@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zvZ-ZC-qdE">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9515"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="OUE-pz-sbe">
+            <objects>
+                <controller id="zvZ-ZC-qdE" customClass="InterfaceController" customModule="Watch_Athan_Extension">
+                    <items>
+                        <group width="1" alignment="left" id="OrE-Qf-oVh">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="Fajr" id="cno-Vj-ZzW">
+                                    <fontDescription key="font" type="system" pointSize="25"/>
+                                </label>
+                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="badge-0" contentMode="scaleAspectFit" animationDuration="1" id="De9-QF-vty"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="center" spacing="8" id="8bp-t4-Exh">
+                            <items>
+                                <group alignment="center" layout="vertical" id="j00-eL-mCS">
+                                    <items>
+                                        <timer alignment="center" id="8pr-JS-OHr">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </timer>
+                                        <label alignment="center" text="left" id="0F9-Tx-1UW">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                    </items>
+                                </group>
+                                <separator alignment="center" id="kpM-3x-vk3"/>
+                                <group width="61.5" alignment="center" layout="vertical" id="FEk-gi-tuf">
+                                    <items>
+                                        <label alignment="center" text="Thuhr" id="v9R-E6-jku">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                        <label alignment="center" text="10:00 PM" id="Uzr-gf-eq7">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <separator alignment="center" id="toW-c3-wUz"/>
+                        <table alignment="left" id="0bV-bf-OP5">
+                            <items>
+                                <tableRow identifier="prayerRow" id="sK3-22-d6G" customClass="PrayerRow" customModule="Watch_Athan_Extension">
+                                    <group key="rootItem" width="1" height="32.5" alignment="left" id="cWm-0v-86T">
+                                        <items>
+                                            <label alignment="left" verticalAlignment="center" text="Fajr" id="y2j-27-4eh"/>
+                                            <label alignment="right" verticalAlignment="center" text="0:00 AM" id="fF9-sQ-Tdb"/>
+                                        </items>
+                                    </group>
+                                    <connections>
+                                        <outlet property="nameLabel" destination="y2j-27-4eh" id="hL8-QW-nRB"/>
+                                        <outlet property="timeLabel" destination="fF9-sQ-Tdb" id="MMf-ag-uFD"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="currentPrayerLabel" destination="cno-Vj-ZzW" id="jMw-JC-hIU"/>
+                        <outlet property="nextPrayerLabel" destination="v9R-E6-jku" id="x70-5H-PIs"/>
+                        <outlet property="nextTimeLabel" destination="Uzr-gf-eq7" id="jKv-sg-f5H"/>
+                        <outlet property="prayerTable" destination="0bV-bf-OP5" id="8qg-tD-FI4"/>
+                        <outlet property="progressImage" destination="De9-QF-vty" id="KRh-8i-1ax"/>
+                        <outlet property="timeLeftTimer" destination="8pr-JS-OHr" id="Y6m-0Q-COk"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="235" y="418"/>
+        </scene>
+        <!--Glance Interface Controller-->
+        <scene sceneID="BOz-TT-tkC">
+            <objects>
+                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModule="Watch_Athan" customModuleProvider="target">
+                    <items>
+                        <group alignment="left" id="t8f-Gd-c4y">
+                            <items>
+                                <imageView alignment="left" image="sun" id="KL5-qa-WnR"/>
+                                <imageView width="50" height="50" alignment="left" image="badge-72" id="L2e-z9-LF8"/>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                        </group>
+                        <group alignment="left" layout="vertical" id="uCw-4Q-Ouw">
+                            <items>
+                                <label alignment="left" text="Fajr" id="UEd-9Q-SrG">
+                                    <fontDescription key="font" type="system" pointSize="38"/>
+                                </label>
+                                <group width="1" alignment="left" id="b2u-4a-RA3">
+                                    <items>
+                                        <timer alignment="left" format="abbreviated" id="YEU-3G-p6V">
+                                            <color key="textColor" red="0.57254936840000004" green="0.92686631939999997" blue="0.57083568770000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <calendarUnit key="units" hour="YES" minute="YES"/>
+                                        </timer>
+                                        <label alignment="left" text="left" id="Pbt-FS-IN9">
+                                            <color key="textColor" red="0.57254936840000004" green="0.92686631939999997" blue="0.57083568770000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </items>
+                                </group>
+                                <label alignment="left" text="Shurooq 12:00 AM" id="sKF-xV-S6p"/>
+                            </items>
+                        </group>
+                    </items>
+                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="currentPrayerLabel" destination="UEd-9Q-SrG" id="Oay-d7-6Hi"/>
+                        <outlet property="nextPrayerLabel" destination="sKF-xV-S6p" id="IPa-e3-LYa"/>
+                        <outlet property="prayerImage" destination="KL5-qa-WnR" id="SAF-4q-N5D"/>
+                        <outlet property="prayerTimer" destination="YEU-3G-p6V" id="h3i-i8-fst"/>
+                        <outlet property="progressImage" destination="L2e-z9-LF8" id="i4v-AO-ro8"/>
+                    </connections>
+                </glanceController>
+            </objects>
+            <point key="canvasLocation" x="235" y="672"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="XkS-y5-khE"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="XkS-y5-khE" id="49B-RR-99y"/>
+                        <segue destination="gdX-wl-uQE" kind="relationship" relationship="dynamicNotificationInterface" id="fKh-qV-3T2"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="235" y="1001"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="KIl-fV-djm">
+            <objects>
+                <controller id="gdX-wl-uQE" customClass="NotificationController" customModule="Watch_Athan" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="553" y="1001"/>
+        </scene>
+    </scenes>
+</document>

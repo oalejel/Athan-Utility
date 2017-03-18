@@ -1,0 +1,1024 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3D017CB91BEEDF7A009265AD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D017CB71BEEDF7A009265AD /* SettingsViewController.swift */; };
+		3D017CBA1BEEDF7A009265AD /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */; };
+		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
+		3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */; };
+		3D033BE41C01306700CCE84A /* sound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BE31C01306700CCE84A /* sound@2x.png */; };
+		3D033BE61C01307D00CCE84A /* no_sound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BE51C01307D00CCE84A /* no_sound@2x.png */; };
+		3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */; };
+		3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA801BDC58B60001EFE4 /* ViewController.swift */; };
+		3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA851BDC58B60001EFE4 /* Assets.xcassets */; };
+		3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */; };
+		3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
+		3D07DA9B1BDC58E30001EFE4 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA911BDC58E30001EFE4 /* SqueezeButton.swift */; };
+		3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA921BDC58E30001EFE4 /* TableController.swift */; };
+		3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */; };
+		3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */; };
+		3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA961BDC58E30001EFE4 /* ClockView.swift */; };
+		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
+		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
+		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
+		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
+		3D327CBD1C3564900083871B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
+		3D32B57F1C14D03A003CAE1B /* sunhorizon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B57E1C14D03A003CAE1B /* sunhorizon.png */; };
+		3D32B5811C14D31D003CAE1B /* sunfilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5801C14D31D003CAE1B /* sunfilled.png */; };
+		3D32B5831C14D32E003CAE1B /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5821C14D32E003CAE1B /* moon.png */; };
+		3D32B5851C14D34D003CAE1B /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5841C14D34D003CAE1B /* sun.png */; };
+		3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */; };
+		3D3643711CCD17960080DF5C /* info1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436B1CCD17960080DF5C /* info1@2x.png */; };
+		3D3643721CCD17960080DF5C /* info2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436C1CCD17960080DF5C /* info2@2x.png */; };
+		3D3643731CCD17960080DF5C /* info3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436D1CCD17960080DF5C /* info3@2x.png */; };
+		3D3643741CCD17960080DF5C /* info4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436E1CCD17960080DF5C /* info4@2x.png */; };
+		3D3643751CCD17960080DF5C /* info5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436F1CCD17960080DF5C /* info5@2x.png */; };
+		3D3643761CCD17960080DF5C /* info6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3643701CCD17960080DF5C /* info6@2x.png */; };
+		3D3DD5DB1C2B1F7200FEBB3D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5D91C2B1F7200FEBB3D /* Interface.storyboard */; };
+		3D3DD5DD1C2B1F7200FEBB3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
+		3D3DD5E41C2B1F7200FEBB3D /* Watch Athan Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D3DD5EB1C2B1F7200FEBB3D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5EA1C2B1F7200FEBB3D /* InterfaceController.swift */; };
+		3D3DD5ED1C2B1F7200FEBB3D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5EC1C2B1F7200FEBB3D /* ExtensionDelegate.swift */; };
+		3D3DD5EF1C2B1F7200FEBB3D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5EE1C2B1F7200FEBB3D /* NotificationController.swift */; };
+		3D3DD5F11C2B1F7200FEBB3D /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5F01C2B1F7200FEBB3D /* GlanceController.swift */; };
+		3D3DD5F31C2B1F7200FEBB3D /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5F21C2B1F7200FEBB3D /* ComplicationController.swift */; };
+		3D3DD5F51C2B1F7300FEBB3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5F41C2B1F7300FEBB3D /* Assets.xcassets */; };
+		3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */; };
+		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
+		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
+		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
+		3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */; };
+		3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */; };
+		3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8049911C34A71900A2AC1F /* PrayerRow.swift */; };
+		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
+		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
+		3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */; };
+		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3DAC704C1C2C43C2006E05CF /* WatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */; };
+		3DAC704E1C2C44D4006E05CF /* WatchDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */; };
+		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
+		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
+		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
+		3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */; };
+		3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3DD903931BDEE2FE009F6635 /* chime1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3DD903921BDEE2FE009F6635 /* chime1.aiff */; };
+		3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD9814C1CC6E3D100151027 /* IntroViewController.swift */; };
+		3DDE264C1BDD25BA004D3D1D /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3D3DD5E51C2B1F7200FEBB3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D3DD5E21C2B1F7200FEBB3D;
+			remoteInfo = "Watch Athan Extension";
+		};
+		3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DD3B48E1C0D3B5700DC91E6;
+			remoteInfo = AthanToday;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3D3DD5FF1C2B1F7300FEBB3D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3D3DD5E41C2B1F7200FEBB3D /* Watch Athan Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3D017CB71BEEDF7A009265AD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
+		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
+		3D033BE31C01306700CCE84A /* sound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound@2x.png"; sourceTree = "<group>"; };
+		3D033BE51C01307D00CCE84A /* no_sound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_sound@2x.png"; sourceTree = "<group>"; };
+		3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Utility.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3D07DA801BDC58B60001EFE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3D07DA831BDC58B60001EFE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3D07DA851BDC58B60001EFE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3D07DA881BDC58B60001EFE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3D07DA8A1BDC58B60001EFE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D07DA901BDC58E30001EFE4 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		3D07DA911BDC58E30001EFE4 /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
+		3D07DA921BDC58E30001EFE4 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
+		3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerCell.swift; sourceTree = "<group>"; };
+		3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerCell.xib; sourceTree = "<group>"; };
+		3D07DA961BDC58E30001EFE4 /* ClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
+		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
+		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
+		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
+		3D32B57E1C14D03A003CAE1B /* sunhorizon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunhorizon.png; sourceTree = "<group>"; };
+		3D32B5801C14D31D003CAE1B /* sunfilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunfilled.png; sourceTree = "<group>"; };
+		3D32B5821C14D32E003CAE1B /* moon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon.png; sourceTree = "<group>"; };
+		3D32B5841C14D34D003CAE1B /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
+		3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
+		3D36436B1CCD17960080DF5C /* info1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info1@2x.png"; sourceTree = "<group>"; };
+		3D36436C1CCD17960080DF5C /* info2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info2@2x.png"; sourceTree = "<group>"; };
+		3D36436D1CCD17960080DF5C /* info3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info3@2x.png"; sourceTree = "<group>"; };
+		3D36436E1CCD17960080DF5C /* info4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info4@2x.png"; sourceTree = "<group>"; };
+		3D36436F1CCD17960080DF5C /* info5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info5@2x.png"; sourceTree = "<group>"; };
+		3D3643701CCD17960080DF5C /* info6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info6@2x.png"; sourceTree = "<group>"; };
+		3D3DD5D71C2B1F7200FEBB3D /* Watch Athan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch Athan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D3DD5DA1C2B1F7200FEBB3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3D3DD5DE1C2B1F7200FEBB3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Watch Athan Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D3DD5E91C2B1F7200FEBB3D /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		3D3DD5EA1C2B1F7200FEBB3D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		3D3DD5EC1C2B1F7200FEBB3D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		3D3DD5EE1C2B1F7200FEBB3D /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		3D3DD5F01C2B1F7200FEBB3D /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		3D3DD5F21C2B1F7200FEBB3D /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		3D3DD5F41C2B1F7300FEBB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3D3DD5F61C2B1F7300FEBB3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElapsedView.swift; sourceTree = "<group>"; };
+		3D6308321C08F3D700AC32B6 /* LocationInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInputController.swift; sourceTree = "<group>"; };
+		3D6308331C08F3D700AC32B6 /* LocationInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationInputController.xib; sourceTree = "<group>"; };
+		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
+		3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingsViewController.swift; sourceTree = "<group>"; };
+		3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingsViewController.xib; sourceTree = "<group>"; };
+		3D8049911C34A71900A2AC1F /* PrayerRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRow.swift; sourceTree = "<group>"; };
+		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
+		3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QiblaViewController.xib; path = ../QiblaViewController.xib; sourceTree = "<group>"; };
+		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
+		3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDataManager.swift; sourceTree = "<group>"; };
+		3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDataDelegate.swift; sourceTree = "<group>"; };
+		3DBF4D971C2C8B0100B973C5 /* Watch Athan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Watch Athan.entitlements"; sourceTree = "<group>"; };
+		3DBF4D981C2C8B7A00B973C5 /* Watch Athan Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Watch Athan Extension.entitlements"; sourceTree = "<group>"; };
+		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		3DD3B4971C0D3B5700DC91E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		3DD3B4991C0D3B5700DC91E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DD903921BDEE2FE009F6635 /* chime1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = chime1.aiff; sourceTree = "<group>"; };
+		3DD9814C1CC6E3D100151027 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
+		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
+		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
+		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3D07DA781BDC58B50001EFE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3DD5E01C2B1F7200FEBB3D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DD3B48C1C0D3B5700DC91E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D07DA721BDC58B50001EFE4 = {
+			isa = PBXGroup;
+			children = (
+				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
+				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
+				3D3DD5D81C2B1F7200FEBB3D /* Watch Athan */,
+				3D3DD5E71C2B1F7200FEBB3D /* Watch Athan Extension */,
+				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
+				3D07DA7C1BDC58B50001EFE4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3D07DA7C1BDC58B50001EFE4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */,
+				3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */,
+				3D3DD5D71C2B1F7200FEBB3D /* Watch Athan.app */,
+				3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3D07DA7D1BDC58B50001EFE4 /* Athan Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
+				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
+				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
+				3DD9814C1CC6E3D100151027 /* IntroViewController.swift */,
+				3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */,
+				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
+				3D4416E71C05174700329AA0 /* General */,
+				3D4416E61C05173D00329AA0 /* Qibla */,
+				3D4416E51C05172400329AA0 /* Settings */,
+				3D4CEDA61BDD597700CA095E /* Table */,
+				3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */,
+				3D033BE51C01307D00CCE84A /* no_sound@2x.png */,
+				3D033BE31C01306700CCE84A /* sound@2x.png */,
+				3DD903921BDEE2FE009F6635 /* chime1.aiff */,
+				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
+				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
+				3D07DA8A1BDC58B60001EFE4 /* Info.plist */,
+			);
+			path = "Athan Utility";
+			sourceTree = "<group>";
+		};
+		3D3DD5D81C2B1F7200FEBB3D /* Watch Athan */ = {
+			isa = PBXGroup;
+			children = (
+				3DBF4D971C2C8B0100B973C5 /* Watch Athan.entitlements */,
+				3D3DD5D91C2B1F7200FEBB3D /* Interface.storyboard */,
+				3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */,
+				3D3DD5DE1C2B1F7200FEBB3D /* Info.plist */,
+			);
+			path = "Watch Athan";
+			sourceTree = "<group>";
+		};
+		3D3DD5E71C2B1F7200FEBB3D /* Watch Athan Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3DBF4D981C2C8B7A00B973C5 /* Watch Athan Extension.entitlements */,
+				3DAA44331C34C7260013B2B0 /* Data */,
+				3DAA44341C34C7690013B2B0 /* Main Interface (App) */,
+				3D3DD5EC1C2B1F7200FEBB3D /* ExtensionDelegate.swift */,
+				3D3DD5EE1C2B1F7200FEBB3D /* NotificationController.swift */,
+				3D3DD5F01C2B1F7200FEBB3D /* GlanceController.swift */,
+				3D3DD5F21C2B1F7200FEBB3D /* ComplicationController.swift */,
+				3D3DD5F41C2B1F7300FEBB3D /* Assets.xcassets */,
+				3D3DD5F61C2B1F7300FEBB3D /* Info.plist */,
+				3D3DD5E81C2B1F7200FEBB3D /* Supporting Files */,
+			);
+			path = "Watch Athan Extension";
+			sourceTree = "<group>";
+		};
+		3D3DD5E81C2B1F7200FEBB3D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3D3DD5E91C2B1F7200FEBB3D /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3D4416E51C05172400329AA0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */,
+				3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */,
+				3D6308321C08F3D700AC32B6 /* LocationInputController.swift */,
+				3D6308331C08F3D700AC32B6 /* LocationInputController.xib */,
+				3D017CB71BEEDF7A009265AD /* SettingsViewController.swift */,
+				3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */,
+				3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */,
+				3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */,
+				3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */,
+				3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */,
+				3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		3D4416E61C05173D00329AA0 /* Qibla */ = {
+			isa = PBXGroup;
+			children = (
+				3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */,
+				3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */,
+				3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */,
+			);
+			name = Qibla;
+			sourceTree = "<group>";
+		};
+		3D4416E71C05174700329AA0 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				3D07DA901BDC58E30001EFE4 /* Global.swift */,
+				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
+				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
+				3D07DA911BDC58E30001EFE4 /* SqueezeButton.swift */,
+				3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */,
+				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */ = {
+			isa = PBXGroup;
+			children = (
+				3D36436B1CCD17960080DF5C /* info1@2x.png */,
+				3D36436C1CCD17960080DF5C /* info2@2x.png */,
+				3D36436D1CCD17960080DF5C /* info3@2x.png */,
+				3D36436E1CCD17960080DF5C /* info4@2x.png */,
+				3D36436F1CCD17960080DF5C /* info5@2x.png */,
+				3D3643701CCD17960080DF5C /* info6@2x.png */,
+				3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */,
+				3D07DA961BDC58E30001EFE4 /* ClockView.swift */,
+				3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */,
+				3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */,
+			);
+			name = "Clock and Elapsed View";
+			sourceTree = "<group>";
+		};
+		3D4CEDA61BDD597700CA095E /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				3D07DA921BDC58E30001EFE4 /* TableController.swift */,
+				3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */,
+				3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
+		3DAA44331C34C7260013B2B0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */,
+				3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		3DAA44341C34C7690013B2B0 /* Main Interface (App) */ = {
+			isa = PBXGroup;
+			children = (
+				3D3DD5EA1C2B1F7200FEBB3D /* InterfaceController.swift */,
+				3D8049911C34A71900A2AC1F /* PrayerRow.swift */,
+			);
+			name = "Main Interface (App)";
+			sourceTree = "<group>";
+		};
+		3DD3B4901C0D3B5700DC91E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3DD3B4931C0D3B5700DC91E6 /* AthanToday */ = {
+			isa = PBXGroup;
+			children = (
+				3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */,
+				3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */,
+				3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */,
+				3D32B57E1C14D03A003CAE1B /* sunhorizon.png */,
+				3D32B5821C14D32E003CAE1B /* moon.png */,
+				3D32B5841C14D34D003CAE1B /* sun.png */,
+				3D32B5801C14D31D003CAE1B /* sunfilled.png */,
+				3DD3B4991C0D3B5700DC91E6 /* Info.plist */,
+			);
+			path = AthanToday;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3D07DA7A1BDC58B50001EFE4 /* Athan Utility */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D07DA8D1BDC58B60001EFE4 /* Build configuration list for PBXNativeTarget "Athan Utility" */;
+			buildPhases = (
+				3D07DA771BDC58B50001EFE4 /* Sources */,
+				3D07DA781BDC58B50001EFE4 /* Frameworks */,
+				3D07DA791BDC58B50001EFE4 /* Resources */,
+				3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */,
+				3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */,
+			);
+			name = "Athan Utility";
+			productName = "Athan Utility";
+			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3D3DD5D61C2B1F7200FEBB3D /* Watch Athan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D3DD6001C2B1F7300FEBB3D /* Build configuration list for PBXNativeTarget "Watch Athan" */;
+			buildPhases = (
+				3D3DD5D51C2B1F7200FEBB3D /* Resources */,
+				3D3DD5FF1C2B1F7300FEBB3D /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D3DD5E61C2B1F7200FEBB3D /* PBXTargetDependency */,
+			);
+			name = "Watch Athan";
+			productName = "Watch Athan";
+			productReference = 3D3DD5D71C2B1F7200FEBB3D /* Watch Athan.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		3D3DD5E21C2B1F7200FEBB3D /* Watch Athan Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D3DD5FE1C2B1F7300FEBB3D /* Build configuration list for PBXNativeTarget "Watch Athan Extension" */;
+			buildPhases = (
+				3D3DD5DF1C2B1F7200FEBB3D /* Sources */,
+				3D3DD5E01C2B1F7200FEBB3D /* Frameworks */,
+				3D3DD5E11C2B1F7200FEBB3D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Watch Athan Extension";
+			productName = "Watch Athan Extension";
+			productReference = 3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+		3DD3B48E1C0D3B5700DC91E6 /* AthanToday */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DD3B49F1C0D3B5700DC91E6 /* Build configuration list for PBXNativeTarget "AthanToday" */;
+			buildPhases = (
+				3DD3B48B1C0D3B5700DC91E6 /* Sources */,
+				3DD3B48C1C0D3B5700DC91E6 /* Frameworks */,
+				3DD3B48D1C0D3B5700DC91E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AthanToday;
+			productName = AthanToday;
+			productReference = 3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3D07DA731BDC58B50001EFE4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Omar Alejel";
+				TargetAttributes = {
+					3D07DA7A1BDC58B50001EFE4 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = FNU3YT2Q2N;
+						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					3D3DD5D61C2B1F7200FEBB3D = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = FNU3YT2Q2N;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
+					3D3DD5E21C2B1F7200FEBB3D = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = FNU3YT2Q2N;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
+					3DD3B48E1C0D3B5700DC91E6 = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = FNU3YT2Q2N;
+						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 3D07DA761BDC58B50001EFE4 /* Build configuration list for PBXProject "Athan Utility" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3D07DA721BDC58B50001EFE4;
+			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3D07DA7A1BDC58B50001EFE4 /* Athan Utility */,
+				3DD3B48E1C0D3B5700DC91E6 /* AthanToday */,
+				3D3DD5D61C2B1F7200FEBB3D /* Watch Athan */,
+				3D3DD5E21C2B1F7200FEBB3D /* Watch Athan Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3D07DA791BDC58B50001EFE4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
+				3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */,
+				3D3643731CCD17960080DF5C /* info3@2x.png in Resources */,
+				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
+				3D3643751CCD17960080DF5C /* info5@2x.png in Resources */,
+				3D3643741CCD17960080DF5C /* info4@2x.png in Resources */,
+				3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */,
+				3D3643721CCD17960080DF5C /* info2@2x.png in Resources */,
+				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
+				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
+				3DD903931BDEE2FE009F6635 /* chime1.aiff in Resources */,
+				3D3643761CCD17960080DF5C /* info6@2x.png in Resources */,
+				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
+				3D033BE41C01306700CCE84A /* sound@2x.png in Resources */,
+				3D017CBA1BEEDF7A009265AD /* SettingsViewController.xib in Resources */,
+				3D3643711CCD17960080DF5C /* info1@2x.png in Resources */,
+				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
+				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
+				3D033BE61C01307D00CCE84A /* no_sound@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3DD5D51C2B1F7200FEBB3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D3DD5DD1C2B1F7200FEBB3D /* Assets.xcassets in Resources */,
+				3D3DD5DB1C2B1F7200FEBB3D /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3DD5E11C2B1F7200FEBB3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D327CBD1C3564900083871B /* Assets.xcassets in Resources */,
+				3D3DD5F51C2B1F7300FEBB3D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DD3B48D1C0D3B5700DC91E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */,
+				3D32B5851C14D34D003CAE1B /* sun.png in Resources */,
+				3D32B5831C14D32E003CAE1B /* moon.png in Resources */,
+				3D32B5811C14D31D003CAE1B /* sunfilled.png in Resources */,
+				3D32B57F1C14D03A003CAE1B /* sunhorizon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3D07DA771BDC58B50001EFE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
+				3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */,
+				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
+				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
+				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
+				3D07DA9B1BDC58E30001EFE4 /* SqueezeButton.swift in Sources */,
+				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
+				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
+				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
+				3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */,
+				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
+				3DDE264C1BDD25BA004D3D1D /* SwiftSpinner.swift in Sources */,
+				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
+				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
+				3D017CB91BEEDF7A009265AD /* SettingsViewController.swift in Sources */,
+				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
+				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
+				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
+				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
+				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
+				3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */,
+				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
+				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D3DD5DF1C2B1F7200FEBB3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D3DD5EF1C2B1F7200FEBB3D /* NotificationController.swift in Sources */,
+				3DAC704E1C2C44D4006E05CF /* WatchDataDelegate.swift in Sources */,
+				3DAC704C1C2C43C2006E05CF /* WatchDataManager.swift in Sources */,
+				3D3DD5ED1C2B1F7200FEBB3D /* ExtensionDelegate.swift in Sources */,
+				3D3DD5F31C2B1F7200FEBB3D /* ComplicationController.swift in Sources */,
+				3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */,
+				3D3DD5EB1C2B1F7200FEBB3D /* InterfaceController.swift in Sources */,
+				3D3DD5F11C2B1F7200FEBB3D /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3DD3B48B1C0D3B5700DC91E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D3DD5E61C2B1F7200FEBB3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D3DD5E21C2B1F7200FEBB3D /* Watch Athan Extension */;
+			targetProxy = 3D3DD5E51C2B1F7200FEBB3D /* PBXContainerItemProxy */;
+		};
+		3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DD3B48E1C0D3B5700DC91E6 /* AthanToday */;
+			targetProxy = 3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3D07DA821BDC58B60001EFE4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D07DA831BDC58B60001EFE4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D07DA881BDC58B60001EFE4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		3D3DD5D91C2B1F7200FEBB3D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D3DD5DA1C2B1F7200FEBB3D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+		3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DD3B4971C0D3B5700DC91E6 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3D07DA8B1BDC58B60001EFE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D07DA8C1BDC58B60001EFE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3D07DA8E1BDC58B60001EFE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Athan Utility/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
+				PRODUCT_NAME = "Athan Utility";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Athan Utility/Athan Utility Test-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		3D07DA8F1BDC58B60001EFE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Athan Utility/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
+				PRODUCT_NAME = "Athan Utility";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Athan Utility/Athan Utility Test-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		3D3DD5FA1C2B1F7300FEBB3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				IBSC_MODULE = Watch_Athan_Extension;
+				INFOPLIST_FILE = "Watch Athan/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		3D3DD5FB1C2B1F7300FEBB3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				IBSC_MODULE = Watch_Athan_Extension;
+				INFOPLIST_FILE = "Watch Athan/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		3D3DD5FC1C2B1F7300FEBB3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Watch Athan Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		3D3DD5FD1C2B1F7300FEBB3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "Watch Athan Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		3DD3B49D1C0D3B5700DC91E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = AthanToday/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanToday";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		3DD3B49E1C0D3B5700DC91E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = AthanToday/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanToday";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3D07DA761BDC58B50001EFE4 /* Build configuration list for PBXProject "Athan Utility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D07DA8B1BDC58B60001EFE4 /* Debug */,
+				3D07DA8C1BDC58B60001EFE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D07DA8D1BDC58B60001EFE4 /* Build configuration list for PBXNativeTarget "Athan Utility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D07DA8E1BDC58B60001EFE4 /* Debug */,
+				3D07DA8F1BDC58B60001EFE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D3DD5FE1C2B1F7300FEBB3D /* Build configuration list for PBXNativeTarget "Watch Athan Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D3DD5FC1C2B1F7300FEBB3D /* Debug */,
+				3D3DD5FD1C2B1F7300FEBB3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D3DD6001C2B1F7300FEBB3D /* Build configuration list for PBXNativeTarget "Watch Athan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D3DD5FA1C2B1F7300FEBB3D /* Debug */,
+				3D3DD5FB1C2B1F7300FEBB3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3DD3B49F1C0D3B5700DC91E6 /* Build configuration list for PBXNativeTarget "AthanToday" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DD3B49D1C0D3B5700DC91E6 /* Debug */,
+				3DD3B49E1C0D3B5700DC91E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3D07DA731BDC58B50001EFE4 /* Project object */;
+}

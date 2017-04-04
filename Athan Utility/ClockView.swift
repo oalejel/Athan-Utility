@@ -129,10 +129,10 @@ class ClockView: UIView {
         let lineWidth: CGFloat = 7.5
         let center = CGPoint(x: width / 2, y: height / 2)
         let radius = (width / 2) - (lineWidth / 2) - bubbleRoom
-        let circ: CGFloat = CGFloat(2 * M_PI) * radius
+        let circ: CGFloat = CGFloat(2 * Double.pi) * radius
         let tickThickness: CGFloat = 2
         
-        let minutePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
+        let minutePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = minutePath.cgPath
         shapeLayer.lineDashPhase = 1.5
@@ -147,10 +147,10 @@ class ClockView: UIView {
     func addHourTicks() {
         let center = CGPoint(x: width / 2, y: height / 2)
         let radius = (width / 2) - (tickHeight / 2) - bubbleRoom
-        let circ: CGFloat = CGFloat(2 * M_PI) * radius
+        let circ: CGFloat = CGFloat(2 * Double.pi) * radius
         let tickThickness: CGFloat = 2
         
-        let hourPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
+        let hourPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = hourPath.cgPath
         shapeLayer.lineDashPhase = 1.5
@@ -167,7 +167,7 @@ class ClockView: UIView {
         let center = CGPoint(x: width / 2, y: height / 2)
         let radius = (width / 2) - (lineWidth / 2) - (bubbleRoom / 2)
         
-        let amPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
+        let amPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         amLayer = CAShapeLayer()
         amLayer.path = amPath.cgPath
         
@@ -190,7 +190,7 @@ class ClockView: UIView {
         let center = CGPoint(x: width / 2, y: height / 2)
         let radius = (width / 2) - (lineWidth / 2)
         
-        let pmPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true)
+        let pmPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         pmLayer = CAShapeLayer()
         pmLayer.path = pmPath.cgPath
         
@@ -252,12 +252,12 @@ class ClockView: UIView {
             df.dateFormat = "s.S"
             let curDate = Date()
             let seconds = Float(df.string(from: curDate))
-            let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(M_PI)
+            let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(Double.pi)
             self.secondsLayer.transform = CATransform3DRotate(self.secondsLayer.transform, radians, 0, 0, 1)
             
             let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
             self.secondsLayer.add(anim, forKey: "transform.rotation")
             
         }
@@ -303,7 +303,7 @@ class ClockView: UIView {
         layer.addSublayer(minutesLayer)
         
         //start it at 0 seconds
-        //container.transform = CATransform3DRotate(container.transform, CGFloat(M_PI * 0.25), 0, 0, 1)
+        //container.transform = CATransform3DRotate(container.transform, CGFloat(Double.pi * 0.25), 0, 0, 1)
         
         
         
@@ -326,12 +326,12 @@ class ClockView: UIView {
             let seconds = Float(df.string(from: curDate))
             df.dateFormat = "m"
             let minutes = Float(df.string(from: curDate))! + (seconds! / 60)
-            let radians: CGFloat = CGFloat(minutes / 30.0) * CGFloat(M_PI)
+            let radians: CGFloat = CGFloat(minutes / 30.0) * CGFloat(Double.pi)
             self.minutesLayer.transform = CATransform3DRotate(self.minutesLayer.transform, radians, 0, 0, 1)
             
             let oldRotation: NSNumber = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
             self.minutesLayer.add(anim, forKey: "transform.rotation")
         }
     }
@@ -402,12 +402,12 @@ class ClockView: UIView {
             df.dateFormat = "m"
             let minutes = Float(df.string(from: curDate))
             hours! += minutes! / 60
-            let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(M_PI)
+            let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)
             self.hoursLayer.transform = CATransform3DRotate(self.hoursLayer.transform, radians, 0, 0, 1)
             
             let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
             self.hoursLayer.add(anim, forKey: "transform.rotation")
         }
     }
@@ -484,7 +484,7 @@ class ClockView: UIView {
                 
                 if seconds == nil {seconds = 0}
                 let outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60) + ((seconds ?? 0) / 3600)
-                let angle = (CGFloat(outOfTwelve / 6) * CGFloat(M_PI)) - CGFloat(0.5 * M_PI)
+                let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
                 
                 let hightLight = p == manager.currentPrayer
                 self.setBubble(p, angle: angle, mer: merid, highlight: hightLight)
@@ -532,12 +532,12 @@ class ClockView: UIView {
                 
                 
                 hours! += minutes! / 60
-                let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(M_PI)
+                let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)
                 self.hoursLayer.transform = CATransform3DRotate(self.hoursLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 hourAnim.fromValue = oldRotation
-                hourAnim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+                hourAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
                 self.hoursLayer.add(hourAnim, forKey: "transform.rotation")
             }
             
@@ -547,12 +547,12 @@ class ClockView: UIView {
             
             
             DispatchQueue.main.async { () -> Void in
-                let radians: CGFloat = CGFloat(minutes! / 30.0) * CGFloat(M_PI)
+                let radians: CGFloat = CGFloat(minutes! / 30.0) * CGFloat(Double.pi)
                 self.minutesLayer.transform = CATransform3DRotate(self.minutesLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 minuteAnim.fromValue = oldRotation
-                minuteAnim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+                minuteAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
                 self.minutesLayer.add(minuteAnim, forKey: "transform.rotation")
             }
             
@@ -562,12 +562,12 @@ class ClockView: UIView {
             secondsAnim.repeatCount = Float.infinity
             
             DispatchQueue.main.async { () -> Void in
-                let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(M_PI)
+                let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(Double.pi)
                 self.secondsLayer.transform = CATransform3DRotate(self.secondsLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 secondsAnim.fromValue = oldRotation
-                secondsAnim.toValue = CGFloat(M_PI * 2) + CGFloat(oldRotation)
+                secondsAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
                 self.secondsLayer.add(secondsAnim, forKey: "transform.rotation")
             }
         }

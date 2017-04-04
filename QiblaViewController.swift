@@ -68,17 +68,17 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     func newHeading(_ h: CLHeading) {
         //        UIView.animateWithDuration(0.2) { () -> Void in
         let angle = h.trueHeading
-        let radians = (-1 * M_PI * (angle / 180)) + (M_PI * Double(self.qiblaOffset / 180))
+        let radians = (-1 * Double.pi * (angle / 180)) + (Double.pi * Double(self.qiblaOffset / 180))
         self.needleLayer?.transform = CATransform3DMakeRotation(CGFloat(radians), 0, 0, 1)
         //        }
         
         //        let angle = h.trueHeading
-        //        let radians = ( M_PI * (angle / 180)) - (M_PI * Double(self.qiblaOffset / 180))
+        //        let radians = ( Double.pi * (angle / 180)) - (Double.pi * Double(self.qiblaOffset / 180))
         //        let anim = CABasicAnimation(keyPath: "transform.rotation")
         //        anim.duration = 0.3
         //        let oldRotation: NSNumber = self.needleLayer.valueForKeyPath("transform.rotation") as! NSNumber
         //        anim.fromValue = oldRotation
-        //        anim.toValue = NSNumber(double: M_PI)//oldRotation.doubleValue + 0.1)//NSNumber(double: oldRotation)
+        //        anim.toValue = NSNumber(double: Double.pi)//oldRotation.doubleValue + 0.1)//NSNumber(double: oldRotation)
         //        self.needleLayer.addAnimation(anim, forKey: "transform.rotation")
     }
     

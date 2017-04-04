@@ -367,7 +367,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {
                 return
             }
-            print("location: \(locationString)")
+            print("location: \(String(describing: locationString))")
             
             print(sureDict["qibla_direction"]!)
             if let a = sureDict["qibla_direction"] as? Double {

@@ -11,57 +11,63 @@ import Foundation
 import WatchConnectivity
 
 enum PrayerType: Int {
-    case Fajr, Shurooq, Thuhr, Asr, Maghrib, Isha
+    case fajr, shurooq, thuhr, asr, maghrib, isha
     func stringValue() -> String {
         switch self {
-        case .Fajr:
+        case .fajr:
             return "Fajr"
-        case .Shurooq:
+        case .shurooq:
             return "Shurooq"
-        case .Thuhr:
+        case .thuhr:
             return "Thuhr"
-        case .Asr:
+        case .asr:
             return "Asr"
-        case .Maghrib:
+        case .maghrib:
             return "Maghrib"
-        case .Isha:
+        case .isha:
             return "Isha"
         }
     }
     
     //incrementors
     func next() -> PrayerType {
-        if self == .Isha {return .Fajr}
+        if self == .isha {return .fajr}
         return PrayerType(rawValue: self.rawValue + 1)!
     }
     func previous() -> PrayerType {
-        if self == .Fajr {return .Isha}
+        if self == .fajr {return .isha}
         return PrayerType(rawValue: self.rawValue - 1)!
     }
 }
 
 class WatchDataManager: NSObject, WCSessionDelegate {
+    /** Called when the session has completed activation. If session state is WCSessionActivationStateNotActivated there will be an error with more details. */
+    @available(watchOS 2.2, *)
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+
     
     ///variables
-    let dateFormatter = NSDateFormatter()
+    let dateFormatter = DateFormatter()
     var currentDay = 0
     var currentMonth = 0
     var currentYear = 0
     
-    var yearTimes: [Int : [Int : [Int : [PrayerType : NSDate]]]] = Dictionary()
-    var todayPrayerTimes: [PrayerType : NSDate] = Dictionary()
-    var tomorrowPrayerTimes: [PrayerType : NSDate] = Dictionary()
-    var yesterdayPrayerTimes: [PrayerType : NSDate] = Dictionary()
+    var yearTimes: [Int : [Int : [Int : [PrayerType : Date]]]] = Dictionary()
+    var todayPrayerTimes: [PrayerType : Date] = Dictionary()
+    var tomorrowPrayerTimes: [PrayerType : Date] = Dictionary()
+    var yesterdayPrayerTimes: [PrayerType : Date] = Dictionary()
     var locationString = ""
     
-    var currentPrayer = PrayerType.Fajr
+    var currentPrayer = PrayerType.fajr
     
-    var timeElapsed: NSTimeInterval = 0
-    var interval: NSTimeInterval = 0
+    var timeElapsed: TimeInterval = 0
+    var interval: TimeInterval = 0
     
     var delegate: WatchDataDelegate!
     
-    var elapsedTimer: NSTimer?
+    var elapsedTimer: Timer?
     var dataReady = false
     
 //    var kickTimer: NSTimer?
@@ -73,32 +79,76 @@ class WatchDataManager: NSObject, WCSessionDelegate {
         self.delegate = delegate
         ///time to get data from phone!
         if WCSession.isSupported() {
-            let session = WCSession.defaultSession()
+            let session = WCSession.default()
             session.delegate = self
-            session.activateSession()
+            session.activate()
   
-            let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-            let documentDirectory = documentDirectories.first
+//            let documentDirectories = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//            let documentDirectory = documentDirectories.first
+//            
+//            let x = documentDirectory! + "/data"
             
-            let x = documentDirectory!.stringByAppendingString("/data")
-            if let dict = NSKeyedUnarchiver.unarchiveObjectWithFile(x) as? NSDictionary {
-                print(dict)
-                parseDictionary(dict, fromFile: true)
-            } else {
-                print("No saved file")
-            }
+            
+            
+            let fm = FileManager.default
+            let prayersURL = prayersArchivePath()
+//            let file = NSKeyedUnarchiver.unarchiveObject(withFile: containerURL!.absoluteString)
+            print("the filepath is \(prayersURL.path)")
+
+            
+//            let data = NSData(contentsOf: containerURL!)
+//            if let trueData = data {
+            let data = NSKeyedUnarchiver.unarchiveObject(withFile: (prayersURL.path))
+                if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: (prayersURL.path)) as? NSDictionary {
+                    print(dict)
+                    //     parseDictionary(dict, fromFile: true)
+                    
+                    
+                    parseDictionary(dict, fromFile: true)
+                } else {
+                    print("No saved file")
+                }
         }
-        
     }
     
+    
+    
+    //MARK: - Data Saving
+    
+    func prayersArchivePath() -> URL{
+        //        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        //        let documentDirectory = documentDirectories.first
+        //
+        //        let x = documentDirectory!.stringByAppendingString("/prayers.plist")
+        
+        let fm = FileManager.default
+        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
+        containerURL = containerURL?.appendingPathComponent("prayers.plist")
+        return containerURL!
+    }
+    
+    func settingsArchivePath() -> URL {
+        //        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        //        let documentDirectory = documentDirectories.first
+        //
+        //        let x = documentDirectory!.stringByAppendingString("/customsettings.plist")
+        //        return NSURL(string: x)!
+        
+        let fm = FileManager.default
+        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
+        containerURL = containerURL?.appendingPathComponent("customsettings.plist")
+        return containerURL!
+    }
+    
+    
     //MARK: Connectivity
-    func session(session: WCSession, didReceiveFile file: WCSessionFile) {
-        let documentDirectories = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        let documentDirectories = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let documentDirectory = documentDirectories.first
 
-        let x = documentDirectory!.stringByAppendingString("/data")
+        let x = documentDirectory! + "/data"
         
-        if let dict = NSKeyedUnarchiver.unarchiveObjectWithFile(file.fileURL.path!) as? NSDictionary {
+        if let dict = NSKeyedUnarchiver.unarchiveObject(withFile: file.fileURL.path) as? NSDictionary {
             print(dict)
             parseDictionary(dict, fromFile: true)
             //save for later...
@@ -116,31 +166,31 @@ class WatchDataManager: NSObject, WCSessionDelegate {
     func calculateProgress() {
         let startTime = currentPrayerTime()
         let endTime = nextPrayerTime()
-        interval = endTime.timeIntervalSinceDate(startTime)
-        timeElapsed = NSDate().timeIntervalSinceDate(startTime)
+        interval = endTime.timeIntervalSince(startTime)
+        timeElapsed = Date().timeIntervalSince(startTime)
     }
     
-    func currentPrayerTime() -> NSDate {
-        if currentPrayer == .Isha {
-            if NSDate().timeIntervalSinceDate(todayPrayerTimes[.Isha]!) < 0 {
-                if (NSDate().compare(tomorrowPrayerTimes[.Fajr]!) == NSComparisonResult.OrderedAscending) {
-                    let cal = NSCalendar.currentCalendar()
-                    let closeToIsha = todayPrayerTimes[.Isha]!
-                    let comps = cal.components([.Year, .Month, .Day, .Hour, .Minute], fromDate: closeToIsha)
+    func currentPrayerTime() -> Date {
+        if currentPrayer == .isha {
+            if Date().timeIntervalSince(todayPrayerTimes[.isha]!) < 0 {
+                if (Date().compare(tomorrowPrayerTimes[.fajr]!) == ComparisonResult.orderedAscending) {
+                    let cal = Calendar.current
+                    let closeToIsha = todayPrayerTimes[.isha]!
+                    var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute], from: closeToIsha)
                     if comps.day == 1 {
                         if comps.month == 1 {
-                            comps.year -= 1
+                            comps.year? -= 1
                             comps.month = 12
                             comps.day = daysInMonth(12)
                         } else {
-                            comps.month -= 1
-                            comps.day = daysInMonth(comps.month)
+                            comps.month? -= 1
+                            comps.day = daysInMonth(comps.month!)
                         }
                     } else {
-                        comps.day -= 1
+                        comps.day? -= 1
                     }
                     
-                    return cal.dateFromComponents(comps)!
+                    return cal.date(from: comps)!
                 }
             }
         }
@@ -149,12 +199,12 @@ class WatchDataManager: NSObject, WCSessionDelegate {
     }
     
     
-    func nextPrayerTime() -> NSDate {
-        if currentPrayer == .Isha {
-            if NSDate().timeIntervalSinceDate(todayPrayerTimes[.Isha]!) > 0 {
-                return tomorrowPrayerTimes[.Fajr]!
+    func nextPrayerTime() -> Date {
+        if currentPrayer == .isha {
+            if Date().timeIntervalSince(todayPrayerTimes[.isha]!) > 0 {
+                return tomorrowPrayerTimes[.fajr]!
             } else {
-                return todayPrayerTimes[.Fajr]!
+                return todayPrayerTimes[.fajr]!
             }
         } else {
             //!!! this might not be good if the prayertype is none and next() returns fajr!!!
@@ -167,20 +217,20 @@ class WatchDataManager: NSObject, WCSessionDelegate {
     
     ///
     
-    func imageForPrayer(p: PrayerType) -> UIImage {
+    func imageForPrayer(_ p: PrayerType) -> UIImage {
         var imageName = ""
         switch p {
-        case .Fajr:
+        case .fajr:
             imageName = "sunhorizon"
-        case .Shurooq:
+        case .shurooq:
             imageName = "sunhorizon"
-        case .Thuhr:
+        case .thuhr:
             imageName = "sun"
-        case .Asr:
+        case .asr:
             imageName = "sunfilled"
-        case .Maghrib:
+        case .maghrib:
             imageName = "sunhorizon"
-        case .Isha:
+        case .isha:
             imageName = "moon"
         }
         
@@ -189,12 +239,12 @@ class WatchDataManager: NSObject, WCSessionDelegate {
 
     func calculateCurrentPrayer() {
         //standard...
-        currentPrayer = .Isha
-        let curDate = NSDate()
+        currentPrayer = .isha
+        let curDate = Date()
         for i in 0...5 {
             let p = PrayerType(rawValue: i)!
             //ascending if the compared one is greater
-            if curDate.compare(todayPrayerTimes[p]!) == NSComparisonResult.OrderedDescending {
+            if curDate.compare(todayPrayerTimes[p]!) == ComparisonResult.orderedDescending {
                 //WARNING: THIS MIGHT FAIL WHEN THE DATE IS AFTER
                 currentPrayer = PrayerType(rawValue: p.rawValue)!//select the previous date prayer
             }
@@ -202,35 +252,44 @@ class WatchDataManager: NSObject, WCSessionDelegate {
     }
     
     
-    func parseDictionary(dict: NSDictionary, fromFile: Bool) {
-        if var sureDict = dict as Dictionary? {
-            if let x = sureDict["address"] as? String {
+    func parseDictionary(_ dict: NSDictionary, fromFile: Bool) {
+//        if dict is Dictionary {
+            if let x = dict["address"] as? String {
                 if x != "" {
                     locationString = x
                 } else {
                     //return
                     print("no location found...")
                 }
-            }
+//            }
             print("location: \(locationString)")
+                
+                
+                
+                
+                
+                
+                
+                
+                
             
             
             
             
             //get prayer times in text and parse into dates
-            if let daysArray = sureDict["items"] as? NSArray {
+            if let daysArray = dict["items"] as? NSArray {
                 //add days in months
                 var dayOffset = 0
                 let df = dateFormatter
                 
                 //get the date info for today to use for computation
-                let curDate = NSDate()
+                let curDate = Date()
                 dateFormatter.dateFormat = "y"
-                currentYear = Int(df.stringFromDate(curDate))!
+                currentYear = Int(df.string(from: curDate))!
                 dateFormatter.dateFormat = "d"
-                currentDay = Int(df.stringFromDate(curDate))!
+                currentDay = Int(df.string(from: curDate))!
                 dateFormatter.dateFormat = "M"
-                currentMonth = Int(df.stringFromDate(curDate))!
+                currentMonth = Int(df.string(from: curDate))!
                 
                 //below will be different if from a file in the past
                 var startMonth = currentMonth
@@ -241,15 +300,15 @@ class WatchDataManager: NSObject, WCSessionDelegate {
                 if fromFile {
                     
                     //if same year, continue
-                    if let yearReceievedString = sureDict["year_recieved"] as? String {
+                    if let yearReceievedString = dict["year_recieved"] as? String {
                         let yearReceieved = Int(yearReceievedString)
                         
                         //find the index we want to start reading from
-                        if let monthRecievedString = sureDict["month_recieved"] as? String {
+                        if let monthRecievedString = dict["month_recieved"] as? String {
                             let monthRecieved = Int(monthRecievedString)!
                             
                             //find the index we want to start reading from
-                            if let dayRecievedString = sureDict["day_recieved"] as? String {
+                            if let dayRecievedString = dict["day_recieved"] as? String {
                                 let dayRecieved = Int(dayRecievedString)!
                                 
                                 startYear = yearReceieved!
@@ -275,7 +334,7 @@ class WatchDataManager: NSObject, WCSessionDelegate {
                 
                 
                 let swiftDaysArray = daysArray as! [[String : String]]
-                let prayers: [PrayerType] = [.Fajr, .Shurooq, .Thuhr, .Asr, .Maghrib, .Isha]
+                let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
                 let customNames = ["fajr", "shurooq", "dhuhr", "asr", "maghrib", "isha"]
                 
                 //will change throughout the days
@@ -286,7 +345,7 @@ class WatchDataManager: NSObject, WCSessionDelegate {
                 
                 //!!! remember to look at this!!!
                 var limiter = 40
-                for (_, dayDict) in swiftDaysArray.enumerate() {
+                for (_, dayDict) in swiftDaysArray.enumerated() {
                     limiter -= 1
                     if limiter == 0 {break}
                     for p in prayers {
@@ -294,7 +353,7 @@ class WatchDataManager: NSObject, WCSessionDelegate {
                         var timeString = dayDict[customNames[p.rawValue]]! as String
                         df.dateFormat = "h:m a d:M:y"
                         timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
-                        let theDate = df.dateFromString(timeString)
+                        let theDate = df.date(from: timeString)
                         
                         if yearTimes[yearIncrementor] == nil {
                             yearTimes[yearIncrementor] = [:]
@@ -383,7 +442,7 @@ class WatchDataManager: NSObject, WCSessionDelegate {
                 //must call set timers after updatecurrent prayer is called
                 //setTimers()
                 
-                elapsedTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(WatchDataManager.updateElapsed), userInfo: nil, repeats: true)
+                elapsedTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(WatchDataManager.updateElapsed), userInfo: nil, repeats: true)
                 
             } else {
                 print("didnt get items...")
@@ -413,13 +472,13 @@ class WatchDataManager: NSObject, WCSessionDelegate {
     //MARK: old datamanager stuff
     func alignPrayerTimes() {
         //get the date info for today to use for computation
-        let curDate = NSDate()
+        let curDate = Date()
         dateFormatter.dateFormat = "y"
-        currentYear = Int(dateFormatter.stringFromDate(curDate))!
+        currentYear = Int(dateFormatter.string(from: curDate))!
         dateFormatter.dateFormat = "d"
-        currentDay = Int(dateFormatter.stringFromDate(curDate))!
+        currentDay = Int(dateFormatter.string(from: curDate))!
         dateFormatter.dateFormat = "M"
-        currentMonth = Int(dateFormatter.stringFromDate(curDate))!
+        currentMonth = Int(dateFormatter.string(from: curDate))!
         
         todayPrayerTimes = yearTimes[currentYear]![currentMonth]![currentDay]!
         
@@ -467,14 +526,14 @@ class WatchDataManager: NSObject, WCSessionDelegate {
         }
     }
     
-    func  daysInMonth(m: Int) -> Int {
+    func  daysInMonth(_ m: Int) -> Int {
         switch m {
         case 1:
             return 31
         case 2:
             let df = dateFormatter
             df.dateFormat = "y"
-            let year = Int(df.stringFromDate(NSDate()))!
+            let year = Int(df.string(from: Date()))!
             if year % 4 == 0 {
                 if year % 100 == 0 {
                     if year % 400 != 0 {

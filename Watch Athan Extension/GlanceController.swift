@@ -23,17 +23,17 @@ class GlanceController: WKInterfaceController, WatchDataDelegate {
     
     var interfaceLoaded = false
     var updatePending = false
-    var lastUpdate: NSDate!
+    var lastUpdate: Date!
     var updateTask: (() -> ())!
     
-    var dateFormatter = NSDateFormatter()
+    var dateFormatter = DateFormatter()
     
     override init() {
         super.init()
         manager = WatchDataManager(delegate: self)
     }
     
-    func dataReady(manager manager: WatchDataManager) {
+    func dataReady(manager: WatchDataManager) {
         print("data here!")
         
         updateTask = {
@@ -45,7 +45,7 @@ class GlanceController: WKInterfaceController, WatchDataDelegate {
             self.currentPrayerLabel.setText(currentP.stringValue())
             
             self.dateFormatter.dateFormat = "h:mm a"
-            self.nextPrayerLabel.setText("\(currentP.next().stringValue()) at \(self.dateFormatter.stringFromDate(manager.nextPrayerTime()))")
+            self.nextPrayerLabel.setText("\(currentP.next().stringValue()) at \(self.dateFormatter.string(from: manager.nextPrayerTime()))")
             
             ///start timer
             self.prayerTimer.setDate(manager.nextPrayerTime())
@@ -55,14 +55,14 @@ class GlanceController: WKInterfaceController, WatchDataDelegate {
             let length = Int(100 * manager.timeElapsed / manager.interval)
             print("progress out of 100: \(length)")
             self.progressImage.setImageNamed("badge-")
-            let duration = (NSTimeInterval(length) / 100.0 * 1.5)
-            self.progressImage.startAnimatingWithImagesInRange(NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
+            let duration = (TimeInterval(length) / 100.0 * 1.5)
+            self.progressImage.startAnimatingWithImages(in: NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
             self.lastLocation = length
             
             //prayer image
             self.prayerImage.setImage(self.imageForPrayer(currentP))
             
-            self.lastUpdate = NSDate()
+            self.lastUpdate = Date()
         }
         
         if !interfaceLoaded {
@@ -72,8 +72,8 @@ class GlanceController: WKInterfaceController, WatchDataDelegate {
         }
     }
 
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         // Configure interface objects here.
         interfaceLoaded = true
         
@@ -89,33 +89,33 @@ class GlanceController: WKInterfaceController, WatchDataDelegate {
         super.willActivate()
         
         //update if a new prayer time passed...
-        if NSDate().timeIntervalSinceDate(manager.nextPrayerTime()) > 0.0 {
+        if Date().timeIntervalSince(manager.nextPrayerTime()) > 0.0 {
             updateTask()
         } else if interfaceLoaded {
             let length = Int(100 * manager.timeElapsed / manager.interval) - lastLocation
             if length > 0 {
                 print("progress out of 100: \(length)")
-                let duration = (NSTimeInterval(length) / 100.0 * 1.5)
-                progressImage.startAnimatingWithImagesInRange(NSRange(location: lastLocation, length: length), duration: duration, repeatCount: 1)
+                let duration = (TimeInterval(length) / 100.0 * 1.5)
+                progressImage.startAnimatingWithImages(in: NSRange(location: lastLocation, length: length), duration: duration, repeatCount: 1)
                 lastLocation += length
             }
         }
     }
 
-    func imageForPrayer(p: PrayerType) -> UIImage {
+    func imageForPrayer(_ p: PrayerType) -> UIImage {
         var imageName = ""
         switch p {
-        case .Fajr:
+        case .fajr:
             imageName = "sunhorizon"
-        case .Shurooq:
+        case .shurooq:
             imageName = "sunhorizon"
-        case .Thuhr:
+        case .thuhr:
             imageName = "sun"
-        case .Asr:
+        case .asr:
             imageName = "sunfilled"
-        case .Maghrib:
+        case .maghrib:
             imageName = "sunhorizon"
-        case .Isha:
+        case .isha:
             imageName = "moon"
         }
         

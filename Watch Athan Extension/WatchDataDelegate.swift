@@ -11,7 +11,7 @@ import WatchKit
 
 @objc protocol WatchDataDelegate {
     var manager: WatchDataManager! {get set}
-    func dataReady(manager manager: WatchDataManager)
-    optional func updateProgress()
-    optional func updatePrayer()
+    func dataReady(manager: WatchDataManager)
+    @objc optional func updateProgress()
+    @objc optional func updatePrayer()
 }

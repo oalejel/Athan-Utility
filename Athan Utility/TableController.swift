@@ -55,7 +55,23 @@ class TableController: UITableViewController {
             
             let date = times[p]
             df.dateFormat = "hh:mm a"
+            
+            /////
+            
+            
+            
+//            if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
+//                //if this is true, the country observes daylgiht savings!!!
+//                print("country observes daylight savings")
+//                if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
+//                    print("this date requires a DST offset fix for website \(String(describing: date))")
+//                    dateStringg += "-1"
+//                }
+//            }
+            
             c.timeLabel.text = df.string(from: date!)
+            
+            ////
             
             if highlightIndex == indexPath.row {
                 c.titleLabel.textColor = highlightColor

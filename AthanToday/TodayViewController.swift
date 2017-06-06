@@ -327,7 +327,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func prayersArchivePath() -> URL {
         let fm = FileManager.default
-        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athan")
+        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
         containerURL = containerURL?.appendingPathComponent("prayers.plist")
         return containerURL!
     }

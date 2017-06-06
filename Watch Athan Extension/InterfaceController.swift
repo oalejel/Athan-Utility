@@ -19,7 +19,7 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
     @IBOutlet var progressImage: WKInterfaceImage!
     @IBOutlet var prayerTable: WKInterfaceTable!
     
-    var dateFormatter = NSDateFormatter()
+    var dateFormatter = DateFormatter()
     
     var interfaceLoaded = false
     var tasks: [() -> ()] = []
@@ -33,7 +33,7 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
         manager = WatchDataManager(delegate: self)
     }
     
-    func dataReady(manager manager: WatchDataManager) {
+    func dataReady(manager: WatchDataManager) {
         print("data here!")
         
         let task = {
@@ -42,17 +42,17 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
             ///set rows
             self.prayerTable.setNumberOfRows(6, withRowType: "prayerRow")
             for i in 0...5 {
-                let row = self.prayerTable.rowControllerAtIndex(i) as! PrayerRow
+                let row = self.prayerTable.rowController(at: i) as! PrayerRow
                 row.nameLabel.setText(PrayerType(rawValue: i)!.stringValue())
                 let p = PrayerType(rawValue: i)!
                 self.dateFormatter.dateFormat = "h:mm a"
-                row.timeLabel.setText(self.dateFormatter.stringFromDate(manager.todayPrayerTimes[p]!))
+                row.timeLabel.setText(self.dateFormatter.string(from: manager.todayPrayerTimes[p]!))
                 if p == manager.currentPrayer {
-                    row.timeLabel.setTextColor(UIColor.greenColor())
-                    row.nameLabel.setTextColor(UIColor.greenColor())
+                    row.timeLabel.setTextColor(UIColor.green)
+                    row.nameLabel.setTextColor(UIColor.green)
                 } else {
-                    row.timeLabel.setTextColor(UIColor.whiteColor())
-                    row.nameLabel.setTextColor(UIColor.whiteColor())
+                    row.timeLabel.setTextColor(UIColor.white)
+                    row.nameLabel.setTextColor(UIColor.white)
                 }
             }
         }
@@ -68,13 +68,13 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
         if manager.dataReady {
             for i in 0...5 {
                 let p = PrayerType(rawValue: i)!
-                let row = self.prayerTable.rowControllerAtIndex(i) as! PrayerRow
+                let row = self.prayerTable.rowController(at: i) as! PrayerRow
                 if p == manager.currentPrayer {
-                    row.timeLabel.setTextColor(UIColor.greenColor())
-                    row.nameLabel.setTextColor(UIColor.greenColor())
+                    row.timeLabel.setTextColor(UIColor.green)
+                    row.nameLabel.setTextColor(UIColor.green)
                 } else {
-                    row.timeLabel.setTextColor(UIColor.whiteColor())
-                    row.nameLabel.setTextColor(UIColor.whiteColor())
+                    row.timeLabel.setTextColor(UIColor.white)
+                    row.nameLabel.setTextColor(UIColor.white)
                 }
             }
         }
@@ -88,7 +88,7 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
             
             ///set current prayer label
             self.dateFormatter.dateFormat = "h:mm a"
-            self.nextTimeLabel.setText(self.dateFormatter.stringFromDate(manager.nextPrayerTime()))
+            self.nextTimeLabel.setText(self.dateFormatter.string(from: manager.nextPrayerTime()))
             
             manager.calculateProgress()
             
@@ -96,8 +96,8 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
             let length = Int(100 * manager.timeElapsed / manager.interval)
             print("progress out of 100: \(length)")
             self.progressImage.setImageNamed("badge-")
-            let duration = (NSTimeInterval(length) / 100.0 * 1.5)
-            self.progressImage.startAnimatingWithImagesInRange(NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
+            let duration = (TimeInterval(length) / 100.0 * 1.5)
+            self.progressImage.startAnimatingWithImages(in: NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
             self.lastImageIndex = length
             
             ///start timer
@@ -108,8 +108,8 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
     }
     
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         // Configure interface objects here.
         interfaceLoaded = true
         
@@ -125,18 +125,37 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
+        self.prayerTable.setNumberOfRows(6, withRowType: "prayerRow")
+        for i in 0...5 {
+            let row = self.prayerTable.rowController(at: i) as! PrayerRow
+            row.nameLabel.setText(PrayerType(rawValue: i)!.stringValue())
+//            let p = PrayerType(rawValue: i)!
+//            self.dateFormatter.dateFormat = "h:mm a"
+//            row.timeLabel.setText(self.dateFormatter.string(from: manager.todayPrayerTimes[p]!))
+//            if p == manager.currentPrayer {
+            if i == 2 {
+                row.timeLabel.setTextColor(UIColor.green)
+                row.nameLabel.setTextColor(UIColor.green)
+            }
+//            } else {
+//                row.timeLabel.setTextColor(UIColor.white)
+//                row.nameLabel.setTextColor(UIColor.white)
+//            }
+        }
+
+        
         if manager.dataReady {
             //!!!! might need to reset timer!!!!
             
             let oldP = manager.currentPrayer
             manager.calculateCurrentPrayer()
             
-            if NSDate().timeIntervalSinceDate(manager.tomorrowPrayerTimes[.Fajr]!) > 0 {
+            if Date().timeIntervalSince(manager.tomorrowPrayerTimes[.fajr]!) > 0 {
                 manager.alignPrayerTimes()
                 manager.calculateProgress()
                 dataReady(manager: manager)
             } else if manager.currentPrayer != oldP {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     self.refreshCurrentInfo()
                     self.updateProgress()
                     self.highlightCurrentPrayer()
@@ -148,12 +167,12 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
             if length == 0 {length = 1}
             print("progress out of 100: \(length)")
             progressImage.setImageNamed("badge-")
-            let duration = (NSTimeInterval(length) / 100.0 * 1.5)
-            progressImage.startAnimatingWithImagesInRange(NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
+            let duration = (TimeInterval(length) / 100.0 * 1.5)
+            progressImage.startAnimatingWithImages(in: NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
             lastImageIndex = length
             
             if manager.elapsedTimer == nil {
-                manager.elapsedTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: manager, selector: #selector(manager.updateElapsed), userInfo: nil, repeats: true)
+                manager.elapsedTimer = Timer.scheduledTimer(timeInterval: 1, target: manager, selector: #selector(manager.updateElapsed), userInfo: nil, repeats: true)
             }
         }
     }
@@ -164,8 +183,8 @@ class InterfaceController: WKInterfaceController, WatchDataDelegate {
             if length == 0 {length = 1}
             if length != lastImageIndex {
                 progressImage.setImageNamed("badge-")
-                let duration = (NSTimeInterval(length) / 100.0 * 1.5)
-                progressImage.startAnimatingWithImagesInRange(NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
+                let duration = (TimeInterval(length) / 100.0 * 1.5)
+                progressImage.startAnimatingWithImages(in: NSRange(location: 0, length: length), duration: duration, repeatCount: 1)
                 lastImageIndex = length
             }
         }

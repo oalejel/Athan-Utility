@@ -114,7 +114,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //    }
     
     func URLString(_ arg1: String?, arg2: String?, arg3: String?, arg4: String?) -> URL? {
-        let urlStr = "https://muslimsalat.com/\(arg1  ?? "")+\(arg2 ?? "")+\(arg3 ?? "")+\(arg4 ?? "")/yearly/true.json"
+        let urlStr = "https://muslimsalat.com/\(arg1  ?? "")+\(arg2 ?? "")+\(arg3 ?? "")+\(arg4 ?? "")/yearly.json"
         print(urlStr)
         return URL(string: urlStr)
     }
@@ -193,9 +193,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //simulator must do this since it has no location services
         #if (arch(i386) || arch(x86_64)) && os(iOS)
             print("Building for ios simulator")
-            self.currentCityString = "Everett"
+            self.currentCityString = "Detroit"
             self.currentCountryString = "US"
-            self.currentStateString = "WA"
+            self.currentStateString = "MI"
             self.fetchJSONData(nil)
         #endif
         //}
@@ -451,7 +451,45 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         var timeString = dayDict[customNames[p.rawValue]]! as String
                         df.dateFormat = "h:m a d:M:y"
                         timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
-                        let theDate = df.date(from: timeString)
+                        var theDate = df.date(from: timeString)
+                        
+                        //////
+                        //ADDING DST FIX
+                        /*
+                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
+                            //if this is true, the country observes daylgiht savings!!!
+                            print("country observes daylight savings")
+                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
+                                print("this date requires a DST offset fix for website \(date)")
+                                dateStringg += "-1"
+                            }
+                        }
+                    
+                        */
+                        
+                        
+                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
+                            //if this is true, the country observes daylgiht savings!!!
+                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: theDate!) {
+                                print("this date requires a DST offset fix for website \(String(describing: theDate))")
+                                //subtract one hour (take into account subtracting from an hour of 1)
+                                df.dateFormat = "h"
+                                let hourString = df.string(from: theDate!)
+                                ///check for crashes after this line. careful
+                                var hourInt = Int(hourString)!
+                                hourInt -= 1
+                                if hourInt == 0 {hourInt = 12}
+                                df.dateFormat = ":m a d:M:y"
+                                let noHourDateString = df.string(from: theDate!)
+                                let fixedDateString = "\(hourInt)" + noHourDateString
+                                theDate = df.date(from: fixedDateString)
+                                
+                                print("from this: \(timeString) to this: \(fixedDateString)")
+                            }
+                        }
+                        
+                        
+                        //////
                         
                         if yearTimes[yearIncrementor] == nil {
                             yearTimes[yearIncrementor] = [:]
@@ -518,7 +556,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     sureDict["year_recieved"] = currentYear as AnyObject?
                     let objc = sureDict as NSDictionary
                     NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
-                    
                 }
             } else {return}
         }
@@ -603,7 +640,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     
                     //limit to 60 notifications (12 per day)
                     scheduled += 12
-                    print("scdeduled: \(scheduled)")
+                    print("scheduled: \(scheduled)")
                     if scheduled >= 60 {
                         break outerLoop
                     }
@@ -890,7 +927,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //        let x = documentDirectory!.stringByAppendingString("/prayers.plist")
         
         let fm = FileManager.default
-        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athan")
+        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
         containerURL = containerURL?.appendingPathComponent("prayers.plist")
         return containerURL!
     }
@@ -903,7 +940,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //        return NSURL(string: x)!
         
         let fm = FileManager.default
-        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athan")
+        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
         containerURL = containerURL?.appendingPathComponent("customsettings.plist")
         return containerURL!
     }

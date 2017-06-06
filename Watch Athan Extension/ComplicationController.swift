@@ -19,7 +19,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WatchDataDele
     
     var dataReady = false
     
-    var dateFormatter = NSDateFormatter()
+    var dateFormatter = DateFormatter()
     
     //MARK: Init
     override init() {
@@ -29,45 +29,45 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WatchDataDele
     }
     
     //MARK: Data Manager Delegate
-    func dataReady(manager manager: WatchDataManager) {
+    func dataReady(manager: WatchDataManager) {
         dataReady = true
     }
     
     // MARK: - Timeline Configuration
     
-    func getSupportedTimeTravelDirectionsForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTimeTravelDirections) -> Void) {
-        handler([.None])
+    func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
+        handler(CLKComplicationTimeTravelDirections())
     }
     
-    func getTimelineStartDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
+    func getTimelineStartDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         handler(nil)
     }
     
-    func getTimelineEndDateForComplication(complication: CLKComplication, withHandler handler: (NSDate?) -> Void) {
+    func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         handler(nil)
     }
     
-    func getPrivacyBehaviorForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationPrivacyBehavior) -> Void) {
-        handler(.ShowOnLockScreen)
+    func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
+        handler(.showOnLockScreen)
     }
     
     // MARK: - Timeline Population
     
-    func getCurrentTimelineEntryForComplication(complication: CLKComplication, withHandler handler: ((CLKComplicationTimelineEntry?) -> Void)) {
+    func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: (@escaping (CLKComplicationTimelineEntry?) -> Void)) {
         // Call the handler with the current timeline entry
         
         if dataReady {
             var entry: CLKComplicationTimelineEntry?
-            let now = NSDate()
+            let now = Date()
             
             print(complication.family)
             
             switch complication.family {
-            case .ModularSmall:
+            case .modularSmall:
                 //shows next prayer name and time
                 let line1Text = manager.currentPrayer.next().stringValue()
                 dateFormatter.dateFormat = "h:m"
-                let line2Text = dateFormatter.stringFromDate(manager.nextPrayerTime())
+                let line2Text = dateFormatter.string(from: manager.nextPrayerTime())
                 
                 let textTemplate = CLKComplicationTemplateModularSmallStackText()
                 textTemplate.line1TextProvider = CLKSimpleTextProvider(text: line1Text)
@@ -75,39 +75,39 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WatchDataDele
                 
                 entry = CLKComplicationTimelineEntry(date: now, complicationTemplate: textTemplate)
                 break
-            case .ModularLarge:
+            case .modularLarge:
                 //shows name and time for next prayer in row 1, time left in row 2
                 dateFormatter.dateFormat = "h:m a"
-                let nextTimeString = dateFormatter.stringFromDate(manager.nextPrayerTime())
+                let nextTimeString = dateFormatter.string(from: manager.nextPrayerTime())
                 let line1Text = "\(manager.currentPrayer.next().stringValue()) \(nextTimeString)"
                 
                 let textTemplate = CLKComplicationTemplateModularLargeStandardBody()
                 textTemplate.body1TextProvider = CLKSimpleTextProvider(text: line1Text)
                 
-                let dp = CLKRelativeDateTextProvider(date: manager.nextPrayerTime(), style: CLKRelativeDateStyle.Natural, units: [.Hour, .Minute])
+                let dp = CLKRelativeDateTextProvider(date: manager.nextPrayerTime(), style: CLKRelativeDateStyle.natural, units: [.hour, .minute])
                 textTemplate.body2TextProvider = dp
                 
                 textTemplate.headerTextProvider = CLKSimpleTextProvider(text: "Athan")
                 
                 entry = CLKComplicationTimelineEntry(date: now, complicationTemplate: textTemplate)
                 break
-            case .UtilitarianSmall:
+            case .utilitarianSmall:
                 //shows next prayer and time
                 dateFormatter.dateFormat = "h:m"
-                let nextTimeString = dateFormatter.stringFromDate(manager.nextPrayerTime())
+                let nextTimeString = dateFormatter.string(from: manager.nextPrayerTime())
                 let string = manager.currentPrayer.next().stringValue()
-                let range = string.startIndex..<string.startIndex.advancedBy(1)
-                let text = "\(string.substringWithRange(range)): \(nextTimeString)"
+                let range = string.startIndex..<string.characters.index(string.startIndex, offsetBy: 1)
+                let text = "\(string.substring(with: range)): \(nextTimeString)"
 
                 let textTemplate = CLKComplicationTemplateUtilitarianSmallFlat()
                 textTemplate.textProvider = CLKSimpleTextProvider(text: text)
                 
                 entry = CLKComplicationTimelineEntry(date: now, complicationTemplate: textTemplate)
                 break
-            case .UtilitarianLarge:
+            case .utilitarianLarge:
                 //shows next prayer, time, and image
                 dateFormatter.dateFormat = "h:m a"
-                let nextTimeString = dateFormatter.stringFromDate(manager.nextPrayerTime())
+                let nextTimeString = dateFormatter.string(from: manager.nextPrayerTime())
                 let text = "\(manager.currentPrayer.next().stringValue()) at \(nextTimeString)"
                 
                 let textTemplate = CLKComplicationTemplateUtilitarianLargeFlat()
@@ -116,8 +116,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WatchDataDele
                 
                 entry = CLKComplicationTimelineEntry(date: now, complicationTemplate: textTemplate)
                 break
-            case .CircularSmall:
+            case .circularSmall:
                 
+                break
+            default:
+                ///there are now more options. add these so that you dont  need this default statement
                 break
             }
             
@@ -127,44 +130,44 @@ class ComplicationController: NSObject, CLKComplicationDataSource, WatchDataDele
         handler(nil)
     }
     
-    func getTimelineEntriesForComplication(complication: CLKComplication, beforeDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
+    func getTimelineEntries(for complication: CLKComplication, before date: Date, limit: Int, withHandler handler: (@escaping ([CLKComplicationTimelineEntry]?) -> Void)) {
         // Call the handler with the timeline entries prior to the given date
         handler(nil)
     }
     
-    func getTimelineEntriesForComplication(complication: CLKComplication, afterDate date: NSDate, limit: Int, withHandler handler: (([CLKComplicationTimelineEntry]?) -> Void)) {
+    func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: (@escaping ([CLKComplicationTimelineEntry]?) -> Void)) {
         // Call the handler with the timeline entries after to the given date
         handler(nil)
     }
     
     // MARK: - Update Scheduling
     
-    func getNextRequestedUpdateDateWithHandler(handler: (NSDate?) -> Void) {
+    func getNextRequestedUpdateDate(handler: @escaping (Date?) -> Void) {
         // Call the handler with the date when you would next like to be given the opportunity to update your complication content
         handler(nil);
     }
     
     // MARK: - Placeholder Templates
     
-    func getPlaceholderTemplateForComplication(complication: CLKComplication, withHandler handler: (CLKComplicationTemplate?) -> Void) {
+    func getPlaceholderTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
         // This method will be called once per supported complication, and the results will be cached
         handler(nil)
     }
     
-    func imageForPrayer(p: PrayerType) -> UIImage {
+    func imageForPrayer(_ p: PrayerType) -> UIImage {
         var imageName = ""
         switch p {
-        case .Fajr:
+        case .fajr:
             imageName = "sunhorizon"
-        case .Shurooq:
+        case .shurooq:
             imageName = "sunhorizon"
-        case .Thuhr:
+        case .thuhr:
             imageName = "sun"
-        case .Asr:
+        case .asr:
             imageName = "sunfilled"
-        case .Maghrib:
+        case .maghrib:
             imageName = "sunhorizon"
-        case .Isha:
+        case .isha:
             imageName = "moon"
         }
         

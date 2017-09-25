@@ -99,6 +99,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var currentCountryString: String?
     var currentDistrictString: String?
     var locationString: String?
+    var coordinate: CLLocationCoordinate2D?
     
     var currentDay: Int!
     var currentMonth: Int!
@@ -113,17 +114,31 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //        }
     //    }
     
-    func URLString(_ arg1: String?, arg2: String?, arg3: String?, arg4: String?) -> URL? {
-        let urlStr = "https://muslimsalat.com/\(arg1  ?? "")+\(arg2 ?? "")+\(arg3 ?? "")+\(arg4 ?? "")/yearly.json"
+    func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
+        let escapedAddress = address.replacingOccurrences(of: " ", with: "+")
+        //http://api.aladhan.com/calendarByCity?city=bloomfield+hills&country=US&month=10&year=2017mode=yearly&method=2
+        //http://api.aladhan.com/calendar?latitude=51.508515&longitude=-0.1254872&month=\(currentMongth)&year=\(currentYear)mode=yearly&method=2
+        let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=9&year=2017mode=yearly&method=2"
+            //"https://muslimsalat.com/\(arg1  ?? "")+\(arg2 ?? "")+\(arg3 ?? "")+\(arg4 ?? "")/yearly.json"
         print(urlStr)
         return URL(string: urlStr)
     }
-    
-    func standardURL() -> URL? {
-        return URLString(currentCityString, arg2: currentDistrictString, arg3: currentStateString, arg4: currentCountryString)
-    }
-    
-    
+
+//    func standardURL() -> URL? {
+//        return URLString(currentCityString, arg2: currentDistrictString, arg3: currentStateString, arg4: currentCountryString)
+//    }
+//    func prayerAPIURL(withAddress: String) -> URL? {
+//        //http://api.aladhan.com/calendarByCity?city=Dubai&state=&country=UAE&month=10&year=2017mode=yearly&method=2
+//        let urlStr = "http://api.aladhan.com/calendarByCity?city=\(currentCityString)&state=\(currentStateString)&country=\(currentCountr)&month=10&year=2017mode=yearly&method=2"
+//        print(urlStr)
+//        return URL(string: urlStr)
+//    }
+//
+//    func prayerAPIURL(withCoordinate: CLLocationCoordinate2D, month: Int, year: Int) -> URL? {
+//        let urlStr = "http://api.aladhan.com/calendar?latitude=\(withCoordinate.latitude)&longitude=\(withCoordinate.longitude)&month=\(month)&year=\(year)mode=yearly&method=2"
+//        print(urlStr)
+//        return URL(string: urlStr)
+//    }
     
     var qibla: Double! = 0
     
@@ -177,6 +192,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         //first, check the file, if there is useful data, use it, then get data from online without slowing things down
         if let dict = dictionaryFromFile() {
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++should parse dict from file now!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             parseDictionary(dict, fromFile: true)
         } else {
             delegate.showLoader()
@@ -218,8 +234,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         coreManager.stopUpdatingLocation()//change if stopping without getting reliable info
         
-        
-        
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
             if let x = error {
                 print(x)
@@ -232,6 +246,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.currentDistrictString = placemark.subAdministrativeArea
                     self.currentStateString = placemark.administrativeArea
                     self.currentCountryString = placemark.isoCountryCode
+                    self.coordinate = placemark.location?.coordinate
                     self.fetchJSONData(nil)
                 }
             }
@@ -285,12 +300,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     //gets data from website then calls the parseJSONData function
     func fetchJSONData(_ searchString: String?) {
+        setCurrentDates()
         self.lastFetchSuccessful = false
-        var URL: Foundation.URL?
+        var URL: URL?
         if let s = searchString {
-            URL = URLString(s, arg2: "", arg3: "", arg4: "")
+            URL = prayerAPIURL(address: s, month: currentMonth, year: currentYear)
         } else {
-            URL = standardURL()
+            var address = "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
+            address = address.replacingOccurrences(of: " ", with: "+")
+                URL = prayerAPIURL(address: address, month: currentMonth, year: currentYear)
         }
         //! dont forget to set this back to true if the app is on for a long time!!!
         if getData {
@@ -311,8 +329,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         //this also stores to a file
                         let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
                         if let sureJSON = JSON {
-                            self.parseDictionary(sureJSON, fromFile: false)
                             print("got data from online!")
+                            self.parseDictionary(sureJSON, fromFile: false)
+                            
                         }
                     }
                     if let closure = self.fetchCompletionClosure {
@@ -352,42 +371,37 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     //this organizes the data and notifies the delegate
-    func parseDictionary(_ dict: NSDictionary, fromFile: Bool) {
+    func parseDictionary(_ dict: NSDictionary?, fromFile: Bool) {
+        setCurrentDates()
         if var sureDict = dict as? Dictionary<String, AnyObject> {
             //for some reason printing this will cause a different part ot crash?
             print("JSON: \(sureDict)")
             
-            if let x = sureDict["address"] as? String {
-                if x != "" {
+            if sureDict["data"] != nil {
                     lastFetchSuccessful = true
-                    locationString = x
-                } else {
-                    return
-                }
+                    locationString = "\(currentCityString ?? "")"
             } else {
                 return
             }
             print("location: \(String(describing: locationString))")
             
-            print(sureDict["qibla_direction"]!)
-            if let a = sureDict["qibla_direction"] as? Double {
-                //if let q = qString.doubleValue as? Double {
-                qibla = a
-                //}
-            }
+//            print(sureArray["qibla_direction"]!)
+//            if let a = sureArray["qibla_direction"] as? Double {
+//                //if let q = qString.doubleValue as? Double {
+//                qibla = a
+//                //}
+//            }
             
-            if let qString = sureDict["qibla_direction"] as? NSString {
-                qibla = qString.doubleValue
-            }
+//            if let qString = sureArray["qibla_direction"] as? NSString {
+//                qibla = qString.doubleValue
+//            }
             
             
             //get prayer times in text and parse into dates
-            if let daysArray = sureDict["items"] as? NSArray {
+            if let daysArray = sureDict["data"] as? NSArray {
                 //add days in months
                 var dayOffset = 0
                 let df = Global.dateFormatter
-                
-                setCurrentDates()
                 
                 //below will be different if from a file in the past
                 var startMonth = currentMonth
@@ -467,7 +481,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     
                         */
                         
-                        
                         if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
                             //if this is true, the country observes daylgiht savings!!!
                             if !NSCalendar.current.timeZone.isDaylightSavingTime(for: theDate!) {
@@ -487,7 +500,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 print("from this: \(timeString) to this: \(fixedDateString)")
                             }
                         }
-                        
                         
                         //////
                         

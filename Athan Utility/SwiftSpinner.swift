@@ -58,11 +58,11 @@ open class SwiftSpinner: UIView {
         cancelButton = SqueezeButton(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
         cancelButton.layer.cornerRadius = 10
         cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
-        cancelButton.setTitle("Cancel", for: UIControlState())
+        cancelButton.setTitle("Cancel", for: UIControlState.normal)
         cancelButton.addTarget(Global.manager, action: #selector(Global.manager.cancelRequest), for: .touchUpInside)
         cancelButton.setTitleColor(UIColor.black, for: UIControlState())
         cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
-        vibrancyView.addSubview(cancelButton)
+        vibrancyView.contentView.addSubview(cancelButton)
         
         //
         

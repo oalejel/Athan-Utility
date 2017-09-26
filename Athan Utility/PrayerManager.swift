@@ -108,37 +108,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //website JSON data request session
     fileprivate var session: URLSession!
     
-    //    var URLString: String {
-    //        get {
-    //            return "https://muslimsalat.com/\(currentCityString!)\(currentStateString!)\(currentCountryString!)/yearly.json?key=7a28c064c1ea9d2779baf747f45b2f85"
-    //        }
-    //    }
-    
     func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
         let escapedAddress = address.replacingOccurrences(of: " ", with: "+")
-        //http://api.aladhan.com/calendarByCity?city=bloomfield+hills&country=US&month=10&year=2017mode=yearly&method=2
-        //http://api.aladhan.com/calendar?latitude=51.508515&longitude=-0.1254872&month=\(currentMongth)&year=\(currentYear)mode=yearly&method=2
         let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=9&year=2017mode=yearly&method=2"
-            //"https://muslimsalat.com/\(arg1  ?? "")+\(arg2 ?? "")+\(arg3 ?? "")+\(arg4 ?? "")/yearly.json"
         print(urlStr)
         return URL(string: urlStr)
     }
-
-//    func standardURL() -> URL? {
-//        return URLString(currentCityString, arg2: currentDistrictString, arg3: currentStateString, arg4: currentCountryString)
-//    }
-//    func prayerAPIURL(withAddress: String) -> URL? {
-//        //http://api.aladhan.com/calendarByCity?city=Dubai&state=&country=UAE&month=10&year=2017mode=yearly&method=2
-//        let urlStr = "http://api.aladhan.com/calendarByCity?city=\(currentCityString)&state=\(currentStateString)&country=\(currentCountr)&month=10&year=2017mode=yearly&method=2"
-//        print(urlStr)
-//        return URL(string: urlStr)
-//    }
-//
-//    func prayerAPIURL(withCoordinate: CLLocationCoordinate2D, month: Int, year: Int) -> URL? {
-//        let urlStr = "http://api.aladhan.com/calendar?latitude=\(withCoordinate.latitude)&longitude=\(withCoordinate.longitude)&month=\(month)&year=\(year)mode=yearly&method=2"
-//        print(urlStr)
-//        return URL(string: urlStr)
-//    }
     
     var qibla: Double! = 0
     
@@ -240,9 +215,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {
                 if placemarks?.count > 0 {
                     let placemark = placemarks![0]
-                    let cityWithSpaces = placemark.locality
-                    let cityNoSpaces = cityWithSpaces?.replacingOccurrences(of: " ", with: "+")
-                    self.currentCityString = cityNoSpaces
+//                    let cityWithSpaces = placemark.locality
+//                    let cityNoSpaces = cityWithSpaces?.replacingOccurrences(of: " ", with: "+")
+                    self.currentCityString = placemark.locality//cityNoSpaces
                     self.currentDistrictString = placemark.subAdministrativeArea
                     self.currentStateString = placemark.administrativeArea
                     self.currentCountryString = placemark.isoCountryCode
@@ -301,6 +276,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //gets data from website then calls the parseJSONData function
     func fetchJSONData(_ searchString: String?) {
         setCurrentDates()
+        calculateAngle(coord: self.coordinate)
         self.lastFetchSuccessful = false
         var URL: URL?
         if let s = searchString {
@@ -347,9 +323,23 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
+ 
+     func calculateAngle(coord: CLLocationCoordinate2D?) {
+        if let coordinate = coord {
+            let lat = coordinate.latitude
+            let lon = coordinate.longitude
+            
+            let phiK = 21.4 * Double.pi / 180.0;
+            let lambdaK = 39.8 * Double.pi / 180.0;
+            let phi = lat * Double.pi / 180.0;
+            let lambda = lon * Double.pi / 180.0;
+            let psi = 180.0 / Double.pi * atan2(sin(lambdaK - lambda), cos(phi) * tan(phiK) - sin(phi) * cos(lambdaK - lambda));
+            qibla = floor(100 * psi) / 100
+        }
+     }
+
+
     func tryRequestWithSearch(_ search: String) -> Bool {
-        
         return false
     }
     
@@ -404,16 +394,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 let df = Global.dateFormatter
                 
                 //below will be different if from a file in the past
-                var startMonth = currentMonth
-                var startYear = currentYear
-                var startDay = currentDay
+//                var startMonth = currentMonth
+//                var startYear = currentYear
+//                var startDay = currentDay
                 
                 //check to see if data is still up to date
                 if fromFile {
+                    if let cityRecievedString = sureDict["location_recieved"] as? String {
+                        locationString = cityRecievedString
+                    }
                     
                     //if same year, continue
                     if let yearReceievedString = sureDict["year_recieved"] as? String {
-                        let yearReceieved = Int(yearReceievedString)
+//                        let yearReceieved = Int(yearReceievedString)
                         
                         //find the index we want to start reading from
                         if let monthRecievedString = sureDict["month_recieved"] as? String {
@@ -423,9 +416,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             if let dayRecievedString = sureDict["day_recieved"] as? String {
                                 let dayRecieved = Int(dayRecievedString)!
                                 
-                                startYear = yearReceieved
-                                startMonth = monthRecieved
-                                startDay = dayRecieved
+//                                startYear = yearReceieved
+//                                startMonth = monthRecieved
+//                                startDay = dayRecieved
+                                
                                 
                                 if currentMonth == monthRecieved {
                                     dayOffset = currentDay - dayRecieved
@@ -443,12 +437,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         }
                     }
                 } else {
+                    //if not from file...
+                    
                     
                 }
                 
                 let swiftDaysArray = daysArray as! [NSDictionary]
-                
-                var specialDict: [String:[String:String]] = [:]
                 
                 let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
                 let customNames = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
@@ -498,159 +492,23 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                                     if let prayerDate = df.date(from: prayerTimeString) {
                                                         yearTimes[parsedYear!]![parsedMonth!]![parsedDay!]![p] = prayerDate
                                                     }
-                                                    
                                                 }
-                                                
-                                                /*
-                                                 df.dateFormat = "h:m a d:M:y"
-                                                 timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
-                                                 var theDate = df.date(from: timeString)
-                                                 */
-                                                
-                                                
                                             }
                                         }
-                                        
-                                        
                                     }
-                                    
                                 }
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-
-                                
-                                
                             }
                         }
-                        
-                        
                     }
                 }
                 
-                
-//                let datesToPrayersDict =
-                
-                
-                
-//                let customNames = ["fajr", "shurooq", "dhuhr", "asr", "maghrib", "isha"]
-                
-                //will change throughout the days
-//                var yearIncrementor = startYear!
-//                var monthIncrementor = startMonth!
-//                var dayIncrementor = startDay!
-                //loop through all of the days and adjust the date each one is from using MATHS
-                
-                //!!! remember to look at this!!!
-//                var limiter = 40
-//                for (_, dayDict) in swiftDaysArray.enumerated() {
-//                    limiter -= 1
-//                    if limiter == 0 {break}
-//                    for p in prayers {
-//                        //get the time for the prayer on the day, and then adjust turn into NSDate
-//
-//
-//                        ///******* FIX THIS
-//
-//                        var timeString = dayDict[customNames[p.rawValue]]! as! String
-//
-//                        df.dateFormat = "h:m a d:M:y"
-//                        timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
-//                        var theDate = df.date(from: timeString)
-//
-//                        //////
-//                        //ADDING DST FIX
-//                        /*
-//                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
-//                            //if this is true, the country observes daylgiht savings!!!
-//                            print("country observes daylight savings")
-//                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
-//                                print("this date requires a DST offset fix for website \(date)")
-//                                dateStringg += "-1"
-//                            }
-//                        }
-//
-//                        */
-//
-//
-//
-//                        /*
-//                        //TODO: see if this needs to stay for
-//                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
-//                            //if this is true, the country observes daylgiht savings!!!
-//                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: theDate!) {
-//                                print("this date requires a DST offset fix for website \(String(describing: theDate))")
-//                                //subtract one hour (take into account subtracting from an hour of 1)
-//                                df.dateFormat = "h"
-//                                let hourString = df.string(from: theDate!)
-//                                ///check for crashes after this line. careful
-//                                var hourInt = Int(hourString)!
-//                                hourInt -= 1
-//                                if hourInt == 0 {hourInt = 12}
-//                                df.dateFormat = ":m a d:M:y"
-//                                let noHourDateString = df.string(from: theDate!)
-//                                let fixedDateString = "\(hourInt)" + noHourDateString
-//                                theDate = df.date(from: fixedDateString)
-//
-//                                print("from this: \(timeString) to this: \(fixedDateString)")
-//                            }
-//                        }
-// */
-//
-//                        //////
-//
-//                        if yearTimes[yearIncrementor] == nil {
-//                            yearTimes[yearIncrementor] = [:]
-//                        }
-//                        if yearTimes[yearIncrementor]![monthIncrementor] == nil {
-//                            yearTimes[yearIncrementor]![monthIncrementor] = [:]
-//                        }
-//                        if yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] == nil {
-//                            yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] = [:]
-//                        }
-//
-//                        yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor]![p] = theDate
-//                    }
-//
-//                    if daysInMonth(monthIncrementor) == dayIncrementor {
-//                        if monthIncrementor == 12 {
-//                            //new year
-//                            yearIncrementor += 1
-//                            monthIncrementor = 1
-//                            dayIncrementor = 1
-//                        } else {
-//                            //new month
-//                            monthIncrementor += 1
-//                            dayIncrementor = 1
-//                        }
-//                    } else {
-//                        //new day
-//                        dayIncrementor += 1
-//                    }
-//
-//                }
-                
                 alignPrayerTimes()
-                
                 calculateCurrentPrayer()
                 notifyDelegate()
-                
                 //must call set timers after updatecurrent prayer is called
                 setTimers()
                 
-                
-                //need to define number of alarms in a day to a different number based on whtat the user selects to get notifications for
-                //!! might want to check if notifications have been allowed...
-                // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                
-                // })
-                
                 scheduleAppropriateNotifications()
-                
                 
                 if !fromFile {
                     //                    if #available(iOS 9.0, *) {
@@ -666,6 +524,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     sureDict["day_recieved"] = currentDay as AnyObject?
                     sureDict["month_recieved"] = currentMonth as AnyObject?
                     sureDict["year_recieved"] = currentYear as AnyObject?
+                    sureDict["location_recieved"] = currentCityString as AnyObject?
                     let objc = sureDict as NSDictionary
                     NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
                 }
@@ -945,7 +804,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 
                 preNote.alertBody = alertText
                 
-                UIApplication.shared.scheduleLocalNotification(preNote)
+                DispatchQueue.main.async {
+                    UIApplication.shared.scheduleLocalNotification(preNote)
+                }
             }
         }
     }

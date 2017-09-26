@@ -49,8 +49,6 @@ class IntroViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
         view.addSubview(doneButton)
         
-        
-        
         //
         //        for x in 0...(items-1) {
         //            let img = UIImage(named:"intro\(x)")
@@ -194,7 +192,6 @@ class IntroViewController: UIViewController {
     //    }
     
     func showFeatures() {
-        
         let f = UIScreen.main.bounds
         
         let i1 = UIImage(named: "info1")
@@ -209,8 +206,6 @@ class IntroViewController: UIViewController {
         let xOffset = (iv1.frame.size.width * scale) + 10
         let combinedHeight = 3 * iv1.frame.size.height * scale
         iv1.frame = CGRect(x: -xOffset, y: (f.size.height / 2) - (0.5 * combinedHeight), width: iv1.frame.size.width * scale, height: iv1.frame.size.height * scale)
-        
-        
         
         let i2 = UIImage(named: "info2")
         let iv2 = UIImageView(image: i2)
@@ -250,7 +245,7 @@ class IntroViewController: UIViewController {
         view.addSubview(iv5)
         view.addSubview(iv6)
         
-        UIView.animateKeyframes(withDuration: 3, delay: 0.5, options: UIViewKeyframeAnimationOptions.calculationModeCubic, animations: {
+        UIView.animateKeyframes(withDuration: 3, delay: 0.5, options: UIViewKeyframeAnimationOptions.calculationModeLinear, animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.33, animations: {
                 iv1.frame = CGRect(x: finalXOffset, y: (f.size.height / 2) - (0.5 * combinedHeight), width: iv1.frame.size.width, height: iv1.frame.size.height)
                 iv4.frame = CGRect(x: f.size.width - finalXOffset - iv1.frame.size.width, y: ((f.size.height / 2) - (0.5 * combinedHeight)), width: iv4.frame.size.width, height: iv4.frame.size.height)

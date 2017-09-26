@@ -442,97 +442,197 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             }
                         }
                     }
+                } else {
+                    
+                }
+                
+                let swiftDaysArray = daysArray as! [NSDictionary]
+                
+                var specialDict: [String:[String:String]] = [:]
+                
+                let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
+                let customNames = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
+                
+                //we will go through every day of the month from the api, get the dates, and then store those data points in a dict organized by year, month, date, and --> prayer times
+                for item in swiftDaysArray {
+                    if let dictItem = item as? [String: NSDictionary] {
+                        if let itemDateCluster = dictItem["date"] {
+                            if let readableDateString = itemDateCluster["readable"] as? String {
+                                print(readableDateString)
+                                
+                                df.dateFormat = "d M y"
+                                if let parsedDate = df.date(from: readableDateString) {
+                                    df.dateFormat = "d"
+                                    let parsedDay = Int(df.string(from: parsedDate))
+                                    
+                                    df.dateFormat = "M"
+                                    let parsedMonth = Int(df.string(from: parsedDate))
+                                    
+                                    df.dateFormat = "Y"
+                                    let parsedYear = Int(df.string(from: parsedDate))
+                                    
+                                    if parsedDay != nil && parsedMonth != nil && parsedYear != nil {
+                                        if yearTimes[parsedYear!] == nil {
+                                            yearTimes[parsedYear!] = [:]
+                                        }
+                                        if yearTimes[parsedYear!]![parsedMonth!] == nil {
+                                            yearTimes[parsedYear!]![parsedMonth!] = [:]
+                                        }
+                                        if yearTimes[parsedYear!]![parsedMonth!]![parsedDay!] == nil {
+                                            yearTimes[parsedYear!]![parsedMonth!]![parsedDay!] = [:]
+                                        }
+                                        
+                                        if let dayPrayersDict = dictItem["timings"] as? [String:String] {
+                                            print(dayPrayersDict)
+                                            for p in prayers {
+                                                //access the time for this one prayer using teh custom names array and a corresponding index
+                                                if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
+                                                    //remove the pesky annoying timezone string
+                                                    let startingParensIndex = prayerTimeString.index(of: "(")
+                                                    let endingParensIndex = prayerTimeString.index(of: ")")
+                                                    prayerTimeString.removeSubrange(startingParensIndex...endingParensIndex)
+
+                                                    prayerTimeString += "\(parsedDay ?? 0) \(parsedMonth ?? 0) \(parsedYear ?? 0)"
+                                                    //teh format will now be something like "20:06 01 Sep 2017"
+                                                    df.dateFormat = "HH:mm d M y"
+                                                    if let prayerDate = df.date(from: prayerTimeString) {
+                                                        yearTimes[parsedYear!]![parsedMonth!]![parsedDay!]![p] = prayerDate
+                                                    }
+                                                    
+                                                }
+                                                
+                                                /*
+                                                 df.dateFormat = "h:m a d:M:y"
+                                                 timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
+                                                 var theDate = df.date(from: timeString)
+                                                 */
+                                                
+                                                
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                }
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+
+                                
+                                
+                            }
+                        }
+                        
+                        
+                    }
                 }
                 
                 
-                let swiftDaysArray = daysArray as! [[String : String]]
-                let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
-                let customNames = ["fajr", "shurooq", "dhuhr", "asr", "maghrib", "isha"]
+//                let datesToPrayersDict =
+                
+                
+                
+//                let customNames = ["fajr", "shurooq", "dhuhr", "asr", "maghrib", "isha"]
                 
                 //will change throughout the days
-                var yearIncrementor = startYear!
-                var monthIncrementor = startMonth!
-                var dayIncrementor = startDay!
+//                var yearIncrementor = startYear!
+//                var monthIncrementor = startMonth!
+//                var dayIncrementor = startDay!
                 //loop through all of the days and adjust the date each one is from using MATHS
                 
                 //!!! remember to look at this!!!
-                var limiter = 40
-                for (_, dayDict) in swiftDaysArray.enumerated() {
-                    limiter -= 1
-                    if limiter == 0 {break}
-                    for p in prayers {
-                        //get the time for the prayer on the day, and then adjust turn into NSDate
-                        var timeString = dayDict[customNames[p.rawValue]]! as String
-                        df.dateFormat = "h:m a d:M:y"
-                        timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
-                        var theDate = df.date(from: timeString)
-                        
-                        //////
-                        //ADDING DST FIX
-                        /*
-                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
-                            //if this is true, the country observes daylgiht savings!!!
-                            print("country observes daylight savings")
-                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
-                                print("this date requires a DST offset fix for website \(date)")
-                                dateStringg += "-1"
-                            }
-                        }
-                    
-                        */
-                        
-                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
-                            //if this is true, the country observes daylgiht savings!!!
-                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: theDate!) {
-                                print("this date requires a DST offset fix for website \(String(describing: theDate))")
-                                //subtract one hour (take into account subtracting from an hour of 1)
-                                df.dateFormat = "h"
-                                let hourString = df.string(from: theDate!)
-                                ///check for crashes after this line. careful
-                                var hourInt = Int(hourString)!
-                                hourInt -= 1
-                                if hourInt == 0 {hourInt = 12}
-                                df.dateFormat = ":m a d:M:y"
-                                let noHourDateString = df.string(from: theDate!)
-                                let fixedDateString = "\(hourInt)" + noHourDateString
-                                theDate = df.date(from: fixedDateString)
-                                
-                                print("from this: \(timeString) to this: \(fixedDateString)")
-                            }
-                        }
-                        
-                        //////
-                        
-                        if yearTimes[yearIncrementor] == nil {
-                            yearTimes[yearIncrementor] = [:]
-                        }
-                        if yearTimes[yearIncrementor]![monthIncrementor] == nil {
-                            yearTimes[yearIncrementor]![monthIncrementor] = [:]
-                        }
-                        if yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] == nil {
-                            yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] = [:]
-                        }
-                        
-                        yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor]![p] = theDate
-                    }
-                    
-                    if daysInMonth(monthIncrementor) == dayIncrementor {
-                        if monthIncrementor == 12 {
-                            //new year
-                            yearIncrementor += 1
-                            monthIncrementor = 1
-                            dayIncrementor = 1
-                        } else {
-                            //new month
-                            monthIncrementor += 1
-                            dayIncrementor = 1
-                        }
-                    } else {
-                        //new day
-                        dayIncrementor += 1
-                    }
-                    
-                }
+//                var limiter = 40
+//                for (_, dayDict) in swiftDaysArray.enumerated() {
+//                    limiter -= 1
+//                    if limiter == 0 {break}
+//                    for p in prayers {
+//                        //get the time for the prayer on the day, and then adjust turn into NSDate
+//
+//
+//                        ///******* FIX THIS
+//
+//                        var timeString = dayDict[customNames[p.rawValue]]! as! String
+//
+//                        df.dateFormat = "h:m a d:M:y"
+//                        timeString = "\(timeString) \(dayIncrementor):\(monthIncrementor):\(yearIncrementor)"
+//                        var theDate = df.date(from: timeString)
+//
+//                        //////
+//                        //ADDING DST FIX
+//                        /*
+//                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
+//                            //if this is true, the country observes daylgiht savings!!!
+//                            print("country observes daylight savings")
+//                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
+//                                print("this date requires a DST offset fix for website \(date)")
+//                                dateStringg += "-1"
+//                            }
+//                        }
+//
+//                        */
+//
+//
+//
+//                        /*
+//                        //TODO: see if this needs to stay for
+//                        if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
+//                            //if this is true, the country observes daylgiht savings!!!
+//                            if !NSCalendar.current.timeZone.isDaylightSavingTime(for: theDate!) {
+//                                print("this date requires a DST offset fix for website \(String(describing: theDate))")
+//                                //subtract one hour (take into account subtracting from an hour of 1)
+//                                df.dateFormat = "h"
+//                                let hourString = df.string(from: theDate!)
+//                                ///check for crashes after this line. careful
+//                                var hourInt = Int(hourString)!
+//                                hourInt -= 1
+//                                if hourInt == 0 {hourInt = 12}
+//                                df.dateFormat = ":m a d:M:y"
+//                                let noHourDateString = df.string(from: theDate!)
+//                                let fixedDateString = "\(hourInt)" + noHourDateString
+//                                theDate = df.date(from: fixedDateString)
+//
+//                                print("from this: \(timeString) to this: \(fixedDateString)")
+//                            }
+//                        }
+// */
+//
+//                        //////
+//
+//                        if yearTimes[yearIncrementor] == nil {
+//                            yearTimes[yearIncrementor] = [:]
+//                        }
+//                        if yearTimes[yearIncrementor]![monthIncrementor] == nil {
+//                            yearTimes[yearIncrementor]![monthIncrementor] = [:]
+//                        }
+//                        if yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] == nil {
+//                            yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor] = [:]
+//                        }
+//
+//                        yearTimes[yearIncrementor]![monthIncrementor]![dayIncrementor]![p] = theDate
+//                    }
+//
+//                    if daysInMonth(monthIncrementor) == dayIncrementor {
+//                        if monthIncrementor == 12 {
+//                            //new year
+//                            yearIncrementor += 1
+//                            monthIncrementor = 1
+//                            dayIncrementor = 1
+//                        } else {
+//                            //new month
+//                            monthIncrementor += 1
+//                            dayIncrementor = 1
+//                        }
+//                    } else {
+//                        //new day
+//                        dayIncrementor += 1
+//                    }
+//
+//                }
                 
                 alignPrayerTimes()
                 
@@ -572,11 +672,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {return}
         }
         
-        if #available(iOS 9.0, *) {
-            let icon = UIApplicationShortcutIcon(type: .location)
-            let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
-            UIApplication.shared.shortcutItems = [dynamicItem]
+        DispatchQueue.main.async {
+            if #available(iOS 9.0, *) {
+                let icon = UIApplicationShortcutIcon(type: .location)
+                let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
+                UIApplication.shared.shortcutItems = [dynamicItem]
+            }
         }
+        
     }
     
     func alignPrayerTimes() {
@@ -629,7 +732,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func scheduleAppropriateNotifications() {
         //remove this later??!
-        UIApplication.shared.cancelAllLocalNotifications()
+        DispatchQueue.main.async {
+            UIApplication.shared.cancelAllLocalNotifications()
+        }
         
         var scheduled = 0
         //create a notification for every day
@@ -806,7 +911,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 
                 note.alertBody = alertText
                 
-                UIApplication.shared.scheduleLocalNotification(note)
+                DispatchQueue.main.async {
+                    UIApplication.shared.scheduleLocalNotification(note)
+                }
             }
             
             if setting.alarmType == .all {

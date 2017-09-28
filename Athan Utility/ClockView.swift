@@ -18,7 +18,7 @@ class ClockView: UIView {
     
     let separation: CGFloat = 2
     let bubbleRoom: CGFloat = 44
-    let tickHeight: CGFloat = 16
+    let tickHeight: CGFloat = 10
     
     var secondsLayer: CAShapeLayer!
     var minutesLayer: CAShapeLayer!
@@ -126,34 +126,36 @@ class ClockView: UIView {
     }
     
     func addMinuteTicks() {
-        let lineWidth: CGFloat = 7.5
-        let center = CGPoint(x: width / 2, y: height / 2)
-        let radius = (width / 2) - (lineWidth / 2) - bubbleRoom
-        let circ: CGFloat = CGFloat(2 * Double.pi) * radius
-        let tickThickness: CGFloat = 2
-        
-        let minutePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.path = minutePath.cgPath
-        shapeLayer.lineDashPhase = 1.5
-        
-        shapeLayer.lineDashPattern = [(tickThickness as NSNumber), (circ / 60) - tickThickness as NSNumber]
-        shapeLayer.strokeColor = UIColor.white.cgColor
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = lineWidth
-        layer.addSublayer(shapeLayer)
+//        let lineWidth: CGFloat = 7.5
+//        let center = CGPoint(x: width / 2, y: height / 2)
+//        let radius = (width / 2) - (lineWidth / 2) - bubbleRoom
+//        let circ: CGFloat = CGFloat(2 * Double.pi) * radius
+//        let tickThickness: CGFloat = 0.3
+//
+//        let minutePath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
+//        let shapeLayer = CAShapeLayer()
+//        shapeLayer.path = minutePath.cgPath
+//        shapeLayer.lineDashPhase = 1.5
+//        shapeLayer.lineCap = kCALineCapRound
+//
+//        shapeLayer.lineDashPattern = [(tickThickness as NSNumber), (circ / 60) - tickThickness as NSNumber]
+//        shapeLayer.strokeColor = UIColor.white.cgColor
+//        shapeLayer.fillColor = UIColor.clear.cgColor
+//        shapeLayer.lineWidth = lineWidth
+//        layer.addSublayer(shapeLayer)
     }
     
     func addHourTicks() {
         let center = CGPoint(x: width / 2, y: height / 2)
-        let radius = (width / 2) - (tickHeight / 2) - bubbleRoom
+        let radius = (width / 2) - (tickHeight / 2) - bubbleRoom - 4
         let circ: CGFloat = CGFloat(2 * Double.pi) * radius
-        let tickThickness: CGFloat = 2
+        let tickThickness: CGFloat = 0
         
         let hourPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = hourPath.cgPath
-        shapeLayer.lineDashPhase = 1.5
+        shapeLayer.lineDashPhase = 0
+        shapeLayer.lineCap = kCALineCapRound
         
         shapeLayer.lineDashPattern = [(tickThickness as NSNumber), (circ / 12) - tickThickness as NSNumber]
         shapeLayer.strokeColor = UIColor.white.cgColor
@@ -212,7 +214,7 @@ class ClockView: UIView {
         let armWidth: CGFloat = 1
         var armHeight = (width / 2) - (tickHeight / 2) - bubbleRoom
         
-        let anchorOffset: CGFloat = 14
+        let anchorOffset: CGFloat = 0//removing this for a cleaner look different form applewatch
         armHeight += anchorOffset
         
         let armRect = CGRect(x: 0, y: 0, width: armWidth, height: armHeight)
@@ -220,7 +222,7 @@ class ClockView: UIView {
         armLayer.frame = armRect
         armLayer.backgroundColor = UIColor.red.cgColor
         
-        let nubWH: CGFloat = 4
+        let nubWH: CGFloat = 9
         let nubLayer = CAShapeLayer()
         let nubRect = CGRect(x: (armWidth / 2) - (nubWH / 2), y: armHeight - anchorOffset - (nubWH / 2), width: nubWH, height: nubWH)
         nubLayer.frame = nubRect
@@ -279,7 +281,8 @@ class ClockView: UIView {
         let shortRect = CGRect(x: (longWidth - shortWidth) / 2, y: shortLongOffset, width: shortWidth, height: shortHeight)
         let shortLayer = CAShapeLayer()
         shortLayer.frame = shortRect
-        shortLayer.backgroundColor = UIColor.white.cgColor
+//        shortLayer.backgroundColor = UIColor.white.cgColor
+        shortLayer.backgroundColor = UIColor.clear.cgColor
         shortLayer.cornerRadius = shortWidth / 2
         
         let fittingRect = shortRect.union(longRect)
@@ -338,7 +341,7 @@ class ClockView: UIView {
     
     func addMovingHourHand() {
         let longWidth: CGFloat = 8
-        let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 30
+        let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 45
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
         let shortLongOffset: CGFloat = 14
@@ -352,7 +355,8 @@ class ClockView: UIView {
         let shortRect = CGRect(x: (longWidth - shortWidth) / 2, y: shortLongOffset, width: shortWidth, height: shortHeight)
         let shortLayer = CAShapeLayer()
         shortLayer.frame = shortRect
-        shortLayer.backgroundColor = UIColor.white.cgColor
+//        shortLayer.backgroundColor = UIColor.white.cgColor
+        shortLayer.backgroundColor = UIColor.clear.cgColor
         shortLayer.cornerRadius = shortWidth / 2
         
         let fittingRect = shortRect.union(longRect)
@@ -375,11 +379,11 @@ class ClockView: UIView {
         layer.addSublayer(hoursLayer)
         
         //move somewhere else
-        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
-        circleView.backgroundColor = UIColor.white
-        circleView.layer.cornerRadius = 4
-        circleView.center = CGPoint(x: width / 2, y: height / 2)
-        addSubview(circleView)
+//        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
+//        circleView.backgroundColor = UIColor.white
+//        circleView.layer.cornerRadius = 4
+//        circleView.center = CGPoint(x: width / 2, y: height / 2)
+//        addSubview(circleView)
         
         //do initial work
         
@@ -529,7 +533,6 @@ class ClockView: UIView {
             let seconds = Float(df.string(from: curDate))
             
             DispatchQueue.main.async { () -> Void in
-                
                 
                 hours! += minutes! / 60
                 let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)

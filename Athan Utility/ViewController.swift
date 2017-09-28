@@ -77,40 +77,47 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         settingsbutton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
         settingsbutton.setTitle("Settings", for: UIControlState.normal)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
         
         if Global.openQibla {
             showQibla(self)
         }
-        
+
         if !Global.darkTheme {
             updateTheme()
         }
         
         Global.mainController = self
     }
-    
+
     func enteredForeground() {
         if refreshClockNeeded {
-            clock.refresh()
-            refreshProgressBar()
-            refreshClockNeeded = false
+            manager.calculateCurrentPrayer()
+            updatePrayerInfo()
+            
+//            refreshClockNeeded = false
         }
     }
-    
+
     func enteredBackground() {
         refreshClockNeeded = true
         clock.pause()
         manager.saveSettings()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        refreshClockNeeded = true
+        clock.pause()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if refreshClockNeeded {
-            clock.refresh()
-            refreshProgressBar()
-            refreshClockNeeded = false
+            manager.calculateCurrentPrayer()
+            updatePrayerInfo()
+//            refreshClockNeeded = false
         }
     }
     
@@ -134,13 +141,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             })
             UserDefaults.standard.set(true, forKey: "introduced")
         }
+        
+        refreshClockNeeded = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        refreshClockNeeded = true
-        clock.pause()
-    }
+   
     
     //Data Manager Delegate
     func dataReady(manager: PrayerManager) {
@@ -176,7 +181,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     //specific to individual prayers
     func updatePrayer(manager: PrayerManager) {
-        
         //a check if its NOT a good time to update
         if let x = lastUpdate {
             if Date().timeIntervalSince(x) < 360 {
@@ -202,11 +206,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                 self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
                 self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
                 self.clock.setPrayerBubbles(self.manager)
+                self.clock.refresh()
                 
                 self.refreshProgressBar()
             }
         }
-        
     }
     
     func newMeridiem() {
@@ -223,7 +227,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                 self.progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
                 self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
             }
-            
         }
     }
     

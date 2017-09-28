@@ -60,37 +60,40 @@ class ElapsedView: UIView {
         
         //elapsedLabel.font = elapsedLabel.font.monospacedDigitFont
         //timeLeftLabel.font = timeLeftLabel.font.monospacedDigitFont
-        
-        layer.cornerRadius = rect.size.height / 3
-        layer.masksToBounds = true
-        
-        let offset: CGFloat = 5
-        let X = x(elapsedLabel) + width(elapsedLabel) + offset
-        let H: CGFloat = 6
-        let Y = (height(self) / 2) - H / 2
-        let end = x(timeLeftLabel)
-        barLength = end - X - offset
-
-        progressBGLayer = CAShapeLayer()
-        progressBGLayer.frame = CGRect(x: X, y: Y, width: barLength, height: H)
-        progressBGLayer.cornerRadius = H / 2
-        progressBGLayer.backgroundColor = UIColor(white: 0.1, alpha: 1.0).cgColor
-        layer.addSublayer(progressBGLayer)
-        
-        progressLayer = CAShapeLayer()
-        progressLayer.frame = CGRect(x: X, y: Y, width: H, height: H)
-        progressLayer.cornerRadius = H / 2
-        progressLayer.backgroundColor = UIColor.green.cgColor
-        layer.addSublayer(progressLayer)
-        
-        didDraw = true
-        //if we had to wait for the view to be drawn...
-        if let c = animationClosure {
-            c()
-            animationClosure = nil
+        DispatchQueue.main.async {
+            self.layer.cornerRadius = rect.size.height / 3
+            self.layer.masksToBounds = true
+            
+            let offset: CGFloat = 5
+            let X = x(self.elapsedLabel) + width(self.elapsedLabel) + offset
+            let H: CGFloat = 6
+            let Y = (height(self) / 2) - H / 2
+            let end = x(self.timeLeftLabel)
+            self.barLength = end - X - offset
+            
+            self.progressBGLayer = CAShapeLayer()
+            self.progressBGLayer.frame = CGRect(x: X, y: Y, width: self.barLength, height: H)
+            self.progressBGLayer.cornerRadius = H / 2
+            self.progressBGLayer.backgroundColor = UIColor(white: 0.1, alpha: 1.0).cgColor
+            self.layer.addSublayer(self.progressBGLayer)
+            
+            self.progressLayer = CAShapeLayer()
+            self.progressLayer.frame = CGRect(x: X, y: Y, width: H, height: H)
+            self.progressLayer.cornerRadius = H / 2
+            self.progressLayer.backgroundColor = UIColor.green.cgColor
+            self.layer.addSublayer(self.progressLayer)
+            
+            self.didDraw = true
+            //if we had to wait for the view to be drawn...
+            if let c = self.animationClosure {
+                c()
+                self.animationClosure = nil
+            }
+            
+            self.updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.updateLabels), userInfo: nil, repeats: true)
+            
         }
         
-        updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.updateLabels), userInfo: nil, repeats: true)
     }
 
     func setup(_ interval: CGFloat, timeElapsed: CGFloat) {

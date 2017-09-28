@@ -369,7 +369,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             
             if sureDict["data"] != nil {
                     lastFetchSuccessful = true
-                    locationString = "\(currentCityString ?? "")"
+                if let state = currentStateString {
+                    locationString = "\(currentCityString ?? ""), \(state), \(currentCountryString ?? "")"
+                } else {
+                 locationString = "\(currentCityString ?? ""), \(currentCountryString ?? "")"
+                }
+                
             } else {
                 return
             }
@@ -390,7 +395,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             //get prayer times in text and parse into dates
             if let daysArray = sureDict["data"] as? NSArray {
                 //add days in months
-                var dayOffset = 0
+//                var dayOffset = 0
                 let df = Global.dateFormatter
                 
                 //below will be different if from a file in the past
@@ -404,38 +409,38 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         locationString = cityRecievedString
                     }
                     
-                    //if same year, continue
-                    if let yearReceievedString = sureDict["year_recieved"] as? String {
-//                        let yearReceieved = Int(yearReceievedString)
-                        
-                        //find the index we want to start reading from
-                        if let monthRecievedString = sureDict["month_recieved"] as? String {
-                            let monthRecieved = Int(monthRecievedString)!
-                            
-                            //find the index we want to start reading from
-                            if let dayRecievedString = sureDict["day_recieved"] as? String {
-                                let dayRecieved = Int(dayRecievedString)!
-                                
-//                                startYear = yearReceieved
-//                                startMonth = monthRecieved
-//                                startDay = dayRecieved
-                                
-                                
-                                if currentMonth == monthRecieved {
-                                    dayOffset = currentDay - dayRecieved
-                                } else {
-                                    //might need to something
-                                    dayOffset += daysInMonth(monthRecieved) - dayRecieved
-                                    dayOffset += currentDay
-                                    if currentMonth - 1 != monthRecieved {
-                                        for m in (monthRecieved + 1)...(currentMonth - 1) {
-                                            dayOffset += daysInMonth(m)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+//                    //if same year, continue
+//                    if let yearReceievedString = sureDict["year_recieved"] as? String {
+////                        let yearReceieved = Int(yearReceievedString)
+//
+//                        //find the index we want to start reading from
+//                        if let monthRecievedString = sureDict["month_recieved"] as? String {
+//                            let monthRecieved = Int(monthRecievedString)!
+//
+//                            //find the index we want to start reading from
+//                            if let dayRecievedString = sureDict["day_recieved"] as? String {
+//                                let dayRecieved = Int(dayRecievedString)!
+//
+////                                startYear = yearReceieved
+////                                startMonth = monthRecieved
+////                                startDay = dayRecieved
+//
+//
+//                                if currentMonth == monthRecieved {
+//                                    dayOffset = currentDay - dayRecieved
+//                                } else {
+//                                    //might need to something
+//                                    dayOffset += daysInMonth(monthRecieved) - dayRecieved
+//                                    dayOffset += currentDay
+//                                    if currentMonth - 1 != monthRecieved {
+//                                        for m in (monthRecieved + 1)...(currentMonth - 1) {
+//                                            dayOffset += daysInMonth(m)
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
                 } else {
                     //if not from file...
                     
@@ -541,28 +546,37 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
     }
     
+    func getFutureDateTuple(daysToSkip: Int = 1) -> (day: Int, month: Int, year: Int) {
+        var tomorrowDay = currentDay!
+        var tomorrowMonth = currentMonth!
+        var tomorrowYear = currentYear!
+        for _ in 0..<daysToSkip {
+            if currentDay == daysInMonth(currentMonth) {
+                if currentMonth == 12 {
+                    //new year
+                    tomorrowYear += 1
+                    tomorrowDay = 1
+                    tomorrowMonth = 1
+                } else {
+                    //new month
+                    tomorrowMonth += 1
+                    tomorrowDay = 1
+                }
+            } else {
+                tomorrowDay += 1
+            }
+        }
+        return (tomorrowDay, tomorrowMonth, tomorrowYear)
+    }
+    
     func alignPrayerTimes() {
         todayPrayerTimes = yearTimes[currentYear]![currentMonth]![currentDay]!
         
-        var tomorrowDay = currentDay
-        var tomorrowMonth = currentMonth
-        var tomorrowYear = currentYear
-        if currentDay == daysInMonth(currentMonth) {
-            if currentMonth == 12 {
-                //new year
-                tomorrowYear! += 1
-                tomorrowDay = 1
-                tomorrowMonth = 1
-            } else {
-                //new month
-                tomorrowMonth! += 1
-                tomorrowDay = 1
-            }
+        let (tomorrowDay, tomorrowMonth, tomorrowYear) = getFutureDateTuple(daysToSkip: 1)
+        if let _tomorrowPrayerTimes = yearTimes[tomorrowYear]?[tomorrowMonth]?[tomorrowDay] {
+            tomorrowPrayerTimes = _tomorrowPrayerTimes
         } else {
-            tomorrowDay! += 1
-        }
-        if let tomorrow = yearTimes[tomorrowYear!]?[tomorrowMonth!]?[tomorrowDay!] {
-            tomorrowPrayerTimes = tomorrow
+            print("****ERROR CALCULATING TOMORROW'S DATE!!!*****")
         }
         
         var yesterdayDay = currentDay
@@ -595,33 +609,40 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             UIApplication.shared.cancelAllLocalNotifications()
         }
         
-        var scheduled = 0
+//        var scheduled = 0
         //create a notification for every day
-        outerLoop: for year in self.yearTimes.keys.sorted() {
-            if year < self.currentYear {continue} //go to the next year or quit
-            for month in self.yearTimes[year]!.keys.sorted() {
-                if year == self.currentYear {
-                    if month < self.currentMonth {continue} //if its the same y but m is old, then next
-                }
-                for day in self.yearTimes[year]![month]!.keys.sorted() {
-                    if month == self.currentMonth {
-                        if day < self.currentDay {continue} //return if the day is passed if current m
-                    }
-                    
-                    var finalNotificationDay = false
-                    if scheduled + 12 >= 60 {
-                        finalNotificationDay = true
-                    }
-                    self.createNotificationsForDayItemTuple((year, month, day), finalFlag: finalNotificationDay)
-                    
-                    //limit to 60 notifications (12 per day)
-                    scheduled += 12
-                    print("scheduled: \(scheduled)")
-                    if scheduled >= 60 {
-                        break outerLoop
-                    }
-                }
-            }
+//        outerLoop: for year in self.yearTimes.keys.sorted() {
+//            if year < self.currentYear {continue} //go to the next year or quit
+//            for month in self.yearTimes[year]!.keys.sorted() {
+//                if year == self.currentYear {
+//                    if month < self.currentMonth {continue} //if its the same y but m is old, then next
+//                }
+//                for day in self.yearTimes[year]![month]!.keys.sorted() {
+//                    if month == self.currentMonth {
+//                        if day < self.currentDay {continue} //return if the day is passed if current m
+//                    }
+//
+//                    var finalNotificationDay = false
+//                    if scheduled + 12 >= 60 {
+//                        finalNotificationDay = true
+//                    }
+//                    self.createNotificationsForDayItemTuple((year, month, day), finalFlag: finalNotificationDay)
+//
+//                    //limit to 60 notifications (12 per day)
+//                    scheduled += 12
+//                    print("scheduled: \(scheduled)")
+//                    if scheduled >= 60 {
+//                        break outerLoop
+//                    }
+//                }
+//            }
+//        }
+        
+        
+        for i in 0..<5 {
+            var final = false
+            if i == 4 {final = true}
+            self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: final)
         }
     }
     
@@ -689,7 +710,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             seconds = Int(df.string(from: curDate))!
             df.dateFormat = "m"
             minutes = Int(df.string(from: curDate))!
-            df.dateFormat = "k"//tried: hh, h,
+            df.dateFormat = "H"//tried: hh, h,
             hours = Int(df.string(from: curDate))!
             
             
@@ -710,7 +731,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         delegate.newMeridiem()
     }
     
-    func createNotificationsForDayItemTuple(_ t: (year: Int, month: Int, day: Int), finalFlag: Bool) {
+    func createNotificationsForDayItemTuple(_ t: (day: Int,  month: Int, year: Int), finalFlag: Bool) {
         let df = Global.dateFormatter
         df.dateFormat = "h:mm"
         var min = 0
@@ -729,85 +750,96 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             //!!annoying bg thread problem where we need to reset the format...
             df.dateFormat = "h:mm"
             let p = PrayerType(rawValue: i)!
-            let pDate = yearTimes[t.year]![t.month]![t.day]![p]
-            let dateString = df.string(from: pDate!)
-            
-            let setting = prayerSettings[p]!
-            
-            //schedule a normal if settings allow
-            if setting.alarmType == .all || setting.alarmType == .noEarly {
-                let note = UILocalNotification()
-                note.fireDate = pDate
-                note.timeZone = TimeZone.autoupdatingCurrent
-                
-                if setting.soundEnabled {
-                    note.soundName = "chime1.aiff"
-                }
-                
-                var alertText = ""
-                if finalFlag {
-                    if p == .isha {
-                        alertText = "Time for \(p.stringValue()) [\(dateString)]. Please reopen Athan Utility to continue to recieve notificaitons..."
-                    }
-                } else {
-                    var alternativeString: String?
-                    if var charRange = locationString?.range(of: ",") {
-                        if let stringEnd = locationString?.endIndex {
-                            //                            charRange.upperBound = stringEnd
-                            charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
-                            alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
+            if let byMonth = yearTimes[t.year] {
+                if let byDay = byMonth[t.month] {
+                    if let byPrayer = byDay[t.day] {
+                        if let pDate = byPrayer[p] {
+                            let dateString = df.string(from: pDate)
+                            
+                            
+                            let setting = prayerSettings[p]!
+                            
+                            //schedule a normal if settings allow
+                            if setting.alarmType == .all || setting.alarmType == .noEarly {
+                                let note = UILocalNotification()
+                                note.fireDate = pDate
+                                note.timeZone = TimeZone.autoupdatingCurrent
+                                
+                                if setting.soundEnabled {
+                                    note.soundName = "chime1.aiff"
+                                }
+                                
+                                var alertText = ""
+                                if finalFlag {
+                                    if p == .isha {
+                                        alertText = "Time for \(p.stringValue()) [\(dateString)]. Please reopen Athan Utility to continue to recieve notificaitons..."
+                                    }
+                                } else {
+                                    var alternativeString: String?
+                                    if var charRange = locationString?.range(of: ",") {
+                                        if let stringEnd = locationString?.endIndex {
+                                            //                            charRange.upperBound = stringEnd
+                                            charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
+                                            alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
+                                        }
+                                    }
+                                    
+                                    if let alt = alternativeString {
+                                        print(dateString)
+                                        alertText = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
+                                    } else {
+                                        alertText = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                    }
+                                    
+                                }
+                                
+                                note.alertBody = alertText
+                                
+                                DispatchQueue.main.async {
+                                    UIApplication.shared.scheduleLocalNotification(note)
+                                }
+                            }
+                            
+                            if setting.alarmType == .all {
+                                ////add a reminder for 15 minutes before
+                                let preNote = UILocalNotification()
+                                preNote.fireDate = pDate.addingTimeInterval(-900)//15 mins before
+                                preNote.timeZone = TimeZone.autoupdatingCurrent
+                                //!! i think i would rather not have this one make a sound...would it still be noticeable?
+                                if setting.soundEnabled {
+                                    preNote.soundName = UILocalNotificationDefaultSoundName
+                                }
+                                
+                                var alertText = ""
+                                
+                                var alternativeString: String?
+                                if var charRange = locationString?.range(of: ",") {
+                                    if let stringEnd = locationString?.endIndex {
+                                        //                        charRange.upperBound = stringEnd
+                                        charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
+                                        alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
+                                    }
+                                }
+                                
+                                if let alt = alternativeString {
+                                    alertText = "15m left til \(p.stringValue()) in \(alt)! [\(dateString)]"
+                                } else {
+                                    alertText = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                }
+                                
+                                preNote.alertBody = alertText
+                                
+                                DispatchQueue.main.async {
+                                    UIApplication.shared.scheduleLocalNotification(preNote)
+                                }
+                            }
+                            
                         }
                     }
-                    
-                    if let alt = alternativeString {
-                        print(dateString)
-                        alertText = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
-                    } else {
-                        alertText = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
-                    }
-                    
-                }
-                
-                note.alertBody = alertText
-                
-                DispatchQueue.main.async {
-                    UIApplication.shared.scheduleLocalNotification(note)
                 }
             }
             
-            if setting.alarmType == .all {
-                ////add a reminder for 15 minutes before
-                let preNote = UILocalNotification()
-                preNote.fireDate = pDate?.addingTimeInterval(-900)//15 mins before
-                preNote.timeZone = TimeZone.autoupdatingCurrent
-                //!! i think i would rather not have this one make a sound...would it still be noticeable?
-                if setting.soundEnabled {
-                    preNote.soundName = UILocalNotificationDefaultSoundName
-                }
-                
-                var alertText = ""
-                
-                var alternativeString: String?
-                if var charRange = locationString?.range(of: ",") {
-                    if let stringEnd = locationString?.endIndex {
-                        //                        charRange.upperBound = stringEnd
-                        charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
-                        alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
-                    }
-                }
-                
-                if let alt = alternativeString {
-                    alertText = "15m left til \(p.stringValue()) in \(alt)! [\(dateString)]"
-                } else {
-                    alertText = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
-                }
-                
-                preNote.alertBody = alertText
-                
-                DispatchQueue.main.async {
-                    UIApplication.shared.scheduleLocalNotification(preNote)
-                }
-            }
+            
         }
     }
     
@@ -887,7 +919,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         getData = true
         coreManager.delegate = self
         coreManager.startUpdatingLocation()
-        
     }
     
     func cancelRequest() {

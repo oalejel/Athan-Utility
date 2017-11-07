@@ -75,6 +75,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         // Do any additional setup after loading the view from its nib.
         preferredContentSize = CGSize(width: 0, height: 80)
         
+        view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
+        
         if let dict = dictionaryFromFile() {
             parseDictionary(dict, fromFile: true)
             calculateCurrentPrayer()
@@ -124,10 +126,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func calculateProgress() {
-        let startTime = currentPrayerTime()
-        let endTime = nextPrayerTime()
-        interval = endTime.timeIntervalSince(startTime)
-        timeElapsed = Date().timeIntervalSince(startTime)
+        if let startTime = currentPrayerTime() {
+            if let endTime = nextPrayerTime() {
+                interval = endTime.timeIntervalSince(startTime)
+                timeElapsed = Date().timeIntervalSince(startTime)
+            }
+        }
     }
     
     func startKickTimer() {
@@ -157,47 +161,51 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     
-    func currentPrayerTime() -> Date {
+    func currentPrayerTime() -> Date? {
         if currentPrayer == .isha {
-            if Date().timeIntervalSince(todayPrayerTimes[.isha]!) < 0 {
+            if Date().timeIntervalSince(todayPrayerTimes[.isha] ?? Date()) < 0 {
                 if (Date().compare(tomorrowPrayerTimes[.fajr]!) == ComparisonResult.orderedAscending) {
                     let cal = Calendar.current
-                    let closeToIsha = todayPrayerTimes[.isha]!
-                    var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute], from: closeToIsha)
-                    if comps.day == 1 {
-                        if comps.month == 1 {
-                            comps.year! -= 1
-                            comps.month = 12
-                            comps.day = daysInMonth(12)
+                    if let closeToIsha = todayPrayerTimes[.isha] {
+                        var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute], from: closeToIsha)
+                        if comps.day == 1 {
+                            if comps.month == 1 {
+                                comps.year! -= 1
+                                comps.month = 12
+                                comps.day = daysInMonth(12)
+                            } else {
+                                comps.month! -= 1
+                                comps.day = daysInMonth(comps.month!)
+                            }
                         } else {
-                            comps.month! -= 1
-                            comps.day = daysInMonth(comps.month!)
+                            comps.day! -= 1
                         }
-                    } else {
-                        comps.day! -= 1
+                        
+                        return cal.date(from: comps)
                     }
-                    
-                    return cal.date(from: comps)!
                 }
             }
         }
         
-        return todayPrayerTimes[currentPrayer]!
+        return todayPrayerTimes[currentPrayer]
     }
     
     
     
-    func nextPrayerTime() -> Date {
+    func nextPrayerTime() -> Date? {
         if currentPrayer == .isha {
-            if Date().timeIntervalSince(todayPrayerTimes[.isha]!) > 0 {
-                return tomorrowPrayerTimes[.fajr]!
-            } else {
-                return todayPrayerTimes[.fajr]!
+            if let ishaTime = todayPrayerTimes[.isha] {
+                if Date().timeIntervalSince(ishaTime) > 0 {
+                    return tomorrowPrayerTimes[.fajr]
+                } else {
+                    return todayPrayerTimes[.fajr]
+                }
             }
         } else {
             //!!! this might not be good if the prayertype is none and next() returns fajr!!!
-            return todayPrayerTimes[currentPrayer.next()]!
+            return todayPrayerTimes[currentPrayer.next()]
         }
+        return nil
     }
     
     func widgetMarginInsets
@@ -675,14 +683,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     func  daysInMonth(_ m: Int) -> Int {

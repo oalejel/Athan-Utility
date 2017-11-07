@@ -53,8 +53,7 @@ class TableController: UITableViewController {
                 c.timeLabel.font = c.timeLabel.font.withSize(12)
             }
             
-            let date = times[p]
-            df.dateFormat = "hh:mm a"
+            
             
             /////
             
@@ -68,8 +67,15 @@ class TableController: UITableViewController {
 //                    dateStringg += "-1"
 //                }
 //            }
-            
+            let date = times[p]
+            df.dateFormat = "hh:mm a"
             c.timeLabel.text = df.string(from: date!)
+            if (c.timeLabel.text?.count)! < 7 {
+                print("ALERT: shortened time detected for cells")
+                //do it again if we have an error
+                df.dateFormat = "hh:mm a"
+                c.timeLabel.text = df.string(from: date!)
+            }
             
             ////
             

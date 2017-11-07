@@ -74,7 +74,7 @@ class ElapsedView: UIView {
             self.progressBGLayer = CAShapeLayer()
             self.progressBGLayer.frame = CGRect(x: X, y: Y, width: self.barLength, height: H)
             self.progressBGLayer.cornerRadius = H / 2
-            self.progressBGLayer.backgroundColor = UIColor(white: 0.1, alpha: 1.0).cgColor
+            
             self.layer.addSublayer(self.progressBGLayer)
             
             self.progressLayer = CAShapeLayer()
@@ -82,6 +82,14 @@ class ElapsedView: UIView {
             self.progressLayer.cornerRadius = H / 2
             self.progressLayer.backgroundColor = UIColor.green.cgColor
             self.layer.addSublayer(self.progressLayer)
+            
+            if Global.darkTheme {
+                self.backgroundColor = Global.darkerGray
+                self.progressBGLayer.backgroundColor = Global.darkestGray.cgColor
+            } else {
+                self.backgroundColor = UIColor.white
+                self.progressBGLayer.backgroundColor = UIColor.lightGray.cgColor
+            }
             
             self.didDraw = true
             //if we had to wait for the view to be drawn...
@@ -126,12 +134,16 @@ class ElapsedView: UIView {
     }
     
     func updateTheme() {
-        if Global.darkTheme {
-            
-        } else {
-            backgroundColor = UIColor.white
-            elapsedLabel.textColor = UIColor.darkGray
-            timeLeftLabel.textColor = UIColor.darkGray
+        DispatchQueue.main.async {
+            if Global.darkTheme {
+                self.backgroundColor = Global.darkerGray
+    //            elapsedLabel.textColor = UIColor.darkGray
+    //            timeLeftLabel.textColor = UIColor.darkGray
+            } else {
+                self.backgroundColor = UIColor.white
+                self.elapsedLabel.textColor = UIColor.darkGray
+                self.timeLeftLabel.textColor = UIColor.darkGray
+            }
         }
     }
     

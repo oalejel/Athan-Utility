@@ -204,6 +204,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         DispatchQueue.main.async { () -> Void in
             if self.manager.dataAvailable {
                 self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
+                print(self.manager.todayPrayerTimes)
                 self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
                 self.clock.setPrayerBubbles(self.manager)
                 self.clock.refresh()
@@ -220,12 +221,20 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     func refreshProgressBar() {
         DispatchQueue.main.async { () -> Void in
             if self.manager.dataAvailable {
-                let startTime = self.manager.currentPrayerTime()
-                let endTime = self.manager.nextPrayerTime()
-                let interval = endTime.timeIntervalSince(startTime as Date)
-                let timeElapsed = Date().timeIntervalSince(startTime as Date)
-                self.progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
-                self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
+                if let startTime = self.manager.currentPrayerTime() {
+                    if let endTime = self.manager.nextPrayerTime() {
+                        let timeElapsed = Date().timeIntervalSince(startTime as Date)
+                        let interval = endTime.timeIntervalSince(startTime as Date)
+                        self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
+                        self.progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
+                        
+                    }
+                }
+                
+                
+                
+                
+                
             }
         }
     }

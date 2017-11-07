@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(types: [.alert, .sound, .badge], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(settings)
         
+        
         return true
     }
     

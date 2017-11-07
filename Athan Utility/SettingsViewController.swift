@@ -23,8 +23,8 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        themeButton.isEnabled = false
-        themeButton.alpha = 0.5
+        themeButton.isEnabled = true//false
+        //themeButton.alpha = 0.5
         
         // Do any additional setup after loading the view.
         customLocationButton.layer.cornerRadius = 8

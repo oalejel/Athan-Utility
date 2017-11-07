@@ -110,7 +110,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
         let escapedAddress = address.replacingOccurrences(of: " ", with: "+")
-        let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=9&year=2017mode=yearly&method=2"
+        let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=\(month)&year=\(year)mode=yearly&method=2"
         print(urlStr)
         return URL(string: urlStr)
     }
@@ -158,6 +158,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         self.delegate = delegate
         super.init()
         
+        setCurrentDates()
+        
+        if let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            if currentAppVersion == "1.8" {
+                removeDictionaryStore()
+            }
+        }
+        
         delegate.manager = self
         
         getSettings()
@@ -167,7 +175,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         //first, check the file, if there is useful data, use it, then get data from online without slowing things down
         if let dict = dictionaryFromFile() {
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++should parse dict from file now!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
         } else {
             delegate.showLoader()
@@ -182,13 +190,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         self.coreManager.startUpdatingLocation()
         
         //simulator must do this since it has no location services
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
-            print("Building for ios simulator")
-            self.currentCityString = "Detroit"
-            self.currentCountryString = "US"
-            self.currentStateString = "MI"
-            self.fetchJSONData(nil)
-        #endif
+//        #if (arch(i386) || arch(x86_64)) && os(iOS)
+//            print("Building for ios simulator")
+//            self.currentCityString = "Detroit"
+//            self.currentCountryString = "US"
+//            self.currentStateString = "MI"
+//            self.fetchJSONData(nil, dateTuple: nil)
+//            let nextMonthTuple = getFutureDateTuple(daysToSkip: daysInMonth(1 + (currentMonth! - currentDay!)))
+//            fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+//        #endif
         //}
         
         //        if #available(iOS 9.0, *) {
@@ -222,7 +232,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.currentStateString = placemark.administrativeArea
                     self.currentCountryString = placemark.isoCountryCode
                     self.coordinate = placemark.location?.coordinate
-                    self.fetchJSONData(nil)
+                    self.fetchJSONData(nil, dateTuple: nil)
+                    let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+                    self.fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
                 }
             }
         })
@@ -274,17 +286,17 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     //gets data from website then calls the parseJSONData function
-    func fetchJSONData(_ searchString: String?) {
+    func fetchJSONData(_ searchString: String?, dateTuple: (month: Int, year: Int)?) {
         setCurrentDates()
         calculateAngle(coord: self.coordinate)
         self.lastFetchSuccessful = false
         var URL: URL?
         if let s = searchString {
-            URL = prayerAPIURL(address: s, month: currentMonth, year: currentYear)
+            URL = prayerAPIURL(address: s, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         } else {
             var address = "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
             address = address.replacingOccurrences(of: " ", with: "+")
-                URL = prayerAPIURL(address: address, month: currentMonth, year: currentYear)
+            URL = prayerAPIURL(address: address, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         }
         //! dont forget to set this back to true if the app is on for a long time!!!
         if getData {
@@ -307,7 +319,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         if let sureJSON = JSON {
                             print("got data from online!")
                             self.parseDictionary(sureJSON, fromFile: false)
-                            
                         }
                     }
                     if let closure = self.fetchCompletionClosure {
@@ -348,6 +359,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         return dict
     }
     
+    func removeDictionaryStore() {
+        do {
+            try FileManager.default.removeItem(atPath: prayersArchivePath().path)
+        } catch {
+            print(error)
+        }
+    }
+    
     func setCurrentDates() {
         let df = Global.dateFormatter
         //get the date info for today to use for computation
@@ -365,7 +384,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         setCurrentDates()
         if var sureDict = dict as? Dictionary<String, AnyObject> {
             //for some reason printing this will cause a different part ot crash?
-            print("JSON: \(sureDict)")
+//            print("JSON: \(sureDict)")
             
             if sureDict["data"] != nil {
                     lastFetchSuccessful = true
@@ -378,7 +397,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {
                 return
             }
-            print("location: \(String(describing: locationString))")
+//            print("location: \(String(describing: locationString))")
             
 //            print(sureArray["qibla_direction"]!)
 //            if let a = sureArray["qibla_direction"] as? Double {
@@ -457,7 +476,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     if let dictItem = item as? [String: NSDictionary] {
                         if let itemDateCluster = dictItem["date"] {
                             if let readableDateString = itemDateCluster["readable"] as? String {
-                                print(readableDateString)
+//                                print(readableDateString)
                                 
                                 df.dateFormat = "d M y"
                                 if let parsedDate = df.date(from: readableDateString) {
@@ -482,7 +501,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                         }
                                         
                                         if let dayPrayersDict = dictItem["timings"] as? [String:String] {
-                                            print(dayPrayersDict)
+//                                            print(dayPrayersDict)
                                             for p in prayers {
                                                 //access the time for this one prayer using teh custom names array and a corresponding index
                                                 if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
@@ -550,27 +569,36 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         var tomorrowDay = currentDay!
         var tomorrowMonth = currentMonth!
         var tomorrowYear = currentYear!
-        for _ in 0..<daysToSkip {
-            if currentDay == daysInMonth(currentMonth) {
-                if currentMonth == 12 {
-                    //new year
-                    tomorrowYear += 1
-                    tomorrowDay = 1
-                    tomorrowMonth = 1
+        if daysToSkip > 0 {
+            for _ in 0..<daysToSkip {
+                if tomorrowDay == daysInMonth(currentMonth) {
+                    if tomorrowMonth == 12 {
+                        //new year
+                        tomorrowYear += 1
+                        tomorrowDay = 1
+                        tomorrowMonth = 1
+                    } else {
+                        //new month
+                        tomorrowMonth += 1
+                        tomorrowDay = 1
+                    }
                 } else {
-                    //new month
-                    tomorrowMonth += 1
-                    tomorrowDay = 1
+                    tomorrowDay += 1
                 }
-            } else {
-                tomorrowDay += 1
             }
         }
+        
         return (tomorrowDay, tomorrowMonth, tomorrowYear)
     }
     
     func alignPrayerTimes() {
-        todayPrayerTimes = yearTimes[currentYear]![currentMonth]![currentDay]!
+        if let months = yearTimes[currentYear] {
+            if let days = months[currentMonth] {
+                if let dayTimes = days[currentDay] {
+                    todayPrayerTimes = dayTimes
+                }
+            }
+        }
         
         let (tomorrowDay, tomorrowMonth, tomorrowYear) = getFutureDateTuple(daysToSkip: 1)
         if let _tomorrowPrayerTimes = yearTimes[tomorrowYear]?[tomorrowMonth]?[tomorrowDay] {
@@ -607,6 +635,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //remove this later??!
         DispatchQueue.main.async {
             UIApplication.shared.cancelAllLocalNotifications()
+            print("schedule notifications")
+//            print(UIApplication.shared.scheduledLocalNotifications)
         }
         
 //        var scheduled = 0
@@ -659,12 +689,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         for i in 0...5 {
             let p = PrayerType(rawValue: i)!
             //ascending if the compared one is greater
-            if curDate.compare(self.todayPrayerTimes[p]!) == ComparisonResult.orderedDescending {
-                //WARNING: THIS MIGHT FAIL WHEN THE DATE IS AFTER
-                self.currentPrayer = PrayerType(rawValue: p.rawValue)!//select the previous date prayer
-            } else {
-                return
+            if let time = self.todayPrayerTimes[p] {
+                if curDate.compare(time) == ComparisonResult.orderedDescending {
+                    //WARNING: THIS MIGHT FAIL WHEN THE DATE IS AFTER
+                    self.currentPrayer = PrayerType(rawValue: p.rawValue)!//select the previous date prayer
+                } else {
+                    return
+                }
             }
+           
         }
     }
     
@@ -679,12 +712,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
             for i in (startIndex)...5 {
                 let p = PrayerType(rawValue: i)!
-                let pDate = todayPrayerTimes[p]!
-                
-                //timer for highlight red for 15 mins left
-                Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManagerDelegate.fifteenMinutesLeft), userInfo: nil, repeats: false)
-                //timer for new prayer
-                Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
+                if let pDate = todayPrayerTimes[p] {
+                    //timer for highlight red for 15 mins left
+                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManagerDelegate.fifteenMinutesLeft), userInfo: nil, repeats: false)
+                    //timer for new prayer
+                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
+                } else {
+                    print("error getting prayer time!")
+                }
             }
         }
         
@@ -732,6 +767,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func createNotificationsForDayItemTuple(_ t: (day: Int,  month: Int, year: Int), finalFlag: Bool) {
+        print("making notifications for \(t.day), \(t.month), \(t.year), final: \(finalFlag)")
+        
         let df = Global.dateFormatter
         df.dateFormat = "h:mm"
         var min = 0
@@ -748,14 +785,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         for i in min...5 {
             //!!annoying bg thread problem where we need to reset the format...
-            df.dateFormat = "h:mm"
+            
             let p = PrayerType(rawValue: i)!
             if let byMonth = yearTimes[t.year] {
                 if let byDay = byMonth[t.month] {
                     if let byPrayer = byDay[t.day] {
                         if let pDate = byPrayer[p] {
+                            df.dateFormat = "h:mm"
                             let dateString = df.string(from: pDate)
-                            
+                            print("the possibly incorrect datestring: \(dateString)")
                             
                             let setting = prayerSettings[p]!
                             
@@ -833,7 +871,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     UIApplication.shared.scheduleLocalNotification(preNote)
                                 }
                             }
-                            
                         }
                     }
                 }
@@ -857,47 +894,55 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         delegate.updatePrayer(manager: self)
     }
     
-    func currentPrayerTime() -> Date {
-        print("got to here***")
-        if currentPrayer == .none {
-            let cal = Calendar.current
-            
-            //!!!will be off... but its ok for now... (yesterday times n/a in api)
-            let closeToIsha = todayPrayerTimes[.isha]!
-            var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute], from: closeToIsha)
-            if comps.day == 1 {
-                if comps.month == 1 {
-                    comps.year! -= 1
-                    comps.month = 12
-                    comps.day = daysInMonth(12)
+    func currentPrayerTime() -> Date? {
+//        print("got to here***")
+        if let closeToIsha = todayPrayerTimes[.isha] {
+
+            if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
+                //if none and its the next day, then substract the day by one and use the today isha time
+                let cal = Calendar.current
+                
+                //!!!will be off... but its ok for now... (yesterday times n/a in api)
+                
+                    var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToIsha)
+                    if comps.day == 1 {
+                        if comps.month == 1 {
+                            comps.year! -= 1
+                            comps.month = 12
+                            comps.day = daysInMonth(12)
+                        } else {
+                            comps.month! -= 1
+                            comps.day = daysInMonth(comps.month!)
+                        }
+                    } else {
+                        comps.day! -= 1
+                        
+                    }
+                
+                
+                
+                    return cal.date(from: comps)
                 } else {
-                    comps.month! -= 1
-                    comps.day = daysInMonth(comps.month!)
+                    return todayPrayerTimes[currentPrayer]
                 }
-            } else {
-                comps.day! -= 1
             }
-            
-            return cal.date(from: comps)!
-        } else {
-            return todayPrayerTimes[currentPrayer]!
-        }
+        return nil
     }
     
     func previousPrayerTime() -> Date {
-        if currentPrayer == .fajr {
+        if currentPrayer == .fajr || currentPrayer == .none {
             return yesterdayPrayerTimes[.isha]!
         } else {
             return todayPrayerTimes[currentPrayer.previous()]!
         }
     }
     
-    func nextPrayerTime() -> Date {
-        if currentPrayer == .isha {
-            return tomorrowPrayerTimes[.fajr]!
+    func nextPrayerTime() -> Date? {
+        if currentPrayer == .isha || currentPrayer == .none {
+            return tomorrowPrayerTimes[.fajr]
         } else {
             //!!! this might not be good if the prayertype is none and next() returns fajr!!!
-            return todayPrayerTimes[currentPrayer.next()]!
+            return todayPrayerTimes[currentPrayer.next()]
         }
     }
     
@@ -908,13 +953,17 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         calculateCurrentPrayer()
         setTimers()
         ///is ^ enough??
-        fetchJSONData(nil)//um, not good enough of a solution!!...
+        fetchJSONData(nil, dateTuple: nil)//not good enough of a solution long term!!...
+        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+        fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
     }
     
     func reload() {
         //for simulator
         #if (arch(i386) || arch(x86_64)) && os(iOS)
-            fetchJSONData(nil)
+            fetchJSONData(nil, dateTuple: nil)
+            let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+            fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
         #endif
         getData = true
         coreManager.delegate = self

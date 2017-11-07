@@ -52,7 +52,7 @@ class LocationInputController: UIViewController {
     @IBAction func tryPressed(_ sender: AnyObject) {
         Global.manager.getData = true//should you set it like this!!!???
         let searchString = inputTextField.text!.replacingOccurrences(of: " ", with: "+")
-        Global.manager.fetchJSONData(searchString)
+        Global.manager.fetchJSONData(searchString, dateTuple: nil)
         activityIndicator._show()
         activityIndicator.startAnimating()
     }

@@ -470,29 +470,31 @@ class ClockView: UIView {
             self.currentMeridiem = df.string(from: curDate) == "AM" ? .am : .pm
             var p = PrayerType.fajr
             for _ in 0...5 {
-                let pDate = manager.todayPrayerTimes[p]!
-                
-                df.dateFormat = "a"
-                let ampmString = df.string(from: pDate)
-                var merid: Meridiem = .pm
-                if (ampmString == "AM") {
-                    merid = .am
+                if let pDate = manager.todayPrayerTimes[p] {
+                    df.dateFormat = "a"
+                    let ampmString = df.string(from: pDate)
+                    var merid: Meridiem = .pm
+                    if (ampmString == "AM") {
+                        merid = .am
+                    }
+                    
+                    df.dateFormat = "h"
+                    let hours = Float(df.string(from: pDate))
+                    df.dateFormat = "m"
+                    let minutes = Float(df.string(from: pDate))
+                    df.dateFormat = "s"
+                    var seconds = Float(df.string(from: pDate))
+                    
+                    if seconds == nil {seconds = 0}
+                    let outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60) + ((seconds ?? 0) / 3600)
+                    let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
+                    
+                    let hightLight = p == manager.currentPrayer
+                    self.setBubble(p, angle: angle, mer: merid, highlight: hightLight)
+                    p = p.next()
+                } else {
+                    print("error with today prayer times!")
                 }
-                
-                df.dateFormat = "h"
-                let hours = Float(df.string(from: pDate))
-                df.dateFormat = "m"
-                let minutes = Float(df.string(from: pDate))
-                df.dateFormat = "s"
-                var seconds = Float(df.string(from: pDate))
-                
-                if seconds == nil {seconds = 0}
-                let outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60) + ((seconds ?? 0) / 3600)
-                let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
-                
-                let hightLight = p == manager.currentPrayer
-                self.setBubble(p, angle: angle, mer: merid, highlight: hightLight)
-                p = p.next()
             }
         }
     }

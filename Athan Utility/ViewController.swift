@@ -343,11 +343,9 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                     self.settingsbutton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.refreshButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.qiblaButton.setTitleColor(UIColor.gray, for: UIControlState())
-                    self.clock.currentMeridiem = self.clock.currentMeridiem//this wil invoke a check on color
+                    self.clock.currentMeridiem = self.clock.currentMeridiem//this will invoke a check on color
                     self.locationLabel.textColor = UIColor.gray
                     
-                    UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-                    //
                     self.view.backgroundColor = UIColor.black
                     if let gl = self.gradientLayer {
                         gl.removeFromSuperlayer()
@@ -374,7 +372,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                     self.locationLabel.textColor = UIColor.white
                     self.newGradientLayer(animated: false)
                     
-                    UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+           
                 })
                 
             })

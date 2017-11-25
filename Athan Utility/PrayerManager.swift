@@ -225,8 +225,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {
                 if placemarks?.count > 0 {
                     let placemark = placemarks![0]
-//                    let cityWithSpaces = placemark.locality
-//                    let cityNoSpaces = cityWithSpaces?.replacingOccurrences(of: " ", with: "+")
                     self.currentCityString = placemark.locality//cityNoSpaces
                     self.currentDistrictString = placemark.subAdministrativeArea
                     self.currentStateString = placemark.administrativeArea
@@ -393,22 +391,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 } else {
                  locationString = "\(currentCityString ?? ""), \(currentCountryString ?? "")"
                 }
-                
             } else {
                 return
             }
-//            print("location: \(String(describing: locationString))")
-            
-//            print(sureArray["qibla_direction"]!)
-//            if let a = sureArray["qibla_direction"] as? Double {
-//                //if let q = qString.doubleValue as? Double {
-//                qibla = a
-//                //}
-//            }
-            
-//            if let qString = sureArray["qibla_direction"] as? NSString {
-//                qibla = qString.doubleValue
-//            }
             
             
             //get prayer times in text and parse into dates
@@ -422,48 +407,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //                var startYear = currentYear
 //                var startDay = currentDay
                 
-                //check to see if data is still up to date
+                //#warning check to see if data is still up to date
                 if fromFile {
                     if let cityRecievedString = sureDict["location_recieved"] as? String {
                         locationString = cityRecievedString
                     }
-                    
-//                    //if same year, continue
-//                    if let yearReceievedString = sureDict["year_recieved"] as? String {
-////                        let yearReceieved = Int(yearReceievedString)
-//
-//                        //find the index we want to start reading from
-//                        if let monthRecievedString = sureDict["month_recieved"] as? String {
-//                            let monthRecieved = Int(monthRecievedString)!
-//
-//                            //find the index we want to start reading from
-//                            if let dayRecievedString = sureDict["day_recieved"] as? String {
-//                                let dayRecieved = Int(dayRecievedString)!
-//
-////                                startYear = yearReceieved
-////                                startMonth = monthRecieved
-////                                startDay = dayRecieved
-//
-//
-//                                if currentMonth == monthRecieved {
-//                                    dayOffset = currentDay - dayRecieved
-//                                } else {
-//                                    //might need to something
-//                                    dayOffset += daysInMonth(monthRecieved) - dayRecieved
-//                                    dayOffset += currentDay
-//                                    if currentMonth - 1 != monthRecieved {
-//                                        for m in (monthRecieved + 1)...(currentMonth - 1) {
-//                                            dayOffset += daysInMonth(m)
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
                 } else {
                     //if not from file...
-                    
-                    
                 }
                 
                 let swiftDaysArray = daysArray as! [NSDictionary]
@@ -476,7 +426,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     if let dictItem = item as? [String: NSDictionary] {
                         if let itemDateCluster = dictItem["date"] {
                             if let readableDateString = itemDateCluster["readable"] as? String {
-//                                print(readableDateString)
+                                print(readableDateString)
                                 
                                 df.dateFormat = "d M y"
                                 if let parsedDate = df.date(from: readableDateString) {

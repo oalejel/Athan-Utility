@@ -59,7 +59,6 @@ class IntroViewController: UIViewController {
         //        }
     }
     
-    
     //    override func viewDidLayoutSubviews() {
     //        //addSlide1()
     //
@@ -85,111 +84,6 @@ class IntroViewController: UIViewController {
         
     }
     
-    //    func addSlide1() {
-    //        let f = UIScreen.mainScreen().bounds
-    //
-    //        slide1 = UIView(frame: CGRectMake(0, 0, f.size.width, f.size.height - scrollViewOffset - buttonHeight))
-    //
-    //        let imageView = UIImageView(image: UIImage(named: "intro1"))
-    //        imageView.frame = slide1.frame
-    //        imageView.contentMode = .ScaleAspectFit
-    //        slide1.addSubview(imageView)
-    //
-    //        let arabic = UILabel(frame: CGRectMake(0,0, f.size.width - 140, 60))
-    //
-    //        arabic.text = "السلام عليكم"
-    //        arabic.numberOfLines = 1
-    //        arabic.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        arabic.adjustsFontSizeToFitWidth = true
-    //        arabic.textAlignment = .Center
-    //        arabic.center = CGPointMake(f.size.width / 2, 90)
-    //        arabic.textColor = UIColor.whiteColor()
-    //        arabic.alpha = 0
-    //
-    //        let english = UILabel(frame: CGRectMake(0,0, f.size.width - 60, 60))
-    //        english.text = "Peace Be Upon You"
-    //        english.numberOfLines = 1
-    //        english.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        english.adjustsFontSizeToFitWidth = true
-    //        english.textAlignment = .Center
-    //        english.center = CGPointMake(f.size.width / 2, 145)
-    //        english.textColor = UIColor.whiteColor()
-    //        english.alpha = 0
-    //
-    //
-    //        let japanese = UILabel(frame: CGRectMake(25, 155, f.size.width / 2.4, 60))
-    //        japanese.text = "平和は貴方とともに"
-    //        japanese.numberOfLines = 1
-    //        japanese.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        japanese.adjustsFontSizeToFitWidth = true
-    //        japanese.textAlignment = .Left
-    //        japanese.textColor = UIColor.whiteColor()
-    //        japanese.alpha = 0
-    //
-    //        let hebrew = UILabel(frame: CGRectMake(f.size.width - 25 - (f.size.width / 2.4), 155, f.size.width / 2.3, 60))
-    //        hebrew.text = "שָׁלוֹם עֲלֵיכֶם"
-    //        hebrew.numberOfLines = 1
-    //        hebrew.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        hebrew.adjustsFontSizeToFitWidth = true
-    //        hebrew.textAlignment = .Right
-    //        hebrew.textColor = UIColor.whiteColor()
-    //        hebrew.alpha = 0
-    //
-    //        let spanish = UILabel(frame: CGRectMake(0,0, f.size.width - 70, 60))
-    //        spanish.text = "la paz está con usted"
-    //        spanish.numberOfLines = 1
-    //        spanish.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        spanish.adjustsFontSizeToFitWidth = true
-    //        spanish.textAlignment = .Center
-    //        spanish.center = CGPointMake(f.size.width / 2, 220)
-    //        spanish.textColor = UIColor.whiteColor()
-    //        spanish.alpha = 0
-    //
-    //
-    //        let french = UILabel(frame: CGRectMake(0,0, f.size.width - 160, 60))
-    //        french.text = "paix à vous"
-    //        french.numberOfLines = 1
-    //        french.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        french.adjustsFontSizeToFitWidth = true
-    //        french.textAlignment = .Center
-    //        french.center = CGPointMake(f.size.width / 2, 255)
-    //        french.textColor = UIColor.whiteColor()
-    //        french.alpha = 0
-    //
-    //
-    //        let german = UILabel(frame: CGRectMake(0,0, f.size.width - 140, 60))
-    //        german.text = "Friede sei mit dir"
-    //        german.numberOfLines = 1
-    //        german.font = UIFont(name: "HelveticaNeue", size: 60)
-    //        german.adjustsFontSizeToFitWidth = true
-    //        german.textAlignment = .Center
-    //        german.center = CGPointMake(f.size.width / 2, 290)
-    //        german.textColor = UIColor.whiteColor()
-    //        german.alpha = 0
-    //
-    //        scrollView.addSubview(slide1)
-    //        slide1.addSubview(spanish)
-    //        slide1.addSubview(german)
-    //        slide1.addSubview(french)
-    //        slide1.addSubview(hebrew)
-    //        slide1.addSubview(japanese)
-    //        slide1.addSubview(english)
-    //        slide1.addSubview(arabic)
-    //
-    //        labels1 = [spanish, german, french, hebrew, japanese, english, arabic]
-    //    }
-    
-    //    func animate1() {
-    //
-    //        UIView.animateWithDuration(1, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 4, options: UIViewAnimationOptions.TransitionNone, animations: {
-    //            for label in self.labels1 {
-    //                label.alpha = 1
-    //
-    //            }
-    //            }) { (done) in
-    //
-    //        }
-    //    }
     
     func showFeatures() {
         let f = UIScreen.main.bounds
@@ -213,12 +107,10 @@ class IntroViewController: UIViewController {
         
         iv2.frame = CGRect(x: -xOffset, y: yOffset + ((f.size.height / 2) - (0.25 * combinedHeight)), width: iv2.frame.size.width * scale, height: iv2.frame.size.height * scale)
         
-        
         let i3 = UIImage(named: "info3")
         let iv3 = UIImageView(image: i3)
         iv3.sizeToFit()
         iv3.frame = CGRect(x: -xOffset, y: 2 * yOffset + (f.size.height / 2), width: iv3.frame.size.width * scale, height: iv3.frame.size.height * scale)
-        
         
         let i4 = UIImage(named: "info4")
         let iv4 = UIImageView(image: i4)
@@ -245,12 +137,10 @@ class IntroViewController: UIViewController {
         view.addSubview(iv5)
         view.addSubview(iv6)
         
-        UIView.animateKeyframes(withDuration: 3, delay: 0.5, options: UIViewKeyframeAnimationOptions.calculationModeLinear, animations: {
+        UIView.animateKeyframes(withDuration: 3, delay: 0.5, options: UIViewKeyframeAnimationOptions.calculationModeCubicPaced, animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.33, animations: {
                 iv1.frame = CGRect(x: finalXOffset, y: (f.size.height / 2) - (0.5 * combinedHeight), width: iv1.frame.size.width, height: iv1.frame.size.height)
                 iv4.frame = CGRect(x: f.size.width - finalXOffset - iv1.frame.size.width, y: ((f.size.height / 2) - (0.5 * combinedHeight)), width: iv4.frame.size.width, height: iv4.frame.size.height)
-                
-                
             })
             UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.33, animations: {
                 iv2.frame =  CGRect(x: finalXOffset, y: yOffset + ((f.size.height / 2) - (0.25 * combinedHeight)), width: iv2.frame.size.width, height: iv2.frame.size.height )

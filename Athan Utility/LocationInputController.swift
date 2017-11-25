@@ -23,7 +23,11 @@ class LocationInputController: UIViewController {
         navigationController?.navigationBar.topItem!.title = "Location Search"
         
         activityIndicator.stopAnimating()
-        activityIndicator._hide()
+        
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.activityIndicator._hide()
+        })
         
         tryButton.layer.cornerRadius = 10
         
@@ -31,11 +35,13 @@ class LocationInputController: UIViewController {
         Global.manager.fetchCompletionClosure = {
             if Global.manager.lastFetchSuccessful {
                 self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-                    //something..
+                    //something...
                     
                 })
                 print("try succeeded")
-                self.activityIndicator._hide()
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.activityIndicator._hide()
+                })
             } else {
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.activityIndicator._hide()
@@ -53,7 +59,10 @@ class LocationInputController: UIViewController {
         Global.manager.getData = true//should you set it like this!!!???
         let searchString = inputTextField.text!.replacingOccurrences(of: " ", with: "+")
         Global.manager.fetchJSONData(searchString, dateTuple: nil)
-        activityIndicator._show()
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.activityIndicator._show()
+        })
         activityIndicator.startAnimating()
     }
     

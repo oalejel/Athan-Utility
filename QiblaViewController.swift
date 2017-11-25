@@ -14,6 +14,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     var qiblaOffset: Double!
     let bounds = UIScreen.main.bounds
     
+    @IBOutlet weak var dismissButton: UIButton!
     var headingManager: PrayerManager!
     
     @IBOutlet weak var angleLabel: UILabel!
@@ -50,7 +51,18 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         
         
         northNeedle.path = northPath.cgPath
-        northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
+        
+        if Global.darkTheme {
+            northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
+            dismissButton.backgroundColor = Global.darkerGray
+            dismissButton.titleLabel?.textColor = .white
+            view.backgroundColor = .black
+        } else {
+            northNeedle.fillColor = UIColor.red.cgColor
+            dismissButton.backgroundColor = .white
+            dismissButton.titleLabel?.textColor = Global.darkestGray
+            view.backgroundColor = .white//add a vibrancy layer in light theme
+        }
         
         view.layer.addSublayer(northNeedle)
         

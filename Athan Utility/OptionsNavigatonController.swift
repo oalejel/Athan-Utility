@@ -34,7 +34,7 @@ class OptionsNavigatonController: UINavigationController {
         if Global.darkTheme {
             navigationBar.barTintColor = UIColor(white: 0.1, alpha: 1.0)
             navigationBar.tintColor = UIColor.white
-            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+            navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
         } else {
             navigationBar.barTintColor = UIColor(white: 1, alpha: 1.0)
         }

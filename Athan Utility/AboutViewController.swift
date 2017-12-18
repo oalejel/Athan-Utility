@@ -24,7 +24,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         }
     }
     
-    func donePressed() {
+    @objc func donePressed() {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             //something..
             

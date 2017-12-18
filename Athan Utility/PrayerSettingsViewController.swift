@@ -105,7 +105,7 @@ class PrayerSettingsViewController: UITableViewController {
         navigationController?.pushViewController(s, animated: true)
     }
     
-    func donePressed() {
+    @objc func donePressed() {
         navigationController!.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             //!! will it still exist in memory?? when this happens
             if self.changesMade {

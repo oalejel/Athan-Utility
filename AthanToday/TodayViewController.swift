@@ -141,7 +141,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         Timer.scheduledTimer(timeInterval: TimeInterval(kickTime), target: self, selector: #selector(TodayViewController.startSecondsTimer), userInfo: nil, repeats: false)
     }
     
-    func startSecondsTimer() {
+    @objc func startSecondsTimer() {
         //increment time for the first minute passed
         timeElapsed += Double(kickTime)
         //start a timer that waits every MINUTE (more efficient) {REPEATS}
@@ -149,7 +149,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         secondsTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(TodayViewController.updateProgressView), userInfo: nil, repeats: true)
     }
     
-    func updateProgressView() {
+    @objc func updateProgressView() {
         //whenever another minute has passed
         timeElapsed += 60
         if timeElapsed >= interval {

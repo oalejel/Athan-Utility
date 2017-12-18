@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,7 +36,7 @@
                                     <constraint firstAttribute="width" secondItem="il8-3r-zSC" secondAttribute="height" multiplier="1:1" priority="999" id="eac-aJ-dcH"/>
                                 </constraints>
                             </view>
-                            <button alpha="0.84999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktD-RF-KDQ" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktD-RF-KDQ" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
                                 <rect key="frame" x="136.5" y="627" width="102" height="29"/>
                                 <color key="backgroundColor" red="0.22508285984848475" green="0.22508285984848475" blue="0.22508285984848475" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -48,7 +48,7 @@
                                     <action selector="settingsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xIL-xW-Ep8"/>
                                 </connections>
                             </button>
-                            <button alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xsb-sE-J85" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xsb-sE-J85" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
                                 <rect key="frame" x="26.5" y="627" width="102" height="29"/>
                                 <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -57,7 +57,7 @@
                                     <action selector="showQibla:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6dP-el-RaO"/>
                                 </connections>
                             </button>
-                            <button alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOI-1r-ZD0" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOI-1r-ZD0" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
                                 <rect key="frame" x="246.5" y="627" width="102" height="29"/>
                                 <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -135,7 +135,7 @@
                         <outlet property="locationLabel" destination="rTe-id-Ph3" id="gOQ-5M-gAq"/>
                         <outlet property="qiblaButton" destination="Xsb-sE-J85" id="Wuu-ZO-UjH"/>
                         <outlet property="refreshButton" destination="lOI-1r-ZD0" id="Hrf-v7-Ejx"/>
-                        <outlet property="settingsbutton" destination="ktD-RF-KDQ" id="bEC-bp-oX0"/>
+                        <outlet property="settingsButton" destination="ktD-RF-KDQ" id="bEC-bp-oX0"/>
                         <outlet property="tableContainer" destination="MSz-Fq-muk" id="MGY-iD-iG2"/>
                     </connections>
                 </viewController>

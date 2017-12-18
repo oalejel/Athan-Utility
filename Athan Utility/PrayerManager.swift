@@ -426,18 +426,18 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     if let dictItem = item as? [String: NSDictionary] {
                         if let itemDateCluster = dictItem["date"] {
                             if let readableDateString = itemDateCluster["readable"] as? String {
-                                print(readableDateString)
+                                print("readable date string: \(readableDateString)")
                                 
                                 df.dateFormat = "d M y"
+                                
                                 if let parsedDate = df.date(from: readableDateString) {
                                     df.dateFormat = "d"
                                     let parsedDay = Int(df.string(from: parsedDate))
                                     
                                     df.dateFormat = "M"
                                     let parsedMonth = Int(df.string(from: parsedDate))
-                                    
-                                    df.dateFormat = "Y"
-                                    let parsedYear = Int(df.string(from: parsedDate))
+                                    let s = readableDateString[4...]
+                                    let parsedYear = 4//Int()
                                     
                                     if parsedDay != nil && parsedMonth != nil && parsedYear != nil {
                                         if yearTimes[parsedYear!] == nil {
@@ -461,10 +461,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                                     prayerTimeString.removeSubrange(startingParensIndex...endingParensIndex)
 
                                                     prayerTimeString += "\(parsedDay ?? 0) \(parsedMonth ?? 0) \(parsedYear ?? 0)"
-                                                    //teh format will now be something like "20:06 01 Sep 2017"
+                                                    //the format will now be something like "20:06 01 Sep 2017"
                                                     df.dateFormat = "HH:mm d M y"
+                                          
                                                     if let prayerDate = df.date(from: prayerTimeString) {
                                                         yearTimes[parsedYear!]![parsedMonth!]![parsedDay!]![p] = prayerDate
+                                                        if parsedDay == 31 {
+                                                            print(yearTimes[2017]![12]![31])
+                                                        }
+                                                        
                                                     }
                                                 }
                                             }
@@ -743,7 +748,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         if let pDate = byPrayer[p] {
                             df.dateFormat = "h:mm"
                             let dateString = df.string(from: pDate)
-                            print("the possibly incorrect datestring: \(dateString)")
+//                            print("the possibly incorrect datestring: \(dateString)")
                             
                             let setting = prayerSettings[p]!
                             

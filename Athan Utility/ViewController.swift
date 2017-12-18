@@ -29,7 +29,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     var refreshClockNeeded = false
     
     @IBOutlet weak var refreshButton: SqueezeButton!
-    @IBOutlet weak var settingsbutton: SqueezeButton!
+    @IBOutlet weak var settingsButton: SqueezeButton!
     @IBOutlet weak var qiblaButton: SqueezeButton!
     //not an actual xib containerview
     @IBOutlet weak var tableContainer: UIView!
@@ -68,14 +68,17 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         
         refreshButton.layer.cornerRadius = 8
         qiblaButton.layer.cornerRadius = 8
-        settingsbutton.layer.cornerRadius = 8
+        settingsButton.layer.cornerRadius = 8
         
         refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         refreshButton.setTitle("Refresh", for: UIControlState())
+        refreshButton.backgroundColor = Global.darkerGray
         qiblaButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         qiblaButton.setTitle("Qibla", for: UIControlState())
-        settingsbutton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-        settingsbutton.setTitle("Settings", for: UIControlState.normal)
+        qiblaButton.backgroundColor = Global.darkerGray
+        settingsButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+        settingsButton.setTitle("Settings", for: UIControlState.normal)
+        settingsButton.backgroundColor = Global.darkerGray
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
@@ -267,8 +270,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             refreshButton._hide()
             table.tableView._hide()
             progressView._hide()
-            settingsbutton.setTitle("Done", for: UIControlState.normal)
-            settingsbutton.alpha = 1
+            settingsButton.setTitle("Done", for: UIControlState.normal)
+            settingsButton.alpha = 1
             //add settings controller
             if settingsController == nil {
                 let s = SettingsViewController()
@@ -288,7 +291,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             refreshButton._show()
             table.tableView._show()
             progressView._show()
-            settingsbutton.setTitle("Settings", for: UIControlState.normal)
+            settingsButton.setTitle("Settings", for: UIControlState.normal)
             if let s = settingsController {
                 s.view._hide()
                 s.removeFromParentViewController()//hmm sketchy...
@@ -331,16 +334,15 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             flash { () -> Void in
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.clock.currentMeridiem = self.clock.currentMeridiem
-                    //
                     
                     self.progressView.updateTheme()
                     self.table.updateTheme()
                     self.settingsController?.updateTheme()
                     
-                    self.settingsbutton.backgroundColor = Global.darkerGray
+                    self.settingsButton.backgroundColor = Global.darkerGray
                     self.qiblaButton.backgroundColor = Global.darkerGray
                     self.refreshButton.backgroundColor = Global.darkerGray
-                    self.settingsbutton.setTitleColor(UIColor.gray, for: UIControlState())
+                    self.settingsButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.refreshButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.qiblaButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.clock.currentMeridiem = self.clock.currentMeridiem//this will invoke a check on color
@@ -362,19 +364,16 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                     self.progressView.updateTheme()
                     self.table.updateTheme()
                     self.settingsController?.updateTheme()
-                    self.settingsbutton.backgroundColor = UIColor.white
+                    self.settingsButton.backgroundColor = UIColor.white
                     self.qiblaButton.backgroundColor = UIColor.white
                     self.refreshButton.backgroundColor = UIColor.white
-                    self.settingsbutton.setTitleColor(UIColor.darkGray, for: UIControlState())
+                    self.settingsButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.refreshButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.qiblaButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.clock.currentMeridiem = self.clock.currentMeridiem
                     self.locationLabel.textColor = UIColor.white
                     self.newGradientLayer(animated: false)
-                    
-           
                 })
-                
             })
         }
     }
@@ -410,17 +409,3 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         self.gradientLayer = layer
     }
 }
-
-
-
-/*
- let gradientsArray: [UInt] = [                  //manages theme colors for diff. prayers
- 0xFCA77F, 0xA165C0,
- 0xE6B130, 0xDC9ABF,
- 0x88DAE7, 0x3980E1,
- 0x68E184, 0x0D7FFF,
- 0xCAAEF2, 0xD92137,
- 0x5535FA, 0x2A1C60
- ]
- */
-

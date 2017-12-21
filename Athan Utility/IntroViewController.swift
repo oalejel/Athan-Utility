@@ -156,7 +156,7 @@ class IntroViewController: UIViewController {
         }
     }
     
-    func done() {
+    @objc func done() {
         print("DONE")
         presentingViewController?.dismiss(animated: true, completion: nil)
     }

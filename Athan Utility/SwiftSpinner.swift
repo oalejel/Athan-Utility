@@ -328,3 +328,4 @@ open class SwiftSpinner: UIView {
     }
     
 }
+

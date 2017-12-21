@@ -259,7 +259,7 @@ class ClockView: UIView {
             
             let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
             self.secondsLayer.add(anim, forKey: "transform.rotation")
             
         }
@@ -411,7 +411,7 @@ class ClockView: UIView {
             
             let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
             self.hoursLayer.add(anim, forKey: "transform.rotation")
         }
     }
@@ -470,7 +470,7 @@ class ClockView: UIView {
             self.currentMeridiem = df.string(from: curDate) == "AM" ? .am : .pm
             var p = PrayerType.fajr
             for _ in 0...5 {
-                if let pDate = manager.todayPrayerTimes[p] {
+                if let pDate = manager.todayPrayerTimes[p.rawValue] {
                     df.dateFormat = "a"
                     let ampmString = df.string(from: pDate)
                     var merid: Meridiem = .pm
@@ -486,7 +486,8 @@ class ClockView: UIView {
                     var seconds = Float(df.string(from: pDate))
                     
                     if seconds == nil {seconds = 0}
-                    let outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60) + ((seconds ?? 0) / 3600)
+                    var outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60)
+                    outOfTwelve += ((seconds ?? 0) / 3600)
                     let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
                     
                     let hightLight = p == manager.currentPrayer
@@ -542,7 +543,7 @@ class ClockView: UIView {
                 
                 let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 hourAnim.fromValue = oldRotation
-                hourAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+                hourAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
                 self.hoursLayer.add(hourAnim, forKey: "transform.rotation")
             }
             
@@ -557,7 +558,7 @@ class ClockView: UIView {
                 
                 let oldRotation: NSNumber = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 minuteAnim.fromValue = oldRotation
-                minuteAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+                minuteAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
                 self.minutesLayer.add(minuteAnim, forKey: "transform.rotation")
             }
             
@@ -572,7 +573,7 @@ class ClockView: UIView {
                 
                 let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber
                 secondsAnim.fromValue = oldRotation
-                secondsAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+                secondsAnim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
                 self.secondsLayer.add(secondsAnim, forKey: "transform.rotation")
             }
         }

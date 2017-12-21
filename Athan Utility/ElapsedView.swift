@@ -21,8 +21,8 @@ extension UIFont {
 private extension UIFontDescriptor {
     
     var monospacedDigitFontDescriptor: UIFontDescriptor {
-        let fontDescriptorFeatureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
-        let fontDescriptorAttributes = [UIFontDescriptorFeatureSettingsAttribute: fontDescriptorFeatureSettings]
+        let fontDescriptorFeatureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
+        let fontDescriptorAttributes = [UIFontDescriptor.AttributeName.featureSettings: fontDescriptorFeatureSettings]
         let fontDescriptor = self.addingAttributes(fontDescriptorAttributes)
         return fontDescriptor
     }
@@ -99,9 +99,7 @@ class ElapsedView: UIView {
             }
             
             self.updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.updateLabels), userInfo: nil, repeats: true)
-            
         }
-        
     }
 
     func setup(_ interval: CGFloat, timeElapsed: CGFloat) {
@@ -147,7 +145,7 @@ class ElapsedView: UIView {
         }
     }
     
-    func updateLabels() {
+    @objc func updateLabels() {
         timeElapsed = timeElapsed + 1
         setLabels()
     }

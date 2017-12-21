@@ -575,8 +575,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                     }
                     
                     //if same year, continue
-                    if let yearReceievedString = sureDict["year_recieved"] as? String {
-                        let yearReceieved = Int(yearReceievedString)
+                    if (sureDict["year_recieved"] as? String) != nil {
+//                        let yearReceieved = Int(yearReceievedString)
                         
                         //find the index we want to start reading from
                         if let monthRecievedString = sureDict["month_recieved"] as? String {
@@ -652,8 +652,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                                                 //access the time for this one prayer using teh custom names array and a corresponding index
                                                 if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
                                                     //remove the pesky annoying timezone string
-                                                    let startingParensIndex = prayerTimeString.index(of: "(")
-                                                    let endingParensIndex = prayerTimeString.index(of: ")")
+                                                    let startingParensIndex = prayerTimeString.index(of: "(")!
+                                                    let endingParensIndex = prayerTimeString.index(of: ")")!
                                                     prayerTimeString.removeSubrange(startingParensIndex...endingParensIndex)
                                                     
                                                     prayerTimeString += "\(parsedDay ?? 0) \(parsedMonth ?? 0) \(parsedYear ?? 0)"

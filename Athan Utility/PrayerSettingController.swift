@@ -107,7 +107,7 @@ class PrayerSettingController: UITableViewController {
         return c
     }
     
-    func switched(_ sender: UISwitch) {
+    @objc func switched(_ sender: UISwitch) {
         if sender != switches[2] {//test if not the sound switch
             if sender == switches[0] {
                 if sender.isOn {

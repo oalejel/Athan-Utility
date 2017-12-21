@@ -69,7 +69,7 @@ class LocationInputController: UIViewController {
     
     
     
-    func cancelPressed() {
+    @objc func cancelPressed() {
         //!!@@@!!might need to reset some variables in manager like getData
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             //something..

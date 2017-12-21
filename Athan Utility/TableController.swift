@@ -10,7 +10,7 @@ import UIKit
 
 class TableController: UITableViewController {
     var cellHeight: CGFloat = 44//sill change according to height
-    var times: [PrayerType : Date] = [:]
+    var times: [Int : Date] = [:]
     //var highLightIndexes: [Int:UIColor] = [:]
     var highlightIndex: Int = -1
     var highlightColor = UIColor.white
@@ -52,22 +52,8 @@ class TableController: UITableViewController {
                 c.titleLabel.font = c.titleLabel.font.withSize(12)
                 c.timeLabel.font = c.timeLabel.font.withSize(12)
             }
-            
-            
-            
-            /////
-            
-            
-            
-//            if NSCalendar.current.timeZone.nextDaylightSavingTimeTransition != nil {
-//                //if this is true, the country observes daylgiht savings!!!
-//                print("country observes daylight savings")
-//                if !NSCalendar.current.timeZone.isDaylightSavingTime(for: date!) {
-//                    print("this date requires a DST offset fix for website \(String(describing: date))")
-//                    dateStringg += "-1"
-//                }
-//            }
-            let date = times[p]
+
+            let date = times[p.rawValue]
             df.dateFormat = "hh:mm a"
             c.timeLabel.text = df.string(from: date!)
             if (c.timeLabel.text?.count)! < 7 {
@@ -76,8 +62,6 @@ class TableController: UITableViewController {
                 df.dateFormat = "hh:mm a"
                 c.timeLabel.text = df.string(from: date!)
             }
-            
-            ////
             
             if highlightIndex == indexPath.row {
                 c.titleLabel.textColor = highlightColor
@@ -97,7 +81,7 @@ class TableController: UITableViewController {
         return c
     }
     
-    func reloadCellsWithTimes(_ t: [PrayerType : Date]) {
+    func reloadCellsWithTimes(_ t: [Int : Date]) {
         DispatchQueue.main.async(execute: { () -> Void in
             self.times = t
             self.tableView.reloadData()

@@ -28,7 +28,7 @@ class AnimatedLabel: UILabel {
         super.init(coder: aDecoder)
     }
     
-    func nextTitle() {
+    @objc func nextTitle() {
         titleIndex += 1
         if titleIndex >= titles.count {
             titleIndex = 0

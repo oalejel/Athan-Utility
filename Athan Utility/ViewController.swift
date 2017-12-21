@@ -94,7 +94,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         Global.mainController = self
     }
 
-    func enteredForeground() {
+    @objc func enteredForeground() {
         if refreshClockNeeded {
             manager.calculateCurrentPrayer()
             updatePrayerInfo()
@@ -103,7 +103,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         }
     }
 
-    func enteredBackground() {
+    @objc func enteredBackground() {
         refreshClockNeeded = true
         clock.pause()
         manager.saveSettings()

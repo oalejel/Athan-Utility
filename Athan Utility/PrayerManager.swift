@@ -238,7 +238,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         headingDelegate?.newHeading(newHeading)
     }
     
-    
     //MARK: - Data Management
     
     func getSettings() {
@@ -673,8 +672,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let nextMeridDate = cal.date(from: comps)
         let nextMeridInterval = nextMeridDate?.timeIntervalSince(curDate)
         
-        Timer.scheduledTimer(timeInterval: nextMeridInterval!, target: self, selector: #selector(PrayerManagerDelegate.newMeridiem), userInfo: nil, repeats: false)
-        
+        Timer.scheduledTimer(timeInterval: nextMeridInterval!, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
         
         DispatchQueue.main.async { () -> Void in
             var seconds = 0
@@ -701,8 +699,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func newMeridiem() {
-        Timer.scheduledTimer(timeInterval: 12 * 60 * 60, target: self, selector: #selector(PrayerManagerDelegate.newMeridiem), userInfo: nil, repeats: false)
+    @objc func newMeridiem() {
+        Timer.scheduledTimer(timeInterval: 12 * 60 * 60, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
         delegate.newMeridiem()
     }
     
@@ -889,12 +887,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     @objc func newDay() {
-        //MARK: WARNING
         setCurrentDates()
         alignPrayerTimes()
         calculateCurrentPrayer()
         setTimers()
-        ///is ^ enough??
         fetchJSONData(nil, dateTuple: nil)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
@@ -914,10 +910,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     @objc func cancelRequest() {
         getData = false
-        //session.invalidateAndCancel()
-        //!! take into account alternative loading screen and hiding it here!!
         SwiftSpinner.hide()
-        
     }
     
     //MARK: - Data Saving

@@ -193,7 +193,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             }
         }
         
-        
         updatePrayerInfo()
         if !Global.darkTheme {
             newGradientLayer(animated: true)
@@ -219,6 +218,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     func newMeridiem() {
         clock.currentMeridiem = (clock.currentMeridiem! == .am) ? .pm : .am
+        updatePrayerInfo()
     }
     
     func refreshProgressBar() {
@@ -230,14 +230,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                         let interval = endTime.timeIntervalSince(startTime as Date)
                         self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
                         self.progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
-                        
                     }
                 }
-                
-                
-                
-                
-                
             }
         }
     }

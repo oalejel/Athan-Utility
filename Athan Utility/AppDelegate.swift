@@ -16,13 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        //            let av = UIAlertView(title: "C'mon man!", message: "It's about time you get a new iPhone dude!", delegate: nil, cancelButtonTitle: "OK")
-        //            av.show()
-        
         //ask for notifications
         let settings = UIUserNotificationSettings(types: [.alert, .sound, .badge], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(settings)
-        
         
         return true
     }
@@ -38,8 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             av.show()
         }
     }
-    
-    ////
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -62,7 +56,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
 

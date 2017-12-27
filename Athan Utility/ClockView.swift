@@ -536,7 +536,6 @@ class ClockView: UIView {
             let seconds = Float(df.string(from: curDate))
             
             DispatchQueue.main.async { () -> Void in
-                
                 hours! += minutes! / 60
                 let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)
                 self.hoursLayer.transform = CATransform3DRotate(self.hoursLayer.transform, radians, 0, 0, 1)

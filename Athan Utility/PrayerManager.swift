@@ -447,7 +447,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                             }
                                             
                                             if let dayPrayersDict = dictItem["timings"] as? [String:String] {
-                                                //                                            print(dayPrayersDict)
+                                                //print(dayPrayersDict)
                                                 for p in prayers {
                                                     //access the time for this one prayer using teh custom names array and a corresponding index
                                                     if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
@@ -875,10 +875,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func nextPrayerTime() -> Date? {
+        //for cases where we are looking into next day
         if currentPrayer == .isha || currentPrayer == .none {
-            return tomorrowPrayerTimes[PrayerType.fajr.rawValue]
+            if let storedNext = tomorrowPrayerTimes[PrayerType.fajr.rawValue] {
+                return storedNext
+            } else {
+                return todayPrayerTimes[currentPrayer.next().rawValue]?.addingTimeInterval(86400)
+            }
         } else {
-            //!!! this might not be good if the prayertype is none and next() returns fajr!!!
+            //standard case, taking time for prayer in same day
             return todayPrayerTimes[currentPrayer.next().rawValue]
         }
     }

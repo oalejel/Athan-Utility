@@ -440,6 +440,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     //save our new data from online
                     sureDict["location_recieved"] = formattedAddressString() as AnyObject?
                     sureDict["data"] = yearTimes as AnyObject
+                    sureDict["qibla"] = qibla as AnyObject
                     let objc = sureDict as NSDictionary
                     NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
                 } else {return}
@@ -451,6 +452,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 //if we are getting data from a file, we expect value for key "data" to be yearTimes
                 if let formattedData = sureDict["data"] as? [Int : [Int : [Int : [Int : Date]]]] {
                     yearTimes = formattedData
+                }
+                
+                if let q = sureDict["qibla"] as? Double {
+                    qibla = q
                 }
             }
             
@@ -749,10 +754,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func timeLeftColor() -> UIColor {
+        if nextPrayerTime()?.timeIntervalSinceNow < 900 {
+            return UIColor.orange
+        }
+        return UIColor.green
+    }
+    
     @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
-        Global.statusColor = UIColor.orange
-        //statusColor = UIColor.orangeColor()
+        Global.statusColor = timeLeftColor()
         delegate.fifteenMinutesLeft()
     }
     

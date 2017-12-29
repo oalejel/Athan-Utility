@@ -556,7 +556,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             return
         }
     }
-    
+
     
     func  daysInMonth(_ m: Int) -> Int {
         switch m {
@@ -609,7 +609,5 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             extensionContext?.open(appURL, completionHandler: nil)
         }
     }
-    
-    
 }
 

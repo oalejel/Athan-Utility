@@ -170,13 +170,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             if let location = manager.locationString {
                 self.locationLabel.text = location
             }
-            //                if let state = manager.currentStateString {
-            //                    if let city = manager.currentCityString {
-            //                        if let country = manager.currentCountryString {
-            //                                            self.locationLabel.text = "\(city), \(state), \(country)"
-            //                        }
-            //                    }
-            //                }
             
             self.updatePrayerInfo()
         }
@@ -210,7 +203,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                 self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
                 self.clock.setPrayerBubbles(self.manager)
                 self.clock.refresh()
-                
                 self.refreshProgressBar()
             }
         }
@@ -229,7 +221,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                         let timeElapsed = Date().timeIntervalSince(startTime as Date)
                         let interval = endTime.timeIntervalSince(startTime as Date)
                         self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
-                        self.progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
+                        self.progressView.progressLayer.backgroundColor = self.manager.timeLeftColor().cgColor
                     }
                 }
             }
@@ -300,8 +292,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         let pIndex = manager.currentPrayer.rawValue
         if pIndex != 6 {
             table.highlightCellAtIndex(pIndex, color: Global.statusColor)
-            progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
-            //clock
+            progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
         }
     }
     

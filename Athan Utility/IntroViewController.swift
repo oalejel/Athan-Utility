@@ -48,22 +48,7 @@ class IntroViewController: UIViewController {
         doneButton.backgroundColor = Global.darkestGray
         doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
         view.addSubview(doneButton)
-        
-        //
-        //        for x in 0...(items-1) {
-        //            let img = UIImage(named:"intro\(x)")
-        //            let imgView = UIImageView(frame: CGRectMake(CGFloat(x) * f.size.width, 0, f.size.width, f.size.height - scrollViewOffset - buttonHeight))
-        //            imgView.image = img
-        //            imgView.contentMode = .ScaleAspectFit
-        //            scrollView.addSubview(imgView)
-        //        }
     }
-    
-    //    override func viewDidLayoutSubviews() {
-    //        //addSlide1()
-    //
-    //        //scrollView.setNeedsDisplay()
-    //    }
     
     override func viewDidAppear(_ animated: Bool) {
         //animate1()

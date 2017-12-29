@@ -107,7 +107,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
         let escapedAddress = address.replacingOccurrences(of: " ", with: "+")
         let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=\(month)&year=\(year)mode=yearly&method=2"
-        print(urlStr)
         return URL(string: urlStr)
     }
     
@@ -176,35 +175,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             delegate.showLoader()
         }
         
-        //dispatch_async(dispatch_get_main_queue()) { () -> Void in
         self.coreManager.delegate = self
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff.
-        
         self.coreManager.requestWhenInUseAuthorization()
-        
         self.coreManager.startUpdatingLocation()
-        
-        //simulator must do this since it has no location services
-//        #if (arch(i386) || arch(x86_64)) && os(iOS)
-//            print("Building for ios simulator")
-//            self.currentCityString = "Detroit"
-//            self.currentCountryString = "US"
-//            self.currentStateString = "MI"
-//            self.fetchJSONData(nil, dateTuple: nil)
-//            let nextMonthTuple = getFutureDateTuple(daysToSkip: daysInMonth(1 + (currentMonth! - currentDay!)))
-//            fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
-//        #endif
-        //}
-        
-        //        if #available(iOS 9.0, *) {
-        //            if WCSession.isSupported() {
-        //                let session = WCSession.defaultSession()
-        //                session.delegate = self
-        //                session.activateSession()
-        //            }
-        //        } else {
-        //            // Fallback on earlier versions
-        //        }
     }
     
     
@@ -278,6 +252,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         NSKeyedArchiver.archiveRootObject(["prayersettings":allSettingsDict], toFile: settingsArchivePath().path)
     }
     
+    func formattedAddressString() -> String {
+        return "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
+    }
+    
     //gets data from website then calls the parseJSONData function
     func fetchJSONData(_ searchString: String?, dateTuple: (month: Int, year: Int)?) {
         setCurrentDates()
@@ -289,7 +267,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let s = searchString {
             URL = prayerAPIURL(address: s, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         } else {
-            var address = "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
+            var address = formattedAddressString()
             address = address.replacingOccurrences(of: " ", with: "+")
             URL = prayerAPIURL(address: address, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         }
@@ -395,20 +373,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     //add days in months
                     //                var dayOffset = 0
                     let df = Global.dateFormatter
-                    
-                    //below will be different if from a file in the past
-                    //                var startMonth = currentMonth
-                    //                var startYear = currentYear
-                    //                var startDay = currentDay
-                    
-                    //#warning check to see if data is still up to date
-                    if fromFile {
-                        if let cityRecievedString = sureDict["location_recieved"] as? String {
-                            locationString = cityRecievedString
-                        }
-                    } else {
-                        //if not from file...
-                    }
+                
                     
                     let swiftDaysArray = daysArray as! [NSDictionary]
                     
@@ -473,12 +438,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     }
                 
                     //save our new data from online
-                    sureDict["location_recieved"] = currentCityString as AnyObject?
+                    sureDict["location_recieved"] = formattedAddressString() as AnyObject?
                     sureDict["data"] = yearTimes as AnyObject
                     let objc = sureDict as NSDictionary
                     NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
                 } else {return}
             } else {
+                if let formattedAddress = sureDict["location_recieved"] as? String {
+                    locationString = formattedAddress
+                }
+                
                 //if we are getting data from a file, we expect value for key "data" to be yearTimes
                 if let formattedData = sureDict["data"] as? [Int : [Int : [Int : [Int : Date]]]] {
                     yearTimes = formattedData
@@ -543,7 +512,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let _tomorrowPrayerTimes = yearTimes[tomorrowYear]?[tomorrowMonth]?[tomorrowDay] {
             tomorrowPrayerTimes = _tomorrowPrayerTimes
         } else {
-            print("****ERROR CALCULATING TOMORROW'S DATE!!!*****")
+            print("Error Calculating tomorrow's date")
         }
         
         var yesterdayDay = currentDay
@@ -574,39 +543,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //remove this later??!
         DispatchQueue.main.async {
             UIApplication.shared.cancelAllLocalNotifications()
-            print("schedule notifications")
-//            print(UIApplication.shared.scheduledLocalNotifications)
         }
-        
-//        var scheduled = 0
-        //create a notification for every day
-//        outerLoop: for year in self.yearTimes.keys.sorted() {
-//            if year < self.currentYear {continue} //go to the next year or quit
-//            for month in self.yearTimes[year]!.keys.sorted() {
-//                if year == self.currentYear {
-//                    if month < self.currentMonth {continue} //if its the same y but m is old, then next
-//                }
-//                for day in self.yearTimes[year]![month]!.keys.sorted() {
-//                    if month == self.currentMonth {
-//                        if day < self.currentDay {continue} //return if the day is passed if current m
-//                    }
-//
-//                    var finalNotificationDay = false
-//                    if scheduled + 12 >= 60 {
-//                        finalNotificationDay = true
-//                    }
-//                    self.createNotificationsForDayItemTuple((year, month, day), finalFlag: finalNotificationDay)
-//
-//                    //limit to 60 notifications (12 per day)
-//                    scheduled += 12
-//                    print("scheduled: \(scheduled)")
-//                    if scheduled >= 60 {
-//                        break outerLoop
-//                    }
-//                }
-//            }
-//        }
-        
         
         for i in 0..<5 {
             var final = false
@@ -614,7 +551,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: final)
         }
     }
-    
     
     func notifyDelegate() {
         dataAvailable = true
@@ -636,14 +572,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     return
                 }
             }
-           
         }
     }
     
     func setTimers() {
         //set the prayer timers
         let curDate = Date()
-        print(currentPrayer)
         if currentPrayer != .isha {
             var startIndex = currentPrayer.rawValue + 1
             if currentPrayer == .none {
@@ -653,11 +587,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {
                     //timer for highlight red for 15 mins left
-                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManagerDelegate.fifteenMinutesLeft), userInfo: nil, repeats: false)
+                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManager.fifteenMinutesLeft), userInfo: nil, repeats: false)
                     //timer for new prayer
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
                 } else {
-                    print("error getting prayer time!")
+                    print("error getting prayer time while setting timers!")
                 }
             }
         }
@@ -683,7 +617,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             seconds = Int(df.string(from: curDate))!
             df.dateFormat = "m"
             minutes = Int(df.string(from: curDate))!
-            df.dateFormat = "H"//tried: hh, h,
+            df.dateFormat = "H"
             hours = Int(df.string(from: curDate))!
             
             
@@ -731,7 +665,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         if let pDate = byPrayer[p.rawValue] {
                             df.dateFormat = "h:mm"
                             let dateString = df.string(from: pDate)
-//                            print("the possibly incorrect datestring: \(dateString)")
                             
                             let setting = prayerSettings[p]!
                             
@@ -754,7 +687,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     var alternativeString: String?
                                     if var charRange = locationString?.range(of: ",") {
                                         if let stringEnd = locationString?.endIndex {
-                                            //                            charRange.upperBound = stringEnd
                                             charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
                                             alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
                                         }
@@ -780,6 +712,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 ////add a reminder for 15 minutes before
                                 let preNote = UILocalNotification()
                                 preNote.fireDate = pDate.addingTimeInterval(-900)//15 mins before
+                                preNote.userInfo = ["intendedFireDate": preNote.fireDate ?? Date()]
                                 preNote.timeZone = TimeZone.autoupdatingCurrent
                                 //!! i think i would rather not have this one make a sound...would it still be noticeable?
                                 if setting.soundEnabled {
@@ -813,12 +746,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     }
                 }
             }
-            
-            
         }
     }
     
-    func fifteenMinutesLeft() {
+    @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
         Global.statusColor = UIColor.orange
         //statusColor = UIColor.orangeColor()
@@ -833,14 +764,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func currentPrayerTime() -> Date? {
-//        print("got to here***")
         if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
 
             if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
                 //if none and its the next day, then substract the day by one and use the today isha time
                 let cal = Calendar.current
-                
-                //!!!will be off... but its ok for now... (yesterday times n/a in api)
                 
                     var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToIsha)
                     if comps.day == 1 {

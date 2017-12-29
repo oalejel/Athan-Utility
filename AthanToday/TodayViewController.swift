@@ -52,10 +52,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     var currentMonth = 0
     var currentYear = 0
     
-    var yearTimes: [Int : [Int : [Int : [PrayerType : Date]]]] = Dictionary()
-    var todayPrayerTimes: [PrayerType : Date] = Dictionary()
-    var tomorrowPrayerTimes: [PrayerType : Date] = Dictionary()
-    var yesterdayPrayerTimes: [PrayerType : Date] = Dictionary()
+    var yearTimes: [Int : [Int : [Int : [Int : Date]]]] = Dictionary()
+    var todayPrayerTimes: [Int : Date] = Dictionary()
+    var tomorrowPrayerTimes: [Int : Date] = Dictionary()
+    var yesterdayPrayerTimes: [Int : Date] = Dictionary()
     var locationString = ""
     
     var currentPrayer = PrayerType.fajr
@@ -112,13 +112,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let nextPrayer = currentPrayer.next()
         dateFormatter.dateFormat = "hh:mm a"
         if nextPrayer == .fajr {
-            if Date().timeIntervalSince(todayPrayerTimes[.fajr]!) < 0 {
-                nextTimeLabel.text = dateFormatter.string(from: todayPrayerTimes[nextPrayer]!)
+            if Date().timeIntervalSince(todayPrayerTimes[PrayerType.fajr.rawValue]!) < 0 {
+                nextTimeLabel.text = dateFormatter.string(from: todayPrayerTimes[nextPrayer.rawValue]!)
             } else {
-                nextTimeLabel.text = dateFormatter.string(from: tomorrowPrayerTimes[nextPrayer]!)
+                nextTimeLabel.text = dateFormatter.string(from: tomorrowPrayerTimes[nextPrayer.rawValue]!)
             }
         } else {
-            nextTimeLabel.text = dateFormatter.string(from: todayPrayerTimes[nextPrayer]!)
+            nextTimeLabel.text = dateFormatter.string(from: todayPrayerTimes[nextPrayer.rawValue]!)
         }
         nextPrayerLabel.text = "\(nextPrayer.stringValue()) @"
         
@@ -163,10 +163,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func currentPrayerTime() -> Date? {
         if currentPrayer == .isha {
-            if Date().timeIntervalSince(todayPrayerTimes[.isha] ?? Date()) < 0 {
-                if (Date().compare(tomorrowPrayerTimes[.fajr]!) == ComparisonResult.orderedAscending) {
+            if Date().timeIntervalSince(todayPrayerTimes[PrayerType.isha.rawValue] ?? Date()) < 0 {
+                if (Date().compare(tomorrowPrayerTimes[PrayerType.fajr.rawValue]!) == ComparisonResult.orderedAscending) {
                     let cal = Calendar.current
-                    if let closeToIsha = todayPrayerTimes[.isha] {
+                    if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
                         var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute], from: closeToIsha)
                         if comps.day == 1 {
                             if comps.month == 1 {
@@ -187,23 +187,23 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             }
         }
         
-        return todayPrayerTimes[currentPrayer]
+        return todayPrayerTimes[currentPrayer.rawValue]
     }
     
     
     
     func nextPrayerTime() -> Date? {
         if currentPrayer == .isha {
-            if let ishaTime = todayPrayerTimes[.isha] {
+            if let ishaTime = todayPrayerTimes[PrayerType.isha.rawValue] {
                 if Date().timeIntervalSince(ishaTime) > 0 {
-                    return tomorrowPrayerTimes[.fajr]
+                    return tomorrowPrayerTimes[PrayerType.fajr.rawValue]
                 } else {
-                    return todayPrayerTimes[.fajr]
+                    return todayPrayerTimes[PrayerType.fajr.rawValue]
                 }
             }
         } else {
             //!!! this might not be good if the prayertype is none and next() returns fajr!!!
-            return todayPrayerTimes[currentPrayer.next()]
+            return todayPrayerTimes[currentPrayer.next().rawValue]
         }
         return nil
     }
@@ -352,7 +352,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         for i in 0...5 {
             let p = PrayerType(rawValue: i)!
             //ascending if the compared one is greater
-            if curDate.compare(todayPrayerTimes[p]!) == ComparisonResult.orderedDescending {
+            if curDate.compare(todayPrayerTimes[p.rawValue]!) == ComparisonResult.orderedDescending {
                 //WARNING: THIS MIGHT FAIL WHEN THE DATE IS AFTER
                 currentPrayer = PrayerType(rawValue: p.rawValue)!//select the previous date prayer
             }
@@ -537,151 +537,24 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     //this organizes the data and notifies the delegate
     func parseDictionary(_ dict: NSDictionary?, fromFile: Bool) {
         if var sureDict = dict as? Dictionary<String, AnyObject> {
-            //for some reason printing this will cause a different part ot crash?
-            print("JSON: \(sureDict)")
-            
-            if sureDict["data"] == nil {
+
+            if let formattedData = sureDict["data"] as? [Int : [Int : [Int : [Int : Date]]]] {
+                yearTimes = formattedData
+            } else {
+                print("could not parse dictionary")
                 return
             }
-            print("location: \(String(describing: locationString))")
             
-            //            print(sureArray["qibla_direction"]!)
-            //            if let a = sureArray["qibla_direction"] as? Double {
-            //                //if let q = qString.doubleValue as? Double {
-            //                qibla = a
-            //                //}
-            //            }
-            
-            //            if let qString = sureArray["qibla_direction"] as? NSString {
-            //                qibla = qString.doubleValue
-            //            }
-            
-            
-            //get prayer times in text and parse into dates
-            if let daysArray = sureDict["data"] as? NSArray {
-                //add days in months
-                var dayOffset = 0
-                let df = dateFormatter
-                
-                //below will be different if from a file in the past
-                //                var startMonth = currentMonth
-                //                var startYear = currentYear
-                //                var startDay = currentDay
-                
-                //check to see if data is still up to date
-                if fromFile {
-                    if let cityRecievedString = sureDict["location_recieved"] as? String {
-                        locationString = cityRecievedString
-                    }
-                    
-                    //if same year, continue
-                    if (sureDict["year_recieved"] as? String) != nil {
-//                        let yearReceieved = Int(yearReceievedString)
-                        
-                        //find the index we want to start reading from
-                        if let monthRecievedString = sureDict["month_recieved"] as? String {
-                            let monthRecieved = Int(monthRecievedString)!
-                            
-                            //find the index we want to start reading from
-                            if let dayRecievedString = sureDict["day_recieved"] as? String {
-                                let dayRecieved = Int(dayRecievedString)!
-                                
-                                //                                startYear = yearReceieved
-                                //                                startMonth = monthRecieved
-                                //                                startDay = dayRecieved
-                                
-                                
-                                if currentMonth == monthRecieved {
-                                    dayOffset = currentDay - dayRecieved
-                                } else {
-                                    //might need to something
-                                    dayOffset += daysInMonth(monthRecieved) - dayRecieved
-                                    dayOffset += currentDay
-                                    if currentMonth - 1 != monthRecieved {
-                                        for m in (monthRecieved + 1)...(currentMonth - 1) {
-                                            dayOffset += daysInMonth(m)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    //if not from file...
-                    
-                    
-                }
-                
-                let swiftDaysArray = daysArray as! [NSDictionary]
-                
-                let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
-                let customNames = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"]
-                
-                //we will go through every day of the month from the api, get the dates, and then store those data points in a dict organized by year, month, date, and --> prayer times
-                for item in swiftDaysArray {
-                    if let dictItem = item as? [String: NSDictionary] {
-                        if let itemDateCluster = dictItem["date"] {
-                            if let readableDateString = itemDateCluster["readable"] as? String {
-                                print(readableDateString)
-                                
-                                df.dateFormat = "d M y"
-                                if let parsedDate = df.date(from: readableDateString) {
-                                    df.dateFormat = "d"
-                                    let parsedDay = Int(df.string(from: parsedDate))
-                                    
-                                    df.dateFormat = "M"
-                                    let parsedMonth = Int(df.string(from: parsedDate))
-                                    
-                                    df.dateFormat = "Y"
-                                    let parsedYear = Int(df.string(from: parsedDate))
-                                    
-                                    if parsedDay != nil && parsedMonth != nil && parsedYear != nil {
-                                        if yearTimes[parsedYear!] == nil {
-                                            yearTimes[parsedYear!] = [:]
-                                        }
-                                        if yearTimes[parsedYear!]![parsedMonth!] == nil {
-                                            yearTimes[parsedYear!]![parsedMonth!] = [:]
-                                        }
-                                        if yearTimes[parsedYear!]![parsedMonth!]![parsedDay!] == nil {
-                                            yearTimes[parsedYear!]![parsedMonth!]![parsedDay!] = [:]
-                                        }
-                                        
-                                        if let dayPrayersDict = dictItem["timings"] as? [String:String] {
-                                            print(dayPrayersDict)
-                                            for p in prayers {
-                                                //access the time for this one prayer using teh custom names array and a corresponding index
-                                                if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
-                                                    //remove the pesky annoying timezone string
-                                                    let startingParensIndex = prayerTimeString.index(of: "(")!
-                                                    let endingParensIndex = prayerTimeString.index(of: ")")!
-                                                    prayerTimeString.removeSubrange(startingParensIndex...endingParensIndex)
-                                                    
-                                                    prayerTimeString += "\(parsedDay ?? 0) \(parsedMonth ?? 0) \(parsedYear ?? 0)"
-                                                    //teh format will now be something like "20:06 01 Sep 2017"
-                                                    df.dateFormat = "HH:mm d M y"
-                                                    if let prayerDate = df.date(from: prayerTimeString) {
-                                                        yearTimes[parsedYear!]![parsedMonth!]![parsedDay!]![p] = prayerDate
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                alignPrayerTimes()
-                calculateCurrentPrayer()
-                
-                //must call set timers after updatecurrent prayer is called
-                
-            } else {return}
+            if let formattedAddress = sureDict["location_recieved"] as? String {
+                locationString = formattedAddress
+            }
+    
+            alignPrayerTimes()
+            calculateCurrentPrayer()
+        } else {
+            print("could not parse dictionary")
+            return
         }
-        
-
-        
     }
     
     

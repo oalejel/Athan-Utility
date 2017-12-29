@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.90821"
+            timestampString = "536252452.578419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "locationManager(_:didUpdateLocations:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.908932"
+            timestampString = "536252452.578854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "init(delegate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.909319"
+            timestampString = "536252452.579125"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "init(delegate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.706175"
+            timestampString = "536252452.579384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "538"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.709164"
+            timestampString = "536252452.579668"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "73"
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.709544"
+            timestampString = "536252452.580001"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.90968"
+            timestampString = "536252452.580253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "686"
-            endingLineNumber = "686"
+            startingLineNumber = "620"
+            endingLineNumber = "620"
             landmarkName = "setTimers()"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.910013"
+            timestampString = "536252452.580537"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
+            startingLineNumber = "616"
+            endingLineNumber = "616"
             landmarkName = "setTimers()"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/ViewController.swift"
-            timestampString = "536037649.910518"
+            timestampString = "536252452.580809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "224"
@@ -202,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/ViewController.swift"
-            timestampString = "536037649.910611"
+            timestampString = "536252452.58086"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
@@ -234,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/ViewController.swift"
-            timestampString = "536037649.910724"
+            timestampString = "536252452.580927"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "236"
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.9108"
+            timestampString = "536252452.580972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "714"
-            endingLineNumber = "714"
+            startingLineNumber = "648"
+            endingLineNumber = "648"
             landmarkName = "createNotificationsForDayItemTuple(_:finalFlag:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.911272"
+            timestampString = "536252452.581239"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "getFutureDateTuple(daysToSkip:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.911572"
+            timestampString = "536252452.581511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "614"
-            endingLineNumber = "614"
+            startingLineNumber = "551"
+            endingLineNumber = "551"
             landmarkName = "scheduleAppropriateNotifications()"
             landmarkType = "7">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.911941"
+            timestampString = "536252452.58181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "locationManager(_:didUpdateLocations:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.912255"
+            timestampString = "536252452.582081"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "locationManager(_:didUpdateLocations:)"
             landmarkType = "7">
             <Locations>
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.912528"
+            timestampString = "536252452.582347"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "796"
-            endingLineNumber = "796"
+            startingLineNumber = "729"
+            endingLineNumber = "729"
             landmarkName = "createNotificationsForDayItemTuple(_:finalFlag:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,7 +442,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.710128"
+            timestampString = "536252452.582598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -458,27 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.912856"
+            timestampString = "536252452.582822"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "580"
-            endingLineNumber = "580"
-            landmarkName = "scheduleAppropriateNotifications()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.913303"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "736"
-            endingLineNumber = "736"
+            startingLineNumber = "669"
+            endingLineNumber = "669"
             landmarkName = "createNotificationsForDayItemTuple(_:finalFlag:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -490,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.913757"
+            timestampString = "536252452.583084"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "init(delegate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -506,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.914181"
+            timestampString = "536252452.583335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "534"
-            endingLineNumber = "534"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
             landmarkName = "alignPrayerTimes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -522,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.914589"
+            timestampString = "536252452.583631"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "locationManager(_:didUpdateLocations:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -538,7 +522,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.914922"
+            timestampString = "536252452.583973"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "62"
@@ -554,7 +538,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/ViewController.swift"
-            timestampString = "536037649.915232"
+            timestampString = "536252452.584213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "227"
@@ -570,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.915291"
+            timestampString = "536252452.584261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "835"
-            endingLineNumber = "835"
+            startingLineNumber = "766"
+            endingLineNumber = "766"
             landmarkName = "currentPrayerTime()"
             landmarkType = "7">
          </BreakpointContent>
@@ -586,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.915628"
+            timestampString = "536252452.584517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "844"
-            endingLineNumber = "844"
+            startingLineNumber = "772"
+            endingLineNumber = "772"
             landmarkName = "currentPrayerTime()"
             landmarkType = "7">
          </BreakpointContent>
@@ -602,7 +586,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/ViewController.swift"
-            timestampString = "536037649.915952"
+            timestampString = "536252452.584764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "229"
@@ -618,11 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.916012"
+            timestampString = "536252452.58481"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "837"
-            endingLineNumber = "837"
+            startingLineNumber = "767"
+            endingLineNumber = "767"
             landmarkName = "currentPrayerTime()"
             landmarkType = "7">
          </BreakpointContent>
@@ -634,7 +618,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.710692"
+            timestampString = "536252452.585061"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
@@ -650,7 +634,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AthanToday/TodayViewController.swift"
-            timestampString = "531697201.710987"
+            timestampString = "536252452.585278"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
@@ -714,11 +698,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.916425"
+            timestampString = "536252452.585539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
+            startingLineNumber = "512"
+            endingLineNumber = "512"
             landmarkName = "alignPrayerTimes()"
             landmarkType = "7">
          </BreakpointContent>
@@ -730,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.91682"
+            timestampString = "536252452.585794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "376"
-            endingLineNumber = "376"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "parseDictionary(_:fromFile:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -746,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.917149"
+            timestampString = "536252452.586047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
             landmarkName = "parseDictionary(_:fromFile:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.917559"
+            timestampString = "536252452.586297"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "init(delegate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -778,11 +762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.917891"
+            timestampString = "536252452.586535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "457"
+            endingLineNumber = "457"
             landmarkName = "parseDictionary(_:fromFile:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -794,11 +778,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.918229"
+            timestampString = "536252452.586784"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "435"
-            endingLineNumber = "435"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "parseDictionary(_:fromFile:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -810,11 +794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.918551"
+            timestampString = "536252452.587032"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "fetchJSONData(_:dateTuple:)"
             landmarkType = "7">
             <Locations>
@@ -873,12 +857,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.91884"
+            timestampString = "536252452.587275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "fetchJSONData(_:dateTuple:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athan Utility/PrayerManager.swift"
+            timestampString = "536252452.587524"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "817"
+            endingLineNumber = "817"
+            landmarkName = "newDay()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -888,13 +888,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Athan Utility/PrayerManager.swift"
-            timestampString = "536037649.919183"
+            filePath = "Athan Utility/AppDelegate.swift"
+            timestampString = "536252452.587776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "889"
-            endingLineNumber = "889"
-            landmarkName = "newDay()"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "application(_:didReceive:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Athan Utility/ViewController.swift"
+            timestampString = "536252452.587823"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "dataReady(manager:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

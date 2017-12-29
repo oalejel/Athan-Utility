@@ -30,8 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         if Int(Date().timeIntervalSince(notification.fireDate!)) < 10 {
-            let av = UIAlertView(title: notification.alertBody, message: nil, delegate: nil, cancelButtonTitle: "OK")
-            av.show()
+            if let intendedDate = notification.userInfo?["intendedDate"] as? Date {
+                let interval = Date().timeIntervalSince(intendedDate)
+                let minutes = (interval / 60)
+                if minutes > 0 {
+                    let originalTitle = notification.alertBody
+                    let newTitle = originalTitle?.replacingOccurrences(of: "15m", with: "\(minutes)m")
+                    let av = UIAlertView(title: newTitle, message: nil, delegate: nil, cancelButtonTitle: "OK")
+                    av.show()
+                }
+            }
+            
         }
     }
     

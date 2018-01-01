@@ -813,13 +813,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func nextPrayerTime() -> Date? {
         //for cases where we are looking into next day
-        if currentPrayer == .isha || currentPrayer == .none {
+        if currentPrayer == .isha {
             if let storedNext = tomorrowPrayerTimes[PrayerType.fajr.rawValue] {
                 return storedNext
             } else {
-                return todayPrayerTimes[currentPrayer.next().rawValue]?.addingTimeInterval(86400)
+                return todayPrayerTimes[PrayerType.fajr.rawValue]?.addingTimeInterval(86400)
             }
         } else {
+            // = .none when we are at a new day and before fajr
             //standard case, taking time for prayer in same day
             return todayPrayerTimes[currentPrayer.next().rawValue]
         }

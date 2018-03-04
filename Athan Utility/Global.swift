@@ -43,7 +43,8 @@ func  daysInMonth(_ m: Int) -> Int {
     case 2:
         let df = Global.dateFormatter
         df.dateFormat = "y"
-        let year = Int(df.string(from: Date()))!
+        let curDate = Date()
+        let year = Int(df.string(from: curDate))!
         if year % 4 == 0 {
             if year % 100 == 0 {
                 if year % 400 != 0 {

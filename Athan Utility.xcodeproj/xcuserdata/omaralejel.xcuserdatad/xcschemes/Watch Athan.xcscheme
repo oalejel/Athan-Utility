@@ -57,6 +57,16 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3DA7C60E201D504C0001600D"
+               BuildableName = "Athan UtilityTests.xctest"
+               BlueprintName = "Athan UtilityTests"
+               ReferencedContainer = "container:Athan Utility.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

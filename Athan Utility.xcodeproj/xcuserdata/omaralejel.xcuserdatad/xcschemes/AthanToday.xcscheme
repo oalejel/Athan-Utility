@@ -44,13 +44,23 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3DA7C60E201D504C0001600D"
+               BuildableName = "Athan UtilityTests.xctest"
+               BlueprintName = "Athan UtilityTests"
+               ReferencedContainer = "container:Athan Utility.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3DD3B48E1C0D3B5700DC91E6"
-            BuildableName = "AthanToday.appex"
-            BlueprintName = "AthanToday"
+            BlueprintIdentifier = "3D07DA7A1BDC58B50001EFE4"
+            BuildableName = "Athan Utility.app"
+            BlueprintName = "Athan Utility"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

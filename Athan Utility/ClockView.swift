@@ -332,9 +332,9 @@ class ClockView: UIView {
             let radians: CGFloat = CGFloat(minutes / 30.0) * CGFloat(Double.pi)
             self.minutesLayer.transform = CATransform3DRotate(self.minutesLayer.transform, radians, 0, 0, 1)
             
-            let oldRotation: NSNumber = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
+            let oldRotation = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
             anim.fromValue = oldRotation
-            anim.toValue = CGFloat(Double.pi * 2) + CGFloat(oldRotation)
+            anim.toValue = (Double.pi * 2) + oldRotation.doubleValue
             self.minutesLayer.add(anim, forKey: "transform.rotation")
         }
     }

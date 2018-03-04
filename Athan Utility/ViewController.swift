@@ -70,6 +70,13 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         qiblaButton.layer.cornerRadius = 8
         settingsButton.layer.cornerRadius = 8
         
+        //prevent touch recognizers from delaying squeezebutton reactions
+        let window = UIApplication.shared.windows[0]
+        let g1 = window.gestureRecognizers?[0]
+        g1?.delaysTouchesBegan = false
+        let g2 = window.gestureRecognizers?[1]
+        g2?.delaysTouchesBegan = false
+        
         refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         refreshButton.setTitle("Refresh", for: UIControlState())
         refreshButton.backgroundColor = Global.darkerGray

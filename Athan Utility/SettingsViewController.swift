@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var customLocationButton: SqueezeButton!
     @IBOutlet weak var editAlarmsButton: SqueezeButton!
     @IBOutlet weak var aboutButton: SqueezeButton!
-    @IBOutlet weak var themeButton: SqueezeButton!
+//    @IBOutlet weak var themeButton: SqueezeButton!
     
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -23,14 +23,14 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        themeButton.isEnabled = false
-        themeButton.alpha = 0.5
+//        themeButton.isEnabled = false
+//        themeButton.alpha = 0.5
         
         // Do any additional setup after loading the view.
         customLocationButton.layer.cornerRadius = 8
         editAlarmsButton.layer.cornerRadius = 8
         aboutButton.layer.cornerRadius = 8
-        themeButton.layer.cornerRadius = 8
+//        themeButton.layer.cornerRadius = 8
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,34 +79,34 @@ class SettingsViewController: UIViewController {
     }
     
     ///IMPORTANT:
-    @IBAction func themePressed(_ sender: AnyObject) {
-        if Global.darkTheme {
-            themeButton.setTitle("Dark Theme", for: UIControlState())
-            
-        } else {
-            themeButton.setTitle("Color Theme", for: UIControlState())
-        }
-        Global.darkTheme = !Global.darkTheme
-    }
+//    @IBAction func themePressed(_ sender: AnyObject) {
+//        if Global.darkTheme {
+//            themeButton.setTitle("Dark Theme", for: UIControlState())
+//
+//        } else {
+//            themeButton.setTitle("Color Theme", for: UIControlState())
+//        }
+//        Global.darkTheme = !Global.darkTheme
+//    }
     
     func updateTheme() {
         if Global.darkTheme {
-            themeButton.backgroundColor = Global.darkerGray
+//            themeButton.backgroundColor = Global.darkerGray
             aboutButton.backgroundColor = Global.darkerGray
             editAlarmsButton.backgroundColor = Global.darkerGray
             customLocationButton.backgroundColor = Global.darkerGray
             
-            themeButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+//            themeButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
             aboutButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
             editAlarmsButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
             customLocationButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
         } else {
-            themeButton.backgroundColor = UIColor.white
+//            themeButton.backgroundColor = UIColor.white
             aboutButton.backgroundColor = UIColor.white
             editAlarmsButton.backgroundColor = UIColor.white
             customLocationButton.backgroundColor = UIColor.white
             
-            themeButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+//            themeButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
             aboutButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
             editAlarmsButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
             customLocationButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)

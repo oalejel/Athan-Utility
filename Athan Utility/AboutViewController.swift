@@ -9,13 +9,12 @@
 import UIKit
 import MessageUI
 
+// AboutViewController is responsible for showing contact info and gratitude to Icons8 and SwiftSpinner
 class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
+        // set the bar button item in the top right to dismiss
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AboutViewController.donePressed))
         navigationController?.navigationBar.topItem!.title = "About"
         
@@ -26,11 +25,12 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     
     @objc func donePressed() {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-            //something..
+            // do nothing for now
             
         })
     }
     
+    // when the contact button is pressed, compose an email to me
     @IBAction func contactPressed(_ sender: AnyObject) {
         if MFMailComposeViewController.canSendMail() {
             let mailController = MFMailComposeViewController()
@@ -43,15 +43,19 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         }
     }
     
+    // Delegate function for when mail composition is done
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
+    // When button for swiftSpinner is pressed, show martin's github
     @IBAction func martinPressed(_ sender: AnyObject) {
         let URL = "https://github.com/icanzilb/SwiftSpinner"
         UIApplication.shared.openURL(Foundation.URL(string: URL)!)
     }
     
+    // when icons8 link is pressed, show website
+    //NOTE: change this to display the website without leaving the application (using SafariViewController)
     @IBAction func iconsPressed(_ sender: AnyObject) {
         UIApplication.shared.openURL(URL(string: "https://icons8.com")!)
     }

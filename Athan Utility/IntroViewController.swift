@@ -7,30 +7,14 @@
 //
 
 import UIKit
-
+// IntroViewController is displayed on the first launch of Athan Utility
+// Its purpose is to show the user what the app is capable of doing
 class IntroViewController: UIViewController {
     
-    var scrollView: UIScrollView!
-    
-    var lastXOffset: CGFloat = 0
-    
-    var items = 3
-    
-    var scrollViewOffset: CGFloat = 14
+    // done button exits Introduction and displays primary app interface
     var buttonHeight: CGFloat = 55
-    
     var doneButton: UIButton!
-    
-    var pageControl: UIPageControl!
-    
-    var slide1: UIView!
-    var slide2: UIView!
-    var slide3: UIView!
-    
-    var labels1: [UILabel] = []
-    
-    var drawNeeded = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +40,7 @@ class IntroViewController: UIViewController {
         
         let f = UIScreen.main.bounds
         
+        // animlabel animates through different translations of "peace be upon you"
         let animLabel = AnimatedLabel(frame: CGRect(x: 0, y: 0, width: f.size.width - 40, height: 200), titles: ["السلام عليكم", "Peace Be Upon You", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Paix à Vous", "Friede Sei Mit Dir"], delay: 2.5)
         animLabel.textColor = UIColor.white
         animLabel.font = UIFont(name: "HelveticaNeue", size: 60)
@@ -66,10 +51,10 @@ class IntroViewController: UIViewController {
         UIView.animate(withDuration: 0.2, animations: {
             animLabel.alpha = 1
         })
-        
     }
     
-    
+    //animates images that communicate the feature of the app
+    // motion goes from either side to the middle
     func showFeatures() {
         let f = UIScreen.main.bounds
         
@@ -141,11 +126,9 @@ class IntroViewController: UIViewController {
         }
     }
     
+    //called on tap of done button
     @objc func done() {
         print("DONE")
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
 }

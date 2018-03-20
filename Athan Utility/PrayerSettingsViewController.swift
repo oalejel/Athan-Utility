@@ -8,6 +8,7 @@
 
 import UIKit
 
+// PrayerSettingsViewController displays the settings for an individual prayer time
 class PrayerSettingsViewController: UITableViewController {
     
     var currentRow = 0

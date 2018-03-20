@@ -8,6 +8,8 @@
 
 import UIKit
 
+// Animated Label takes an array of strings and animates through every string with a given delay
+// Example: "Hello" -> "Hola" -> "Bonjour" -> repeat
 class AnimatedLabel: UILabel {
     var titles: [String] = []
     var titleIndex = 0
@@ -20,7 +22,7 @@ class AnimatedLabel: UILabel {
         
         adjustsFontSizeToFitWidth = true
         numberOfLines = 1
-        
+        //set a timer to animate in the next translation
         Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(nextTitle), userInfo: nil, repeats: true)
     }
     
@@ -34,7 +36,6 @@ class AnimatedLabel: UILabel {
             titleIndex = 0
         }
         
-        
         UIView.animate(withDuration: 0.2, animations: {
             self.alpha = 0
         }, completion: { (done) in
@@ -45,17 +46,5 @@ class AnimatedLabel: UILabel {
                 
             })
         })
-        
-        
-        
     }
-    
-    /*
-     // Only override drawRect: if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func drawRect(rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
 }

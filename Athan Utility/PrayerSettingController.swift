@@ -8,6 +8,8 @@
 
 import UIKit
 
+// PrayerSettingController is responsible for user settings related to notifications frequency,
+// sounds, and other future settings
 class PrayerSettingController: UITableViewController {
     
     var p: PrayerType!
@@ -17,8 +19,6 @@ class PrayerSettingController: UITableViewController {
     var switchesEnabled: [Bool] = [true,true,true]
     
     var initialSettings: PrayerSetting!
-    
-    
     
     init(style: UITableViewStyle, prayer: PrayerType) {
         super.init(style: style)
@@ -68,6 +68,7 @@ class PrayerSettingController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
+    //if we decide to organize our table using headers and cells separated... use this
     //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     //        switch section {
     //        case 0:
@@ -79,6 +80,7 @@ class PrayerSettingController: UITableViewController {
     //        }
     //    }
     
+    // setup for settings cells in tableview
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let c = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
@@ -135,7 +137,6 @@ class PrayerSettingController: UITableViewController {
             default:
                 break
             }
-            //            print(Global.manager.prayerSettings[p]?.alarmType)
         } else {
             Global.manager.prayerSettings[p]?.soundEnabled = sender.isOn
         }

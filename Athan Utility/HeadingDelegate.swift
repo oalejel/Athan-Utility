@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 
+// A HeadingDelegate is notified when the compass direction is changed in "Qibla Mode"
 @objc protocol HeadingDelegate {
     func newHeading(_ h: CLHeading)
 }

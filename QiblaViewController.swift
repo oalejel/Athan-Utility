@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 
+// QiblaViewController displays a compass arrow in Qibla mode
 class QiblaViewController: UIViewController, HeadingDelegate {
     var needleLayer: CAShapeLayer!
     var qiblaOffset: Double!
@@ -22,23 +23,14 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
-        
         let northNeedle = CAShapeLayer()
         
+        // define geometry of the arrow
         let w: CGFloat = 30
         let h = (height(bounds) - (height(bounds) / 3)) - (width(bounds) / 2)
         let x = (width(bounds) / 2) - (w / 2)
         let y = height(bounds) / 4
         let tailY = h - 15
-        
-        //        let tipX = width(bounds) / 2
-        //        let tipY = height(bounds) / 4
-        //        let bottomY = height(bounds) - (height(bounds) / 3)
-        //        let bottomY2 = bottomY - 15
-        //        let bottomX1 = tipX - 15
-        //        let bottomX2 = tipX + 15
         
         let frame = CGRect(x: x, y: y, width: w, height: h)
         
@@ -48,8 +40,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         northPath.addLine(to: CGPoint(x: w / 2, y: tailY))
         northPath.addLine(to: CGPoint(x: w, y: h))
         northPath.addLine(to: CGPoint(x: w / 2, y: 0))
-        
-        
+        // set the layer's path using the UIBezierPath
         northNeedle.path = northPath.cgPath
         
         if Global.darkTheme {
@@ -78,26 +69,16 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     
     //get heading for qibla
     func newHeading(_ h: CLHeading) {
-        //        UIView.animateWithDuration(0.2) { () -> Void in
+        // set angle based on heading
         let angle = h.trueHeading
         let radians = (-1 * Double.pi * (angle / 180)) + (Double.pi * Double(self.qiblaOffset / 180))
         self.needleLayer?.transform = CATransform3DMakeRotation(CGFloat(radians), 0, 0, 1)
-        //        }
-        
-        //        let angle = h.trueHeading
-        //        let radians = ( Double.pi * (angle / 180)) - (Double.pi * Double(self.qiblaOffset / 180))
-        //        let anim = CABasicAnimation(keyPath: "transform.rotation")
-        //        anim.duration = 0.3
-        //        let oldRotation: NSNumber = self.needleLayer.valueForKeyPath("transform.rotation") as! NSNumber
-        //        anim.fromValue = oldRotation
-        //        anim.toValue = NSNumber(double: Double.pi)//oldRotation.doubleValue + 0.1)//NSNumber(double: oldRotation)
-        //        self.needleLayer.addAnimation(anim, forKey: "transform.rotation")
     }
     
     @IBAction func dismiss(_ sender: AnyObject) {
         headingManager.headingDelegate = nil
         presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-            //
+            // do nothing for now
         })
     }
 }

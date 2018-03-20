@@ -8,6 +8,7 @@
 
 import UIKit
 
+//LocationInputController allows the user to input a location they do not live in
 class LocationInputController: UIViewController {
     
     @IBOutlet weak var inputTextField: UITextField!
@@ -35,9 +36,9 @@ class LocationInputController: UIViewController {
         Global.manager.fetchCompletionClosure = {
             if Global.manager.lastFetchSuccessful {
                 self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-                    //something...
-                    
+                    // do nothing for now
                 })
+                
                 print("try succeeded")
                 DispatchQueue.main.async(execute: { () -> Void in
                     self.activityIndicator._hide()
@@ -50,11 +51,10 @@ class LocationInputController: UIViewController {
                 
                 print("try failed")
             }
-            
         }
-        
     }
     
+    // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
         Global.manager.getData = true//should you set it like this!!!???
         let searchString = inputTextField.text!.replacingOccurrences(of: " ", with: "+")
@@ -66,13 +66,10 @@ class LocationInputController: UIViewController {
         activityIndicator.startAnimating()
     }
     
-    
-    
-    
     @objc func cancelPressed() {
-        //!!@@@!!might need to reset some variables in manager like getData
+        // might need to reset some variables in manager like getData
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-            //something..
+            // do nothing special for now
             
         })
     }

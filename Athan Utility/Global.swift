@@ -8,6 +8,10 @@
 
 import UIKit
 
+/*
+    Global.swift contains many standard Athan Utility
+    functions and colors used throughout the application
+ */
 
 //size and origin getters
 func width(_ v: UIView) -> CGFloat {

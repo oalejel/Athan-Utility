@@ -8,15 +8,16 @@
 
 import Foundation
 
+/*
+ This protocol defines a delegate for prayer time updates
+ A PrayerManagerDelegate protocol should be used for all sorts of Extensions including
+ Watchkit and Today extensions
+*/
 @objc protocol PrayerManagerDelegate {
-    //    //main notification
     var manager: PrayerManager! {get set}
     func dataReady(manager: PrayerManager)
     func updatePrayer(manager: PrayerManager)
     func showLoader()
     func fifteenMinutesLeft()
     func newMeridiem()
-    //    optional func updateProgress(percent: Float)
-    //    //special notifications
-    //    func newDay()
 }

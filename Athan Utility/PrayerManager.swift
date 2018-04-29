@@ -831,7 +831,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         alignPrayerTimes()
         calculateCurrentPrayer()
         setTimers()
-        fetchJSONData(searchString: searchString: nil, dateTuple: nil)//not good enough of a solution long term!!...
+        fetchJSONData(searchString: nil, dateTuple: nil)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
     }

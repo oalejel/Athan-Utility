@@ -58,7 +58,7 @@ class LocationInputController: UIViewController {
     @IBAction func tryPressed(_ sender: AnyObject) {
         Global.manager.getData = true//should you set it like this!!!???
         let searchString = inputTextField.text!.replacingOccurrences(of: " ", with: "+")
-        Global.manager.fetchJSONData(searchString, dateTuple: nil)
+        Global.manager.fetchJSONData(searchString: searchString, dateTuple: nil)
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.activityIndicator._show()

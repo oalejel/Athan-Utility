@@ -200,9 +200,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.currentCountryString = placemark.isoCountryCode
                     self.coordinate = placemark.location?.coordinate
                     //fetch data for this month and the next month
-                    self.fetchJSONData(nil, dateTuple: nil)
+                    self.fetchJSONData(searchString: nil, dateTuple: nil)
                     let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-                    self.fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+                    self.fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
                 }
             }
         })
@@ -257,7 +257,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     //gets data from website then calls the parseJSONData function
-    func fetchJSONData(_ searchString: String?, dateTuple: (month: Int, year: Int)?) {
+    func fetchJSONData(searchString: String?, dateTuple: (month: Int, year: Int)?) {
         setCurrentDates()
         calculateAngle(coord: self.coordinate)
         self.lastFetchSuccessful = false
@@ -831,17 +831,17 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         alignPrayerTimes()
         calculateCurrentPrayer()
         setTimers()
-        fetchJSONData(nil, dateTuple: nil)//not good enough of a solution long term!!...
+        fetchJSONData(searchString: searchString: nil, dateTuple: nil)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+        fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
     }
     
     func reload() {
         //for simulator
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
-            fetchJSONData(nil, dateTuple: nil)
+        #if targetEnvironment(simulator)
+        fetchJSONData(searchString: nil, dateTuple: nil)
             let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-            fetchJSONData(nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+        fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
         #endif
         getData = true
         coreManager.delegate = self

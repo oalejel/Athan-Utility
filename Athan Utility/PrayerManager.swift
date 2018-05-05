@@ -6,14 +6,11 @@
 //  Copyright (c) 2015 Omar Alejel. All rights reserved.
 //
 
-/*
- PrayerManager
- 
- */
-
 import UIKit
 import CoreLocation
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+import UserNotifications
+
+// Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -26,7 +23,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -177,12 +174,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         self.coreManager.delegate = self
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff.
-        self.coreManager.requestWhenInUseAuthorization()
-        self.coreManager.startUpdatingLocation()
     }
     
     
     //MARK: - Location Services
+    
+    func beginLocationRequest() {
+        self.coreManager.requestWhenInUseAuthorization()
+        self.coreManager.startUpdatingLocation()
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -545,9 +545,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func scheduleAppropriateNotifications() {
-        //remove this later??!
+        //ask user for notifications capabilities
+        
+        let center = UNUserNotificationCenter.current()
         DispatchQueue.main.async {
-            UIApplication.shared.cancelAllLocalNotifications()
+            center.removeAllPendingNotificationRequests()
+        }
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
+            print("User denied use of notifications")
+//            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
+            
         }
         
         for i in 0..<5 {
@@ -618,13 +625,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             var minutes = 0
             var hours = 0
             let df = Global.dateFormatter
-            df.dateFormat = "s"
-            seconds = Int(df.string(from: curDate))!
+            df.dateFormat = "ss"
+            guard let s = Int(df.string(from: curDate)) else { return }
+            seconds = s
             df.dateFormat = "m"
-            minutes = Int(df.string(from: curDate))!
+            guard let m = Int(df.string(from: curDate)) else { return }
+            minutes = m
             df.dateFormat = "H"
-            hours = Int(df.string(from: curDate))!
-            
+            guard let h = Int(df.string(from: curDate)) else { return }
+            hours = h
             
             //set the newday timer
             let secondsInDay: Int? = seconds + (minutes * 60) + ((hours % 24) * 3600)
@@ -634,8 +643,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 
             }
         }
-        
-        
     }
     
     @objc func newMeridiem() {
@@ -660,6 +667,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
         
+        let center = UNUserNotificationCenter.current()
+        
         for i in min...5 {
             //!!annoying bg thread problem where we need to reset the format...
             
@@ -670,23 +679,23 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         if let pDate = byPrayer[p.rawValue] {
                             df.dateFormat = "h:mm"
                             let dateString = df.string(from: pDate)
-                            
                             let setting = prayerSettings[p]!
+                            
+                            // The object that stores text and sound for a note
+                            let _noteContent = UNMutableNotificationContent()
                             
                             //schedule a normal if settings allow
                             if setting.alarmType == .all || setting.alarmType == .noEarly {
-                                let note = UILocalNotification()
-                                note.fireDate = pDate
-                                note.timeZone = TimeZone.autoupdatingCurrent
-                                
                                 if setting.soundEnabled {
-                                    note.soundName = "chime1.aiff"
+                                    _noteContent.sound = UNNotificationSound(named: "chime1.aiff")
                                 }
                                 
-                                var alertText = ""
+                                var alertString = ""
+                                // finalFlag indicates that we have reached the limit for stored
+                                // local notifications, and should let the user know
                                 if finalFlag {
                                     if p == .isha {
-                                        alertText = "Time for \(p.stringValue()) [\(dateString)]. Please reopen Athan Utility to continue to recieve notificaitons..."
+                                        alertString = "Time for \(p.stringValue()) [\(dateString)]. Please reopen Athan Utility to continue to recieve notificaitons..."
                                     }
                                 } else {
                                     var alternativeString: String?
@@ -699,20 +708,23 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     
                                     if let alt = alternativeString {
                                         print(dateString)
-                                        alertText = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
+                                        alertString = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
                                     } else {
-                                        alertText = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                        alertString = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
                                     }
-                                    
                                 }
+
+                                _noteContent.title = alertString
                                 
-                                note.alertBody = alertText
-                                
+                                let dateComp = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: pDate)
+                                let _trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+                                let _noteRequest = UNNotificationRequest(identifier: "standard_note", content: _noteContent, trigger: _trigger)
                                 DispatchQueue.main.async {
-                                    UIApplication.shared.scheduleLocalNotification(note)
+                                    center.add(_noteRequest, withCompletionHandler: nil)
                                 }
                             }
                             
+                            // if user would ALSO like to get notified 15 minutes prior
                             if setting.alarmType == .all {
                                 ////add a reminder for 15 minutes before
                                 let preNote = UILocalNotification()
@@ -724,24 +736,23 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     preNote.soundName = UILocalNotificationDefaultSoundName
                                 }
                                 
-                                var alertText = ""
+                                var alertString = ""
                                 
                                 var alternativeString: String?
                                 if var charRange = locationString?.range(of: ",") {
                                     if let stringEnd = locationString?.endIndex {
-                                        //                        charRange.upperBound = stringEnd
                                         charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
                                         alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
                                     }
                                 }
                                 
                                 if let alt = alternativeString {
-                                    alertText = "15m left til \(p.stringValue()) in \(alt)! [\(dateString)]"
+                                    alertString = "15m left til \(p.stringValue()) in \(alt)! [\(dateString)]"
                                 } else {
-                                    alertText = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                    alertString = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
                                 }
                                 
-                                preNote.alertBody = alertText
+                                preNote.alertBody = alertString
                                 
                                 DispatchQueue.main.async {
                                     UIApplication.shared.scheduleLocalNotification(preNote)

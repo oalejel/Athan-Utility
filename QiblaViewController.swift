@@ -43,17 +43,17 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         // set the layer's path using the UIBezierPath
         northNeedle.path = northPath.cgPath
         
-        if Global.darkTheme {
+//        if Global.darkTheme {
             northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
             dismissButton.backgroundColor = Global.darkerGray
             dismissButton.titleLabel?.textColor = .white
             view.backgroundColor = .black
-        } else {
-            northNeedle.fillColor = UIColor.red.cgColor
-            dismissButton.backgroundColor = .white
-            dismissButton.titleLabel?.textColor = Global.darkestGray
-            view.backgroundColor = .white//add a vibrancy layer in light theme
-        }
+//        } else {
+//            northNeedle.fillColor = UIColor.red.cgColor
+//            dismissButton.backgroundColor = .white
+//            dismissButton.titleLabel?.textColor = Global.darkestGray
+//            view.backgroundColor = .white//add a vibrancy layer in light theme
+//        }
         
         view.layer.addSublayer(northNeedle)
         

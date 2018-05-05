@@ -19,19 +19,25 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         
         let f = UIScreen.main.bounds
-        
         let layer = CAGradientLayer()
         layer.colors = [UIColor(red: 75/255, green: 28/255, blue: 152/255, alpha: 1).cgColor, UIColor.black.cgColor]
         layer.frame = f
         view.layer.addSublayer(layer)
         
-        let doneButton = UIButton(frame: CGRect(x: 0, y: f.size.height - buttonHeight, width: f.size.width, height: buttonHeight))
+        let doneButton = SqueezeButton(frame: CGRect(x: 0, y: f.size.height - buttonHeight, width: f.size.width, height: buttonHeight))
         doneButton.setTitle("Continue", for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray.withAlphaComponent(0.7), for: .highlighted)
         doneButton.backgroundColor = Global.darkestGray
         doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
         view.addSubview(doneButton)
+        
+        // add contraints to appropriately place dismiss button for phones including iPhone X
+        let left = NSLayoutConstraint(item: doneButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 8)
+        let right = NSLayoutConstraint(item: doneButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 8)
+        let bottom = NSLayoutConstraint(item: doneButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 8)
+        let height = NSLayoutConstraint(item: doneButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: buttonHeight)
+        view.addConstraints([left, right, bottom, height])
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,5 +136,8 @@ class IntroViewController: UIViewController {
     @objc func done() {
         print("DONE")
         presentingViewController?.dismiss(animated: true, completion: nil)
+        
+        //request use of location services. Will ask for notifications permission later
+        Global.manager.beginLocationRequest()
     }
 }

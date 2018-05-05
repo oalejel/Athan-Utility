@@ -90,13 +90,15 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
         
+        // Deal with a force-press app shortcut
         if Global.openQibla {
             showQibla(self)
         }
 
-        if !Global.darkTheme {
-            updateTheme()
-        }
+        // Theme changing currently not supported
+//        if !Global.darkTheme {
+//            updateTheme()
+//        }
         
         Global.mainController = self
     }
@@ -140,15 +142,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         if showSpinner {
             SwiftSpinner.show("Loading Prayer\nData", animated: true)
             showSpinner = false
+            //
             if !pref { showIntroLate = true }
+            manager.beginLocationRequest()
         } else if !pref {
-            print("show intro screen!!!!")
-            //show intro screen
+            print("show intro screen")
             let intro = IntroViewController()
             intro.view.backgroundColor = UIColor.black
-            present(intro, animated: true, completion: {
-                
-            })
+            present(intro, animated: true, completion: { })
             UserDefaults.standard.set(true, forKey: "introduced")
         }
         

@@ -14,10 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        //NOTE: ask for notifications permissions at a later time so that the user can digest the app before allowing notifications
-        //ask user for notifications capabilities
-        let settings = UIUserNotificationSettings(types: [.alert, .sound, .badge], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
+        //NOTE: ask for notifications permissions once features are shown so that the user can digest the app before allowing notifications
         
         return true
     }

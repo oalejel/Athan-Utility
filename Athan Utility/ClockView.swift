@@ -98,24 +98,7 @@ class ClockView: UIView {
             didDraw = true
         }
     }
-    
-    //    //wont need this...
-    //    override init(frame: CGRect) {
-    //        super.init(frame: frame)
-    //
-    //        backgroundColor = UIColor.blackColor()
-    //
-    //        width = frame.size.width
-    //        height = frame.size.height
-    //        addPMPath()
-    //        addAMPath()
-    //        addMinuteTicks()
-    //        addHourTicks()
-    //        addMovingHourHand()
-    //        addMovingMinuteHand()
-    //        addMovingSecondHand()
-    //    }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -529,15 +512,18 @@ class ClockView: UIView {
             let df = Global.dateFormatter
             df.dateFormat = "h"
             let curDate = Date()
-            var hours = Float(df.string(from: curDate))
+            guard var hours = Float(df.string(from: curDate)) else {
+                
+                return
+            }
             df.dateFormat = "m"
-            let minutes = Float(df.string(from: curDate))
+            guard let minutes = Float(df.string(from: curDate)) else { return }
             df.dateFormat = "s.S"
-            let seconds = Float(df.string(from: curDate))
-            
+            guard let seconds = Float(df.string(from: curDate)) else { return }
+
             DispatchQueue.main.async { () -> Void in
-                hours! += minutes! / 60
-                let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)
+                hours += minutes / 60
+                let radians: CGFloat = CGFloat(hours / 6) * CGFloat(Double.pi)
                 self.hoursLayer.transform = CATransform3DRotate(self.hoursLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
@@ -550,9 +536,8 @@ class ClockView: UIView {
             minuteAnim.duration = 3600
             minuteAnim.repeatCount = Float.infinity
             
-            
             DispatchQueue.main.async { () -> Void in
-                let radians: CGFloat = CGFloat(minutes! / 30.0) * CGFloat(Double.pi)
+                let radians: CGFloat = CGFloat(minutes / 30.0) * CGFloat(Double.pi)
                 self.minutesLayer.transform = CATransform3DRotate(self.minutesLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.minutesLayer.value(forKeyPath: "transform.rotation") as! NSNumber
@@ -567,7 +552,7 @@ class ClockView: UIView {
             secondsAnim.repeatCount = Float.infinity
             
             DispatchQueue.main.async { () -> Void in
-                let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(Double.pi)
+                let radians: CGFloat = CGFloat(seconds / 30.0) * CGFloat.pi
                 self.secondsLayer.transform = CATransform3DRotate(self.secondsLayer.transform, radians, 0, 0, 1)
                 
                 let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber

@@ -30,6 +30,11 @@ class SettingsViewController: UIViewController {
         customLocationButton.layer.cornerRadius = 8
         editAlarmsButton.layer.cornerRadius = 8
         aboutButton.layer.cornerRadius = 8
+        
+        customLocationButton.backgroundColor = Global.darkerGray
+        editAlarmsButton.backgroundColor = Global.darkerGray
+        aboutButton.backgroundColor = Global.darkerGray
+        
 //        themeButton.layer.cornerRadius = 8
     }
     

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -49,8 +44,8 @@
                                 </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xsb-sE-J85" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
-                                <rect key="frame" x="26.5" y="627" width="102" height="29"/>
-                                <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="26.5" y="627" width="102.5" height="29"/>
+                                <color key="backgroundColor" red="0.22500000000000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Qibla"/>
                                 <connections>
@@ -76,7 +71,7 @@
                                 <rect key="frame" x="37.5" y="368" width="300" height="222"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNa-XY-ot8">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="222"/>
+                                        <rect key="frame" x="0.5" y="0.0" width="300" height="222"/>
                                         <connections>
                                             <segue destination="wgr-FR-nbt" kind="embed" identifier="Table" id="8Iu-8L-Dk5"/>
                                         </connections>
@@ -105,7 +100,7 @@
                             <constraint firstItem="Bv4-zz-aNR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4BP-L7-Ukg"/>
                             <constraint firstItem="rTe-id-Ph3" firstAttribute="top" secondItem="MSz-Fq-muk" secondAttribute="bottom" constant="8" id="9b9-0u-efg"/>
                             <constraint firstItem="Xsb-sE-J85" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="26.5" id="AKO-8T-WTI"/>
-                            <constraint firstItem="ktD-RF-KDQ" firstAttribute="leading" secondItem="Xsb-sE-J85" secondAttribute="trailing" constant="8" id="DVn-cZ-WJF"/>
+                            <constraint firstItem="ktD-RF-KDQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xsb-sE-J85" secondAttribute="trailing" id="DVn-cZ-WJF"/>
                             <constraint firstItem="lOI-1r-ZD0" firstAttribute="leading" secondItem="ktD-RF-KDQ" secondAttribute="trailing" constant="8" id="GGT-HV-on4"/>
                             <constraint firstItem="lOI-1r-ZD0" firstAttribute="top" secondItem="ktD-RF-KDQ" secondAttribute="top" id="KcB-b6-fOL"/>
                             <constraint firstItem="lOI-1r-ZD0" firstAttribute="height" secondItem="ktD-RF-KDQ" secondAttribute="height" id="MHG-IZ-1kk"/>
@@ -123,7 +118,6 @@
                             <constraint firstItem="rTe-id-Ph3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fbl-Fk-t0s"/>
                             <constraint firstItem="Bv4-zz-aNR" firstAttribute="top" secondItem="il8-3r-zSC" secondAttribute="bottom" constant="8" id="hYo-gY-ZGt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ktD-RF-KDQ" secondAttribute="bottom" constant="11" id="jtg-hn-Fmi"/>
-                            <constraint firstItem="ktD-RF-KDQ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.2" constant="27" id="mcm-FZ-ch2"/>
                             <constraint firstItem="il8-3r-zSC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="oq3-3b-Kh8"/>
                             <constraint firstItem="ktD-RF-KDQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pIk-Cn-9K0"/>
                             <constraint firstItem="MSz-Fq-muk" firstAttribute="width" secondItem="Bv4-zz-aNR" secondAttribute="width" id="vkh-GE-fX2"/>
@@ -190,6 +184,7 @@
                         <constraints>
                             <constraint firstItem="DR6-nG-c7u" firstAttribute="centerY" secondItem="l5g-4f-vid" secondAttribute="centerY" id="46p-Rt-Wl3"/>
                             <constraint firstAttribute="trailing" secondItem="CdP-WV-17B" secondAttribute="trailing" constant="8" id="Ht2-pq-gJ3"/>
+                            <constraint firstItem="CdP-WV-17B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DR6-nG-c7u" secondAttribute="trailing" id="Ll0-XM-Rep"/>
                             <constraint firstItem="CdP-WV-17B" firstAttribute="centerY" secondItem="l5g-4f-vid" secondAttribute="centerY" id="UR2-CB-w5v"/>
                             <constraint firstItem="DR6-nG-c7u" firstAttribute="leading" secondItem="l5g-4f-vid" secondAttribute="leading" constant="9" id="pBM-PU-cKf"/>
                         </constraints>

@@ -32,11 +32,13 @@ class IntroViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
         view.addSubview(doneButton)
         
+        
         // add contraints to appropriately place dismiss button for phones including iPhone X
         let left = NSLayoutConstraint(item: doneButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 8)
-        let right = NSLayoutConstraint(item: doneButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 8)
-        let bottom = NSLayoutConstraint(item: doneButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: 8)
+        let right = NSLayoutConstraint(item: doneButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -8)
+        let bottom = NSLayoutConstraint(item: doneButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1, constant: -8)
         let height = NSLayoutConstraint(item: doneButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: buttonHeight)
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraints([left, right, bottom, height])
     }
     
@@ -137,6 +139,7 @@ class IntroViewController: UIViewController {
         print("DONE")
         presentingViewController?.dismiss(animated: true, completion: nil)
         
+        Global.manager.delegate.loadingHandler()
         //request use of location services. Will ask for notifications permission later
         Global.manager.beginLocationRequest()
     }

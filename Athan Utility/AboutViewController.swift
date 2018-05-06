@@ -50,13 +50,13 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     
     // When button for swiftSpinner is pressed, show martin's github
     @IBAction func martinPressed(_ sender: AnyObject) {
-        let URL = "https://github.com/icanzilb/SwiftSpinner"
-        UIApplication.shared.openURL(Foundation.URL(string: URL)!)
+        let URLString = "https://github.com/icanzilb/SwiftSpinner"
+        UIApplication.shared.open(URL(string: URLString)!, options: [:], completionHandler: nil)
     }
     
     // when icons8 link is pressed, show website
     //NOTE: change this to display the website without leaving the application (using SafariViewController)
     @IBAction func iconsPressed(_ sender: AnyObject) {
-        UIApplication.shared.openURL(URL(string: "https://icons8.com")!)
+        UIApplication.shared.open(URL(string: "https://icons8.com")!, options: [:], completionHandler: nil)
     }
 }

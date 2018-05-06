@@ -169,13 +169,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
         } else {
-            delegate.showLoader()
+            delegate.setShouldShowLoader()
         }
         
         self.coreManager.delegate = self
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff.
     }
-    
     
     //MARK: - Location Services
     
@@ -374,7 +373,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     //                var dayOffset = 0
                     let df = Global.dateFormatter
                 
-                    
                     let swiftDaysArray = daysArray as! [NSDictionary]
                     
                     let prayers: [PrayerType] = [.fajr, .shurooq, .thuhr, .asr, .maghrib, .isha]
@@ -552,7 +550,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             center.removeAllPendingNotificationRequests()
         }
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
-            print("User denied use of notifications")
+            if !granted {
+               print("User denied use of notifications")
+            }
 //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
             
         }
@@ -670,8 +670,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let center = UNUserNotificationCenter.current()
         
         for i in min...5 {
-            //!!annoying bg thread problem where we need to reset the format...
-            
             let p = PrayerType(rawValue: i)!
             if let byMonth = yearTimes[t.year] {
                 if let byDay = byMonth[t.month] {
@@ -682,12 +680,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             let setting = prayerSettings[p]!
                             
                             // The object that stores text and sound for a note
-                            let _noteContent = UNMutableNotificationContent()
+                            let noteContent = UNMutableNotificationContent()
                             
                             //schedule a normal if settings allow
                             if setting.alarmType == .all || setting.alarmType == .noEarly {
                                 if setting.soundEnabled {
-                                    _noteContent.sound = UNNotificationSound(named: "chime1.aiff")
+                                    noteContent.sound = UNNotificationSound(named: "chime1.aiff")
                                 }
                                 
                                 var alertString = ""
@@ -714,26 +712,32 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                 }
 
-                                _noteContent.title = alertString
-                                
+                                // set the notification body
+                                noteContent.body = alertString
+
+                                //create a trigger with the correct date
                                 let dateComp = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: pDate)
-                                let _trigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
-                                let _noteRequest = UNNotificationRequest(identifier: "standard_note", content: _noteContent, trigger: _trigger)
+                                let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
+                                //create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
+                                let noteRequest = UNNotificationRequest(identifier: "standard_note", content: noteContent, trigger: noteTrigger)
                                 DispatchQueue.main.async {
-                                    center.add(_noteRequest, withCompletionHandler: nil)
+                                    center.add(noteRequest, withCompletionHandler: nil)
                                 }
                             }
                             
                             // if user would ALSO like to get notified 15 minutes prior
                             if setting.alarmType == .all {
                                 ////add a reminder for 15 minutes before
-                                let preNote = UILocalNotification()
-                                preNote.fireDate = pDate.addingTimeInterval(-900)//15 mins before
-                                preNote.userInfo = ["intendedFireDate": preNote.fireDate ?? Date()]
-                                preNote.timeZone = TimeZone.autoupdatingCurrent
-                                //!! i think i would rather not have this one make a sound...would it still be noticeable?
+                                let preNoteContent = UNMutableNotificationContent()
+                                let preDate = pDate.addingTimeInterval(-900)//15 mins before
+                                preNoteContent.userInfo = ["intendedFireDate": preDate]
+                                let preNoteComponents = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: preDate)
+                                
+                                let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
+                                
+                                //use a standard note tone when giving a 15m reminder
                                 if setting.soundEnabled {
-                                    preNote.soundName = UILocalNotificationDefaultSoundName
+                                    preNoteContent.sound = UNNotificationSound.default()
                                 }
                                 
                                 var alertString = ""
@@ -752,10 +756,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     alertString = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
                                 }
                                 
-                                preNote.alertBody = alertString
-                                
+                                preNoteContent.title = alertString
+                               
+                                let preNoteRequest = UNNotificationRequest(identifier: "pre_note", content: preNoteContent, trigger: preNoteTrigger)
                                 DispatchQueue.main.async {
-                                    UIApplication.shared.scheduleLocalNotification(preNote)
+                                    center.add(preNoteRequest, withCompletionHandler: nil)
                                 }
                             }
                         }

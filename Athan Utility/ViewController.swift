@@ -136,13 +136,19 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         //show introduction if never presented before!
         let pref = UserDefaults.standard.bool(forKey: "introduced")
-        
-        //CONNECT
-        
-        if showSpinner {
-            SwiftSpinner.show("Loading Prayer\nData", animated: true)
-            showSpinner = false
-            //
+        if !pref {
+            let intro = IntroViewController()
+            intro.view.backgroundColor = UIColor.black
+            present(intro, animated: true, completion: { })
+            UserDefaults.standard.set(true, forKey: "introduced")
+        } else {
+            if showSpinner {
+                SwiftSpinner.show("Loading Prayer\nData", animated: true)
+                showSpinner = false
+            }
+        }
+            
+            /*
             if !pref { showIntroLate = true }
             manager.beginLocationRequest()
         } else if !pref {
@@ -152,6 +158,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             present(intro, animated: true, completion: { })
             UserDefaults.standard.set(true, forKey: "introduced")
         }
+             }
+ */
         
         refreshClockNeeded = true
     }
@@ -164,17 +172,17 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         
         DispatchQueue.main.async { () -> Void in
             SwiftSpinner.hide()
-            if self.showIntroLate {
-                print("show intro screen!!!!")
-                //show intro screen
-                let intro = IntroViewController()
-                intro.view.backgroundColor = UIColor.black
-                self.present(intro, animated: true, completion: {
-                    
-                })
-                self.showIntroLate = false
-                UserDefaults.standard.set(true, forKey: "introduced")
-            }
+//            if self.showIntroLate {
+//                print("show intro screen!!!!")
+//                //show intro screen
+//                let intro = IntroViewController()
+//                intro.view.backgroundColor = UIColor.black
+//                self.present(intro, animated: true, completion: {
+//
+//                })
+//                self.showIntroLate = false
+//                UserDefaults.standard.set(true, forKey: "introduced")
+//            }
             if let location = manager.locationString {
                 self.locationLabel.text = location
             }
@@ -207,7 +215,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         DispatchQueue.main.async { () -> Void in
             if self.manager.dataAvailable {
                 self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
-                print(self.manager.todayPrayerTimes)
+//                print(self.manager.todayPrayerTimes)
                 self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
                 self.clock.setPrayerBubbles(self.manager)
                 self.clock.refresh()
@@ -236,7 +244,13 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         }
     }
     
-    func showLoader() {
+    func loadingHandler() {
+        SwiftSpinner.show("Loading Prayer\nData", animated: true)
+        manager.reload()
+    }
+    
+    // tells vc to be ready to show spinner when prayer manager is initialized
+    func setShouldShowLoader() {
         showSpinner = true
     }
     
@@ -252,11 +266,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     @IBAction func refreshPressed(_ sender: AnyObject) {
         //get new data
-        
-        SwiftSpinner.show("Loading Prayer\nData", animated: true)
-        manager.reload()
+        loadingHandler()
     }
-    
     
     @IBAction func settingsButtonPressed(_ sender: AnyObject) {
         if !settingsMode {

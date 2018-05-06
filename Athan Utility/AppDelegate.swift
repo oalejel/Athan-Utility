@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,33 +20,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    @available(iOS 9.0, *)
     // launching from a force-press shortcut item
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         Global.openQibla = true
     }
     
     // give an alert when the application is meant to receive a local notification
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        if Int(Date().timeIntervalSince(notification.fireDate!)) < 10 {
-            if let intendedDate = notification.userInfo?["intendedDate"] as? Date {
+    
+    private func application(_ application: UIApplication, didReceive notification: UNNotification) {
+        
+        //only bother giving an update to their 15 m reminder if its been 5 minutes since
+        if Int(Date().timeIntervalSince(notification.date)) < 10 {
+            if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
                 let interval = Date().timeIntervalSince(intendedDate)
                 let minutes = (interval / 60)
                 if minutes > 0 {
-                    let originalTitle = notification.alertBody
-                    let newTitle = originalTitle?.replacingOccurrences(of: "15m", with: "\(minutes)m")
-                    let av = UIAlertView(title: newTitle, message: nil, delegate: nil, cancelButtonTitle: "OK")
-                    av.show()
+                    let originalTitle = notification.request.content.body
+                    let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
+                    let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
+                    alertController.show((window?.rootViewController)!, sender: nil)
                 }
             }
-            
+
         }
     }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
+//    internal
+//    func applicationWillResignActive(_ application: UIApplication) {
+//        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+//        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+//    }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.

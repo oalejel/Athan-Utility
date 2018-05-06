@@ -9,7 +9,6 @@
 
 import UIKit
 
-@available(iOS 8.0, *)
 open class SwiftSpinner: UIView {
     
     // MARK: - Singleton

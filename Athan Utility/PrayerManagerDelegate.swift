@@ -17,7 +17,8 @@ import Foundation
     var manager: PrayerManager! {get set}
     func dataReady(manager: PrayerManager)
     func updatePrayer(manager: PrayerManager)
-    func showLoader()
+    func setShouldShowLoader()
     func fifteenMinutesLeft()
     func newMeridiem()
+    func loadingHandler()
 }

@@ -69,10 +69,11 @@
 		3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DD903931BDEE2FE009F6635 /* chime1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3DD903921BDEE2FE009F6635 /* chime1.aiff */; };
 		3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD9814C1CC6E3D100151027 /* IntroViewController.swift */; };
-		3DDE264C1BDD25BA004D3D1D /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */; };
+		3DDE264C1BDD25BA004D3D1D /* oldSwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */; };
 		3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3DFE11572096647100D46A1F /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3DFE11582097E03B00D46A1F /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
+		3FE798E961008341454CBC07 /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
 		3D017CB71BEEDF7A009265AD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
@@ -208,10 +210,12 @@
 		3DD3B4991C0D3B5700DC91E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD903921BDEE2FE009F6635 /* chime1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = chime1.aiff; sourceTree = "<group>"; };
 		3DD9814C1CC6E3D100151027 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
+		3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oldSwiftSpinner.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
+		D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.release.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE798E961008341454CBC07 /* Pods_Athan_Utility.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,9 +249,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		75B9878424837E0AC28AE6A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1624FA18F3BDCB6BB4B4C2A2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */,
+				DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3D07DA721BDC58B50001EFE4 = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +278,7 @@
 				3DA7C610201D504C0001600D /* Athan UtilityTests */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
+				1624FA18F3BDCB6BB4B4C2A2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -367,7 +389,7 @@
 				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
 				3D07DA911BDC58E30001EFE4 /* SqueezeButton.swift */,
-				3DDE264B1BDD25BA004D3D1D /* SwiftSpinner.swift */,
+				3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */,
 				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
 			);
 			name = General;
@@ -431,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */,
+				D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -457,11 +480,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D07DA8D1BDC58B60001EFE4 /* Build configuration list for PBXNativeTarget "Athan Utility" */;
 			buildPhases = (
+				15CF839A23920BA0FE906F67 /* [CP] Check Pods Manifest.lock */,
 				3D07DA771BDC58B50001EFE4 /* Sources */,
 				3D07DA781BDC58B50001EFE4 /* Frameworks */,
 				3D07DA791BDC58B50001EFE4 /* Resources */,
 				3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */,
 				3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */,
+				84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */,
+				7AAB8ADA54CFBFBF81C71DFD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -479,6 +505,7 @@
 			buildPhases = (
 				3D3DD5D51C2B1F7200FEBB3D /* Resources */,
 				3D3DD5FF1C2B1F7300FEBB3D /* Embed App Extensions */,
+				75B9878424837E0AC28AE6A2 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -689,6 +716,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		15CF839A23920BA0FE906F67 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Athan Utility-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7AAB8ADA54CFBFBF81C71DFD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSpinner.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3D07DA771BDC58B50001EFE4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -705,7 +786,7 @@
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
-				3DDE264C1BDD25BA004D3D1D /* SwiftSpinner.swift in Sources */,
+				3DDE264C1BDD25BA004D3D1D /* oldSwiftSpinner.swift in Sources */,
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3D017CB91BEEDF7A009265AD /* SettingsViewController.swift in Sources */,
@@ -917,8 +998,8 @@
 		};
 		3D07DA8E1BDC58B60001EFE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -942,8 +1023,8 @@
 		};
 		3D07DA8F1BDC58B60001EFE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -967,7 +1048,6 @@
 		3D3DD5FA1C2B1F7300FEBB3D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Watch Athan/Watch Athan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -990,7 +1070,6 @@
 		3D3DD5FB1C2B1F7300FEBB3D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Watch Athan/Watch Athan.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

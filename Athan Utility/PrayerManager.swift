@@ -275,12 +275,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if getData {
             getData = false
             if let sureURL = URL {
-                print("going to request data")
+                print("Going to request data")
                 let request = URLRequest(url: sureURL)
                 let dataTask = session.dataTask(with: request, completionHandler: {
                     (data: Data?, response: URLResponse?, error: Error?) -> Void in
                     if error != nil {
-                        print("here")
                         self.getData = true
                     }
                     
@@ -288,7 +287,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         //this also stores to a file
                         let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
                         if let sureJSON = JSON {
-                            print("got data from online!")
+                            print("Got data from online")
                             self.parseDictionary(sureJSON, fromFile: false)
                         }
                     }
@@ -383,7 +382,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         if let dictItem = item as? [String: NSDictionary] {
                             if let itemDateCluster = dictItem["date"] {
                                 if let readableDateString = itemDateCluster["readable"] as? String {
-                                    print("readable date string: \(readableDateString)")
+//                                    print("readable date string: \(readableDateString)")
                                     
                                     df.dateFormat = "d M y"
                                     
@@ -651,7 +650,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func createNotificationsForDayItemTuple(_ t: (day: Int,  month: Int, year: Int), finalFlag: Bool) {
-        print("making notifications for \(t.month), \(t.day), \(t.year), final: \(finalFlag)")
+//        print("making notifications for \(t.month), \(t.day), \(t.year), final: \(finalFlag)")
         
         let df = Global.dateFormatter
         df.dateFormat = "h:mm"
@@ -705,7 +704,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                     
                                     if let alt = alternativeString {
-                                        print(dateString)
                                         alertString = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
                                     } else {
                                         alertString = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"

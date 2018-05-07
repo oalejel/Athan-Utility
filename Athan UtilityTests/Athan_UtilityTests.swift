@@ -10,21 +10,21 @@ import XCTest
 // given section
 
 class Athan_UtilityTests: XCTestCase, PrayerManagerDelegate {
-    var manager: PrayerManager!
-    
-    
-    
-    var pm: PrayerManager!
+//    var manager: PrayerManager!
+//
+//
+//
+//    var pm: PrayerManager!
     
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        pm = PrayerManager(delegate: self)
-        
-        // setup for first tests
-        pm.currentPrayer = .fajr
-        pm.todayPrayerTimes = [0:Date(), 1: Date(), 2:Date(), 3:Date(), 4:Date(), 5:Date()]
+//        pm = PrayerManager(delegate: self)
+//
+//        // setup for first tests
+//        pm.currentPrayer = .fajr
+//        pm.todayPrayerTimes = [0:Date(), 1: Date(), 2:Date(), 3:Date(), 4:Date(), 5:Date()]
     }
     
     override func tearDown() {
@@ -47,9 +47,9 @@ class Athan_UtilityTests: XCTestCase, PrayerManagerDelegate {
     
     
     /// Mandatory delegate implementations
-    func dataReady(manager: PrayerManager) {}
-    func updatePrayer(manager: PrayerManager) {}
-    func showLoader() {}
-    func fifteenMinutesLeft() {}
-    func newMeridiem() {}
+//    func dataReady(manager: PrayerManager) {}
+//    func updatePrayer(manager: PrayerManager) {}
+//    func showLoader() {}
+//    func fifteenMinutesLeft() {}
+//    func newMeridiem() {}
 }

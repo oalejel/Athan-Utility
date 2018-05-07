@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import UserNotifications
+import SwiftSpinner
 
 // Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.

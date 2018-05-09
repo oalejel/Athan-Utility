@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftSpinner
 
 extension UIView {
     func _hide() {
@@ -144,7 +143,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             UserDefaults.standard.set(true, forKey: "introduced")
         } else {
             if showSpinner {
-                SwiftSpinner.show("Loading Prayer\nData", animated: true)
+                Spinner.show("Loading Prayer\nData", animated: true)
                 showSpinner = false
             }
         }
@@ -172,7 +171,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         lastUpdate = Date()
         
         DispatchQueue.main.async { () -> Void in
-            SwiftSpinner.hide()
+            Spinner.hide()
 //            if self.showIntroLate {
 //                print("show intro screen!!!!")
 //                //show intro screen
@@ -246,7 +245,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func loadingHandler() {
-        SwiftSpinner.show("Loading Prayer\nData", animated: true)
+        Spinner.show("Loading Prayer\nData", animated: true)
         manager.reload()
     }
     

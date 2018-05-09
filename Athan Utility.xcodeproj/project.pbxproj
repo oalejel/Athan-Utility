@@ -26,6 +26,7 @@
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D152C9120A0E843007F6B11 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D152C9020A0E843007F6B11 /* Spinner.swift */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D327CBD1C3564900083871B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
@@ -159,6 +160,7 @@
 		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
 		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
+		3D152C9020A0E843007F6B11 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
 		3D32B57E1C14D03A003CAE1B /* sunhorizon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunhorizon.png; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				3DD9814C1CC6E3D100151027 /* IntroViewController.swift */,
 				3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
+				3D152C9020A0E843007F6B11 /* Spinner.swift */,
 				3D4416E71C05174700329AA0 /* General */,
 				3D4416E61C05173D00329AA0 /* Qibla */,
 				3D4416E51C05172400329AA0 /* Settings */,
@@ -782,6 +785,7 @@
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D07DA9B1BDC58E30001EFE4 /* SqueezeButton.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
+				3D152C9120A0E843007F6B11 /* Spinner.swift in Sources */,
 				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */,

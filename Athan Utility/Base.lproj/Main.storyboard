@@ -25,10 +25,26 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="il8-3r-zSC" customClass="ClockView" customModule="Athan_Utility" customModuleProvider="target">
                                 <rect key="frame" x="37.5" y="20" width="300" height="300"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGl-K9-se3" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                                        <rect key="frame" x="270" y="270" width="30" height="30"/>
+                                        <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="MGl-K9-se3" secondAttribute="height" multiplier="1:1" id="PcO-gs-xCl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <connections>
+                                            <action selector="refreshPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RDe-ol-66Z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.27595918850000001" blue="0.2365535436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="MGl-K9-se3" firstAttribute="bottom" secondItem="il8-3r-zSC" secondAttribute="bottom" id="5Hj-HV-V6X"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="400" placeholder="YES" id="Tjm-4p-Vkk"/>
                                     <constraint firstAttribute="width" secondItem="il8-3r-zSC" secondAttribute="height" multiplier="1:1" priority="999" id="eac-aJ-dcH"/>
+                                    <constraint firstItem="MGl-K9-se3" firstAttribute="width" secondItem="il8-3r-zSC" secondAttribute="width" multiplier="0.1" id="uw5-cI-mk8"/>
+                                    <constraint firstItem="MGl-K9-se3" firstAttribute="leading" secondItem="il8-3r-zSC" secondAttribute="trailing" constant="-30" id="yuf-qX-IMX"/>
                                 </constraints>
                             </view>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ktD-RF-KDQ" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">

@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 import UserNotifications
-import SwiftSpinner
 
 // Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -865,7 +864,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     @objc func cancelRequest() {
         getData = false
-        SwiftSpinner.hide()
+        Spinner.hide()
     }
     
     //MARK: - Data Saving

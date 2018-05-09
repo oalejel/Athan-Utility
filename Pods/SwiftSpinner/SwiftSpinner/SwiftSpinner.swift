@@ -9,7 +9,7 @@
 
 import UIKit
 
-public class SwiftSpinner: UIView {
+open class SwiftSpinner: UIView {
     // MARK: - Singleton
     
     //
@@ -90,7 +90,7 @@ public class SwiftSpinner: UIView {
         isUserInteractionEnabled = true
     }
     
-    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         return self
     }
     
@@ -317,7 +317,7 @@ public class SwiftSpinner: UIView {
     //
     // observe the view frame and update the subviews layout
     //
-    public override var frame: CGRect {
+    open override var frame: CGRect {
         didSet {
             if frame == CGRect.zero {
                 return
@@ -388,7 +388,7 @@ public class SwiftSpinner: UIView {
         }
     }
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
         if tapHandler != nil {
@@ -412,7 +412,7 @@ public class SwiftSpinner: UIView {
     private var blurEffectStyle: UIBlurEffectStyle = .dark
     private var blurEffect: UIBlurEffect!
     private var blurView: UIVisualEffectView!
-    private var vibrancyView: UIVisualEffectView!
+    open var vibrancyView: UIVisualEffectView!
     
     private let defaultTitleFont = UIFont(name: "HelveticaNeue", size: 22.0)!
     private var currentTitleFont : UIFont
@@ -492,7 +492,7 @@ public class SwiftSpinner: UIView {
         }
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         updateFrame()
     }

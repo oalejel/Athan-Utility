@@ -11,8 +11,6 @@
 		3D017CBA1BEEDF7A009265AD /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */; };
 		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
 		3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */; };
-		3D033BE41C01306700CCE84A /* sound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BE31C01306700CCE84A /* sound@2x.png */; };
-		3D033BE61C01307D00CCE84A /* no_sound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BE51C01307D00CCE84A /* no_sound@2x.png */; };
 		3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */; };
 		3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA801BDC58B60001EFE4 /* ViewController.swift */; };
 		3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA851BDC58B60001EFE4 /* Assets.xcassets */; };
@@ -68,7 +66,6 @@
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
 		3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */; };
 		3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3DD903931BDEE2FE009F6635 /* chime1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 3DD903921BDEE2FE009F6635 /* chime1.aiff */; };
 		3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD9814C1CC6E3D100151027 /* IntroViewController.swift */; };
 		3DDE264C1BDD25BA004D3D1D /* oldSwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */; };
 		3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
@@ -142,8 +139,6 @@
 		3D017CB81BEEDF7A009265AD /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
 		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
-		3D033BE31C01306700CCE84A /* sound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound@2x.png"; sourceTree = "<group>"; };
-		3D033BE51C01307D00CCE84A /* no_sound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_sound@2x.png"; sourceTree = "<group>"; };
 		3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Utility.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D07DA801BDC58B60001EFE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -210,7 +205,6 @@
 		3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		3DD3B4971C0D3B5700DC91E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3DD3B4991C0D3B5700DC91E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3DD903921BDEE2FE009F6635 /* chime1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = chime1.aiff; sourceTree = "<group>"; };
 		3DD9814C1CC6E3D100151027 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oldSwiftSpinner.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -311,9 +305,6 @@
 				3D4416E51C05172400329AA0 /* Settings */,
 				3D4CEDA61BDD597700CA095E /* Table */,
 				3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */,
-				3D033BE51C01307D00CCE84A /* no_sound@2x.png */,
-				3D033BE31C01306700CCE84A /* sound@2x.png */,
-				3DD903921BDEE2FE009F6635 /* chime1.aiff */,
 				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
 				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
 				3D07DA8A1BDC58B60001EFE4 /* Info.plist */,
@@ -668,15 +659,12 @@
 				3D3643721CCD17960080DF5C /* info2@2x.png in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
-				3DD903931BDEE2FE009F6635 /* chime1.aiff in Resources */,
 				3D3643761CCD17960080DF5C /* info6@2x.png in Resources */,
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
-				3D033BE41C01306700CCE84A /* sound@2x.png in Resources */,
 				3D017CBA1BEEDF7A009265AD /* SettingsViewController.xib in Resources */,
 				3D3643711CCD17960080DF5C /* info1@2x.png in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
-				3D033BE61C01307D00CCE84A /* no_sound@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,11 +15,11 @@ class OptionsNavigatonController: UINavigationController {
         
         var fx: UIBlurEffect!
         
-        if Global.darkTheme {
+//        if Global.darkTheme {
             fx = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        } else {
-            fx = UIBlurEffect(style: UIBlurEffectStyle.light)
-        }
+//        } else {
+//            fx = UIBlurEffect(style: UIBlurEffectStyle.light)
+//        }
         
         
         let fxView = UIVisualEffectView(effect: fx)
@@ -31,16 +31,13 @@ class OptionsNavigatonController: UINavigationController {
 
         
         //nav
-        if Global.darkTheme {
+//        if Global.darkTheme {
             navigationBar.barTintColor = UIColor(white: 0.1, alpha: 1.0)
             navigationBar.tintColor = UIColor.white
             navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
-        } else {
-            navigationBar.barTintColor = UIColor(white: 1, alpha: 1.0)
-        }
-        
-        
-        
+//        } else {
+//            navigationBar.barTintColor = UIColor(white: 1, alpha: 1.0)
+//        }
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

@@ -96,13 +96,13 @@ class TableController: UITableViewController {
         })
     }
     
-    func updateTheme() {
-        if Global.darkTheme {
-            view.backgroundColor = UIColor.clear
-            tableView.separatorColor = UIColor.darkGray
-        } else {
-            view.backgroundColor = UIColor(white: 1, alpha: 0.1)
-            tableView.separatorColor = UIColor.clear
-        }
-    }
+//    func updateTheme() {
+//        if Global.darkTheme {
+//            view.backgroundColor = UIColor.clear
+//            tableView.separatorColor = UIColor.darkGray
+//        } else {
+//            view.backgroundColor = UIColor(white: 1, alpha: 0.1)
+//            tableView.separatorColor = UIColor.clear
+//        }
+//    }
 }

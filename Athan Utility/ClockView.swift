@@ -39,19 +39,19 @@ class ClockView: UIView {
         didSet {
             switch currentMeridiem! {
             case .am:
-                if Global.darkTheme {
-                    //in this case, the non-darkgray is selected
+//                if Global.darkTheme {
+//                    //in this case, the non-darkgray is selected
                     amLayer.strokeColor = UIColor.darkGray.cgColor
                     pmLayer.strokeColor = Global.darkestGray.cgColor
                     amLabel.textColor = UIColor.lightGray
                     pmLabel.textColor = UIColor.lightGray
-                } else {
-                    //in this case, white is selected
-                    amLayer.strokeColor = UIColor(white: 1, alpha: 0.5).cgColor
-                    pmLayer.strokeColor = UIColor(white: 1, alpha: 0.8).cgColor
-                    amLabel.textColor = UIColor.darkGray
-                    pmLabel.textColor = UIColor.darkGray
-                }
+//                } else {
+//                    //in this case, white is selected
+//                    amLayer.strokeColor = UIColor(white: 1, alpha: 0.5).cgColor
+//                    pmLayer.strokeColor = UIColor(white: 1, alpha: 0.8).cgColor
+//                    amLabel.textColor = UIColor.darkGray
+//                    pmLabel.textColor = UIColor.darkGray
+//                }
                 
                 //!! i initially had this since they would not update colors...
                 //                amLayer.removeFromSuperlayer()
@@ -60,17 +60,17 @@ class ClockView: UIView {
                 //                layer.insertSublayer(pmLayer, below: amLayer)
                 break
             case .pm:
-                if Global.darkTheme {
+//                if Global.darkTheme {
                     pmLayer.strokeColor = UIColor.darkGray.cgColor
                     amLayer.strokeColor = Global.darkestGray.cgColor
                     amLabel.textColor = UIColor.lightGray
                     pmLabel.textColor = UIColor.lightGray
-                } else {
-                    pmLayer.strokeColor = UIColor(white: 1, alpha: 0.5).cgColor
-                    amLayer.strokeColor = UIColor(white: 1, alpha: 0.8).cgColor
-                    amLabel.textColor = UIColor.darkGray
-                    pmLabel.textColor = UIColor.darkGray
-                }
+//                } else {
+//                    pmLayer.strokeColor = UIColor(white: 1, alpha: 0.5).cgColor
+//                    amLayer.strokeColor = UIColor(white: 1, alpha: 0.8).cgColor
+//                    amLabel.textColor = UIColor.darkGray
+//                    pmLabel.textColor = UIColor.darkGray
+//                }
                 
                 //                amLayer.removeFromSuperlayer()
                 //                layer.insertSublayer(amLayer, below: pmLayer)
@@ -283,8 +283,8 @@ class ClockView: UIView {
         minutesLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
         minutesLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
         
-        minutesLayer.shadowColor = UIColor.black.cgColor
-        minutesLayer.shadowOpacity = 0.5
+//        minutesLayer.shadowColor = UIColor.black.cgColor
+//        minutesLayer.shadowOpacity = 0.5
         
         layer.addSublayer(minutesLayer)
         
@@ -356,8 +356,8 @@ class ClockView: UIView {
         hoursLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
         hoursLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
         
-        hoursLayer.shadowColor = UIColor.black.cgColor
-        hoursLayer.shadowOpacity = 0.5
+//        hoursLayer.shadowColor = UIColor.black.cgColor
+//        hoursLayer.shadowOpacity = 0.5
         
         layer.addSublayer(hoursLayer)
         

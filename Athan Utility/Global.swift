@@ -105,11 +105,11 @@ class Global {
     
     static var mainController: ViewController?
     
-    static var darkTheme = true {
-        didSet {
-            mainController?.updateTheme()
-        }
-    }
+//    static var darkTheme = true {
+//        didSet {
+//            mainController?.updateTheme()
+//        }
+//    }
     
     static var openQibla = false {
         didSet {
@@ -119,6 +119,8 @@ class Global {
         }
     }
     
+    
+    /*
     class func colorsForPrayer(_ p: PrayerType) -> [CGColor] {
         var colors: [CGColor]!
         switch p {
@@ -140,6 +142,8 @@ class Global {
         
         return colors
     }
+ */
+    
     //    class var statusColor: UIColor {
     //        struct Formatter {
     //            static var instance = UIColor.greenColor()

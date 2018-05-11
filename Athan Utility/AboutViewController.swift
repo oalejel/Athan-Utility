@@ -18,9 +18,9 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AboutViewController.donePressed))
         navigationController?.navigationBar.topItem!.title = "About"
         
-        if !Global.darkTheme {
-            navigationItem.rightBarButtonItem!.tintColor = UIColor.darkGray
-        }
+//        if !Global.darkTheme {
+        navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray
+//        }
     }
     
     @objc func donePressed() {

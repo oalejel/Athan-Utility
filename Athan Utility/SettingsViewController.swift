@@ -78,28 +78,28 @@ class SettingsViewController: UIViewController {
     
     // this function will never be called for now
     
-    func updateTheme() {
-        if Global.darkTheme {
+//    func updateTheme() {
+//        if Global.darkTheme {
 //            themeButton.backgroundColor = Global.darkerGray
-            aboutButton.backgroundColor = Global.darkerGray
-            editAlarmsButton.backgroundColor = Global.darkerGray
-            customLocationButton.backgroundColor = Global.darkerGray
-            
-//            themeButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-            aboutButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-            editAlarmsButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-            customLocationButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
-        } else {
-//            themeButton.backgroundColor = UIColor.white
-            aboutButton.backgroundColor = UIColor.white
-            editAlarmsButton.backgroundColor = UIColor.white
-            customLocationButton.backgroundColor = UIColor.white
-            
-//            themeButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
-            aboutButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
-            editAlarmsButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
-            customLocationButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
-        }
-    }
+//            aboutButton.backgroundColor = Global.darkerGray
+//            editAlarmsButton.backgroundColor = Global.darkerGray
+//            customLocationButton.backgroundColor = Global.darkerGray
+//
+////            themeButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+//            aboutButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+//            editAlarmsButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+//            customLocationButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+////        } else {
+//////            themeButton.backgroundColor = UIColor.white
+////            aboutButton.backgroundColor = UIColor.white
+////            editAlarmsButton.backgroundColor = UIColor.white
+////            customLocationButton.backgroundColor = UIColor.white
+////
+//////            themeButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+////            aboutButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+////            editAlarmsButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+////            customLocationButton.setTitleColor(UIColor.darkGray, for: UIControlState.normal)
+////        }
+//    }
 
 }

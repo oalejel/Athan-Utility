@@ -83,13 +83,13 @@ class ElapsedView: UIView {
             self.progressLayer.backgroundColor = UIColor.green.cgColor
             self.layer.addSublayer(self.progressLayer)
             
-            if Global.darkTheme {
+//            if Global.darkTheme {
                 self.backgroundColor = Global.darkerGray
                 self.progressBGLayer.backgroundColor = Global.darkestGray.cgColor
-            } else {
-                self.backgroundColor = UIColor.white
-                self.progressBGLayer.backgroundColor = UIColor.lightGray.cgColor
-            }
+//            } else {
+//                self.backgroundColor = UIColor.white
+//                self.progressBGLayer.backgroundColor = UIColor.lightGray.cgColor
+//            }
             
             self.didDraw = true
             //if we had to wait for the view to be drawn...
@@ -131,19 +131,19 @@ class ElapsedView: UIView {
         }
     }
     
-    func updateTheme() {
-        DispatchQueue.main.async {
-            if Global.darkTheme {
-                self.backgroundColor = Global.darkerGray
-    //            elapsedLabel.textColor = UIColor.darkGray
-    //            timeLeftLabel.textColor = UIColor.darkGray
-            } else {
-                self.backgroundColor = UIColor.white
-                self.elapsedLabel.textColor = UIColor.darkGray
-                self.timeLeftLabel.textColor = UIColor.darkGray
-            }
-        }
-    }
+//    func updateTheme() {
+//        DispatchQueue.main.async {
+//            if Global.darkTheme {
+//                self.backgroundColor = Global.darkerGray
+//    //            elapsedLabel.textColor = UIColor.darkGray
+//    //            timeLeftLabel.textColor = UIColor.darkGray
+//            } else {
+//                self.backgroundColor = UIColor.white
+//                self.elapsedLabel.textColor = UIColor.darkGray
+//                self.timeLeftLabel.textColor = UIColor.darkGray
+//            }
+//        }
+//    }
     
     @objc func updateLabels() {
         timeElapsed = timeElapsed + 1

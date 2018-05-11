@@ -23,14 +23,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     var table: TableController!
     var progressView: ElapsedView!
     
-    @IBOutlet weak var locationLabel: UILabel!
+//    @IBOutlet weak var locationLabel: UILabel!
     var manager: PrayerManager!
     var showSpinner = false
     var refreshClockNeeded = false
     
-    @IBOutlet weak var refreshButton: SqueezeButton!
-    @IBOutlet weak var settingsButton: SqueezeButton!
-    @IBOutlet weak var qiblaButton: SqueezeButton!
+//    @IBOutlet weak var settingsButton: SqueezeButton!
     //not an actual xib containerview
     @IBOutlet weak var tableContainer: UIView!
     
@@ -40,6 +38,13 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     var showIntroLate = false
     
     var lastUpdate: Date?
+    
+    //new buttons
+    @IBOutlet weak var notificationsButton: SqueezeButton!
+    @IBOutlet weak var infoButton: SqueezeButton!
+    @IBOutlet weak var refreshButton: SqueezeButton!
+    @IBOutlet weak var qiblaButton: SqueezeButton!
+    @IBOutlet weak var locationButton: SqueezeButton!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Table" {
@@ -66,9 +71,9 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         manager = PrayerManager(delegate: self)
         Global.manager = manager
         
-        refreshButton.layer.cornerRadius = 8
-        qiblaButton.layer.cornerRadius = 8
-        settingsButton.layer.cornerRadius = 8
+//        refreshButton.layer.cornerRadius = 8
+//        qiblaButton.layer.cornerRadius = 8
+//        settingsButton.layer.cornerRadius = 8
         
         //prevent touch recognizers from delaying squeezebutton reactions
         let window = UIApplication.shared.windows[0]
@@ -77,15 +82,19 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         let g2 = window.gestureRecognizers?[1]
         g2?.delaysTouchesBegan = false
         
-        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
-        refreshButton.setTitle("Refresh", for: UIControlState())
+//        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
+//        refreshButton.setTitle("Refresh", for: UIControlState())
         refreshButton.backgroundColor = Global.darkerGray
-        qiblaButton.setTitleColor(UIColor.lightGray, for: UIControlState())
-        qiblaButton.setTitle("Qibla", for: UIControlState())
+        locationButton.backgroundColor = Global.darkerGray
+        locationButton.setTitleColor(UIColor.lightGray, for: .normal)
+//        qiblaButton.setTitleColor(UIColor.lightGray, for: UIControlState())
+//        qiblaButton.setTitle("Qibla", for: UIControlState())
         qiblaButton.backgroundColor = Global.darkerGray
-        settingsButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-        settingsButton.setTitle("Settings", for: UIControlState.normal)
-        settingsButton.backgroundColor = Global.darkerGray
+        infoButton.backgroundColor = Global.darkerGray
+        notificationsButton.backgroundColor = Global.darkerGray
+//        settingsButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
+//        settingsButton.setTitle("Settings", for: UIControlState.normal)
+//        settingsButton.backgroundColor = Global.darkerGray
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
@@ -122,6 +131,17 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         super.viewDidDisappear(animated)
         refreshClockNeeded = true
         clock.pause()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // new button setup
+        let radius = notificationsButton.frame.size.width / 2
+        notificationsButton.layer.cornerRadius = radius
+        infoButton.layer.cornerRadius = radius
+        refreshButton.layer.cornerRadius = radius
+        qiblaButton.layer.cornerRadius = radius
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,7 +204,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //                UserDefaults.standard.set(true, forKey: "introduced")
 //            }
             if let location = manager.locationString {
-                self.locationLabel.text = location
+//                self.locationLabel.text = location
+                self.locationButton.setTitle(location, for: .normal)
             }
             
             self.updatePrayerInfo()
@@ -196,18 +217,18 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         //a check if its NOT a good time to update
         if let x = lastUpdate {
             if Date().timeIntervalSince(x) < 360 {
-                if locationLabel.text == manager.locationString {
+                if locationButton.titleLabel?.text == manager.locationString {
                     return
                 }
             }
         }
         
         updatePrayerInfo()
-        if !Global.darkTheme {
-            newGradientLayer(animated: true)
-        }
+//        if !Global.darkTheme {
+//            newGradientLayer(animated: true)
+//        }
         
-        //now we save the update date
+        //now we save the updated date
         lastUpdate = Date()
     }
     
@@ -254,29 +275,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         showSpinner = true
     }
     
-    @IBAction func showQibla(_ sender: AnyObject) {
-        let qvc = QiblaViewController()
-        qvc.qiblaOffset = self.manager.qibla
-        qvc.headingManager = self.manager
-        self.manager.headingDelegate = qvc
-        present(qvc, animated: true) { () -> Void in
-            //do something
-        }
-    }
-    
-    @IBAction func refreshPressed(_ sender: AnyObject) {
-        //get new data
-        loadingHandler()
-    }
-    
     @IBAction func settingsButtonPressed(_ sender: AnyObject) {
         if !settingsMode {
             qiblaButton._hide()
             refreshButton._hide()
             table.tableView._hide()
             progressView._hide()
-            settingsButton.setTitle("Done", for: UIControlState.normal)
-            settingsButton.alpha = 1
+//            settingsButton.setTitle("Done", for: UIControlState.normal)
+//            settingsButton.alpha = 1
             //add settings controller
             if settingsController == nil {
                 let s = SettingsViewController()
@@ -296,7 +302,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             refreshButton._show()
             table.tableView._show()
             progressView._show()
-            settingsButton.setTitle("Settings", for: UIControlState.normal)
+//            settingsButton.setTitle("Settings", for: UIControlState.normal)
             if let s = settingsController {
                 s.view._hide()
                 s.removeFromParentViewController()//hmm sketchy...
@@ -332,6 +338,50 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         })
     }
     
+    //MARK: - Button Presses
+    
+    // Show alarm controls. Originates from bell button
+    @IBAction func alarmsButtonPressed(_ sender: AnyObject) {
+        let prayerSettingsController = PrayerSettingsViewController()
+        prayerSettingsController.manager = manager
+        let navController = OptionsNavigatonController(rootViewController: prayerSettingsController)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    // Show conrtol for setting custom location (originates from location button @ bottom)
+    @IBAction func customLocationPressed(_ sender: SqueezeButton) {
+        let v = LocationInputController()//: UIViewController!
+        let navController = OptionsNavigatonController(rootViewController: v)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    // Show app credits. Originates from 'i' info button
+    @IBAction func aboutPressed(_ sender: SqueezeButton) {
+        let v = AboutViewController()
+        let navController = OptionsNavigatonController(rootViewController: v)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    // Show compass direction to Kabah in Mecca. Originates from compass button.
+    @IBAction func showQibla(_ sender: AnyObject) {
+        let qvc = QiblaViewController()
+        qvc.qiblaOffset = self.manager.qibla
+        qvc.headingManager = self.manager
+        self.manager.headingDelegate = qvc
+        present(qvc, animated: true) { () -> Void in
+            //do something
+        }
+    }
+    
+    // Refresh app data. Originates from button with rotating arrows
+    @IBAction func refreshPressed(_ sender: AnyObject) {
+        //get new data
+        loadingHandler()
+    }
+    
+    
+    /*
+     
     //global is notified by the settings controller, global then tells the viewcontroller
     func updateTheme() {
         if Global.darkTheme {
@@ -343,14 +393,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                     self.table.updateTheme()
                     self.settingsController?.updateTheme()
                     
-                    self.settingsButton.backgroundColor = Global.darkerGray
+//                    self.settingsButton.backgroundColor = Global.darkerGray
                     self.qiblaButton.backgroundColor = Global.darkerGray
                     self.refreshButton.backgroundColor = Global.darkerGray
-                    self.settingsButton.setTitleColor(UIColor.gray, for: UIControlState())
+//                    self.settingsButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.refreshButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.qiblaButton.setTitleColor(UIColor.gray, for: UIControlState())
                     self.clock.currentMeridiem = self.clock.currentMeridiem//this will invoke a check on color
-                    self.locationLabel.textColor = UIColor.gray
+//                    self.locationLabel.textColor = UIColor.gray
                     
                     self.view.backgroundColor = UIColor.black
                     if let gl = self.gradientLayer {
@@ -368,14 +418,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                     self.progressView.updateTheme()
                     self.table.updateTheme()
                     self.settingsController?.updateTheme()
-                    self.settingsButton.backgroundColor = UIColor.white
+//                    self.settingsButton.backgroundColor = UIColor.white
                     self.qiblaButton.backgroundColor = UIColor.white
                     self.refreshButton.backgroundColor = UIColor.white
-                    self.settingsButton.setTitleColor(UIColor.darkGray, for: UIControlState())
+//                    self.settingsButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.refreshButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.qiblaButton.setTitleColor(UIColor.darkGray, for: UIControlState())
                     self.clock.currentMeridiem = self.clock.currentMeridiem
-                    self.locationLabel.textColor = UIColor.white
+//                    self.locationLabel.textColor = UIColor.white
                     self.newGradientLayer(animated: false)
                 })
             })
@@ -383,6 +433,9 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     
+    
+    
+
     func newGradientLayer(animated: Bool) {
         //create layer
         let layer = CAGradientLayer()
@@ -412,4 +465,5 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         //might need to make this exclusive to non-animations and have another copy after a completion is called
         self.gradientLayer = layer
     }
+ */
 }

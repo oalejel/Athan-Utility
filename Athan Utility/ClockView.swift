@@ -140,7 +140,7 @@ class ClockView: UIView {
         shapeLayer.lineDashPhase = 0
         shapeLayer.lineCap = kCALineCapRound
         
-        shapeLayer.lineDashPattern = [(tickThickness as NSNumber), (circ / 12) - tickThickness as NSNumber]
+        shapeLayer.lineDashPattern = [tickThickness, (circ - 12 * (tickThickness)) / 12] as [NSNumber]
         shapeLayer.strokeColor = UIColor.white.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineWidth = tickHeight

@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import SwiftSpinner
 
 extension UIView {
+    /// Custom UIView method to fade out a view in 0.77 seconds
     func _hide() {
         UIView.animate(withDuration: 0.77, animations: { () -> Void in self.alpha = 0.0 })
     }
+    
+    /// Custom UIView method to fade in a view in 0.77 seconds
     func _show() {
         UIView.animate(withDuration: 0.77, animations: { () -> Void in self.alpha = 1.0 })
     }
@@ -59,7 +63,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         }
     }
     
-    var settingsController: SettingsViewController?
+//    var settingsController: SettingsViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,7 +167,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             UserDefaults.standard.set(true, forKey: "introduced")
         } else {
             if showSpinner {
-                Spinner.show("Loading Prayer\nData", animated: true)
+                SwiftSpinner.show("Loading Prayer\nData", animated: true)
                 showSpinner = false
             }
         }
@@ -191,7 +195,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         lastUpdate = Date()
         
         DispatchQueue.main.async { () -> Void in
-            Spinner.hide()
+            SwiftSpinner.hide()
 //            if self.showIntroLate {
 //                print("show intro screen!!!!")
 //                //show intro screen
@@ -266,51 +270,13 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func loadingHandler() {
-        Spinner.show("Loading Prayer\nData", animated: true)
+        SwiftSpinner.show("Loading Prayer\nData", animated: true)
         manager.reload()
     }
     
     // tells vc to be ready to show spinner when prayer manager is initialized
     func setShouldShowLoader() {
         showSpinner = true
-    }
-    
-    @IBAction func settingsButtonPressed(_ sender: AnyObject) {
-        if !settingsMode {
-            qiblaButton._hide()
-            refreshButton._hide()
-            table.tableView._hide()
-            progressView._hide()
-//            settingsButton.setTitle("Done", for: UIControlState.normal)
-//            settingsButton.alpha = 1
-            //add settings controller
-            if settingsController == nil {
-                let s = SettingsViewController()
-                s.view.frame = table.tableView.frame
-                s.view.alpha = 0
-                settingsController = s
-                s.manager = manager
-            }
-            addChildViewController(settingsController!)
-            tableContainer.addSubview(settingsController!.view)
-            settingsController!.view._show()
-            
-            //remember
-            settingsMode = true
-        } else {
-            qiblaButton._show()
-            refreshButton._show()
-            table.tableView._show()
-            progressView._show()
-//            settingsButton.setTitle("Settings", for: UIControlState.normal)
-            if let s = settingsController {
-                s.view._hide()
-                s.removeFromParentViewController()//hmm sketchy...
-            }
-            
-            //remember
-            settingsMode = false
-        }
     }
     
     func fifteenMinutesLeft() {
@@ -339,6 +305,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     //MARK: - Button Presses
+    
+    // Refresh app data. Originates from button with rotating arrows
+    @IBAction func refreshPressed(_ sender: AnyObject) {
+        // tell manager that if we were locked on a location, we now want a new one
+        manager.lockLocation = false
+        // get new data
+        loadingHandler()
+    }
     
     // Show alarm controls. Originates from bell button
     @IBAction func alarmsButtonPressed(_ sender: AnyObject) {
@@ -371,12 +345,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         present(qvc, animated: true) { () -> Void in
             //do something
         }
-    }
-    
-    // Refresh app data. Originates from button with rotating arrows
-    @IBAction func refreshPressed(_ sender: AnyObject) {
-        //get new data
-        loadingHandler()
     }
     
     

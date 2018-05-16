@@ -29,6 +29,8 @@ class PrayerSettingsViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(PrayerSettingsViewController.donePressed))
         navigationController?.navigationBar.topItem!.title = "Alarms"
         
+        navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray
+        
         soundImage = UIImage(named: "sound")
         noSoundImage = UIImage(named: "no_sound")
     }

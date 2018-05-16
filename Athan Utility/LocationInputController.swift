@@ -31,39 +31,40 @@ class LocationInputController: UIViewController {
         })
         
         tryButton.layer.cornerRadius = 10
-        
-        //for when a fetch is completed (regardless of success or not)
-        Global.manager.fetchCompletionClosure = {
-            if Global.manager.lastFetchSuccessful {
-                self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-                    // do nothing for now
-                })
-                
-                print("try succeeded")
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.activityIndicator._hide()
-                })
-            } else {
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self.activityIndicator._hide()
-                    self.failedLabel._show()
-                })
-                
-                print("try failed")
-            }
-        }
     }
     
     // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
-        Global.manager.getData = true//should you set it like this!!!???
-        let searchString = inputTextField.text!.replacingOccurrences(of: " ", with: "+")
-        Global.manager.fetchJSONData(searchString: searchString, dateTuple: nil)
+        Global.manager.getData = true //WARNING: should you set it like this!!!???
+        let locationString = inputTextField.text
+        Global.manager.fetchJSONData(forLocation: locationString!, dateTuple: nil, completion: { (successfulFetch) in
+            
+            if successfulFetch  {
+                self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
+                    // do nothing for now
+                })
+                print("try succeeded")
+                DispatchQueue.main.async {
+                    self.activityIndicator._hide()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.activityIndicator._hide()
+                    self.failedLabel._show()
+                }
+                print("try failed")
+            }
+            
+        })
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.activityIndicator._show()
         })
         activityIndicator.startAnimating()
+    }
+    
+    @IBAction func lockPressed(_ sender: AnyObject) {
+        Global.manager.lockLocation = true
     }
     
     @objc func cancelPressed() {

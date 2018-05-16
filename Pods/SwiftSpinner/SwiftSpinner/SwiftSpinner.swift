@@ -15,7 +15,7 @@ open class SwiftSpinner: UIView {
     //
     // Access the singleton instance
     //
-    public class var sharedInstance: SwiftSpinner {
+    open class var sharedInstance: SwiftSpinner {
         struct Singleton {
             static let instance = SwiftSpinner(frame: CGRect.zero)
         }
@@ -88,6 +88,35 @@ open class SwiftSpinner: UIView {
         blurView.contentView.addSubview(innerCircleView)
         
         isUserInteractionEnabled = true
+        
+        
+        // CUSTOM CHANGE
+        
+        let f = frame
+        let cancelButton = customButton().init(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
+        cancelButton.layer.cornerRadius = 10
+        cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
+        cancelButton.setTitle("Cancel", for: UIControlState.normal)
+        if let target = manager() {
+            if let sel = managerSelector() {
+                cancelButton.addTarget(target, action: sel, for: .touchUpInside)
+            }
+        }
+        cancelButton.setTitleColor(UIColor.black, for: UIControlState())
+        cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
+        self.vibrancyView.contentView.addSubview(cancelButton)
+    }
+    
+    open func customButton() -> UIButton.Type {
+        return UIButton.self
+    }
+    
+    open func manager() -> NSObject? {
+        return nil
+    }
+    
+    open func managerSelector() -> Selector? {
+        return nil
     }
     
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

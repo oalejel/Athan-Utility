@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import UserNotifications
+import SwiftSpinner
 
 // Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -98,7 +99,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var currentMonth: Int!
     var currentYear: Int!
     
-    //website JSON data request session
+    // user has ability to keep location set to only one place if they specify a custom location
+    var lockLocation = false
+    
+    // website JSON data request session
     fileprivate var session: URLSession!
     
     func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
@@ -113,13 +117,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var tomorrowPrayerTimes: [Int : Date] = Dictionary()
     var yesterdayPrayerTimes: [Int : Date] = Dictionary()
     
-    //access by [year][month][day][PrayerType.rawValue() : Date]
+    // access by [year][month][day][PrayerType.rawValue() : Date]
     var yearTimes: [Int : [Int : [Int : [Int : Date]]]] = Dictionary()
     
     //for settings with alarms
     var timesSettings: [PrayerType : AlarmSetting]!
     var soundsSettings: [PrayerType : Bool] = [:]
-    //ultimate settings object..
+    // ultimate settings object..
     var prayerSettings: [PrayerType : PrayerSetting] = [:]
     
     var delegate: PrayerManagerDelegate!
@@ -157,14 +161,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
         
+        // the delegate, (typically a view controller) gets information from the PrayerManager
         delegate.manager = self
         
+        // unload user settings on notifications
         getSettings()
         
         let conf = URLSessionConfiguration.default
         session = URLSession(configuration: conf, delegate: nil, delegateQueue: nil)
         
-        //first, check the file, if there is useful data, use it, then get data from online without slowing things down
+        // first, check the file, if there is useful data, use it, then get data from online without slowing things down
         if let dict = dictionaryFromFile() {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
@@ -179,8 +185,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //MARK: - Location Services
     
     func beginLocationRequest() {
-        self.coreManager.requestWhenInUseAuthorization()
-        self.coreManager.startUpdatingLocation()
+        if !lockLocation {
+            self.coreManager.requestWhenInUseAuthorization()
+            self.coreManager.startUpdatingLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -198,10 +206,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.currentStateString = placemark.administrativeArea
                     self.currentCountryString = placemark.isoCountryCode
                     self.coordinate = placemark.location?.coordinate
+                    
+                    //update our location string used to make queries and display in UI
+                    self.locationString = self.formattedAddressString()
+                    
                     //fetch data for this month and the next month
-                    self.fetchJSONData(searchString: nil, dateTuple: nil)
+                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
                     let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-                    self.fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
                 }
             }
         })
@@ -252,29 +264,38 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func formattedAddressString() -> String {
-        return "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
+        // if country is divided into statess, organize location string accordingly
+        if let state = currentStateString {
+            return"\(currentCityString ?? ""), \(state), \(currentCountryString ?? "")"
+        } else {
+            return "\(currentCityString ?? ""), \(currentCountryString ?? "")"
+        }
+//        return "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
     }
     
-    //gets data from website then calls the parseJSONData function
-    func fetchJSONData(searchString: String?, dateTuple: (month: Int, year: Int)?) {
+    /// Gets data from website then calls the parseJSONData function.
+    /// - parameters:
+    ///     - searchString: string with location of query. we sometimes want to override the current location
+    ///     - dateTuple: tuple of month and year of data queried
+    ///     - completion: be called on completion of fetch, whether or not it is successful, with a success boolean
+    /// - returns: *nothing*
+    
+    func fetchJSONData(forLocation queryLocationString: String, dateTuple: (month: Int, year: Int)?, completion: ((Bool) -> Void)?) {
         setCurrentDates()
         calculateAngle(coord: self.coordinate)
         self.lastFetchSuccessful = false
         
-        //decide what URL to use in our data request based on date and location
-        var URL: URL?
-        if let s = searchString {
-            URL = prayerAPIURL(address: s, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
-        } else {
-            var address = formattedAddressString()
-            address = address.replacingOccurrences(of: " ", with: "+")
-            URL = prayerAPIURL(address: address, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
-        }
+        // WARNING: should not need to actually readjust this.
+//        locationString = formattedAddressString()
         
-        //! dont forget to set this back to true if the app is on for a long time!!!
+        //decide what URL to use in our data request based on date and location
+        let escapedLocation = queryLocationString.replacingOccurrences(of: " ", with: "+")
+        let queryURL = prayerAPIURL(address: escapedLocation, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
+        
+        //WARNING! dont forget to set this back to true if the app is on for a long time!!!
         if getData {
             getData = false
-            if let sureURL = URL {
+            if let sureURL = queryURL {
                 print("Going to request data")
                 let request = URLRequest(url: sureURL)
                 let dataTask = session.dataTask(with: request, completionHandler: {
@@ -284,23 +305,32 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     }
                     
                     if let sureData = data {
-                        //this also stores to a file
+                        // this also stores to a file
                         let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
                         if let sureJSON = JSON {
                             print("Got data from online")
-                            self.parseDictionary(sureJSON, fromFile: false)
+                            
+                            // in case we got a custom location from a text field input,
+                            // and now decide to make the query string our official locationString
+                            self.locationString = queryLocationString
+                            
+                            // if parsing dictionary goes well, call completion handler with true
+                            if self.parseDictionary(sureJSON, fromFile: false) {
+                                completion?(true)
+                                return
+                            }
                         }
                     }
-                    if let closure = self.fetchCompletionClosure {
-                        closure()
-                    }
+                    //unsuccessful fetch if reaching this point
+                    completion?(false)
                 })
                 
                 dataTask.resume()
             } else {
-                if let closure = self.fetchCompletionClosure {
-                    closure()
-                }
+                // did not have a working URL
+                print("URL error")
+                // still execute completion handler, telling handler that we had an unsuccessful fetch
+                completion?(false)
             }
         }
     }
@@ -348,21 +378,22 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         currentMonth = Int(df.string(from: curDate))
     }
     
-    //this organizes the data and notifies the delegate
-    func parseDictionary(_ dict: NSDictionary?, fromFile: Bool) {
+    // this organizes the data and notifies the delegate. dict should either be coming with proper formatting from a file, or from the API with a need for special JSON parsing
+    @discardableResult
+    func parseDictionary(_ dict: NSDictionary, fromFile: Bool) -> Bool {
+        // readjust current date measurements for use later
         setCurrentDates()
+        
+        var successful = false
+        
+        // check whether we have a dictionary formatted in the format we like
         if var sureDict = dict as? Dictionary<String, AnyObject> {
             if sureDict["data"] != nil {
+                //WARNING: next step is getting rid of lastFetchSuccessful and instead relying on return type
                     lastFetchSuccessful = true
-                if let state = currentStateString {
-                    locationString = "\(currentCityString ?? ""), \(state), \(currentCountryString ?? "")"
-                } else {
-                 locationString = "\(currentCityString ?? ""), \(currentCountryString ?? "")"
-                }
             } else {
-                return
+                return false
             }
-            
             
             if !fromFile {
                 //if not from file, the object stored with the "date" key will be an array
@@ -422,6 +453,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                                         df.dateFormat = "HH:mm d M y"
                                                         
                                                         if let prayerDate = df.date(from: prayerTimeString) {
+                                                            successful = true // will set to true if we got at least one thing
                                                             yearTimes[parsedYear!]![parsedMonth!]![parsedDay!]![p.rawValue] = prayerDate
                                                         }
                                                     }
@@ -440,14 +472,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     sureDict["qibla"] = qibla as AnyObject
                     let objc = sureDict as NSDictionary
                     NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
-                } else {return}
+                } else { return false }
             } else {
+                // if reading data from file, deal with stored dictionary accordingly
+                
+                // check the last record's recieved location
                 if let formattedAddress = sureDict["location_recieved"] as? String {
                     locationString = formattedAddress
                 }
                 
-                //if we are getting data from a file, we expect value for key "data" to be yearTimes
+                // if we are getting data from a file, we expect value for key
+                // "data" to be in the format of yearTimes
                 if let formattedData = sureDict["data"] as? [Int : [Int : [Int : [Int : Date]]]] {
+                    successful = true // true since we got the date in the form needed
                     yearTimes = formattedData
                 }
                 
@@ -465,14 +502,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             scheduleAppropriateNotifications()
         }
         
+        // now that we actually have a qibla heading, we can have a dynamic quick action
         DispatchQueue.main.async {
-            if #available(iOS 9.0, *) {
-                let icon = UIApplicationShortcutIcon(type: .location)
-                let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
-                UIApplication.shared.shortcutItems = [dynamicItem]
-            }
+            let icon = UIApplicationShortcutIcon(type: .location)
+            let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
+            UIApplication.shared.shortcutItems = [dynamicItem]
         }
         
+        return successful
     }
     
     func getFutureDateTuple(daysToSkip: Int = 1) -> (day: Int, month: Int, year: Int) {
@@ -725,7 +762,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             
                             // if user would ALSO like to get notified 15 minutes prior
                             if setting.alarmType == .all {
-                                ////add a reminder for 15 minutes before
+                                // adding a reminder for 15 minutes before the actual prayer time
                                 let preNoteContent = UNMutableNotificationContent()
                                 let preDate = pDate.addingTimeInterval(-900)//15 mins before
                                 preNoteContent.userInfo = ["intendedFireDate": preDate]
@@ -781,7 +818,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         delegate.fifteenMinutesLeft()
     }
     
-    //for when the manager needs to notify itself mid-day
+    // for when the manager needs to notify itself mid-day
     @objc func newPrayer() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
@@ -792,7 +829,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
 
             if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
-                //if none and its the next day, then substract the day by one and use the today isha time
+                // if none and its the next day, then substract the day by one and use the today isha time
                 let cal = Calendar.current
                 
                     var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToIsha)
@@ -839,32 +876,35 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             return todayPrayerTimes[currentPrayer.next().rawValue]
         }
     }
-    
+    /// - important: may assume that we have valid location and date info, since newDay is only set on a timer created post-successful fetch
     @objc func newDay() {
         setCurrentDates()
         alignPrayerTimes()
         calculateCurrentPrayer()
         setTimers()
-        fetchJSONData(searchString: nil, dateTuple: nil)//not good enough of a solution long term!!...
+        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
     }
     
+    /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
     func reload() {
         //for simulator
         #if targetEnvironment(simulator)
-        fetchJSONData(searchString: nil, dateTuple: nil)
+        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
             let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(searchString: nil, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year))
+        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
         #endif
         getData = true
-        coreManager.delegate = self
-        coreManager.startUpdatingLocation()
+        coreManager.delegate = self // WARNING: check if redundant
+        if !lockLocation {
+            coreManager.startUpdatingLocation()
+        }
     }
     
     @objc func cancelRequest() {
         getData = false
-        Spinner.hide()
+        SwiftSpinner.hide()
     }
     
     //MARK: - Data Saving

@@ -91,20 +91,19 @@ open class SwiftSpinner: UIView {
         
         
         // CUSTOM CHANGE
-        
-        let f = frame
-        let cancelButton = customButton().init(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
-        cancelButton.layer.cornerRadius = 10
-        cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
-        cancelButton.setTitle("Cancel", for: UIControlState.normal)
-        if let target = manager() {
-            if let sel = managerSelector() {
-                cancelButton.addTarget(target, action: sel, for: .touchUpInside)
-            }
-        }
-        cancelButton.setTitleColor(UIColor.black, for: UIControlState())
-        cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
-        self.vibrancyView.contentView.addSubview(cancelButton)
+//        let f = frame
+//        let cancelButton = customButton().init(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
+//        cancelButton.layer.cornerRadius = 10
+//        cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
+//        cancelButton.setTitle("Cancel", for: UIControlState.normal)
+//        if let target = manager() {
+//            if let sel = managerSelector() {
+//                cancelButton.addTarget(target, action: sel, for: .touchUpInside)
+//            }
+//        }
+//        cancelButton.setTitleColor(UIColor.black, for: UIControlState())
+//        cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
+//        blurView.contentView.addSubview(cancelButton)
     }
     
     open func customButton() -> UIButton.Type {

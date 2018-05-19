@@ -188,31 +188,16 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         refreshClockNeeded = true
     }
     
-   
-    
     //Data Manager Delegate
     func dataReady(manager: PrayerManager) {
         lastUpdate = Date()
         
         DispatchQueue.main.async { () -> Void in
+            self.updatePrayerInfo()
             SwiftSpinner.hide()
-//            if self.showIntroLate {
-//                print("show intro screen!!!!")
-//                //show intro screen
-//                let intro = IntroViewController()
-//                intro.view.backgroundColor = UIColor.black
-//                self.present(intro, animated: true, completion: {
-//
-//                })
-//                self.showIntroLate = false
-//                UserDefaults.standard.set(true, forKey: "introduced")
-//            }
             if let location = manager.locationString {
-//                self.locationLabel.text = location
                 self.locationButton.setTitle(location, for: .normal)
             }
-            
-            self.updatePrayerInfo()
         }
     }
     
@@ -237,15 +222,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func updatePrayerInfo() {
-        DispatchQueue.main.async { () -> Void in
-            if self.manager.dataAvailable {
-                self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
-//                print(self.manager.todayPrayerTimes)
-                self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
-                self.clock.setPrayerBubbles(self.manager)
-                self.clock.refresh()
-                self.refreshProgressBar()
-            }
+        if self.manager.dataAvailable {
+            self.refreshProgressBar()
+            self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
+            self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
+            self.clock.setPrayerBubbles(self.manager)
+            self.clock.refresh()
         }
     }
     
@@ -255,18 +237,16 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func refreshProgressBar() {
-        DispatchQueue.main.async { () -> Void in
-            if self.manager.dataAvailable {
-                if let startTime = self.manager.currentPrayerTime() {
-                    if let endTime = self.manager.nextPrayerTime() {
-                        let timeElapsed = Date().timeIntervalSince(startTime as Date)
-                        let interval = endTime.timeIntervalSince(startTime as Date)
-                        self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
-                        self.progressView.progressLayer.backgroundColor = self.manager.timeLeftColor().cgColor
-                    }
+        if self.manager.dataAvailable {
+            if let startTime = self.manager.currentPrayerTime() {
+                if let endTime = self.manager.nextPrayerTime() {
+                    let timeElapsed = Date().timeIntervalSince(startTime as Date)
+                    let interval = endTime.timeIntervalSince(startTime as Date)
+                    self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
                 }
             }
         }
+
     }
     
     func loadingHandler() {

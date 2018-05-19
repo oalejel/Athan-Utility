@@ -83,7 +83,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             setStuff()
             calculateProgress()
             progressView.setProgress(Float(timeElapsed / interval), animated: false)
-            startKickTimer()
+            kickstartTimer()
             for v in view.subviews {
                 if v.tag == 1 {
                     v.isHidden = true
@@ -134,7 +134,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
     
-    func startKickTimer() {
+    func kickstartTimer() {
         dateFormatter.dateFormat = "s"
         let currentSeconds = Int(dateFormatter.string(from: Date()))!
         kickTime = 60 - currentSeconds
@@ -149,8 +149,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         secondsTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(TodayViewController.updateProgressView), userInfo: nil, repeats: true)
     }
     
+    //whenever another minute has passed
     @objc func updateProgressView() {
-        //whenever another minute has passed
         timeElapsed += 60
         if timeElapsed >= interval {
             calculateCurrentPrayer()
@@ -246,7 +246,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             progressView.setProgress(Float(timeElapsed / interval), animated: false)
             setStuff()
             if kickTimer == nil {
-                startKickTimer()
+                kickstartTimer()
             }
         } else {
             viewAppearedOnce = true

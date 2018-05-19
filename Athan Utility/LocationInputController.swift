@@ -21,9 +21,11 @@ class LocationInputController: UIViewController {
         
         // Do any additional setup after loading the view.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(LocationInputController.cancelPressed))
+        navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray
         navigationController?.navigationBar.topItem!.title = "Location Search"
         
         activityIndicator.stopAnimating()
+        
         
         
         DispatchQueue.main.async(execute: { () -> Void in
@@ -35,7 +37,7 @@ class LocationInputController: UIViewController {
     
     // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
-        Global.manager.getData = true //WARNING: should you set it like this!!!???
+        Global.manager.needsDataUpdate = true //WARNING: should you set it like this!!!???
         let locationString = inputTextField.text
         Global.manager.fetchJSONData(forLocation: locationString!, dateTuple: nil, completion: { (successfulFetch) in
             

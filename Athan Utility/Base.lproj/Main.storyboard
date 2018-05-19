@@ -42,7 +42,7 @@
                                         <rect key="frame" x="0.0" y="264" width="36" height="36"/>
                                         <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <state key="normal" image="compass"/>
+                                        <state key="normal" image="kaba"/>
                                         <connections>
                                             <action selector="showQibla:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CkM-xd-b0A"/>
                                         </connections>
@@ -221,7 +221,7 @@
     </scenes>
     <resources>
         <image name="bell" width="16" height="21"/>
-        <image name="compass" width="24" height="24"/>
+        <image name="kaba" width="20" height="21"/>
         <image name="refresh" width="24" height="20"/>
     </resources>
 </document>

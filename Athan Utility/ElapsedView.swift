@@ -51,8 +51,6 @@ class ElapsedView: UIView {
         }
     }
     
-    
-    
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
@@ -80,7 +78,7 @@ class ElapsedView: UIView {
             self.progressLayer = CAShapeLayer()
             self.progressLayer.frame = CGRect(x: X, y: Y, width: H, height: H)
             self.progressLayer.cornerRadius = H / 2
-            self.progressLayer.backgroundColor = UIColor.green.cgColor
+            self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
             self.layer.addSublayer(self.progressLayer)
             
 //            if Global.darkTheme {
@@ -94,8 +92,8 @@ class ElapsedView: UIView {
             self.didDraw = true
             //if we had to wait for the view to be drawn...
             if let c = self.animationClosure {
+                // setting self.animationClosure to nil right after calling it is dangerous
                 c()
-                self.animationClosure = nil
             }
             
             self.updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.updateLabels), userInfo: nil, repeats: true)
@@ -103,31 +101,33 @@ class ElapsedView: UIView {
     }
 
     func setup(_ interval: CGFloat, timeElapsed: CGFloat) {
-        
-        DispatchQueue.main.async { () -> Void in
-            self.interval = interval
-            self.timeElapsed = timeElapsed
-            self.animationClosure = {
+        // create a closure to be called as soon as things are drawn
+        self.animationClosure = {
+            DispatchQueue.main.async { () -> Void in
+                self.interval = interval
+                self.timeElapsed = timeElapsed
                 //hopefully we wont need to account for the ∆t between this and call time...
                 let progress = CGFloat(timeElapsed / interval)
                 let currentLength = progress * self.barLength
                 let secondsLeft = interval - timeElapsed
-                
+            
                 self.progressLayer.frame.size.width = currentLength
+                self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
                 
                 let anim = CABasicAnimation(keyPath: "tranform.width")
                 anim.duration = Double(secondsLeft)
-                anim.toValue = currentLength
+                anim.toValue = self.progressBGLayer.frame.size.width
                 anim.fromValue = currentLength
                 self.progressLayer.add(anim, forKey: "transform.width")
                 self.progressLayer.removeAllAnimations()
                 
                 self.setLabels()
             }
-            if self.didDraw {
-                self.animationClosure!()
-                self.animationClosure = nil
-            }
+        }
+        
+        // if we already drew to the screen, then okay to proceed and call block
+        if self.didDraw {
+            self.animationClosure!()
         }
     }
     

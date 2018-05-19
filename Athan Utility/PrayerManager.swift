@@ -131,7 +131,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var fetchCompletionClosure: (() -> ())?
     var lastFetchSuccessful = false
     
-    var getData = true
+    var needsDataUpdate = true
     var dataAvailable = false
     
     weak var headingDelegate: HeadingDelegate? {
@@ -293,15 +293,17 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let queryURL = prayerAPIURL(address: escapedLocation, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         
         //WARNING! dont forget to set this back to true if the app is on for a long time!!!
-        if getData {
-            getData = false
+        if needsDataUpdate {
+            needsDataUpdate = false
             if let sureURL = queryURL {
                 print("Going to request data")
-                let request = URLRequest(url: sureURL)
+                var request = URLRequest(url: sureURL)
+                request.httpMethod = "GET" // should be default setting, but just making this a point
+                request.timeoutInterval = 6
                 let dataTask = session.dataTask(with: request, completionHandler: {
                     (data: Data?, response: URLResponse?, error: Error?) -> Void in
                     if error != nil {
-                        self.getData = true
+                        self.needsDataUpdate = true
                     }
                     
                     if let sureData = data {
@@ -895,7 +897,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
         #endif
-        getData = true
+        needsDataUpdate = true
         coreManager.delegate = self // WARNING: check if redundant
         if !lockLocation {
             coreManager.startUpdatingLocation()
@@ -903,7 +905,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     @objc func cancelRequest() {
-        getData = false
+        needsDataUpdate = false
         SwiftSpinner.hide()
     }
     

@@ -119,7 +119,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     @objc func enteredForeground() {
         if refreshClockNeeded {
             manager.calculateCurrentPrayer()
-            updatePrayerInfo()
+            softResetPrayerVisuals()
+            clock.refreshTime()
             
 //            refreshClockNeeded = false
         }
@@ -152,7 +153,9 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         super.viewWillAppear(animated)
         if refreshClockNeeded {
             manager.calculateCurrentPrayer()
-            updatePrayerInfo()
+            softResetPrayerVisuals()
+            // though this is called by hard reset, we always want to refresh this animation
+            clock.refreshTime()
 //            refreshClockNeeded = false
         }
     }
@@ -193,7 +196,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         lastUpdate = Date()
         
         DispatchQueue.main.async { () -> Void in
-            self.updatePrayerInfo()
+            self.hardResetPrayerVisuals()
             SwiftSpinner.hide()
             if let location = manager.locationString {
                 self.locationButton.setTitle(location, for: .normal)
@@ -212,7 +215,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             }
         }
         
-        updatePrayerInfo()
+        softResetPrayerVisuals()
 //        if !Global.darkTheme {
 //            newGradientLayer(animated: true)
 //        }
@@ -221,23 +224,44 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         lastUpdate = Date()
     }
     
-    func updatePrayerInfo() {
-        if self.manager.dataAvailable {
-            self.refreshProgressBar()
-            self.table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
-            self.table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
-            self.clock.setPrayerBubbles(self.manager)
-            self.clock.refresh()
+    /// readjust only visual things that need changing within the same day. Does not include reloading table data.
+    func softResetPrayerVisuals(_ fifteenMinutesLeft: Bool = false) {
+        if manager.dataExists {
+            refreshProgressBar()
+            clock.refreshPrayerBubbles(manager.currentPrayer)
+            
+            let pIndex = manager.currentPrayer.rawValue
+            if pIndex != 6 {
+                table.highlightCellAtIndex(pIndex, color: Global.statusColor)
+                if fifteenMinutesLeft {
+                    progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
+                }
+            }
+        }
+    }
+    
+    /// readjust all visual representations, **including** things reset in softResetPrayerVisuals
+    func hardResetPrayerVisuals() {
+        if manager.dataExists {
+            // soft
+            refreshProgressBar()
+            clock.refreshPrayerBubbles(manager.currentPrayer)
+            table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
+            // hard
+            table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
+            clock.setPrayerBubbles(manager)
+            clock.refreshTime()
+            
         }
     }
     
     func newMeridiem() {
         clock.currentMeridiem = (clock.currentMeridiem! == .am) ? .pm : .am
-        updatePrayerInfo()
+        hardResetPrayerVisuals()
     }
     
     func refreshProgressBar() {
-        if self.manager.dataAvailable {
+        if self.manager.dataExists {
             if let startTime = self.manager.currentPrayerTime() {
                 if let endTime = self.manager.nextPrayerTime() {
                     let timeElapsed = Date().timeIntervalSince(startTime as Date)
@@ -246,11 +270,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                 }
             }
         }
-
     }
     
     func loadingHandler() {
         SwiftSpinner.show("Loading Prayer\nData", animated: true)
+        SwiftSpinner.cancelButton!.addTarget(manager, action: #selector(manager.userCanceledDataRequest), for: .touchUpInside)
         manager.reload()
     }
     
@@ -260,11 +284,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func fifteenMinutesLeft() {
+        softResetPrayerVisuals()
+        
         let pIndex = manager.currentPrayer.rawValue
         if pIndex != 6 {
             table.highlightCellAtIndex(pIndex, color: Global.statusColor)
             progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
         }
+        clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: true)
     }
     
     func flash(_ midwayBlock: @escaping () -> Void) {
@@ -326,7 +353,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             //do something
         }
     }
-    
     
     /*
      

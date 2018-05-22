@@ -22,11 +22,18 @@ open class SwiftSpinner: UIView {
         return Singleton.instance
     }
     
+    open static func spinnerType() -> SwiftSpinner.Type {
+        return SwiftSpinner.self
+    }
+    
     // MARK: - Init
     
     //
     // Custom init to build the spinner UI
     //
+    
+    /// Custom added button
+    open static var cancelButton: SqueezeButton?
     
     public override init(frame: CGRect) {
         
@@ -88,34 +95,17 @@ open class SwiftSpinner: UIView {
         blurView.contentView.addSubview(innerCircleView)
         
         isUserInteractionEnabled = true
-        
-        
         // CUSTOM CHANGE
-//        let f = frame
-//        let cancelButton = customButton().init(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
-//        cancelButton.layer.cornerRadius = 10
-//        cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
-//        cancelButton.setTitle("Cancel", for: UIControlState.normal)
-//        if let target = manager() {
-//            if let sel = managerSelector() {
-//                cancelButton.addTarget(target, action: sel, for: .touchUpInside)
-//            }
-//        }
-//        cancelButton.setTitleColor(UIColor.black, for: UIControlState())
-//        cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
-//        blurView.contentView.addSubview(cancelButton)
-    }
-    
-    open func customButton() -> UIButton.Type {
-        return UIButton.self
-    }
-    
-    open func manager() -> NSObject? {
-        return nil
-    }
-    
-    open func managerSelector() -> Selector? {
-        return nil
+        let f = UIScreen.main.bounds
+        SwiftSpinner.cancelButton = SqueezeButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+//        SwiftSpinner.cancelButton!.layer.cornerRadius = 14
+        SwiftSpinner.cancelButton!.backgroundColor = UIColor(white: 0.70, alpha: 0.5)
+        SwiftSpinner.cancelButton!.setTitle("Cancel", for: UIControlState.normal)
+        SwiftSpinner.cancelButton!.setTitleColor(UIColor.black, for: UIControlState())
+        SwiftSpinner.cancelButton!.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
+        SwiftSpinner.cancelButton!.isUserInteractionEnabled = true
+        blurView.contentView.addSubview(SwiftSpinner.cancelButton!)
+        // allow application to set target
     }
     
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -416,14 +406,14 @@ open class SwiftSpinner: UIView {
         }
     }
     
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-        if tapHandler != nil {
-            tapHandler?()
-            tapHandler = nil
-        }
-    }
+//    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        super.touchesBegan(touches, with: event)
+//
+//        if tapHandler != nil {
+//            tapHandler?()
+//            tapHandler = nil
+//        }
+//    }
     
     public func clearTapHandler() {
         isUserInteractionEnabled = false

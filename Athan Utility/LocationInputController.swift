@@ -26,7 +26,7 @@ class LocationInputController: UIViewController {
         
         activityIndicator.stopAnimating()
         
-        
+        inputTextField.text = Global.manager.locationString ?? ""
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.activityIndicator._hide()

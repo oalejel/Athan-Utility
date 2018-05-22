@@ -18,7 +18,7 @@ import UIKit
  g2?.delaysTouchesBegan = false
  */
 
-class SqueezeButton: UIButton {
+open class SqueezeButton: UIButton {
     var completedSqueeze = true
     var pendingOut = false
     static let defaultCornerRadius: CGFloat = 10
@@ -30,19 +30,19 @@ class SqueezeButton: UIButton {
         layer.masksToBounds = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         layer.cornerRadius = SqueezeButton.defaultCornerRadius
         layer.masksToBounds = true
     }
     
     //react to touches with a press or rescale animation
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         press()
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         rescaleButton()
     }
@@ -74,5 +74,4 @@ class SqueezeButton: UIButton {
         }
     }
 }
-
 

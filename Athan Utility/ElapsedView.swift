@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIFont {
-    
     var monospacedDigitFont: UIFont {
         let oldFontDescriptor = fontDescriptor
         let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
@@ -19,14 +18,12 @@ extension UIFont {
 }
 
 private extension UIFontDescriptor {
-    
     var monospacedDigitFontDescriptor: UIFontDescriptor {
         let fontDescriptorFeatureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
         let fontDescriptorAttributes = [UIFontDescriptor.AttributeName.featureSettings: fontDescriptorFeatureSettings]
         let fontDescriptor = self.addingAttributes(fontDescriptorAttributes)
         return fontDescriptor
     }
-    
 }
 
 class ElapsedView: UIView {
@@ -51,8 +48,6 @@ class ElapsedView: UIView {
         }
     }
     
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
         // Drawing code
         
@@ -81,13 +76,8 @@ class ElapsedView: UIView {
             self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
             self.layer.addSublayer(self.progressLayer)
             
-//            if Global.darkTheme {
-                self.backgroundColor = Global.darkerGray
-                self.progressBGLayer.backgroundColor = Global.darkestGray.cgColor
-//            } else {
-//                self.backgroundColor = UIColor.white
-//                self.progressBGLayer.backgroundColor = UIColor.lightGray.cgColor
-//            }
+            self.backgroundColor = Global.darkerGray
+            self.progressBGLayer.backgroundColor = Global.darkestGray.cgColor
             
             self.didDraw = true
             //if we had to wait for the view to be drawn...
@@ -130,21 +120,7 @@ class ElapsedView: UIView {
             self.animationClosure!()
         }
     }
-    
-//    func updateTheme() {
-//        DispatchQueue.main.async {
-//            if Global.darkTheme {
-//                self.backgroundColor = Global.darkerGray
-//    //            elapsedLabel.textColor = UIColor.darkGray
-//    //            timeLeftLabel.textColor = UIColor.darkGray
-//            } else {
-//                self.backgroundColor = UIColor.white
-//                self.elapsedLabel.textColor = UIColor.darkGray
-//                self.timeLeftLabel.textColor = UIColor.darkGray
-//            }
-//        }
-//    }
-    
+
     @objc func updateLabels() {
         timeElapsed = timeElapsed + 1
         setLabels()

@@ -132,7 +132,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var lastFetchSuccessful = false
     
     var needsDataUpdate = true
-    var dataAvailable = false
+    var dataExists = false
     
     weak var headingDelegate: HeadingDelegate? {
         didSet {
@@ -584,9 +584,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //ask user for notifications capabilities
         
         let center = UNUserNotificationCenter.current()
-        DispatchQueue.main.async {
-            center.removeAllPendingNotificationRequests()
-        }
+//        DispatchQueue.main.async {
+        center.removeAllPendingNotificationRequests()
+//        }
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
             if !granted {
                print("User denied use of notifications")
@@ -600,10 +600,18 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             if i == 4 {final = true}
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: final)
         }
+        
+        center.getPendingNotificationRequests(completionHandler: { (reqs) in
+           print(reqs)
+        })
+        
+        center.getDeliveredNotifications { (reqs) in
+            print("delivered: \(reqs)")
+        }
     }
     
     func notifyDelegate() {
-        dataAvailable = true
+        dataExists = true
         delegate?.dataReady(manager: self)
     }
     
@@ -626,7 +634,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func setTimers() {
-        //set the prayer timers
+        // create prayer times
         let curDate = Date()
         if currentPrayer != .isha {
             var startIndex = currentPrayer.rawValue + 1
@@ -637,6 +645,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {
                     //timer for highlight red for 15 mins left
+                    print("time interval til 15 m warning: \(pDate.timeIntervalSince(curDate) - 900)")
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManager.fifteenMinutesLeft), userInfo: nil, repeats: false)
                     //timer for new prayer
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
@@ -646,6 +655,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
         
+        
+        // create a timer that tells us when we switch between AM and PM
         let cal = Calendar.current
         var comps = (cal as NSCalendar).components([.year, .month, .day, .hour], from: curDate)
         if comps.hour! >= 12 {
@@ -658,6 +669,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         Timer.scheduledTimer(timeInterval: nextMeridInterval!, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
         
+        
+        // create a timer that tells us when it has become a new day
         DispatchQueue.main.async { () -> Void in
             var seconds = 0
             var minutes = 0
@@ -757,16 +770,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
                                 //create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                                 let noteRequest = UNNotificationRequest(identifier: "standard_note", content: noteContent, trigger: noteTrigger)
-                                DispatchQueue.main.async {
-                                    center.add(noteRequest, withCompletionHandler: nil)
-                                }
+                                center.add(noteRequest, withCompletionHandler: nil)
                             }
                             
                             // if user would ALSO like to get notified 15 minutes prior
                             if setting.alarmType == .all {
                                 // adding a reminder for 15 minutes before the actual prayer time
                                 let preNoteContent = UNMutableNotificationContent()
-                                let preDate = pDate.addingTimeInterval(-900)//15 mins before
+                                let preDate = pDate.addingTimeInterval(-900) // 15 mins before
                                 preNoteContent.userInfo = ["intendedFireDate": preDate]
                                 let preNoteComponents = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: preDate)
                                 
@@ -814,6 +825,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         return UIColor.green
     }
     
+    /// indicates that there are 15 m left til next prayer begins.
+    /// Should adjust app by changing color of certain things to orange
     @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
         Global.statusColor = timeLeftColor()
@@ -904,7 +917,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    @objc func cancelRequest() {
+    @objc func userCanceledDataRequest() {
         needsDataUpdate = false
         SwiftSpinner.hide()
     }

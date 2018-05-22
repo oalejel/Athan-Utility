@@ -51,11 +51,11 @@
 		3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */; };
 		3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8049911C34A71900A2AC1F /* PrayerRow.swift */; };
+		3D894B1320B0EF8700F9887C /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D894B1220B0EF8600F9887C /* SqueezeButton.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
-		3DA573EF20A9EE1C006B3761 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA573EE20A9EE1C006B3761 /* SqueezeButton.swift */; };
 		3DAC704C1C2C43C2006E05CF /* WatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */; };
 		3DAC704E1C2C44D4006E05CF /* WatchDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
@@ -64,7 +64,6 @@
 		3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */; };
 		3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD9814C1CC6E3D100151027 /* IntroViewController.swift */; };
-		3DDE264C1BDD25BA004D3D1D /* oldSwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */; };
 		3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3DFE11572096647100D46A1F /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3DFE11582097E03B00D46A1F /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
@@ -182,10 +181,10 @@
 		3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingsViewController.xib; sourceTree = "<group>"; };
 		3D8049911C34A71900A2AC1F /* PrayerRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRow.swift; sourceTree = "<group>"; };
+		3D894B1220B0EF8600F9887C /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = ../Pods/SwiftSpinner/SqueezeButton.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QiblaViewController.xib; path = ../QiblaViewController.xib; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
-		3DA573EE20A9EE1C006B3761 /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
 		3DA7C60F201D504C0001600D /* Athan UtilityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athan UtilityTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athan_UtilityTests.swift; sourceTree = "<group>"; };
 		3DA7C613201D504C0001600D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -200,7 +199,6 @@
 		3DD3B4971C0D3B5700DC91E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3DD3B4991C0D3B5700DC91E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD9814C1CC6E3D100151027 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = oldSwiftSpinner.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
@@ -371,10 +369,9 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
-				3DA573EE20A9EE1C006B3761 /* SqueezeButton.swift */,
+				3D894B1220B0EF8600F9887C /* SqueezeButton.swift */,
 				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
-				3DDE264B1BDD25BA004D3D1D /* oldSwiftSpinner.swift */,
 				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
 			);
 			name = General;
@@ -472,7 +469,6 @@
 				3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */,
 				3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */,
 				84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */,
-				7AAB8ADA54CFBFBF81C71DFD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -716,21 +712,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7AAB8ADA54CFBFBF81C71DFD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -764,14 +745,13 @@
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
 				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
-				3DA573EF20A9EE1C006B3761 /* SqueezeButton.swift in Sources */,
 				3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
-				3DDE264C1BDD25BA004D3D1D /* oldSwiftSpinner.swift in Sources */,
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
+				3D894B1320B0EF8700F9887C /* SqueezeButton.swift in Sources */,
 				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,

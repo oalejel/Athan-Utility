@@ -283,8 +283,10 @@ class ClockView: UIView {
         minutesLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
         minutesLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
         
-//        minutesLayer.shadowColor = UIColor.black.cgColor
-//        minutesLayer.shadowOpacity = 0.5
+        
+        // keep this shadow to differentiate between the minute arm and the hour dots it touches
+        minutesLayer.shadowColor = UIColor.black.cgColor
+        minutesLayer.shadowOpacity = 0.5
         
         layer.addSublayer(minutesLayer)
         
@@ -401,7 +403,7 @@ class ClockView: UIView {
     
     //MARK: Bubbles
     
-    func setBubble(_ p: PrayerType, angle: CGFloat, mer: Meridiem, highlight: Bool) {
+    func placeBubble(_ p: PrayerType, angle: CGFloat, mer: Meridiem, highlight: Bool) {
         let pName = p.stringValue()
         let letter = pName[pName.startIndex]
         
@@ -417,7 +419,7 @@ class ClockView: UIView {
             addSubview(b)
         }
         
-        //special math!!!
+        // special math for placement of bubble
         let lineWidth: CGFloat = (bubbleRoom / 2) - separation
         let standardRadius = (width / 2) - (lineWidth / 2)
         
@@ -426,14 +428,11 @@ class ClockView: UIView {
             radius = (width / 2) - (lineWidth * 1.5) - separation
         }
         
-        UIView.animate(withDuration: 1, animations: { () -> Void in
-            if highlight {
-                b.backgroundColor = Global.statusColor
-            } else {
-                b.backgroundColor = UIColor.white
-            }
-        })
-        
+        if highlight {
+            b.backgroundColor = Global.statusColor
+        } else {
+            b.backgroundColor = UIColor.white
+        }
         
         let xRect = (radius * cos(angle)) + standardRadius
         let yRect = (radius * sin(angle)) + standardRadius
@@ -441,8 +440,14 @@ class ClockView: UIView {
         b.center = CGPoint(x: xRect + (b.frame.size.width / 2), y: yRect + (b.frame.size.height / 2))
     }
     
-    func refreshPrayerBubbles(_ manager: PrayerManager) {
-        //!! what does this do??
+    func refreshPrayerBubbles(_ currentPrayer: PrayerType, fifteenMinutesLeft: Bool = false) {
+        for (index, bubble) in prayerBubbleViews.enumerated() {
+            if index == currentPrayer.rawValue {
+                bubble.backgroundColor = fifteenMinutesLeft ? Global.statusColor : .green
+            } else {
+                bubble.backgroundColor = UIColor.white
+            }
+        }
     }
     
     func setPrayerBubbles(_ manager: PrayerManager) {
@@ -474,7 +479,7 @@ class ClockView: UIView {
                     let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
                     
                     let hightLight = p == manager.currentPrayer
-                    self.setBubble(p, angle: angle, mer: merid, highlight: hightLight)
+                    self.placeBubble(p, angle: angle, mer: merid, highlight: hightLight)
                     p = p.next()
                 } else {
                     print("error with today prayer times!")
@@ -500,7 +505,7 @@ class ClockView: UIView {
         secondsLayer.transform = CATransform3DMakeRotation(0, 0, 0, 1)
     }
     
-    func refresh() {
+    func refreshTime() {
         if animationsPaused {
             animationsPaused = false
             

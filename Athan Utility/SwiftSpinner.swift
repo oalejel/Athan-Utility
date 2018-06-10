@@ -22,7 +22,7 @@ open class SwiftSpinner: UIView {
         return Singleton.instance
     }
     
-    open static func spinnerType() -> SwiftSpinner.Type {
+    static func spinnerType() -> SwiftSpinner.Type {
         return SwiftSpinner.self
     }
     
@@ -33,7 +33,7 @@ open class SwiftSpinner: UIView {
     //
     
     /// Custom added button
-    open static var cancelButton: SqueezeButton?
+    static var cancelButton: SqueezeButton?
     
     public override init(frame: CGRect) {
         

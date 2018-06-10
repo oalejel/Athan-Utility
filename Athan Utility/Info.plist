@@ -33,6 +33,12 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Utility uses your location to determine prayer information</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>Intent1Intent</string>
+		<string>Intent2Intent</string>
+		<string>IntentIntent</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

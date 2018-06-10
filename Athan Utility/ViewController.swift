@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftSpinner
+import IntentsUI
 
 extension UIView {
     /// Custom UIView method to fade out a view in 0.77 seconds

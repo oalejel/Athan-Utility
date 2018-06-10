@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 import UserNotifications
-import SwiftSpinner
 
 // Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -595,18 +594,18 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             
         }
         
+        center.getPendingNotificationRequests(completionHandler: { (reqs) in
+            print("last pending notification count: \(reqs.count)")
+        })
+        
+        center.getDeliveredNotifications { (reqs) in
+            print("last delivered notification count: \(reqs.count)")
+        }
+        
         for i in 0..<5 {
             var final = false
             if i == 4 {final = true}
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: final)
-        }
-        
-        center.getPendingNotificationRequests(completionHandler: { (reqs) in
-           print(reqs)
-        })
-        
-        center.getDeliveredNotifications { (reqs) in
-            print("delivered: \(reqs)")
         }
     }
     
@@ -755,6 +754,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                         }
                                     }
                                     
+                                    // Alternative string stores a shorter version of the location
+                                    // in order to show "San Francisco" instead of "San Francisco, CA, USA"
                                     if let alt = alternativeString {
                                         alertString = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
                                     } else {
@@ -763,14 +764,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 }
 
                                 // set the notification body
+                                noteContent.title = "sdfsdf"//remove
                                 noteContent.body = alertString
 
-                                //create a trigger with the correct date
-                                let dateComp = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: pDate)
+                                // create a trigger with the correct date
+                                let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: pDate)
                                 let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
-                                //create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
+                                // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                                 let noteRequest = UNNotificationRequest(identifier: "standard_note", content: noteContent, trigger: noteTrigger)
-                                center.add(noteRequest, withCompletionHandler: nil)
+                                center.add(noteRequest) { print($0 ?? "", separator: "", terminator: "") }
                             }
                             
                             // if user would ALSO like to get notified 15 minutes prior

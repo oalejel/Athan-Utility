@@ -51,7 +51,16 @@
 		3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */; };
 		3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8049911C34A71900A2AC1F /* PrayerRow.swift */; };
-		3D894B1320B0EF8700F9887C /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D894B1220B0EF8600F9887C /* SqueezeButton.swift */; };
+		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
+		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
+		3D89E72B20C8462000E64118 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E72A20C8462000E64118 /* SqueezeButton.swift */; };
+		3D89E73520C88A0900E64118 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73420C88A0900E64118 /* IntentHandler.swift */; };
+		3D89E73D20C88A0A00E64118 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D89E73C20C88A0A00E64118 /* IntentsUI.framework */; };
+		3D89E74020C88A0A00E64118 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73F20C88A0A00E64118 /* IntentViewController.swift */; };
+		3D89E74320C88A0A00E64118 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D89E74120C88A0A00E64118 /* MainInterface.storyboard */; };
+		3D89E74720C88A0A00E64118 /* athanIntentsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D89E74A20C88A0A00E64118 /* athanIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D89E73220C88A0900E64118 /* athanIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D89E75220C88B5E00E64118 /* INNextPrayerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */; };
@@ -67,7 +76,6 @@
 		3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3DFE11572096647100D46A1F /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3DFE11582097E03B00D46A1F /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
-		3FE798E961008341454CBC07 /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +85,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3D3DD5E21C2B1F7200FEBB3D;
 			remoteInfo = "Watch Athan Extension";
+		};
+		3D89E74520C88A0A00E64118 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D89E73A20C88A0900E64118;
+			remoteInfo = athanIntentsUI;
+		};
+		3D89E74820C88A0A00E64118 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D89E73120C88A0900E64118;
+			remoteInfo = athanIntents;
 		};
 		3DA7C614201D504C0001600D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -123,6 +145,8 @@
 			dstSubfolderSpec = 13;
 			files = (
 				3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */,
+				3D89E74A20C88A0A00E64118 /* athanIntents.appex in Embed App Extensions */,
+				3D89E74720C88A0A00E64118 /* athanIntentsUI.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +154,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
 		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
 		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
 		3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Utility.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,7 +204,18 @@
 		3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingsViewController.xib; sourceTree = "<group>"; };
 		3D8049911C34A71900A2AC1F /* PrayerRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRow.swift; sourceTree = "<group>"; };
-		3D894B1220B0EF8600F9887C /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = ../Pods/SwiftSpinner/SqueezeButton.swift; sourceTree = "<group>"; };
+		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
+		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		3D89E72A20C8462000E64118 /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
+		3D89E73220C88A0900E64118 /* athanIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = athanIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D89E73420C88A0900E64118 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		3D89E73620C88A0900E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = athanIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		3D89E73F20C88A0A00E64118 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		3D89E74220C88A0A00E64118 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		3D89E74420C88A0A00E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INNextPrayerIntent.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QiblaViewController.xib; path = ../QiblaViewController.xib; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
@@ -202,8 +236,6 @@
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
-		D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.release.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +243,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FE798E961008341454CBC07 /* Pods_Athan_Utility.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +250,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D89E72F20C88A0900E64118 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D89E73820C88A0900E64118 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D89E73D20C88A0A00E64118 /* IntentsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,15 +293,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1624FA18F3BDCB6BB4B4C2A2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */,
-				DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3D07DA721BDC58B50001EFE4 = {
 			isa = PBXGroup;
 			children = (
@@ -264,9 +301,10 @@
 				3D3DD5D81C2B1F7200FEBB3D /* Watch Athan */,
 				3D3DD5E71C2B1F7200FEBB3D /* Watch Athan Extension */,
 				3DA7C610201D504C0001600D /* Athan UtilityTests */,
+				3D89E73320C88A0900E64118 /* athanIntents */,
+				3D89E73E20C88A0A00E64118 /* athanIntentsUI */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
-				1624FA18F3BDCB6BB4B4C2A2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -278,6 +316,8 @@
 				3D3DD5D71C2B1F7200FEBB3D /* Watch Athan.app */,
 				3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */,
 				3DA7C60F201D504C0001600D /* Athan UtilityTests.xctest */,
+				3D89E73220C88A0900E64118 /* athanIntents.appex */,
+				3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -299,6 +339,7 @@
 				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
 				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
 				3D07DA8A1BDC58B60001EFE4 /* Info.plist */,
+				3D89E71520C75E6000E64118 /* Intents.intentdefinition */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -369,7 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
-				3D894B1220B0EF8600F9887C /* SqueezeButton.swift */,
+				3D89E72A20C8462000E64118 /* SqueezeButton.swift */,
 				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
 				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
@@ -386,6 +427,7 @@
 				3D36436E1CCD17960080DF5C /* info4@2x.png */,
 				3D36436F1CCD17960080DF5C /* info5@2x.png */,
 				3D3643701CCD17960080DF5C /* info6@2x.png */,
+				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
 				3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */,
 				3D07DA961BDC58E30001EFE4 /* ClockView.swift */,
 				3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */,
@@ -402,6 +444,26 @@
 				3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */,
 			);
 			name = Table;
+			sourceTree = "<group>";
+		};
+		3D89E73320C88A0900E64118 /* athanIntents */ = {
+			isa = PBXGroup;
+			children = (
+				3D89E73420C88A0900E64118 /* IntentHandler.swift */,
+				3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */,
+				3D89E73620C88A0900E64118 /* Info.plist */,
+			);
+			path = athanIntents;
+			sourceTree = "<group>";
+		};
+		3D89E73E20C88A0A00E64118 /* athanIntentsUI */ = {
+			isa = PBXGroup;
+			children = (
+				3D89E73F20C88A0A00E64118 /* IntentViewController.swift */,
+				3D89E74120C88A0A00E64118 /* MainInterface.storyboard */,
+				3D89E74420C88A0A00E64118 /* Info.plist */,
+			);
+			path = athanIntentsUI;
 			sourceTree = "<group>";
 		};
 		3DA7C610201D504C0001600D /* Athan UtilityTests */ = {
@@ -435,7 +497,7 @@
 			isa = PBXGroup;
 			children = (
 				3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */,
-				D2E2A36F4239C2BBBD583EF8 /* Pods_Athan_Utility.framework */,
+				3D89E73C20C88A0A00E64118 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -462,18 +524,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D07DA8D1BDC58B60001EFE4 /* Build configuration list for PBXNativeTarget "Athan Utility" */;
 			buildPhases = (
-				15CF839A23920BA0FE906F67 /* [CP] Check Pods Manifest.lock */,
 				3D07DA771BDC58B50001EFE4 /* Sources */,
 				3D07DA781BDC58B50001EFE4 /* Frameworks */,
 				3D07DA791BDC58B50001EFE4 /* Resources */,
 				3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */,
 				3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */,
-				84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */,
+				3D89E74620C88A0A00E64118 /* PBXTargetDependency */,
+				3D89E74920C88A0A00E64118 /* PBXTargetDependency */,
 			);
 			name = "Athan Utility";
 			productName = "Athan Utility";
@@ -514,6 +576,40 @@
 			productName = "Watch Athan Extension";
 			productReference = 3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
+		};
+		3D89E73120C88A0900E64118 /* athanIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D89E74E20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntents" */;
+			buildPhases = (
+				3D89E72E20C88A0900E64118 /* Sources */,
+				3D89E72F20C88A0900E64118 /* Frameworks */,
+				3D89E73020C88A0900E64118 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = athanIntents;
+			productName = athanIntents;
+			productReference = 3D89E73220C88A0900E64118 /* athanIntents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3D89E73A20C88A0900E64118 /* athanIntentsUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D89E74B20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntentsUI" */;
+			buildPhases = (
+				3D89E73720C88A0900E64118 /* Sources */,
+				3D89E73820C88A0900E64118 /* Frameworks */,
+				3D89E73920C88A0900E64118 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = athanIntentsUI;
+			productName = athanIntentsUI;
+			productReference = 3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		3DA7C60E201D504C0001600D /* Athan UtilityTests */ = {
 			isa = PBXNativeTarget;
@@ -557,7 +653,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0730;
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Omar Alejel";
 				TargetAttributes = {
@@ -589,7 +685,20 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
 						};
+					};
+					3D89E73120C88A0900E64118 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = DL7989H5XT;
+						ProvisioningStyle = Automatic;
+					};
+					3D89E73A20C88A0900E64118 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = DL7989H5XT;
+						ProvisioningStyle = Automatic;
 					};
 					3DA7C60E201D504C0001600D = {
 						CreatedOnToolsVersion = 9.2;
@@ -627,6 +736,8 @@
 				3D3DD5D61C2B1F7200FEBB3D /* Watch Athan */,
 				3D3DD5E21C2B1F7200FEBB3D /* Watch Athan Extension */,
 				3DA7C60E201D504C0001600D /* Athan UtilityTests */,
+				3D89E73120C88A0900E64118 /* athanIntents */,
+				3D89E73A20C88A0900E64118 /* athanIntentsUI */,
 			);
 		};
 /* End PBXProject section */
@@ -672,6 +783,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3D89E73020C88A0900E64118 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D89E73920C88A0900E64118 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D89E74320C88A0A00E64118 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3DA7C60D201D504C0001600D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -693,45 +819,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		15CF839A23920BA0FE906F67 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Athan Utility-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84E8986C36D1ADB934667720 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSpinner.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		3D07DA771BDC58B50001EFE4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -751,13 +838,15 @@
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
-				3D894B1320B0EF8700F9887C /* SqueezeButton.swift in Sources */,
 				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
+				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3DD9814D1CC6E3D100151027 /* IntroViewController.swift in Sources */,
+				3D89E72B20C8462000E64118 /* SqueezeButton.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
+				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,6 +862,23 @@
 				3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */,
 				3D3DD5EB1C2B1F7200FEBB3D /* InterfaceController.swift in Sources */,
 				3D3DD5F11C2B1F7200FEBB3D /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D89E72E20C88A0900E64118 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D89E75220C88B5E00E64118 /* INNextPrayerIntent.swift in Sources */,
+				3D89E73520C88A0900E64118 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D89E73720C88A0900E64118 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D89E74020C88A0A00E64118 /* IntentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,6 +907,16 @@
 			isa = PBXTargetDependency;
 			target = 3D3DD5E21C2B1F7200FEBB3D /* Watch Athan Extension */;
 			targetProxy = 3D3DD5E51C2B1F7200FEBB3D /* PBXContainerItemProxy */;
+		};
+		3D89E74620C88A0A00E64118 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D89E73A20C88A0900E64118 /* athanIntentsUI */;
+			targetProxy = 3D89E74520C88A0A00E64118 /* PBXContainerItemProxy */;
+		};
+		3D89E74920C88A0A00E64118 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D89E73120C88A0900E64118 /* athanIntents */;
+			targetProxy = 3D89E74820C88A0A00E64118 /* PBXContainerItemProxy */;
 		};
 		3DA7C615201D504C0001600D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -837,6 +953,14 @@
 				3D3DD5DA1C2B1F7200FEBB3D /* Base */,
 			);
 			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+		3D89E74120C88A0A00E64118 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D89E74220C88A0A00E64118 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */ = {
@@ -958,8 +1082,8 @@
 		};
 		3D07DA8E1BDC58B60001EFE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 058132690C9EB726B20248E5 /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -983,8 +1107,8 @@
 		};
 		3D07DA8F1BDC58B60001EFE4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DEEB173C65245469118BDB53 /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
@@ -1088,6 +1212,110 @@
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		3D89E74C20C88A0A00E64118 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = athanIntentsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntentsUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D89E74D20C88A0A00E64118 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = athanIntentsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntentsUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3D89E74F20C88A0A00E64118 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = athanIntents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D89E75020C88A0A00E64118 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = athanIntents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1211,6 +1439,24 @@
 			buildConfigurations = (
 				3D3DD5FA1C2B1F7300FEBB3D /* Debug */,
 				3D3DD5FB1C2B1F7300FEBB3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D89E74B20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntentsUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D89E74C20C88A0A00E64118 /* Debug */,
+				3D89E74D20C88A0A00E64118 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D89E74E20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D89E74F20C88A0A00E64118 /* Debug */,
+				3D89E75020C88A0A00E64118 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -100,7 +100,8 @@ open class SwiftSpinner: UIView {
         SwiftSpinner.cancelButton = SqueezeButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
 //        SwiftSpinner.cancelButton!.layer.cornerRadius = 14
         SwiftSpinner.cancelButton!.backgroundColor = UIColor(white: 0.70, alpha: 0.5)
-        SwiftSpinner.cancelButton!.setTitle("Cancel", for: UIControlState.normal)
+        let cancelString = NSLocalizedString("Cancel", comment: "")
+        SwiftSpinner.cancelButton!.setTitle(cancelString, for: UIControlState.normal)
         SwiftSpinner.cancelButton!.setTitleColor(UIColor.black, for: UIControlState())
         SwiftSpinner.cancelButton!.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
         SwiftSpinner.cancelButton!.isUserInteractionEnabled = true

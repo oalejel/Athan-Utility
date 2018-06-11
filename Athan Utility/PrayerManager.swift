@@ -368,15 +368,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func setCurrentDates() {
-        let df = Global.dateFormatter
+//        let df = Global.dateFormatter
         //get the date info for today to use for computation
         let curDate = Date()
-        Global.dateFormatter.dateFormat = "y"
-        currentYear = Int(df.string(from: curDate))
-        Global.dateFormatter.dateFormat = "d"
-        currentDay = Int(df.string(from: curDate))
-        Global.dateFormatter.dateFormat = "M"
-        currentMonth = Int(df.string(from: curDate))
+        currentYear = Calendar.current.component(.year, from: curDate)
+        currentDay = Calendar.current.component(.day, from: curDate)
+        currentMonth = Calendar.current.component(.month, from: curDate)
     }
     
     // this organizes the data and notifies the delegate. dict should either be coming with proper formatting from a file, or from the API with a need for special JSON parsing
@@ -576,36 +573,31 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let yesterday = yearTimes[yesterdayYear!]?[yesterdayMonth!]?[yesterdayDay!] {
             yesterdayPrayerTimes = yesterday
         }
-        
     }
     
     func scheduleAppropriateNotifications() {
         //ask user for notifications capabilities
         
         let center = UNUserNotificationCenter.current()
-//        DispatchQueue.main.async {
-        center.removeAllPendingNotificationRequests()
-//        }
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
             if !granted {
-               print("User denied use of notifications")
+                print("User denied use of notifications")
             }
-//            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
-            
+            //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
         }
         
         center.getPendingNotificationRequests(completionHandler: { (reqs) in
             print("last pending notification count: \(reqs.count)")
         })
         
+        center.removeAllPendingNotificationRequests()
+        
         center.getDeliveredNotifications { (reqs) in
             print("last delivered notification count: \(reqs.count)")
         }
         
         for i in 0..<5 {
-            var final = false
-            if i == 4 {final = true}
-            self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: final)
+            self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: i == 4)
         }
     }
     
@@ -653,8 +645,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 }
             }
         }
-        
-        
+    
         // create a timer that tells us when we switch between AM and PM
         let cal = Calendar.current
         var comps = (cal as NSCalendar).components([.year, .month, .day, .hour], from: curDate)
@@ -701,10 +692,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func createNotificationsForDayItemTuple(_ t: (day: Int,  month: Int, year: Int), finalFlag: Bool) {
-//        print("making notifications for \(t.month), \(t.day), \(t.year), final: \(finalFlag)")
+        print("making notifications for month: \(t.month), day: \(t.day), year: \(t.year), final: \(finalFlag)")
         
         let df = Global.dateFormatter
         df.dateFormat = "h:mm"
+        
+        // min holds raw value + 1 of prayer we want to calculate for teh day
         var min = 0
         //account for prayers that could have passed today
         if t.day == currentDay && t.month == currentMonth && t.year == currentYear {
@@ -764,14 +757,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 }
 
                                 // set the notification body
-                                noteContent.title = "sdfsdf"//remove
                                 noteContent.body = alertString
 
                                 // create a trigger with the correct date
-                                let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: pDate)
+                                let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: pDate)
+                                print(dateComp.isValidDate)
                                 let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
                                 // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
-                                let noteRequest = UNNotificationRequest(identifier: "standard_note", content: noteContent, trigger: noteTrigger)
+                                let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
+                                let noteRequest = UNNotificationRequest(identifier: noteID, content: noteContent, trigger: noteTrigger)
                                 center.add(noteRequest) { print($0 ?? "", separator: "", terminator: "") }
                             }
                             
@@ -781,7 +775,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 let preNoteContent = UNMutableNotificationContent()
                                 let preDate = pDate.addingTimeInterval(-900) // 15 mins before
                                 preNoteContent.userInfo = ["intendedFireDate": preDate]
-                                let preNoteComponents = Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: preDate)
+                                let preNoteComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)
                                 
                                 let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
                                 
@@ -806,12 +800,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     alertString = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
                                 }
                                 
-                                preNoteContent.title = alertString
+                                preNoteContent.body = alertString
                                
-                                let preNoteRequest = UNNotificationRequest(identifier: "pre_note", content: preNoteContent, trigger: preNoteTrigger)
-                                DispatchQueue.main.async {
-                                    center.add(preNoteRequest, withCompletionHandler: nil)
-                                }
+                                let preNoteID = "pre_note_\(preNoteComponents.day!)_\(preNoteComponents.hour!)_\(preNoteComponents.minute!)"
+                                let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
+//                                DispatchQueue.main.async {
+                                center.add(preNoteRequest, withCompletionHandler: nil)
+//                                }
                             }
                         }
                     }

@@ -308,12 +308,9 @@ class ClockView: UIView {
         addSubview(vc)
         
         DispatchQueue.main.async { () -> Void in
-            let df = Global.dateFormatter
-            df.dateFormat = "s.S"
             let curDate = Date()
-            let seconds = Float(df.string(from: curDate))
-            df.dateFormat = "m"
-            let minutes = Float(df.string(from: curDate))! + (seconds! / 60)
+            let seconds = Float(Calendar.current.component(.second, from: curDate))
+            let minutes = Float(Calendar.current.component(.minute, from: curDate)) + (seconds / 60)
             let radians: CGFloat = CGFloat(minutes / 30.0) * CGFloat(Double.pi)
             self.minutesLayer.transform = CATransform3DRotate(self.minutesLayer.transform, radians, 0, 0, 1)
             
@@ -384,14 +381,11 @@ class ClockView: UIView {
         addSubview(vc)
         
         DispatchQueue.main.async { () -> Void in
-            let df = Global.dateFormatter
-            df.dateFormat = "h"
             let curDate = Date()
-            var hours = Float(df.string(from: curDate))
-            df.dateFormat = "m"
-            let minutes = Float(df.string(from: curDate))
-            hours! += minutes! / 60
-            let radians: CGFloat = CGFloat(hours! / 6) * CGFloat(Double.pi)
+            var hours = Float(Calendar.current.component(.hour, from: curDate))
+            let minutes = Float(Calendar.current.component(.minute, from: curDate))
+            hours += minutes / 60
+            let radians: CGFloat = CGFloat(hours / 6) * CGFloat(Double.pi)
             self.hoursLayer.transform = CATransform3DRotate(self.hoursLayer.transform, radians, 0, 0, 1)
             
             let oldRotation: NSNumber = self.hoursLayer.value(forKeyPath: "transform.rotation") as! NSNumber
@@ -454,28 +448,22 @@ class ClockView: UIView {
         DispatchQueue.main.async { () -> Void in
             let curDate = Date()
             let df = Global.dateFormatter
-            df.dateFormat = "a"
-            self.currentMeridiem = df.string(from: curDate) == "AM" ? .am : .pm
+            self.currentMeridiem = Calendar.current.component(.hour, from: curDate) > 11 ? .am : .pm
             var p = PrayerType.fajr
             for _ in 0...5 {
                 if let pDate = manager.todayPrayerTimes[p.rawValue] {
-                    df.dateFormat = "a"
-                    let ampmString = df.string(from: pDate)
-                    var merid: Meridiem = .pm
-                    if (ampmString == "AM") {
-                        merid = .am
+                    let hours = Float(Calendar.current.component(.hour, from: pDate))
+                    let minutes = Float(Calendar.current.component(.minute, from: pDate))
+                    var seconds = Float(Calendar.current.component(.second, from: pDate))
+                    
+                    // warning: ensure that hour -> meridiem calculations are consistent
+                    var merid: Meridiem = .am
+                    if (hours > 11) {
+                        merid = .pm
                     }
                     
-                    df.dateFormat = "h"
-                    let hours = Float(df.string(from: pDate))
-                    df.dateFormat = "m"
-                    let minutes = Float(df.string(from: pDate))
-                    df.dateFormat = "s"
-                    var seconds = Float(df.string(from: pDate))
-                    
-                    if seconds == nil {seconds = 0}
-                    var outOfTwelve = (hours ?? 0) + ((minutes ?? 0) / 60)
-                    outOfTwelve += ((seconds ?? 0) / 3600)
+                    var outOfTwelve = hours + (minutes / 60)
+                    outOfTwelve += seconds / 3600
                     let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
                     
                     let hightLight = p == manager.currentPrayer

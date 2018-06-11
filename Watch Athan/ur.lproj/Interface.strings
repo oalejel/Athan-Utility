@@ -1,0 +1,18 @@
+
+/* Class = "WKInterfaceLabel"; text = "Shurooq 12:00 AM"; ObjectID = "WR0-Ts-JkU"; */
+"WR0-Ts-JkU.text" = "Shurooq 12:00 AM";
+
+/* Class = "WKInterfaceLabel"; text = "Alert Label"; ObjectID = "XkS-y5-khE"; */
+"XkS-y5-khE.text" = "Alert Label";
+
+/* Class = "WKInterfaceLabel"; text = "0:00 AM"; ObjectID = "fF9-sQ-Tdb"; */
+"fF9-sQ-Tdb.text" = "0:00 AM";
+
+/* Class = "WKInterfaceLabel"; text = "Fajr"; ObjectID = "iUl-LG-yNV"; */
+"iUl-LG-yNV.text" = "Fajr";
+
+/* Class = "WKInterfaceLabel"; text = "left"; ObjectID = "psC-MB-hD1"; */
+"psC-MB-hD1.text" = "left";
+
+/* Class = "WKInterfaceLabel"; text = "Fajr"; ObjectID = "y2j-27-4eh"; */
+"y2j-27-4eh.text" = "Fajr";

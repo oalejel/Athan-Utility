@@ -45,6 +45,8 @@
 		3D3DD5F31C2B1F7200FEBB3D /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3DD5F21C2B1F7200FEBB3D /* ComplicationController.swift */; };
 		3D3DD5F51C2B1F7300FEBB3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5F41C2B1F7300FEBB3D /* Assets.xcassets */; };
 		3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */; };
+		3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
+		3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */; };
 		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
 		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
 		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
@@ -63,7 +65,6 @@
 		3D89E75220C88B5E00E64118 /* INNextPrayerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
-		3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3DAC704C1C2C43C2006E05CF /* WatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */; };
 		3DAC704E1C2C44D4006E05CF /* WatchDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */; };
@@ -198,6 +199,30 @@
 		3D3DD5F41C2B1F7300FEBB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D3DD5F61C2B1F7300FEBB3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElapsedView.swift; sourceTree = "<group>"; };
+		3D52254E20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
+		3D52254F20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3D52255020CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52255120CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Interface.strings; sourceTree = "<group>"; };
+		3D52255220CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52255620CDD25800CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3D52255820CDD42300CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3D52256920CDF50400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
+		3D52256A20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		3D52256B20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3D52256C20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52256D20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52256E20CDF51C00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Interface.strings; sourceTree = "<group>"; };
+		3D52256F20CDF51C00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3D52257120CDF53700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Main.strings; sourceTree = "<group>"; };
+		3D52257220CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3D52257320CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52257420CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3D52257520CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Interface.strings; sourceTree = "<group>"; };
+		3D52257620CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3D52257820CDF54800CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
+		3D52257920CDF55700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
+		3D52257A20CDF5BA00CF8C3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/QiblaViewController.xib; sourceTree = "<group>"; };
+		3D52257B20CDF5D200CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D6308321C08F3D700AC32B6 /* LocationInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInputController.swift; sourceTree = "<group>"; };
 		3D6308331C08F3D700AC32B6 /* LocationInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationInputController.xib; sourceTree = "<group>"; };
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
@@ -217,7 +242,6 @@
 		3D89E74420C88A0A00E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INNextPrayerIntent.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
-		3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QiblaViewController.xib; path = ../QiblaViewController.xib; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
 		3DA7C60F201D504C0001600D /* Athan UtilityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athan UtilityTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athan_UtilityTests.swift; sourceTree = "<group>"; };
@@ -298,11 +322,11 @@
 			children = (
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
+				3D89E73E20C88A0A00E64118 /* athanIntentsUI */,
 				3D3DD5D81C2B1F7200FEBB3D /* Watch Athan */,
 				3D3DD5E71C2B1F7200FEBB3D /* Watch Athan Extension */,
 				3DA7C610201D504C0001600D /* Athan UtilityTests */,
 				3D89E73320C88A0900E64118 /* athanIntents */,
-				3D89E73E20C88A0A00E64118 /* athanIntentsUI */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
 			);
@@ -325,6 +349,7 @@
 		3D07DA7D1BDC58B50001EFE4 /* Athan Utility */ = {
 			isa = PBXGroup;
 			children = (
+				3D52255720CDD25800CF8C3D /* Localizable.strings */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
@@ -401,7 +426,7 @@
 			children = (
 				3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */,
 				3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */,
-				3D936A1B1BE3A98B0060790D /* QiblaViewController.xib */,
+				3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */,
 			);
 			name = Qibla;
 			sourceTree = "<group>";
@@ -725,6 +750,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				fr,
+				ur,
 			);
 			mainGroup = 3D07DA721BDC58B50001EFE4;
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
@@ -747,19 +775,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */,
 				3D3643731CCD17960080DF5C /* info3@2x.png in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
 				3D3643751CCD17960080DF5C /* info5@2x.png in Resources */,
 				3D3643741CCD17960080DF5C /* info4@2x.png in Resources */,
-				3D936A1D1BE3A98B0060790D /* QiblaViewController.xib in Resources */,
 				3D3643721CCD17960080DF5C /* info2@2x.png in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
 				3D3643761CCD17960080DF5C /* info6@2x.png in Resources */,
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
 				3D3643711CCD17960080DF5C /* info1@2x.png in Resources */,
+				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
 			);
@@ -935,6 +964,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				3D07DA831BDC58B60001EFE4 /* Base */,
+				3D52254E20CDCE2300CF8C3D /* ar */,
+				3D52256A20CDF51B00CF8C3D /* fr */,
+				3D52257120CDF53700CF8C3D /* ur */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -943,6 +975,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				3D07DA881BDC58B60001EFE4 /* Base */,
+				3D52254F20CDCE2300CF8C3D /* ar */,
+				3D52256B20CDF51B00CF8C3D /* fr */,
+				3D52257220CDF53800CF8C3D /* ur */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -951,14 +986,43 @@
 			isa = PBXVariantGroup;
 			children = (
 				3D3DD5DA1C2B1F7200FEBB3D /* Base */,
+				3D52255120CDCE2400CF8C3D /* ar */,
+				3D52256E20CDF51C00CF8C3D /* fr */,
+				3D52257520CDF53800CF8C3D /* ur */,
 			);
 			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+		3D52255720CDD25800CF8C3D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D52255620CDD25800CF8C3D /* ar */,
+				3D52255820CDD42300CF8C3D /* en */,
+				3D52256F20CDF51C00CF8C3D /* fr */,
+				3D52257620CDF53800CF8C3D /* ur */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D52256920CDF50400CF8C3D /* ar */,
+				3D52257820CDF54800CF8C3D /* fr */,
+				3D52257920CDF55700CF8C3D /* ur */,
+				3D52257A20CDF5BA00CF8C3D /* Base */,
+				3D52257B20CDF5D200CF8C3D /* en */,
+			);
+			name = QiblaViewController.xib;
 			sourceTree = "<group>";
 		};
 		3D89E74120C88A0A00E64118 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3D89E74220C88A0A00E64118 /* Base */,
+				3D52255220CDCE2400CF8C3D /* ar */,
+				3D52256D20CDF51B00CF8C3D /* fr */,
+				3D52257420CDF53800CF8C3D /* ur */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -967,6 +1031,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				3DD3B4971C0D3B5700DC91E6 /* Base */,
+				3D52255020CDCE2400CF8C3D /* ar */,
+				3D52256C20CDF51B00CF8C3D /* fr */,
+				3D52257320CDF53800CF8C3D /* ur */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -978,6 +1045,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1034,6 +1102,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

@@ -15,9 +15,10 @@ class BubbleTextView: UIView {
         let f = CGRect(x: 0, y: 0, width: 20, height: 20)
         super.init(frame: f)
         letterLabel = UILabel(frame: f)
+        letterLabel.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         letterLabel.textAlignment = .center
         letterLabel.adjustsFontSizeToFitWidth = true
-        letterLabel.text = "\(letter)"
+        letterLabel.text = NSLocalizedString("\(letter)_letter", comment: "")
         addSubview(letterLabel)
         letterLabel.textColor = UIColor.black
         layer.cornerRadius = f.width / 2

@@ -7,4 +7,11 @@
 */
 
 
-"Cancel" = "Cancel";
+"Cancel" = "Annuler";
+
+"F_letter" = "F";
+"S_letter" = "S";
+"T_letter" = "D";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";

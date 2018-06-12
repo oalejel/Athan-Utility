@@ -163,7 +163,7 @@ class ClockView: UIView {
         
         let labelFrame = CGRect(x: 0, y: 0, width: 40, height: lineWidth)
         amLabel = UILabel(frame: labelFrame)
-        amLabel.text = "AM"
+        amLabel.text = Calendar.current.amSymbol
         amLabel.textColor = UIColor.lightGray
         amLabel.textAlignment = .center
         amLabel.center = CGPoint(x: bounds.size.width / 2, y: (1.5 * lineWidth) + separation)
@@ -186,7 +186,7 @@ class ClockView: UIView {
         
         let labelFrame = CGRect(x: 0, y: 0, width: 40, height: lineWidth)
         pmLabel = UILabel(frame: labelFrame)
-        pmLabel.text = "PM"
+        pmLabel.text = Calendar.current.pmSymbol
         pmLabel.textColor = UIColor.lightGray
         pmLabel.textAlignment = .center
         pmLabel.center = CGPoint(x: bounds.size.width / 2, y: lineWidth / 2)
@@ -233,11 +233,10 @@ class ClockView: UIView {
         
         
         DispatchQueue.main.async { () -> Void in
-            let df = Global.dateFormatter
-            df.dateFormat = "s.S"
-            let curDate = Date()
-            let seconds = Float(df.string(from: curDate))
-            let radians: CGFloat = CGFloat(seconds! / 30.0) * CGFloat(Double.pi)
+//            let curDate = Date()
+            // need millisecond accuracy
+            let seconds = Float(Date().timeIntervalSince1970.truncatingRemainder(dividingBy: 60))
+            let radians: CGFloat = CGFloat(seconds / 30.0) * CGFloat(Double.pi)
             self.secondsLayer.transform = CATransform3DRotate(self.secondsLayer.transform, radians, 0, 0, 1)
             
             let oldRotation: NSNumber = self.secondsLayer.value(forKeyPath: "transform.rotation") as! NSNumber
@@ -447,14 +446,13 @@ class ClockView: UIView {
     func setPrayerBubbles(_ manager: PrayerManager) {
         DispatchQueue.main.async { () -> Void in
             let curDate = Date()
-            let df = Global.dateFormatter
             self.currentMeridiem = Calendar.current.component(.hour, from: curDate) > 11 ? .am : .pm
             var p = PrayerType.fajr
             for _ in 0...5 {
                 if let pDate = manager.todayPrayerTimes[p.rawValue] {
                     let hours = Float(Calendar.current.component(.hour, from: pDate))
                     let minutes = Float(Calendar.current.component(.minute, from: pDate))
-                    var seconds = Float(Calendar.current.component(.second, from: pDate))
+                    let seconds = Float(Calendar.current.component(.second, from: pDate))
                     
                     // warning: ensure that hour -> meridiem calculations are consistent
                     var merid: Meridiem = .am

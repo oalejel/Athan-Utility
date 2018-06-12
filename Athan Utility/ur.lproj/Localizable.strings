@@ -7,4 +7,11 @@
 */
 
 
-"Cancel" = "Cancel";
+"Cancel" = "منسوخ";
+
+"F_letter" = "ف";
+"S_letter" = "ش";
+"T_letter" = "ظ";
+"A_letter" = "ع";
+"M_letter" = "م";
+"I_letter" = "ع";

@@ -256,6 +256,13 @@
 		3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		3DD3B4971C0D3B5700DC91E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3DD3B4991C0D3B5700DC91E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DD843B620CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		3DD843B720CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
+		3DD843B820CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		3DD843B920CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3DD843BA20CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		3DD843BB20CE5D3200D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Interface.strings; sourceTree = "<group>"; };
+		3DD843BC20CE5D3200D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3DD9814C1CC6E3D100151027 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
@@ -753,6 +760,7 @@
 				ar,
 				fr,
 				ur,
+				tr,
 			);
 			mainGroup = 3D07DA721BDC58B50001EFE4;
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
@@ -967,6 +975,7 @@
 				3D52254E20CDCE2300CF8C3D /* ar */,
 				3D52256A20CDF51B00CF8C3D /* fr */,
 				3D52257120CDF53700CF8C3D /* ur */,
+				3DD843B620CE5D3100D4309E /* tr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -978,6 +987,7 @@
 				3D52254F20CDCE2300CF8C3D /* ar */,
 				3D52256B20CDF51B00CF8C3D /* fr */,
 				3D52257220CDF53800CF8C3D /* ur */,
+				3DD843B820CE5D3100D4309E /* tr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -989,6 +999,7 @@
 				3D52255120CDCE2400CF8C3D /* ar */,
 				3D52256E20CDF51C00CF8C3D /* fr */,
 				3D52257520CDF53800CF8C3D /* ur */,
+				3DD843BB20CE5D3200D4309E /* tr */,
 			);
 			name = Interface.storyboard;
 			sourceTree = "<group>";
@@ -1000,6 +1011,7 @@
 				3D52255820CDD42300CF8C3D /* en */,
 				3D52256F20CDF51C00CF8C3D /* fr */,
 				3D52257620CDF53800CF8C3D /* ur */,
+				3DD843BC20CE5D3200D4309E /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1012,6 +1024,7 @@
 				3D52257920CDF55700CF8C3D /* ur */,
 				3D52257A20CDF5BA00CF8C3D /* Base */,
 				3D52257B20CDF5D200CF8C3D /* en */,
+				3DD843B720CE5D3100D4309E /* tr */,
 			);
 			name = QiblaViewController.xib;
 			sourceTree = "<group>";
@@ -1023,6 +1036,7 @@
 				3D52255220CDCE2400CF8C3D /* ar */,
 				3D52256D20CDF51B00CF8C3D /* fr */,
 				3D52257420CDF53800CF8C3D /* ur */,
+				3DD843BA20CE5D3100D4309E /* tr */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -1034,6 +1048,7 @@
 				3D52255020CDCE2400CF8C3D /* ar */,
 				3D52256C20CDF51B00CF8C3D /* fr */,
 				3D52257320CDF53800CF8C3D /* ur */,
+				3DD843B920CE5D3100D4309E /* tr */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";

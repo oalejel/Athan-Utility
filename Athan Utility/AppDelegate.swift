@@ -34,28 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
-        
-        // This implementation will not make a difference, since the user will only ever get the alert the moment the notification arrives
-//        // handling 15 m reminders
-//        if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
-//            let interval = intendedDate.timeIntervalSince(Date())
-//            let minutes = (interval / 60)
-//            if minutes > 0 {
-//                let originalTitle = notification.request.content.body
-//                let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
-//
-//                let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
-//                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//                alertController.addAction(okAction)
-//                window?.rootViewController?.present(alertController, animated: true, completion: nil)
-//            }
-//        } else {
-//            // handling other reminders
-//            let alertController = UIAlertController(title: notification.request.content.body, message: nil, preferredStyle: .alert)
-//            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//            alertController.addAction(okAction)
-//            window?.rootViewController?.present(alertController, animated: true, completion: nil)
-//        }
     }
     
 
@@ -64,8 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 //        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 //    }
-    
-    
+    /*
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
@@ -83,5 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+ */
+    
 }
 

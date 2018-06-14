@@ -185,6 +185,20 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         self.coreManager.delegate = self
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff.
+        
+        #if targetEnvironment(simulator)
+        self.currentCityString = "Bloomfield Hills"
+        self.currentStateString = "MI"
+        self.currentCountryString = "USA"
+        self.coordinate = CLLocationCoordinate2D(latitude: 42.588, longitude: -83.2975)
+        
+        //update our location string used to make queries and display in UI
+        self.locationString = self.formattedAddressString()
+        
+        //fetch data for this month and the next month
+        self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
+//        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+        #endif
     }
     
     //MARK: - Location Services

@@ -30,27 +30,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        //only bother giving an update to their 15 m reminder if its been 5 minutes since
-//                if Int(Date().timeIntervalSince(notification.date)) < 10 {
-                    if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
-                        let interval = Date().timeIntervalSince(intendedDate)
-                        let minutes = (interval / 60)
-                        if minutes > 0 {
-                            let originalTitle = notification.request.content.body
-                            let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
-                           
-                            let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
-                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                            alertController.addAction(okAction)
-                            window?.rootViewController?.present(alertController, animated: true, completion: nil)
-                            
-                            
-                            
-                            
-                        }
-                    }
-
-//                }
+        let alertController = UIAlertController(title: notification.request.content.body, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        
+        // This implementation will not make a difference, since the user will only ever get the alert the moment the notification arrives
+//        // handling 15 m reminders
+//        if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
+//            let interval = intendedDate.timeIntervalSince(Date())
+//            let minutes = (interval / 60)
+//            if minutes > 0 {
+//                let originalTitle = notification.request.content.body
+//                let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
+//
+//                let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
+//                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                alertController.addAction(okAction)
+//                window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//            }
+//        } else {
+//            // handling other reminders
+//            let alertController = UIAlertController(title: notification.request.content.body, message: nil, preferredStyle: .alert)
+//            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//            alertController.addAction(okAction)
+//            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+//        }
     }
     
 

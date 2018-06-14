@@ -812,12 +812,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 }
                                 
                                 preNoteContent.body = alertString
-                               
-                                let preNoteID = "pre_note_\(preNoteComponents.day!)_\(preNoteComponents.hour!)_\(preNoteComponents.minute!)"
-                                let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
                                 
                                 // hold onto the intended date for notification so that local notes can be handled in an accurate alert view
                                 preNoteContent.userInfo["intendedDate"] = pDate
+                               
+                                //create a unique time based id
+                                let preNoteID = "pre_note_\(preNoteComponents.day!)_\(preNoteComponents.hour!)_\(preNoteComponents.minute!)"
+                                
+                                let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
+                                
 //                                DispatchQueue.main.async {
                                 center.add(preNoteRequest, withCompletionHandler: nil)
 //                                }

@@ -75,17 +75,17 @@ class PrayerSettingsViewController: UITableViewController {
         
         switch indexPath.row {
         case 0:
-            cell.leftLabel?.text = "Fajr"
+            cell.leftLabel?.text = PrayerType.fajr.localizedString()
         case 1:
-            cell.leftLabel?.text = "Shurooq"
+            cell.leftLabel?.text = PrayerType.shurooq.localizedString()
         case 2:
-            cell.leftLabel?.text = "Thuhr"
+            cell.leftLabel?.text = PrayerType.thuhr.localizedString()
         case 3:
-            cell.leftLabel?.text = "Asr"
+            cell.leftLabel?.text = PrayerType.asr.localizedString()
         case 4:
-            cell.leftLabel?.text = "Maghrib"
+            cell.leftLabel?.text = PrayerType.maghrib.localizedString()
         case 5:
-            cell.leftLabel?.text = "Isha"
+            cell.leftLabel?.text = PrayerType.isha.localizedString()
         default:
             break
         }

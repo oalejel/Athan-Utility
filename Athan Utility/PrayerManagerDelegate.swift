@@ -21,4 +21,5 @@ import Foundation
     func fifteenMinutesLeft()
     func newMeridiem()
     func loadingHandler()
+//    func emergencyRefresh()
 }

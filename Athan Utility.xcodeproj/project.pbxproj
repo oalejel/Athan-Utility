@@ -29,12 +29,6 @@
 		3D32B5831C14D32E003CAE1B /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5821C14D32E003CAE1B /* moon.png */; };
 		3D32B5851C14D34D003CAE1B /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5841C14D34D003CAE1B /* sun.png */; };
 		3D36436A1CCD069F0080DF5C /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */; };
-		3D3643711CCD17960080DF5C /* info1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436B1CCD17960080DF5C /* info1@2x.png */; };
-		3D3643721CCD17960080DF5C /* info2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436C1CCD17960080DF5C /* info2@2x.png */; };
-		3D3643731CCD17960080DF5C /* info3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436D1CCD17960080DF5C /* info3@2x.png */; };
-		3D3643741CCD17960080DF5C /* info4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436E1CCD17960080DF5C /* info4@2x.png */; };
-		3D3643751CCD17960080DF5C /* info5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D36436F1CCD17960080DF5C /* info5@2x.png */; };
-		3D3643761CCD17960080DF5C /* info6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3643701CCD17960080DF5C /* info6@2x.png */; };
 		3D3DD5DB1C2B1F7200FEBB3D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5D91C2B1F7200FEBB3D /* Interface.storyboard */; };
 		3D3DD5DD1C2B1F7200FEBB3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
 		3D3DD5E41C2B1F7200FEBB3D /* Watch Athan Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D3DD5E31C2B1F7200FEBB3D /* Watch Athan Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -179,12 +173,6 @@
 		3D32B5821C14D32E003CAE1B /* moon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon.png; sourceTree = "<group>"; };
 		3D32B5841C14D34D003CAE1B /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
 		3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
-		3D36436B1CCD17960080DF5C /* info1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info1@2x.png"; sourceTree = "<group>"; };
-		3D36436C1CCD17960080DF5C /* info2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info2@2x.png"; sourceTree = "<group>"; };
-		3D36436D1CCD17960080DF5C /* info3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info3@2x.png"; sourceTree = "<group>"; };
-		3D36436E1CCD17960080DF5C /* info4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info4@2x.png"; sourceTree = "<group>"; };
-		3D36436F1CCD17960080DF5C /* info5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info5@2x.png"; sourceTree = "<group>"; };
-		3D3643701CCD17960080DF5C /* info6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info6@2x.png"; sourceTree = "<group>"; };
 		3D3DD5D71C2B1F7200FEBB3D /* Watch Athan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch Athan.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D3DD5DA1C2B1F7200FEBB3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -453,12 +441,6 @@
 		3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */ = {
 			isa = PBXGroup;
 			children = (
-				3D36436B1CCD17960080DF5C /* info1@2x.png */,
-				3D36436C1CCD17960080DF5C /* info2@2x.png */,
-				3D36436D1CCD17960080DF5C /* info3@2x.png */,
-				3D36436E1CCD17960080DF5C /* info4@2x.png */,
-				3D36436F1CCD17960080DF5C /* info5@2x.png */,
-				3D3643701CCD17960080DF5C /* info6@2x.png */,
 				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
 				3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */,
 				3D07DA961BDC58E30001EFE4 /* ClockView.swift */,
@@ -786,16 +768,10 @@
 				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */,
-				3D3643731CCD17960080DF5C /* info3@2x.png in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
-				3D3643751CCD17960080DF5C /* info5@2x.png in Resources */,
-				3D3643741CCD17960080DF5C /* info4@2x.png in Resources */,
-				3D3643721CCD17960080DF5C /* info2@2x.png in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
-				3D3643761CCD17960080DF5C /* info6@2x.png in Resources */,
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
-				3D3643711CCD17960080DF5C /* info1@2x.png in Resources */,
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,

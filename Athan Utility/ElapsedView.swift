@@ -46,6 +46,7 @@ class ElapsedView: UIView {
                 x.invalidate()
             }
         }
+        
     }
     
     override func draw(_ rect: CGRect) {
@@ -53,15 +54,19 @@ class ElapsedView: UIView {
         
         //elapsedLabel.font = elapsedLabel.font.monospacedDigitFont
         //timeLeftLabel.font = timeLeftLabel.font.monospacedDigitFont
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             self.layer.cornerRadius = rect.size.height / 3
             self.layer.masksToBounds = true
             
+            let RTLmode = x(self.elapsedLabel) > x(self.timeLeftLabel)
+            let leftLabel: UILabel = RTLmode ? self.timeLeftLabel : self.elapsedLabel
+            let rightLabel: UILabel = RTLmode ? self.elapsedLabel : self.timeLeftLabel
+            
             let offset: CGFloat = 5
-            let X = x(self.elapsedLabel) + width(self.elapsedLabel) + offset
+            let X = x(leftLabel) + width(leftLabel) + offset
             let H: CGFloat = 6
             let Y = (height(self) / 2) - H / 2
-            let end = x(self.timeLeftLabel)
+            let end = x(rightLabel)
             self.barLength = end - X - offset
             
             self.progressBGLayer = CAShapeLayer()
@@ -86,16 +91,17 @@ class ElapsedView: UIView {
                 c()
             }
             
-            self.updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.updateLabels), userInfo: nil, repeats: true)
-        }
+            self.updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ElapsedView.timerTriggered), userInfo: nil, repeats: true)
+//        }
     }
 
     func setup(_ interval: CGFloat, timeElapsed: CGFloat) {
         // create a closure to be called as soon as things are drawn
+        self.interval = interval
+        self.timeElapsed = timeElapsed
+        
         self.animationClosure = {
             DispatchQueue.main.async { () -> Void in
-                self.interval = interval
-                self.timeElapsed = timeElapsed
                 //hopefully we wont need to account for the ∆t between this and call time...
                 let progress = CGFloat(timeElapsed / interval)
                 let currentLength = progress * self.barLength
@@ -111,28 +117,41 @@ class ElapsedView: UIView {
                 self.progressLayer.add(anim, forKey: "transform.width")
                 self.progressLayer.removeAllAnimations()
                 
-                self.setLabels()
+                self.adjustTimeLabels()
             }
+            // remove on completion
+//            self.animationClosure = nil
         }
         
         // if we already drew to the screen, then okay to proceed and call block
         if self.didDraw {
+            self.progressLayer.removeAllAnimations()
             self.animationClosure!()
         }
     }
 
-    @objc func updateLabels() {
-        timeElapsed = timeElapsed + 1
-        setLabels()
+    @objc func timerTriggered() {
+        timeElapsed += 1
+        
+        if timeElapsed >= interval {
+            
+        }
+        adjustTimeLabels()
     }
     
-    func setLabels() {
+    func adjustTimeLabels() {
         let hoursPassed = Int(timeElapsed / 3600)
         let minutesPassed = Int(timeElapsed / 60) % 60
         let secondsPassed = Int(timeElapsed) % 60
         elapsedLabel.text = String(format: "%02d:%02d:%02d", arguments: [hoursPassed, minutesPassed, secondsPassed])
         
         let totalSecondsLeft = interval - timeElapsed
+        
+//        // safety check for negative time
+//        if totalSecondsLeft < 0 {
+//            Global.manager.delegate.emergencyRefresh()
+//        }
+        
         let hoursLeft = Int(totalSecondsLeft / 3600)
         let minutesLeft = Int(totalSecondsLeft / 60) % 60
         let secondsLeft = (Int(totalSecondsLeft) % 60) + 1

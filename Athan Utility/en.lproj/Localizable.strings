@@ -16,3 +16,14 @@
 "A_letter" = "A";
 "M_letter" = "M";
 "I_letter" = "I";
+
+"Fajr" = "Fajr";
+"Shurooq" = "Shurooq";
+"Thuhr" = "Thuhr";
+"Asr" = "Asr";
+"Maghrib" = "Maghrib";
+"Isha" = "Isha";
+
+"Loading Prayer Data" = "Loading Prayer Data";
+
+"Offset: %0.2f˚" = "Offset: %0.2f˚";

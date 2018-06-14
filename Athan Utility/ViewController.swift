@@ -117,11 +117,13 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
 
     @objc func enteredForeground() {
+        // must reset timers, since they are not accurate in background
+        manager.calculateCurrentPrayer()
+        manager.setTimers()
+        
         if refreshClockNeeded {
-            manager.calculateCurrentPrayer()
             softResetPrayerVisuals()
             clock.refreshTime()
-            
 //            refreshClockNeeded = false
         }
     }
@@ -170,7 +172,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             UserDefaults.standard.set(true, forKey: "introduced")
         } else {
             if showSpinner {
-                SwiftSpinner.show("Loading Prayer\nData", animated: true)
+                let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
+                SwiftSpinner.show(loadingString, animated: true)
                 showSpinner = false
             }
         }
@@ -220,7 +223,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //            newGradientLayer(animated: true)
 //        }
         
-        //now we save the updated date
+        // keep track of last time we updated our visuals
         lastUpdate = Date()
     }
     
@@ -273,7 +276,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func loadingHandler() {
-        SwiftSpinner.show("Loading Prayer\nData", animated: true)
+        let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
+        SwiftSpinner.show(loadingString, animated: true)
         SwiftSpinner.cancelButton!.addTarget(manager, action: #selector(manager.userCanceledDataRequest), for: .touchUpInside)
         manager.reload()
     }
@@ -353,6 +357,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             //do something
         }
     }
+    
+//    func emergencyRefresh() {
+//        manager.alignPrayerTimes()
+//        manager.calculateCurrentPrayer()
+//        hardResetPrayerVisuals()
+//    }
     
     /*
      

@@ -64,7 +64,8 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         
         needleLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        angleLabel.text = "Offset: \(qiblaOffset ?? 0)˚"
+        let localizedAngleString = NSLocalizedString("Offset: %0.2f˚", comment: "")
+        angleLabel.text = String(format: localizedAngleString, qiblaOffset ?? 0)
     }
     
     //get heading for qibla

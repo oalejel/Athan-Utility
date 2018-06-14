@@ -10,13 +10,14 @@ import UIKit
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //NOTE: ask for notifications permissions once features are shown so that the user can digest the app before allowing notifications
         
+        UNUserNotificationCenter.current().delegate = self
         return true
     }
     
@@ -27,23 +28,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // give an alert when the application is meant to receive a local notification
     
-    private func application(_ application: UIApplication, didReceive notification: UNNotification) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         //only bother giving an update to their 15 m reminder if its been 5 minutes since
-        if Int(Date().timeIntervalSince(notification.date)) < 10 {
-            if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
-                let interval = Date().timeIntervalSince(intendedDate)
-                let minutes = (interval / 60)
-                if minutes > 0 {
-                    let originalTitle = notification.request.content.body
-                    let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
-                    let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
-                    alertController.show((window?.rootViewController)!, sender: nil)
-                }
-            }
+//                if Int(Date().timeIntervalSince(notification.date)) < 10 {
+                    if let intendedDate = notification.request.content.userInfo["intendedDate"] as? Date {
+                        let interval = Date().timeIntervalSince(intendedDate)
+                        let minutes = (interval / 60)
+                        if minutes > 0 {
+                            let originalTitle = notification.request.content.body
+                            let newTitle = originalTitle.replacingOccurrences(of: "15m", with: "\(minutes)m")
+                           
+                            let alertController = UIAlertController(title: newTitle, message: nil, preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alertController.addAction(okAction)
+                            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+                            
+                            
+                            
+                            
+                        }
+                    }
 
-        }
+//                }
     }
+    
+
 //    internal
 //    func applicationWillResignActive(_ application: UIApplication) {
 //        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -45,7 +45,7 @@ class TableController: UITableViewController {
         if times.count == 6 {
             let p = PrayerType(rawValue: indexPath.row)!
             let df = Global.dateFormatter
-            c.titleLabel.text = p.stringValue()
+            c.titleLabel.text = p.localizedString()
             
             if bounds.size.height < 568 {
                 print(bounds.size.height)

@@ -65,6 +65,10 @@ enum PrayerType: Int {
         if self == .fajr {return .isha}
         return PrayerType(rawValue: self.rawValue - 1)!
     }
+    
+    func localizedString() -> String {
+        return NSLocalizedString(self.stringValue(), comment: "")
+    }
 }
 
 enum AlarmSetting: Int {
@@ -100,6 +104,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     // user has ability to keep location set to only one place if they specify a custom location
     var lockLocation = false
+    var ignoreLocationUpdates = false
     
     // website JSON data request session
     fileprivate var session: URLSession!
@@ -154,6 +159,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         setCurrentDates()
         
+        // important update changed storage format
         if let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
             if currentAppVersion == "1.8" {
                 removeDictionaryStore()
@@ -192,7 +198,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        coreManager.stopUpdatingLocation()//change if stopping without getting reliable info
+        coreManager.stopUpdatingLocation() //change if stopping without getting reliable info
+        
+        // need this since location managers send multiple updates even after being told to stop updating
+        if ignoreLocationUpdates == true {return}
+        ignoreLocationUpdates = true
         
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
             if let x = error {
@@ -213,6 +223,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
                     let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
                     self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+                    self.ignoreLocationUpdates = false
                 }
             }
         })
@@ -804,6 +815,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                
                                 let preNoteID = "pre_note_\(preNoteComponents.day!)_\(preNoteComponents.hour!)_\(preNoteComponents.minute!)"
                                 let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
+                                
+                                // hold onto the intended date for notification so that local notes can be handled in an accurate alert view
+                                preNoteContent.userInfo["intendedDate"] = pDate
 //                                DispatchQueue.main.async {
                                 center.add(preNoteRequest, withCompletionHandler: nil)
 //                                }

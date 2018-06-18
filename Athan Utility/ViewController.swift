@@ -278,7 +278,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     func loadingHandler() {
         let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
         SwiftSpinner.show(loadingString, animated: true)
-        SwiftSpinner.cancelButton!.addTarget(manager, action: #selector(manager.userCanceledDataRequest), for: .touchUpInside)
         manager.reload()
     }
     

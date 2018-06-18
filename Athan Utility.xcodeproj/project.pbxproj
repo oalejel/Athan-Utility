@@ -351,6 +351,7 @@
 				3DD9814C1CC6E3D100151027 /* IntroViewController.swift */,
 				3D3643691CCD069E0080DF5C /* AnimatedLabel.swift */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
+				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
 				3D4416E71C05174700329AA0 /* General */,
 				3D4416E61C05173D00329AA0 /* Qibla */,
 				3D4416E51C05172400329AA0 /* Settings */,
@@ -441,7 +442,6 @@
 		3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */ = {
 			isa = PBXGroup;
 			children = (
-				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
 				3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */,
 				3D07DA961BDC58E30001EFE4 /* ClockView.swift */,
 				3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */,

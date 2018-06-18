@@ -933,15 +933,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
     func reload() {
         //for simulator
-        #if targetEnvironment(simulator)
-        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
-            let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
-        #endif
         needsDataUpdate = true
-        coreManager.delegate = self // WARNING: check if redundant
         if !lockLocation {
             coreManager.startUpdatingLocation()
+            #if targetEnvironment(simulator)
+            fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
+            let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+            fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+            #endif
         }
     }
     

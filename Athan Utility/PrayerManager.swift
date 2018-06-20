@@ -488,7 +488,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             }
                         }
                     }
-                
+
                     //save our new data from online
                     sureDict["location_recieved"] = formattedAddressString() as AnyObject?
                     sureDict["data"] = yearTimes as AnyObject
@@ -761,7 +761,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 // local notifications, and should let the user know
                                 if finalFlag {
                                     if p == .isha {
-                                        alertString = "Time for \(p.stringValue()) [\(dateString)]. Please reopen Athan Utility to continue to recieve notificaitons..."
+                                        let localizedAlertString = NSLocalizedString("Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons.", comment: "")
+                                        alertString = String(format: localizedAlertString, p.stringValue(), dateString)
                                     }
                                 } else {
                                     var alternativeString: String?
@@ -774,13 +775,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     
                                     // Alternative string stores a shorter version of the location
                                     // in order to show "San Francisco" instead of "San Francisco, CA, USA"
+                                    let localizedStandardNote = NSLocalizedString("Time for %@ in %@ [%@]", comment: "")
                                     if let alt = alternativeString {
-                                        alertString = "Time for \(p.stringValue()) in \(alt) [\(dateString)]"
+                                        alertString = String(format: localizedStandardNote, p.stringValue(), alt, dateString)
                                     } else {
-                                        alertString = "Time for \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                        alertString = String(format: localizedStandardNote, p.stringValue(), locationString!, dateString)
                                     }
                                 }
-
+                                
                                 // set the notification body
                                 noteContent.body = alertString
 
@@ -819,10 +821,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                 }
                                 
+                                let localized15mAlert = NSLocalizedString("15m left til %@ in %@! [%@]", comment: "")
                                 if let alt = alternativeString {
-                                    alertString = "15m left til \(p.stringValue()) in \(alt)! [\(dateString)]"
+                                    alertString = String(format: localized15mAlert, p.stringValue(), alt, dateString)
                                 } else {
-                                    alertString = "15m left til \(p.stringValue()) in \(locationString!) [\(dateString)]"
+                                    alertString = String(format: localized15mAlert, p.stringValue(), locationString!, dateString)
                                 }
                                 
                                 preNoteContent.body = alertString

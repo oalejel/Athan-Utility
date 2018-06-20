@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-        <array key="HelveticaNeueLights.ttc">
-            <string>HelveticaNeue-Light</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Today View Controller-->
         <scene sceneID="cwh-vc-ff4">
@@ -36,34 +28,34 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Epr-u4-cli">
-                                <rect key="frame" x="231.5" y="65" width="38.5" height="15"/>
+                                <rect key="frame" x="241" y="65" width="31" height="15"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="Iag-rZ-HJE"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDH-em-hc4">
-                                <rect key="frame" x="361.5" y="32" width="38.5" height="15"/>
+                                <rect key="frame" x="369" y="32.5" width="31" height="15"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="V4y-bt-ZSr"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-ro-gYb">
-                                <rect key="frame" x="0.0" y="32" width="38.5" height="15"/>
+                                <rect key="frame" x="0.0" y="32.5" width="31" height="15"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="I9E-wW-6Sb"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nf7-P1-f1r">
-                                <rect key="frame" x="38.5" y="10" width="323" height="60"/>
+                                <rect key="frame" x="31" y="10" width="338" height="60"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="k2o-PX-wf2">
-                                        <rect key="frame" x="0.0" y="4" width="195" height="52"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="k2o-PX-wf2">
+                                        <rect key="frame" x="0.0" y="3.5" width="212" height="53"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NOX-JU-Aem">
-                                                <rect key="frame" x="0.0" y="0.0" width="195" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="212" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sunfilled.png" translatesAutoresizingMaskIntoConstraints="NO" id="hH4-8N-R8i">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -73,15 +65,15 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maghrib" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGq-L5-quF">
-                                                        <rect key="frame" x="58" y="2" width="137" height="46.5"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="39"/>
+                                                        <rect key="frame" x="58" y="2.5" width="154" height="45.5"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="39"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="d8L-xQ-pB5">
-                                                <rect key="frame" x="0.0" y="50" width="195" height="2"/>
+                                                <rect key="frame" x="0.0" y="51" width="212" height="2"/>
                                                 <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </progressView>
                                         </subviews>
@@ -91,25 +83,25 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEU-By-uax" userLabel="Line">
-                                        <rect key="frame" x="230.5" y="0.0" width="1" height="60"/>
+                                        <rect key="frame" x="240" y="0.0" width="2" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="caz-bA-SH1"/>
-                                            <constraint firstAttribute="width" constant="1" id="eS6-cQ-yqe"/>
+                                            <constraint firstAttribute="width" constant="2" id="eS6-cQ-yqe"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vVb-k8-udG">
-                                        <rect key="frame" x="266.5" y="8.5" width="56.5" height="43"/>
+                                        <rect key="frame" x="269.5" y="4.5" width="68.5" height="51"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Isha @" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-hq-rC1">
-                                                <rect key="frame" x="0.0" y="0.0" width="56.5" height="17.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Isha" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-hq-rC1">
+                                                <rect key="frame" x="0.0" y="0.0" width="68.5" height="21.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:23 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bss-tQ-GhU">
-                                                <rect key="frame" x="0.0" y="25.5" width="56.5" height="17.5"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                <rect key="frame" x="0.0" y="29.5" width="68.5" height="21.5"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

@@ -120,7 +120,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         } else {
             nextTimeLabel.text = dateFormatter.string(from: todayPrayerTimes[nextPrayer.rawValue]!)
         }
-        nextPrayerLabel.text = "\(nextPrayer.stringValue()) @"
+        nextPrayerLabel.text = nextPrayer.stringValue()
         
         //locationLabel.text = locationString
     }

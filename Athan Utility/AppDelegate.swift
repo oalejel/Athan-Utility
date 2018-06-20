@@ -31,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         let alertController = UIAlertController(title: notification.request.content.body, message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okString = NSLocalizedString("OK", comment: "")
+        let okAction = UIAlertAction(title: okString, style: .default, handler: nil)
         alertController.addAction(okAction)
         window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }

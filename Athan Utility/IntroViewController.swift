@@ -24,8 +24,9 @@ class IntroViewController: UIViewController {
         layer.frame = f
         view.layer.addSublayer(layer)
         
+        let continueString = NSLocalizedString("Continue", comment: "")
         let doneButton = SqueezeButton(frame: CGRect(x: 0, y: f.size.height - buttonHeight, width: f.size.width, height: buttonHeight))
-        doneButton.setTitle("Continue", for: UIControlState())
+        doneButton.setTitle(continueString, for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray.withAlphaComponent(0.7), for: .highlighted)
         doneButton.backgroundColor = Global.darkestGray

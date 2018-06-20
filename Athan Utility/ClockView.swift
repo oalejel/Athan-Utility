@@ -195,9 +195,9 @@ class ClockView: UIView {
     
     func addMovingSecondHand() {
         let armWidth: CGFloat = 1
-        var armHeight = (width / 2) - (tickHeight / 2) - bubbleRoom
+        var armHeight: CGFloat = 8//(width / 2) - (tickHeight / 2) - bubbleRoom
         
-        let anchorOffset: CGFloat = 0//removing this for a cleaner look different form applewatch
+        let anchorOffset: CGFloat = 0 //removing this for a cleaner look different form applewatch
         armHeight += anchorOffset
         
         let armRect = CGRect(x: 0, y: 0, width: armWidth, height: armHeight)
@@ -205,14 +205,16 @@ class ClockView: UIView {
         armLayer.frame = armRect
         armLayer.backgroundColor = UIColor.red.cgColor
         
-        let nubWH: CGFloat = 9
+        let nubWH: CGFloat = 8
         let nubLayer = CAShapeLayer()
         let nubRect = CGRect(x: (armWidth / 2) - (nubWH / 2), y: armHeight - anchorOffset - (nubWH / 2), width: nubWH, height: nubWH)
         nubLayer.frame = nubRect
         nubLayer.cornerRadius = nubWH / 2
         nubLayer.backgroundColor = UIColor.red.cgColor
         
+        //#warning("trying out no nub")
         armLayer.addSublayer(nubLayer)
+        
         secondsLayer = armLayer
         secondsLayer.anchorPoint = CGPoint(x: 0.5, y: ((armHeight - anchorOffset) / armHeight))
         secondsLayer.frame.origin = CGPoint(x: (width / 2) - (armWidth / 2), y: (height / 2) - (armHeight - anchorOffset))
@@ -231,7 +233,6 @@ class ClockView: UIView {
         vc.layer.cornerRadius = 1
         addSubview(vc)
         
-        
         DispatchQueue.main.async { () -> Void in
 //            let curDate = Date()
             // need millisecond accuracy
@@ -243,16 +244,15 @@ class ClockView: UIView {
             anim.fromValue = oldRotation
             anim.toValue = CGFloat(Double.pi * 2) + CGFloat(truncating: oldRotation)
             self.secondsLayer.add(anim, forKey: "transform.rotation")
-            
         }
     }
     
     func addMovingMinuteHand() {
         let longWidth: CGFloat = 8
-        let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 14
+        let shortLongOffset: CGFloat = 0//14
+        let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - shortLongOffset
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
-        let shortLongOffset: CGFloat = 14
         
         let longRect = CGRect(x: 0, y: 0, width: longWidth, height: longHeight)
         let longLayer = CAShapeLayer()
@@ -292,8 +292,6 @@ class ClockView: UIView {
         //start it at 0 seconds
         //container.transform = CATransform3DRotate(container.transform, CGFloat(Double.pi * 0.25), 0, 0, 1)
         
-        
-        
         //do initial work
         
         let anim = CABasicAnimation(keyPath: "transform.rotation")
@@ -322,10 +320,10 @@ class ClockView: UIView {
     
     func addMovingHourHand() {
         let longWidth: CGFloat = 8
+        let shortLongOffset: CGFloat = 0//14
         let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 45
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
-        let shortLongOffset: CGFloat = 14
         
         let longRect = CGRect(x: 0, y: 0, width: longWidth, height: longHeight)
         let longLayer = CAShapeLayer()

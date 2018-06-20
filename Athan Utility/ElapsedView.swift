@@ -131,7 +131,8 @@ class ElapsedView: UIView {
     }
 
     @objc func timerTriggered() {
-        timeElapsed += 1
+        //#warning("change to += 1 in swif 4.2?..")
+        timeElapsed = timeElapsed + 1
         
         if timeElapsed >= interval {
             

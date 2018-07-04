@@ -42,7 +42,7 @@ class ClockView: UIView {
 //                if Global.darkTheme {
 //                    //in this case, the non-darkgray is selected
                     amLayer.strokeColor = UIColor.darkGray.cgColor
-                    pmLayer.strokeColor = Global.darkestGray.cgColor
+                    pmLayer.strokeColor = UIColor.darkestGray.cgColor
                     amLabel.textColor = UIColor.lightGray
                     pmLabel.textColor = UIColor.lightGray
 //                } else {
@@ -62,7 +62,7 @@ class ClockView: UIView {
             case .pm:
 //                if Global.darkTheme {
                     pmLayer.strokeColor = UIColor.darkGray.cgColor
-                    amLayer.strokeColor = Global.darkestGray.cgColor
+                    amLayer.strokeColor = UIColor.darkestGray.cgColor
                     amLabel.textColor = UIColor.lightGray
                     pmLabel.textColor = UIColor.lightGray
 //                } else {
@@ -156,7 +156,7 @@ class ClockView: UIView {
         amLayer = CAShapeLayer()
         amLayer.path = amPath.cgPath
         
-        amLayer.strokeColor = Global.darkestGray.cgColor
+        amLayer.strokeColor = UIColor.darkestGray.cgColor
         amLayer.lineWidth = lineWidth
         amLayer.fillColor = UIColor.clear.cgColor
         layer.addSublayer(amLayer)
@@ -179,7 +179,7 @@ class ClockView: UIView {
         pmLayer = CAShapeLayer()
         pmLayer.path = pmPath.cgPath
         
-        pmLayer.strokeColor = Global.darkestGray.cgColor
+        pmLayer.strokeColor = UIColor.darkestGray.cgColor
         pmLayer.lineWidth = lineWidth
         pmLayer.fillColor = UIColor.clear.cgColor
         layer.addSublayer(pmLayer)
@@ -195,7 +195,7 @@ class ClockView: UIView {
     
     func addMovingSecondHand() {
         let armWidth: CGFloat = 1
-        var armHeight: CGFloat = 8//(width / 2) - (tickHeight / 2) - bubbleRoom
+        var armHeight: CGFloat = 8 //(width / 2) - (tickHeight / 2) - bubbleRoom
         
         let anchorOffset: CGFloat = 0 //removing this for a cleaner look different form applewatch
         armHeight += anchorOffset

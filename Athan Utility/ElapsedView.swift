@@ -81,8 +81,8 @@ class ElapsedView: UIView {
             self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
             self.layer.addSublayer(self.progressLayer)
             
-            self.backgroundColor = Global.darkerGray
-            self.progressBGLayer.backgroundColor = Global.darkestGray.cgColor
+            self.backgroundColor = .darkerGray
+            self.progressBGLayer.backgroundColor = UIColor.darkestGray.cgColor
             
             self.didDraw = true
             //if we had to wait for the view to be drawn...

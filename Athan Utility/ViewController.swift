@@ -8,6 +8,7 @@
 
 import UIKit
 import IntentsUI
+import WhatsNew
 
 extension UIView {
     /// Custom UIView method to fade out a view in 0.77 seconds
@@ -88,14 +89,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         
 //        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
 //        refreshButton.setTitle("Refresh", for: UIControlState())
-        refreshButton.backgroundColor = Global.darkerGray
-        locationButton.backgroundColor = Global.darkerGray
+        refreshButton.backgroundColor = .darkerGray
+        locationButton.backgroundColor = .darkerGray
         locationButton.setTitleColor(UIColor.lightGray, for: .normal)
 //        qiblaButton.setTitleColor(UIColor.lightGray, for: UIControlState())
 //        qiblaButton.setTitle("Qibla", for: UIControlState())
-        qiblaButton.backgroundColor = Global.darkerGray
-        infoButton.backgroundColor = Global.darkerGray
-        notificationsButton.backgroundColor = Global.darkerGray
+        qiblaButton.backgroundColor = .darkerGray
+        infoButton.backgroundColor = .darkerGray
+        notificationsButton.backgroundColor = .darkerGray
 //        settingsButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
 //        settingsButton.setTitle("Settings", for: UIControlState.normal)
 //        settingsButton.backgroundColor = Global.darkerGray
@@ -163,13 +164,25 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //show introduction if never presented before!
-        let pref = UserDefaults.standard.bool(forKey: "introduced")
-        if !pref {
-            let intro = IntroViewController()
-            intro.view.backgroundColor = UIColor.black
-            present(intro, animated: true, completion: { })
-            UserDefaults.standard.set(true, forKey: "introduced")
+        //show what's new if never presented before!
+        #warning("change mode from debug to majorVersion")
+        if WhatsNew.shouldPresent(with: .debug) {
+            let whatsNewVC = WhatsNewViewController(items: [
+                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
+                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
+                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
+                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
+                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description")
+            ])
+            #warning("change mode from debug to majorVersion")
+            whatsNewVC.presentationOption = .debug
+            whatsNewVC.buttonBackgroundColor = .darkestGray
+//            whatsNewVC.titleColor = .purple
+            whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Paix à Vous", "Friede Sei Mit Dir"]
+            whatsNewVC.buttonTextColor = .gray
+            whatsNewVC.itemSubtitleColor = .darkGray
+            whatsNewVC.view.backgroundColor = .darkestGray
+            whatsNewVC.presentIfNeeded(on: self)
         } else {
             if showSpinner {
                 let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
@@ -178,6 +191,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             }
         }
             
+        
             /*
             if !pref { showIntroLate = true }
             manager.beginLocationRequest()

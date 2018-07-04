@@ -31,4 +31,7 @@
 "OK" = "تام";
 "Continue" = "Continue";
 
-
+// notification strings
+"Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons." = "Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons.";
+"Time for %@ in %@ [%@]" = "Time for %@ in %@ [%@]";
+"15m left til %@ in %@! [%@]" = "15m left til %@ in %@! [%@]";

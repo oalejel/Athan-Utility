@@ -1,0 +1,16 @@
+PODS:
+  - WhatsNew (0.4.3)
+
+DEPENDENCIES:
+  - WhatsNew
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - WhatsNew
+
+SPEC CHECKSUMS:
+  WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
+
+PODFILE CHECKSUM: 395b6dfc30ff67092ac75ab3dc27acaf5e892ae7
+
+COCOAPODS: 1.5.3

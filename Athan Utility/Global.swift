@@ -87,6 +87,12 @@ func  daysInMonth(_ m: Int) -> Int {
     }
 }
 
+extension UIColor {
+    static var darkestGray = UIColor(white: 0.1, alpha: 1)//for things that need to contrast with other gray
+    static var darkerGray = UIColor(white: 0.15, alpha: 1)//lighter than darkest, use for buttons and other
+
+}
+
 class Global {
     //put shared classes and stuff here
     class var dateFormatter: DateFormatter {
@@ -98,8 +104,6 @@ class Global {
     }
     static var statusColor = UIColor.green
     
-    static var darkestGray = UIColor(white: 0.1, alpha: 1)//for things that need to contrast with other gray
-    static var darkerGray = UIColor(white: 0.15, alpha: 1)//lighter than darkest, use for buttons and other
     
     static var manager: PrayerManager!
     

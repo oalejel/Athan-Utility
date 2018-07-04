@@ -29,7 +29,7 @@ class IntroViewController: UIViewController {
         doneButton.setTitle(continueString, for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         doneButton.setTitleColor(UIColor.lightGray.withAlphaComponent(0.7), for: .highlighted)
-        doneButton.backgroundColor = Global.darkestGray
+        doneButton.backgroundColor = .darkestGray
         doneButton.addTarget(self, action: #selector(done), for: .touchUpInside)
         view.addSubview(doneButton)
         
@@ -52,7 +52,7 @@ class IntroViewController: UIViewController {
         // animlabel animates through different translations of "peace be upon you"
         let animLabel = AnimatedLabel(frame: CGRect(x: 0, y: 0, width: f.size.width - 40, height: 200), titles: ["السلام عليكم", "Peace Be Upon You", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Paix à Vous", "Friede Sei Mit Dir"], delay: 2.5)
         animLabel.textColor = UIColor.white
-        animLabel.font = UIFont(name: "HelveticaNeue", size: 60)
+//        animLabel.font = UIFont(name: "HelveticaNeue", size: 60)
         animLabel.textAlignment = .center
         animLabel.center = CGPoint(x: f.size.width / 2, y: 100)
         animLabel.alpha = 0

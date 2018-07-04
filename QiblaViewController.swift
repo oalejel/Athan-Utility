@@ -45,7 +45,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         
 //        if Global.darkTheme {
             northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
-            dismissButton.backgroundColor = Global.darkerGray
+            dismissButton.backgroundColor = .darkerGray
             dismissButton.titleLabel?.textColor = .white
             view.backgroundColor = .black
 //        } else {

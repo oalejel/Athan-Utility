@@ -1,0 +1,6 @@
+framework module Pods_Athan_UtilityTests {
+  umbrella header "Pods-Athan UtilityTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

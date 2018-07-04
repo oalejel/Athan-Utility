@@ -91,7 +91,7 @@ class PrayerSettingController: UITableViewController {
         switches.append(enableSwitch)
         
         c.accessoryView = enableSwitch
-        c.backgroundColor = Global.darkestGray
+        c.backgroundColor = .darkestGray
         c.textLabel?.textColor = UIColor.white
         
         

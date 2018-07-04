@@ -1,0 +1,6 @@
+framework module Pods_Watch_Athan {
+  umbrella header "Pods-Watch Athan-umbrella.h"
+
+  export *
+  module * { export * }
+}

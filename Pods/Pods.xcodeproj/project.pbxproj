@@ -18,7 +18,7 @@
 		32BE8714EFCB0A56850DBF7999E152AF /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0962377BE0E5A411EC90A1312D928306 /* NibLoadable.swift */; };
 		36D666E4AC50FE38252EF0F42C4B9D55 /* Pods-athanIntentsUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BABCDFFC355E287D243C5132ADD5F15D /* Pods-athanIntentsUI-dummy.m */; };
 		3803B8CAFE0A62EA5BB3124BF180A6F9 /* Pods-AthanToday-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FE3603B3D0FFFF0EA973989FA8EFEE /* Pods-AthanToday-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3DBB867520EC9055000F3B1B /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBB867420EC9055000F3B1B /* AnimatedLabel.swift */; };
+		3D57C5B820EC9B2000316A2A /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D57C5B620EC9B0200316A2A /* AnimatedLabel.swift */; };
 		3DEA3149FE368AD0E2E8FB3BDE65B053 /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB0601E9ECD0B63E8977DD551B0474F0 /* WhatsNewItemTextView.xib */; };
 		3FC733C8B9B5D331312B0981FE4DFD06 /* Pods-athanIntents-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA7E500A8EEA9FBE3BD6B56B1575A84 /* Pods-athanIntents-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		45A2367DCAD4274DC64CC375D841D7E8 /* WhatsNew-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E2978DB7EBD7AF6847D66E27D89D7DCA /* WhatsNew-dummy.m */; };
@@ -81,8 +81,8 @@
 		366F13786E072BBCA028AEF8C8A9826F /* Pods-Watch Athan Extension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Watch Athan Extension-dummy.m"; sourceTree = "<group>"; };
 		3773B09AE55BCC08B2B6FF52ACBBE862 /* Pods-Watch Athan-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Watch Athan-resources.sh"; sourceTree = "<group>"; };
 		3B843E3048269193F6674806CBF4AF83 /* Pods-Watch Athan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Watch Athan.modulemap"; sourceTree = "<group>"; };
+		3D57C5B620EC9B0200316A2A /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		3DAB912805A803867E0EA11B90A1F646 /* Pods-Athan Utility.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Athan Utility.modulemap"; sourceTree = "<group>"; };
-		3DBB867420EC9055000F3B1B /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		3FCF0136AA4FEDAAE1A784CFF1D3DCF0 /* Pods-Athan Utility-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-resources.sh"; sourceTree = "<group>"; };
 		40EBEA92872715EC69F0C608F6CFC043 /* Pods-Athan UtilityTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Athan UtilityTests-umbrella.h"; sourceTree = "<group>"; };
 		4155AEBD5664A3F7E57172E0E499FBDF /* Pods-athanIntents-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-athanIntents-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 		6AF86CF24E181652530B2E0244C48485 /* WhatsNew */ = {
 			isa = PBXGroup;
 			children = (
-				3DBB867420EC9055000F3B1B /* AnimatedLabel.swift */,
+				3D57C5B620EC9B0200316A2A /* AnimatedLabel.swift */,
 				0962377BE0E5A411EC90A1312D928306 /* NibLoadable.swift */,
 				C1BE13B35A8127C083E834966FCFFBCA /* PresentationOption.swift */,
 				85CB664D2A66A48D01EA5197E19619EA /* WhatsNew.swift */,
@@ -681,6 +681,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					79F82E4CE818CD4C7FADD62DCED645AA = {
+						LastSwiftMigration = 1000;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -775,7 +780,7 @@
 				32BE8714EFCB0A56850DBF7999E152AF /* NibLoadable.swift in Sources */,
 				1D88018D3C22ECBAF5B8BE317B2D6223 /* PresentationOption.swift in Sources */,
 				45A2367DCAD4274DC64CC375D841D7E8 /* WhatsNew-dummy.m in Sources */,
-				3DBB867520EC9055000F3B1B /* AnimatedLabel.swift in Sources */,
+				3D57C5B820EC9B2000316A2A /* AnimatedLabel.swift in Sources */,
 				A8281C4F5A37ABC10C4AA18AED9F1553 /* WhatsNew.swift in Sources */,
 				1ED12294BBC5EFEF13DCEAD2EC6C82C5 /* WhatsNewItem.swift in Sources */,
 				A27D5D237B4459D3B501276CA2DB2B59 /* WhatsNewItemImageView.swift in Sources */,
@@ -1351,6 +1356,7 @@
 			baseConfigurationReference = DCA8FEA61452571D4927C784F11B05B9 /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1375,6 +1381,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1387,6 +1394,7 @@
 			baseConfigurationReference = D1088514361E2DA0C2D952C8C3567122 /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1412,6 +1420,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

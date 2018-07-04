@@ -80,7 +80,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //        qiblaButton.layer.cornerRadius = 8
 //        settingsButton.layer.cornerRadius = 8
         
-        //prevent touch recognizers from delaying squeezebutton reactions
+        // prevent touch recognizers from delaying squeezebutton reactions
         let window = UIApplication.shared.windows[0]
         let g1 = window.gestureRecognizers?[0]
         g1?.delaysTouchesBegan = false
@@ -166,27 +166,28 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         //show what's new if never presented before!
         #warning("change mode from debug to majorVersion")
-        if WhatsNew.shouldPresent(with: .debug) {
+        if WhatsNew.shouldPresent(with: .majorVersion) {
             let whatsNewVC = WhatsNewViewController(items: [
-                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
-                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
-                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
-                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description"),
-                WhatsNewItem.text(title: "Cool things", subtitle: "This is a description")
+                WhatsNewItem.text(title: "Months Long Storage", subtitle: "Offline use is possible with months of athan data storage."),
+                WhatsNewItem.text(title: "15 minute reminders", subtitle: "Get reminded when athan will take place. Configurable in app preferences."),
+                WhatsNewItem.text(title: "Today Extension", subtitle: "Check current and upcoming salah times with the Notification Center widget."),
+                WhatsNewItem.text(title: "Athan clock face", subtitle: "A new way to visualize salah times throughout the day."),
             ])
             #warning("change mode from debug to majorVersion")
-            whatsNewVC.presentationOption = .debug
-            whatsNewVC.buttonBackgroundColor = .darkestGray
-//            whatsNewVC.titleColor = .purple
+            whatsNewVC.presentationOption = .majorVersion
             whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Paix à Vous", "Friede Sei Mit Dir"]
-            whatsNewVC.buttonTextColor = .gray
+            whatsNewVC.titleColor = .white
+            whatsNewVC.buttonBackgroundColor = .white
+            whatsNewVC.buttonTextColor = .darkGray
             whatsNewVC.itemSubtitleColor = .darkGray
-            whatsNewVC.view.backgroundColor = .darkestGray
+            whatsNewVC.itemTitleColor = .gray
+            whatsNewVC.view.backgroundColor = .black
             whatsNewVC.presentIfNeeded(on: self)
         } else {
             if showSpinner {
                 let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
                 SwiftSpinner.show(loadingString, animated: true)
+                manager.beginLocationRequest()
                 showSpinner = false
             }
         }

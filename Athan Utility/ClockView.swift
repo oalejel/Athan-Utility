@@ -195,7 +195,7 @@ class ClockView: UIView {
     
     func addMovingSecondHand() {
         let armWidth: CGFloat = 1
-        var armHeight: CGFloat = 8 //(width / 2) - (tickHeight / 2) - bubbleRoom
+        var armHeight: CGFloat = (width / 2) - (tickHeight / 2) - bubbleRoom
         
         let anchorOffset: CGFloat = 0 //removing this for a cleaner look different form applewatch
         armHeight += anchorOffset
@@ -205,14 +205,14 @@ class ClockView: UIView {
         armLayer.frame = armRect
         armLayer.backgroundColor = UIColor.red.cgColor
         
-        let nubWH: CGFloat = 8
+        let nubWH: CGFloat = 4
         let nubLayer = CAShapeLayer()
         let nubRect = CGRect(x: (armWidth / 2) - (nubWH / 2), y: armHeight - anchorOffset - (nubWH / 2), width: nubWH, height: nubWH)
         nubLayer.frame = nubRect
         nubLayer.cornerRadius = nubWH / 2
         nubLayer.backgroundColor = UIColor.red.cgColor
         
-        //#warning("trying out no nub")
+//        #warning("trying out no nub")
         armLayer.addSublayer(nubLayer)
         
         secondsLayer = armLayer
@@ -249,7 +249,7 @@ class ClockView: UIView {
     
     func addMovingMinuteHand() {
         let longWidth: CGFloat = 8
-        let shortLongOffset: CGFloat = 0//14
+        let shortLongOffset: CGFloat = 14
         let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - shortLongOffset
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
@@ -263,8 +263,8 @@ class ClockView: UIView {
         let shortRect = CGRect(x: (longWidth - shortWidth) / 2, y: shortLongOffset, width: shortWidth, height: shortHeight)
         let shortLayer = CAShapeLayer()
         shortLayer.frame = shortRect
-//        shortLayer.backgroundColor = UIColor.white.cgColor
-        shortLayer.backgroundColor = UIColor.clear.cgColor
+        shortLayer.backgroundColor = UIColor.white.cgColor
+//        shortLayer.backgroundColor = UIColor.clear.cgColor
         shortLayer.cornerRadius = shortWidth / 2
         
         let fittingRect = shortRect.union(longRect)
@@ -320,7 +320,7 @@ class ClockView: UIView {
     
     func addMovingHourHand() {
         let longWidth: CGFloat = 8
-        let shortLongOffset: CGFloat = 0//14
+        let shortLongOffset: CGFloat = 14
         let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 45
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
@@ -334,8 +334,8 @@ class ClockView: UIView {
         let shortRect = CGRect(x: (longWidth - shortWidth) / 2, y: shortLongOffset, width: shortWidth, height: shortHeight)
         let shortLayer = CAShapeLayer()
         shortLayer.frame = shortRect
-//        shortLayer.backgroundColor = UIColor.white.cgColor
-        shortLayer.backgroundColor = UIColor.clear.cgColor
+        shortLayer.backgroundColor = UIColor.white.cgColor
+//        shortLayer.backgroundColor = UIColor.clear.cgColor
         shortLayer.cornerRadius = shortWidth / 2
         
         let fittingRect = shortRect.union(longRect)
@@ -352,17 +352,17 @@ class ClockView: UIView {
         hoursLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
         hoursLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
         
-//        hoursLayer.shadowColor = UIColor.black.cgColor
-//        hoursLayer.shadowOpacity = 0.5
+        hoursLayer.shadowColor = UIColor.black.cgColor
+        hoursLayer.shadowOpacity = 0.5
         
         layer.addSublayer(hoursLayer)
         
         //move somewhere else
-//        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
-//        circleView.backgroundColor = UIColor.white
-//        circleView.layer.cornerRadius = 4
-//        circleView.center = CGPoint(x: width / 2, y: height / 2)
-//        addSubview(circleView)
+        let circleView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 8))
+        circleView.backgroundColor = UIColor.white
+        circleView.layer.cornerRadius = 4
+        circleView.center = CGPoint(x: width / 2, y: height / 2)
+        addSubview(circleView)
         
         //do initial work
         

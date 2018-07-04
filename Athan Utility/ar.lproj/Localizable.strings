@@ -29,7 +29,7 @@
 "Offset: %0.2f˚" = "%0.2f :عوض";
 
 "OK" = "تام";
-"Continue" = "Continue";
+"Continue" = "استمر"; // consider trying واصل
 
 // notification strings
 "Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons." = "Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons.";

@@ -9,6 +9,7 @@
 import UIKit
 import IntentsUI
 import WhatsNew
+import SqueezeButton
 
 extension UIView {
     /// Custom UIView method to fade out a view in 0.77 seconds
@@ -81,11 +82,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //        settingsButton.layer.cornerRadius = 8
         
         // prevent touch recognizers from delaying squeezebutton reactions
-        let window = UIApplication.shared.windows[0]
-        let g1 = window.gestureRecognizers?[0]
-        g1?.delaysTouchesBegan = false
-        let g2 = window.gestureRecognizers?[1]
-        g2?.delaysTouchesBegan = false
+//        let window = UIApplication.shared.windows[0]
+//        let g1 = window.gestureRecognizers?[0]
+//        g1?.delaysTouchesBegan = false
+//        let g2 = window.gestureRecognizers?[1]
+//        g2?.delaysTouchesBegan = false
         
 //        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
 //        refreshButton.setTitle("Refresh", for: UIControlState())
@@ -149,7 +150,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         infoButton.layer.cornerRadius = radius
         refreshButton.layer.cornerRadius = radius
         qiblaButton.layer.cornerRadius = radius
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

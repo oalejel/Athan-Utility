@@ -8,6 +8,7 @@
 
 import XCTest
 // given section
+@testable import PrayerManagerDelegate
 
 class Athan_UtilityTests: XCTestCase, PrayerManagerDelegate {
 //    var manager: PrayerManager!

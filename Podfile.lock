@@ -1,16 +1,20 @@
 PODS:
+  - SqueezeButton (0.1.0)
   - WhatsNew (0.4.3)
 
 DEPENDENCIES:
+  - SqueezeButton
   - WhatsNew
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - SqueezeButton
     - WhatsNew
 
 SPEC CHECKSUMS:
+  SqueezeButton: bbf9e7049375625854fb4bead4359c98392b6709
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
 
-PODFILE CHECKSUM: 395b6dfc30ff67092ac75ab3dc27acaf5e892ae7
+PODFILE CHECKSUM: da74261bdf2d176d5ca397824119dd7894cd3e12
 
 COCOAPODS: 1.5.3

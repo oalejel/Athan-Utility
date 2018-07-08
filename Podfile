@@ -11,7 +11,8 @@ target 'Athan Utility' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
+  pod 'SqueezeButton'
 end
 
 target 'athanIntents' do

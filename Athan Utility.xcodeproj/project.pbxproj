@@ -25,6 +25,7 @@
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D12B24920F1DD230060D78D /* Athan_UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D327CBD1C3564900083871B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
@@ -52,7 +53,6 @@
 		3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8049911C34A71900A2AC1F /* PrayerRow.swift */; };
 		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
-		3D89E72B20C8462000E64118 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E72A20C8462000E64118 /* SqueezeButton.swift */; };
 		3D89E73520C88A0900E64118 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73420C88A0900E64118 /* IntentHandler.swift */; };
 		3D89E73D20C88A0A00E64118 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D89E73C20C88A0A00E64118 /* IntentsUI.framework */; };
 		3D89E74020C88A0A00E64118 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73F20C88A0A00E64118 /* IntentViewController.swift */; };
@@ -225,7 +225,6 @@
 		3D8049911C34A71900A2AC1F /* PrayerRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRow.swift; sourceTree = "<group>"; };
 		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		3D89E72A20C8462000E64118 /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
 		3D89E73220C88A0900E64118 /* athanIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = athanIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D89E73420C88A0900E64118 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		3D89E73620C88A0900E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -461,7 +460,6 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
-				3D89E72A20C8462000E64118 /* SqueezeButton.swift */,
 				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
 				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
@@ -978,10 +976,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SqueezeButton/SqueezeButton.framework",
 				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SqueezeButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1067,7 +1067,6 @@
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
-				3D89E72B20C8462000E64118 /* SqueezeButton.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
@@ -1111,6 +1110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DFE11582097E03B00D46A1F /* Global.swift in Sources */,
+				3D12B24920F1DD230060D78D /* Athan_UtilityTests.swift in Sources */,
 				3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */,
 				3DFE11572096647100D46A1F /* PrayerManagerDelegate.swift in Sources */,
 			);

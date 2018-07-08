@@ -1,0 +1,6 @@
+framework module SqueezeButton {
+  umbrella header "SqueezeButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

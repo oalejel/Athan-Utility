@@ -166,6 +166,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
         
+        // register for foreground updates in case user moves to new location and opens app in that place
+        NotificationCenter.default.addObserver(self, selector: #selector(PrayerManager.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        
         // the delegate, (typically a view controller) gets information from the PrayerManager
         delegate.manager = self
         
@@ -224,6 +227,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             } else {
                 if placemarks?.count > 0 {
                     let placemark = placemarks![0]
+                    
+                    // if we should not update, then abort fetching
+                    if !self.shouldUpdateLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
+                        return
+                    }
+                    
+                    // update our understanding of the location
                     self.currentCityString = placemark.locality//cityNoSpaces
                     self.currentDistrictString = placemark.subAdministrativeArea
                     self.currentStateString = placemark.administrativeArea
@@ -243,10 +253,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         })
     }
     
+    // tell our delegate that the heading has been updated (qibla view controller)
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         headingDelegate?.newHeading(newHeading)
     }
-    
     //MARK: - Data Management
     
     func getSettings() {
@@ -361,6 +371,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
  
+    /// calculate angle to point to Mecca
      func calculateAngle(coord: CLLocationCoordinate2D?) {
         if let coordinate = coord {
             let lat = coordinate.latitude
@@ -379,6 +390,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         return false
     }
     
+    // MARK: - Dictionary Storage
+    
     func dictionaryFromFile() -> NSDictionary? {
         let dict = NSKeyedUnarchiver.unarchiveObject(withFile: prayersArchivePath().path) as? NSDictionary
         return dict
@@ -393,7 +406,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func setCurrentDates() {
-//        let df = Global.dateFormatter
         //get the date info for today to use for computation
         let curDate = Date()
         currentYear = Calendar.current.component(.year, from: curDate)
@@ -535,7 +547,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         return successful
     }
     
+    
     func getFutureDateTuple(daysToSkip: Int = 1) -> (day: Int, month: Int, year: Int) {
+        setCurrentDates()
         var tomorrowDay = currentDay!
         var tomorrowMonth = currentMonth!
         var tomorrowYear = currentYear!
@@ -649,6 +663,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    /// set triggers that relate to repeated app state changes
     func setTimers() {
         // create prayer times
         let curDate = Date()
@@ -661,7 +676,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {
                     //timer for highlight red for 15 mins left
-                    print("time interval til 15 m warning: \(pDate.timeIntervalSince(curDate) - 900)")
+//                    print("time interval til 15 m warning: \(pDate.timeIntervalSince(curDate) - 900)")
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManager.fifteenMinutesLeft), userInfo: nil, repeats: false)
                     //timer for new prayer
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
@@ -683,7 +698,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let nextMeridInterval = nextMeridDate?.timeIntervalSince(curDate)
         
         Timer.scheduledTimer(timeInterval: nextMeridInterval!, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
-        
         
         // create a timer that tells us when it has become a new day
         DispatchQueue.main.async { () -> Void in
@@ -711,11 +725,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    /// Called on change of AM / PM time
     @objc func newMeridiem() {
         Timer.scheduledTimer(timeInterval: 12 * 60 * 60, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
         delegate.newMeridiem()
     }
     
+    /// Generates UNUserNotification for given day
+    /// - parameters:
+    ///     - t: tuple for day to make notifications in
+    ///     - finalFlag: indicates whether that day is the last to have notifications before user mus reopen app
     func createNotificationsForDayItemTuple(_ t: (day: Int,  month: Int, year: Int), finalFlag: Bool) {
         print("making notifications for month: \(t.month), day: \(t.day), year: \(t.year), final: \(finalFlag)")
         
@@ -849,6 +868,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    /// Returns approprate color for urgency of time left
     func timeLeftColor() -> UIColor {
         if nextPrayerTime()?.timeIntervalSinceNow < 900 {
             return UIColor.orange
@@ -951,6 +971,29 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         needsDataUpdate = false
         SwiftSpinner.hide()
     }
+    
+    // MARK: – Automatic Refreshing
+    
+    @objc func enteredForeground() {
+        ignoreLocationUpdates = false
+        coreManager.startUpdatingLocation()
+    }
+    
+    /// returns true of user is in same location and there is enough data stored for the next month
+    func shouldUpdateLocation(locality: String?, subAdminArea: String?, state: String?, countryCode: String?) -> Bool {
+        print("Checking if should update location")
+        // first test if user is in same location
+        if currentCityString == locality && currentDistrictString == subAdminArea && currentCountryString == countryCode {
+            // then test if we have have data for next month before saving
+            let daysTilNextMonth = daysInMonth(self.currentMonth!) + 1 - self.currentDay!
+            let nextMonthTuple = getFutureDateTuple(daysToSkip: daysTilNextMonth)
+            if let _ = yearTimes[nextMonthTuple.year]?[nextMonthTuple.month + 1] {
+                return true
+            }
+        }
+        return false
+    }
+    
     
     //MARK: - Data Saving
     

@@ -1,3 +1,4 @@
+
 //
 //  SqueezeButton.swift
 //  Expense Tracker
@@ -18,10 +19,14 @@ import UIKit
  g2?.delaysTouchesBegan = false
  */
 
-class SqueezeButton: UIButton {
+@IBDesignable class SqueezeButton: UIButton {
     var completedSqueeze = true
     var pendingOut = false
-    static let defaultCornerRadius: CGFloat = 10
+    @IBInspectable var defaultCornerRadius: CGFloat = 10 {
+        didSet {
+            layer.cornerRadius = defaultCornerRadius
+        }
+    } // can be set in interface builder
     
     // for gradient purposes
     var firstLayoutComplete = false
@@ -32,14 +37,19 @@ class SqueezeButton: UIButton {
     //setup corner radius and mask to bounds to prevent corners from being shown
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.cornerRadius = SqueezeButton.defaultCornerRadius
+        layer.cornerRadius = defaultCornerRadius
         layer.masksToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        layer.cornerRadius = SqueezeButton.defaultCornerRadius
+        layer.cornerRadius = defaultCornerRadius
         layer.masksToBounds = true
+    }
+    
+    convenience init(frame: CGRect, cornerRadius: CGFloat) {
+        self.init(frame: frame)
+        layer.cornerRadius = cornerRadius
     }
     
     override func layoutSubviews() {

@@ -19,10 +19,10 @@ import UIKit
  g2?.delaysTouchesBegan = false
  */
 
-@IBDesignable class SqueezeButton: UIButton {
+@IBDesignable public class SqueezeButton: UIButton {
     var completedSqueeze = true
     var pendingOut = false
-    @IBInspectable var defaultCornerRadius: CGFloat = 10 {
+    @IBInspectable public var defaultCornerRadius: CGFloat = 10 {
         didSet {
             layer.cornerRadius = defaultCornerRadius
         }
@@ -35,24 +35,24 @@ import UIKit
     
     
     //setup corner radius and mask to bounds to prevent corners from being shown
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = defaultCornerRadius
         layer.masksToBounds = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         layer.cornerRadius = defaultCornerRadius
         layer.masksToBounds = true
     }
     
-    convenience init(frame: CGRect, cornerRadius: CGFloat) {
+    convenience public init(frame: CGRect, cornerRadius: CGFloat) {
         self.init(frame: frame)
         layer.cornerRadius = cornerRadius
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         if !firstLayoutComplete {
             firstLayoutComplete = true
@@ -64,12 +64,12 @@ import UIKit
     }
     
     //react to touches with a press or rescale animation
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         press()
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         rescaleButton()
     }
@@ -103,7 +103,7 @@ import UIKit
     
     /// adds a gradient layer to the button
     /// - note: It is okay to call this method before or after the button is drawn to the screen
-    func addGradient(startColor: UIColor, endColor: UIColor, angle: CGFloat) {
+    public func addGradient(startColor: UIColor, endColor: UIColor, angle: CGFloat) {
         // if things have already been shown and frame size is set, we immediately add the gradient
         if firstLayoutComplete {
             drawGradient(startColor: startColor, endColor: endColor, angle: angle)

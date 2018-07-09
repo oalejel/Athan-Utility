@@ -9,43 +9,47 @@
 /* Begin PBXBuildFile section */
 		0A3190B52A8BC130F099FAE2777CA9DD /* Pods-Watch Athan Extension-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EE97129D961A4FAA14D320B2D376B1FF /* Pods-Watch Athan Extension-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		109866FE0FAC3E27E43F42C5BD40A5DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
-		131CAB3B53CD7ADAE2E1A32D6114D00E /* SqueezeButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 572378360737B7C7A27FF201CC065D39 /* SqueezeButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		131CAB3B53CD7ADAE2E1A32D6114D00E /* SqueezeButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FF3BB15A07430DA33B70E8074A38BDA /* Pods-Watch Athan-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C9CE8210EF27085895D011B15C4F33B9 /* Pods-Watch Athan-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		267FAA7EA0C1B726D1684ABABA4E0F8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6CB14738032206DFB3D01DEF32B72A /* Foundation.framework */; };
-		292BC7E47B58B835240C63B147B9BE06 /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5625B6D6DF4F4F4DF9B3498C89B5BDB /* WhatsNewItemImageView.swift */; };
-		35BC682F454D09ABFCA810EC1C513657 /* SqueezeButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A3D063B11CAFE5DE760BD4047B28438B /* SqueezeButton-dummy.m */; };
+		292BC7E47B58B835240C63B147B9BE06 /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */; };
 		36D666E4AC50FE38252EF0F42C4B9D55 /* Pods-athanIntentsUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BABCDFFC355E287D243C5132ADD5F15D /* Pods-athanIntentsUI-dummy.m */; };
 		3803B8CAFE0A62EA5BB3124BF180A6F9 /* Pods-AthanToday-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 67FE3603B3D0FFFF0EA973989FA8EFEE /* Pods-AthanToday-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3EF7002F2D879F6D94710A869BF98D32 /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97EA0D23F450577315E919B7BAE7D3 /* PresentationOption.swift */; };
+		3D641C8320F33121004F48A9 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D641C8220F33121004F48A9 /* AnimatedLabel.swift */; };
+		3D641C8420F33121004F48A9 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D641C8220F33121004F48A9 /* AnimatedLabel.swift */; };
+		3EF7002F2D879F6D94710A869BF98D32 /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */; };
 		3FC733C8B9B5D331312B0981FE4DFD06 /* Pods-athanIntents-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AA7E500A8EEA9FBE3BD6B56B1575A84 /* Pods-athanIntents-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		40A09FC3712E27321FD5097DAED51D49 /* Pods-Athan Utility-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 63AA94B62E395EDBB0E30AAB82A71966 /* Pods-Athan Utility-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		431777F2CE8FEFF1A34DE1B7C41CCA35 /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8B6386C740B1E2C3BB3D1FF802A0426 /* WhatsNewItemTextView.xib */; };
-		46A64A18A0C9748F2C44C64376A195EA /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B86B9DA6DE8A49789B685AE1FFEE585 /* WhatsNewItemImageView.xib */; };
+		431777F2CE8FEFF1A34DE1B7C41CCA35 /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */; };
+		46A64A18A0C9748F2C44C64376A195EA /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */; };
 		48560C9A2174A7DFCFB3AB5B240D4ED1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
-		5266D4B0036BD05178EE2EBB28A108C5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780783C5F4909D63EA3C32BBB245BD5 /* WhatsNew.swift */; };
-		59B18B976F39F71CF4B210CAE722D1CF /* WhatsNew-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 090D9B312B19AFFE30672D5E60BDF9FF /* WhatsNew-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5EF19295341357791E1EBA64DDF0EA2E /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595ACCDA4DB9F27B29DC88AE1D4D7884 /* NibLoadable.swift */; };
-		649B7D1EC5F281B64931D193ECF9D5A1 /* WhatsNew-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E93C5F8327B1ECF6A4D54D98D3464F /* WhatsNew-dummy.m */; };
+		5266D4B0036BD05178EE2EBB28A108C5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */; };
+		59B18B976F39F71CF4B210CAE722D1CF /* WhatsNew-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A44F76F0B15B8886599F4B47759E06F /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */; };
+		5EF19295341357791E1EBA64DDF0EA2E /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */; };
+		649B7D1EC5F281B64931D193ECF9D5A1 /* WhatsNew-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */; };
 		6553A25F013AF8AEFA47166CCE05DCA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
 		7136CC3D42D91FB96E5CDF26A0E03A12 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
 		715F2AE19522E7249D176642206E8AF4 /* Pods-Watch Athan Extension-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 366F13786E072BBCA028AEF8C8A9826F /* Pods-Watch Athan Extension-dummy.m */; };
-		76198FE9E049ED7BF678950107EE39B5 /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AB336D387D24D064E522659B4992E3 /* WhatsNewItemTextView.swift */; };
+		76198FE9E049ED7BF678950107EE39B5 /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */; };
 		7A8DFA01607B26E3257DAD3BC595D1B9 /* Pods-Athan UtilityTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EBEA92872715EC69F0C608F6CFC043 /* Pods-Athan UtilityTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		841AF7E59F04E485E0954CAF71CEBD23 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0C38E4E9C52A9337BF2316AE16663B /* SqueezeButton.swift */; };
 		87E6348AD1C00A5FC617A303D8A5609E /* Pods-AthanToday-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EAEA548812B5EB2864A34748B573F7 /* Pods-AthanToday-dummy.m */; };
 		8D1E4C210C6F2D96D7B81890DA43497A /* Pods-athanIntentsUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C1CA7225A44E2A2C197631852159D18 /* Pods-athanIntentsUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D7DB98400A7CD6EE8AB6782ECAA4CC0 /* Pods-Athan Utility-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DA9CFC7AED8C97C9A3EC3F83CEC253 /* Pods-Athan Utility-dummy.m */; };
 		97C4A3E69A41AF4E27A0A636A834B9A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
-		995AFF8477D8A4B5BC5522E3F77D4C96 /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E9BFCBC84E2C643079928B27C8ABD67 /* WhatsNew.xib */; };
-		9BA6EB7A556C135145C65C5EE3511A4B /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45B734AF8D93AC37AC679567F6D23F /* WhatsNewItem.swift */; };
+		995AFF8477D8A4B5BC5522E3F77D4C96 /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */; };
+		9BA6EB7A556C135145C65C5EE3511A4B /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */; };
 		A5459D8C691C6E098DE30179C2DB2643 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F54D71F1007D448C4F2F71986C72CAC /* UIKit.framework */; };
 		A63A0CCEC0AB994ABBCED8A265C0AED5 /* Pods-Watch Athan-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FBBA8BC25982059F92CA0721DA478A /* Pods-Watch Athan-dummy.m */; };
 		A6A83B15D886D6E69248E2883D983835 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
 		B338F1E50D71B1F7D3BD4F1BA2E16DA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */; };
+		B6E700F5C0B332DCDBB279BCE969269A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */; };
+		EDFE0B7B3F81B0B41A894EE9373EA084 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */; };
 		EED1E6F99703E18BCE61D170D762AA73 /* Pods-athanIntents-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 79520BBF4AC30D927F7A92A165C96458 /* Pods-athanIntents-dummy.m */; };
 		F057AEC14CEAC472233B45C86CFC5860 /* Pods-Athan UtilityTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 16AC547FFC4A6730733FEDEB40285A25 /* Pods-Athan UtilityTests-dummy.m */; };
 		F2B2D50E0EC2887331176EF6A74FB34F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6CB14738032206DFB3D01DEF32B72A /* Foundation.framework */; };
-		F49B4913FAAC10B7A22149457F7EE5B3 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227A517485B997A770B203F2A83C648C /* WhatsNewViewController.swift */; };
+		F49B4913FAAC10B7A22149457F7EE5B3 /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */; };
+		FF63CBFC622278AC662B6C654BA3801B /* SqueezeButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,86 +77,85 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemTextView.xib; path = WhatsNew/Resources/WhatsNewItemTextView.xib; sourceTree = "<group>"; };
 		03FC1443B901A997059C9B9B71950AB3 /* Pods-Athan Utility-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Athan Utility-acknowledgements.plist"; sourceTree = "<group>"; };
-		04903D4970FD3AC5ED06D1B465AA86A5 /* Pods_Watch_Athan_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Watch_Athan_Extension.framework; path = "Pods-Watch Athan Extension.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		090D9B312B19AFFE30672D5E60BDF9FF /* WhatsNew-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-umbrella.h"; sourceTree = "<group>"; };
+		04903D4970FD3AC5ED06D1B465AA86A5 /* Pods_Watch_Athan_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Watch_Athan_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = WhatsNew/Utils/NibLoadable.swift; sourceTree = "<group>"; };
 		0931EB09C594AFF29120D4964D83A9D0 /* Pods-AthanToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AthanToday.debug.xcconfig"; sourceTree = "<group>"; };
 		0B6CB14738032206DFB3D01DEF32B72A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS4.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		0E45B734AF8D93AC37AC679567F6D23F /* WhatsNewItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItem.swift; path = WhatsNew/Items/WhatsNewItem.swift; sourceTree = "<group>"; };
-		11871B38192C4C9BCDA12EC36E34AEF7 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Athan_Utility.framework; path = "Pods-Athan Utility.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		11871B38192C4C9BCDA12EC36E34AEF7 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15803530087721D0FE450816C2168DDC /* Pods-AthanToday.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AthanToday.modulemap"; sourceTree = "<group>"; };
 		16AC547FFC4A6730733FEDEB40285A25 /* Pods-Athan UtilityTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Athan UtilityTests-dummy.m"; sourceTree = "<group>"; };
 		1AA7E500A8EEA9FBE3BD6B56B1575A84 /* Pods-athanIntents-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-athanIntents-umbrella.h"; sourceTree = "<group>"; };
 		204322775874CA353780E6DCB2CF595A /* Pods-athanIntents-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-athanIntents-resources.sh"; sourceTree = "<group>"; };
-		227A517485B997A770B203F2A83C648C /* WhatsNewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewViewController.swift; path = WhatsNew/WhatsNewViewController.swift; sourceTree = "<group>"; };
-		2438773841CC8F27AAC8854268221428 /* SqueezeButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SqueezeButton.modulemap; sourceTree = "<group>"; };
 		28DA9CFC7AED8C97C9A3EC3F83CEC253 /* Pods-Athan Utility-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Athan Utility-dummy.m"; sourceTree = "<group>"; };
 		2B9609F90AFC8C0C67E5FAA6D2B59813 /* Pods-athanIntents-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-athanIntents-acknowledgements.markdown"; sourceTree = "<group>"; };
-		2BD2FFAC75746AB2D70FCE7C79DD8A0F /* Pods_Athan_UtilityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Athan_UtilityTests.framework; path = "Pods-Athan UtilityTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BD2FFAC75746AB2D70FCE7C79DD8A0F /* Pods_Athan_UtilityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_UtilityTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CAB6012F7592AC6FC3B68786118143A /* Pods-Athan UtilityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan UtilityTests.release.xcconfig"; sourceTree = "<group>"; };
 		2E17396CEFF08389EB4087F68F114C7A /* Pods-Watch Athan Extension-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Watch Athan Extension-frameworks.sh"; sourceTree = "<group>"; };
-		2EC419520281108916226D8EF7EAB344 /* Pods_athanIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_athanIntents.framework; path = "Pods-athanIntents.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC419520281108916226D8EF7EAB344 /* Pods_athanIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_athanIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3007FFD0A48F973045B8936C31FDD62B /* Pods-athanIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-athanIntents.release.xcconfig"; sourceTree = "<group>"; };
+		32D3295CFCFDE5A93DE520D121BF256B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		366F13786E072BBCA028AEF8C8A9826F /* Pods-Watch Athan Extension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Watch Athan Extension-dummy.m"; sourceTree = "<group>"; };
 		3773B09AE55BCC08B2B6FF52ACBBE862 /* Pods-Watch Athan-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Watch Athan-resources.sh"; sourceTree = "<group>"; };
 		3B843E3048269193F6674806CBF4AF83 /* Pods-Watch Athan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Watch Athan.modulemap"; sourceTree = "<group>"; };
-		3B86B9DA6DE8A49789B685AE1FFEE585 /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemImageView.xib; path = WhatsNew/Resources/WhatsNewItemImageView.xib; sourceTree = "<group>"; };
-		3D0C38E4E9C52A9337BF2316AE16663B /* SqueezeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = SqueezeButton/SqueezeButton.swift; sourceTree = "<group>"; };
+		3D641C8220F33121004F48A9 /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		3DAB912805A803867E0EA11B90A1F646 /* Pods-Athan Utility.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Athan Utility.modulemap"; sourceTree = "<group>"; };
 		3FCF0136AA4FEDAAE1A784CFF1D3DCF0 /* Pods-Athan Utility-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-resources.sh"; sourceTree = "<group>"; };
-		40AB336D387D24D064E522659B4992E3 /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemTextView.swift; path = WhatsNew/Items/WhatsNewItemTextView.swift; sourceTree = "<group>"; };
 		40EBEA92872715EC69F0C608F6CFC043 /* Pods-Athan UtilityTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Athan UtilityTests-umbrella.h"; sourceTree = "<group>"; };
 		4155AEBD5664A3F7E57172E0E499FBDF /* Pods-athanIntents-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-athanIntents-acknowledgements.plist"; sourceTree = "<group>"; };
+		47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-umbrella.h"; sourceTree = "<group>"; };
 		497DE700D97B2375D6E4DCB665911181 /* Pods-Watch Athan Extension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Watch Athan Extension-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewViewController.swift; path = WhatsNew/WhatsNewViewController.swift; sourceTree = "<group>"; };
 		51C61F4152275D8351F4463228DC0872 /* Pods-Athan UtilityTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Athan UtilityTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		546AB1944413D5122CFBD2486DE0D58A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		548B7BB2A362BC0497ABE6AD80D1A944 /* Pods_Watch_Athan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Watch_Athan.framework; path = "Pods-Watch Athan.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		56D6591E8C7BA24FD3FAB78170C59153 /* SqueezeButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-prefix.pch"; sourceTree = "<group>"; };
-		572378360737B7C7A27FF201CC065D39 /* SqueezeButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-umbrella.h"; sourceTree = "<group>"; };
-		5780783C5F4909D63EA3C32BBB245BD5 /* WhatsNew.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNew.swift; path = WhatsNew/Items/WhatsNew.swift; sourceTree = "<group>"; };
-		595ACCDA4DB9F27B29DC88AE1D4D7884 /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = WhatsNew/Utils/NibLoadable.swift; sourceTree = "<group>"; };
+		548B7BB2A362BC0497ABE6AD80D1A944 /* Pods_Watch_Athan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Watch_Athan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CCA58E0A04947BD57551297C50B94BF /* Pods-Athan UtilityTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Athan UtilityTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		5D558114971349E85A99C7AD232E857D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DA8C0008765D583DCEE083D66476659 /* Pods-AthanToday-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AthanToday-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5E9BFCBC84E2C643079928B27C8ABD67 /* WhatsNew.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNew.xib; path = WhatsNew/Resources/WhatsNew.xib; sourceTree = "<group>"; };
 		5F54D71F1007D448C4F2F71986C72CAC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		612FBE30D68B942B61E3B64E37EE366D /* SqueezeButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-prefix.pch"; sourceTree = "<group>"; };
 		6196F849EF666F576769B4DF3C439521 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63AA94B62E395EDBB0E30AAB82A71966 /* Pods-Athan Utility-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Athan Utility-umbrella.h"; sourceTree = "<group>"; };
-		648E9706F584EB8DF63DCFA7E885A365 /* SqueezeButton.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SqueezeButton.xcconfig; sourceTree = "<group>"; };
-		65E93C5F8327B1ECF6A4D54D98D3464F /* WhatsNew-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WhatsNew-dummy.m"; sourceTree = "<group>"; };
 		662329A5E3A10FEF2658B4E522856EDC /* Pods-athanIntentsUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-athanIntentsUI.release.xcconfig"; sourceTree = "<group>"; };
 		67EAEA548812B5EB2864A34748B573F7 /* Pods-AthanToday-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AthanToday-dummy.m"; sourceTree = "<group>"; };
 		67FBBA8BC25982059F92CA0721DA478A /* Pods-Watch Athan-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Watch Athan-dummy.m"; sourceTree = "<group>"; };
 		67FE3603B3D0FFFF0EA973989FA8EFEE /* Pods-AthanToday-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AthanToday-umbrella.h"; sourceTree = "<group>"; };
+		6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SqueezeButton-dummy.m"; sourceTree = "<group>"; };
+		6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WhatsNew-dummy.m"; sourceTree = "<group>"; };
 		6B54F7B4174832E3EAF2F26F56658905 /* Pods-athanIntentsUI-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-athanIntentsUI-acknowledgements.markdown"; sourceTree = "<group>"; };
 		79520BBF4AC30D927F7A92A165C96458 /* Pods-athanIntents-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-athanIntents-dummy.m"; sourceTree = "<group>"; };
 		7C1CA7225A44E2A2C197631852159D18 /* Pods-athanIntentsUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-athanIntentsUI-umbrella.h"; sourceTree = "<group>"; };
 		7D2A5BFE6D70D40B9EC9E7BC420FE989 /* Pods-Watch Athan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Watch Athan.release.xcconfig"; sourceTree = "<group>"; };
 		8162108F131F3A0ACD084FED50E4812C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		85B061E08CD4F58C922B1126440A16EB /* SqueezeButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SqueezeButton.framework; path = SqueezeButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = SqueezeButtonPreview/SqueezeButton.swift; sourceTree = "<group>"; };
+		85B061E08CD4F58C922B1126440A16EB /* SqueezeButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SqueezeButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemImageView.xib; path = WhatsNew/Resources/WhatsNewItemImageView.xib; sourceTree = "<group>"; };
 		883B9989C73A5C162CAE4A075E0FB328 /* Pods-Watch Athan Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Watch Athan Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		89A87536C8FC42DA9000DC886818FEBD /* Pods-Watch Athan Extension.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Watch Athan Extension.modulemap"; sourceTree = "<group>"; };
 		8A58F79D2148395384EA252A4536C87E /* Pods-Watch Athan Extension-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Watch Athan Extension-acknowledgements.plist"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemTextView.swift; path = WhatsNew/Items/WhatsNewItemTextView.swift; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9633E6595DCD8BE60B4523E096FDABCB /* Pods-Athan UtilityTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan UtilityTests-frameworks.sh"; sourceTree = "<group>"; };
-		97000579B4B185031536AC648EE51307 /* WhatsNew.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WhatsNew.modulemap; sourceTree = "<group>"; };
 		99D9AFBCD938AC2BA2AE91465DDD8490 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WhatsNew.xcconfig; sourceTree = "<group>"; };
 		9BC3937CE15FE46C60C58D5E8DA3CBD5 /* Pods-Athan UtilityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan UtilityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C78611348BD925E080182BAF7BB7D8A /* Pods-AthanToday-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AthanToday-acknowledgements.plist"; sourceTree = "<group>"; };
-		9DE62F27BA5A1EDC0A9972130F198132 /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WhatsNew.framework; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3D063B11CAFE5DE760BD4047B28438B /* SqueezeButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SqueezeButton-dummy.m"; sourceTree = "<group>"; };
-		A58BCC95A37D91804B0080562EAF4C8C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A78E0C39E9A8B36FD0539B2EBD84ECF6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DE62F27BA5A1EDC0A9972130F198132 /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = SqueezeButtonPreview/ViewController.swift; sourceTree = "<group>"; };
+		A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-umbrella.h"; sourceTree = "<group>"; };
+		AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNew.swift; path = WhatsNew/Items/WhatsNew.swift; sourceTree = "<group>"; };
 		B831B9DDC8D07DA684FC46A7131CD1F0 /* Pods-Watch Athan-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Watch Athan-frameworks.sh"; sourceTree = "<group>"; };
-		BA97EA0D23F450577315E919B7BAE7D3 /* PresentationOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationOption.swift; path = WhatsNew/Items/PresentationOption.swift; sourceTree = "<group>"; };
 		BABCDFFC355E287D243C5132ADD5F15D /* Pods-athanIntentsUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-athanIntentsUI-dummy.m"; sourceTree = "<group>"; };
 		BB57D4018E357061886584FFBE5E0DEC /* Pods-Watch Athan-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Watch Athan-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BC181691F000667864FCC09ED8BE624E /* WhatsNew-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-prefix.pch"; sourceTree = "<group>"; };
+		BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SqueezeButtonPreview/AppDelegate.swift; sourceTree = "<group>"; };
+		BCFE988601C0CB98C57DF493A5BD0AE3 /* SqueezeButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SqueezeButton.modulemap; sourceTree = "<group>"; };
 		C20D0A83D0B7A1A175C84082479FAEE3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3DB4D5B781CF281D0E56FED211DE0E7 /* Pods-AthanToday-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AthanToday-resources.sh"; sourceTree = "<group>"; };
-		C8B6386C740B1E2C3BB3D1FF802A0426 /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemTextView.xib; path = WhatsNew/Resources/WhatsNewItemTextView.xib; sourceTree = "<group>"; };
+		C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationOption.swift; path = WhatsNew/Items/PresentationOption.swift; sourceTree = "<group>"; };
 		C8E585F572FBC97F7B9FE1FB08122AED /* Pods-athanIntentsUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-athanIntentsUI.modulemap"; sourceTree = "<group>"; };
 		C9CE8210EF27085895D011B15C4F33B9 /* Pods-Watch Athan-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Watch Athan-umbrella.h"; sourceTree = "<group>"; };
-		CF4CEB0E18B5576A1C915A007A50256C /* WhatsNew-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-prefix.pch"; sourceTree = "<group>"; };
 		CFA64A68ECB6D457BD70E218496851E9 /* Pods-Watch Athan Extension-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Watch Athan Extension-resources.sh"; sourceTree = "<group>"; };
 		D1088514361E2DA0C2D952C8C3567122 /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
 		D5E924A45FA078FD7AF4338AFA359529 /* Pods-Athan Utility-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-frameworks.sh"; sourceTree = "<group>"; };
@@ -160,22 +163,26 @@
 		D6F5F8CA85A1064EE5B45013F921FE95 /* Pods-Athan Utility-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Athan Utility-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D8882FFAA106688D2F1720925EB221AC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8C2611155E986A78643AB121AB1601F /* Pods-athanIntentsUI-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-athanIntentsUI-acknowledgements.plist"; sourceTree = "<group>"; };
-		DB4B4CB81FD724EDFA04B6B1CDA46B5A /* WhatsNew.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WhatsNew.xcconfig; sourceTree = "<group>"; };
 		DCA8FEA61452571D4927C784F11B05B9 /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
+		DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItem.swift; path = WhatsNew/Items/WhatsNewItem.swift; sourceTree = "<group>"; };
 		E0288D54D0A22F9FDAA19C850F97967D /* Pods-athanIntentsUI-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-athanIntentsUI-resources.sh"; sourceTree = "<group>"; };
 		E24EFD0F33E798FC296C11B26D1BCF40 /* Pods-athanIntents.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-athanIntents.modulemap"; sourceTree = "<group>"; };
+		E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNew.xib; path = WhatsNew/Resources/WhatsNew.xib; sourceTree = "<group>"; };
+		E31B07E429C8F0A9E8BD4C983BA63159 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3274FA9798886DCEA1B6061F76CEE6F /* Pods-Athan UtilityTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Athan UtilityTests.modulemap"; sourceTree = "<group>"; };
 		E5D90C7C4EBB39A3FFCF26B8266C4717 /* Pods-AthanToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AthanToday.release.xcconfig"; sourceTree = "<group>"; };
+		E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SqueezeButton.xcconfig; sourceTree = "<group>"; };
+		EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemImageView.swift; path = WhatsNew/Items/WhatsNewItemImageView.swift; sourceTree = "<group>"; };
 		EE97129D961A4FAA14D320B2D376B1FF /* Pods-Watch Athan Extension-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Watch Athan Extension-umbrella.h"; sourceTree = "<group>"; };
-		F5625B6D6DF4F4F4DF9B3498C89B5BDB /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemImageView.swift; path = WhatsNew/Items/WhatsNewItemImageView.swift; sourceTree = "<group>"; };
 		F5B16B7C1F04D5F5063C453E4AD2CBCB /* Pods-athanIntentsUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-athanIntentsUI.debug.xcconfig"; sourceTree = "<group>"; };
 		F5BA9623D405B225B76DDF52F9DA515C /* Pods-athanIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-athanIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		F5E8AF8EA4C7B9B42307C84C8418D1ED /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F72B661094919B7C73E607746D3BA8E7 /* Pods_AthanToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AthanToday.framework; path = "Pods-AthanToday.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F72B661094919B7C73E607746D3BA8E7 /* Pods_AthanToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AthanToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F968057060D636B3E855104EAA4874AE /* Pods-Watch Athan-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Watch Athan-acknowledgements.plist"; sourceTree = "<group>"; };
 		FA5DF4CE380EACC0D437961F46642440 /* Pods-Watch Athan Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Watch Athan Extension.release.xcconfig"; sourceTree = "<group>"; };
 		FA75878CE55BCD7FBFC716384D841B71 /* Pods-Athan UtilityTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan UtilityTests-resources.sh"; sourceTree = "<group>"; };
-		FAD693BC69B8155CD1BB358FA707EA3A /* Pods_athanIntentsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_athanIntentsUI.framework; path = "Pods-athanIntentsUI.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAD693BC69B8155CD1BB358FA707EA3A /* Pods_athanIntentsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_athanIntentsUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF14E4FF2A15A7D609B0CF6A0F6CFFCA /* WhatsNew.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WhatsNew.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +262,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		243B654F43DFBA867FAED286DD00E0AC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */,
+				864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */,
+				02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		3C44B7231F503297823025E3005392D3 /* watchOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +298,23 @@
 			path = "Target Support Files/Pods-Watch Athan";
 			sourceTree = "<group>";
 		};
+		5403C00689580FE592BA5FDB4A56EBB1 /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				3D641C8220F33121004F48A9 /* AnimatedLabel.swift */,
+				08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */,
+				C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */,
+				AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */,
+				DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */,
+				EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */,
+				8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */,
+				4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */,
+				243B654F43DFBA867FAED286DD00E0AC /* Resources */,
+				C5D9B155E940B4D1976DF7DD9CE89136 /* Support Files */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
 		5E1B33A759A6252986592C1CCCEF4C61 /* Pods-Watch Athan Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,16 +331,6 @@
 			);
 			name = "Pods-Watch Athan Extension";
 			path = "Target Support Files/Pods-Watch Athan Extension";
-			sourceTree = "<group>";
-		};
-		735A8FFAAB1E440B097AA228C8715A52 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				5E9BFCBC84E2C643079928B27C8ABD67 /* WhatsNew.xib */,
-				3B86B9DA6DE8A49789B685AE1FFEE585 /* WhatsNewItemImageView.xib */,
-				C8B6386C740B1E2C3BB3D1FF802A0426 /* WhatsNewItemTextView.xib */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		7C952849EFF9BEB3A874800C7CF339BE /* Pods-Athan UtilityTests */ = {
@@ -332,20 +356,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				8B6D968432DA454CBE7BE3761821A977 /* Frameworks */,
-				C91E3AD56AE3FBCBCF44ACF71D7389E4 /* Pods */,
+				EC0DB039A3AAC22CBDEE3F701A5EA624 /* Pods */,
 				8FA70CCC25FFAC3B5C8E74E8D5B32356 /* Products */,
 				BC7871D51A21F463E1A0D4480C6F2D96 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		871E0B303F075060FBC9600AA7825A24 /* SqueezeButton */ = {
-			isa = PBXGroup;
-			children = (
-				3D0C38E4E9C52A9337BF2316AE16663B /* SqueezeButton.swift */,
-				E45C79B836B5F2EE28EBDE57ECA639F3 /* Support Files */,
-			);
-			name = SqueezeButton;
-			path = SqueezeButton;
 			sourceTree = "<group>";
 		};
 		8B6D968432DA454CBE7BE3761821A977 /* Frameworks */ = {
@@ -382,21 +396,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A86992770D011C774D4140D95E6A0608 /* WhatsNew */ = {
+		B11694C38BC152335F9C447E3E9B58A5 /* SqueezeButton */ = {
 			isa = PBXGroup;
 			children = (
-				595ACCDA4DB9F27B29DC88AE1D4D7884 /* NibLoadable.swift */,
-				BA97EA0D23F450577315E919B7BAE7D3 /* PresentationOption.swift */,
-				5780783C5F4909D63EA3C32BBB245BD5 /* WhatsNew.swift */,
-				0E45B734AF8D93AC37AC679567F6D23F /* WhatsNewItem.swift */,
-				F5625B6D6DF4F4F4DF9B3498C89B5BDB /* WhatsNewItemImageView.swift */,
-				40AB336D387D24D064E522659B4992E3 /* WhatsNewItemTextView.swift */,
-				227A517485B997A770B203F2A83C648C /* WhatsNewViewController.swift */,
-				735A8FFAAB1E440B097AA228C8715A52 /* Resources */,
-				FB7AC60C6257639A86BD96D97CB8E049 /* Support Files */,
+				BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */,
+				849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */,
+				A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */,
+				F5434DEC1268AACB95D03EDFDB8E52D4 /* Support Files */,
 			);
-			name = WhatsNew;
-			path = WhatsNew;
+			path = SqueezeButton;
 			sourceTree = "<group>";
 		};
 		B7629F232599646E25AE4757C5ED8C09 /* Pods-athanIntents */ = {
@@ -448,13 +456,18 @@
 			path = "Target Support Files/Pods-Athan Utility";
 			sourceTree = "<group>";
 		};
-		C91E3AD56AE3FBCBCF44ACF71D7389E4 /* Pods */ = {
+		C5D9B155E940B4D1976DF7DD9CE89136 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				871E0B303F075060FBC9600AA7825A24 /* SqueezeButton */,
-				A86992770D011C774D4140D95E6A0608 /* WhatsNew */,
+				32D3295CFCFDE5A93DE520D121BF256B /* Info.plist */,
+				FF14E4FF2A15A7D609B0CF6A0F6CFFCA /* WhatsNew.modulemap */,
+				9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */,
+				6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */,
+				BC181691F000667864FCC09ED8BE624E /* WhatsNew-prefix.pch */,
+				47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */,
 			);
-			name = Pods;
+			name = "Support Files";
+			path = "../Target Support Files/WhatsNew";
 			sourceTree = "<group>";
 		};
 		D04E0CC64914D4C16119BDE21A7ABF67 /* Pods-AthanToday */ = {
@@ -491,32 +504,27 @@
 			path = "Target Support Files/Pods-athanIntentsUI";
 			sourceTree = "<group>";
 		};
-		E45C79B836B5F2EE28EBDE57ECA639F3 /* Support Files */ = {
+		EC0DB039A3AAC22CBDEE3F701A5EA624 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A58BCC95A37D91804B0080562EAF4C8C /* Info.plist */,
-				2438773841CC8F27AAC8854268221428 /* SqueezeButton.modulemap */,
-				648E9706F584EB8DF63DCFA7E885A365 /* SqueezeButton.xcconfig */,
-				A3D063B11CAFE5DE760BD4047B28438B /* SqueezeButton-dummy.m */,
-				56D6591E8C7BA24FD3FAB78170C59153 /* SqueezeButton-prefix.pch */,
-				572378360737B7C7A27FF201CC065D39 /* SqueezeButton-umbrella.h */,
+				B11694C38BC152335F9C447E3E9B58A5 /* SqueezeButton */,
+				5403C00689580FE592BA5FDB4A56EBB1 /* WhatsNew */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F5434DEC1268AACB95D03EDFDB8E52D4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E31B07E429C8F0A9E8BD4C983BA63159 /* Info.plist */,
+				BCFE988601C0CB98C57DF493A5BD0AE3 /* SqueezeButton.modulemap */,
+				E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */,
+				6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */,
+				612FBE30D68B942B61E3B64E37EE366D /* SqueezeButton-prefix.pch */,
+				A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SqueezeButton";
-			sourceTree = "<group>";
-		};
-		FB7AC60C6257639A86BD96D97CB8E049 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A78E0C39E9A8B36FD0539B2EBD84ECF6 /* Info.plist */,
-				97000579B4B185031536AC648EE51307 /* WhatsNew.modulemap */,
-				DB4B4CB81FD724EDFA04B6B1CDA46B5A /* WhatsNew.xcconfig */,
-				65E93C5F8327B1ECF6A4D54D98D3464F /* WhatsNew-dummy.m */,
-				CF4CEB0E18B5576A1C915A007A50256C /* WhatsNew-prefix.pch */,
-				090D9B312B19AFFE30672D5E60BDF9FF /* WhatsNew-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/WhatsNew";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -741,7 +749,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 44A0234E930C6752B77456066DE6AA1D /* Build configuration list for PBXNativeTarget "SqueezeButton" */;
 			buildPhases = (
-				37647DB42D27D3860CA5AD06FAAC6E5E /* Sources */,
+				CF7726975D48E3AD84669D1586B7AA6F /* Sources */,
 				F25815AB79120872FC808C29301E3509 /* Frameworks */,
 				727645AF02ABE2AFD1A29E7E86F7575F /* Headers */,
 			);
@@ -762,6 +770,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					B461EE0ABC8BE4DB9262651FDE1CC04D = {
+						LastSwiftMigration = 1000;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -807,15 +820,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D7DB98400A7CD6EE8AB6782ECAA4CC0 /* Pods-Athan Utility-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		37647DB42D27D3860CA5AD06FAAC6E5E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				35BC682F454D09ABFCA810EC1C513657 /* SqueezeButton-dummy.m in Sources */,
-				841AF7E59F04E485E0954CAF71CEBD23 /* SqueezeButton.swift in Sources */,
+				3D641C8320F33121004F48A9 /* AnimatedLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +864,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CF7726975D48E3AD84669D1586B7AA6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDFE0B7B3F81B0B41A894EE9373EA084 /* AppDelegate.swift in Sources */,
+				FF63CBFC622278AC662B6C654BA3801B /* SqueezeButton-dummy.m in Sources */,
+				5A44F76F0B15B8886599F4B47759E06F /* SqueezeButton.swift in Sources */,
+				B6E700F5C0B332DCDBB279BCE969269A /* ViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D80E0137DEE77A7B46D6216F04524E14 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -874,6 +890,7 @@
 				5EF19295341357791E1EBA64DDF0EA2E /* NibLoadable.swift in Sources */,
 				3EF7002F2D879F6D94710A869BF98D32 /* PresentationOption.swift in Sources */,
 				649B7D1EC5F281B64931D193ECF9D5A1 /* WhatsNew-dummy.m in Sources */,
+				3D641C8420F33121004F48A9 /* AnimatedLabel.swift in Sources */,
 				5266D4B0036BD05178EE2EBB28A108C5 /* WhatsNew.swift in Sources */,
 				9BA6EB7A556C135145C65C5EE3511A4B /* WhatsNewItem.swift in Sources */,
 				292BC7E47B58B835240C63B147B9BE06 /* WhatsNewItemImageView.swift in Sources */,
@@ -967,7 +984,7 @@
 		};
 		12D1366D5CB2E333EF24AA98473092BC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB4B4CB81FD724EDFA04B6B1CDA46B5A /* WhatsNew.xcconfig */;
+			baseConfigurationReference = 9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1002,6 +1019,7 @@
 			baseConfigurationReference = DCA8FEA61452571D4927C784F11B05B9 /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1026,6 +1044,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1104,7 +1123,7 @@
 		};
 		343627F0DFA53291BBCA0DE63E3918CE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 648E9706F584EB8DF63DCFA7E885A365 /* SqueezeButton.xcconfig */;
+			baseConfigurationReference = E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1171,7 +1190,7 @@
 		};
 		411BB62F71EB7C230E1F92300C4F7CCF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB4B4CB81FD724EDFA04B6B1CDA46B5A /* WhatsNew.xcconfig */;
+			baseConfigurationReference = 9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1344,6 +1363,7 @@
 			baseConfigurationReference = D1088514361E2DA0C2D952C8C3567122 /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1369,6 +1389,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1549,7 +1570,7 @@
 		};
 		E94BB2D7B299A115A70B54596B057ABE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 648E9706F584EB8DF63DCFA7E885A365 /* SqueezeButton.xcconfig */;
+			baseConfigurationReference = E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

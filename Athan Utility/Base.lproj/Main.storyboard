@@ -24,7 +24,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="il8-3r-zSC" customClass="ClockView" customModule="Athan_Utility" customModuleProvider="target">
                                 <rect key="frame" x="37.5" y="28" width="300" height="300"/>
                                 <subviews>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGl-K9-se3" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGl-K9-se3" customClass="SqueezeButton" customModule="SqueezeButton">
                                         <rect key="frame" x="264" y="264" width="36" height="36"/>
                                         <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -36,7 +36,7 @@
                                             <action selector="refreshPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lSi-lo-iV9"/>
                                         </connections>
                                     </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wC5-hi-kNy" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wC5-hi-kNy" customClass="SqueezeButton" customModule="SqueezeButton">
                                         <rect key="frame" x="0.0" y="264" width="36" height="36"/>
                                         <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -45,7 +45,7 @@
                                             <action selector="showQibla:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CkM-xd-b0A"/>
                                         </connections>
                                     </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1EH-27-Wnf" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1EH-27-Wnf" customClass="SqueezeButton" customModule="SqueezeButton">
                                         <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
                                         <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -54,7 +54,7 @@
                                             <action selector="alarmsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jct-H8-sO1"/>
                                         </connections>
                                     </button>
-                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RV7-LX-nSy" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RV7-LX-nSy" customClass="SqueezeButton" customModule="SqueezeButton">
                                         <rect key="frame" x="264" y="0.0" width="36" height="36"/>
                                         <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -112,7 +112,7 @@
                                     <segue destination="G1K-Bo-b0q" kind="embed" identifier="Progress" id="kiZ-1Y-d2b"/>
                                 </connections>
                             </containerView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ca1-eh-7yQ" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ca1-eh-7yQ" customClass="SqueezeButton" customModule="SqueezeButton">
                                 <rect key="frame" x="37.5" y="630" width="300" height="29"/>
                                 <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

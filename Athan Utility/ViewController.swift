@@ -79,14 +79,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         
 //        refreshButton.layer.cornerRadius = 8
 //        qiblaButton.layer.cornerRadius = 8
-//        settingsButton.layer.cornerRadius = 8
+//        settingsButton.layer.cornerRadius = 8
         
         // prevent touch recognizers from delaying squeezebutton reactions
-//        let window = UIApplication.shared.windows[0]
-//        let g1 = window.gestureRecognizers?[0]
-//        g1?.delaysTouchesBegan = false
-//        let g2 = window.gestureRecognizers?[1]
-//        g2?.delaysTouchesBegan = false
+        let window = UIApplication.shared.windows[0]
+        let g1 = window.gestureRecognizers?[0]
+        g1?.delaysTouchesBegan = false
+        let g2 = window.gestureRecognizers?[1]
+        g2?.delaysTouchesBegan = false
         
 //        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
 //        refreshButton.setTitle("Refresh", for: UIControlState())
@@ -175,7 +175,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             ])
             #warning("change mode from debug to majorVersion")
             whatsNewVC.presentationOption = .majorVersion
-            whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Paix à Vous", "Friede Sei Mit Dir"]
+            whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "Paix à Vous", "Selamünaleyküm", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Friede Sei Mit Dir"]
             whatsNewVC.titleColor = .white
             whatsNewVC.buttonBackgroundColor = .white
             whatsNewVC.buttonTextColor = .darkGray
@@ -191,7 +191,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                 showSpinner = false
             }
         }
-            
         
             /*
             if !pref { showIntroLate = true }

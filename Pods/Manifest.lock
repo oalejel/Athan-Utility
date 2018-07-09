@@ -1,5 +1,5 @@
 PODS:
-  - SqueezeButton (0.1.0)
+  - SqueezeButton (0.2.0)
   - WhatsNew (0.4.3)
 
 DEPENDENCIES:
@@ -12,7 +12,7 @@ SPEC REPOS:
     - WhatsNew
 
 SPEC CHECKSUMS:
-  SqueezeButton: bbf9e7049375625854fb4bead4359c98392b6709
+  SqueezeButton: 9c340dbda8b3d3eab85a366b38e6c9812d4efa30
   WhatsNew: ddf224a0ac4f5fc32deb15188c820ccc625f4929
 
 PODFILE CHECKSUM: da74261bdf2d176d5ca397824119dd7894cd3e12

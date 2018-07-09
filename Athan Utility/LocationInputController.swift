@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SqueezeButton
 
 //LocationInputController allows the user to input a location they do not live in
 class LocationInputController: UIViewController {

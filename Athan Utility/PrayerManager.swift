@@ -218,7 +218,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         coreManager.stopUpdatingLocation() //change if stopping without getting reliable info
         
         // need this since location managers send multiple updates even after being told to stop updating
-        if ignoreLocationUpdates == true {return}
+        if ignoreLocationUpdates == true {
+            // hide swift spinner in case we are blocking the screen
+            SwiftSpinner.hide()
+            return
+        }
         ignoreLocationUpdates = true
         
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
@@ -230,10 +234,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     
                     // if we should not update, then abort fetching
                     if !self.shouldUpdateLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
+                        SwiftSpinner.hide()
                         return
                     }
                     
-                    // update our understanding of the location
+                    // update our recorded location
                     self.currentCityString = placemark.locality//cityNoSpaces
                     self.currentDistrictString = placemark.subAdministrativeArea
                     self.currentStateString = placemark.administrativeArea
@@ -327,6 +332,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let queryURL = prayerAPIURL(address: escapedLocation, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         
         //WARNING! dont forget to set this back to true if the app is on for a long time!!!
+        #error("remove either needsDataUpdate or ignoreLocationUpdates")
         if needsDataUpdate {
             needsDataUpdate = false
             if let sureURL = queryURL {
@@ -807,7 +813,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 
                                 // create a trigger with the correct date
                                 let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: pDate)
-                                print(dateComp.isValidDate)
                                 let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
                                 // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                                 let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
@@ -957,8 +962,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     func reload() {
         //for simulator
         needsDataUpdate = true
+        ignoreLocationUpdates = false
         if !lockLocation {
             coreManager.startUpdatingLocation()
+            
+            // location updates trigger nothing in simulator, so call on a predefined location:
             #if targetEnvironment(simulator)
             fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
             let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)

@@ -166,15 +166,34 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         //show what's new if never presented before!
         #warning("change mode from debug to majorVersion")
-        if WhatsNew.shouldPresent(with: .majorVersion) {
+        if WhatsNew.shouldPresent(with: .debug) {
+            let title1 = NSLocalizedString("Offline Storage", comment: "")
+            let title2 = NSLocalizedString("15 minute reminders", comment: "")
+            let title3 = NSLocalizedString("Today Extension", comment: "")
+            let title4 = NSLocalizedString("Athan clock face", comment: "")
+            
+            let subtitle1 = NSLocalizedString("Athan Utility stores months of athan data for offline use.", comment: "")
+            let subtitle2 = NSLocalizedString("Get reminded before the next athan takes place. Configurable in app preferences.", comment: "")
+            let subtitle3 = NSLocalizedString("Check current and upcoming salah times with the Notification Center widget.", comment: "")
+            let subtitle4 = NSLocalizedString("A new way to visualize salah times throughout the day.", comment: "")
+            
             let whatsNewVC = WhatsNewViewController(items: [
-                WhatsNewItem.text(title: "Months Long Storage", subtitle: "Offline use is possible with months of athan data storage."),
-                WhatsNewItem.text(title: "15 minute reminders", subtitle: "Get reminded when athan will take place. Configurable in app preferences."),
-                WhatsNewItem.text(title: "Today Extension", subtitle: "Check current and upcoming salah times with the Notification Center widget."),
-                WhatsNewItem.text(title: "Athan clock face", subtitle: "A new way to visualize salah times throughout the day."),
+                WhatsNewItem.image(title: title1,
+                                   subtitle: subtitle1,
+                                   image: UIImage(named: "no_wifi_icon") ?? UIImage()),
+                WhatsNewItem.image(title: title2,
+                                  subtitle: subtitle2,
+                                  image: UIImage(named: "timer_icon") ?? UIImage()),
+                WhatsNewItem.image(title: title3,
+                                  subtitle: subtitle3,
+                                  image: UIImage(named: "widget_icon") ?? UIImage()),
+                WhatsNewItem.image(title: title4,
+                                  subtitle: subtitle4,
+                                  image: UIImage(named: "clock_icon") ?? UIImage()),
             ])
+            
             #warning("change mode from debug to majorVersion")
-            whatsNewVC.presentationOption = .majorVersion
+            whatsNewVC.presentationOption = .debug
             whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "Paix à Vous", "Selamünaleyküm", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Friede Sei Mit Dir"]
             whatsNewVC.titleColor = .white
             whatsNewVC.buttonBackgroundColor = .white

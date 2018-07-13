@@ -332,7 +332,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let queryURL = prayerAPIURL(address: escapedLocation, month: dateTuple?.month ?? currentMonth, year: dateTuple?.year ?? currentYear)
         
         //WARNING! dont forget to set this back to true if the app is on for a long time!!!
-        #error("remove either needsDataUpdate or ignoreLocationUpdates")
+        //#error("remove either needsDataUpdate or ignoreLocationUpdates")
         if needsDataUpdate {
             needsDataUpdate = false
             if let sureURL = queryURL {
@@ -786,7 +786,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 // local notifications, and should let the user know
                                 if finalFlag {
                                     if p == .isha {
-                                        let localizedAlertString = NSLocalizedString("Time for %@ [%@]. Please reopen Athan Utility to continue to recieve notificaitons.", comment: "")
+                                        let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
                                         alertString = String(format: localizedAlertString, p.stringValue(), dateString)
                                     }
                                 } else {
@@ -800,7 +800,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     
                                     // Alternative string stores a shorter version of the location
                                     // in order to show "San Francisco" instead of "San Francisco, CA, USA"
-                                    let localizedStandardNote = NSLocalizedString("Time for %@ in %@ [%@]", comment: "")
+                                    let localizedStandardNote = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
                                     if let alt = alternativeString {
                                         alertString = String(format: localizedStandardNote, p.stringValue(), alt, dateString)
                                     } else {
@@ -845,7 +845,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                 }
                                 
-                                let localized15mAlert = NSLocalizedString("15m left til %@ in %@! [%@]", comment: "")
+                                let localized15mAlert = NSLocalizedString("15m left til %1$@ in %2$@! [%3$@]", comment: "")
                                 if let alt = alternativeString {
                                     alertString = String(format: localized15mAlert, p.stringValue(), alt, dateString)
                                 } else {

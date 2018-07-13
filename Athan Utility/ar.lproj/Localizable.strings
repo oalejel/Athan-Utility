@@ -40,11 +40,16 @@
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "15m left til %1$@ in %2$@! [%3$@]" = "[%3$@] !%2$@ بقى ١٥ دقيقة حتى ال@$1% في";
 
+// "What's New" listed feature titles and subtitles
+"Offline Storage" = "تخزين دون اتصال";
+"15 minute reminders" = "التذكير قبل ١٥ دقيقة";
+"Today Extension" = "أداة على شريط المهام";
+"Athan clock face" = "ساعة الدوام";
 
 "Athan Utility stores months of athan data for offline use." = "هذا التطبيق يخزن أشهر من بيانات الاذان للاستخدام دون اتصال";
 
-"Get reminded before the next athan takes place. Configurable in app preferences." = ".تذكير قبل أن يبدأ الأذان القادم. شكلي في تفضيلات التطبيق";
+"Get reminded before the next athan takes place. Configurable in app preferences." = "تذكير قبل أن يبدأ الأذان القادم. شكلي في تفضيلات التطبيق";
 
-"Check current and upcoming salah times with the Notification Center widget." = ".تحقق من أوقات صلاح الحالية والقادمة مع أداة مركز الإعلام";
+"Check current and upcoming salah times with the Notification Center widget." = "تحقق من أوقات صلاح الحالية والقادمة مع أداة مركز الإعلام";
 
-"A new way to visualize salah times throughout the day." = ".طريقة جديدة لتصور أوقات صلاح طوال اليوم";
+"A new way to visualize salah times throughout the day." = "طريقة جديدة لتصور أوقات صلاح طوال اليوم";

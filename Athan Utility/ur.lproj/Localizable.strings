@@ -40,7 +40,11 @@
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "15m left til %1$@ in %2$@! [%3$@]" = "‏@%2$ میں @$1% تک ١٥ منٹ باقی رہ گئے [@$3%]‏";
 
-
+// "What's New" listed feature titles and subtitles
+"Offline Storage" = "آف لائن اسٹوریج"; // clearly wrong – just a transliteration....
+"15 minute reminders" = "پندرہ منٹ یاد دہانی";
+"Today Extension" = "آج توسیع";
+"Athan clock face" = "ایتھن گھڑی کا چہرہ";
 
 "Athan Utility stores months of athan data for offline use." = ".یہ ایپلی کیشن آف لائن استعمال کے مہینے کے مہینوں کے ذخیرہ کرتا ہے";
 

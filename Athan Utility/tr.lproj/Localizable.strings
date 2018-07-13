@@ -40,6 +40,11 @@
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "15m left til %1$@ in %2$@! [%3$@]" = "%2$@ %1$@ kadar 15 dakika kaldı! [%3$@]";
 
+// "What's New" listed feature titles and subtitles
+"Offline Storage" = "Çevrimdışı Depolama";
+"15 minute reminders" = "15 dakika hatırlatıcılar";
+"Today Extension" = "Bugün Uzatma";
+"Athan clock face" = "Athan saat yüzü";
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility çevrimdışı kullanım için athan verilerini aylar.";
 

@@ -64,7 +64,7 @@ public class WhatsNewViewController: UIViewController {
         }
     }
     /// Text of the bottom button that dismisses the view controller.
-    public var buttonText: String = "Continue" {
+    public var buttonText: String = NSLocalizedString("Continue", comment: "") {
         didSet {
             continueButton?.setTitle(buttonText, for: .normal)
         }

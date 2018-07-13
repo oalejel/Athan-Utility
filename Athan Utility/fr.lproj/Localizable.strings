@@ -41,6 +41,11 @@
 "15m left til %1$@ in %2$@! [%3$@]" = "15 minutes restantes jusqu'à %1$@ en %2$@! [%3$@]";
 
 
+// "What's New" listed feature titles and subtitles
+"Offline Storage" = "Stockage hors ligne";
+"15 minute reminders" = "Rappels de 15 minutes";
+"Today Extension" = "Aujourd'hui Extension";
+"Athan clock face" = "Visage de l'horloge Athan";
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility stocke des mois de données athan pour une utilisation hors ligne.";
 

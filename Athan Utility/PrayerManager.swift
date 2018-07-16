@@ -87,6 +87,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     //location services data provider
     fileprivate let coreManager = CLLocationManager()
+    var lastAuthStatus = CLAuthorizationStatus.notDetermined
     
     var currentPrayer: PrayerType = PrayerType.fajr //default prayer before arrival of data. should be based on a plist int
     
@@ -135,7 +136,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var fetchCompletionClosure: (() -> ())?
     var lastFetchSuccessful = false
     
-    var needsDataUpdate = true
+//    var needsDataUpdate = true
     var dataExists = false
     
     weak var headingDelegate: HeadingDelegate? {
@@ -249,19 +250,31 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     self.locationString = self.formattedAddressString()
                     
                     //fetch data for this month and the next month
-                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
-                    let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+//                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
+//                    let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+//                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+                    self.fetchMonthsJSONDataForCurrentLocation()
                     self.ignoreLocationUpdates = false
                 }
             }
         })
     }
     
+    // in case user initially prevents location updates and decides to switch back
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if lastAuthStatus == .denied {
+            if status == .authorizedWhenInUse || status == .authorizedAlways {
+                reload() // user has decided to share location, so start process of getting data
+            }
+        }
+        lastAuthStatus = status
+    }
+    
     // tell our delegate that the heading has been updated (qibla view controller)
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         headingDelegate?.newHeading(newHeading)
     }
+    
     //MARK: - Data Management
     
     func getSettings() {
@@ -333,48 +346,49 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         //WARNING! dont forget to set this back to true if the app is on for a long time!!!
         //#error("remove either needsDataUpdate or ignoreLocationUpdates")
-        if needsDataUpdate {
-            needsDataUpdate = false
-            if let sureURL = queryURL {
-                print("Going to request data")
-                var request = URLRequest(url: sureURL)
-                request.httpMethod = "GET" // should be default setting, but just making this a point
-                request.timeoutInterval = 6
-                let dataTask = session.dataTask(with: request, completionHandler: {
-                    (data: Data?, response: URLResponse?, error: Error?) -> Void in
-                    if error != nil {
-                        self.needsDataUpdate = true
-                    }
-                    
-                    if let sureData = data {
-                        // this also stores to a file
-                        let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
-                        if let sureJSON = JSON {
-                            print("Got data from online")
-                            
-                            // in case we got a custom location from a text field input,
-                            // and now decide to make the query string our official locationString
-                            self.locationString = queryLocationString
-                            
-                            // if parsing dictionary goes well, call completion handler with true
-                            if self.parseDictionary(sureJSON, fromFile: false) {
-                                completion?(true)
-                                return
-                            }
+//        if needsDataUpdate {
+//        needsDataUpdate = false
+        if let sureURL = queryURL {
+            print("Going to request data")
+            var request = URLRequest(url: sureURL)
+            request.httpMethod = "GET" // should be default setting, but just making this a point
+            request.timeoutInterval = 6
+            let dataTask = session.dataTask(with: request, completionHandler: {
+                (data: Data?, response: URLResponse?, error: Error?) -> Void in
+                if error != nil {
+//                    self.needsDataUpdate = true
+                    #warning("might want to figure out an appropriate response")
+                }
+                
+                if let sureData = data {
+                    // this also stores to a file
+                    let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
+                    if let sureJSON = JSON {
+                        print("Got data from online")
+                        
+                        // in case we got a custom location from a text field input,
+                        // and now decide to make the query string our official locationString
+                        self.locationString = queryLocationString
+                        
+                        // if parsing dictionary goes well, call completion handler with true
+                        if self.parseDictionary(sureJSON, fromFile: false) {
+                            completion?(true)
+                            return
                         }
                     }
-                    //unsuccessful fetch if reaching this point
-                    completion?(false)
-                })
-                
-                dataTask.resume()
-            } else {
-                // did not have a working URL
-                print("URL error")
-                // still execute completion handler, telling handler that we had an unsuccessful fetch
+                }
+                //unsuccessful fetch if reaching this point
                 completion?(false)
-            }
+            })
+            
+            dataTask.resume()
+        } else {
+            // did not have a working URL
+            print("URL error")
+            // still execute completion handler, telling handler that we had an unsuccessful fetch
+            completion?(false)
         }
+//        }
     }
  
     /// calculate angle to point to Mecca
@@ -508,7 +522,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     }
 
                     //save our new data from online
-                    sureDict["location_recieved"] = formattedAddressString() as AnyObject?
+//                    sureDict["location_recieved"] = formattedAddressString() as AnyObject?
+                    sureDict["last_country"] = (currentCountryString ?? "") as AnyObject
+                    sureDict["last_state"] = (currentStateString ?? "") as AnyObject
+                    sureDict["last_city"] = (currentCityString ?? "") as AnyObject
                     sureDict["data"] = yearTimes as AnyObject
                     sureDict["qibla"] = qibla as AnyObject
                     let objc = sureDict as NSDictionary
@@ -518,9 +535,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 // if reading data from file, deal with stored dictionary accordingly
                 
                 // check the last record's recieved location
-                if let formattedAddress = sureDict["location_recieved"] as? String {
-                    locationString = formattedAddress
-                }
+//                if let formattedAddress = sureDict["location_recieved"] as? String {
+//                    locationString = formattedAddress
+//                }
+                currentCountryString = sureDict["last_country"] as? String
+                currentStateString = sureDict["last_state"] as? String
+                currentCityString = sureDict["last_city"] as? String
+                
+                locationString = formattedAddressString()
+                
                 
                 // if we are getting data from a file, we expect value for key
                 // "data" to be in the format of yearTimes
@@ -552,7 +575,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         return successful
     }
-    
     
     func getFutureDateTuple(daysToSkip: Int = 1) -> (day: Int, month: Int, year: Int) {
         setCurrentDates()
@@ -953,30 +975,44 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         alignPrayerTimes()
         calculateCurrentPrayer()
         setTimers()
+        fetchMonthsJSONDataForCurrentLocation()
+    }
+    
+    func fetchMonthsJSONDataForCurrentLocation() {
         fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
     }
     
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
-    func reload() {
+    func userRequestsReload() {
         //for simulator
-        needsDataUpdate = true
+//        needsDataUpdate = true
         ignoreLocationUpdates = false
-        if !lockLocation {
-            coreManager.startUpdatingLocation()
-            
-            // location updates trigger nothing in simulator, so call on a predefined location:
-            #if targetEnvironment(simulator)
-            fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
-            let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-            fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
-            #endif
+        
+        if lockLocation {
+            // if a custom location is explicitly set, get JSON
+            fetchMonthsJSONDataForCurrentLocation()
+        } else {
+            // else, we check for our current location as well
+            reload()
         }
     }
     
+    private func reload() {
+        coreManager.startUpdatingLocation()
+        
+        // location updates trigger nothing in simulator, so call on a predefined location:
+        #if targetEnvironment(simulator)
+//        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
+//        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+//        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+        fetchMonthsJSONDataForCurrentLocation()
+        #endif
+    }
+    
     @objc func userCanceledDataRequest() {
-        needsDataUpdate = false
+//        needsDataUpdate = false
         SwiftSpinner.hide()
     }
     
@@ -995,11 +1031,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             // then test if we have have data for next month before saving
             let daysTilNextMonth = daysInMonth(self.currentMonth!) + 1 - self.currentDay!
             let nextMonthTuple = getFutureDateTuple(daysToSkip: daysTilNextMonth)
-            if let _ = yearTimes[nextMonthTuple.year]?[nextMonthTuple.month + 1] {
-                return true
+            if let _ = yearTimes[nextMonthTuple.year]?[nextMonthTuple.month] {
+                print(" - no")
+                return false
             }
         }
-        return false
+        print(" - yes")
+        return true
     }
     
     

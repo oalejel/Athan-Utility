@@ -165,17 +165,19 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         //show what's new if never presented before!
-        #warning("change mode from debug to majorVersion")
-        if WhatsNew.shouldPresent(with: .debug) {
+//        #warning("change mode from debug to majorVersion")
+        if WhatsNew.shouldPresent(with: .majorVersion) {
             let title1 = NSLocalizedString("Offline Storage", comment: "")
             let title2 = NSLocalizedString("15 minute reminders", comment: "")
             let title3 = NSLocalizedString("Today Extension", comment: "")
             let title4 = NSLocalizedString("Athan clock face", comment: "")
+            let title5 = NSLocalizedString("Qibla", comment: "")
             
             let subtitle1 = NSLocalizedString("Athan Utility stores months of athan data for offline use.", comment: "")
             let subtitle2 = NSLocalizedString("Get reminded before the next athan takes place. Configurable in app preferences.", comment: "")
             let subtitle3 = NSLocalizedString("Check current and upcoming salah times with the Notification Center widget.", comment: "")
             let subtitle4 = NSLocalizedString("A new way to visualize salah times throughout the day.", comment: "")
+            // no subtitle for qibla
             
             let whatsNewVC = WhatsNewViewController(items: [
                 WhatsNewItem.text(title: title1,
@@ -188,12 +190,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
                                   subtitle: subtitle3),
                                   //image: UIImage(named: "widget_icon") ?? UIImage()),
                 WhatsNewItem.text(title: title4,
-                                  subtitle: subtitle4)
-                                  //image: UIImage(named: "clock_icon") ?? UIImage()),
+                                  subtitle: subtitle4),
+                WhatsNewItem.text(title: title5,
+                                  subtitle: "")
             ])
-            
-            #warning("change mode from debug to majorVersion")
-            whatsNewVC.presentationOption = .debug
+//            #warning("change mode from debug to majorVersion")
+            whatsNewVC.presentationOption = .majorVersion
             whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "Paix à Vous", "Selamünaleyküm", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Friede Sei Mit Dir"]
             whatsNewVC.titleColor = .white
             whatsNewVC.buttonBackgroundColor = .darkerGray
@@ -311,7 +313,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     func loadingHandler() {
         let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
         SwiftSpinner.show(loadingString, animated: true)
-        manager.reload()
+        manager.userRequestsReload()
     }
     
     // tells vc to be ready to show spinner when prayer manager is initialized

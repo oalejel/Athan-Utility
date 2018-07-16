@@ -36,15 +36,17 @@
 // Example: Time for Fajr [2:45 pm]. Please open...
 "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "%1$@ zamanı [%2$@]. Bildirimleri almaya devam etmek için lütfen Athan Utility'yi tekrar açın.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "%2$@ %1$@ zamani [%3$@]";
+// NOTE: change in conjugation for different locations means that separating the location, %2$@, will fit all cases
+"Time for %1$@ in %2$@ [%3$@]" = "%1$@ zamani : %2$@ [%3$@]";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"15m left til %1$@ in %2$@! [%3$@]" = "%2$@ %1$@ kadar 15 dakika kaldı! [%3$@]";
+"15m left til %1$@ in %2$@! [%3$@]" = "%1$@ kadar 15 dakika kaldı : %2$@ [%3$@]";
 
 // "What's New" listed feature titles and subtitles
 "Offline Storage" = "Çevrimdışı Depolama";
 "15 minute reminders" = "15 dakika hatırlatıcılar";
-"Today Extension" = "Bugün Uzatma";
+"Today Extension" = "\"Today Extensions\"";
 "Athan clock face" = "Athan saat yüzü";
+"Qibla" = "kıble";
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility çevrimdışı kullanım için athan verilerini aylar.";
 

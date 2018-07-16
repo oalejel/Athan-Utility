@@ -17,12 +17,12 @@
 "M_letter" = "M";
 "I_letter" = "I";
 
-"Fajr" = "Fajr";
+"Fajr" = "Fajjr";
 "Shurooq" = "Shurooq";
-"Thuhr" = "Dhuhr";
+"Thuhr" = "Dhouhr";
 "Asr" = "Asr";
 "Maghrib" = "Maghrib";
-"Isha" = "Isha";
+"Isha" = "Icha";
 
 "Loading Prayer Data" = "Chargement des données de prière";
 
@@ -44,8 +44,9 @@
 // "What's New" listed feature titles and subtitles
 "Offline Storage" = "Stockage hors ligne";
 "15 minute reminders" = "Rappels de 15 minutes";
-"Today Extension" = "Aujourd'hui Extension";
-"Athan clock face" = "Visage de l'horloge Athan";
+"Today Extension" = "Widget D'aujourd'hui";
+"Athan clock face" = "Horloge du Adhan";
+"Qibla" = "Qibla"; // same in french
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility stocke des mois de données athan pour une utilisation hors ligne.";
 

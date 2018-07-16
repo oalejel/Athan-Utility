@@ -25,7 +25,6 @@
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
-		3D12B24920F1DD230060D78D /* Athan_UtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D327CBD1C3564900083871B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D3DD5DC1C2B1F7200FEBB3D /* Assets.xcassets */; };
@@ -48,6 +47,8 @@
 		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
 		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
 		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
+		3D7BD11F20FC1B5D00A0C3FA /* FastlaneTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA271B420F8898E00099038 /* FastlaneTestCase.swift */; };
+		3D7BD12020FC1B6A00A0C3FA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DA7C613201D504C0001600D /* Info.plist */; };
 		3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */; };
 		3D8049921C34A71900A2AC1F /* PrayerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8049911C34A71900A2AC1F /* PrayerRow.swift */; };
@@ -63,6 +64,7 @@
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3DA271B720F889AC00099038 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA271B620F889AC00099038 /* SnapshotHelper.swift */; };
 		3DAC704C1C2C43C2006E05CF /* WatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704B1C2C43C2006E05CF /* WatchDataManager.swift */; };
 		3DAC704E1C2C44D4006E05CF /* WatchDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC704D1C2C44D4006E05CF /* WatchDataDelegate.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
@@ -236,6 +238,8 @@
 		3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INNextPrayerIntent.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
+		3DA271B420F8898E00099038 /* FastlaneTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastlaneTestCase.swift; sourceTree = "<group>"; };
+		3DA271B620F889AC00099038 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		3DA7C60F201D504C0001600D /* Athan UtilityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Athan UtilityTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athan_UtilityTests.swift; sourceTree = "<group>"; };
 		3DA7C613201D504C0001600D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -512,6 +516,8 @@
 			isa = PBXGroup;
 			children = (
 				3DA7C611201D504C0001600D /* Athan_UtilityTests.swift */,
+				3DA271B420F8898E00099038 /* FastlaneTestCase.swift */,
+				3DA271B620F889AC00099038 /* SnapshotHelper.swift */,
 				3DA7C613201D504C0001600D /* Info.plist */,
 			);
 			path = "Athan UtilityTests";
@@ -879,6 +885,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D7BD12020FC1B6A00A0C3FA /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,9 +1117,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DFE11582097E03B00D46A1F /* Global.swift in Sources */,
-				3D12B24920F1DD230060D78D /* Athan_UtilityTests.swift in Sources */,
+				3D7BD11F20FC1B5D00A0C3FA /* FastlaneTestCase.swift in Sources */,
 				3DFE11562096637A00D46A1F /* PrayerManager.swift in Sources */,
 				3DFE11572096647100D46A1F /* PrayerManagerDelegate.swift in Sources */,
+				3DA271B720F889AC00099038 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

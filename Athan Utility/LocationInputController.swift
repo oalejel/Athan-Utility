@@ -38,7 +38,7 @@ class LocationInputController: UIViewController {
     
     // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
-        Global.manager.needsDataUpdate = true //WARNING: should you set it like this!!!???
+//        Global.manager.needsDataUpdate = true //WARNING: should you set it like this!!!???
         let locationString = inputTextField.text
         Global.manager.fetchJSONData(forLocation: locationString!, dateTuple: nil, completion: { (successfulFetch) in
             

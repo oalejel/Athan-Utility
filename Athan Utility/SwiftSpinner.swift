@@ -60,7 +60,9 @@ open class SwiftSpinner: UIView {
         cancelButton = SqueezeButton(frame: CGRect(x: 0, y: 0, width: f.size.width / 3, height: f.size.width / 7))
         cancelButton.layer.cornerRadius = 10
         cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
-        cancelButton.setTitle("Cancel", for: UIControlState.normal)
+        let localizedCancelString = NSLocalizedString("Cancel", comment: "")
+        cancelButton.setTitle(localizedCancelString, for: UIControlState.normal)
+        cancelButton.accessibilityLabel = "cancel" //localizedCancelString // make this localized later
         cancelButton.addTarget(Global.manager, action: #selector(Global.manager.userCanceledDataRequest), for: .touchUpInside)
         cancelButton.setTitleColor(UIColor.black, for: UIControlState())
         cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)

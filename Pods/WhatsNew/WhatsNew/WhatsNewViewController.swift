@@ -128,6 +128,8 @@ public class WhatsNewViewController: UIViewController {
         continueButton?.setTitleColor(buttonTextColor, for: .normal)
         continueButton?.titleLabel?.font = buttonFont
         continueButton?.backgroundColor = buttonBackgroundColor
+        continueButton?.accessibilityLabel = "Continue"
+        continueButton?.accessibilityHint = "Continue from what's new view"
 
         setUp(with: items)
 

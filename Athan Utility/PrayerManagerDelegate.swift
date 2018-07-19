@@ -16,7 +16,7 @@ import Foundation
 @objc protocol PrayerManagerDelegate {
     var manager: PrayerManager! {get set}
     func dataReady(manager: PrayerManager)
-    func updatePrayer(manager: PrayerManager)
+    func updateCurrentPrayer(manager: PrayerManager)
     func setShouldShowLoader()
     func fifteenMinutesLeft()
     func newMeridiem()

@@ -7,9 +7,6 @@
 */
 
 
-"Cancel" = "إلغاء";
-
-
 "F_letter" = "ف";
 "S_letter" = "ش";
 "T_letter" = "ظ";
@@ -24,9 +21,24 @@
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";
 
+"Cancel" = "إلغاء";
+"Alarms" = "تنبيهات";
+"Location Search" = "بحث الموقع";
+
+// alarm settings
+"Normal & 15m" = "طبيعي و ١٥ دقيقة";
+"Normal Reminder" = "تذكير طبيعي";
+"No Reminders" = "لا تذكير";
+
+// location settings
+"Try Location" = "جرب الموقع";
+"Location Search" = "بحث الموقع";
+"Locality, State, Country" = "محلية ، ولاية ، بلد";
+"Try again" = "كرر";
+
 "Loading Prayer Data" = "تحميل بيانات الصلاة";
 
-"Offset: %0.2f˚" = "%0.2f :عوض";
+"Offset: %@˚" = "%@˚ :عوض";
 
 "OK" = "تام";
 "Continue" = "استمر"; // consider trying واصل

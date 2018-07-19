@@ -357,7 +357,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 (data: Data?, response: URLResponse?, error: Error?) -> Void in
                 if error != nil {
 //                    self.needsDataUpdate = true
-                    #warning("might want to figure out an appropriate response")
+//                    #warning("might want to figure out an appropriate response")
                 }
                 
                 if let sureData = data {
@@ -915,7 +915,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     @objc func newPrayer() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
-        delegate.updatePrayer(manager: self)
+        delegate.updateCurrentPrayer(manager: self)
     }
     
     func currentPrayerTime() -> Date? {

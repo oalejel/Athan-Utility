@@ -70,6 +70,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // setup accessibility on buttons and elements of screen
+//        #warning("should eventually make this based on a localized string")
+        notificationsButton.accessibilityLabel = "notification settings"
+        infoButton.accessibilityLabel = "info"
+        refreshButton.accessibilityLabel = "refresh"
+        qiblaButton.accessibilityLabel = "qibla"
+        locationButton.accessibilityLabel = "location"
+        
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.black
         
@@ -243,27 +251,16 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     //specific to individual prayers
-    func updatePrayer(manager: PrayerManager) {
-        //a check if its NOT a good time to update
-        if let x = lastUpdate {
-            if Date().timeIntervalSince(x) < 360 {
-                if locationButton.titleLabel?.text == manager.locationString {
-                    return
-                }
-            }
-        }
+    func updateCurrentPrayer(manager: PrayerManager) {
         
         softResetPrayerVisuals()
-//        if !Global.darkTheme {
-//            newGradientLayer(animated: true)
-//        }
         
         // keep track of last time we updated our visuals
         lastUpdate = Date()
     }
     
     /// readjust only visual things that need changing within the same day. Does not include reloading table data.
-    func softResetPrayerVisuals(_ fifteenMinutesLeft: Bool = false) {
+    func softResetPrayerVisuals(fifteenMinutesLeft: Bool = false) {
         if manager.dataExists {
             refreshProgressBar()
             clock.refreshPrayerBubbles(manager.currentPrayer)
@@ -322,7 +319,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     }
     
     func fifteenMinutesLeft() {
-        softResetPrayerVisuals()
+        softResetPrayerVisuals(fifteenMinutesLeft: true)
         
         let pIndex = manager.currentPrayer.rawValue
         if pIndex != 6 {

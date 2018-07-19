@@ -7,8 +7,6 @@
 */
 
 
-"Cancel" = "Cancel";
-
 // single letter for fajr, shurooq, etc
 "F_letter" = "F";
 "S_letter" = "S";
@@ -24,9 +22,24 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
+"Cancel" = "Cancel";
+"Alarms" = "Alarms";
+"Location Search" = "Location Search";
+
+// alarm settings
+"Normal & 15m" = "Normal & 15m";
+"Normal Reminder" = "Normal Reminder";
+"No Reminders" = "No Reminders";
+
+// location settings
+"Try Location" = "Try Location";
+"Location Search" = "Location Search";
+"Locality, State, Country" = "Locality, State, Country";
+"Try again" = "Try again";
+
 "Loading Prayer Data" = "Loading Prayer Data";
 
-"Offset: %0.2f˚" = "Offset: %0.2f˚";
+"Offset: %@˚" = "Offset: %@˚";
 
 "OK" = "OK";
 "Continue" = "Continue";

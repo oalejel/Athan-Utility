@@ -7,8 +7,6 @@
 */
 
 
-"Cancel" = "Cancel";
-
 // single letter for fajr, shurooq, etc
 "F_letter" = "F";
 "S_letter" = "S";
@@ -24,9 +22,25 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
+
+"Cancel" = "İptal etmek";
+"Alarms" = "Alarm"; // for some reason, it seems that the plural has no effect on ending
+"Location Search" = "Yer Arama";
+
+// alarm settings
+"Normal & 15m" = "Tipik ve 15 dakika";
+"Normal Reminder" = "Tipik hatırlatıcılar";
+"No Reminders" = "Hatırlatıcı yok";
+
+// location settings
+"Try Location" = "Konumu dene";
+"Location Search" = "Yer Arama";
+"Locality, State, Country" = "Yerellik, Devlet, Ülke";
+"Try again" = "Tekrar deneyin";
+
 "Loading Prayer Data" = "Namaz Verilerini Yükleme";
 
-"Offset: %0.2f˚" = "açı: %0.2f˚";
+"Offset: %@˚" = "Açı: %@˚";
 
 "OK" = "Tamam";
 "Continue" = "Devam Et";

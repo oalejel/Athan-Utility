@@ -144,7 +144,16 @@ class ElapsedView: UIView {
         let hoursPassed = Int(timeElapsed / 3600)
         let minutesPassed = Int(timeElapsed / 60) % 60
         let secondsPassed = Int(timeElapsed) % 60
-        elapsedLabel.text = String(format: "%02d:%02d:%02d", arguments: [hoursPassed, minutesPassed, secondsPassed])
+        
+        let numFormatter = NumberFormatter()
+        numFormatter.minimumIntegerDigits = 2
+        
+        let localizedHoursPassed = numFormatter.string(from: NSNumber(value: hoursPassed)) ?? "00"
+        let localizedMinutesPassed = numFormatter.string(from: NSNumber(value: minutesPassed)) ?? "00"
+        let localizedSecondsPassed = numFormatter.string(from: NSNumber(value: secondsPassed)) ?? "00"
+        let timePassedString = "\(localizedHoursPassed):\(localizedMinutesPassed):\(localizedSecondsPassed)"
+        elapsedLabel.text = timePassedString
+        //String(format: "%02d:%02d:%02d", arguments: [hoursPassed, minutesPassed, secondsPassed])
         
         let totalSecondsLeft = interval - timeElapsed
         
@@ -156,6 +165,13 @@ class ElapsedView: UIView {
         let hoursLeft = Int(totalSecondsLeft / 3600)
         let minutesLeft = Int(totalSecondsLeft / 60) % 60
         let secondsLeft = (Int(totalSecondsLeft) % 60) + 1
-        timeLeftLabel.text = String(format: "%02d:%02d:%02d", arguments: [hoursLeft, minutesLeft, secondsLeft])
+        
+        let localizedHoursLeft = numFormatter.string(from: NSNumber(value: hoursLeft)) ?? "00"
+        let localizedMinutesLeft = numFormatter.string(from: NSNumber(value: minutesLeft)) ?? "00"
+        let localizedSecondsLeft = numFormatter.string(from: NSNumber(value: secondsLeft)) ?? "00"
+        let timeLeftString = "\(localizedHoursLeft):\(localizedMinutesLeft):\(localizedSecondsLeft)"
+        timeLeftLabel.text = timeLeftString
+        
+        //String(format: "%02d:%02d:%02d", arguments: [hoursLeft, minutesLeft, secondsLeft])
     }
 }

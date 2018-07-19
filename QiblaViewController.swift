@@ -44,10 +44,11 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         northNeedle.path = northPath.cgPath
         
 //        if Global.darkTheme {
-            northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
-            dismissButton.backgroundColor = .darkerGray
-            dismissButton.titleLabel?.textColor = .white
-            view.backgroundColor = .black
+        northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
+        dismissButton.backgroundColor = .darkerGray
+        dismissButton.titleLabel?.textColor = .white
+        dismissButton.accessibilityLabel = "done"
+        view.backgroundColor = .black
 //        } else {
 //            northNeedle.fillColor = UIColor.red.cgColor
 //            dismissButton.backgroundColor = .white
@@ -64,8 +65,11 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         
         needleLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        let localizedAngleString = NSLocalizedString("Offset: %0.2f˚", comment: "")
-        angleLabel.text = String(format: localizedAngleString, qiblaOffset ?? 0)
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumFractionDigits = 2
+        let localizedQiblaString = numberFormatter.string(from: qiblaOffset! as NSNumber)
+        let localizedAngleString = NSLocalizedString("Offset: %@˚", comment: "")
+        angleLabel.text = String(format: localizedAngleString, localizedQiblaString ?? "none")
     }
     
     //get heading for qibla

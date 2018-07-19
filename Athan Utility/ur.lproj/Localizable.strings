@@ -7,9 +7,6 @@
 */
 
 
-"Cancel" = "منسوخ";
-
-
 "F_letter" = "ف";
 "S_letter" = "ش";
 "T_letter" = "ظ";
@@ -24,9 +21,24 @@
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";
 
+"Cancel" = "منسوخ";
+"Alarms" = "الارم";
+"Location Search" = "مقام کی تلاش";
+
+// alarm settings
+"Normal & 15m" = "عمومی اور 15 منٹ";
+"Normal Reminder" = "عمومی یاد دہانی";
+"No Reminders" = "کوئی یاد دہانی نہیں";
+
+// location settings
+"Try Location" = "مقام کی کوشش کریں";
+"Location Search" = "مقام کی تلاش";
+"Locality, State, Country" = "مقامی، ریاست، ملک";
+"Try again" = "دوبارہ کوشش کریں";
+
 "Loading Prayer Data" = "نماز ڈیٹا لوڈ کر رہا ہے";
 
-"Offset: %0.2f˚" = "˚%0.2f :زاویہ";
+"Offset: %@˚" = "%@˚ :زاویہ";
 
 "OK" = "ٹھیک ہے";
 "Continue" = "جاری رہے";

@@ -23,7 +23,21 @@ class LocationInputController: UIViewController {
         // Do any additional setup after loading the view.
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(LocationInputController.cancelPressed))
         navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray
-        navigationController?.navigationBar.topItem!.title = "Location Search"
+        navigationController?.navigationBar.topItem!.title = NSLocalizedString("Location Search", comment: "")
+//        navigationController?.navigationBar.topItem!.accessibilityLabel = "Location Search"
+        
+        // localize the try button
+        let localizedTry = NSLocalizedString("Try Location", comment: "")
+        tryButton.setTitle(localizedTry, for: .normal)
+//        tryButton.accessibilityLabel = "Try Location"
+        
+        // localize the text field
+        inputTextField.placeholder = NSLocalizedString("Locality, State, Country", comment: "")
+//        inputTextField.accessibilityLabel = "Locality, State, Country"
+        
+        // localized failure label
+        failedLabel.text = NSLocalizedString("Try again", comment: "")
+//        failedLabel.accessibilityLabel = "Try again"
         
         activityIndicator.stopAnimating()
         

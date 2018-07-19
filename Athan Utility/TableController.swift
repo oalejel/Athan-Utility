@@ -41,44 +41,68 @@ class TableController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let c = tableView.dequeueReusableCell(withIdentifier: "cell") as! PrayerCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! PrayerCell
         if times.count == 6 {
             let p = PrayerType(rawValue: indexPath.row)!
             let df = Global.dateFormatter
-            c.titleLabel.text = p.localizedString()
+            cell.titleLabel.text = p.localizedString()
             
             if bounds.size.height < 568 {
                 print(bounds.size.height)
-                c.titleLabel.font = c.titleLabel.font.withSize(12)
-                c.timeLabel.font = c.timeLabel.font.withSize(12)
+                cell.titleLabel.font = cell.titleLabel.font.withSize(12)
+                cell.timeLabel.font = cell.timeLabel.font.withSize(12)
             }
 
-            let date = times[p.rawValue]
-            df.dateFormat = "hh:mm a"
-            c.timeLabel.text = df.string(from: date!)
-            if (c.timeLabel.text?.count)! < 7 {
-                print("ALERT: shortened time detected for cells")
-                //do it again if we have an error
-                df.dateFormat = "hh:mm a"
-                c.timeLabel.text = df.string(from: date!)
+            if let prayerDate = times[p.rawValue] {
+                df.timeStyle = .short
+                df.dateStyle = .none
+                
+                var timeString = df.string(from: prayerDate).uppercased()
+                
+                if let meridEnd = timeString.lastIndex(where: { (char) -> Bool in
+                    return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
+                }) {
+                    if let meridStart = timeString.firstIndex(where: { (char) -> Bool in
+                        return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
+                    }) {
+                        if meridEnd == timeString.endIndex {
+                            // we know meridiem is at right end of string, so put space before meridStart
+                            timeString.insert(" ", at: meridStart)
+                        } else {
+                            // else, we know meridiem is likely on left side of string
+                            timeString.insert(" ", at: timeString.index(meridEnd, offsetBy: 1))
+                        }
+                    }
+                }
+                
+                cell.timeLabel.text = timeString
             }
+//            df.dateFormat = "hh:mm a"
+//            c.timeLabel.text = df.string(from: date!)
+//            if (c.timeLabel.text?.count)! < 7 {
+//                print("ALERT: shortened time detected for cells")
+//                //do it again if we have an error
+//                df.dateFormat = "hh:mm a"
+//                c.timeLabel.text = df.string(from: date!)
+//            }
+            
             
             if highlightIndex == indexPath.row {
-                c.titleLabel.textColor = highlightColor
-                c.timeLabel.textColor = highlightColor
+                cell.titleLabel.textColor = highlightColor
+                cell.timeLabel.textColor = highlightColor
             } else {
-                c.timeLabel.textColor = UIColor.white
-                c.titleLabel.textColor = UIColor.white
+                cell.timeLabel.textColor = UIColor.white
+                cell.titleLabel.textColor = UIColor.white
             }
         } else {
             if indexPath.row < 6 {
                 let p = PrayerType(rawValue: indexPath.row)!
-                c.titleLabel.text = p.stringValue()
-                c.timeLabel.text = "0:00"
+                cell.titleLabel.text = p.stringValue()
+                cell.timeLabel.text = "0:00"
             }
         }
         
-        return c
+        return cell
     }
     
     func reloadCellsWithTimes(_ t: [Int : Date]) {

@@ -7,9 +7,6 @@
 */
 
 
-"Cancel" = "Annuler";
-
-
 "F_letter" = "F";
 "S_letter" = "S";
 "T_letter" = "D";
@@ -24,9 +21,24 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Icha";
 
+"Cancel" = "Annuler";
+"Alarms" = "Alarmes";
+"Location Search" = "Recherche de Lieu";
+
+// alarm settings
+"Normal & 15m" = "Normal et 15m";
+"Normal Reminder" = "Rappel normal";
+"No Reminders" = "No rappels";
+
+// location settings
+"Try Location" = "Essayez l'emplacement";
+"Location Search" = "Recherche de lieu";
+"Locality, State, Country" = "Localité, État, Pays";
+"Try again" = "Réessayer";
+
 "Loading Prayer Data" = "Chargement des données de prière";
 
-"Offset: %0.2f˚" = "Décalage: %0.2f˚";
+"Offset: %@˚" = "Décalage: %@˚";
 
 "OK" = "D'accord";
 "Continue" = "Continuer";

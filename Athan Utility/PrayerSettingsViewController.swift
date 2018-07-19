@@ -27,7 +27,9 @@ class PrayerSettingsViewController: UITableViewController {
         tableView.contentInset = UIEdgeInsets(top: tableView.rowHeight, left: 0, bottom: 0, right: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(PrayerSettingsViewController.donePressed))
-        navigationController?.navigationBar.topItem!.title = "Alarms"
+        navigationItem.rightBarButtonItem?.accessibilityLabel = "done"
+        navigationController?.navigationBar.topItem!.title = NSLocalizedString("Alarms", comment: "")
+        navigationController?.navigationBar.topItem!.accessibilityLabel = "Alarms"
         
         navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray
         

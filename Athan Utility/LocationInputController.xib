@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +26,7 @@
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Locality, State, Country" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7sK-WR-9OP">
                     <rect key="frame" x="16" y="261.5" width="343" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" priority="999" constant="352" id="YV1-Uu-ret"/>
+                        <constraint firstAttribute="width" priority="999" constant="343" id="YV1-Uu-ret"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="alert"/>
@@ -55,14 +55,14 @@
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="7sK-WR-9OP" firstAttribute="top" secondItem="RNj-Kj-g4d" secondAttribute="bottom" constant="8" id="6mk-bR-GKN"/>
+                <constraint firstItem="7sK-WR-9OP" firstAttribute="top" secondItem="RNj-Kj-g4d" secondAttribute="bottom" constant="41.5" id="6mk-bR-GKN"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ABX-NF-75n"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="CwO-CF-DOx"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-57" id="HJH-kY-eke"/>
                 <constraint firstItem="ssQ-KG-SeA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Tp4-ZD-y4G"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="width" secondItem="7sK-WR-9OP" secondAttribute="width" constant="-141" id="Wss-Hq-fdV"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="top" secondItem="7sK-WR-9OP" secondAttribute="bottom" constant="15" id="dJe-Xb-Kod"/>
-                <constraint firstItem="RNj-Kj-g4d" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jjd-SH-zi1"/>
+                <constraint firstItem="RNj-Kj-g4d" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="113" id="jjd-SH-zi1"/>
                 <constraint firstItem="ssQ-KG-SeA" firstAttribute="top" secondItem="FWi-g2-5d3" secondAttribute="bottom" constant="14" id="pa0-re-6fU"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="wqh-Zs-yer"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7sK-WR-9OP" secondAttribute="trailing" constant="16" id="zKw-ZJ-aVi"/>

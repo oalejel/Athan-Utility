@@ -9,35 +9,35 @@
 import UIKit
 import NotificationCenter
 
-enum PrayerType: Int {
-    case fajr, shurooq, thuhr, asr, maghrib, isha
-    func stringValue() -> String {
-        switch self {
-        case .fajr:
-            return "Fajr"
-        case .shurooq:
-            return "Shurooq"
-        case .thuhr:
-            return "Thuhr"
-        case .asr:
-            return "Asr"
-        case .maghrib:
-            return "Maghrib"
-        case .isha:
-            return "Isha"
-        }
-    }
-    
-    //incrementors
-    func next() -> PrayerType {
-        if self == .isha {return .fajr}
-        return PrayerType(rawValue: self.rawValue + 1)!
-    }
-    func previous() -> PrayerType {
-        if self == .fajr {return .isha}
-        return PrayerType(rawValue: self.rawValue - 1)!
-    }
-}
+//enum PrayerType: Int {
+//    case fajr, shurooq, thuhr, asr, maghrib, isha
+//    func stringValue() -> String {
+//        switch self {
+//        case .fajr:
+//            return "Fajr"
+//        case .shurooq:
+//            return "Shurooq"
+//        case .thuhr:
+//            return "Thuhr"
+//        case .asr:
+//            return "Asr"
+//        case .maghrib:
+//            return "Maghrib"
+//        case .isha:
+//            return "Isha"
+//        }
+//    }
+//
+//    //incrementors
+//    func next() -> PrayerType {
+//        if self == .isha {return .fajr}
+//        return PrayerType(rawValue: self.rawValue + 1)!
+//    }
+//    func previous() -> PrayerType {
+//        if self == .fajr {return .isha}
+//        return PrayerType(rawValue: self.rawValue - 1)!
+//    }
+//}
 
 class TodayViewController: UIViewController, NCWidgetProviding {
     
@@ -107,7 +107,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         //no need for "true"
         
         imageView.image = imageForPrayer(currentPrayer)
-        currentPrayerLabel.text = currentPrayer.stringValue()
+        currentPrayerLabel.text = currentPrayer.localizedString()
         
         let nextPrayer = currentPrayer.next()
         dateFormatter.dateFormat = "hh:mm a"
@@ -328,6 +328,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             imageName = "sunhorizon"
         case .isha:
             imageName = "moon"
+        default:
+            imageName = ""
         }
         
         return UIImage(named: imageName)!

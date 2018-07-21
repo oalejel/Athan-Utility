@@ -35,6 +35,8 @@ class LocationInputController: UIViewController {
         inputTextField.placeholder = NSLocalizedString("Locality, State, Country", comment: "")
 //        inputTextField.accessibilityLabel = "Locality, State, Country"
         
+        self.failedLabel.alpha = 0
+        
         // localized failure label
         failedLabel.text = NSLocalizedString("Try again", comment: "")
 //        failedLabel.accessibilityLabel = "Try again"
@@ -53,7 +55,7 @@ class LocationInputController: UIViewController {
     // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
 //        Global.manager.needsDataUpdate = true //WARNING: should you set it like this!!!???
-        let locationString = inputTextField.text
+        let locationString = inputTextField.text?.capitalized
         Global.manager.fetchJSONData(forLocation: locationString!, dateTuple: nil, completion: { (successfulFetch) in
             
             if successfulFetch  {

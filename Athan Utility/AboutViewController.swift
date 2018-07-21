@@ -16,7 +16,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         super.viewDidLoad()
         // set the bar button item in the top right to dismiss
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(AboutViewController.donePressed))
-        navigationController?.navigationBar.topItem!.title = "About"
+        navigationController?.navigationBar.topItem!.title = NSLocalizedString("About", comment: "")
         
 //        if !Global.darkTheme {
         navigationItem.rightBarButtonItem!.tintColor = UIColor.lightGray

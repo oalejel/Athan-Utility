@@ -22,20 +22,25 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
-
 "Cancel" = "İptal etmek";
 "Alarms" = "Alarm"; // for some reason, it seems that the plural has no effect on ending
 "Location Search" = "Yer Arama";
 
+// "About" used in the context of "About the app"
+"About" = "About";
+
 // alarm settings
 "Normal & 15m" = "Tipik ve 15 dakika";
-"Normal Reminder" = "Tipik hatırlatıcılar";
-"No Reminders" = "Hatırlatıcı yok";
+"Normal Reminder" = "Tipik hatırlatma";
+"No Reminders" = "Hatırlatma yok";
+
+"15 minute reminder" = "15 dakika hatırlatma";
+"Sounds" = "Sesler";
 
 // location settings
 "Try Location" = "Konumu dene";
 "Location Search" = "Yer Arama";
-"Locality, State, Country" = "Yerellik, Devlet, Ülke";
+"Locality, State, Country" = "Yerellik, Devlet, Ülke (sadece ingilizce)";
 "Try again" = "Tekrar deneyin";
 
 "Loading Prayer Data" = "Namaz Verilerini Yükleme";

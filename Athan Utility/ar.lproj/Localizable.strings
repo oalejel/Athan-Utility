@@ -25,20 +25,26 @@
 "Alarms" = "تنبيهات";
 "Location Search" = "بحث الموقع";
 
+// "About" used in the context of "About the app"
+"About" = "About";
+
 // alarm settings
 "Normal & 15m" = "طبيعي و ١٥ دقيقة";
 "Normal Reminder" = "تذكير طبيعي";
 "No Reminders" = "لا تذكير";
 
+"15 minute reminder" = "تذكير ١٥ دقيقة";
+"Sounds" = "اصوات";
+
 // location settings
 "Try Location" = "جرب الموقع";
 "Location Search" = "بحث الموقع";
-"Locality, State, Country" = "محلية ، ولاية ، بلد";
+"Locality, State, Country" = "(الانجليزية فقط) محلية ، ولاية ، بلد";
 "Try again" = "كرر";
 
 "Loading Prayer Data" = "تحميل بيانات الصلاة";
 
-"Offset: %@˚" = "%@˚ :عوض";
+"Offset: %@˚" = "%@˚";
 
 "OK" = "تام";
 "Continue" = "استمر"; // consider trying واصل

@@ -25,10 +25,16 @@
 "Alarms" = "Alarmes";
 "Location Search" = "Recherche de Lieu";
 
+// "About" used in the context of "About the app"
+"About" = "About";
+
 // alarm settings
 "Normal & 15m" = "Normal et 15m";
 "Normal Reminder" = "Rappel normal";
 "No Reminders" = "No rappels";
+
+"15 minute reminder" = "Rappel de 15 minutes";
+"Sounds" = "Sons";
 
 // location settings
 "Try Location" = "Essayez l'emplacement";

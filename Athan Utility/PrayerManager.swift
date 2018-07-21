@@ -34,43 +34,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-enum PrayerType: Int {
-    case fajr, shurooq, thuhr, asr, maghrib, isha, none
-    func stringValue() -> String {
-        switch self {
-        case .fajr:
-            return "Fajr"
-        case .shurooq:
-            return "Shurooq"
-        case .thuhr:
-            return "Thuhr"
-        case .asr:
-            return "Asr"
-        case .maghrib:
-            return "Maghrib"
-        case .isha:
-            return "Isha"
-        case .none:
-            return "This should not be visible"
-        }
-    }
-    
-    //incrementors
-    func next() -> PrayerType {
-        if self == .isha {return .fajr}
-        if self == .none {return .fajr}//none can happen when it is a new day
-        return PrayerType(rawValue: self.rawValue + 1)!
-    }
-    func previous() -> PrayerType {
-        if self == .fajr {return .isha}
-        return PrayerType(rawValue: self.rawValue - 1)!
-    }
-    
-    func localizedString() -> String {
-        return NSLocalizedString(self.stringValue(), comment: "")
-    }
-}
-
 enum AlarmSetting: Int {
     case all, noEarly, none
 }
@@ -653,15 +616,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
         }
         
-        center.getPendingNotificationRequests(completionHandler: { (reqs) in
-            print("last pending notification count: \(reqs.count)")
-        })
-        
-        center.removeAllPendingNotificationRequests()
-        
-        center.getDeliveredNotifications { (reqs) in
-            print("last delivered notification count: \(reqs.count)")
-        }
+//        center.getPendingNotificationRequests(completionHandler: { (reqs) in
+//            print("last pending notification count: \(reqs.count)")
+//        })
+//
+//        center.removeAllPendingNotificationRequests()
+//
+//        center.getDeliveredNotifications { (reqs) in
+//            print("last delivered notification count: \(reqs.count)")
+//        }
         
         for i in 0..<5 {
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: i == 4)
@@ -809,7 +772,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 if finalFlag {
                                     if p == .isha {
                                         let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
-                                        alertString = String(format: localizedAlertString, p.stringValue(), dateString)
+                                        alertString = String(format: localizedAlertString, p.localizedString(), dateString)
                                     }
                                 } else {
                                     var alternativeString: String?
@@ -824,9 +787,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     // in order to show "San Francisco" instead of "San Francisco, CA, USA"
                                     let localizedStandardNote = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
                                     if let alt = alternativeString {
-                                        alertString = String(format: localizedStandardNote, p.stringValue(), alt, dateString)
+                                        alertString = String(format: localizedStandardNote, p.localizedString(), alt, dateString)
                                     } else {
-                                        alertString = String(format: localizedStandardNote, p.stringValue(), locationString!, dateString)
+                                        alertString = String(format: localizedStandardNote, p.localizedString(), locationString!, dateString)
                                     }
                                 }
                                 
@@ -839,6 +802,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                                 let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
                                 let noteRequest = UNNotificationRequest(identifier: noteID, content: noteContent, trigger: noteTrigger)
+                                print(alertString)
                                 center.add(noteRequest) { print($0 ?? "", separator: "", terminator: "") }
                             }
                             
@@ -869,9 +833,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 
                                 let localized15mAlert = NSLocalizedString("15m left til %1$@ in %2$@! [%3$@]", comment: "")
                                 if let alt = alternativeString {
-                                    alertString = String(format: localized15mAlert, p.stringValue(), alt, dateString)
+                                    alertString = String(format: localized15mAlert, p.localizedString(), alt, dateString)
                                 } else {
-                                    alertString = String(format: localized15mAlert, p.stringValue(), locationString!, dateString)
+                                    alertString = String(format: localized15mAlert, p.localizedString(), locationString!, dateString)
                                 }
                                 
                                 preNoteContent.body = alertString
@@ -885,6 +849,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
                                 
 //                                DispatchQueue.main.async {
+                                print(alertString)
                                 center.add(preNoteRequest, withCompletionHandler: nil)
 //                                }
                             }

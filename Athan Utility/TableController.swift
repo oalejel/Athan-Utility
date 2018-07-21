@@ -97,7 +97,7 @@ class TableController: UITableViewController {
         } else {
             if indexPath.row < 6 {
                 let p = PrayerType(rawValue: indexPath.row)!
-                cell.titleLabel.text = p.stringValue()
+                cell.titleLabel.text = p.localizedString()
                 cell.timeLabel.text = "0:00"
             }
         }

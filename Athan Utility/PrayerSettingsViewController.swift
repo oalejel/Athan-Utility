@@ -59,18 +59,18 @@ class PrayerSettingsViewController: UITableViewController {
         var cellText = ""
         switch setting.alarmType {
         case .all:
-            cellText = "Normal & 15m"
+            cellText = NSLocalizedString("Normal & 15m", comment: "")
         case .noEarly:
-            cellText = "Normal Reminder"
+            cellText = NSLocalizedString("Normal Reminder", comment: "")
         case .none:
-            cellText = "No Reminders"
+            cellText = NSLocalizedString("No Reminders", comment: "") 
         }
         cell.rightLabel?.text = cellText
         
         if setting.soundEnabled {
-            cell.iconView.image = soundImage
+            cell.iconView.image = soundImage.imageFlippedForRightToLeftLayoutDirection()
         } else {
-            cell.iconView.image = noSoundImage
+            cell.iconView.image = noSoundImage.imageFlippedForRightToLeftLayoutDirection()
         }
         
         cell.iconView.contentMode = .center
@@ -115,7 +115,7 @@ class PrayerSettingsViewController: UITableViewController {
             //!! will it still exist in memory?? when this happens
             if self.changesMade {
                 //reset notifications with manager if we had changes
-                
+                //#warning("see what this is all about....")
             }
             
             //maybe save??

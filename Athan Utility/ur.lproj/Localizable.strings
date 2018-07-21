@@ -25,15 +25,21 @@
 "Alarms" = "الارم";
 "Location Search" = "مقام کی تلاش";
 
+// "About" used in the context of "About the app"
+"About" = "About";
+
 // alarm settings
-"Normal & 15m" = "عمومی اور 15 منٹ";
+"Normal & 15m" = "عمومی اور ١٥ منٹ";
 "Normal Reminder" = "عمومی یاد دہانی";
 "No Reminders" = "کوئی یاد دہانی نہیں";
+
+"15 minute reminder" = "١٥ منٹ یاد دہانی";
+"Sounds" = "آواز";
 
 // location settings
 "Try Location" = "مقام کی کوشش کریں";
 "Location Search" = "مقام کی تلاش";
-"Locality, State, Country" = "مقامی، ریاست، ملک";
+"Locality, State, Country" = "(صرف انگریزی) مقامی، ریاست، ملک";
 "Try again" = "دوبارہ کوشش کریں";
 
 "Loading Prayer Data" = "نماز ڈیٹا لوڈ کر رہا ہے";

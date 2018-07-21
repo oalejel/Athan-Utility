@@ -44,7 +44,7 @@ class Athan_Utility_UITests: XCTestCase {
         snapshot("01MainScreen")
         app.buttons["notification settings"].tap()
         snapshot("03NotificationsSettings")
-        app.navigationBars["Alarms"].buttons["done"].tap()
+        app.buttons["done"].tap()
         app.buttons["location"].tap()
         snapshot("04LocationControl")
         

@@ -56,7 +56,7 @@ class PrayerSettingController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.separatorColor = UIColor.black
         tableView.allowsSelection = false
-        navigationItem.title = p.stringValue()
+        navigationItem.title = p.localizedString()
         
         tableView.contentInset = UIEdgeInsets(top: 40, left: 0, bottom: 0, right: 0)
     }
@@ -72,7 +72,7 @@ class PrayerSettingController: UITableViewController {
     //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     //        switch section {
     //        case 0:
-    //            return "Standard Alarm"
+    //            return "Normal Reminder"
     //        case 1:
     //            return "15 minute reminder"
     //        default:
@@ -97,11 +97,11 @@ class PrayerSettingController: UITableViewController {
         
         switch indexPath.row {
         case 0:
-            c.textLabel?.text = "Standard Alarm"
+            c.textLabel?.text = NSLocalizedString("Normal Reminder", comment: "")
         case 1:
-            c.textLabel?.text = "15 minute reminder"
+            c.textLabel?.text = NSLocalizedString("15 minute reminder", comment: "")
         case 2:
-            c.textLabel?.text = "Sounds"
+            c.textLabel?.text = NSLocalizedString("Sounds", comment: "")
         default:
             break
         }

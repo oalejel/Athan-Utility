@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationInputController" customModule="Athan_Utility" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="ssQ-KG-SeA" id="r3l-Hb-wx9"/>
-                <outlet property="failedLabel" destination="RNj-Kj-g4d" id="imw-ce-vpJ"/>
+                <outlet property="failedLabel" destination="Lny-pk-jq9" id="1jV-ea-WMZ"/>
                 <outlet property="inputTextField" destination="7sK-WR-9OP" id="T9o-jK-n35"/>
                 <outlet property="tryButton" destination="FWi-g2-5d3" id="4FQ-Jt-40G"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -46,23 +46,23 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ssQ-KG-SeA">
                     <rect key="frame" x="177.5" y="362.5" width="20" height="20"/>
                 </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Try again" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNj-Kj-g4d">
-                    <rect key="frame" x="265" y="199" width="71" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try again" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lny-pk-jq9">
+                    <rect key="frame" x="152.5" y="205" width="70" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="7sK-WR-9OP" firstAttribute="top" secondItem="RNj-Kj-g4d" secondAttribute="bottom" constant="41.5" id="6mk-bR-GKN"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ABX-NF-75n"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="CwO-CF-DOx"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-57" id="HJH-kY-eke"/>
                 <constraint firstItem="ssQ-KG-SeA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Tp4-ZD-y4G"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="width" secondItem="7sK-WR-9OP" secondAttribute="width" constant="-141" id="Wss-Hq-fdV"/>
+                <constraint firstItem="Lny-pk-jq9" firstAttribute="centerX" secondItem="7sK-WR-9OP" secondAttribute="centerX" id="cu3-5U-jow"/>
                 <constraint firstItem="FWi-g2-5d3" firstAttribute="top" secondItem="7sK-WR-9OP" secondAttribute="bottom" constant="15" id="dJe-Xb-Kod"/>
-                <constraint firstItem="RNj-Kj-g4d" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="113" id="jjd-SH-zi1"/>
+                <constraint firstItem="7sK-WR-9OP" firstAttribute="top" secondItem="Lny-pk-jq9" secondAttribute="bottom" constant="35.5" id="kpJ-ua-doM"/>
                 <constraint firstItem="ssQ-KG-SeA" firstAttribute="top" secondItem="FWi-g2-5d3" secondAttribute="bottom" constant="14" id="pa0-re-6fU"/>
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="wqh-Zs-yer"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7sK-WR-9OP" secondAttribute="trailing" constant="16" id="zKw-ZJ-aVi"/>

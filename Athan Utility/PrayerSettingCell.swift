@@ -15,14 +15,12 @@ class PrayerSettingCell: UITableViewCell {
     @IBOutlet weak var rightLabel: UILabel!
     @IBOutlet weak var leftLabel: UILabel!
     
-    // may need these for future extra customized initialization
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//    }
+//     may need these for future extra customized initialization
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
+    }
+    
     
 }

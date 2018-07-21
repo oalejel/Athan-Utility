@@ -105,7 +105,6 @@ class ClockView: UIView {
     
     func adjustToSize(_ s: CGSize) {
         frame = CGRect(x: 0, y: 0, width: s.width, height: s.height)
-        
     }
     
     func addMinuteTicks() {
@@ -396,7 +395,7 @@ class ClockView: UIView {
     
     func placeBubble(_ p: PrayerType, angle: CGFloat, mer: Meridiem, highlight: Bool) {
         let pName = p.stringValue()
-        let letter = pName[pName.startIndex]
+        let localizedLetter = NSLocalizedString("\(pName[pName.startIndex])_letter", comment: "")
         
         var b: BubbleTextView!
         
@@ -405,7 +404,7 @@ class ClockView: UIView {
             b = prayerBubbleViews[p.rawValue]
         } else {
             //add it if there isnt already one...
-            b = BubbleTextView(letter: letter)
+            b = BubbleTextView(letter: localizedLetter.first ?? " ".first!)
             prayerBubbleViews.append(b)
             addSubview(b)
         }

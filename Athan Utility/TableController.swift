@@ -57,23 +57,23 @@ class TableController: UITableViewController {
                 df.timeStyle = .short
                 df.dateStyle = .none
                 
-                var timeString = df.string(from: prayerDate).uppercased()
+                let timeString = df.string(from: prayerDate).uppercased()
                 //#warning("add this back")
-                if let meridEnd = timeString.lastIndex(where: { (char) -> Bool in
-                    return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
-                }) {
-                    if let meridStart = timeString.firstIndex(where: { (char) -> Bool in
-                        return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
-                    }) {
-                        if meridEnd == timeString.endIndex {
-                            // we know meridiem is at right end of string, so put space before meridStart
-                            timeString.insert(" ", at: meridStart)
-                        } else {
-                            // else, we know meridiem is likely on left side of string
-                            timeString.insert(" ", at: timeString.index(meridEnd, offsetBy: 1))
-                        }
-                    }
-                }
+//                if let meridEnd = timeString.lastIndex(where: { (char) -> Bool in
+//                    return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
+//                }) {
+//                    if let meridStart = timeString.firstIndex(where: { (char) -> Bool in
+//                        return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
+//                    }) {
+//                        if meridEnd == timeString.endIndex {
+//                            // we know meridiem is at right end of string, so put space before meridStart
+//                            timeString.insert(" ", at: meridStart)
+//                        } else {
+//                            // else, we know meridiem is likely on left side of string
+//                            timeString.insert(" ", at: timeString.index(meridEnd, offsetBy: 1))
+//                        }
+//                    }
+//                }
                 
                 cell.timeLabel.text = timeString
             }

@@ -13,9 +13,9 @@
 
  languages([
    "en-US",
-   "ar-sy",
+   #"ar-sy",
    "fr_FR",
-   "ur_PK",
+   #"ur_PK",
    "tr"
  ])
 

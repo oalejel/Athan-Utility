@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C48B7FDB85A3354636BD733 /* Pods_athanIntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F24DC2FFBCB36C7FB97E96 /* Pods_athanIntentsUI.framework */; };
 		1F11222ECCAAA9AD5190FDAE /* Pods_AthanToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C5583EA87275A23C997C91 /* Pods_AthanToday.framework */; };
 		39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */; };
 		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
@@ -41,13 +40,6 @@
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
 		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
-		3D89E73520C88A0900E64118 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73420C88A0900E64118 /* IntentHandler.swift */; };
-		3D89E73D20C88A0A00E64118 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D89E73C20C88A0A00E64118 /* IntentsUI.framework */; };
-		3D89E74020C88A0A00E64118 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E73F20C88A0A00E64118 /* IntentViewController.swift */; };
-		3D89E74320C88A0A00E64118 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D89E74120C88A0A00E64118 /* MainInterface.storyboard */; };
-		3D89E74720C88A0A00E64118 /* athanIntentsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3D89E74A20C88A0A00E64118 /* athanIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D89E73220C88A0900E64118 /* athanIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3D89E75220C88B5E00E64118 /* INNextPrayerIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -60,24 +52,9 @@
 		3DD51AF620FC5A00000CBFFC /* Athan_Utility_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD51AF520FC5A00000CBFFC /* Athan_Utility_UITests.swift */; };
 		3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DF0EE9B21038E3D00624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
-		5706502155CB90D8A14BD9F4 /* Pods_athanIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 588D44C38393ADE8BB926403 /* Pods_athanIntents.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3D89E74520C88A0A00E64118 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D89E73A20C88A0900E64118;
-			remoteInfo = athanIntentsUI;
-		};
-		3D89E74820C88A0A00E64118 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3D89E73120C88A0900E64118;
-			remoteInfo = athanIntents;
-		};
 		3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
@@ -112,8 +89,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */,
-				3D89E74A20C88A0A00E64118 /* athanIntents.appex in Embed App Extensions */,
-				3D89E74720C88A0A00E64118 /* athanIntentsUI.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,10 +151,8 @@
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		3D89E73220C88A0900E64118 /* athanIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = athanIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D89E73420C88A0900E64118 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		3D89E73620C88A0900E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = athanIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		3D89E73F20C88A0A00E64118 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		3D89E74220C88A0A00E64118 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -236,23 +209,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D89E72F20C88A0900E64118 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5706502155CB90D8A14BD9F4 /* Pods_athanIntents.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D89E73820C88A0900E64118 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D89E73D20C88A0A00E64118 /* IntentsUI.framework in Frameworks */,
-				1C48B7FDB85A3354636BD733 /* Pods_athanIntentsUI.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3DD3B48C1C0D3B5700DC91E6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,8 +247,6 @@
 			children = (
 				3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */,
 				3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */,
-				3D89E73220C88A0900E64118 /* athanIntents.appex */,
-				3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */,
 				3DD51AF320FC59FF000CBFFC /* Athan Utility UITests.xctest */,
 			);
 			name = Products;
@@ -480,49 +434,11 @@
 			);
 			dependencies = (
 				3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */,
-				3D89E74620C88A0A00E64118 /* PBXTargetDependency */,
-				3D89E74920C88A0A00E64118 /* PBXTargetDependency */,
 			);
 			name = "Athan Utility";
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
 			productType = "com.apple.product-type.application";
-		};
-		3D89E73120C88A0900E64118 /* athanIntents */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3D89E74E20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntents" */;
-			buildPhases = (
-				5C82A0F016E033C8CCBBE984 /* [CP] Check Pods Manifest.lock */,
-				3D89E72E20C88A0900E64118 /* Sources */,
-				3D89E72F20C88A0900E64118 /* Frameworks */,
-				3D89E73020C88A0900E64118 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = athanIntents;
-			productName = athanIntents;
-			productReference = 3D89E73220C88A0900E64118 /* athanIntents.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		3D89E73A20C88A0900E64118 /* athanIntentsUI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3D89E74B20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntentsUI" */;
-			buildPhases = (
-				0C7516B1AE847DD70E53ACB5 /* [CP] Check Pods Manifest.lock */,
-				3D89E73720C88A0900E64118 /* Sources */,
-				3D89E73820C88A0900E64118 /* Frameworks */,
-				3D89E73920C88A0900E64118 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = athanIntentsUI;
-			productName = athanIntentsUI;
-			productReference = 3D89E73B20C88A0900E64118 /* athanIntentsUI.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 		3DD3B48E1C0D3B5700DC91E6 /* AthanToday */ = {
 			isa = PBXNativeTarget;
@@ -581,16 +497,6 @@
 							};
 						};
 					};
-					3D89E73120C88A0900E64118 = {
-						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = DL7989H5XT;
-						ProvisioningStyle = Automatic;
-					};
-					3D89E73A20C88A0900E64118 = {
-						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = DL7989H5XT;
-						ProvisioningStyle = Automatic;
-					};
 					3DD3B48E1C0D3B5700DC91E6 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = DL7989H5XT;
@@ -629,8 +535,6 @@
 				3D07DA7A1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF220FC59FF000CBFFC /* Athan Utility UITests */,
 				3DD3B48E1C0D3B5700DC91E6 /* AthanToday */,
-				3D89E73120C88A0900E64118 /* athanIntents */,
-				3D89E73A20C88A0900E64118 /* athanIntentsUI */,
 			);
 		};
 /* End PBXProject section */
@@ -650,21 +554,6 @@
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D89E73020C88A0900E64118 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D89E73920C88A0900E64118 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D89E74320C88A0A00E64118 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,24 +580,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0C7516B1AE847DD70E53ACB5 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-athanIntentsUI-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		574BA20B2A8FABD86A199F59 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -727,24 +598,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5C82A0F016E033C8CCBBE984 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-athanIntents-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DA2C09126AA7E4E0017666B0 /* [CP] Check Pods Manifest.lock */ = {
@@ -814,23 +667,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D89E72E20C88A0900E64118 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D89E75220C88B5E00E64118 /* INNextPrayerIntent.swift in Sources */,
-				3D89E73520C88A0900E64118 /* IntentHandler.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3D89E73720C88A0900E64118 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D89E74020C88A0A00E64118 /* IntentViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		3DD3B48B1C0D3B5700DC91E6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -852,16 +688,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3D89E74620C88A0A00E64118 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D89E73A20C88A0900E64118 /* athanIntentsUI */;
-			targetProxy = 3D89E74520C88A0A00E64118 /* PBXContainerItemProxy */;
-		};
-		3D89E74920C88A0A00E64118 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3D89E73120C88A0900E64118 /* athanIntents */;
-			targetProxy = 3D89E74820C88A0A00E64118 /* PBXContainerItemProxy */;
-		};
 		3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3DD3B48E1C0D3B5700DC91E6 /* AthanToday */;
@@ -1110,114 +936,6 @@
 			};
 			name = Release;
 		};
-		3D89E74C20C88A0A00E64118 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CCA51508D1FFDEA7E7667F5 /* Pods-athanIntentsUI.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = athanIntentsUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntentsUI";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3D89E74D20C88A0A00E64118 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC95ADFFAD984DE33C9E3D66 /* Pods-athanIntentsUI.release.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = athanIntentsUI/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntentsUI";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		3D89E74F20C88A0A00E64118 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 56534853B6887B8405906425 /* Pods-athanIntents.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = athanIntents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntents";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		3D89E75020C88A0A00E64118 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7235B34E841B705AA2B09A1B /* Pods-athanIntents.release.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = athanIntents/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.athanIntents";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		3DD3B49D1C0D3B5700DC91E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 40304C7DD88FC1F6464ABF35 /* Pods-AthanToday.debug.xcconfig */;
@@ -1325,24 +1043,6 @@
 			buildConfigurations = (
 				3D07DA8E1BDC58B60001EFE4 /* Debug */,
 				3D07DA8F1BDC58B60001EFE4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3D89E74B20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntentsUI" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3D89E74C20C88A0A00E64118 /* Debug */,
-				3D89E74D20C88A0A00E64118 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3D89E74E20C88A0A00E64118 /* Build configuration list for PBXNativeTarget "athanIntents" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3D89E74F20C88A0A00E64118 /* Debug */,
-				3D89E75020C88A0A00E64118 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

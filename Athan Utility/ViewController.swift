@@ -162,6 +162,8 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        progressView.setNeedsDisplay()
         if refreshClockNeeded {
             manager.calculateCurrentPrayer()
             softResetPrayerVisuals()

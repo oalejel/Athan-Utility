@@ -68,13 +68,15 @@ class ElapsedView: UIView {
             let Y = (height(self) / 2) - H / 2
             let end = x(rightLabel)
             self.barLength = end - X - offset
-            
+        
+            self.progressBGLayer?.removeFromSuperlayer()
             self.progressBGLayer = CAShapeLayer()
             self.progressBGLayer.frame = CGRect(x: X, y: Y, width: self.barLength, height: H)
             self.progressBGLayer.cornerRadius = H / 2
-            
+        
             self.layer.addSublayer(self.progressBGLayer)
-            
+        
+            self.progressLayer?.removeFromSuperlayer()
             self.progressLayer = CAShapeLayer()
             self.progressLayer.frame = CGRect(x: X, y: Y, width: H, height: H)
             self.progressLayer.cornerRadius = H / 2

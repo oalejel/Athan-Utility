@@ -315,7 +315,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             print("Going to request data")
             var request = URLRequest(url: sureURL)
             request.httpMethod = "GET" // should be default setting, but just making this a point
-            request.timeoutInterval = 6
+//            request.timeoutInterval =
             let dataTask = session.dataTask(with: request, completionHandler: {
                 (data: Data?, response: URLResponse?, error: Error?) -> Void in
                 if error != nil {
@@ -627,6 +627,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //        }
         
         for i in 0..<5 {
+            
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: i == 4)
         }
     }
@@ -981,7 +982,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         SwiftSpinner.hide()
     }
     
-    // MARK: – Automatic Refreshing
+    //MARK: – Automatic Refreshing
     
     @objc func enteredForeground() {
         ignoreLocationUpdates = false

@@ -51,6 +51,7 @@
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
@@ -672,6 +673,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */,
+				3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */,
 				3D32B5851C14D34D003CAE1B /* sun.png in Resources */,
 				3D32B5831C14D32E003CAE1B /* moon.png in Resources */,
 				3D32B5811C14D31D003CAE1B /* sunfilled.png in Resources */,

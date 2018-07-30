@@ -25,6 +25,10 @@
 "Alarms" = "الارم";
 "Location Search" = "مقام کی تلاش";
 
+// system does not have these words
+"Done" = "ہو گیا";
+"Cancel" = "منسوخ کریں";
+
 // "About" used in the context of "About the app"
 "About" = "About";
 
@@ -52,7 +56,7 @@
 // notification strings
 
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = ".‏@%1$ كے لئے وقت [@$2%]. برائے مہربانی نوٹیفکیشن حاصل کرنے کے لئے ایتھن یوٹیلٹی دوبارہ کھولیں";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = ".‏%1$@ كے لئے وقت [@$2%]. برائے مہربانی نوٹیفکیشن حاصل کرنے کے لئے ایتھن یوٹیلٹی دوبارہ کھولیں";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "‏@%2$ میں @$1% کے لئے وقت [@$3%]";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]

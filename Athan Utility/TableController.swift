@@ -58,7 +58,7 @@ class TableController: UITableViewController {
                 df.dateStyle = .none
                 
                 var timeString = df.string(from: prayerDate).uppercased()
-                
+                //#warning("add this back")
                 if let meridEnd = timeString.lastIndex(where: { (char) -> Bool in
                     return CharacterSet.alphanumerics.contains(char.unicodeScalars.first!)
                 }) {

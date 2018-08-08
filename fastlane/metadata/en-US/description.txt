@@ -1,0 +1,3 @@
+A refocused interpretation of the modern Athan App. Athan Utility is a lightweight application that combines simplicity with precision to help Muslims keep up to date with Athan Times. 
+
+Athan Utility features an analog Athan times viewer, a Today Extension, a simple prayer time table, Qibla, 15 minute reminder notifications, custom locations, and alarms.

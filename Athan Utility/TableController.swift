@@ -86,7 +86,6 @@ class TableController: UITableViewController {
 //                c.timeLabel.text = df.string(from: date!)
 //            }
             
-            
             if highlightIndex == indexPath.row {
                 cell.titleLabel.textColor = highlightColor
                 cell.timeLabel.textColor = highlightColor

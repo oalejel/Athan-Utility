@@ -82,6 +82,8 @@ class ElapsedView: UIView {
             self.progressLayer.cornerRadius = H / 2
             self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
             self.layer.addSublayer(self.progressLayer)
+        
+            self.timeLeftLabel.textColor = Global.manager.timeLeftColor()
             
             self.backgroundColor = .darkerGray
             self.progressBGLayer.backgroundColor = UIColor.darkestGray.cgColor
@@ -111,6 +113,8 @@ class ElapsedView: UIView {
             
                 self.progressLayer.frame.size.width = currentLength
                 self.progressLayer.backgroundColor = Global.manager.timeLeftColor().cgColor
+                
+                self.timeLeftLabel.textColor = Global.manager.timeLeftColor()
                 
                 let anim = CABasicAnimation(keyPath: "tranform.width")
                 anim.duration = Double(secondsLeft)

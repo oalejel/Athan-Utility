@@ -254,7 +254,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     //specific to individual prayers
     func updateCurrentPrayer(manager: PrayerManager) {
-        
         softResetPrayerVisuals()
         
         // keep track of last time we updated our visuals
@@ -265,15 +264,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     func softResetPrayerVisuals(fifteenMinutesLeft: Bool = false) {
         if manager.dataExists {
             refreshProgressBar()
-            clock.refreshPrayerBubbles(manager.currentPrayer)
             
             let pIndex = manager.currentPrayer.rawValue
-            if pIndex != 6 {
-                table.highlightCellAtIndex(pIndex, color: Global.statusColor)
-                if fifteenMinutesLeft {
-                    progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
-                }
-            }
+            var cellIndex = pIndex
+            if cellIndex > 5 { cellIndex = 5 }
+            table.highlightCellAtIndex(cellIndex, color: Global.statusColor)
+            //        progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
+            clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: fifteenMinutesLeft)
+//            progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
         }
     }
     
@@ -285,6 +283,7 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             clock.refreshPrayerBubbles(manager.currentPrayer)
             table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
             // hard
+            
             table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
             clock.setPrayerBubbles(manager)
             clock.refreshTime()
@@ -323,12 +322,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     func fifteenMinutesLeft() {
         softResetPrayerVisuals(fifteenMinutesLeft: true)
         
-        let pIndex = manager.currentPrayer.rawValue
-        if pIndex != 6 {
-            table.highlightCellAtIndex(pIndex, color: Global.statusColor)
-            progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
-        }
-        clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: true)
+//        let pIndex = manager.currentPrayer.rawValue
+//        var cellIndex = pIndex
+//        if cellIndex > 5 { cellIndex = 5 }
+//        table.highlightCellAtIndex(cellIndex, color: Global.statusColor)
+////        progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
+//        clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: true)
     }
     
     func flash(_ midwayBlock: @escaping () -> Void) {

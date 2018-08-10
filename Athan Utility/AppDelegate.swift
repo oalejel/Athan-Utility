@@ -26,15 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Global.openQibla = true
     }
     
-    // give an alert when the application is meant to receive a local notification
+    // allow notification to continue
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
-//        let alertController = UIAlertController(title: notification.request.content.body, message: nil, preferredStyle: .alert)
-//        let okString = NSLocalizedString("OK", comment: "")
-//        let okAction = UIAlertAction(title: okString, style: .default, handler: nil)
-//        alertController.addAction(okAction)
-//        window?.rootViewController?.present(alertController, animated: true, completion: nil)
         completionHandler(.alert)
     }
     

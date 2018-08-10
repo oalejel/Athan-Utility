@@ -215,12 +215,14 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             whatsNewVC.view.backgroundColor = .black
             whatsNewVC.presentIfNeeded(on: self)
         } else {
+            // if we were in a mode to show the spinner, then show it and being location request
             if showSpinner {
                 let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
                 SwiftSpinner.show(loadingString, animated: true)
-                manager.beginLocationRequest()
                 showSpinner = false
             }
+            // always do a location request on first appearance of view
+            manager.beginLocationRequest()
         }
         
             /*
@@ -287,7 +289,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
             clock.setPrayerBubbles(manager)
             clock.refreshTime()
-            
         }
     }
     

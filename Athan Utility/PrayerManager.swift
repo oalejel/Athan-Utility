@@ -984,6 +984,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     //MARK: – Automatic Refreshing
     
+    
+    // note that this is not called on the first foreground update
     @objc func enteredForeground() {
         ignoreLocationUpdates = false
         coreManager.startUpdatingLocation()

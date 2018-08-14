@@ -198,6 +198,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     
                     // if we should not update, then abort fetching
                     if !self.shouldUpdateLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
+                        // we know that the location we already have is correct
+                        self.delegate.locationIsUpToDate = true
                         SwiftSpinner.hide()
                         return
                     }
@@ -216,7 +218,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
 //                    let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
 //                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
-                    self.fetchMonthsJSONDataForCurrentLocation()
+                    self.fetchMonthsJSONDataForCurrentLocation(completion: { (success) in
+                        self.delegate.locationIsUpToDate = success
+                    })
                     self.ignoreLocationUpdates = false
                 }
             }
@@ -712,7 +716,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             if secondsInDay != nil {
                 let secondsLeft = 86400 - secondsInDay!
                 Timer.scheduledTimer(timeInterval: TimeInterval(secondsLeft), target: self, selector: #selector(PrayerManager.newDay), userInfo: nil, repeats: false)
-                
             }
         }
     }
@@ -944,10 +947,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         fetchMonthsJSONDataForCurrentLocation()
     }
     
-    func fetchMonthsJSONDataForCurrentLocation() {
-        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)//not good enough of a solution long term!!...
+    func fetchMonthsJSONDataForCurrentLocation(completion: ((Bool) -> ())? = nil) {
+        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: completion)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
+        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: completion)
     }
     
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
@@ -958,7 +961,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         if lockLocation {
             // if a custom location is explicitly set, get JSON
-            fetchMonthsJSONDataForCurrentLocation()
+            fetchMonthsJSONDataForCurrentLocation { (success) in
+                self.delegate.locationIsUpToDate = false
+            }
         } else {
             // else, we check for our current location as well
             reload()
@@ -988,6 +993,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     // note that this is not called on the first foreground update
     @objc func enteredForeground() {
         ignoreLocationUpdates = false
+        // not sure if we are still in same location – will know later
+        delegate.locationIsUpToDate = false
         coreManager.startUpdatingLocation()
     }
     

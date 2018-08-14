@@ -54,14 +54,25 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Table" {
-            table = segue.destination as! TableController
+            table = segue.destination as? TableController
             //!!! might want to not set default color as clear!!!
             table.view.backgroundColor = UIColor.clear
             table.view.layer.cornerRadius = 6
             table.tableView.backgroundColor = UIColor.clear
             table.tableView.backgroundView?.backgroundColor = UIColor.clear
         } else if segue.identifier == "Progress" {
-            progressView = segue.destination.view as! ElapsedView
+            progressView = segue.destination.view as? ElapsedView
+        }
+    }
+    
+    // protocol variable
+    var locationIsUpToDate = false {
+        didSet {
+            // show/hide the current location image in case we lost location
+            let imageName: UIImage? = locationIsUpToDate ? UIImage(named: "arrow") : nil
+            DispatchQueue.main.async {
+                self.locationButton.setImage(imageName, for: .normal)
+            }
         }
     }
     
@@ -77,6 +88,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         refreshButton.accessibilityLabel = "refresh"
         qiblaButton.accessibilityLabel = "qibla"
         locationButton.accessibilityLabel = "location"
+        
+        // make current location indication image look normal
+        locationButton.imageEdgeInsets = UIEdgeInsets(top: 6, left: 4, bottom: 6, right: 12)
+        locationButton.imageView?.contentMode = .scaleAspectFit
+        locationButton.setImage(nil, for: .normal)
         
         // Do any additional setup after loading the view, typically from a nib.
         view.backgroundColor = UIColor.black

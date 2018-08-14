@@ -15,6 +15,8 @@ import Foundation
 */
 @objc protocol PrayerManagerDelegate {
     var manager: PrayerManager! {get set}
+    var locationIsUpToDate: Bool { get set }
+    
     func dataReady(manager: PrayerManager)
     func updateCurrentPrayer(manager: PrayerManager)
     func setShouldShowLoader()

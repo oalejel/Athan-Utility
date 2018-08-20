@@ -32,7 +32,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //    @IBOutlet weak var locationLabel: UILabel!
     var manager: PrayerManager!
     var showSpinner = false
-    var refreshClockNeeded = false
     
 //    @IBOutlet weak var settingsButton: SqueezeButton!
     //not an actual xib containerview
@@ -147,22 +146,17 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         manager.calculateCurrentPrayer()
         manager.setTimers()
         
-        if refreshClockNeeded {
-            softResetPrayerVisuals()
-            clock.refreshTime()
-//            refreshClockNeeded = false
-        }
+        softResetPrayerVisuals()
+        clock.refreshTime()
     }
 
     @objc func enteredBackground() {
-        refreshClockNeeded = true
         clock.pause()
         manager.saveSettings()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        refreshClockNeeded = true
         clock.pause()
     }
     
@@ -180,13 +174,12 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         super.viewWillAppear(animated)
         
         progressView.setNeedsDisplay()
-        if refreshClockNeeded {
-            manager.calculateCurrentPrayer()
-            softResetPrayerVisuals()
-            // though this is called by hard reset, we always want to refresh this animation
-            clock.refreshTime()
-//            refreshClockNeeded = false
-        }
+        softResetPrayerVisuals()
+        
+        manager.calculateCurrentPrayer()
+        
+        // though this is called by hard reset, we always want to refresh this animation
+        clock.refreshTime()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -254,7 +247,6 @@ class ViewController: UIViewController, PrayerManagerDelegate {
              }
  */
         
-        refreshClockNeeded = true
     }
     
     //Data Manager Delegate

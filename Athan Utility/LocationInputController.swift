@@ -55,8 +55,19 @@ class LocationInputController: UIViewController {
     // attempt to fetch data for the given location string
     @IBAction func tryPressed(_ sender: AnyObject) {
 //        Global.manager.needsDataUpdate = true //WARNING: should you set it like this!!!???
-        let locationString = inputTextField.text?.capitalized
-        Global.manager.fetchJSONData(forLocation: locationString!, dateTuple: nil, completion: { (successfulFetch) in
+        guard let rawLocationString = inputTextField.text else {
+            // no input given
+            return
+        }
+        
+        // we want text before commas to be capitalized like normal pronouns
+        // and text after commas to be all caps. Ex: Bloomfield Hills, MI, USA
+        let rightHalfIndex = rawLocationString.firstIndex(of: ",") ?? rawLocationString.endIndex
+        let leftHalf = rawLocationString[rawLocationString.startIndex..<rightHalfIndex].capitalized
+        let rightHalf = rawLocationString[rightHalfIndex..<rawLocationString.endIndex].uppercased()
+        
+        let cleanedLocationString = String(leftHalf + rightHalf)
+        Global.manager.fetchJSONData(forLocation: cleanedLocationString, dateTuple: nil, completion: { (successfulFetch) in
             
             if successfulFetch  {
                 self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
@@ -64,14 +75,22 @@ class LocationInputController: UIViewController {
                 })
                 print("try succeeded")
                 DispatchQueue.main.async {
+                    // if we successfully used an input location, then we know that we are no longer GPS for the shown data
+                    Global.manager.currentCityString = nil
+                    Global.manager.currentStateString = nil
+                    Global.manager.currentCountryString = nil
+                    Global.manager.delegate.locationIsUpToDate = false
+                    // hide the loading spinner that covers the screen
                     self.activityIndicator._hide()
                 }
             } else {
+                print("try failed")
                 DispatchQueue.main.async {
+                    // hide the loading spinner that covers the screen
                     self.activityIndicator._hide()
+                    // show the user text that indicates input failure
                     self.failedLabel._show()
                 }
-                print("try failed")
             }
             
         })

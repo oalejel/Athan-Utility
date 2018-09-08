@@ -620,15 +620,17 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
         }
         
-//        center.getPendingNotificationRequests(completionHandler: { (reqs) in
-//            print("last pending notification count: \(reqs.count)")
-//        })
-//
-//        center.removeAllPendingNotificationRequests()
+
+        center.removeAllPendingNotificationRequests()
 //
 //        center.getDeliveredNotifications { (reqs) in
 //            print("last delivered notification count: \(reqs.count)")
 //        }
+        
+        //        center.getPendingNotificationRequests(completionHandler: { (reqs) in
+        //            print("last pending notification count: \(reqs.count)")
+        //        })
+        //
         
         for i in 0..<5 {
             

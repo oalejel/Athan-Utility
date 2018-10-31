@@ -62,5 +62,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSSiriUsageDescription</key>
+	<string>Athan times for your area are shared with Siri.</string>
 </dict>
 </plist>

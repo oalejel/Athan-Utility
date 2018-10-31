@@ -10,6 +10,7 @@ import UIKit
 import IntentsUI
 import WhatsNew
 import SqueezeButton
+import Intents
 
 extension UIView {
     /// Custom UIView method to fade out a view in 0.77 seconds
@@ -79,6 +80,16 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // for now, ask for siri permission immediately.
+        // goal is to have settings available for requesting manually,
+        // and a banner to show the feature in the second and third times the app is opened.
+        INPreferences.requestSiriAuthorization { (status: INSiriAuthorizationStatus) in
+            if status == INSiriAuthorizationStatus.authorized {
+                
+            }
+        }
+        
         
         // setup accessibility on buttons and elements of screen
 //        #warning("should eventually make this based on a localized string")

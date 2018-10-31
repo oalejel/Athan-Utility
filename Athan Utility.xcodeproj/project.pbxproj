@@ -43,6 +43,13 @@
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D93E9DF21829D0C002019B7 /* Intents.framework */; };
+		3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93EA092182C447002019B7 /* IntentHandler.swift */; };
+		3D93EA112182C447002019B7 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D89E73C20C88A0A00E64118 /* IntentsUI.framework */; };
+		3D93EA142182C447002019B7 /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93EA132182C447002019B7 /* IntentViewController.swift */; };
+		3D93EA172182C447002019B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D93EA152182C447002019B7 /* MainInterface.storyboard */; };
+		3D93EA1B2182C447002019B7 /* AthanSiriIntentsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
@@ -55,6 +62,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3D93EA192182C447002019B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D93EA0F2182C447002019B7;
+			remoteInfo = AthanSiriIntentsUI;
+		};
+		3D93EA1C2182C447002019B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D93EA062182C447002019B7;
+			remoteInfo = AthanSiriIntents;
+		};
 		3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
@@ -89,6 +110,8 @@
 			dstSubfolderSpec = 13;
 			files = (
 				3DD3B49C1C0D3B5700DC91E6 /* AthanToday.appex in Embed App Extensions */,
+				3D93EA1B2182C447002019B7 /* AthanSiriIntentsUI.appex in Embed App Extensions */,
+				3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,19 +148,16 @@
 		3D52254E20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		3D52254F20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3D52255020CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		3D52255220CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52255620CDD25800CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52255820CDD42300CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52256920CDF50400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D52256A20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		3D52256B20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3D52256C20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		3D52256D20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52256F20CDF51C00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52257120CDF53700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Main.strings; sourceTree = "<group>"; };
 		3D52257220CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3D52257320CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		3D52257420CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52257620CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52257820CDF54800CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D52257920CDF55700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
@@ -151,15 +171,17 @@
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		3D89E73420C88A0900E64118 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		3D89E73620C88A0900E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		3D89E73F20C88A0A00E64118 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
-		3D89E74220C88A0A00E64118 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		3D89E74420C88A0A00E64118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INNextPrayerIntent.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
+		3D93E9DF21829D0C002019B7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		3D93EA072182C447002019B7 /* AthanSiriIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanSiriIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D93EA092182C447002019B7 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		3D93EA0B2182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanSiriIntentsUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D93EA132182C447002019B7 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		3D93EA162182C447002019B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		3D93EA182182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -173,7 +195,6 @@
 		3DD843B720CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3DD843B820CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3DD843B920CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		3DD843BA20CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3DD843BC20CE5D3200D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
@@ -205,7 +226,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
 				39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D93EA042182C447002019B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D93EA0D2182C447002019B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D93EA112182C447002019B7 /* IntentsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,9 +270,9 @@
 			children = (
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF420FC5A00000CBFFC /* Athan Utility UITests */,
-				3D89E73320C88A0900E64118 /* athanIntents */,
-				3D89E73E20C88A0A00E64118 /* athanIntentsUI */,
 				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
+				3D93EA082182C447002019B7 /* AthanSiriIntents */,
+				3D93EA122182C447002019B7 /* AthanSiriIntentsUI */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
 				FB6B467EB412DE03F3297FE1 /* Pods */,
@@ -248,6 +285,8 @@
 				3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */,
 				3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */,
 				3DD51AF320FC59FF000CBFFC /* Athan Utility UITests.xctest */,
+				3D93EA072182C447002019B7 /* AthanSiriIntents.appex */,
+				3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -333,29 +372,29 @@
 			name = Table;
 			sourceTree = "<group>";
 		};
-		3D89E73320C88A0900E64118 /* athanIntents */ = {
+		3D93EA082182C447002019B7 /* AthanSiriIntents */ = {
 			isa = PBXGroup;
 			children = (
-				3D89E73420C88A0900E64118 /* IntentHandler.swift */,
-				3D89E75120C88B5E00E64118 /* INNextPrayerIntent.swift */,
-				3D89E73620C88A0900E64118 /* Info.plist */,
+				3D93EA092182C447002019B7 /* IntentHandler.swift */,
+				3D93EA0B2182C447002019B7 /* Info.plist */,
 			);
-			path = athanIntents;
+			path = AthanSiriIntents;
 			sourceTree = "<group>";
 		};
-		3D89E73E20C88A0A00E64118 /* athanIntentsUI */ = {
+		3D93EA122182C447002019B7 /* AthanSiriIntentsUI */ = {
 			isa = PBXGroup;
 			children = (
-				3D89E73F20C88A0A00E64118 /* IntentViewController.swift */,
-				3D89E74120C88A0A00E64118 /* MainInterface.storyboard */,
-				3D89E74420C88A0A00E64118 /* Info.plist */,
+				3D93EA132182C447002019B7 /* IntentViewController.swift */,
+				3D93EA152182C447002019B7 /* MainInterface.storyboard */,
+				3D93EA182182C447002019B7 /* Info.plist */,
 			);
-			path = athanIntentsUI;
+			path = AthanSiriIntentsUI;
 			sourceTree = "<group>";
 		};
 		3DD3B4901C0D3B5700DC91E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D93E9DF21829D0C002019B7 /* Intents.framework */,
 				3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */,
 				3D89E73C20C88A0A00E64118 /* IntentsUI.framework */,
 				FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */,
@@ -434,11 +473,47 @@
 			);
 			dependencies = (
 				3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */,
+				3D93EA1A2182C447002019B7 /* PBXTargetDependency */,
+				3D93EA1D2182C447002019B7 /* PBXTargetDependency */,
 			);
 			name = "Athan Utility";
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
 			productType = "com.apple.product-type.application";
+		};
+		3D93EA062182C447002019B7 /* AthanSiriIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D93EA222182C447002019B7 /* Build configuration list for PBXNativeTarget "AthanSiriIntents" */;
+			buildPhases = (
+				3D93EA032182C447002019B7 /* Sources */,
+				3D93EA042182C447002019B7 /* Frameworks */,
+				3D93EA052182C447002019B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AthanSiriIntents;
+			productName = AthanSiriIntents;
+			productReference = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3D93EA0F2182C447002019B7 /* AthanSiriIntentsUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D93EA1F2182C447002019B7 /* Build configuration list for PBXNativeTarget "AthanSiriIntentsUI" */;
+			buildPhases = (
+				3D93EA0C2182C447002019B7 /* Sources */,
+				3D93EA0D2182C447002019B7 /* Frameworks */,
+				3D93EA0E2182C447002019B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AthanSiriIntentsUI;
+			productName = AthanSiriIntentsUI;
+			productReference = 3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		3DD3B48E1C0D3B5700DC91E6 /* AthanToday */ = {
 			isa = PBXNativeTarget;
@@ -495,7 +570,20 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
 						};
+					};
+					3D93EA062182C447002019B7 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = DL7989H5XT;
+						ProvisioningStyle = Automatic;
+					};
+					3D93EA0F2182C447002019B7 = {
+						CreatedOnToolsVersion = 10.0;
+						DevelopmentTeam = DL7989H5XT;
+						ProvisioningStyle = Automatic;
 					};
 					3DD3B48E1C0D3B5700DC91E6 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -535,6 +623,8 @@
 				3D07DA7A1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF220FC59FF000CBFFC /* Athan Utility UITests */,
 				3DD3B48E1C0D3B5700DC91E6 /* AthanToday */,
+				3D93EA062182C447002019B7 /* AthanSiriIntents */,
+				3D93EA0F2182C447002019B7 /* AthanSiriIntentsUI */,
 			);
 		};
 /* End PBXProject section */
@@ -554,6 +644,21 @@
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D93EA052182C447002019B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D93EA0E2182C447002019B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D93EA172182C447002019B7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +772,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3D93EA032182C447002019B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D93EA0C2182C447002019B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D93EA142182C447002019B7 /* IntentViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3DD3B48B1C0D3B5700DC91E6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -688,6 +809,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3D93EA1A2182C447002019B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D93EA0F2182C447002019B7 /* AthanSiriIntentsUI */;
+			targetProxy = 3D93EA192182C447002019B7 /* PBXContainerItemProxy */;
+		};
+		3D93EA1D2182C447002019B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D93EA062182C447002019B7 /* AthanSiriIntents */;
+			targetProxy = 3D93EA1C2182C447002019B7 /* PBXContainerItemProxy */;
+		};
 		3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3DD3B48E1C0D3B5700DC91E6 /* AthanToday */;
@@ -750,14 +881,10 @@
 			name = QiblaViewController.xib;
 			sourceTree = "<group>";
 		};
-		3D89E74120C88A0A00E64118 /* MainInterface.storyboard */ = {
+		3D93EA152182C447002019B7 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3D89E74220C88A0A00E64118 /* Base */,
-				3D52255220CDCE2400CF8C3D /* ar */,
-				3D52256D20CDF51B00CF8C3D /* fr */,
-				3D52257420CDF53800CF8C3D /* ur */,
-				3DD843BA20CE5D3100D4309E /* tr */,
+				3D93EA162182C447002019B7 /* Base */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -936,6 +1063,114 @@
 			};
 			name = Release;
 		};
+		3D93EA202182C447002019B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AthanSiriIntentsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntentsUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D93EA212182C447002019B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AthanSiriIntentsUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntentsUI";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3D93EA232182C447002019B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D93EA242182C447002019B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DL7989H5XT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3DD3B49D1C0D3B5700DC91E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 40304C7DD88FC1F6464ABF35 /* Pods-AthanToday.debug.xcconfig */;
@@ -1043,6 +1278,24 @@
 			buildConfigurations = (
 				3D07DA8E1BDC58B60001EFE4 /* Debug */,
 				3D07DA8F1BDC58B60001EFE4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D93EA1F2182C447002019B7 /* Build configuration list for PBXNativeTarget "AthanSiriIntentsUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D93EA202182C447002019B7 /* Debug */,
+				3D93EA212182C447002019B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D93EA222182C447002019B7 /* Build configuration list for PBXNativeTarget "AthanSiriIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D93EA232182C447002019B7 /* Debug */,
+				3D93EA242182C447002019B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

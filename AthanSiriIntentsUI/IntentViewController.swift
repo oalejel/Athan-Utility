@@ -1,8 +1,8 @@
 //
 //  IntentViewController.swift
-//  athanIntentsUI
+//  AthanSiriIntentsUI
 //
-//  Created by Omar Al-Ejel on 6/6/18.
+//  Created by Omar Al-Ejel on 10/25/18.
 //  Copyright © 2018 Omar Alejel. All rights reserved.
 //
 

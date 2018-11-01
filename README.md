@@ -1,8 +1,5 @@
 # Athan-Utility
 
-[comment]: <> ([![Build Status](https://travis-ci.org/oalejel/Athan-Utility.svg?branch=master)](https://travis-ci.org/oalejel/Athan-Utility))
-
-
 Athan Utility is a simple, modern Athan application with zero ads. 
 
 ## Current Features

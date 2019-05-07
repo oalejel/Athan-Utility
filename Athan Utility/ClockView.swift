@@ -129,7 +129,7 @@ class ClockView: UIView {
     
     func addHourTicks() {
         let center = CGPoint(x: width / 2, y: height / 2)
-        let radius = (width / 2) - (tickHeight / 2) - bubbleRoom - 4
+        let radius = 0.5 * (width - tickHeight) - bubbleRoom - 4
         let circ: CGFloat = CGFloat(2 * Double.pi) * radius
         let tickThickness: CGFloat = 0
         
@@ -149,7 +149,7 @@ class ClockView: UIView {
     func addAMPath() {
         let lineWidth: CGFloat = (bubbleRoom / 2) - separation
         let center = CGPoint(x: width / 2, y: height / 2)
-        let radius = (width / 2) - (lineWidth / 2) - (bubbleRoom / 2)
+        let radius = 0.5 * (width - lineWidth - bubbleRoom)
         
         let amPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         amLayer = CAShapeLayer()
@@ -320,7 +320,7 @@ class ClockView: UIView {
     func addMovingHourHand() {
         let longWidth: CGFloat = 8
         let shortLongOffset: CGFloat = 14
-        let longHeight = (width / 2) - (tickHeight / 2) - bubbleRoom - 45
+        let longHeight = 0.5 * (width - tickHeight) - bubbleRoom - 45
         let shortHeight: CGFloat = longHeight
         let shortWidth: CGFloat = longWidth / 2
         

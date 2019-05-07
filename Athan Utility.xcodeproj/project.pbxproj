@@ -51,6 +51,8 @@
 		3D93EA1B2182C447002019B7 /* AthanSiriIntentsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
+		3DB9331F21AB0BFB00E5E726 /* QueryLocationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */; };
+		3DB9332121AB0C1500E5E726 /* CurrentLocationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
@@ -182,6 +184,8 @@
 		3D93EA132182C447002019B7 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		3D93EA162182C447002019B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3D93EA182182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryLocationIntent.swift; sourceTree = "<group>"; };
+		3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationIntent.swift; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -376,6 +380,8 @@
 			isa = PBXGroup;
 			children = (
 				3D93EA092182C447002019B7 /* IntentHandler.swift */,
+				3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */,
+				3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */,
 				3D93EA0B2182C447002019B7 /* Info.plist */,
 			);
 			path = AthanSiriIntents;
@@ -605,7 +611,7 @@
 			};
 			buildConfigurationList = 3D07DA761BDC58B50001EFE4 /* Build configuration list for PBXProject "Athan Utility" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -776,7 +782,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DB9331F21AB0BFB00E5E726 /* QueryLocationIntent.swift in Sources */,
 				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
+				3DB9332121AB0C1500E5E726 /* CurrentLocationIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

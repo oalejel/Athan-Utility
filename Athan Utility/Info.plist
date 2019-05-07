@@ -33,11 +33,13 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Utility uses your location to determine prayer information</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Athan times for requested regions are used by Siri.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>Intent1Intent</string>
+		<string>CurrentLocationIntentIntent</string>
 		<string>Intent2Intent</string>
-		<string>IntentIntent</string>
+		<string>QueryLocationIntentIntent</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -62,7 +64,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSSiriUsageDescription</key>
-	<string>Athan times for your area are shared with Siri.</string>
 </dict>
 </plist>

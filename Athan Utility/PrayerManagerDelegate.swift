@@ -18,9 +18,10 @@ import Foundation
     var locationIsUpToDate: Bool { get set }
     
     func dataReady(manager: PrayerManager)
-    func updateCurrentPrayer(manager: PrayerManager)
-    func setShouldShowLoader()
-    func fifteenMinutesLeft()
-    func newMeridiem()
-    func loadingHandler()
+    @objc optional func updateCurrentPrayer(manager: PrayerManager)
+    @objc optional func setShouldShowLoader()
+    @objc optional func fifteenMinutesLeft()
+    @objc optional func newMeridiem()
+    @objc optional func loadingHandler()
+    @objc optional func hideLoadingView()
 }

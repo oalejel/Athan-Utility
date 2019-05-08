@@ -130,9 +130,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
         
-        // register for foreground updates in case user moves to new location and opens app in that place
-        NotificationCenter.default.addObserver(self, selector: #selector(PrayerManager.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
-        
         // the delegate, (typically a view controller) gets information from the PrayerManager
         delegate.manager = self
         
@@ -147,7 +144,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
         } else {
-            delegate.setShouldShowLoader()
+            delegate.setShouldShowLoader?()
         }
         
         self.coreManager.delegate = self
@@ -184,7 +181,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         // need this since location managers send multiple updates even after being told to stop updating
         if ignoreLocationUpdates == true {
             // hide swift spinner in case we are blocking the screen
-            SwiftSpinner.hide()
+            delegate.hideLoadingView?()
             return
         }
         ignoreLocationUpdates = true
@@ -200,7 +197,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     if !self.shouldUpdateLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
                         // we know that the location we already have is correct
                         self.delegate.locationIsUpToDate = true
-                        SwiftSpinner.hide()
+                        self.delegate.hideLoadingView?()
                         return
                     }
                     
@@ -533,13 +530,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             scheduleAppropriateNotifications()
         }
         
-        // now that we actually have a qibla heading, we can have a dynamic quick action
-        DispatchQueue.main.async {
-            let icon = UIApplicationShortcutIcon(type: .location)
-            let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
-            UIApplication.shared.shortcutItems = [dynamicItem]
-        }
-        
         return successful
     }
     
@@ -725,7 +715,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     /// Called on change of AM / PM time
     @objc func newMeridiem() {
         Timer.scheduledTimer(timeInterval: 12 * 60 * 60, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
-        delegate.newMeridiem()
+        delegate.newMeridiem?()
     }
     
     /// Generates UNUserNotification for given day
@@ -769,7 +759,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             //schedule a normal if settings allow
                             if setting.alarmType == .all || setting.alarmType == .noEarly {
                                 if setting.soundEnabled {
-                                    noteContent.sound = UNNotificationSound(named: "chime1.aiff")
+                                    let soundName = UNNotificationSoundName(rawValue: "chime1.aiff")
+                                    noteContent.sound = UNNotificationSound(named: soundName)
                                 }
                                 
                                 var alertString = ""
@@ -879,14 +870,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
         Global.statusColor = timeLeftColor()
-        delegate.fifteenMinutesLeft()
+        delegate.fifteenMinutesLeft?()
     }
     
     // for when the manager needs to notify itself mid-day
     @objc func newPrayer() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
-        delegate.updateCurrentPrayer(manager: self)
+        delegate.updateCurrentPrayer?(manager: self)
     }
     
     func currentPrayerTime() -> Date? {
@@ -986,7 +977,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     @objc func userCanceledDataRequest() {
 //        needsDataUpdate = false
-        SwiftSpinner.hide()
+        delegate.hideLoadingView?()
     }
     
     //MARK: – Automatic Refreshing

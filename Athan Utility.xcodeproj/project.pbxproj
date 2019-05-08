@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F11222ECCAAA9AD5190FDAE /* Pods_AthanToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C5583EA87275A23C997C91 /* Pods_AthanToday.framework */; };
 		39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */; };
 		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
 		3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */; };
@@ -51,8 +50,20 @@
 		3D93EA1B2182C447002019B7 /* AthanSiriIntentsUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA102182C447002019B7 /* AthanSiriIntentsUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
-		3DB9331F21AB0BFB00E5E726 /* QueryLocationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */; };
-		3DB9332121AB0C1500E5E726 /* CurrentLocationIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */; };
+		3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */; };
+		3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */; };
+		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
+		3DB56CEB228204BB00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
+		3DB56CEC228367DB00B9F738 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
+		3DB56CED228367DC00B9F738 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
+		3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3DB56CEF228367E100B9F738 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3DB56CF02283682700B9F738 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
+		3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
+		3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3DB56CF3228368BA00B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3DB56CF4228369A200B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
+		3DB56CF5228369A300B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
@@ -184,8 +195,8 @@
 		3D93EA132182C447002019B7 /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
 		3D93EA162182C447002019B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3D93EA182182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryLocationIntent.swift; sourceTree = "<group>"; };
-		3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationIntent.swift; sourceTree = "<group>"; };
+		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
+		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -204,7 +215,6 @@
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
 		3DF0EE9921038E3400624E98 /* PrayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerType.swift; sourceTree = "<group>"; };
-		40304C7DD88FC1F6464ABF35 /* Pods-AthanToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AthanToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AthanToday/Pods-AthanToday.debug.xcconfig"; sourceTree = "<group>"; };
 		4E6E5FCA2F568BDE7816BD68 /* Pods-Watch Athan Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan Extension/Pods-Watch Athan Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		56534853B6887B8405906425 /* Pods-athanIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntents/Pods-athanIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		588D44C38393ADE8BB926403 /* Pods_athanIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_athanIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,7 +222,6 @@
 		5F05DE2BF70FC6D726387EC4 /* Pods-Athan UtilityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan UtilityTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan UtilityTests/Pods-Athan UtilityTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7235B34E841B705AA2B09A1B /* Pods-athanIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntents.release.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntents/Pods-athanIntents.release.xcconfig"; sourceTree = "<group>"; };
 		7D6DCA5E1E523A955B0BDCED /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
-		885291268D2BF3F2948790FC /* Pods-AthanToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AthanToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-AthanToday/Pods-AthanToday.release.xcconfig"; sourceTree = "<group>"; };
 		8E1EAF8A1EDF22F6460C7EE5 /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.release.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
 		AECE86FC8077C475329F475C /* Pods-Watch Athan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan/Pods-Watch Athan.release.xcconfig"; sourceTree = "<group>"; };
 		B2887E99AE89345A2793C938 /* Pods_Watch_Athan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Watch_Athan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */,
-				1F11222ECCAAA9AD5190FDAE /* Pods_AthanToday.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,8 +388,8 @@
 			isa = PBXGroup;
 			children = (
 				3D93EA092182C447002019B7 /* IntentHandler.swift */,
-				3DB9331E21AB0BFB00E5E726 /* QueryLocationIntent.swift */,
-				3DB9332021AB0C1500E5E726 /* CurrentLocationIntent.swift */,
+				3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */,
+				3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */,
 				3D93EA0B2182C447002019B7 /* Info.plist */,
 			);
 			path = AthanSiriIntents;
@@ -446,8 +454,6 @@
 				8E1EAF8A1EDF22F6460C7EE5 /* Pods-Athan Utility.release.xcconfig */,
 				5F05DE2BF70FC6D726387EC4 /* Pods-Athan UtilityTests.debug.xcconfig */,
 				E889C73C7691953B5ECA90C2 /* Pods-Athan UtilityTests.release.xcconfig */,
-				40304C7DD88FC1F6464ABF35 /* Pods-AthanToday.debug.xcconfig */,
-				885291268D2BF3F2948790FC /* Pods-AthanToday.release.xcconfig */,
 				E5B9FA466BB30273FA81D77D /* Pods-Watch Athan.debug.xcconfig */,
 				AECE86FC8077C475329F475C /* Pods-Watch Athan.release.xcconfig */,
 				4E6E5FCA2F568BDE7816BD68 /* Pods-Watch Athan Extension.debug.xcconfig */,
@@ -525,7 +531,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3DD3B49F1C0D3B5700DC91E6 /* Build configuration list for PBXNativeTarget "AthanToday" */;
 			buildPhases = (
-				F53D6B72ACEC05B721437944 /* [CP] Check Pods Manifest.lock */,
 				3DD3B48B1C0D3B5700DC91E6 /* Sources */,
 				3DD3B48C1C0D3B5700DC91E6 /* Frameworks */,
 				3DD3B48D1C0D3B5700DC91E6 /* Resources */,
@@ -729,24 +734,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F53D6B72ACEC05B721437944 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AthanToday-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -782,9 +769,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DB9331F21AB0BFB00E5E726 /* QueryLocationIntent.swift in Sources */,
+				3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */,
+				3DB56CEC228367DB00B9F738 /* PrayerManager.swift in Sources */,
 				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
-				3DB9332121AB0C1500E5E726 /* CurrentLocationIntent.swift in Sources */,
+				3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */,
+				3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */,
+				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
+				3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */,
+				3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */,
+				3DB56CF4228369A200B9F738 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +785,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DB56CEB228204BB00B9F738 /* Intents.intentdefinition in Sources */,
+				3DB56CF3228368BA00B9F738 /* HeadingDelegate.swift in Sources */,
+				3DB56CED228367DC00B9F738 /* PrayerManager.swift in Sources */,
+				3DB56CF02283682700B9F738 /* PrayerType.swift in Sources */,
 				3D93EA142182C447002019B7 /* IntentViewController.swift in Sources */,
+				3DB56CEF228367E100B9F738 /* PrayerManagerDelegate.swift in Sources */,
+				3DB56CF5228369A300B9F738 /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,7 +1180,6 @@
 		};
 		3DD3B49D1C0D3B5700DC91E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40304C7DD88FC1F6464ABF35 /* Pods-AthanToday.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1200,7 +1198,6 @@
 		};
 		3DD3B49E1C0D3B5700DC91E6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 885291268D2BF3F2948790FC /* Pods-AthanToday.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

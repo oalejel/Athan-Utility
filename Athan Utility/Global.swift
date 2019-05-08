@@ -40,7 +40,7 @@ func y(_ r: CGRect) -> CGFloat {
     return r.origin.y
 }
 
-func  daysInMonth(_ m: Int) -> Int {
+func daysInMonth(_ m: Int) -> Int {
     switch m {
     case 1:
         return 31
@@ -107,7 +107,7 @@ class Global {
     
     static var manager: PrayerManager!
     
-    static var mainController: ViewController?
+//    static var mainController: UIViewController?
     
 //    static var darkTheme = true {
 //        didSet {
@@ -115,13 +115,14 @@ class Global {
 //        }
 //    }
     
-    static var openQibla = false {
-        didSet {
-            if let m = mainController {
-                m.showQibla(self)
-            }
-        }
-    }
+    static var openQibla = false
+//    {
+//        didSet {
+//            if let m = mainController {
+//                m.showQibla(self)
+//            }
+//        }
+//    }
     
     
     /*

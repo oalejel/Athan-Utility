@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -87,24 +85,6 @@
                                     <constraint firstAttribute="bottom" secondItem="wC5-hi-kNy" secondAttribute="bottom" id="ydl-wp-Xio"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSz-Fq-muk">
-                                <rect key="frame" x="37.5" y="376" width="300" height="246"/>
-                                <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNa-XY-ot8">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="246"/>
-                                        <connections>
-                                            <segue destination="wgr-FR-nbt" kind="embed" identifier="Table" id="8Iu-8L-Dk5"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="CNa-XY-ot8" firstAttribute="centerX" secondItem="MSz-Fq-muk" secondAttribute="centerX" id="P2h-4W-rYH"/>
-                                    <constraint firstItem="CNa-XY-ot8" firstAttribute="height" secondItem="MSz-Fq-muk" secondAttribute="height" id="PfJ-4J-8fd"/>
-                                    <constraint firstItem="CNa-XY-ot8" firstAttribute="centerY" secondItem="MSz-Fq-muk" secondAttribute="centerY" id="sLn-F8-S0T"/>
-                                    <constraint firstItem="CNa-XY-ot8" firstAttribute="width" secondItem="MSz-Fq-muk" secondAttribute="width" id="sq5-m1-uxW"/>
-                                </constraints>
-                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bv4-zz-aNR">
                                 <rect key="frame" x="37.5" y="336" width="300" height="33"/>
                                 <constraints>
@@ -126,21 +106,63 @@
                                     <action selector="customLocationPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wbG-8E-oe2"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AcV-te-gRM">
+                                <rect key="frame" x="37.5" y="377" width="300" height="245"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bW-fS-vwD" userLabel="Siri Button View">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="64"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFo-L1-Fih">
+                                                <rect key="frame" x="280" y="26" width="12" height="12"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="12" id="RGa-cH-WZk"/>
+                                                    <constraint firstAttribute="height" constant="12" id="c6e-qg-nCq"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="XFo-L1-Fih" firstAttribute="centerY" secondItem="1bW-fS-vwD" secondAttribute="centerY" id="Djk-M0-SCt"/>
+                                            <constraint firstAttribute="height" constant="64" id="SDt-Bm-9bK"/>
+                                            <constraint firstAttribute="trailing" secondItem="XFo-L1-Fih" secondAttribute="trailing" constant="8" id="WXt-Ch-ntL"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSz-Fq-muk">
+                                        <rect key="frame" x="0.0" y="72" width="300" height="173"/>
+                                        <subviews>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNa-XY-ot8">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="173"/>
+                                                <connections>
+                                                    <segue destination="wgr-FR-nbt" kind="embed" identifier="Table" id="8Iu-8L-Dk5"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="CNa-XY-ot8" firstAttribute="centerX" secondItem="MSz-Fq-muk" secondAttribute="centerX" id="P2h-4W-rYH"/>
+                                            <constraint firstItem="CNa-XY-ot8" firstAttribute="height" secondItem="MSz-Fq-muk" secondAttribute="height" id="PfJ-4J-8fd"/>
+                                            <constraint firstItem="CNa-XY-ot8" firstAttribute="width" secondItem="MSz-Fq-muk" secondAttribute="width" id="sq5-m1-uxW"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Bv4-zz-aNR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4BP-L7-Ukg"/>
+                            <constraint firstItem="AcV-te-gRM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bpg-wU-a2b"/>
                             <constraint firstItem="Ca1-eh-7yQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IOg-0i-yK3"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ca1-eh-7yQ" secondAttribute="bottom" constant="8" id="MFm-4i-i4u"/>
-                            <constraint firstItem="MSz-Fq-muk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mqa-yq-Mxy"/>
                             <constraint firstItem="il8-3r-zSC" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="P7J-fe-UfX"/>
-                            <constraint firstItem="Ca1-eh-7yQ" firstAttribute="top" secondItem="CNa-XY-ot8" secondAttribute="bottom" constant="8" id="UGj-mO-V4f"/>
-                            <constraint firstItem="MSz-Fq-muk" firstAttribute="top" secondItem="Bv4-zz-aNR" secondAttribute="bottom" constant="7" id="Xgx-AN-Jba"/>
+                            <constraint firstItem="Ca1-eh-7yQ" firstAttribute="top" secondItem="AcV-te-gRM" secondAttribute="bottom" constant="8" id="TCn-5n-Dgf"/>
                             <constraint firstItem="Bv4-zz-aNR" firstAttribute="width" secondItem="il8-3r-zSC" secondAttribute="width" id="dRE-Fa-vXf"/>
+                            <constraint firstItem="AcV-te-gRM" firstAttribute="width" secondItem="Bv4-zz-aNR" secondAttribute="width" id="fkk-Kz-7yX"/>
+                            <constraint firstItem="Ca1-eh-7yQ" firstAttribute="top" secondItem="CNa-XY-ot8" secondAttribute="bottom" constant="8" id="hBO-Qn-pdP"/>
                             <constraint firstItem="Bv4-zz-aNR" firstAttribute="top" secondItem="il8-3r-zSC" secondAttribute="bottom" constant="8" id="hYo-gY-ZGt"/>
                             <constraint firstItem="il8-3r-zSC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="oq3-3b-Kh8"/>
-                            <constraint firstItem="Ca1-eh-7yQ" firstAttribute="width" secondItem="CNa-XY-ot8" secondAttribute="width" id="tyC-KN-WPm"/>
-                            <constraint firstItem="MSz-Fq-muk" firstAttribute="width" secondItem="Bv4-zz-aNR" secondAttribute="width" id="vkh-GE-fX2"/>
+                            <constraint firstItem="AcV-te-gRM" firstAttribute="top" secondItem="Bv4-zz-aNR" secondAttribute="bottom" constant="8" id="tUJ-B4-ykM"/>
                             <constraint firstItem="il8-3r-zSC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xWg-U9-PwQ"/>
+                            <constraint firstItem="Ca1-eh-7yQ" firstAttribute="width" secondItem="Bv4-zz-aNR" secondAttribute="width" id="xn2-fj-Pqp"/>
                         </constraints>
                     </view>
                     <connections>
@@ -150,6 +172,8 @@
                         <outlet property="notificationsButton" destination="1EH-27-Wnf" id="6iA-jM-V1a"/>
                         <outlet property="qiblaButton" destination="wC5-hi-kNy" id="xma-EH-3Fe"/>
                         <outlet property="refreshButton" destination="MGl-K9-se3" id="grV-ef-J45"/>
+                        <outlet property="siriAnchorView" destination="XFo-L1-Fih" id="sfJ-cs-I4l"/>
+                        <outlet property="siriButtonView" destination="1bW-fS-vwD" id="S6d-X5-hMV"/>
                         <outlet property="tableContainer" destination="MSz-Fq-muk" id="MGY-iD-iG2"/>
                     </connections>
                 </viewController>
@@ -166,7 +190,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Z5s-1V-gc0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yhI-Rm-3Rl">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="246"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="173"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -222,7 +246,7 @@
     <resources>
         <image name="arrow" width="26" height="28"/>
         <image name="bell" width="16" height="21"/>
-        <image name="kaba" width="20" height="21"/>
+        <image name="kaba" width="20.5" height="21"/>
         <image name="refresh" width="24" height="20"/>
     </resources>
 </document>

@@ -26,8 +26,7 @@
 		<dict>
 			<key>IntentsSupported</key>
 			<array>
-				<string>CurrentLocationIntent</string>
-				<string>QueryLocationIntent</string>
+				<string>NextPrayerIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

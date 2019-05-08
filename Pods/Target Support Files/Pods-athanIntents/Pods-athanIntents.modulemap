@@ -1,6 +1,0 @@
-framework module Pods_athanIntents {
-  umbrella header "Pods-athanIntents-umbrella.h"
-
-  export *
-  module * { export * }
-}

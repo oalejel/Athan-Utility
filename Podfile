@@ -7,13 +7,16 @@ target 'Athan Utility' do
 
   # Pods for Athan Utility
   pod 'WhatsNew'
-  target 'Athan UtilityTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+
+#  target 'Athan UtilityTests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
   
   pod 'SqueezeButton'
 end
+
+=begin
 
 target 'athanIntents' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -54,3 +57,5 @@ target 'Watch Athan Extension' do
   # Pods for Watch Athan Extension
 
 end
+
+=end

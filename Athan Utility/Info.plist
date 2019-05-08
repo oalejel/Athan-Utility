@@ -38,7 +38,9 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>CurrentLocationIntentIntent</string>
+		<string>CustomLocationIntentIntent</string>
 		<string>Intent2Intent</string>
+		<string>NextPrayerIntent</string>
 		<string>QueryLocationIntentIntent</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

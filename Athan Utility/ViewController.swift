@@ -12,6 +12,7 @@ import WhatsNew
 import SqueezeButton
 import Intents
 
+
 extension UIView {
     /// Custom UIView method to fade out a view in 0.77 seconds
     func _hide() {
@@ -24,22 +25,24 @@ extension UIView {
     }
 }
 
-class ViewController: UIViewController, PrayerManagerDelegate {
+class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShortcutViewControllerDelegate {
     
     @IBOutlet weak var clock: ClockView!
     var table: TableController!
     var progressView: ElapsedView!
     
-//    @IBOutlet weak var locationLabel: UILabel!
+    //    @IBOutlet weak var locationLabel: UILabel!
     var manager: PrayerManager!
     var showSpinner = false
     
 //    @IBOutlet weak var settingsButton: SqueezeButton!
     //not an actual xib containerview
+    @IBOutlet weak var siriButtonView: UIView!
     @IBOutlet weak var tableContainer: UIView!
     
     var settingsMode = false
     
+    @IBOutlet weak var siriAnchorView: UIView!
     var gradientLayer: CAGradientLayer?
     var showIntroLate = false
     
@@ -81,15 +84,27 @@ class ViewController: UIViewController, PrayerManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // by default, hide siri recommendation view
+        siriButtonView.isHidden = true
+        
         // for now, ask for siri permission immediately.
         // goal is to have settings available for requesting manually,
         // and a banner to show the feature in the second and third times the app is opened.
         INPreferences.requestSiriAuthorization { (status: INSiriAuthorizationStatus) in
-            if status == INSiriAuthorizationStatus.authorized {
-                
+
+            // if on iOS 12, show button for creating shortcut
+            if #available(iOS 12.0, *) {
+                // check that user still wants to see shortcut
+                if UserDefaults.standard.bool(forKey: "hideSiriShortcuts") == false {
+                    if status == INSiriAuthorizationStatus.authorized {
+                        self.prepareSiriButtonView()
+                    }
+                }
             }
+            
+
+
         }
-        
         
         // setup accessibility on buttons and elements of screen
 //        #warning("should eventually make this based on a localized string")
@@ -110,6 +125,9 @@ class ViewController: UIViewController, PrayerManagerDelegate {
         //this will also set the manager variable equal to this (could cause a problem)!
         manager = PrayerManager(delegate: self)
         Global.manager = manager
+        
+        // register for foreground updates in case user moves to new location and opens app in that place
+        NotificationCenter.default.addObserver(self, selector: #selector(PrayerManager.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
         
 //        refreshButton.layer.cornerRadius = 8
 //        qiblaButton.layer.cornerRadius = 8
@@ -149,8 +167,71 @@ class ViewController: UIViewController, PrayerManagerDelegate {
 //            updateTheme()
 //        }
         
-        Global.mainController = self
+//        Global.mainController = self
     }
+    
+    // MARK: Siri Intents
+    
+    func hideLoadingView() {
+        SwiftSpinner.hide()
+    }
+    
+    func prepareSiriButtonView() {
+        if #available(iOS 12.0, *) {
+            siriButtonView.isHidden = false
+            siriButtonView.layer.cornerRadius = 10
+            siriButtonView.backgroundColor = .darkerGray
+            
+            let button = INUIAddVoiceShortcutButton(style: .blackOutline)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            siriButtonView.addSubview(button)
+            button.trailingAnchor.constraint(equalTo: siriAnchorView.trailingAnchor).isActive = true
+            button.centerYAnchor.constraint(equalTo: siriAnchorView.centerYAnchor).isActive = true
+            
+            button.addTarget(self, action: #selector(addToSiri), for: .touchUpInside)
+            
+            let suggestionLabel = UILabel()
+            suggestionLabel.translatesAutoresizingMaskIntoConstraints = false
+            suggestionLabel.text = "Ask Siri for the \nnext prayer time."
+            suggestionLabel.textColor = .white
+            suggestionLabel.font = UIFont(name: "\(suggestionLabel.font.fontName)-Bold", size: suggestionLabel.font.pointSize - 4)
+            suggestionLabel.numberOfLines = 2
+            
+            siriButtonView.addSubview(suggestionLabel)
+            
+            suggestionLabel.heightAnchor.constraint(equalTo: siriButtonView.heightAnchor, constant: -16).isActive = true
+            suggestionLabel.widthAnchor.constraint(equalTo: siriButtonView.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
+            suggestionLabel.leadingAnchor.constraint(equalTo: siriButtonView.leadingAnchor, constant: 12).isActive = true
+            suggestionLabel.centerYAnchor.constraint(equalTo: siriButtonView.centerYAnchor).isActive = true
+
+        }
+
+    }
+    
+    @objc
+    func addToSiri() {
+        if #available(iOS 12.0, *) {
+            if let shortcut = INShortcut(intent: NextPrayerIntent()) {
+                let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
+                viewController.modalPresentationStyle = .formSheet
+                viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
+                present(viewController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @available(iOS 12.0, *)
+    func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
+        siriButtonView.isHidden = true
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    @available(iOS 12.0, *)
+    func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
+        // if canceled, keep shortcut suggestion visible, but set default settings to off
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
 
     @objc func enteredForeground() {
         // must reset timers, since they are not accurate in background
@@ -270,6 +351,11 @@ class ViewController: UIViewController, PrayerManagerDelegate {
             if let location = manager.locationString {
                 self.locationButton.setTitle(location, for: .normal)
             }
+            
+            // now that we actually have a qibla heading, we can have a dynamic quick action
+            let icon = UIApplicationShortcutIcon(type: .location)
+            let dynamicItem = UIApplicationShortcutItem(type: "qibla", localizedTitle: "Qibla", localizedSubtitle: nil, icon: icon, userInfo: nil)
+            UIApplication.shared.shortcutItems = [dynamicItem]
         }
     }
     

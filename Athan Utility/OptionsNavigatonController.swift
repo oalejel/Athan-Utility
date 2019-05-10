@@ -16,7 +16,7 @@ class OptionsNavigatonController: UINavigationController {
         var fx: UIBlurEffect!
         
 //        if Global.darkTheme {
-            fx = UIBlurEffect(style: UIBlurEffectStyle.dark)
+            fx = UIBlurEffect(style: UIBlurEffect.Style.dark)
 //        } else {
 //            fx = UIBlurEffect(style: UIBlurEffectStyle.light)
 //        }
@@ -34,7 +34,7 @@ class OptionsNavigatonController: UINavigationController {
 //        if Global.darkTheme {
             navigationBar.barTintColor = UIColor(white: 0.1, alpha: 1.0)
             navigationBar.tintColor = UIColor.white
-            navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
 //        } else {
 //            navigationBar.barTintColor = UIColor(white: 1, alpha: 1.0)
 //        }

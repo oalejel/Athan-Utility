@@ -463,8 +463,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                                     //access the time for this one prayer using teh custom names array and a corresponding index
                                                     if var prayerTimeString = dayPrayersDict[customNames[p.rawValue]] {
                                                         //remove the pesky annoying timezone string
-                                                        let startingParensIndex = prayerTimeString.index(of: "(")
-                                                        let endingParensIndex = prayerTimeString.index(of: ")")
+                                                        let startingParensIndex = prayerTimeString.firstIndex(of: "(")
+                                                        let endingParensIndex = prayerTimeString.firstIndex(of: ")")
                                                         prayerTimeString.removeSubrange(startingParensIndex!...endingParensIndex!)
                                                         
                                                         prayerTimeString += "\(parsedDay ?? 0) \(parsedMonth ?? 0) \(parsedYear ?? 0)"
@@ -610,7 +610,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
         }
         
-
         center.removeAllPendingNotificationRequests()
 //
 //        center.getDeliveredNotifications { (reqs) in
@@ -743,6 +742,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         let center = UNUserNotificationCenter.current()
         
+        let noteSoundFilename = Settings.getSelectedSoundFilename()
+        
+        
         for i in min...5 {
             let p = PrayerType(rawValue: i)!
             if let byMonth = yearTimes[t.year] {
@@ -759,8 +761,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             //schedule a normal if settings allow
                             if setting.alarmType == .all || setting.alarmType == .noEarly {
                                 if setting.soundEnabled {
-                                    let soundName = UNNotificationSoundName(rawValue: "chime1.aiff")
-                                    noteContent.sound = UNNotificationSound(named: soundName)
+                                    if noteSoundFilename == "DEFAULT" {
+                                        noteContent.sound = .default
+                                    } else {
+                                        noteContent.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(noteSoundFilename).mp3"))
+                                    }
+                                   
                                 }
                                 
                                 var alertString = ""
@@ -815,7 +821,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 
                                 //use a standard note tone when giving a 15m reminder
                                 if setting.soundEnabled {
-                                    preNoteContent.sound = UNNotificationSound.default()
+                                    preNoteContent.sound = .default
                                 }
                                 
                                 var alertString = ""
@@ -858,18 +864,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     /// Returns approprate color for urgency of time left
-    func timeLeftColor() -> UIColor {
-        if nextPrayerTime()?.timeIntervalSinceNow < 900 {
-            return UIColor.orange
-        }
-        return UIColor.green
-    }
+//    func timeLeftColor() -> UIColor {
+////        if nextPrayerTime()?.timeIntervalSinceNow < 900 {
+////            return UIColor.orange
+////        }
+////        return UIColor.green
+//        return UIColor.orange
+//    }
     
     /// indicates that there are 15 m left til next prayer begins.
     /// Should adjust app by changing color of certain things to orange
     @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
-        Global.statusColor = timeLeftColor()
+        Global.statusColor = UIColor.orange
         delegate.fifteenMinutesLeft?()
     }
     
@@ -877,7 +884,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     @objc func newPrayer() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
-        delegate.updateCurrentPrayer?(manager: self)
+        delegate.newPrayer?(manager: self)
     }
     
     func currentPrayerTime() -> Date? {

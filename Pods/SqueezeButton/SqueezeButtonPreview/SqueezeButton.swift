@@ -76,7 +76,7 @@ import UIKit
     
     //if press has not completed, rescaling will not take place
     func press() {
-        UIView.animateKeyframes(withDuration: 0.1, delay: 0.0, options: UIViewKeyframeAnimationOptions.calculationModeCubic, animations: { () -> Void in
+        UIView.animateKeyframes(withDuration: 0.1, delay: 0.0, options: UIView.KeyframeAnimationOptions.calculationModeCubic, animations: { () -> Void in
             self.completedSqueeze = false
             self.transform = self.transform.scaledBy(x: 0.9, y: 0.9)
         }) { (done) -> Void in
@@ -91,7 +91,7 @@ import UIKit
     
     func rescaleButton() {
         if completedSqueeze {
-            UIView.animateKeyframes(withDuration: 0.2, delay: 0.0, options: UIViewKeyframeAnimationOptions.calculationModeCubic, animations: { () -> Void in
+            UIView.animateKeyframes(withDuration: 0.2, delay: 0.0, options: UIView.KeyframeAnimationOptions.calculationModeCubic, animations: { () -> Void in
                 self.transform = self.transform.scaledBy(x: 1/0.9, y: 1/0.9)
             }) { (done) -> Void in
                 

@@ -20,7 +20,7 @@ class PrayerSettingController: UITableViewController {
     
     var initialSettings: PrayerSetting!
     
-    init(style: UITableViewStyle, prayer: PrayerType) {
+    init(style: UITableView.Style, prayer: PrayerType) {
         super.init(style: style)
         p = prayer
         //create a settings object to be compared later
@@ -85,7 +85,7 @@ class PrayerSettingController: UITableViewController {
         let c = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         let enableSwitch = UISwitch()
-        enableSwitch.addTarget(self, action: #selector(PrayerSettingController.switched), for: UIControlEvents.touchUpInside)
+        enableSwitch.addTarget(self, action: #selector(PrayerSettingController.switched), for: UIControl.Event.touchUpInside)
         enableSwitch.isOn = switchesOn[indexPath.row]
         enableSwitch.isEnabled = switchesEnabled[indexPath.row]
         switches.append(enableSwitch)
@@ -142,9 +142,12 @@ class PrayerSettingController: UITableViewController {
         }
     }
     
+    #warning("move settings saving to settings.swift")
     override func viewWillDisappear(_ animated: Bool) {
+        Global.manager.saveSettings()
         if initialSettings.alarmType != Global.manager.prayerSettings[p]!.alarmType || initialSettings.soundEnabled != Global.manager.prayerSettings[p]!.soundEnabled {
-            Global.manager.scheduleAppropriateNotifications()
+//            Global.manager.scheduleAppropriateNotifications()
+            Settings.notificationUpdatesPending = true
         }
     }
 }

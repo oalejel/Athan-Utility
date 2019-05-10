@@ -61,10 +61,10 @@ open class SwiftSpinner: UIView {
         cancelButton.layer.cornerRadius = 10
         cancelButton.backgroundColor = UIColor(white: 0.87, alpha: 0.5)
         let localizedCancelString = NSLocalizedString("Cancel", comment: "")
-        cancelButton.setTitle(localizedCancelString, for: UIControlState.normal)
+        cancelButton.setTitle(localizedCancelString, for: UIControl.State.normal)
         cancelButton.accessibilityLabel = "cancel" //localizedCancelString // make this localized later
         cancelButton.addTarget(Global.manager, action: #selector(Global.manager.userCanceledDataRequest), for: .touchUpInside)
-        cancelButton.setTitleColor(UIColor.black, for: UIControlState())
+        cancelButton.setTitleColor(UIColor.black, for: UIControl.State())
         cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
         vibrancyView.contentView.addSubview(cancelButton)
         
@@ -76,7 +76,7 @@ open class SwiftSpinner: UIView {
         outerCircle.lineWidth = 8.0
         outerCircle.strokeStart = 0.0
         outerCircle.strokeEnd = 0.45
-        outerCircle.lineCap = kCALineCapRound
+        outerCircle.lineCap = CAShapeLayerLineCap.round
         outerCircle.fillColor = UIColor.clear.cgColor
         outerCircle.strokeColor = UIColor.white.cgColor
         outerCircleView.layer.addSublayer(outerCircle)
@@ -93,7 +93,7 @@ open class SwiftSpinner: UIView {
         innerCircle.lineWidth = 4.0
         innerCircle.strokeStart = 0.5
         innerCircle.strokeEnd = 0.9
-        innerCircle.lineCap = kCALineCapRound
+        innerCircle.lineCap = CAShapeLayerLineCap.round
         innerCircle.fillColor = UIColor.clear.cgColor
         innerCircle.strokeColor = UIColor.gray.cgColor
         innerCircleView.layer.addSublayer(innerCircle)
@@ -188,7 +188,7 @@ open class SwiftSpinner: UIView {
                 spinner.titleLabel.alpha = 0.2
             }, completion: {_ in
                 spinner.titleLabel.text = self.title
-                UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+                UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0.0, options: UIView.AnimationOptions.curveLinear, animations: {
                     spinner.titleLabel.transform = CGAffineTransform.identity
                     spinner.titleLabel.alpha = 1.0
                 }, completion: nil)
@@ -247,7 +247,7 @@ open class SwiftSpinner: UIView {
     // layout elements
     //
     
-    fileprivate var blurEffectStyle: UIBlurEffectStyle = .dark
+    fileprivate var blurEffectStyle: UIBlurEffect.Style = .dark
     fileprivate var blurEffect: UIBlurEffect!
     fileprivate var blurView: UIVisualEffectView!
     fileprivate var vibrancyView: UIVisualEffectView!
@@ -280,7 +280,7 @@ open class SwiftSpinner: UIView {
         let randomRotation = Double(Float(arc4random()) /  Float(UInt32.max)) * (Double.pi / 4) + (Double.pi)
         
         //outer circle
-        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.0, options: UIView.AnimationOptions.curveLinear, animations: {
             self.currentOuterRotation -= CGFloat(randomRotation)
             self.outerCircleView.transform = CGAffineTransform(rotationAngle: self.currentOuterRotation)
         }, completion: {_ in
@@ -299,7 +299,7 @@ open class SwiftSpinner: UIView {
         }
         
         //inner circle
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.curveLinear, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: UIView.AnimationOptions.curveLinear, animations: {
             self.currentInnerRotation += CGFloat(Double.pi / 4)
             self.innerCircleView.transform = CGAffineTransform(rotationAngle: self.currentInnerRotation)
         }, completion: {_ in

@@ -101,9 +101,6 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
                     }
                 }
             }
-            
-
-
         }
         
         // setup accessibility on buttons and elements of screen
@@ -127,11 +124,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         Global.manager = manager
         
         // register for foreground updates in case user moves to new location and opens app in that place
-        NotificationCenter.default.addObserver(self, selector: #selector(PrayerManager.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
-        
-//        refreshButton.layer.cornerRadius = 8
-//        qiblaButton.layer.cornerRadius = 8
-//        settingsButton.layer.cornerRadius = 8
+        NotificationCenter.default.addObserver(manager!, selector: #selector(PrayerManager.enteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         // prevent touch recognizers from delaying squeezebutton reactions
         let window = UIApplication.shared.windows[0]
@@ -140,34 +133,20 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         let g2 = window.gestureRecognizers?[1]
         g2?.delaysTouchesBegan = false
         
-//        refreshButton.setTitleColor(UIColor.lightGray, for: UIControlState())
-//        refreshButton.setTitle("Refresh", for: UIControlState())
         refreshButton.backgroundColor = .darkerGray
-        locationButton.backgroundColor = .darkerGray
-        locationButton.setTitleColor(UIColor.lightGray, for: .normal)
-//        qiblaButton.setTitleColor(UIColor.lightGray, for: UIControlState())
-//        qiblaButton.setTitle("Qibla", for: UIControlState())
         qiblaButton.backgroundColor = .darkerGray
         infoButton.backgroundColor = .darkerGray
         notificationsButton.backgroundColor = .darkerGray
-//        settingsButton.setTitleColor(UIColor.lightGray, for: UIControlState.normal)
-//        settingsButton.setTitle("Settings", for: UIControlState.normal)
-//        settingsButton.backgroundColor = Global.darkerGray
+        locationButton.backgroundColor = .darkerGray
+        locationButton.setTitleColor(UIColor.lightGray, for: .normal)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: .UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
-        // Deal with a force-press app shortcut
+        // Deal with a force-press app shortcut on app launch
         if Global.openQibla {
-            showQibla(self)
+            self.showQibla(self)
         }
-
-        // Theme changing currently not supported
-//        if !Global.darkTheme {
-//            updateTheme()
-//        }
-        
-//        Global.mainController = self
     }
     
     // MARK: Siri Intents
@@ -203,15 +182,15 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             suggestionLabel.widthAnchor.constraint(equalTo: siriButtonView.widthAnchor, multiplier: 0.5, constant: 0).isActive = true
             suggestionLabel.leadingAnchor.constraint(equalTo: siriButtonView.leadingAnchor, constant: 12).isActive = true
             suggestionLabel.centerYAnchor.constraint(equalTo: siriButtonView.centerYAnchor).isActive = true
-
         }
-
     }
     
     @objc
     func addToSiri() {
         if #available(iOS 12.0, *) {
-            if let shortcut = INShortcut(intent: NextPrayerIntent()) {
+            let intent = NextPrayerIntent()
+            intent.suggestedInvocationPhrase = "Next prayer"
+            if let shortcut = INShortcut(intent: intent) {
                 let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
                 viewController.modalPresentationStyle = .formSheet
                 viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
@@ -224,16 +203,20 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
         siriButtonView.isHidden = true
         controller.dismiss(animated: true, completion: nil)
+        // from now on, users must enable shortcuts in settings view controller
+        UserDefaults.standard.set(true, forKey: "hideSiriShortcuts")
     }
     
     @available(iOS 12.0, *)
     func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
         // if canceled, keep shortcut suggestion visible, but set default settings to off
         controller.dismiss(animated: true, completion: nil)
+        // from now on, users must enable shortcuts in settings view controller
+        UserDefaults.standard.set(true, forKey: "hideSiriShortcuts")
     }
     
-
     @objc func enteredForeground() {
+        print("entered foreground")
         // must reset timers, since they are not accurate in background
         manager.calculateCurrentPrayer()
         manager.setTimers()
@@ -267,9 +250,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         
         progressView.setNeedsDisplay()
         softResetPrayerVisuals()
-        
         manager.calculateCurrentPrayer()
-        
         // though this is called by hard reset, we always want to refresh this animation
         clock.refreshTime()
     }
@@ -325,20 +306,6 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             // always do a location request on first appearance of view
             manager.beginLocationRequest()
         }
-        
-            /*
-            if !pref { showIntroLate = true }
-            manager.beginLocationRequest()
-        } else if !pref {
-            print("show intro screen")
-            let intro = IntroViewController()
-            intro.view.backgroundColor = UIColor.black
-            present(intro, animated: true, completion: { })
-            UserDefaults.standard.set(true, forKey: "introduced")
-        }
-             }
- */
-        
     }
     
     //Data Manager Delegate
@@ -360,7 +327,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     }
     
     //specific to individual prayers
-    func updateCurrentPrayer(manager: PrayerManager) {
+    func newPrayer(manager: PrayerManager) {
         softResetPrayerVisuals()
         
         // keep track of last time we updated our visuals
@@ -376,9 +343,8 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             var cellIndex = pIndex
             if cellIndex > 5 { cellIndex = 5 }
             table.highlightCellAtIndex(cellIndex, color: Global.statusColor)
-            //        progressView.progressLayer.backgroundColor = manager.timeLeftColor().cgColor
             clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: fifteenMinutesLeft)
-//            progressView.progressLayer.backgroundColor = Global.statusColor.cgColor
+//            progressView?.progressLayer.backgroundColor = Global.statusColor.cgColor
         }
     }
     
@@ -389,8 +355,9 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             refreshProgressBar()
             clock.refreshPrayerBubbles(manager.currentPrayer)
             table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
-            // hard
+//            progressView?.progressLayer.backgroundColor = Global.statusColor.cgColor
             
+            // hard
             table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
             clock.setPrayerBubbles(manager)
             clock.refreshTime()
@@ -487,12 +454,15 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     // Show compass direction to Kabah in Mecca. Originates from compass button.
     @IBAction func showQibla(_ sender: AnyObject) {
-        let qvc = QiblaViewController()
-        qvc.qiblaOffset = self.manager.qibla
-        qvc.headingManager = self.manager
-        self.manager.headingDelegate = qvc
-        present(qvc, animated: true) { () -> Void in
-            //do something
+        DispatchQueue.main.async {
+            Global.openQibla = false
+            let qvc = QiblaViewController()
+            qvc.qiblaOffset = self.manager.qibla
+            qvc.headingManager = self.manager
+            self.manager.headingDelegate = qvc
+            self.present(qvc, animated: true) { () -> Void in
+                // do something
+            }
         }
     }
     

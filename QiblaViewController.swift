@@ -81,6 +81,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     }
     
     @IBAction func dismiss(_ sender: AnyObject) {
+        Global.openQibla = false
         headingManager.headingDelegate = nil
         presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // do nothing for now

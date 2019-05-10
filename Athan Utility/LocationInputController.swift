@@ -62,7 +62,7 @@ class LocationInputController: UIViewController {
         
         // we want text before commas to be capitalized like normal pronouns
         // and text after commas to be all caps. Ex: Bloomfield Hills, MI, USA
-        let rightHalfIndex = rawLocationString.index(of: ",") ?? rawLocationString.endIndex
+        let rightHalfIndex = rawLocationString.firstIndex(of: ",") ?? rawLocationString.endIndex
         let leftHalf = rawLocationString[rawLocationString.startIndex..<rightHalfIndex].capitalized
         let rightHalf = rawLocationString[rightHalfIndex..<rawLocationString.endIndex].uppercased()
         

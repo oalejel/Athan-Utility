@@ -27,7 +27,7 @@ class PrayerCell: UITableViewCell {
         timeLabel.adjustsFontSizeToFitWidth = true
         
         let image = UIImage(named: "bell")
-        alarmButton.setImage(image, for: UIControlState())
+        alarmButton.setImage(image, for: UIControl.State())
         alarmButton.imageView?.contentMode = .scaleAspectFit
         alarmButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         alarmButton.backgroundColor = UIColor.black
@@ -46,11 +46,11 @@ class PrayerCell: UITableViewCell {
         if alarmOn {
             alarmButton.tintColor = UIColor.darkGray
             let image = UIImage(named: "bell")
-            alarmButton.setImage(image, for: UIControlState())
+            alarmButton.setImage(image, for: UIControl.State())
         } else {
             alarmButton.tintColor = UIColor.lightGray
             let image = UIImage(named: "bell_off")
-            alarmButton.setImage(image, for: UIControlState())
+            alarmButton.setImage(image, for: UIControl.State())
         }
     }
 }

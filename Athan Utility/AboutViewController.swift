@@ -51,12 +51,17 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     // When button for swiftSpinner is pressed, show martin's github
     @IBAction func martinPressed(_ sender: AnyObject) {
         let URLString = "https://github.com/icanzilb/SwiftSpinner"
-        UIApplication.shared.open(URL(string: URLString)!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: URLString)!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     
     // when icons8 link is pressed, show website
     //NOTE: change this to display the website without leaving the application (using SafariViewController)
     @IBAction func iconsPressed(_ sender: AnyObject) {
-        UIApplication.shared.open(URL(string: "https://icons8.com")!, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL(string: "https://icons8.com")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

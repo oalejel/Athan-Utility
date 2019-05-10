@@ -40,6 +40,14 @@ func y(_ r: CGRect) -> CGFloat {
     return r.origin.y
 }
 
+func hijriString(for month: Int, day: Int, year: Int) -> String {
+    let months = ["Muḥarram", "Ṣafar", "Rabīʿ al-Awwal",
+                  "Rabīʿ ath-Thānī", "Jumādá al-Ūlá", "Jumādá al-Ākhirah",
+                  "Rajab", "Sha‘bān", "Ramaḍān", "Shawwāl", "Dhū al-Qa‘dah", "Dhū al-Ḥijjah"
+    ]
+    return "\(day) \(months[(month - 1) % 12]), \(year)"
+}
+
 func daysInMonth(_ m: Int) -> Int {
     switch m {
     case 1:
@@ -90,7 +98,6 @@ func daysInMonth(_ m: Int) -> Int {
 extension UIColor {
     static var darkestGray = UIColor(white: 0.1, alpha: 1)//for things that need to contrast with other gray
     static var darkerGray = UIColor(white: 0.15, alpha: 1)//lighter than darkest, use for buttons and other
-
 }
 
 class Global {
@@ -103,7 +110,6 @@ class Global {
         return Formatter.instance
     }
     static var statusColor = UIColor.green
-    
     
     static var manager: PrayerManager!
     

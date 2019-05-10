@@ -137,7 +137,7 @@ class ClockView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = hourPath.cgPath
         shapeLayer.lineDashPhase = 0
-        shapeLayer.lineCap = kCALineCapRound
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
         
         shapeLayer.lineDashPattern = [tickThickness, (circ - 12 * (tickThickness)) / 12] as [NSNumber]
         shapeLayer.strokeColor = UIColor.white.cgColor
@@ -433,7 +433,7 @@ class ClockView: UIView {
     func refreshPrayerBubbles(_ currentPrayer: PrayerType, fifteenMinutesLeft: Bool = false) {
         for (index, bubble) in prayerBubbleViews.enumerated() {
             if index == currentPrayer.rawValue {
-                bubble.backgroundColor = fifteenMinutesLeft ? Global.statusColor : .green
+                bubble.backgroundColor = Global.statusColor
             } else {
                 bubble.backgroundColor = UIColor.white
             }

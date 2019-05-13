@@ -47,6 +47,9 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         
         soundImage = UIImage(named: "sound")
         noSoundImage = UIImage(named: "no_sound")
+        
+        // check what the user setting for selected sound index is
+        notificationSoundIndex = Settings.getSelectedSoundIndex()
     }
     
     // sections: Siri Extension, Athan Alarms, Notification Sound
@@ -88,7 +91,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
             cell.textLabel?.text = noteSoundNames[indexPath.row]
             cell.selectionStyle = .gray
             // EDIT this so that we check the thing the user has in their settings
-            cell.accessoryType = indexPath.row == 0 ? .checkmark : .none
+            cell.accessoryType = indexPath.row == notificationSoundIndex ? .checkmark : .none
             
             return cell
         } else if indexPath.section == 2 {
@@ -160,7 +163,8 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
                 soundPreviewPlayer?.stop()
                 soundPreviewPlayer = nil
             } else {
-                handleSoundSelection(for: indexPath.row)
+//                handleSoundSelection(for: indexPath.row)
+                NoteSoundPlayer.playFullAudio(for: indexPath.row, fadeInterval: 30)
                 Settings.notificationUpdatesPending = true
             }
             
@@ -183,6 +187,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
     }
     
     @objc func donePressed() {
+        self.soundPreviewPlayer?.setVolume(0, fadeDuration: 1)
         navigationController!.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // save sound setting
             Settings.setSelectedSound(for: self.notificationSoundIndex)
@@ -196,29 +201,31 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         })
     }
     
-    // stop playing sound and play a new sound
-    var soundPreviewTimer: Timer?
-    func handleSoundSelection(for index: Int) {
-        // stop potentially running previews
-        soundPreviewPlayer?.stop()
-        do {
-            let fileName = Settings.noteSoundFileNames[index]
-            if fileName == "DEFAULT" {
-                AudioServicesPlaySystemSound(1315);
-            } else {
-                if let asset = NSDataAsset(name: fileName) {
-                    try soundPreviewPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
-                    soundPreviewPlayer?.play()
-                    soundPreviewTimer?.invalidate()
-                    soundPreviewTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (timer) in
-                        self.soundPreviewPlayer?.setVolume(0, fadeDuration: 1)
-                    }
-                }
-            }
-        } catch {
-            fatalError("unable to play audio file")
-        }
-    }
+//    // stop playing sound and play a new sound
+//    var soundPreviewTimer: Timer?
+//    func handleSoundSelection(for index: Int) {
+//        // stop potentially running previews
+//        soundPreviewPlayer?.stop()
+//        do {
+//            let fileName = Settings.noteSoundFileNames[index]
+//            if fileName == "DEFAULT" {
+//                AudioServicesPlaySystemSound(1315)
+//            } else {
+//                if let asset = NSDataAsset(name: fileName) {
+//                    try soundPreviewPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+//                    // allow audio to play with ringer off
+//                    try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+//                    soundPreviewPlayer?.play()
+//                    soundPreviewTimer?.invalidate()
+//                    soundPreviewTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (timer) in
+//                        self.soundPreviewPlayer?.setVolume(0, fadeDuration: 1)
+//                    }
+//                }
+//            }
+//        } catch {
+//            fatalError("unable to play audio file")
+//        }
+//    }
     
     // MARK: Siri
     @objc

@@ -44,6 +44,14 @@
 		3D73FC6C2285C3380092A83C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
 		3D73FC6D2285C3390092A83C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
 		3D73FC6E2285C3390092A83C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
+		3D73FC7A22875CCA0092A83C /* makkah-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7322875CC70092A83C /* makkah-preview.caf */; };
+		3D73FC7B22875CCA0092A83C /* alaqsa-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7422875CC80092A83C /* alaqsa-preview.caf */; };
+		3D73FC7C22875CCA0092A83C /* abdulghaffar-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7522875CC80092A83C /* abdulghaffar-preview.caf */; };
+		3D73FC7D22875CCA0092A83C /* abdulbaset-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7622875CC80092A83C /* abdulbaset-preview.caf */; };
+		3D73FC7E22875CCA0092A83C /* echo-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7722875CC80092A83C /* echo-preview.caf */; };
+		3D73FC7F22875CCA0092A83C /* madina-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7822875CC90092A83C /* madina-preview.caf */; };
+		3D73FC8022875CCA0092A83C /* egypt-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7922875CC90092A83C /* egypt-preview.caf */; };
+		3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */; };
 		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
 		3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */; };
@@ -197,6 +205,14 @@
 		3D73FC5A2284A2020092A83C /* SiriCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiriCell.xib; sourceTree = "<group>"; };
 		3D73FC662284DC720092A83C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		3D73FC6A2284EE1C0092A83C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		3D73FC7322875CC70092A83C /* makkah-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "makkah-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7422875CC80092A83C /* alaqsa-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "alaqsa-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7522875CC80092A83C /* abdulghaffar-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "abdulghaffar-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7622875CC80092A83C /* abdulbaset-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "abdulbaset-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7722875CC80092A83C /* echo-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "echo-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7822875CC90092A83C /* madina-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "madina-preview.caf"; sourceTree = "<group>"; };
+		3D73FC7922875CC90092A83C /* egypt-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "egypt-preview.caf"; sourceTree = "<group>"; };
+		3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSoundPlayer.swift; sourceTree = "<group>"; };
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
 		3D7D42C11C00E5380013956C /* PrayerSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* PrayerSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingsViewController.xib; sourceTree = "<group>"; };
@@ -380,6 +396,7 @@
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
 				3D73FC6A2284EE1C0092A83C /* Settings.swift */,
+				3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */,
 				3DF0EE9921038E3400624E98 /* PrayerType.swift */,
 				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
@@ -395,6 +412,7 @@
 				3D07DA961BDC58E30001EFE4 /* ClockView.swift */,
 				3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */,
 				3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */,
+				3D73FC8122875CCF0092A83C /* Notification Sound Previews */,
 			);
 			name = "Clock and Elapsed View";
 			sourceTree = "<group>";
@@ -407,6 +425,20 @@
 				3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */,
 			);
 			name = Table;
+			sourceTree = "<group>";
+		};
+		3D73FC8122875CCF0092A83C /* Notification Sound Previews */ = {
+			isa = PBXGroup;
+			children = (
+				3D73FC7622875CC80092A83C /* abdulbaset-preview.caf */,
+				3D73FC7522875CC80092A83C /* abdulghaffar-preview.caf */,
+				3D73FC7422875CC80092A83C /* alaqsa-preview.caf */,
+				3D73FC7722875CC80092A83C /* echo-preview.caf */,
+				3D73FC7922875CC90092A83C /* egypt-preview.caf */,
+				3D73FC7822875CC90092A83C /* madina-preview.caf */,
+				3D73FC7322875CC70092A83C /* makkah-preview.caf */,
+			);
+			name = "Notification Sound Previews";
 			sourceTree = "<group>";
 		};
 		3D93EA082182C447002019B7 /* AthanSiriIntents */ = {
@@ -686,13 +718,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
+				3D73FC8022875CCA0092A83C /* egypt-preview.caf in Resources */,
 				3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* PrayerSettingsViewController.xib in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
+				3D73FC7B22875CCA0092A83C /* alaqsa-preview.caf in Resources */,
+				3D73FC7C22875CCA0092A83C /* abdulghaffar-preview.caf in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
+				3D73FC7E22875CCA0092A83C /* echo-preview.caf in Resources */,
+				3D73FC7F22875CCA0092A83C /* madina-preview.caf in Resources */,
+				3D73FC7D22875CCA0092A83C /* abdulbaset-preview.caf in Resources */,
+				3D73FC7A22875CCA0092A83C /* makkah-preview.caf in Resources */,
 				3D73FC5C2284A2020092A83C /* SiriCell.xib in Resources */,
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
@@ -790,6 +829,7 @@
 				3D7D42C31C00E5380013956C /* PrayerSettingsViewController.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
+				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,

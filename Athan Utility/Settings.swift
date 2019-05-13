@@ -25,6 +25,10 @@ class Settings {
         return noteSoundFileNames[selectedSoundIndex % noteSoundFileNames.count]
     }
     
+    static func getSelectedSoundIndex() -> Int {
+        return UserDefaults.standard.integer(forKey: SOUND_INDEX_KEY)
+    }
+    
     static func setSelectedSound(for index: Int) {
         if index >= noteSoundFileNames.count {
             if #available(iOS 12.0, *) {

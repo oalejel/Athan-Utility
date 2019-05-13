@@ -332,6 +332,9 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         
         // keep track of last time we updated our visuals
         lastUpdate = Date()
+        
+        // play notification sound
+        NoteSoundPlayer.playFullAudio(for: Settings.getSelectedSoundIndex())
     }
     
     /// readjust only visual things that need changing within the same day. Does not include reloading table data.

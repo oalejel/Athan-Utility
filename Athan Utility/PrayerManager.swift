@@ -744,7 +744,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         let noteSoundFilename = Settings.getSelectedSoundFilename()
         
-        
         for i in min...5 {
             let p = PrayerType(rawValue: i)!
             if let byMonth = yearTimes[t.year] {
@@ -764,9 +763,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     if noteSoundFilename == "DEFAULT" {
                                         noteContent.sound = .default
                                     } else {
-                                        noteContent.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(noteSoundFilename).mp3"))
+                                        let soundName = UNNotificationSoundName(rawValue: "\(noteSoundFilename)-preview.caf")
+                                        noteContent.sound = UNNotificationSound(named: soundName)
                                     }
-                                   
                                 }
                                 
                                 var alertString = ""
@@ -956,7 +955,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
     func userRequestsReload() {
         //for simulator
-//        needsDataUpdate = true
         ignoreLocationUpdates = false
         
         if lockLocation {
@@ -975,15 +973,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         // location updates trigger nothing in simulator, so call on a predefined location:
         #if targetEnvironment(simulator)
-//        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
-//        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-//        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
         fetchMonthsJSONDataForCurrentLocation()
         #endif
     }
     
     @objc func userCanceledDataRequest() {
-//        needsDataUpdate = false
         delegate.hideLoadingView?()
     }
     

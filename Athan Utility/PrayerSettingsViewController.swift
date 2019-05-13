@@ -23,7 +23,6 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
     // file names are in settings.swift
     
     var notificationSoundIndex = 0 // set this to user setting
-    var soundPreviewPlayer: AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,11 +158,9 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
             tableView.deselectRow(at: indexPath, animated: true)
             
             // stop audio player if user tapped the same thing
-            if indexPath.row == notificationSoundIndex && soundPreviewPlayer?.isPlaying ?? false {
-                soundPreviewPlayer?.stop()
-                soundPreviewPlayer = nil
+            if indexPath.row == notificationSoundIndex && NoteSoundPlayer.isPlaying() {
+                NoteSoundPlayer.stopAudio()
             } else {
-//                handleSoundSelection(for: indexPath.row)
                 NoteSoundPlayer.playFullAudio(for: indexPath.row, fadeInterval: 30)
                 Settings.notificationUpdatesPending = true
             }
@@ -187,7 +184,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
     }
     
     @objc func donePressed() {
-        self.soundPreviewPlayer?.setVolume(0, fadeDuration: 1)
+        NoteSoundPlayer.fadeAudio()
         navigationController!.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // save sound setting
             Settings.setSelectedSound(for: self.notificationSoundIndex)
@@ -200,32 +197,6 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
             self.removeFromParent()
         })
     }
-    
-//    // stop playing sound and play a new sound
-//    var soundPreviewTimer: Timer?
-//    func handleSoundSelection(for index: Int) {
-//        // stop potentially running previews
-//        soundPreviewPlayer?.stop()
-//        do {
-//            let fileName = Settings.noteSoundFileNames[index]
-//            if fileName == "DEFAULT" {
-//                AudioServicesPlaySystemSound(1315)
-//            } else {
-//                if let asset = NSDataAsset(name: fileName) {
-//                    try soundPreviewPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
-//                    // allow audio to play with ringer off
-//                    try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-//                    soundPreviewPlayer?.play()
-//                    soundPreviewTimer?.invalidate()
-//                    soundPreviewTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (timer) in
-//                        self.soundPreviewPlayer?.setVolume(0, fadeDuration: 1)
-//                    }
-//                }
-//            }
-//        } catch {
-//            fatalError("unable to play audio file")
-//        }
-//    }
     
     // MARK: Siri
     @objc

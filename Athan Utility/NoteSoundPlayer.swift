@@ -44,11 +44,11 @@ class NoteSoundPlayer: NSObject {
     }
     
     static func playPreviewAudio(for index: Int) {
-        playAudio(for: index, isPreview: false)
+        playAudio(for: index, isPreview: true)
     }
     
     static func playFullAudio(for index: Int, fadeInterval: Int? = nil) {
-        playAudio(for: index, isPreview: true, fadeInterval: fadeInterval)
+        playAudio(for: index, isPreview: false, fadeInterval: fadeInterval)
     }
     
     static func fadeAudio() {
@@ -58,4 +58,10 @@ class NoteSoundPlayer: NSObject {
     static func stopAudio() {
         audioPlayer?.stop()
     }
+    
+    static func isPlaying() -> Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    
+    
 }

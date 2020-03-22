@@ -171,6 +171,12 @@ public class WhatsNewViewController: UIViewController {
 
     @IBAction func `continue`() {
         WhatsNew.markCurrentVersionAsPresented()
-        dismiss(animated: true, completion: onDismissal)
+        let x = onDismissal
+        onDismissal = nil
+        dismiss(animated: true, completion: x)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        onDismissal?()
     }
 }

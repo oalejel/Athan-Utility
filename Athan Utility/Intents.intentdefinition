@@ -5,6 +5,12 @@
 	<key>INEnums</key>
 	<array>
 		<dict>
+			<key>INEnumDisplayName</key>
+			<string>Prayer Name</string>
+			<key>INEnumDisplayNameID</key>
+			<string>cnrKVB</string>
+			<key>INEnumGeneratesHeader</key>
+			<true/>
 			<key>INEnumName</key>
 			<string>PrayerTime</string>
 			<key>INEnumType</key>
@@ -16,8 +22,6 @@
 					<string>unknown</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>A7FBXG</string>
-					<key>INEnumValueIndex</key>
-					<integer>0</integer>
 					<key>INEnumValueName</key>
 					<string>unknown</string>
 				</dict>
@@ -85,13 +89,15 @@
 		</dict>
 	</array>
 	<key>INIntentDefinitionModelVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
+	<key>INIntentDefinitionNamespace</key>
+	<string>y5p0RV</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>18E226</string>
+	<string>19D76</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>10E1001</string>
+	<string>11C504</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>10.2.1</string>
+	<string>11.3.1</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -101,8 +107,6 @@
 			<string>View time of next prayer, and time remaining.</string>
 			<key>INIntentDescriptionID</key>
 			<string>r18HwH</string>
-			<key>INIntentLastParameterTag</key>
-			<integer>0</integer>
 			<key>INIntentName</key>
 			<string>NextPrayer</string>
 			<key>INIntentParameterCombinations</key>
@@ -118,27 +122,15 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string></string>
+					<string>Ask for upcoming Athan</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>BcC4RS</string>
 				</dict>
 			</dict>
-			<key>INIntentParameters</key>
-			<array/>
 			<key>INIntentResponse</key>
 			<dict>
 				<key>INIntentResponseCodes</key>
 				<array>
-					<dict>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Unable to find next prayer.</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>L2NBSc</string>
-						<key>INIntentResponseCodeName</key>
-						<string>failure</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<false/>
-					</dict>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
 						<string>${upcomingPrayerName} begins in ${upcomingTime} at ${upcomingDate} in ${recentLocation}.</string>
@@ -151,13 +143,19 @@
 					</dict>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
+						<string>Unable to find next prayer.</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>L2NBSc</string>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeFormatString</key>
 						<string>No data available for ${recentLocation}.</string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>DTkHYE</string>
 						<key>INIntentResponseCodeName</key>
 						<string>failureNoData</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<false/>
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
@@ -169,8 +167,6 @@
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingPrayerName</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>6</integer>
 						<key>INIntentResponseParameterType</key>
@@ -181,8 +177,6 @@
 						<integer>2</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingDate</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>7</integer>
 						<key>INIntentResponseParameterType</key>
@@ -193,8 +187,6 @@
 						<integer>3</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingTime</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>8</integer>
 						<key>INIntentResponseParameterType</key>
@@ -205,8 +197,6 @@
 						<integer>4</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>recentLocation</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>11</integer>
 						<key>INIntentResponseParameterType</key>
@@ -214,16 +204,12 @@
 					</dict>
 				</array>
 			</dict>
-			<key>INIntentRestrictions</key>
-			<integer>0</integer>
 			<key>INIntentTitle</key>
 			<string>Next Prayer Time</string>
 			<key>INIntentTitleID</key>
 			<string>dw5ktd</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
-			<key>INIntentUserConfirmationRequired</key>
-			<false/>
 			<key>INIntentVerb</key>
 			<string>Find</string>
 		</dict>
@@ -246,16 +232,8 @@
 				<dict>
 					<key>INIntentParameterCombinationIsPrimary</key>
 					<true/>
-					<key>INIntentParameterCombinationSubtitle</key>
-					<string></string>
-					<key>INIntentParameterCombinationSubtitleID</key>
-					<string>rF17Rh</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string></string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>Z1Tmaz</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -263,10 +241,13 @@
 				<dict>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataType</key>
+						<string>Name</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>queriedLocation</string>
-					<key>INIntentParameterSupportsMultipleValues</key>
-					<false/>
 					<key>INIntentParameterTag</key>
 					<integer>5</integer>
 					<key>INIntentParameterType</key>
@@ -279,16 +260,6 @@
 				<array>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>Unable to find prayer times for ${queriedLocation}.</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>3ZBipj</string>
-						<key>INIntentResponseCodeName</key>
-						<string>failure</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>INIntentResponseCodeFormatString</key>
 						<string>The next prayer in ${queriedLocation} is </string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>VxBPWe</string>
@@ -299,9 +270,13 @@
 					</dict>
 					<dict>
 						<key>INIntentResponseCodeFormatString</key>
-						<string></string>
+						<string>Unable to find prayer times for ${queriedLocation}.</string>
 						<key>INIntentResponseCodeFormatStringID</key>
-						<string>DwE43Y</string>
+						<string>3ZBipj</string>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+					<dict>
 						<key>INIntentResponseCodeName</key>
 						<string>failureLocationNotFound</string>
 						<key>INIntentResponseCodeSuccess</key>
@@ -317,8 +292,6 @@
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>queriedLocation</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>10</integer>
 						<key>INIntentResponseParameterType</key>
@@ -329,8 +302,6 @@
 						<integer>2</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingPrayerName</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>4</integer>
 						<key>INIntentResponseParameterType</key>
@@ -341,8 +312,6 @@
 						<integer>3</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingDate</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>5</integer>
 						<key>INIntentResponseParameterType</key>
@@ -353,8 +322,6 @@
 						<integer>4</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingTime</string>
-						<key>INIntentResponseParameterSupportsMultipleValues</key>
-						<false/>
 						<key>INIntentResponseParameterTag</key>
 						<integer>7</integer>
 						<key>INIntentResponseParameterType</key>
@@ -362,19 +329,17 @@
 					</dict>
 				</array>
 			</dict>
-			<key>INIntentRestrictions</key>
-			<integer>0</integer>
 			<key>INIntentTitle</key>
 			<string>Next Prayer Time</string>
 			<key>INIntentTitleID</key>
 			<string>VsOhOe</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
-			<key>INIntentUserConfirmationRequired</key>
-			<false/>
 			<key>INIntentVerb</key>
 			<string>View</string>
 		</dict>
 	</array>
+	<key>INTypes</key>
+	<array/>
 </dict>
 </plist>

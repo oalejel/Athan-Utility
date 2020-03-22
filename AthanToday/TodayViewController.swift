@@ -538,7 +538,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     //this organizes the data and notifies the delegate
     func parseDictionary(_ dict: NSDictionary?, fromFile: Bool) {
-        if var sureDict = dict as? Dictionary<String, AnyObject> {
+        if let sureDict = dict as? Dictionary<String, AnyObject> {
 
             if let formattedData = sureDict["data"] as? [Int : [Int : [Int : [Int : Date]]]] {
                 yearTimes = formattedData

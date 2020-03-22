@@ -242,7 +242,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //MARK: - Data Management
     
     func getSettings() {
-        let dict = NSKeyedUnarchiver.unarchiveObject(withFile: settingsArchivePath().path) as? [String:AnyObject]
+        var dict: [String:AnyObject]?
+        do {
+            if #available(iOS 11.0, *) {
+                let data = try Data(contentsOf: settingsArchivePath())
+                dict = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String:AnyObject]
+            } else {
+                // Fallback on earlier versions
+                dict = NSKeyedUnarchiver.unarchiveObject(withFile: settingsArchivePath().path) as? [String:AnyObject]
+            }
+        } catch {
+            print("Couldn't unarchive prayer settings")
+        }
+
         if let prayersDict = dict?["prayersettings"] as? [String:AnyObject] {
             for i in 0...5 {
                 let p = PrayerType(rawValue: i)!
@@ -276,7 +288,18 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             allSettingsDict[p.stringValue()] = settingDict
         }
         
-        NSKeyedArchiver.archiveRootObject(["prayersettings":allSettingsDict], toFile: settingsArchivePath().path)
+        // archive the settings
+        do {
+            if #available(iOS 11.0, *) {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: ["prayersettings":allSettingsDict], requiringSecureCoding: false)
+                try data.write(to: settingsArchivePath())
+            } else {
+                // Fallback on earlier versions
+                NSKeyedArchiver.archiveRootObject(["prayersettings":allSettingsDict], toFile: settingsArchivePath().path)
+            }
+        } catch {
+            print("Couldn't archive prayer settings")
+        }
     }
     
     func formattedAddressString() -> String {
@@ -377,8 +400,20 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     // MARK: - Dictionary Storage
     
     func dictionaryFromFile() -> NSDictionary? {
-        let dict = NSKeyedUnarchiver.unarchiveObject(withFile: prayersArchivePath().path) as? NSDictionary
-        return dict
+        do {
+            if #available(iOS 11.0, *) {
+                let data = try Data(contentsOf: prayersArchivePath())
+                return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? NSDictionary
+            } else {
+                // Fallback on earlier versions
+                return NSKeyedUnarchiver.unarchiveObject(withFile: prayersArchivePath().path) as? NSDictionary
+            }
+        } catch {
+            print("Couldn't unarchive prayer settings")
+        }
+        
+        print("Nil dictionary in attempt to unarchive")
+        return nil
     }
     
     func removeDictionaryStore() {
@@ -492,8 +527,22 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     sureDict["last_city"] = (currentCityString ?? "") as AnyObject
                     sureDict["data"] = yearTimes as AnyObject
                     sureDict["qibla"] = qibla as AnyObject
+                    
                     let objc = sureDict as NSDictionary
-                    NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
+                    
+                    
+                    do {
+                        if #available(iOS 11.0, *) {
+                            let data = try NSKeyedArchiver.archivedData(withRootObject: objc, requiringSecureCoding: false)
+                            try data.write(to: prayersArchivePath())
+                        } else {
+                            // Fallback on earlier versions
+                            NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
+                        }
+                    } catch {
+                        print("Couldn't archive prayers")
+                    }
+                    
                 } else { return false }
             } else {
                 // if reading data from file, deal with stored dictionary accordingly
@@ -507,7 +556,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 currentCityString = sureDict["last_city"] as? String
                 
                 locationString = formattedAddressString()
-                
                 
                 // if we are getting data from a file, we expect value for key
                 // "data" to be in the format of yearTimes
@@ -622,7 +670,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //
         
         for i in 0..<5 {
-            
             self.createNotificationsForDayItemTuple(getFutureDateTuple(daysToSkip: i), finalFlag: i == 4)
         }
     }
@@ -741,7 +788,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
         
         let center = UNUserNotificationCenter.current()
-        
         let noteSoundFilename = Settings.getSelectedSoundFilename()
         
         for i in min...5 {
@@ -883,9 +929,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     @objc func newPrayer() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
+        
         delegate.newPrayer?(manager: self)
     }
     
+    // returns the athan time for the "active" or "current" prayer session time
     func currentPrayerTime() -> Date? {
         if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
 

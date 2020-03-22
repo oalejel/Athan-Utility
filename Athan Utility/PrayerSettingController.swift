@@ -17,7 +17,6 @@ class PrayerSettingController: UITableViewController {
     var switches: [UISwitch] = []
     var switchesOn: [Bool] = [true,true,true]
     var switchesEnabled: [Bool] = [true,true,true]
-    
     var initialSettings: PrayerSetting!
     
     init(style: UITableView.Style, prayer: PrayerType) {

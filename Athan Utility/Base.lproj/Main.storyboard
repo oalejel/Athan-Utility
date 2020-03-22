@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="il8-3r-zSC" customClass="ClockView" customModule="Athan_Utility" customModuleProvider="target">
-                                <rect key="frame" x="37.5" y="28" width="300" height="300"/>
+                                <rect key="frame" x="37.5" y="8" width="300" height="300"/>
                                 <subviews>
                                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGl-K9-se3" customClass="SqueezeButton" customModule="SqueezeButton">
                                         <rect key="frame" x="264" y="264" width="36" height="36"/>
@@ -86,7 +84,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bv4-zz-aNR">
-                                <rect key="frame" x="37.5" y="336" width="300" height="33"/>
+                                <rect key="frame" x="37.5" y="316" width="300" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="CqH-yV-8Ra"/>
                                 </constraints>
@@ -107,7 +105,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AcV-te-gRM">
-                                <rect key="frame" x="37.5" y="377" width="300" height="245"/>
+                                <rect key="frame" x="37.5" y="357" width="300" height="265"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1bW-fS-vwD" userLabel="Siri Button View">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="64"/>
@@ -129,10 +127,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSz-Fq-muk">
-                                        <rect key="frame" x="0.0" y="72" width="300" height="173"/>
+                                        <rect key="frame" x="0.0" y="72" width="300" height="193"/>
                                         <subviews>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNa-XY-ot8">
-                                                <rect key="frame" x="0.0" y="0.0" width="300" height="173"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="193"/>
                                                 <connections>
                                                     <segue destination="wgr-FR-nbt" kind="embed" identifier="Table" id="8Iu-8L-Dk5"/>
                                                 </connections>
@@ -190,7 +188,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Z5s-1V-gc0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yhI-Rm-3Rl">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="173"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="193"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>

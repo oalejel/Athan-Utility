@@ -97,8 +97,6 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>search</string>
-			<key>INIntentDefaultImageName</key>
-			<string>sunhorizon</string>
 			<key>INIntentDescription</key>
 			<string>View time of next prayer, and time remaining.</string>
 			<key>INIntentDescriptionID</key>

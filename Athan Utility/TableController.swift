@@ -17,13 +17,25 @@ class TableController: UITableViewController {
     
     let bounds = UIScreen.main.bounds
     
+    var lastHeight: CGFloat = 0
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // trick to get table cells to resize when the height changes after siri button is removed
+        if lastHeight != 0 && lastHeight != height(tableView) {
+            tableView.reloadData()
+        }
+        lastHeight = height(tableView)
+    }
+    
     override func loadView() {
         tableView = UITableView(frame: CGRect.zero)
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
-        tableView.separatorColor = UIColor.darkGray
-        
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        tableView.separatorColor = UIColor.darkGray
+        tableView.separatorStyle = .none
+//        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.register(UINib(nibName: "PrayerCell", bundle: nil), forCellReuseIdentifier: "cell")
     }
     
@@ -33,6 +45,10 @@ class TableController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return height(tableView) / 6
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return height(tableView) / 6
     }
     
@@ -118,6 +134,8 @@ class TableController: UITableViewController {
             self.tableView.reloadData()
         })
     }
+    
+    
     
 //    func updateTheme() {
 //        if Global.darkTheme {

@@ -24,8 +24,12 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling, PrayerManager
     
     func handle(intent: NextPrayerIntent, completion: @escaping (NextPrayerIntentResponse) -> Void) {
         // get prayer data if available
-        
-        let manager = PrayerManager(delegate: self)
+        if Global.manager == nil {
+            manager = PrayerManager(delegate: self)
+            Global.manager = manager
+        } else {
+            manager = Global.manager
+        }
         
         if let upcomingDate = manager.nextPrayerTime() {
             let df = DateFormatter()
@@ -54,13 +58,12 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling, PrayerManager
                 timeLeftString += "\(minutesDiff) minute"
                 if minutesDiff != 1 {timeLeftString += "s"} // plural
             }
-
+            
             // if we only have a few minutes, incorporate seconds in string
             if hoursDiff == 0 && minutesDiff < 5 {
+                if minutesDiff != 0 {timeLeftString += " and "}
                 timeLeftString += "\(secondsDiff) seconds"
             }
- 
- 
             
             let upcomingPrayerName = manager.currentPrayer.next().stringValue()
             

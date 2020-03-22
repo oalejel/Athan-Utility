@@ -1,5 +1,5 @@
 //
-//  PrayerSettingsViewController.swift
+//  SettingsViewController.swift
 //  Athan Utility
 //
 //  Created by Omar Alejel on 11/21/15.
@@ -10,8 +10,8 @@ import UIKit
 import IntentsUI
 import AVFoundation
 
-// PrayerSettingsViewController displays the settings for an individual prayer time
-class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutViewControllerDelegate {
+// SettingsViewController displays the settings for an individual prayer time
+class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewControllerDelegate {
 
     var currentRow = 0
     var manager: PrayerManager!
@@ -37,7 +37,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         tableView.backgroundView = nil
         tableView.allowsSelection = true
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(PrayerSettingsViewController.donePressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsViewController.donePressed))
         navigationItem.rightBarButtonItem?.accessibilityLabel = "done"
         navigationController?.navigationBar.topItem!.title = NSLocalizedString("Settings", comment: "")//NSLocalizedString("Alarms", comment: "")
         navigationController?.navigationBar.topItem!.accessibilityLabel = "Settings"//"Alarms"
@@ -53,7 +53,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
     
     // sections: Siri Extension, Athan Alarms, Notification Sound
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // don't include siri extention if user is behind ios 12
+        // don't include siri shortcuts button if user is behind ios 12
         if #available(iOS 12.0, *) { return 3 }
         return 2
     }
@@ -77,12 +77,14 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         return headerLabels[section]
     }
     
+    
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.tintColor = .darkerGray
             headerView.textLabel?.textColor = .gray
         }
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
@@ -97,7 +99,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
             if #available(iOS 12.0, *) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "siri_cell") as! SiriCell
                 cell.selectionStyle = .none
-                cell.button.addTarget(self, action: #selector(addToSiri), for: .touchUpInside)
+                cell.button.addTarget(self, action: #selector(beginSiriShortcutsSetup), for: .touchUpInside)
                 return cell
             }
         }
@@ -152,10 +154,11 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         if indexPath.section == 0 {
             // set new notification sound
             let c = tableView.cellForRow(at: indexPath)
-            tableView.deselectRow(at: indexPath, animated: true)
             
             // stop audio player if user tapped the same thing
             if indexPath.row == notificationSoundIndex && NoteSoundPlayer.isPlaying() {
@@ -183,8 +186,9 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         }
     }
     
+    
     @objc func donePressed() {
-        NoteSoundPlayer.fadeAudio()
+        NoteSoundPlayer.fadeAndStopAudio()
         navigationController!.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // save sound setting
             Settings.setSelectedSound(for: self.notificationSoundIndex)
@@ -198,10 +202,12 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         })
     }
     
+    
     // MARK: Siri
+    
     @objc
     @available(iOS 12.0, *)
-    func addToSiri() {
+    func beginSiriShortcutsSetup() {
         let intent = NextPrayerIntent()
         intent.suggestedInvocationPhrase = "Next prayer"
         if let shortcut = INShortcut(intent: intent) {
@@ -212,6 +218,7 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         }
     }
     
+    
     // requires shortcut stubs
     @available(iOS 12.0, *)
     func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
@@ -219,11 +226,12 @@ class PrayerSettingsViewController: UITableViewController, INUIAddVoiceShortcutV
         UserDefaults.standard.set(true, forKey: "hideSiriShortcuts")
     }
     
+    
     @available(iOS 12.0, *)
     func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
         controller.dismiss(animated: true, completion: nil)
         UserDefaults.standard.set(true, forKey: "hideSiriShortcuts")
     }
+    
+    
 }
-
-

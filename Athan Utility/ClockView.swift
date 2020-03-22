@@ -131,7 +131,7 @@ class ClockView: UIView {
         let center = CGPoint(x: width / 2, y: height / 2)
         let radius = 0.5 * (width - tickHeight) - bubbleRoom - 4
         let circ: CGFloat = CGFloat(2 * Double.pi) * radius
-        let tickThickness: CGFloat = 0
+        let tickThickness: CGFloat = 0.1
         
         let hourPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(2 * Double.pi), clockwise: true)
         let shapeLayer = CAShapeLayer()

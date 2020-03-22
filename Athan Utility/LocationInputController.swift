@@ -70,11 +70,12 @@ class LocationInputController: UIViewController {
         Global.manager.fetchJSONData(forLocation: cleanedLocationString, dateTuple: nil, completion: { (successfulFetch) in
             
             if successfulFetch  {
-                self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
-                    // do nothing for now
-                })
-                print("try succeeded")
                 DispatchQueue.main.async {
+                    print("try succeeded")
+
+                    self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
+                        // do nothing for now
+                    })
                     // if we successfully used an input location, then we know that we are no longer GPS for the shown data
                     Global.manager.currentCityString = nil
                     Global.manager.currentStateString = nil

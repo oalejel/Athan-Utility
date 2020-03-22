@@ -113,23 +113,9 @@ class Global {
     
     static var manager: PrayerManager!
     
-//    static var mainController: UIViewController?
-    
-//    static var darkTheme = true {
-//        didSet {
-//            mainController?.updateTheme()
-//        }
-//    }
-    
     static var openQibla = false
-//    {
-//        didSet {
-//            if let m = mainController {
-//                m.showQibla(self)
-//            }
-//        }
-//    }
-    
+
+    static let HIDE_SIRI_SHORTCUTS_KEY = "hideSiriShortcuts"
     
     /*
     class func colorsForPrayer(_ p: PrayerType) -> [CGColor] {
@@ -153,13 +139,5 @@ class Global {
         
         return colors
     }
- */
-    
-    //    class var statusColor: UIColor {
-    //        struct Formatter {
-    //            static var instance = UIColor.greenColor()
-    //        }
-    //
-    //        return Formatter.instance
-    //    }
+ */    
 }

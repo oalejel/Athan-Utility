@@ -22,6 +22,8 @@
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53C242827210010C709 /* Default-568h@2x.png */; };
+		3D15F53F242828590010C709 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53E242828590010C709 /* LaunchScreen.xib */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D32B57F1C14D03A003CAE1B /* sunhorizon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B57E1C14D03A003CAE1B /* sunhorizon.png */; };
@@ -151,6 +153,8 @@
 		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
 		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
+		3D15F53C242827210010C709 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3D15F53E242828590010C709 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
 		3D32B57E1C14D03A003CAE1B /* sunhorizon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunhorizon.png; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 		3D93EA0B2182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
+		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
 		3DCB30CA236B109200D47C7C /* UIView+Fading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +289,7 @@
 		3D07DA721BDC58B50001EFE4 = {
 			isa = PBXGroup;
 			children = (
+				3D15F53C242827210010C709 /* Default-568h@2x.png */,
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF420FC5A00000CBFFC /* Athan Utility UITests */,
 				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
@@ -311,10 +317,12 @@
 				3D52255720CDD25800CF8C3D /* Localizable.strings */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
+				3D15F53E242828590010C709 /* LaunchScreen.xib */,
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
 				3DCB30CA236B109200D47C7C /* UIView+Fading.swift */,
 				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
+				3DC2FB072464E044005D1EF5 /* Todo.md */,
 				3D4416E71C05174700329AA0 /* General */,
 				3D4416E61C05173D00329AA0 /* Qibla */,
 				3D4416E51C05172400329AA0 /* Settings */,
@@ -649,6 +657,7 @@
 				3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */,
+				3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
 				3D73FC7B22875CCA0092A83C /* alaqsa-preview.caf in Resources */,
 				3D73FC7C22875CCA0092A83C /* abdulghaffar-preview.caf in Resources */,
@@ -663,6 +672,7 @@
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3D73FC632284DC720092A83C /* AppIntentVocabulary.plist in Resources */,
+				3D15F53F242828590010C709 /* LaunchScreen.xib in Resources */,
 				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1015,15 +1025,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1040,15 +1051,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1076,6 +1088,7 @@
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
@@ -1105,6 +1118,7 @@
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1123,6 +1137,7 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1140,6 +1155,7 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

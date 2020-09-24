@@ -22,7 +22,7 @@ struct ActivityRingView: View {
                 .stroke(outlineColor, lineWidth: lineWidth * 1.1)
 //                .blur(radius: 1)
             Circle()
-                .trim(from: 0, to: progress)
+                .trim(from: 0, to: 0.7)
                 .stroke(
                     AngularGradient(
                         gradient: Gradient(colors: colors),
@@ -32,16 +32,23 @@ struct ActivityRingView: View {
                     ),
                     style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
                 ).rotationEffect(.degrees(-90))
+//                .opacity(0)
+//            Circle()
+////                .frame(width: lineWidth, height: lineWidth)
+//                .foregroundColor(.red)
+//                .offset(y: (lineWidth / 20) * 0)
             Circle()
-                .frame(width: lineWidth, height: lineWidth)
-                .foregroundColor(colors.first)
-                .offset(y: (lineWidth / 20) * -150)
-            Circle()
-                .frame(width: lineWidth, height: lineWidth)
-                .foregroundColor(progress > 0.95 ? colors[1] : colors[1].opacity(0))
-                .offset(y: (lineWidth / 20) * -150)
-                .rotationEffect(Angle.degrees(360 * Double(progress)))
-                .shadow(color: progress > 0.96 ? Color.black.opacity(0.1): Color.clear, radius: (lineWidth / 20) * 3, x: (lineWidth / 20) * 4, y: 0)
+                .trim(from: 0, to: 0.001) // just fills circle
+                .stroke(colors.first!, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                
+            
+//            Circle()
+//                .frame(width: lineWidth, height: lineWidth)
+//                .foregroundColor(progress > 0.95 ? colors[1] : colors[1].opacity(0))
+//                .offset(y: (lineWidth / 20) * -150)
+//                .rotationEffect(Angle.degrees(360 * Double(progress)))
+//                .shadow(color: progress > 0.96 ? Color.black.opacity(0.1): Color.clear, radius: (lineWidth / 20) * 3, x: (lineWidth / 20) * 4, y: 0)
         }
     }
 }
@@ -70,8 +77,11 @@ struct PrayerSymbol: View {
 
 struct SmallWidget: View {
     var entry: AthanEntry
-//    @State var progress: CGFloat = 0.4
-        
+    var df: RelativeDateTimeFormatter = {
+        let d = RelativeDateTimeFormatter()
+        d.dateTimeStyle = .numeric
+        return d
+    }()
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -83,7 +93,7 @@ struct SmallWidget: View {
                         lineWidth: 10,
                         progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
                         outlineColor: .init(white: 1, opacity: 0.2),
-                        colors: [.white, .white]
+                        colors: [.white, .init(white: 1, opacity: 0.5)]
                     )
                         .scaledToFit()
                 }
@@ -91,31 +101,17 @@ struct SmallWidget: View {
                 PrayerSymbol(prayerType: entry.currentPrayer)
                     .opacity(0.9)
                     .foregroundColor(.white)
-//                HStack(alignment: .bottom) {
-//                        .resizable()
-//                        .frame(width: 30, height: 30)
-//                        .offset(x: 0, y: 4)
-//                        .opacity(0.9)
-//                    Text("Bloomfield Hills")
-//                        .foregroundColor(.init(.lightText))
-//                        .font(.caption)
-//                        .autocapitalization(.allCharacters)
-//                        .truncationMode(.tail)
-//                        .scaledToFit()
-//                }
                 
                 Text(entry.currentPrayer.localizedString())
                     .foregroundColor(.white)
                     .font(.title)
                     .fontWeight(.bold)
 //                Text("\(dateFormatter.string(from: entry.nextPrayerDate))")
-//                Text("\(entry.nextPrayerDate, formatter: relativeDF) left")
-                Text("\(entry.nextPrayerDate, style: .relative) left")
+                Text("\(entry.currentPrayer.next().localizedString()) at \(entry.nextPrayerDate, style: .time)")
+//                Text("\(entry.nextPrayerDate, style: .relative) left")
                     .foregroundColor(.init(UIColor.lightText))
-                    .font(.system(size: 14))
+                    .font(.system(size: 12))
                     .bold()
-                    .scaledToFit()
-                
             }
             .padding()
             
@@ -124,7 +120,7 @@ struct SmallWidget: View {
 }
 
 struct ProgressBar: View {
-    @Binding var progress: CGFloat
+    var progress: CGFloat
     @State var lineWidth: CGFloat = 7
     @State var outlineColor: Color
     
@@ -138,7 +134,6 @@ struct ProgressBar: View {
                 .cornerRadius(lineWidth * 0.5)
             GeometryReader { g in
                 ZStack(alignment: .leading) {
-                    
                     Rectangle()
                         .foregroundColor(colors.first)
                         .frame(width: progress * g.size.width, height: lineWidth)
@@ -172,35 +167,25 @@ struct MediumWidget: View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack(alignment: .leading, spacing: 4) {
-                HStack(alignment: .firstTextBaseline, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/) {
-                    Text("Asr")
+                HStack(alignment: .firstTextBaseline, spacing: nil) {
+                    Text(entry.currentPrayer.localizedString())
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text("1h 10m left")
+                    Text("\(entry.nextPrayerDate, style: .relative) left")
                         .foregroundColor(.init(UIColor.lightText))
                         .font(.subheadline)
                         .fontWeight(.bold)
+//                    Text("left")
+//                        .foregroundColor(.init(UIColor.lightText))
+//                        .font(.subheadline)
+//                        .fontWeight(.bold)
                     Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        Image("sunhorizon")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-    //                        .border(Color.red)
-        //                    .scaledToFit()
-                            .offset(x: 0, y: 8)
-        //                    .border(Color.gray)
-    //                        .padding(.zero)
-//                        Text("Barcelona")
-//                            .foregroundColor(.init(.lightText))
-//                            .font(.caption)
-//                            .autocapitalization(.allCharacters)
-
-                    }
+                    PrayerSymbol(prayerType: entry.currentPrayer)
+                        .foregroundColor(.white)
                 }
                 
-                ProgressBar(progress: $progress,
+                ProgressBar(progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
                             lineWidth: 6,
                             outlineColor: .init(white: 1, opacity: 0.2),
                             colors: [.white, .white])
@@ -210,8 +195,8 @@ struct MediumWidget: View {
                 HStack {
                     VStack(alignment: .leading) {
                         ForEach(0..<3) { i in
-                            Text(tempNames[i])
-                                .foregroundColor(.init(UIColor.lightText))
+                            Text(PrayerType(rawValue: i)!.localizedString())
+                                .foregroundColor(i == entry.currentPrayer.rawValue ? .green : (i < entry.currentPrayer.rawValue ? .init(UIColor.lightText) : .white))
                                 .font(.caption)
                                 .fontWeight(.bold)
                             if (i < 2) {
@@ -222,8 +207,8 @@ struct MediumWidget: View {
                     Spacer()
                     VStack(alignment: .trailing) {
                         ForEach(0..<3) { i in
-                            Text("11:30 PM")
-                                .foregroundColor(.init(UIColor.lightText))
+                            Text(entry.todayPrayerTimes[PrayerType(rawValue: i)!]!, style: .time)
+                                .foregroundColor(i == entry.currentPrayer.rawValue ? .green : (i < entry.currentPrayer.rawValue ? .init(UIColor.lightText) : .white))
                                 .font(.caption)
                                 .fontWeight(.bold)
                             if (i < 2) {
@@ -234,10 +219,11 @@ struct MediumWidget: View {
                     Spacer()
                     VStack(alignment: .leading) {
                         ForEach(3..<6) { i in
-                            Text(tempNames[i])
-                                .foregroundColor(i == 3 ? .green : .white)
+                            Text(PrayerType(rawValue: i)!.localizedString())
+                                .foregroundColor(i == entry.currentPrayer.rawValue ? .green : (i < entry.currentPrayer.rawValue ? .init(UIColor.lightText) : .white))
                                 .font(.caption)
                                 .fontWeight(.bold)
+                            
                             if (i < 5) {
                                 Spacer()
                             }
@@ -246,8 +232,8 @@ struct MediumWidget: View {
                     Spacer()
                     VStack(alignment: .leading) {
                         ForEach(3..<6) { i in
-                            Text("2:13 PM")
-                                .foregroundColor(i == 3 ? .green : .white)
+                            Text(entry.todayPrayerTimes[PrayerType(rawValue: i)!]!, style: .time)
+                                .foregroundColor(i == entry.currentPrayer.rawValue ? .green : (i < entry.currentPrayer.rawValue ? .init(UIColor.lightText) : .white))
                                 .font(.caption)
                                 .fontWeight(.bold)
                             if (i < 5) {
@@ -311,7 +297,7 @@ struct Athan_Widget: Widget {
 
 struct Athan_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(0..<6) { i in
+        ForEach(0..<2) { i in
             let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
     //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
             let entry = AthanEntry(date: Date(),
@@ -334,12 +320,13 @@ struct Athan_Widget_Previews: PreviewProvider {
         let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
 //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
         let entry = AthanEntry(date: Date(),
-                               currentPrayer: .fajr, currentPrayerDate: Date(),
+                               currentPrayer: .asr,
+                               currentPrayerDate: Date(),
                                nextPrayerDate: nextDate,
                                todayPrayerTimes: [
-                                .fajr : Date(), .shurooq : Date(),
-                                .thuhr : Date(), .asr : Date(),
-                                .maghrib : Date(), .isha : Date()
+                                .fajr : nextDate, .shurooq : nextDate,
+                                .thuhr : nextDate, .asr : nextDate,
+                                .maghrib : nextDate, .isha : nextDate
                                ])
 
         

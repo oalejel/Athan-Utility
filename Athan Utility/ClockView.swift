@@ -101,6 +101,7 @@ class ClockView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        backgroundColor = UIColor.clear
     }
     
     func adjustToSize(_ s: CGSize) {

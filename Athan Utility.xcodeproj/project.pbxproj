@@ -60,6 +60,14 @@
 		3D73FC8022875CCA0092A83C /* egypt-preview.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC7922875CC90092A83C /* egypt-preview.caf */; };
 		3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */; };
 		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
+		3D770549251C3137007BCEAA /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
+		3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11D971251C2BD9009F6146 /* Widget_Provider.swift */; };
+		3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
+		3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */; };
+		3D770571251C3812007BCEAA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
+		3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
+		3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D770583251C3849007BCEAA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
 		3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* SettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* SettingsViewController.xib */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
@@ -105,13 +113,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3D93EA062182C447002019B7;
 			remoteInfo = AthanSiriIntents;
-		};
-		3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3DD3B48E1C0D3B5700DC91E6;
-			remoteInfo = AthanToday;
 		};
 		3DD51AF820FC5A00000CBFFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -168,6 +169,7 @@
 		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
 		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
+		3D11D971251C2BD9009F6146 /* Widget_Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget_Provider.swift; sourceTree = "<group>"; };
 		3D15F53C242827210010C709 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3D15F53E242828590010C709 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -220,6 +222,8 @@
 		3D73FC7922875CC90092A83C /* egypt-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "egypt-preview.caf"; sourceTree = "<group>"; };
 		3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSoundPlayer.swift; sourceTree = "<group>"; };
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
+		3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Convenience.swift; sourceTree = "<group>"; };
+		3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		3D7D42C11C00E5380013956C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 		3D07DA721BDC58B50001EFE4 = {
 			isa = PBXGroup;
 			children = (
+				3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */,
 				3D15F53C242827210010C709 /* Default-568h@2x.png */,
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF420FC5A00000CBFFC /* Athan Utility UITests */,
@@ -373,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				3D20CB212518DA0900275206 /* Athan_Widget.swift */,
+				3D11D971251C2BD9009F6146 /* Widget_Provider.swift */,
 				3D20CB232518DA0900275206 /* Athan_Widget.intentdefinition */,
 				3D20CB242518DA0B00275206 /* Assets.xcassets */,
 				3D20CB262518DA0B00275206 /* Info.plist */,
@@ -415,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
+				3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */,
 				3D73FC6A2284EE1C0092A83C /* Settings.swift */,
 				3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */,
 				3DF0EE9921038E3400624E98 /* PrayerType.swift */,
@@ -554,7 +561,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */,
 				3D93EA1D2182C447002019B7 /* PBXTargetDependency */,
 				3D20CB2A2518DA0B00275206 /* PBXTargetDependency */,
 			);
@@ -835,6 +841,7 @@
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
+				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
@@ -865,8 +872,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
+				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
+				3D770571251C3812007BCEAA /* Global.swift in Sources */,
+				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
+				3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */,
+				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
 				3D20CB272518DA0B00275206 /* Athan_Widget.intentdefinition in Sources */,
+				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -918,11 +932,6 @@
 			isa = PBXTargetDependency;
 			target = 3D93EA062182C447002019B7 /* AthanSiriIntents */;
 			targetProxy = 3D93EA1C2182C447002019B7 /* PBXContainerItemProxy */;
-		};
-		3DD3B49B1C0D3B5700DC91E6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3DD3B48E1C0D3B5700DC91E6 /* AthanToday */;
-			targetProxy = 3DD3B49A1C0D3B5700DC91E6 /* PBXContainerItemProxy */;
 		};
 		3DD51AF920FC5A00000CBFFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1175,6 +1184,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1183,6 +1193,7 @@
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
@@ -1206,6 +1217,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1214,6 +1226,7 @@
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 4.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1296,6 +1309,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1314,6 +1328,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

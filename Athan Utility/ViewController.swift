@@ -45,10 +45,10 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     @IBOutlet weak var locationButton: SqueezeButton!
     
     // protocol variable
-    var locationIsUpToDate = false {
+    var locationIsSynced = false {
         didSet {
             // show/hide the current location image in case we lost location
-            let imageName: UIImage? = locationIsUpToDate ? UIImage(named: "arrow") : nil
+            let imageName: UIImage? = manager.gpsStrings != nil ? UIImage(named: "arrow") : nil
             DispatchQueue.main.async {
                 self.locationButton.setImage(imageName, for: .normal)
             }
@@ -133,8 +133,19 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     }
     
     
+    var addedGrad = false
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if !addedGrad {
+//            let gradLayer = CAGradientLayer()
+//            gradLayer.colors = [UIColor.black.cgColor, UIColor(red: 0, green: 0, blue: 0.3, alpha: 1).cgColor]
+//            gradLayer.frame = view.frame
+//            gradLayer.startPoint = CGPoint(x: 0.2, y: 0.2)
+//            gradLayer.endPoint = CGPoint(x: 1, y: 1)
+//            view.layer.insertSublayer(gradLayer, at: 0)
+            addedGrad = true
+        }
         
         progressView.setNeedsDisplay()
         softResetPrayerVisuals()
@@ -156,7 +167,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
                     self.showSpinner = false
                 }
                 // always do a location request on first appearance of view
-                self.manager.beginLocationRequest()
+                self.manager.readyToRequestPermissions()
             }
         }
         
@@ -333,7 +344,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         DispatchQueue.main.async { () -> Void in
             self.hardResetPrayerVisuals()
             SwiftSpinner.hide()
-            if let location = manager.locationString {
+            if let location = manager.readableLocationString {
                 self.locationButton.setTitle(location, for: .normal)
             }
             
@@ -343,7 +354,6 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             UIApplication.shared.shortcutItems = [dynamicItem]
         }
     }
-    
     
     //specific to individual prayers
     func newPrayer(manager: PrayerManager) {
@@ -466,8 +476,8 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     // Refresh app data. Originates from button with rotating arrows
     @IBAction func refreshPressed(_ sender: AnyObject) {
-        // tell manager that if we were locked on a location, we now want a new one
-        manager.lockLocation = false
+//        // tell manager that if we were locked on a location, we now want a new one
+        manager.shouldSyncLocation = true
         // get new data
         loadingHandler()
     }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Locality, State, Country" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7sK-WR-9OP">
-                    <rect key="frame" x="16" y="261.5" width="343" height="30"/>
+                    <rect key="frame" x="16" y="259.5" width="343" height="34"/>
                     <constraints>
                         <constraint firstAttribute="width" priority="999" constant="343" id="YV1-Uu-ret"/>
                     </constraints>
@@ -32,7 +30,7 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="alert"/>
                 </textField>
                 <button alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FWi-g2-5d3" customClass="SqueezeButton" customModule="Athan_Utility" customModuleProvider="target">
-                    <rect key="frame" x="86.5" y="306.5" width="202" height="42"/>
+                    <rect key="frame" x="86.5" y="308.5" width="202" height="42"/>
                     <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="42" id="RgE-dx-tew"/>
@@ -44,10 +42,10 @@
                     </connections>
                 </button>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="ssQ-KG-SeA">
-                    <rect key="frame" x="177.5" y="362.5" width="20" height="20"/>
+                    <rect key="frame" x="177.5" y="364.5" width="20" height="20"/>
                 </activityIndicatorView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try again" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lny-pk-jq9">
-                    <rect key="frame" x="152.5" y="205" width="70" height="21"/>
+                    <rect key="frame" x="152.5" y="203" width="70" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
@@ -67,6 +65,12 @@
                 <constraint firstItem="7sK-WR-9OP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="wqh-Zs-yer"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7sK-WR-9OP" secondAttribute="trailing" constant="16" id="zKw-ZJ-aVi"/>
             </constraints>
+            <point key="canvasLocation" x="-230" y="153"/>
         </view>
     </objects>
+    <designables>
+        <designable name="FWi-g2-5d3">
+            <size key="intrinsicContentSize" width="94" height="33"/>
+        </designable>
+    </designables>
 </document>

@@ -9,6 +9,8 @@
 import UIKit
 import CoreLocation
 import UserNotifications
+import WidgetKit
+import os // for logging errors / updates
 
 // Comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
@@ -55,11 +57,24 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var currentPrayer: PrayerType = PrayerType.fajr //default prayer before arrival of data. should be based on a plist int
     
     //important data that comes from the coremanager
-    var currentCityString: String?
-    var currentStateString: String?
-    var currentCountryString: String?
-    var currentDistrictString: String?
-    var locationString: String?
+    struct GPSStrings {
+        var currentCityString: String?
+        var currentDistrictString: String?
+        var currentStateString: String?
+        var currentCountryString: String?
+        
+        func concatenated() -> String {
+            var out = ""
+            if let s = currentCityString { out += s + ", "}
+            if let s = currentDistrictString { out += s + ", "}
+            if let s = currentStateString { out += s + ", "}
+            if let s = currentCountryString { out += s}
+            return out
+        }
+    }
+    var gpsStrings: GPSStrings?
+    
+    var readableLocationString: String?
     var coordinate: CLLocationCoordinate2D?
     
     var currentDay: Int!
@@ -67,8 +82,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var currentYear: Int!
     
     // user has ability to keep location set to only one place if they specify a custom location
-    var lockLocation = false
     var ignoreLocationUpdates = false
+    var shouldSyncLocation = true
     
     // website JSON data request session
     fileprivate var session: URLSession!
@@ -94,12 +109,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     // ultimate settings object..
     var prayerSettings: [PrayerType : PrayerSetting] = [:]
     
-    var delegate: PrayerManagerDelegate!
+    var delegate: PrayerManagerDelegate?
     
-    var fetchCompletionClosure: (() -> ())?
+    var calculationCompletionClosure: ((Result<[PrayerType:Date], Error>) -> ())?
     var lastFetchSuccessful = false
-    
-//    var needsDataUpdate = true
     var dataExists = false
     
     weak var headingDelegate: HeadingDelegate? {
@@ -117,7 +130,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     //MARK: - Initializer
     
-    init(delegate: PrayerManagerDelegate) {
+    // calculation completion only called once. if we load from a local dictionary, we load from there
+    init(delegate: PrayerManagerDelegate?, calculationCompletion: ((Result<[PrayerType:Date], Error>) -> ())? = nil) {
         self.delegate = delegate
         super.init()
         
@@ -125,13 +139,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         // important update changed storage format
         if let currentAppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
-            if currentAppVersion == "1.8" {
+            if Float(currentAppVersion) ?? 99.9 <= 1.8 {
                 removeDictionaryStore()
             }
         }
         
         // the delegate, (typically a view controller) gets information from the PrayerManager
-        delegate.manager = self
+        delegate?.manager = self
         
         // unload user settings on notifications
         getSettings()
@@ -143,50 +157,57 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let dict = dictionaryFromFile() {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
+            var times = [PrayerType:Date]()
+            todayPrayerTimes.forEach { (k, v) in
+                times[PrayerType(rawValue: k)!] = v
+            }
+            calculationCompletion?(.success(times))
         } else {
-            delegate.setShouldShowLoader?()
+            delegate?.setShouldShowLoader?()
+            calculationCompletionClosure = calculationCompletion
         }
         
         self.coreManager.delegate = self
-        self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff.
+        self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff
+        
+        if !shouldSyncLocation {
+//            fetchMonthsJSONDataForCurrentLocation(gpsStr)
+        }
         
         #if targetEnvironment(simulator)
-        self.currentCityString = "Bloomfield Hills"
-        self.currentStateString = "MI"
-        self.currentCountryString = "USA"
+        self.gpsStrings = GPSStrings(currentCityString: "Bloomfield Hills",
+                                     currentStateString: "MI",
+                                     currentCountryString: "USA",
+                                     urrentDistrictString: "Oakland")
         self.coordinate = CLLocationCoordinate2D(latitude: 42.588, longitude: -83.2975)
-        
-        //update our location string used to make queries and display in UI
-        self.locationString = self.formattedAddressString()
-        
         //fetch data for this month and the next month
-        self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
+        self.fetchJSONData(forLocation: "Bloomfield Hills, MI, USA"!, dateTuple: nil, completion: nil)
 //        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         #endif
     }
     
     //MARK: - Location Services
     
-    func beginLocationRequest() {
-        if !lockLocation {
-            self.coreManager.requestWhenInUseAuthorization()
+    func readyToRequestPermissions() {
+        self.coreManager.requestWhenInUseAuthorization()
+        if shouldSyncLocation {
             self.coreManager.startUpdatingLocation()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         coreManager.stopUpdatingLocation() //change if stopping without getting reliable info
         
         // need this since location managers send multiple updates even after being told to stop updating
         if ignoreLocationUpdates == true {
             // hide swift spinner in case we are blocking the screen
-            delegate.hideLoadingView?()
+            delegate?.hideLoadingView?()
             return
         }
         ignoreLocationUpdates = true
         
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+         
             if let x = error {
                 print(x)
             } else {
@@ -194,31 +215,44 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     let placemark = placemarks![0]
                     
                     // if we should not update, then abort fetching
-                    if !self.shouldUpdateLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
+                    if !self.shouldRequestJSONForLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
                         // we know that the location we already have is correct
-                        self.delegate.locationIsUpToDate = true
-                        self.delegate.hideLoadingView?()
+//                        self.delegate?.syncLocation = true
+                        self.delegate?.hideLoadingView?()
                         return
                     }
                     
                     // update our recorded location
-                    self.currentCityString = placemark.locality//cityNoSpaces
-                    self.currentDistrictString = placemark.subAdministrativeArea
-                    self.currentStateString = placemark.administrativeArea
-                    self.currentCountryString = placemark.isoCountryCode
+                    self.gpsStrings = GPSStrings(currentCityString: placemark.locality,
+                                                 currentDistrictString: placemark.subAdministrativeArea,
+                                                 currentStateString: placemark.administrativeArea,
+                                                 currentCountryString: placemark.isoCountryCode)
                     self.coordinate = placemark.location?.coordinate
                     
                     //update our location string used to make queries and display in UI
-                    self.locationString = self.formattedAddressString()
+                    self.readableLocationString = self.readableAddressString()
                     
                     //fetch data for this month and the next month
 //                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: nil)
 //                    let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
 //                    self.fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: nil)
                     self.fetchMonthsJSONDataForCurrentLocation(completion: { (success) in
-                        self.delegate.locationIsUpToDate = success
+                        self.ignoreLocationUpdates = success
+                        self.delegate?.locationIsSynced = success
+                        if success {
+                            var times = [PrayerType:Date]()
+                            self.todayPrayerTimes.forEach { (k, v) in
+                                times[PrayerType(rawValue: k)!] = v
+                            }
+                            self.calculationCompletionClosure?(.success(times))
+                            self.calculationCompletionClosure = nil
+                        } else {
+                            self.calculationCompletionClosure?(.failure(NSError()))
+                            self.calculationCompletionClosure = nil
+                        }
+                        
                     })
-                    self.ignoreLocationUpdates = false
+                    
                 }
             }
         })
@@ -227,8 +261,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     // in case user initially prevents location updates and decides to switch back
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if lastAuthStatus == .denied {
-            if status == .authorizedWhenInUse || status == .authorizedAlways {
-                reload() // user has decided to share location, so start process of getting data
+            if shouldSyncLocation && (status == .authorizedWhenInUse || status == .authorizedAlways) {
+                coreManager.startUpdatingLocation() // user has decided to share location, so start process of getting data
             }
         }
         lastAuthStatus = status
@@ -252,7 +286,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 dict = NSKeyedUnarchiver.unarchiveObject(withFile: settingsArchivePath().path) as? [String:AnyObject]
             }
         } catch {
-            print("Couldn't unarchive prayer settings")
+            logOrPrint("Couldn't unarchive prayer settings")
         }
 
         if let prayersDict = dict?["prayersettings"] as? [String:AnyObject] {
@@ -298,16 +332,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 NSKeyedArchiver.archiveRootObject(["prayersettings":allSettingsDict], toFile: settingsArchivePath().path)
             }
         } catch {
-            print("Couldn't archive prayer settings")
+            logOrPrint("Couldn't archive prayer settings")
         }
     }
     
-    func formattedAddressString() -> String {
+    func readableAddressString() -> String {
         // if country is divided into statess, organize location string accordingly
-        if let state = currentStateString {
-            return"\(currentCityString ?? ""), \(state), \(currentCountryString ?? "")"
+        if let state = gpsStrings?.currentStateString {
+            return"\(gpsStrings?.currentCityString ?? ""), \(state)"
         } else {
-            return "\(currentCityString ?? ""), \(currentCountryString ?? "")"
+            return "\(gpsStrings?.currentCityString ?? ""), \(gpsStrings?.currentCountryString ?? "")"
         }
 //        return "\(currentCityString ?? ""), \(currentStateString ?? ""), \(currentCountryString ?? "")"
     }
@@ -336,7 +370,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //        if needsDataUpdate {
 //        needsDataUpdate = false
         if let sureURL = queryURL {
-            print("Going to request data")
+            logOrPrint("Going to request data")
             var request = URLRequest(url: sureURL)
             request.httpMethod = "GET" // should be default setting, but just making this a point
 //            request.timeoutInterval =
@@ -351,11 +385,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     // this also stores to a file
                     let JSON = (try? JSONSerialization.jsonObject(with: sureData, options: [])) as? NSDictionary
                     if let sureJSON = JSON {
-                        print("Got data from online")
+                        self.logOrPrint("Got data from online")
                         
                         // in case we got a custom location from a text field input,
                         // and now decide to make the query string our official locationString
-                        self.locationString = queryLocationString
+                        self.readableLocationString = self.readableAddressString()
+                        if self.readableLocationString == nil || self.readableLocationString == "" {
+                            self.readableLocationString = queryLocationString
+                        }
                         
                         // if parsing dictionary goes well, call completion handler with true
                         if self.parseDictionary(sureJSON, fromFile: false) {
@@ -371,11 +408,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             dataTask.resume()
         } else {
             // did not have a working URL
-            print("URL error")
+            logOrPrint("URL error")
             // still execute completion handler, telling handler that we had an unsuccessful fetch
             completion?(false)
         }
-//        }
     }
  
     /// calculate angle to point to Mecca
@@ -409,10 +445,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                 return NSKeyedUnarchiver.unarchiveObject(withFile: prayersArchivePath().path) as? NSDictionary
             }
         } catch {
-            print("Couldn't unarchive prayer settings")
+            logOrPrint("Couldn't unarchive prayer times")
         }
         
-        print("Nil dictionary in attempt to unarchive")
+        logOrPrint("Nil dictionary in attempt to unarchive")
         return nil
     }
     
@@ -522,14 +558,16 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 
                     //save our new data from online
 //                    sureDict["location_recieved"] = formattedAddressString() as AnyObject?
-                    sureDict["last_country"] = (currentCountryString ?? "") as AnyObject
-                    sureDict["last_state"] = (currentStateString ?? "") as AnyObject
-                    sureDict["last_city"] = (currentCityString ?? "") as AnyObject
+                    
+                    sureDict["last_city"] = (gpsStrings?.currentCityString ?? "") as AnyObject
+                    sureDict["last_district"] = (gpsStrings?.currentDistrictString ?? "") as AnyObject
+                    sureDict["last_state"] = (gpsStrings?.currentStateString ?? "") as AnyObject
+                    sureDict["last_country"] = (gpsStrings?.currentCountryString ?? "") as AnyObject
+                    
                     sureDict["data"] = yearTimes as AnyObject
                     sureDict["qibla"] = qibla as AnyObject
                     
                     let objc = sureDict as NSDictionary
-                    
                     
                     do {
                         if #available(iOS 11.0, *) {
@@ -540,7 +578,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             NSKeyedArchiver.archiveRootObject(objc, toFile: prayersArchivePath().path)
                         }
                     } catch {
-                        print("Couldn't archive prayers")
+                        logOrPrint("Couldn't archive prayers")
                     }
                     
                 } else { return false }
@@ -551,11 +589,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //                if let formattedAddress = sureDict["location_recieved"] as? String {
 //                    locationString = formattedAddress
 //                }
-                currentCountryString = sureDict["last_country"] as? String
-                currentStateString = sureDict["last_state"] as? String
-                currentCityString = sureDict["last_city"] as? String
+                gpsStrings = GPSStrings(currentCityString: sureDict["last_city"] as? String,
+                                        currentDistrictString: sureDict["last_district"] as? String,
+                                        currentStateString: sureDict["last_state"] as? String,
+                                        currentCountryString: sureDict["last_country"] as? String)
                 
-                locationString = formattedAddressString()
+                readableLocationString = readableAddressString()
                 
                 // if we are getting data from a file, we expect value for key
                 // "data" to be in the format of yearTimes
@@ -621,7 +660,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let _tomorrowPrayerTimes = yearTimes[tomorrowYear]?[tomorrowMonth]?[tomorrowDay] {
             tomorrowPrayerTimes = _tomorrowPrayerTimes
         } else {
-            print("Error Calculating tomorrow's date")
+            logOrPrint("Error Calculating tomorrow's date")
         }
         
         var yesterdayDay = currentDay
@@ -653,7 +692,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
             if !granted {
-                print("User denied use of notifications")
+                self.logOrPrint("User denied use of notifications")
             }
             //            let alertController = UIAlertController(title: "Notifications Disabled", message: "To allow notifications later, use iOS settings", preferredStyle: .)
         }
@@ -697,6 +736,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    
+    func logOrPrint(_ str: StaticString) {
+        if #available(iOS 12.0, *) {
+            os_log(.debug, str)
+        } else {
+            print(str)
+        }
+    }
+    
     /// set triggers that relate to repeated app state changes
     func setTimers() {
         // create prayer times
@@ -715,7 +763,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     //timer for new prayer
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
                 } else {
-                    print("error getting prayer time while setting timers!")
+                    logOrPrint("error getting prayer time while setting timers!")
                 }
             }
         }
@@ -761,7 +809,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     /// Called on change of AM / PM time
     @objc func newMeridiem() {
         Timer.scheduledTimer(timeInterval: 12 * 60 * 60, target: self, selector: #selector(PrayerManager.newMeridiem), userInfo: nil, repeats: false)
-        delegate.newMeridiem?()
+        delegate?.newMeridiem?()
     }
     
     /// Generates UNUserNotification for given day
@@ -824,10 +872,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                 } else {
                                     var alternativeString: String?
-                                    if var charRange = locationString?.range(of: ",") {
-                                        if let stringEnd = locationString?.endIndex {
+                                    if var charRange = readableLocationString?.range(of: ",") {
+                                        if let stringEnd = readableLocationString?.endIndex {
                                             charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
-                                            alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
+                                            alternativeString = readableLocationString?.replacingCharacters(in: charRange, with: "")
                                         }
                                     }
                                     
@@ -837,7 +885,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     if let alt = alternativeString {
                                         alertString = String(format: localizedStandardNote, p.localizedString(), alt, dateString)
                                     } else {
-                                        alertString = String(format: localizedStandardNote, p.localizedString(), locationString!, dateString)
+                                        alertString = String(format: localizedStandardNote, p.localizedString(), readableLocationString ?? "", dateString)
                                     }
                                 }
                                 
@@ -872,10 +920,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 var alertString = ""
                                 
                                 var alternativeString: String?
-                                if var charRange = locationString?.range(of: ",") {
-                                    if let stringEnd = locationString?.endIndex {
+                                if var charRange = readableLocationString?.range(of: ",") {
+                                    if let stringEnd = readableLocationString?.endIndex {
                                         charRange = Range(uncheckedBounds: (lower: charRange.lowerBound, upper: stringEnd))
-                                        alternativeString = locationString?.replacingCharacters(in: charRange, with: "")
+                                        alternativeString = readableLocationString?.replacingCharacters(in: charRange, with: "")
                                     }
                                 }
                                 
@@ -883,7 +931,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 if let alt = alternativeString {
                                     alertString = String(format: localized15mAlert, p.localizedString(), alt, dateString)
                                 } else {
-                                    alertString = String(format: localized15mAlert, p.localizedString(), locationString!, dateString)
+                                    alertString = String(format: localized15mAlert, p.localizedString(), readableLocationString!, dateString)
                                 }
                                 
                                 preNoteContent.body = alertString
@@ -896,10 +944,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 
                                 let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
                                 
-//                                DispatchQueue.main.async {
                                 print(alertString)
                                 center.add(preNoteRequest, withCompletionHandler: nil)
-//                                }
                             }
                         }
                     }
@@ -907,22 +953,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
-    /// Returns approprate color for urgency of time left
-//    func timeLeftColor() -> UIColor {
-////        if nextPrayerTime()?.timeIntervalSinceNow < 900 {
-////            return UIColor.orange
-////        }
-////        return UIColor.green
-//        return UIColor.orange
-//    }
-    
+        
     /// indicates that there are 15 m left til next prayer begins.
     /// Should adjust app by changing color of certain things to orange
     @objc func fifteenMinutesLeft() {
         print("15 mins (or less) left!!")
         Global.statusColor = UIColor.orange
-        delegate.fifteenMinutesLeft?()
+        delegate?.fifteenMinutesLeft?()
     }
     
     // for when the manager needs to notify itself mid-day
@@ -930,13 +967,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
         
-        delegate.newPrayer?(manager: self)
+        delegate?.newPrayer?(manager: self)
     }
     
     // returns the athan time for the "active" or "current" prayer session time
     func currentPrayerTime() -> Date? {
         if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
-
             if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
                 // if none and its the next day, then substract the day by one and use the today isha time
                 let cal = Calendar.current
@@ -956,10 +992,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                         
                     }
                     return cal.date(from: comps)
-                } else {
-                    return todayPrayerTimes[currentPrayer.rawValue]
-                }
+            } else if currentPrayer != .none {
+                return todayPrayerTimes[currentPrayer.rawValue]
             }
+        }
         return nil
     }
     
@@ -985,6 +1021,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             return todayPrayerTimes[currentPrayer.next().rawValue]
         }
     }
+    
     /// - important: may assume that we have valid location and date info, since newDay is only set on a timer created post-successful fetch
     @objc func newDay() {
         setCurrentDates()
@@ -995,9 +1032,21 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func fetchMonthsJSONDataForCurrentLocation(completion: ((Bool) -> ())? = nil) {
-        fetchJSONData(forLocation: self.locationString!, dateTuple: nil, completion: completion)//not good enough of a solution long term!!...
+        var gpsLoc = (gpsStrings?.currentCityString ?? "") + ", "
+        gpsLoc += (gpsStrings?.currentDistrictString ?? "") + ", "
+        gpsLoc += (gpsStrings?.currentStateString ?? "") + ", "
+        gpsLoc += (gpsStrings?.currentCountryString ?? "")
+        fetchJSONData(forLocation: gpsLoc, dateTuple: nil, completion: completion)//not good enough of a solution long term!!...
         let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(forLocation: self.locationString!, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: completion)
+        fetchJSONData(forLocation: gpsLoc, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: completion)
+        
+        // update widgets if available
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadTimelines(ofKind: "com.omaralejel.Athan-Utility.Athan-Widget")
+        } else {
+            // Fallback on earlier versions
+        }
+        
     }
     
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
@@ -1005,28 +1054,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         //for simulator
         ignoreLocationUpdates = false
         
-        if lockLocation {
+        if !shouldSyncLocation {
             // if a custom location is explicitly set, get JSON
             fetchMonthsJSONDataForCurrentLocation { (success) in
-                self.delegate.locationIsUpToDate = false
+                self.delegate?.locationIsSynced = false
             }
         } else {
             // else, we check for our current location as well
-            reload()
+            coreManager.startUpdatingLocation()
         }
     }
     
-    private func reload() {
-        coreManager.startUpdatingLocation()
-        
-        // location updates trigger nothing in simulator, so call on a predefined location:
-        #if targetEnvironment(simulator)
-        fetchMonthsJSONDataForCurrentLocation()
-        #endif
-    }
-    
     @objc func userCanceledDataRequest() {
-        delegate.hideLoadingView?()
+        delegate?.hideLoadingView?()
     }
     
     //MARK: – Automatic Refreshing
@@ -1036,15 +1076,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     @objc func enteredForeground() {
         ignoreLocationUpdates = false
         // not sure if we are still in same location – will know later
-        delegate.locationIsUpToDate = false
+        delegate?.locationIsSynced = false
         coreManager.startUpdatingLocation()
     }
     
     /// returns true of user is in same location and there is enough data stored for the next month
-    func shouldUpdateLocation(locality: String?, subAdminArea: String?, state: String?, countryCode: String?) -> Bool {
+    func shouldRequestJSONForLocation(locality: String?, subAdminArea: String?, state: String?, countryCode: String?) -> Bool {
         print("Checking if should update location")
         // first test if user is in same location
-        if currentCityString == locality && currentDistrictString == subAdminArea && currentCountryString == countryCode {
+        if gpsStrings?.currentCityString == locality && gpsStrings?.currentDistrictString == subAdminArea && gpsStrings?.currentCountryString == countryCode {
             // then test if we have have data for next month before saving
             let daysTilNextMonth = daysInMonth(self.currentMonth!) + 1 - self.currentDay!
             let nextMonthTuple = getFutureDateTuple(daysToSkip: daysTilNextMonth)
@@ -1057,10 +1097,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         return true
     }
     
-    
     //MARK: - Data Saving
     
-    func prayersArchivePath() -> URL{
+    func prayersArchivePath() -> URL {
         let fm = FileManager.default
         var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
         containerURL = containerURL?.appendingPathComponent("prayers.plist")

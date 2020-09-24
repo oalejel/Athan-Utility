@@ -15,7 +15,7 @@ import Foundation
 */
 @objc protocol PrayerManagerDelegate {
     var manager: PrayerManager! {get set}
-    var locationIsUpToDate: Bool { get set }
+    var locationIsSynced: Bool { get set }
     
     func dataReady(manager: PrayerManager)
     @objc optional func newPrayer(manager: PrayerManager)

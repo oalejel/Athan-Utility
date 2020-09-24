@@ -14,9 +14,8 @@ import Intents
 
 class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling, PrayerManagerDelegate {
     
+    var locationIsSynced: Bool = true
     var manager: PrayerManager!
-    
-    var locationIsUpToDate: Bool = false
     
     func dataReady(manager: PrayerManager) {
         
@@ -71,7 +70,7 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling, PrayerManager
             response.upcomingDate = upcomingDateString
             response.upcomingTime = timeLeftString
             response.upcomingPrayerName = upcomingPrayerName
-            response.recentLocation = manager.currentCityString
+            response.recentLocation = manager.readableLocationString
             
             // we have put together a correct response
             completion(response)

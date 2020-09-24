@@ -10,63 +10,21 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Provider: IntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
-    }
-    
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        completion(entry)
-    }
-    
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-        
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 60 {
-            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-        
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
-    }
-}
-
-
-struct SimpleEntry: TimelineEntry {
+struct AthanEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationIntent
+    var prayerTimes: [PrayerType:Date]?
+    // I don't think I'll need intents for these widgets
+    // allowing users to load times for different locations
+    // is a feature for another day
+    //let configuration: ConfigurationIntent
 }
-
-extension Color {
-    public static var outlineRed: Color {
-        return Color(decimalRed: 34, green: 0, blue: 3)
-    }
-    
-    public static var darkRed: Color {
-        return Color(decimalRed: 221, green: 31, blue: 59)
-    }
-    
-    public static var lightRed: Color {
-        return Color(decimalRed: 239, green: 54, blue: 128)
-    }
-    
-    public init(decimalRed red: Double, green: Double, blue: Double) {
-        self.init(red: red / 255, green: green / 255, blue: blue / 255)
-    }
-}
-
 
 struct ActivityRingView: View {
     @Binding var progress: CGFloat
     @State var lineWidth: CGFloat = 7
     @State var outlineColor: Color
     
-    var colors: [Color] = [Color.darkRed, Color.lightRed]
+    var colors: [Color] = [Color.white, Color.gray]
     
     var body: some View {
         ZStack {
@@ -86,20 +44,20 @@ struct ActivityRingView: View {
                 ).rotationEffect(.degrees(-90))
             Circle()
                 .frame(width: lineWidth, height: lineWidth)
-                .foregroundColor(Color.darkRed)
+                .foregroundColor(colors.first)
                 .offset(y: (lineWidth / 20) * -150)
             Circle()
                 .frame(width: lineWidth, height: lineWidth)
-                .foregroundColor(progress > 0.95 ? Color.lightRed: Color.lightRed.opacity(0))
+                .foregroundColor(progress > 0.95 ? colors[1] : colors[1].opacity(0))
                 .offset(y: (lineWidth / 20) * -150)
                 .rotationEffect(Angle.degrees(360 * Double(progress)))
                 .shadow(color: progress > 0.96 ? Color.black.opacity(0.1): Color.clear, radius: (lineWidth / 20) * 3, x: (lineWidth / 20) * 4, y: 0)
-        }//.frame(idealWidth: 300, idealHeight: 300, alignment: .center)
+        }
     }
 }
 
 struct SmallWidget: View {
-    var entry: Provider.Entry
+    var entry: AthanEntry
     @State var progress: CGFloat = 0.4
     
     var body: some View {
@@ -113,28 +71,29 @@ struct SmallWidget: View {
                                      lineWidth: 10,
                                      outlineColor: .init(white: 1, opacity: 0.2),
                                      colors: [.white, .white])
-//                        .border(Color.orange)
                         .scaledToFit()
                 }
                 
-//                Spacer()
-//                    .frame(maxWidth: .infinity)
-                Image("sunhorizon")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-//                    .scaledToFit()
-                    .offset(x: 0, y: 4)
-//                    .border(Color.gray)
-                    .padding(.zero)
+                HStack(alignment: .bottom) {
+                    Image("sunhorizon")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .offset(x: 0, y: 4)
+                    Text("Bloomfield Hills")
+                        .foregroundColor(.init(.lightText))
+                        .font(.caption)
+                        .autocapitalization(.allCharacters)
+                        .truncationMode(.tail)
+                        .scaledToFit()
+                }
+                
                 Text("Maghrib")
                     .foregroundColor(.white)
                     .font(.title)
                     .fontWeight(.bold)
-//                    .border(Color.red)
                 Text("1h 5m left")
                     .foregroundColor(.init(UIColor.lightText))
                     .font(.system(size: 14))
-//                    .border(Color.green)
                 
             }
             .padding()
@@ -146,15 +105,9 @@ struct SmallWidget: View {
 struct ProgressBar: View {
     @Binding var progress: CGFloat
     @State var lineWidth: CGFloat = 7
-    @State var outlineColor: Color {
-        mutating didSet {
-            dotColor = outlineColor.opacity(0.9)
-        }
-    }
+    @State var outlineColor: Color
     
-    var dotColor = Color.gray
-    
-    var colors: [Color] = [Color.darkRed, Color.lightRed]
+    var colors: [Color] = [Color.white, Color.white]
     
     var body: some View {
         ZStack {
@@ -169,8 +122,6 @@ struct ProgressBar: View {
                         .foregroundColor(colors.first)
                         .frame(width: progress * g.size.width, height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
-
-                    
                     // having these circles might confuse users
 //                    HStack(alignment: .center, spacing: 0) {
 //                        ForEach(0..<5) { index in
@@ -187,67 +138,12 @@ struct ProgressBar: View {
 //            .border(Color.green)
             .frame(height: lineWidth)
             
-//            Circle()
-//                .stroke(outlineColor, lineWidth: lineWidth)
-//            Circle()
-//                .trim(from: 0, to: progress)
-//                .stroke(
-//                    AngularGradient(
-//                        gradient: Gradient(colors: colors),
-//                        center: .center,
-//                        startAngle: .degrees(0),
-//                        endAngle: .degrees(360)
-//                    ),
-//                    style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
-//                ).rotationEffect(.degrees(-90))
-//            Circle()
-//                .frame(width: lineWidth, height: lineWidth)
-//                .foregroundColor(Color.darkRed)
-//                .offset(y: (lineWidth / 20) * -150)
-//            Circle()
-//                .frame(width: lineWidth, height: lineWidth)
-//                .foregroundColor(progress > 0.95 ? Color.lightRed: Color.lightRed.opacity(0))
-//                .offset(y: (lineWidth / 20) * -150)
-//                .rotationEffect(Angle.degrees(360 * Double(progress)))
-//                .shadow(color: progress > 0.96 ? Color.black.opacity(0.1): Color.clear, radius: (lineWidth / 20) * 3, x: (lineWidth / 20) * 4, y: 0)
         }//.frame(idealWidth: 300, idealHeight: 300, alignment: .center)
     }
 }
 
-
-
-/*
- HStack(alignment: .top) {
-     
-     
-     ForEach(0..<tempNames.count) { i in
-         Spacer()
-         VStack {
-             Text(tempNames[i])
-                 .font(.caption)
-                 .foregroundColor(.white)
-             Spacer()
-             Text("11:00 PM")
-                 .font(.caption2)
-                 .foregroundColor(.init(UIColor.lightText))
-                 .fixedSize()
-                 
-         }
-         if i < 5 {
-             Divider()
-                 .background(Color.white)
-         }
-//                        Divider()
-//                            .background(Color.white)
-//                            .frame(maxWidth: .infinity)
-//                            .foregroundColor(.white)
-     }
-     Spacer()
- }
- */
-
 struct MediumWidget: View {
-    var entry: Provider.Entry
+    var entry: AthanEntry
     @State var progress: CGFloat = 0.5
     var tempNames = ["Fajr", "Shurooq", "Thuhr", "Asr", "Maghrib", "Isha"]
     
@@ -264,6 +160,23 @@ struct MediumWidget: View {
                         .foregroundColor(.init(UIColor.lightText))
                         .font(.subheadline)
                         .fontWeight(.bold)
+                    Spacer()
+                    
+                    VStack(alignment: .trailing) {
+                        Image("sunhorizon")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+    //                        .border(Color.red)
+        //                    .scaledToFit()
+                            .offset(x: 0, y: 8)
+        //                    .border(Color.gray)
+    //                        .padding(.zero)
+                        Text("Barcelona")
+                            .foregroundColor(.init(.lightText))
+                            .font(.caption)
+                            .autocapitalization(.allCharacters)
+
+                    }
                 }
                 
                 ProgressBar(progress: $progress,
@@ -273,31 +186,56 @@ struct MediumWidget: View {
                 Spacer()
                     .frame(maxWidth: .infinity)
                 
-                HStack(alignment: .center) {
-                    ForEach (0..<6) { i in
-                        Spacer()
-                        VStack {
+                HStack {
+                    VStack(alignment: .leading) {
+                        ForEach(0..<3) { i in
                             Text(tempNames[i])
-                                .font(.caption)
-                                .foregroundColor(.white)
-                            Text("11:00 pm")
-                                .font(.caption2)
                                 .foregroundColor(.init(UIColor.lightText))
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            if (i < 2) {
+                                Spacer()
+                            }
                         }
-                        if i < 5 {
-                            Divider()
-                                .background(Color.white)
-                        }
-//                        Divider()
-//                            .background(Color.white)
-//                            .frame(maxWidth: .infinity)
-
-//                            .foregroundColor(.white)
                     }
                     Spacer()
+                    VStack(alignment: .trailing) {
+                        ForEach(0..<3) { i in
+                            Text("11:30 PM")
+                                .foregroundColor(.init(UIColor.lightText))
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            if (i < 2) {
+                                Spacer()
+                            }
+                        }
+                    }
+                    Spacer()
+                    VStack(alignment: .leading) {
+                        ForEach(3..<6) { i in
+                            Text(tempNames[i])
+                                .foregroundColor(i == 3 ? .green : .white)
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            if (i < 5) {
+                                Spacer()
+                            }
+                        }
+                    }
+                    Spacer()
+                    VStack(alignment: .leading) {
+                        ForEach(3..<6) { i in
+                            Text("2:13 PM")
+                                .foregroundColor(i == 3 ? .green : .white)
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            if (i < 5) {
+                                Spacer()
+                            }
+                        }
+                    }
                 }
-                .frame(maxWidth: .infinity)
-
+                
             }
             .padding()
             
@@ -306,8 +244,7 @@ struct MediumWidget: View {
 }
 
 struct LargeWidget: View {
-    var entry: Provider.Entry
-    
+    var entry: AthanEntry
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -316,7 +253,7 @@ struct LargeWidget: View {
 }
 
 struct Athan_WidgetEntryView : View {
-    var entry: Provider.Entry
+    var entry: AthanEntry
     @Environment(\.widgetFamily) var family: WidgetFamily
     
     @ViewBuilder
@@ -327,6 +264,7 @@ struct Athan_WidgetEntryView : View {
         case .systemMedium:
             MediumWidget(entry: entry)
         case .systemLarge:
+            // this family is not in the supported list, so this wont be run
             LargeWidget(entry: entry)
         @unknown default:
             SmallWidget(entry: entry)
@@ -340,24 +278,28 @@ struct Athan_Widget: Widget {
     
     var body: some WidgetConfiguration {
         
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
+        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
             Athan_WidgetEntryView(entry: entry)
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        // lets not support the large widget family for now...
+        .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
     }
 }
 
 struct Athan_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Athan_WidgetEntryView(entry: AthanEntry(date: Date(), prayerTimes: nil))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .flipsForRightToLeftLayoutDirection(true)
+//            .environment(\.layoutDirection, .rightToLeft)
+//            .environment(\.locale, Locale(identifier: "ar"))
         
-        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Athan_WidgetEntryView(entry: AthanEntry(date: Date(), prayerTimes: nil))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
         
-        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
-            .previewContext(WidgetPreviewContext(family: .systemLarge))
+//        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+//            .previewContext(WidgetPreviewContext(family: .systemLarge))
     }
 }

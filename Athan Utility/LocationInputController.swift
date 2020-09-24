@@ -43,7 +43,7 @@ class LocationInputController: UIViewController {
         
         activityIndicator.stopAnimating()
         
-        inputTextField.text = Global.manager.locationString ?? ""
+        inputTextField.text = Global.manager.readableLocationString ?? ""
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.activityIndicator._hide()
@@ -77,10 +77,8 @@ class LocationInputController: UIViewController {
                         // do nothing for now
                     })
                     // if we successfully used an input location, then we know that we are no longer GPS for the shown data
-                    Global.manager.currentCityString = nil
-                    Global.manager.currentStateString = nil
-                    Global.manager.currentCountryString = nil
-                    Global.manager.delegate.locationIsUpToDate = false
+                    Global.manager.gpsStrings = nil
+                    Global.manager.shouldSyncLocation = false
                     // hide the loading spinner that covers the screen
                     self.activityIndicator._hide()
                 }
@@ -101,11 +99,7 @@ class LocationInputController: UIViewController {
         })
         activityIndicator.startAnimating()
     }
-    
-    @IBAction func lockPressed(_ sender: AnyObject) {
-        Global.manager.lockLocation = true
-    }
-    
+        
     @objc func cancelPressed() {
         // might need to reset some variables in manager like getData
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: { () -> Void in

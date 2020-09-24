@@ -10,20 +10,10 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct AthanEntry: TimelineEntry {
-    let date: Date
-    var prayerTimes: [PrayerType:Date]?
-    // I don't think I'll need intents for these widgets
-    // allowing users to load times for different locations
-    // is a feature for another day
-    //let configuration: ConfigurationIntent
-}
-
 struct ActivityRingView: View {
-    @Binding var progress: CGFloat
     @State var lineWidth: CGFloat = 7
+    var progress: CGFloat = 0.0
     @State var outlineColor: Color
-    
     var colors: [Color] = [Color.white, Color.gray]
     
     var body: some View {
@@ -56,10 +46,32 @@ struct ActivityRingView: View {
     }
 }
 
+struct PrayerSymbol: View {
+    var prayerType: PrayerType
+    var body: some View {
+        switch prayerType {
+            case .fajr:
+                Image(systemName: "light.max")
+            case .shurooq:
+                Image(systemName: "sunrise")
+            case .thuhr:
+                Image(systemName: "sun.min")
+            case .asr:
+                Image(systemName: "sun.max")
+            case .maghrib:
+                Image(systemName: "sunset")
+            case .isha:
+                Image(systemName: "moon.stars")
+            default:
+                Image(systemName: "sun.min")
+        }
+    }
+}
+
 struct SmallWidget: View {
     var entry: AthanEntry
-    @State var progress: CGFloat = 0.4
-    
+//    @State var progress: CGFloat = 0.4
+        
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -67,33 +79,42 @@ struct SmallWidget: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .center) {
                     Spacer()
-                    ActivityRingView(progress: $progress,
-                                     lineWidth: 10,
-                                     outlineColor: .init(white: 1, opacity: 0.2),
-                                     colors: [.white, .white])
+                    ActivityRingView(
+                        lineWidth: 10,
+                        progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
+                        outlineColor: .init(white: 1, opacity: 0.2),
+                        colors: [.white, .white]
+                    )
                         .scaledToFit()
                 }
+
+                PrayerSymbol(prayerType: entry.currentPrayer)
+                    .opacity(0.9)
+                    .foregroundColor(.white)
+//                HStack(alignment: .bottom) {
+//                        .resizable()
+//                        .frame(width: 30, height: 30)
+//                        .offset(x: 0, y: 4)
+//                        .opacity(0.9)
+//                    Text("Bloomfield Hills")
+//                        .foregroundColor(.init(.lightText))
+//                        .font(.caption)
+//                        .autocapitalization(.allCharacters)
+//                        .truncationMode(.tail)
+//                        .scaledToFit()
+//                }
                 
-                HStack(alignment: .bottom) {
-                    Image("sunhorizon")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .offset(x: 0, y: 4)
-                    Text("Bloomfield Hills")
-                        .foregroundColor(.init(.lightText))
-                        .font(.caption)
-                        .autocapitalization(.allCharacters)
-                        .truncationMode(.tail)
-                        .scaledToFit()
-                }
-                
-                Text("Maghrib")
+                Text(entry.currentPrayer.localizedString())
                     .foregroundColor(.white)
                     .font(.title)
                     .fontWeight(.bold)
-                Text("1h 5m left")
+//                Text("\(dateFormatter.string(from: entry.nextPrayerDate))")
+//                Text("\(entry.nextPrayerDate, formatter: relativeDF) left")
+                Text("\(entry.nextPrayerDate, style: .relative) left")
                     .foregroundColor(.init(UIColor.lightText))
                     .font(.system(size: 14))
+                    .bold()
+                    .scaledToFit()
                 
             }
             .padding()
@@ -171,10 +192,10 @@ struct MediumWidget: View {
                             .offset(x: 0, y: 8)
         //                    .border(Color.gray)
     //                        .padding(.zero)
-                        Text("Barcelona")
-                            .foregroundColor(.init(.lightText))
-                            .font(.caption)
-                            .autocapitalization(.allCharacters)
+//                        Text("Barcelona")
+//                            .foregroundColor(.init(.lightText))
+//                            .font(.caption)
+//                            .autocapitalization(.allCharacters)
 
                     }
                 }
@@ -281,8 +302,8 @@ struct Athan_Widget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
             Athan_WidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Athan Widget")
+        .description("Use Athan Widgets to view upcoming salah times at a glance.")
         // lets not support the large widget family for now...
         .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
     }
@@ -290,13 +311,39 @@ struct Athan_Widget: Widget {
 
 struct Athan_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Athan_WidgetEntryView(entry: AthanEntry(date: Date(), prayerTimes: nil))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-            .flipsForRightToLeftLayoutDirection(true)
-//            .environment(\.layoutDirection, .rightToLeft)
-//            .environment(\.locale, Locale(identifier: "ar"))
+        ForEach(0..<6) { i in
+            let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
+    //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
+            let entry = AthanEntry(date: Date(),
+                                   currentPrayer: PrayerType(rawValue: i)!, currentPrayerDate: Date(),
+                                   nextPrayerDate: nextDate,
+                                   todayPrayerTimes: [
+                                    .fajr : Date(), .shurooq : Date(),
+                                    .thuhr : Date(), .asr : Date(),
+                                    .maghrib : Date(), .isha : Date()
+                                   ])
+
+            Athan_WidgetEntryView(entry: entry)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .flipsForRightToLeftLayoutDirection(true)
+    //            .environment(\.layoutDirection, .rightToLeft)
+    //            .environment(\.locale, Locale(identifier: "ar"))
+
+        }
         
-        Athan_WidgetEntryView(entry: AthanEntry(date: Date(), prayerTimes: nil))
+        let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
+//        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
+        let entry = AthanEntry(date: Date(),
+                               currentPrayer: .fajr, currentPrayerDate: Date(),
+                               nextPrayerDate: nextDate,
+                               todayPrayerTimes: [
+                                .fajr : Date(), .shurooq : Date(),
+                                .thuhr : Date(), .asr : Date(),
+                                .maghrib : Date(), .isha : Date()
+                               ])
+
+        
+        Athan_WidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
         
 //        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))

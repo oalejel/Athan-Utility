@@ -360,11 +360,9 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         softResetPrayerVisuals()
         
         if manager.dataExists {
-            if let startTime = self.manager.currentPrayerTime() {
-                let timeElapsed = Date().timeIntervalSince(startTime as Date)
-                if timeElapsed < 3 { // only play athan if its been < 2 seconds since athan
-                    NoteSoundPlayer.playFullAudio(for: Settings.getSelectedSoundIndex())
-                }
+            let timeElapsed = Date().timeIntervalSince(self.manager.currentPrayerTime())
+            if timeElapsed < 3 { // only play athan if its been < 2 seconds since athan
+                NoteSoundPlayer.playFullAudio(for: Settings.getSelectedSoundIndex())
             }
         }
         
@@ -413,16 +411,14 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     func refreshProgressBar() {
         if self.manager.dataExists {
-            if let startTime = self.manager.currentPrayerTime() {
-                if let endTime = self.manager.nextPrayerTime() {
-                    let timeElapsed = Date().timeIntervalSince(startTime as Date)
-                    let interval = endTime.timeIntervalSince(startTime as Date)
-                    self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
-                }
+            let startTime = self.manager.currentPrayerTime()
+            if let endTime = self.manager.nextPrayerTime() {
+                let timeElapsed = Date().timeIntervalSince(startTime as Date)
+                let interval = endTime.timeIntervalSince(startTime as Date)
+                self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
             }
         }
     }
-    
     
     func loadingHandler() {
         let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")

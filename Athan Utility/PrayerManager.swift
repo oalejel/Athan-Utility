@@ -111,7 +111,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     var delegate: PrayerManagerDelegate?
     
-    var calculationCompletionClosure: ((Result<[PrayerType:Date], Error>) -> ())?
+    var calculationCompletionClosure: ((Result<PrayerManager, Error>) -> ())?
     var lastFetchSuccessful = false
     var dataExists = false
     
@@ -131,7 +131,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //MARK: - Initializer
     
     // calculation completion only called once. if we load from a local dictionary, we load from there
-    init(delegate: PrayerManagerDelegate?, calculationCompletion: ((Result<[PrayerType:Date], Error>) -> ())? = nil) {
+    init(delegate: PrayerManagerDelegate?, calculationCompletion: ((Result<PrayerManager, Error>) -> ())? = nil) {
         self.delegate = delegate
         super.init()
         
@@ -157,11 +157,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let dict = dictionaryFromFile() {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
-            var times = [PrayerType:Date]()
-            todayPrayerTimes.forEach { (k, v) in
-                times[PrayerType(rawValue: k)!] = v
-            }
-            calculationCompletion?(.success(times))
+//            var times = [PrayerType:Date]()
+//            todayPrayerTimes.forEach { (k, v) in
+//                times[PrayerType(rawValue: k)!] = v
+//            }
+            calculationCompletion?(.success(self))
         } else {
             delegate?.setShouldShowLoader?()
             calculationCompletionClosure = calculationCompletion
@@ -176,12 +176,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         #if targetEnvironment(simulator)
         self.gpsStrings = GPSStrings(currentCityString: "Bloomfield Hills",
+                                     currentDistrictString: "Oakland",
                                      currentStateString: "MI",
-                                     currentCountryString: "USA",
-                                     urrentDistrictString: "Oakland")
+                                     currentCountryString: "USA")
         self.coordinate = CLLocationCoordinate2D(latitude: 42.588, longitude: -83.2975)
         //fetch data for this month and the next month
-        self.fetchJSONData(forLocation: "Bloomfield Hills, MI, USA"!, dateTuple: nil, completion: nil)
+        self.fetchJSONData(forLocation: "Bloomfield Hills, MI, USA", dateTuple: nil, completion: nil)
 //        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
         #endif
     }
@@ -218,6 +218,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                     if !self.shouldRequestJSONForLocation(locality: placemark.locality, subAdminArea: placemark.subAdministrativeArea, state: placemark.administrativeArea, countryCode: placemark.isoCountryCode) {
                         // we know that the location we already have is correct
 //                        self.delegate?.syncLocation = true
+                        self.delegate?.locationIsSynced = true
                         self.delegate?.hideLoadingView?()
                         return
                     }
@@ -244,9 +245,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             self.todayPrayerTimes.forEach { (k, v) in
                                 times[PrayerType(rawValue: k)!] = v
                             }
-                            self.calculationCompletionClosure?(.success(times))
+                            self.calculationCompletionClosure?(.success(self))
                             self.calculationCompletionClosure = nil
                         } else {
+                            self.gpsStrings = nil
+                            self.ignoreLocationUpdates = false
+                            self.shouldSyncLocation = true
                             self.calculationCompletionClosure?(.failure(NSError()))
                             self.calculationCompletionClosure = nil
                         }
@@ -719,16 +723,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     func calculateCurrentPrayer() {
-        self.currentPrayer = .none//in case its a new day and fajr didnt start
+        self.currentPrayer = .isha //in case its a new day and fajr didnt start
         let curDate = Date()
         
         for i in 0...5 {
             let p = PrayerType(rawValue: i)!
             //ascending if the compared one is greater
             if let time = self.todayPrayerTimes[p.rawValue] {
-                if curDate.compare(time) == ComparisonResult.orderedDescending {
+                // allow for 2 seconds of overestimation of current time in case this is triggered just before a prayer is calculated
+                let adjTime = Calendar.current.date(byAdding: .second, value: -2, to: time)!
+                if curDate.compare(adjTime) == ComparisonResult.orderedDescending {
                     //WARNING: THIS MIGHT FAIL WHEN THE DATE IS AFTER
-                    self.currentPrayer = PrayerType(rawValue: p.rawValue)!//select the previous date prayer
+                    print("CURRENT PRAYER IS \(p.rawValue)")
+                    self.currentPrayer = PrayerType(rawValue: p.rawValue)! // select the previous date prayer
                 } else {
                     return
                 }
@@ -749,11 +756,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     func setTimers() {
         // create prayer times
         let curDate = Date()
-        if currentPrayer != .isha {
+        // if we arent in the case where we are on the same day as "today's fajr" and its not isha
+        if !(currentPrayer == .isha && todayPrayerTimes[0] < Date()) {
             var startIndex = currentPrayer.rawValue + 1
-            if currentPrayer == .none {
-                startIndex = 0
-            }
+//            if currentPrayer == .none {
+//                startIndex = 0
+//            }
             for i in (startIndex)...5 {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {
@@ -826,8 +834,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         var min = 0
         //account for prayers that could have passed today
         if t.day == currentDay && t.month == currentMonth && t.year == currentYear {
-            if currentPrayer == .none {
-                min = 0
+            if currentPrayer == .isha && todayPrayerTimes[0] > Date() {
+                min = 0 // case where its isha but we are on a new day
             } else if currentPrayer == .isha {
                 return
             } else {
@@ -971,36 +979,57 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     // returns the athan time for the "active" or "current" prayer session time
-    func currentPrayerTime() -> Date? {
-        if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
-            if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
-                // if none and its the next day, then substract the day by one and use the today isha time
-                let cal = Calendar.current
-                
-                    var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToIsha)
-                    if comps.day == 1 {
-                        if comps.month == 1 {
-                            comps.year! -= 1
-                            comps.month = 12
-                            comps.day = daysInMonth(12)
-                        } else {
-                            comps.month! -= 1
-                            comps.day = daysInMonth(comps.month!)
-                        }
-                    } else {
-                        comps.day! -= 1
-                        
-                    }
-                    return cal.date(from: comps)
-            } else if currentPrayer != .none {
-                return todayPrayerTimes[currentPrayer.rawValue]
+    func currentPrayerTime() -> Date {
+        if currentPrayer == .isha && Date() < todayPrayerTimes[0] {
+            // if none and its the next day, then substract the day by one and use the today isha time
+            let cal = Calendar.current
+            let closeToTodaysIsha = todayPrayerTimes[PrayerType.isha.rawValue]!
+            var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToTodaysIsha)
+            if comps.day == 1 {
+                if comps.month == 1 {
+                    comps.year! -= 1
+                    comps.month = 12
+                    comps.day = daysInMonth(12)
+                } else {
+                    comps.month! -= 1
+                    comps.day = daysInMonth(comps.month!)
+                }
+            } else {
+                comps.day! -= 1
             }
+            return cal.date(from: comps)!
+        } else {
+            return todayPrayerTimes[currentPrayer.rawValue]!
         }
-        return nil
+//        if let closeToIsha = todayPrayerTimes[PrayerType.isha.rawValue] {
+//            if currentPrayer == .none && Date().timeIntervalSince(closeToIsha) < 0 {
+//                // if none and its the next day, then substract the day by one and use the today isha time
+//                let cal = Calendar.current
+//
+//                    var comps = (cal as NSCalendar).components([.year, .month, .day, .hour, .minute, .timeZone], from: closeToIsha)
+//                    if comps.day == 1 {
+//                        if comps.month == 1 {
+//                            comps.year! -= 1
+//                            comps.month = 12
+//                            comps.day = daysInMonth(12)
+//                        } else {
+//                            comps.month! -= 1
+//                            comps.day = daysInMonth(comps.month!)
+//                        }
+//                    } else {
+//                        comps.day! -= 1
+//
+//                    }
+//                    return cal.date(from: comps)
+//            } else if currentPrayer != .none {
+//                return todayPrayerTimes[currentPrayer.rawValue]
+//            }
+//        }
+//        return nil
     }
     
     func previousPrayerTime() -> Date {
-        if currentPrayer == .fajr || currentPrayer == .none {
+        if currentPrayer == .fajr || (currentPrayer == .isha && Date() < todayPrayerTimes[0]) {
             return yesterdayPrayerTimes[PrayerType.isha.rawValue]!
         } else {
             return todayPrayerTimes[currentPrayer.previous().rawValue]!

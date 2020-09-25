@@ -759,9 +759,10 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         // if we arent in the case where we are on the same day as "today's fajr" and its not isha
         if !(currentPrayer == .isha && todayPrayerTimes[0] < Date()) {
             var startIndex = currentPrayer.rawValue + 1
-//            if currentPrayer == .none {
-//                startIndex = 0
-//            }
+            if currentPrayer == .isha {
+                startIndex = 0
+            }
+            
             for i in (startIndex)...5 {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {

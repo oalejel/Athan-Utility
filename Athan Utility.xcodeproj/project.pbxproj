@@ -37,6 +37,8 @@
 		3D32B5811C14D31D003CAE1B /* sunfilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5801C14D31D003CAE1B /* sunfilled.png */; };
 		3D32B5831C14D32E003CAE1B /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5821C14D32E003CAE1B /* moon.png */; };
 		3D32B5851C14D34D003CAE1B /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5841C14D34D003CAE1B /* sun.png */; };
+		3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AC133251D894600B2D41D /* MainSwiftUI.swift */; };
+		3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */; };
 		3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */; };
 		3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */; };
@@ -185,6 +187,8 @@
 		3D32B5801C14D31D003CAE1B /* sunfilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunfilled.png; sourceTree = "<group>"; };
 		3D32B5821C14D32E003CAE1B /* moon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon.png; sourceTree = "<group>"; };
 		3D32B5841C14D34D003CAE1B /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
+		3D4AC133251D894600B2D41D /* MainSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSwiftUI.swift; sourceTree = "<group>"; };
+		3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElapsedView.swift; sourceTree = "<group>"; };
 		3D52254E20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
 		3D52254F20CDCE2300CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -357,6 +361,8 @@
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3D15F53E242828590010C709 /* LaunchScreen.xib */,
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
+				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
+				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
 				3DCB30CA236B109200D47C7C /* UIView+Fading.swift */,
 				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
@@ -842,6 +848,7 @@
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
+				3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */,
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
@@ -863,6 +870,7 @@
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
+				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 			);

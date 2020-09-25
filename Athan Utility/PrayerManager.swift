@@ -51,7 +51,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     //location services data provider
-    fileprivate let coreManager = CLLocationManager()
+    let coreManager = CLLocationManager()
     var lastAuthStatus = CLAuthorizationStatus.notDetermined
     
     var currentPrayer: PrayerType = PrayerType.fajr //default prayer before arrival of data. should be based on a plist int
@@ -157,23 +157,25 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if let dict = dictionaryFromFile() {
             print("should parse dict from file now!")
             parseDictionary(dict, fromFile: true)
-//            var times = [PrayerType:Date]()
-//            todayPrayerTimes.forEach { (k, v) in
-//                times[PrayerType(rawValue: k)!] = v
-//            }
-            calculationCompletion?(.success(self))
+//            calculationCompletionClosure = calculationCompletion
+//            notifyWidget()
         } else {
             delegate?.setShouldShowLoader?()
-            calculationCompletionClosure = calculationCompletion
         }
+        // hold onto this so that we can tell the user that we have data
+        // only once we try to update from location / from current location data
+        calculationCompletionClosure = calculationCompletion
         
         self.coreManager.delegate = self
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff
         
+        // DO NOT REQUEST permissions yet, since we only use this to trigger early updates in the case that the user has already accepted permissions
+        self.coreManager.startUpdatingLocation()
+        
         if !shouldSyncLocation {
 //            fetchMonthsJSONDataForCurrentLocation(gpsStr)
         }
-        
+                
         #if targetEnvironment(simulator)
         self.gpsStrings = GPSStrings(currentCityString: "Bloomfield Hills",
                                      currentDistrictString: "Oakland",
@@ -195,6 +197,19 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // tell widget whether we have current data. this should get called once we finish attempting to check our location
+    // if the user has data on file that is correct, but the location request failed, we will fallback on that data
+    // since this only checks for data existing
+    func notifyWidget() {
+        if todayPrayerTimes.count > 0 {
+            self.calculationCompletionClosure?(.success(self))
+        } else {
+            self.calculationCompletionClosure?(.failure(NSError()))
+        }
+        
+        self.calculationCompletionClosure = nil
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         coreManager.stopUpdatingLocation() //change if stopping without getting reliable info
         
@@ -207,7 +222,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         ignoreLocationUpdates = true
         
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-         
             if let x = error {
                 print(x)
             } else {
@@ -220,6 +234,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //                        self.delegate?.syncLocation = true
                         self.delegate?.locationIsSynced = true
                         self.delegate?.hideLoadingView?()
+                        
+                        // tell widgets / requester that we have success, since there is no need for an update
+                        self.notifyWidget()
                         return
                     }
                     
@@ -245,18 +262,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                             self.todayPrayerTimes.forEach { (k, v) in
                                 times[PrayerType(rawValue: k)!] = v
                             }
-                            self.calculationCompletionClosure?(.success(self))
-                            self.calculationCompletionClosure = nil
+                            self.notifyWidget()
                         } else {
                             self.gpsStrings = nil
                             self.ignoreLocationUpdates = false
                             self.shouldSyncLocation = true
-                            self.calculationCompletionClosure?(.failure(NSError()))
-                            self.calculationCompletionClosure = nil
+                            self.notifyWidget()
                         }
-                        
                     })
-                    
                 }
             }
         })
@@ -267,7 +280,18 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if lastAuthStatus == .denied {
             if shouldSyncLocation && (status == .authorizedWhenInUse || status == .authorizedAlways) {
                 coreManager.startUpdatingLocation() // user has decided to share location, so start process of getting data
+                lastAuthStatus = status
+                return
             }
+        }
+        
+        // try to load data for the current location if current data is out of date
+        if !hasDataForNextMonth() && gpsStrings != nil {
+            fetchMonthsJSONDataForCurrentLocation { (success) in
+                self.notifyWidget()
+            }
+        } else {
+            self.notifyWidget()
         }
         lastAuthStatus = status
     }
@@ -1082,7 +1106,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         } else {
             // Fallback on earlier versions
         }
-        
     }
     
     /// - important: testing this function in simulator will not accurately reflect change of location and locked locations
@@ -1116,15 +1139,22 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         coreManager.startUpdatingLocation()
     }
     
+    private func hasDataForNextMonth() -> Bool {
+        let daysTilNextMonth = daysInMonth(self.currentMonth!) + 1 - self.currentDay!
+        let nextMonthTuple = getFutureDateTuple(daysToSkip: daysTilNextMonth)
+        if let _ = yearTimes[nextMonthTuple.year]?[nextMonthTuple.month] {
+            return false
+        }
+        return true
+    }
+    
     /// returns true of user is in same location and there is enough data stored for the next month
     func shouldRequestJSONForLocation(locality: String?, subAdminArea: String?, state: String?, countryCode: String?) -> Bool {
         print("Checking if should update location")
         // first test if user is in same location
         if gpsStrings?.currentCityString == locality && gpsStrings?.currentDistrictString == subAdminArea && gpsStrings?.currentCountryString == countryCode {
             // then test if we have have data for next month before saving
-            let daysTilNextMonth = daysInMonth(self.currentMonth!) + 1 - self.currentDay!
-            let nextMonthTuple = getFutureDateTuple(daysToSkip: daysTilNextMonth)
-            if let _ = yearTimes[nextMonthTuple.year]?[nextMonthTuple.month] {
+            if hasDataForNextMonth() {
                 print(" - no")
                 return false
             }

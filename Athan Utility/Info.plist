@@ -37,6 +37,7 @@
 	<string>Athan times for requested regions are used by Siri.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>ConfigurationIntent</string>
 		<string>CurrentLocationIntentIntent</string>
 		<string>Intent2Intent</string>
 		<string>NextPrayerIntent</string>

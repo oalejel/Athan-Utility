@@ -250,6 +250,39 @@ struct MediumWidget: View {
     }
 }
 
+struct SmallErrorWidget: View {
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: nil) {
+                    Text("Open Athan Utility to use your location for athan times")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+            }
+        }
+    }
+}
+
+struct MediumErrorWidget: View {
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: nil) {
+                    Text("Open Athan Utility to use your location for athan times")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.bold)
+                }
+            }
+            
+        }
+    }
+}
+
 struct LargeWidget: View {
     var entry: AthanEntry
     var body: some View {
@@ -265,12 +298,16 @@ struct Athan_WidgetEntryView : View {
     
     @ViewBuilder
     var body: some View {
-        switch family {
-        case .systemSmall:
+        switch (family, entry.currentPrayer) {
+        case (.systemSmall, .none):
+            SmallErrorWidget()
+        case (.systemMedium, .none):
+            MediumErrorWidget()
+        case (.systemSmall, _):
             SmallWidget(entry: entry)
-        case .systemMedium:
+        case (.systemMedium, _):
             MediumWidget(entry: entry)
-        case .systemLarge:
+        case (.systemLarge, _):
             // this family is not in the supported list, so this wont be run
             LargeWidget(entry: entry)
         @unknown default:

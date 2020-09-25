@@ -90,7 +90,16 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         
         // add siri button, which will request siri permissions this function
         // checks for compatibility and whether the user has interacted with the button
-        self.prepareSiriButtonView()
+        
+        INVoiceShortcutCenter.shared.getAllVoiceShortcuts(completion: { (shortcuts, err) in
+            if shortcuts == nil || shortcuts?.count == 0 {
+                DispatchQueue.main.async {
+                    self.prepareSiriButtonView()
+                }
+            } else {
+                self.siriButtonView.isHidden = true
+            }
+        })
         
         // prevent touch recognizers from delaying squeezebutton reactions
         //        let window = UIApplication.shared.windows[0]

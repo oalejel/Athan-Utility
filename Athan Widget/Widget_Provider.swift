@@ -81,6 +81,13 @@ struct AthanProvider: IntentTimelineProvider {
                     tomorrowTimesDict[PrayerType(rawValue: k)!] = v
                 }
                 
+                // first, add a snapshot entry for NOW, since we may be on isha time
+                // on a new day (at like 1 AM), where there is no entry made above that
+                // precedes the current time
+                let nowEntry = AthanEntry(date: Date(), currentPrayer: man.currentPrayer, currentPrayerDate: man.currentPrayerTime(), nextPrayerDate: man.nextPrayerTime()!, todayPrayerTimes: todayTimesDict)
+                entries.append(nowEntry)
+
+                
                 // create entry for every prayer of today
                 // maybe its ok if we put things that have dates after now?
                 for i in 0...5 {
@@ -150,6 +157,7 @@ struct AthanProvider: IntentTimelineProvider {
                     }
                     // no worry for type == isha, since tomorrow's entries only go up to maghrib
                 }
+                
                 
                 // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
                 let timeline = Timeline(entries: entries, policy: .atEnd)

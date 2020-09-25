@@ -613,12 +613,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
             
             alignPrayerTimes()
-            calculateCurrentPrayer()
-            notifyDelegate()
-            //must call set timers after updatecurrent prayer is called
-            setTimers()
-            
-            scheduleAppropriateNotifications()
+            // may still be nil if we are reading prayer times for a date not including today!
+            if todayPrayerTimes.count != 0 {
+                calculateCurrentPrayer()
+                notifyDelegate()
+                //must call set timers after updatecurrent prayer is called
+                setTimers()
+                scheduleAppropriateNotifications()
+            }
         }
         
         return successful
@@ -759,6 +761,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         // if we arent in the case where we are on the same day as "today's fajr" and its not isha
         if !(currentPrayer == .isha && todayPrayerTimes[0] < Date()) {
             var startIndex = currentPrayer.rawValue + 1
+            if currentPrayer == .isha {
+                startIndex = 0
+            }
 //            if currentPrayer == .none {
 //                startIndex = 0
 //            }
@@ -1038,12 +1043,14 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func nextPrayerTime() -> Date? {
         //for cases where we are looking into next day
-        if currentPrayer == .isha {
+        if currentPrayer == .isha && Date() > todayPrayerTimes[0] { // case where we must read from tomorrow
             if let storedNext = tomorrowPrayerTimes[PrayerType.fajr.rawValue] {
                 return storedNext
             } else {
                 return todayPrayerTimes[PrayerType.fajr.rawValue]?.addingTimeInterval(86400)
             }
+        } else if currentPrayer == .isha {
+            return todayPrayerTimes[0]
         } else {
             // = .none when we are at a new day and before fajr
             //standard case, taking time for prayer in same day

@@ -22,7 +22,7 @@ struct ActivityRingView: View {
                 .stroke(outlineColor, lineWidth: lineWidth * 1.1)
 //                .blur(radius: 1)
             Circle()
-                .trim(from: 0, to: 0.7)
+                .trim(from: 0, to: progress)
                 .stroke(
                     AngularGradient(
                         gradient: Gradient(colors: colors),
@@ -189,8 +189,8 @@ struct MediumWidget: View {
                             lineWidth: 6,
                             outlineColor: .init(white: 1, opacity: 0.2),
                             colors: [.white, .white])
-                Spacer()
-                    .frame(maxWidth: .infinity)
+//                Spacer()
+//                    .frame(maxWidth: .infinity)
                 
                 HStack {
                     VStack(alignment: .leading) {
@@ -241,7 +241,7 @@ struct MediumWidget: View {
                             }
                         }
                     }
-                }
+                }.padding(.top, 10)
                 
             }
             .padding()

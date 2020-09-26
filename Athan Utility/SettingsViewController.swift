@@ -23,6 +23,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
     // file names are in settings.swift
     
     var notificationSoundIndex = 0 // set this to user setting
+//    var calculationMethodIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,13 +50,14 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
         
         // check what the user setting for selected sound index is
         notificationSoundIndex = Settings.getSelectedSoundIndex()
+//        calculationMethodIndex = Settings.getCalculationMethodIndex()
     }
     
     // sections: Siri Extension, Athan Alarms, Notification Sound
     override func numberOfSections(in tableView: UITableView) -> Int {
         // don't include siri shortcuts button if user is behind ios 12
-        if #available(iOS 12.0, *) { return 3 }
-        return 2
+        if #available(iOS 12.0, *) { return 4 }
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,6 +66,8 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             // notification sound
             return noteSoundNames.count
         case 1:
+            return 1 // calculation method
+        case 2:
             // athan alarms
             return 6
         default:
@@ -85,7 +89,6 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
         }
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "tone_cell") as! ToneSettingCell
@@ -95,8 +98,16 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             cell.accessoryType = indexPath.row == notificationSoundIndex ? .checkmark : .none
             
             return cell
-        } else if indexPath.section == 2 {
-            
+        } else if indexPath.section == 1 {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            cell.textLabel?.text = Settings.calculationMethodNames[Settings.getCalculationMethodIndex()]
+            cell.accessoryType = .disclosureIndicator
+            cell.accessoryView?.tintColor = .white
+            cell.backgroundView?.backgroundColor = UIColor.clear
+            cell.backgroundColor = UIColor.clear
+            cell.textLabel?.textColor = UIColor.white
+            cell.selectionStyle = .gray
+            return cell
         } else if indexPath.section == 3 {
             if #available(iOS 12.0, *) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "siri_cell") as! SiriCell
@@ -176,14 +187,26 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             let originalIndexPath = IndexPath(row: notificationSoundIndex, section: 0)
             tableView.cellForRow(at: originalIndexPath)?.accessoryType = .none
             notificationSoundIndex = indexPath.row
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 1 { // calculation method
+            
+            // show setting view controller for this specific prayer
+            let c = tableView.cellForRow(at: indexPath)!
+            currentRow = indexPath.row
+//            c.contentView.backgroundColor = UIColor(white: 0.4, alpha: 0.5)
+//            let s = PrayerSettingController(style: .plain, prayer: PrayerType(rawValue: indexPath.row)!)
+            let s = CalculationSettingController()
+            //s.manager = manager
+//            tableView.deselectRow(at: indexPath, animated: true)
+            navigationController?.pushViewController(s, animated: true)
+            
+        } else if indexPath.section == 2 {
             // show setting view controller for this specific prayer
             let c = tableView.cellForRow(at: indexPath) as! PrayerSettingCell
             currentRow = indexPath.row
-            c.contentView.backgroundColor = UIColor(white: 0.4, alpha: 0.5)
+//            c.contentView.backgroundColor = UIColor(white: 0.4, alpha: 0.5)
             let s = PrayerSettingController(style: .plain, prayer: PrayerType(rawValue: indexPath.row)!)
             //s.manager = manager
-            tableView.deselectRow(at: indexPath, animated: true)
+//            tableView.deselectRow(at: indexPath, animated: true)
             navigationController?.pushViewController(s, animated: true)
         }
     }
@@ -194,6 +217,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
         navigationController!.presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // save sound setting
             Settings.setSelectedSound(for: self.notificationSoundIndex)
+            // do not set calculatio method setting here. its done in another VC
             // if updates are pending, then recreate our notifications
             if Settings.notificationUpdatesPending {
                 Settings.notificationUpdatesPending = false

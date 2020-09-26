@@ -90,7 +90,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     
     func prayerAPIURL(address: String, month: Int, year: Int) -> URL? {
         let escapedAddress = address.replacingOccurrences(of: " ", with: "+")
-        let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=\(month)&year=\(year)mode=yearly&method=2"
+        let urlStr = "https://api.aladhan.com/calendarByAddress?address=\(escapedAddress)&month=\(month)&year=\(year)mode=yearly&method=\(Settings.getCalculationMethodIndex() + 1)"
+        // must add 1 to calc method since website uses 1-indexing
         return URL(string: urlStr)
     }
     

@@ -12,7 +12,7 @@ import Intents
 
 struct AthanEntry: TimelineEntry {
     let date: Date // just represents time to update the timeline. != always equal start of prayer
-    var currentPrayer: PrayerType
+    var currentPrayer: PrayerType?
     var currentPrayerDate: Date
     var nextPrayerDate: Date // will refer to Fajr of next day if prayerType is isha
     var todayPrayerTimes: [PrayerType:Date]
@@ -23,56 +23,66 @@ struct AthanEntry: TimelineEntry {
     //let configuration: ConfigurationIntent
 }
 
-struct AthanProvider: IntentTimelineProvider {
+class AthanProvider: IntentTimelineProvider {
+    static var manager: PrayerManager!
     
+    let updateSemaphore = DispatchSemaphore(value: 0)
+    init() {
+        DispatchQueue.main.async {
+            AthanProvider.manager = PrayerManager(delegate: nil, requestLocationOnStart: true, calculationCompletion: { res in
+                // indicate that we now have data
+                self.updateSemaphore.signal()
+            })
+        }
+    }
+
     func placeholder(in context: Context) -> AthanEntry {
         // let UI handle case with nil data
         let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
-        return AthanEntry(date: Date(), currentPrayer: .fajr, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
+        // pass .none for placeholders
+        return AthanEntry(date: Date(), currentPrayer: PrayerType.none, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
         
-        func generateSnapshotOnManager(manager: PrayerManager) {
+        // returns true on success
+        func generateSnapshotOnManager(manager: PrayerManager) -> Bool {
             var times = [PrayerType:Date]()
-            manager.todayPrayerTimes.forEach { (k, v) in
-                times[PrayerType(rawValue: k)!] = v
-            }
-            let entry = AthanEntry(date: Date(), currentPrayer: manager.currentPrayer, currentPrayerDate: manager.currentPrayerTime(), nextPrayerDate: manager.nextPrayerTime()!, todayPrayerTimes: times)
-            completion(entry)
-        }
-        
-        // lets try to load from file for a snapshot
-        // if no times available, then have the prayer manager load things
-        func attemptLoadFromFile() {
-            let manager = PrayerManager(delegate: nil)
-            if manager.dataExists {
-                generateSnapshotOnManager(manager: manager)
-                return
-            } else if manager.readableLocationString == nil {
-                // if no location was ever set, give up
-                print("location services not allowed")
-                let errorEntry = AthanEntry(date: Date(), currentPrayer: .none, currentPrayerDate: Date(), nextPrayerDate: Date(), todayPrayerTimes: [:])
-                completion(errorEntry)
-            }
-        }
-        attemptLoadFromFile()
-        
-        // if we reach this point, the old discarded manager was not able
-        // to read data from a file, and so we need GPS data
-        let _ = PrayerManager(delegate: nil) { (res) in
-            switch res {
-            case .success(let man):
-                generateSnapshotOnManager(manager: man)
-                return
-            case .failure:
-                print("Unable to get prayer snapshot")
-                // create dummy date in this case
-                let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
-                let entry = AthanEntry(date: Date(), currentPrayer: .fajr, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
+            if manager.todayPrayerTimes.count == 6 && manager.tomorrowPrayerTimes.count == 6 {
+                manager.todayPrayerTimes.forEach { (k, v) in
+                    times[PrayerType(rawValue: k)!] = v
+                }
+                let entry = AthanEntry(date: Date(), currentPrayer: manager.currentPrayer, currentPrayerDate: manager.currentPrayerTime(), nextPrayerDate: manager.nextPrayerTime()!, todayPrayerTimes: times)
                 completion(entry)
+                return true
+            }
+            return false
+        }
+        
+        // wait no more than 4 seconds to load data from manager from online
+        if updateSemaphore.wait(timeout: .now() + 4) == .success {
+            updateSemaphore.signal()
+            // confirm that we have data
+            if AthanProvider.manager.todayPrayerTimes.count > 0 && AthanProvider.manager.tomorrowPrayerTimes.count > 0 {
+                if generateSnapshotOnManager(manager: AthanProvider.manager) {
+                    return // only return if no error
+                }
+                
+            }
+            // fall through for error
+        } else {
+            // check if we have data from file
+            if AthanProvider.manager.todayPrayerTimes.count > 0 && AthanProvider.manager.tomorrowPrayerTimes.count > 0 {
+                if generateSnapshotOnManager(manager: AthanProvider.manager) {
+                    return // only return if no error
+                }
             }
         }
+        print("Unable to get prayer snapshot")
+        // create dummy date in this case
+        let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        let entry = AthanEntry(date: Date(), currentPrayer: nil, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
+        completion(entry)
     }
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<AthanEntry>) -> ()) {
@@ -80,13 +90,13 @@ struct AthanProvider: IntentTimelineProvider {
         // NOTE: users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
         // at the very least allow the widget provider to request new data on the last entry if we only have one day left of data!
         
-        func generateTimeline(man: PrayerManager) {
+        // returns success indicating that we called completion
+        func generateTimeline(man: PrayerManager) -> Bool {
             // Generate a timeline consisting of five entries an hour apart, starting from the current date.
             
             guard man.todayPrayerTimes.count == 6 && man.tomorrowPrayerTimes.count == 6 else {
                 print("Incomplete prayer times for today")
-                completion(Timeline(entries: [], policy: .atEnd))
-                return
+                return false
             }
             
             // store times as ptype -> date dict
@@ -105,7 +115,6 @@ struct AthanProvider: IntentTimelineProvider {
             let nowEntry = AthanEntry(date: Date(), currentPrayer: man.currentPrayer, currentPrayerDate: man.currentPrayerTime(), nextPrayerDate: man.nextPrayerTime()!, todayPrayerTimes: todayTimesDict)
             entries.append(nowEntry)
 
-            
             // create entry for every prayer of today
             // maybe its ok if we put things that have dates after now?
             for i in 0...5 {
@@ -115,8 +124,7 @@ struct AthanProvider: IntentTimelineProvider {
                 // get time of prayer that follows this one
                 guard var nextTime = todayTimesDict[type.next()] else {
                     print("Widget failed to load next prayer time")
-                    completion(Timeline(entries: [], policy: .atEnd))
-                    return
+                    return false
                 }
                 
                 // we should really be reading from tomorrow's fajr time in this case
@@ -152,8 +160,7 @@ struct AthanProvider: IntentTimelineProvider {
                 // get time of prayer that follows this one
                 guard let nextTime = man.tomorrowPrayerTimes[type.next().rawValue] else {
                     print("Widget failed to load next prayer time")
-                    completion(Timeline(entries: [], policy: .atEnd))
-                    return
+                    return false
                 }
                 
                 // repeat what we did for today's times with the 10% increment updates
@@ -178,36 +185,35 @@ struct AthanProvider: IntentTimelineProvider {
             
             // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
             let timeline = Timeline(entries: entries, policy: .atEnd)
+            print(entries)
             completion(timeline)
+            return true
         }
         
-        let manager = PrayerManager(delegate: nil)
-        if !manager.todayPrayerTimes.isEmpty && !manager.tomorrowPrayerTimes.isEmpty {
-            // first attempt to read from new data, otherwise stick with this file data
-            generateTimeline(man: manager)
-//            manager.fetchMonthsJSONDataForCurrentLocation { (success) in
-//                generateTimeline(man: manager)
-//            }
+        // wait no more than 4 seconds to load data from manager from online
+        if updateSemaphore.wait(timeout: .now() + 4) == .success {
+            updateSemaphore.signal()
+            // confirm that we have data
+            if AthanProvider.manager.todayPrayerTimes.count > 0 && AthanProvider.manager.tomorrowPrayerTimes.count > 0 {
+                if generateTimeline(man: AthanProvider.manager) {
+                    return // only return if we had no error
+                }
+            }
+            // fall through for error
         } else {
-            // tell user to open app
-            // create dummy date in this case
-            let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
-            let entry = AthanEntry(date: Date(), currentPrayer: .none, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
-            completion(Timeline(entries: [entry], policy: .atEnd))
+            // check if we have data from file
+            if AthanProvider.manager.todayPrayerTimes.count > 0 && AthanProvider.manager.tomorrowPrayerTimes.count > 0 {
+                if generateTimeline(man: AthanProvider.manager) {
+                    return // only return if we had no error
+                }
+            }
         }
         
-//        let _ = PrayerManager(delegate: nil) { (res) in
-//            switch res {
-//            case .success(let man):
-//                generateTimeline(man: man)
-//                return
-//            case .failure:
-//                print("Unable to get prayer snapshot")
-//                // create dummy date in this case
-//                let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
-//                let entry = AthanEntry(date: Date(), currentPrayer: .none, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
-//                completion(Timeline(entries: [entry], policy: .atEnd))
-//            }
-//        }
+        // error fallback
+        print("Unable to get prayer snapshot")
+        // create dummy date in this case
+        let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        let entry = AthanEntry(date: Date(), currentPrayer: nil, currentPrayerDate: Date(), nextPrayerDate: exampleDate, todayPrayerTimes: [:])
+        completion(Timeline(entries: [entry], policy: .atEnd))
     }
 }

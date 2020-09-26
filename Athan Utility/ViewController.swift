@@ -130,7 +130,6 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         clock.pause()
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         // new button setup

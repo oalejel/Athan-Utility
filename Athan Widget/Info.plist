@@ -25,5 +25,11 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Athan Widget uses your location to calculate athan times.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Athan Widget uses your location to calculate athan times.</string>
+	<key>NSWidgetWantsLocation</key>
+	<true/>
 </dict>
 </plist>

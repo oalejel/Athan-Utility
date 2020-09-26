@@ -9,24 +9,22 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>19G2021</string>
+	<string>20A294</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>12A7209</string>
+	<string>12A6144</string>
 	<key>INIntentDefinitionToolsVersion</key>
 	<string>12.0</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
-			<string>set</string>
+			<string>information</string>
 			<key>INIntentDescriptionID</key>
 			<string>tVvJ9c</string>
 			<key>INIntentEligibleForWidgets</key>
 			<true/>
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
-			<key>INIntentLastParameterTag</key>
-			<integer>2</integer>
 			<key>INIntentName</key>
 			<string>Configuration</string>
 			<key>INIntentResponse</key>
@@ -46,13 +44,13 @@
 				</array>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>Location</string>
+			<string>Configuration</string>
 			<key>INIntentTitleID</key>
 			<string>gpCwrM</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>
-			<string>Set</string>
+			<string>View</string>
 		</dict>
 	</array>
 	<key>INTypes</key>

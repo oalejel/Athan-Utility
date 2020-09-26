@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */; };
+		3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
+		3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
 		3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */; };
 		3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */; };
@@ -30,8 +32,6 @@
 		3D20CB1F2518DA0900275206 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1E2518DA0900275206 /* SwiftUI.framework */; };
 		3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20CB212518DA0900275206 /* Athan_Widget.swift */; };
 		3D20CB252518DA0B00275206 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D20CB242518DA0B00275206 /* Assets.xcassets */; };
-		3D20CB272518DA0B00275206 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D20CB232518DA0900275206 /* Athan_Widget.intentdefinition */; };
-		3D20CB282518DA0B00275206 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D20CB232518DA0900275206 /* Athan_Widget.intentdefinition */; };
 		3D20CB2B2518DA0B00275206 /* Athan WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D20CB1B2518DA0900275206 /* Athan WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3D32B57F1C14D03A003CAE1B /* sunhorizon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B57E1C14D03A003CAE1B /* sunhorizon.png */; };
 		3D32B5811C14D31D003CAE1B /* sunfilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D32B5801C14D31D003CAE1B /* sunfilled.png */; };
@@ -150,6 +150,7 @@
 /* Begin PBXFileReference section */
 		0CCA51508D1FFDEA7E7667F5 /* Pods-athanIntentsUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntentsUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntentsUI/Pods-athanIntentsUI.debug.xcconfig"; sourceTree = "<group>"; };
 		3BB636A02F5CFEAB07C455CD /* Pods-Watch Athan Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan Extension/Pods-Watch Athan Extension.release.xcconfig"; sourceTree = "<group>"; };
+		3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
 		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
 		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
 		3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Utility.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,7 +177,6 @@
 		3D20CB1C2518DA0900275206 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		3D20CB1E2518DA0900275206 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		3D20CB212518DA0900275206 /* Athan_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athan_Widget.swift; sourceTree = "<group>"; };
-		3D20CB232518DA0900275206 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
 		3D20CB242518DA0B00275206 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D20CB262518DA0B00275206 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D32B57E1C14D03A003CAE1B /* sunhorizon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunhorizon.png; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 			children = (
 				3D20CB212518DA0900275206 /* Athan_Widget.swift */,
 				3D11D971251C2BD9009F6146 /* Widget_Provider.swift */,
-				3D20CB232518DA0900275206 /* Athan_Widget.intentdefinition */,
+				3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */,
 				3D20CB242518DA0B00275206 /* Assets.xcassets */,
 				3D20CB262518DA0B00275206 /* Info.plist */,
 			);
@@ -846,7 +846,6 @@
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
-				3D20CB282518DA0B00275206 /* Athan_Widget.intentdefinition in Sources */,
 				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
@@ -856,6 +855,7 @@
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
 				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
+				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
@@ -871,13 +871,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
+				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
 				3D770571251C3812007BCEAA /* Global.swift in Sources */,
 				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
 				3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */,
 				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
-				3D20CB272518DA0B00275206 /* Athan_Widget.intentdefinition in Sources */,
 				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1131,7 +1131,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1157,7 +1157,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1188,7 +1188,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1222,7 +1222,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1251,7 +1251,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1282,7 +1282,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1304,6 +1304,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1323,6 +1324,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

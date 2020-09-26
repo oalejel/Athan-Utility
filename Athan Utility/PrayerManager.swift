@@ -131,7 +131,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     //MARK: - Initializer
     
     // calculation completion only called once. if we load from a local dictionary, we load from there
-    init(delegate: PrayerManagerDelegate?, calculationCompletion: ((Result<PrayerManager, Error>) -> ())? = nil) {
+    init(delegate: PrayerManagerDelegate?, requestLocationOnStart: Bool = false, calculationCompletion: ((Result<PrayerManager, Error>) -> ())? = nil) {
         self.delegate = delegate
         super.init()
         
@@ -170,7 +170,11 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         self.coreManager.desiredAccuracy = kCLLocationAccuracyHundredMeters //can change for eff
         
         // DO NOT REQUEST permissions yet, since we only use this to trigger early updates in the case that the user has already accepted permissions
-        self.coreManager.startUpdatingLocation()
+        if requestLocationOnStart {
+            self.coreManager.requestWhenInUseAuthorization()
+            self.coreManager.startUpdatingLocation()
+        }
+        
         
         if !shouldSyncLocation {
 //            fetchMonthsJSONDataForCurrentLocation(gpsStr)
@@ -204,10 +208,15 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         if todayPrayerTimes.count > 0 {
             self.calculationCompletionClosure?(.success(self))
         } else {
-            self.calculationCompletionClosure?(.failure(NSError()))
+            self.calculationCompletionClosure?(.failure(NSError(domain: "widget", code: 0, userInfo: nil)))
         }
         
         self.calculationCompletionClosure = nil
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("LOCATION MANAGER ERROR: \(error.localizedDescription)")
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -798,7 +807,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //                    print("time interval til 15 m warning: \(pDate.timeIntervalSince(curDate) - 900)")
                     Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate) - 900, target: self, selector: #selector(PrayerManager.fifteenMinutesLeft), userInfo: nil, repeats: false)
                     //timer for new prayer
-                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayer), userInfo: nil, repeats: false)
+                    Timer.scheduledTimer(timeInterval: pDate.timeIntervalSince(curDate), target: self, selector: #selector(PrayerManager.newPrayerTimerTrigger), userInfo: nil, repeats: false)
                 } else {
                     logOrPrint("error getting prayer time while setting timers!")
                 }
@@ -981,7 +990,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 
                                 let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
                                 
-                                print(alertString)
+//                                print(alertString)
                                 center.add(preNoteRequest, withCompletionHandler: nil)
                             }
                         }
@@ -1000,7 +1009,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     }
     
     // for when the manager needs to notify itself mid-day
-    @objc func newPrayer() {
+    @objc func newPrayerTimerTrigger() {
         Global.statusColor = UIColor.green
         calculateCurrentPrayer()
         

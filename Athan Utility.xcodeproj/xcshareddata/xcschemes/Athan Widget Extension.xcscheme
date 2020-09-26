@@ -57,8 +57,18 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3D20CB1A2518DA0900275206"
+            BuildableName = "Athan WidgetExtension.appex"
+            BlueprintName = "Athan WidgetExtension"
+            ReferencedContainer = "container:Athan Utility.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3D07DA7A1BDC58B50001EFE4"
@@ -66,7 +76,7 @@
             BlueprintName = "Athan Utility"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"

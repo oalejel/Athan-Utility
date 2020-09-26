@@ -72,7 +72,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
         }
     }
     
-    let headerLabels = ["Notification Sound", "Athan Alarms", "Siri Extension"]
+    let headerLabels = ["Notification Sound", "Calculation Method", "Athan Alarms", "Siri Extension"]
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return headerLabels[section]
     }
@@ -96,6 +96,8 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             
             return cell
         } else if indexPath.section == 2 {
+            
+        } else if indexPath.section == 3 {
             if #available(iOS 12.0, *) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "siri_cell") as! SiriCell
                 cell.selectionStyle = .none

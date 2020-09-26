@@ -67,7 +67,6 @@ class AthanProvider: IntentTimelineProvider {
                 if generateSnapshotOnManager(manager: AthanProvider.manager) {
                     return // only return if no error
                 }
-                
             }
             // fall through for error
         } else {
@@ -185,7 +184,7 @@ class AthanProvider: IntentTimelineProvider {
             
             // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
             let timeline = Timeline(entries: entries, policy: .atEnd)
-            print(entries)
+//            print(entries)
             completion(timeline)
             return true
         }

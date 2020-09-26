@@ -173,9 +173,8 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         // DO NOT REQUEST permissions yet, since we only use this to trigger early updates in the case that the user has already accepted permissions
         if requestLocationOnStart {
             self.coreManager.requestWhenInUseAuthorization()
-            self.coreManager.startUpdatingLocation()
+//            self.coreManager.startUpdatingLocation()
         }
-        
         
         if !shouldSyncLocation {
 //            fetchMonthsJSONDataForCurrentLocation(gpsStr)
@@ -285,9 +284,30 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         })
     }
     
+    @available(iOS 14, *)
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if lastAuthStatus == .denied || lastAuthStatus == .notDetermined {
+            if shouldSyncLocation && (manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways) {
+                coreManager.startUpdatingLocation() // user has decided to share location, so start process of getting data
+                lastAuthStatus = manager.authorizationStatus
+                return
+            }
+        }
+        
+        // try to load data for the current location if current data is out of date
+        if !hasDataForNextMonth() && gpsStrings != nil {
+            fetchMonthsJSONDataForCurrentLocation { (success) in
+                self.notifyWidget()
+            }
+        } else if manager.authorizationStatus != .notDetermined { // ONLY if we are not in the notDetermined stage can we be sure that we have probably failed
+            self.notifyWidget()
+        }
+        lastAuthStatus = manager.authorizationStatus
+    }
+    
     // in case user initially prevents location updates and decides to switch back
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if lastAuthStatus == .denied {
+        if lastAuthStatus == .denied || lastAuthStatus == .notDetermined {
             if shouldSyncLocation && (status == .authorizedWhenInUse || status == .authorizedAlways) {
                 coreManager.startUpdatingLocation() // user has decided to share location, so start process of getting data
                 lastAuthStatus = status
@@ -300,7 +320,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             fetchMonthsJSONDataForCurrentLocation { (success) in
                 self.notifyWidget()
             }
-        } else {
+        } else if status != .notDetermined { // ONLY if we are not in the notDetermined stage can we be sure that we have probably failed
             self.notifyWidget()
         }
         lastAuthStatus = status
@@ -783,6 +803,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     func logOrPrint(_ str: StaticString) {
         if #available(iOS 12.0, *) {
             os_log(.debug, str)
+            print(str)
         } else {
             print(str)
         }

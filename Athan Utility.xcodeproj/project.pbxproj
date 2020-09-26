@@ -422,11 +422,11 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
+				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */,
 				3D73FC6A2284EE1C0092A83C /* Settings.swift */,
 				3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */,
 				3DF0EE9921038E3400624E98 /* PrayerType.swift */,
-				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */,
 				3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */,
 			);

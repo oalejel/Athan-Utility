@@ -184,12 +184,14 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
             let title2 = NSLocalizedString("15 minute reminders", comment: "")
             let title3 = NSLocalizedString("Today Extension", comment: "")
             let title4 = NSLocalizedString("Athan clock face", comment: "")
-            let title5 = NSLocalizedString("Qibla", comment: "")
+            let title5 = "Multiple Calculation Methods"
+            let title6 = NSLocalizedString("Qibla", comment: "")
             
             let subtitle1 = NSLocalizedString("Athan Utility stores months of athan data for offline use.", comment: "")
             let subtitle2 = NSLocalizedString("Get reminded before the next athan takes place. Configurable in app preferences.", comment: "")
             let subtitle3 = NSLocalizedString("Check current and upcoming salah times with the Notification Center widget.", comment: "")
             let subtitle4 = NSLocalizedString("A new way to visualize salah times throughout the day.", comment: "")
+            let subtitle5 = "Pick from a list of international calculation methods."
             // no subtitle for qibla
             
             let whatsNewVC = WhatsNewViewController(items: [
@@ -205,6 +207,8 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
                 WhatsNewItem.text(title: title4,
                                   subtitle: subtitle4),
                 WhatsNewItem.text(title: title5,
+                                  subtitle: title5),
+                WhatsNewItem.text(title: title6,
                                   subtitle: "")
             ])
             //            #warning("change mode from debug to majorVersion")

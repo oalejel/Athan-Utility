@@ -128,7 +128,7 @@ class AthanProvider: IntentTimelineProvider {
                 
                 // we should really be reading from tomorrow's fajr time in this case
                 if type == .isha {
-                    nextTime = man.tomorrowPrayerTimes[0] ?? nextTime
+                    nextTime = man.tomorrowPrayerTimes[0]!
                 }
                 
                 // create a timestamp for every 10% increment between prayerDate and the next prayer date
@@ -152,7 +152,7 @@ class AthanProvider: IntentTimelineProvider {
             }
             
             // now add times for tomorrow up til asr time (when we reach asr, we want tomorrow's times to be ready for isha -> fajr's calc
-            for i in 0...2 {
+            for i in 0..<1 {
                 let type = PrayerType(rawValue: i)!
                 let prayerDate = man.tomorrowPrayerTimes[i]!
                 

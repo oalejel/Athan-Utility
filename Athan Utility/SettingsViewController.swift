@@ -179,6 +179,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             } else {
                 NoteSoundPlayer.playFullAudio(for: indexPath.row, fadeInterval: 30)
                 Settings.notificationUpdatesPending = true
+//                Settings.setSelectedSound(for: indexPath.row)
             }
             
             if indexPath.row == notificationSoundIndex {return}
@@ -219,6 +220,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             Settings.setSelectedSound(for: self.notificationSoundIndex)
             // do not set calculatio method setting here. its done in another VC
             // if updates are pending, then recreate our notifications
+            #warning("potential interleaving bug: if data isnt downloaded for a new calculation method, this might conflict with the running code")
             if Settings.notificationUpdatesPending {
                 Settings.notificationUpdatesPending = false
                 Global.manager.scheduleAppropriateNotifications()

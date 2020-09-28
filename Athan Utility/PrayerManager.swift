@@ -1133,9 +1133,12 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         // update widgets if available
         if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "com.omaralejel.Athan-Utility.Athan-Widget")
-        } else {
-            // Fallback on earlier versions
+            // only if this is being run in the main app:
+            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                DispatchQueue.main.async {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
         }
     }
     

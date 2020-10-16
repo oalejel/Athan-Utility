@@ -75,7 +75,11 @@ class Settings {
         }
         #warning("move this widget update somewhere else")
         if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadTimelines(ofKind: "com.omaralejel.Athan-Utility.Athan-Widget")
+            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                DispatchQueue.main.async {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
         } else {
             // Fallback on earlier versions
         }

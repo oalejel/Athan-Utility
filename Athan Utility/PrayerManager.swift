@@ -428,7 +428,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //        if needsDataUpdate {
 //        needsDataUpdate = false
         if let sureURL = queryURL {
-            logOrPrint("Going to request data")
+            logOrPrint("Going to request data for a month")
             var request = URLRequest(url: sureURL)
             request.httpMethod = "GET" // should be default setting, but just making this a point
 //            request.timeoutInterval =
@@ -470,6 +470,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             // still execute completion handler, telling handler that we had an unsuccessful fetch
             completion?(false)
         }
+        
     }
  
     /// calculate angle to point to Mecca
@@ -966,7 +967,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                                 let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
                                 let noteRequest = UNNotificationRequest(identifier: noteID, content: noteContent, trigger: noteTrigger)
-                                print(alertString)
+//                                print(alertString)
                                 center.add(noteRequest) { print($0 ?? "", separator: "", terminator: "") }
                             }
                             
@@ -1127,17 +1128,26 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         gpsLoc += (gpsStrings?.currentDistrictString ?? "") + ", "
         gpsLoc += (gpsStrings?.currentStateString ?? "") + ", "
         gpsLoc += (gpsStrings?.currentCountryString ?? "")
-        fetchJSONData(forLocation: gpsLoc, dateTuple: nil, completion: completion)//not good enough of a solution long term!!...
-        let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
-        fetchJSONData(forLocation: gpsLoc, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year), completion: completion)
-        
-        // update widgets if available
-        if #available(iOS 14.0, *) {
-            // only if this is being run in the main app:
-            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
-                DispatchQueue.main.async {
-                    WidgetCenter.shared.reloadAllTimelines()
+        fetchJSONData(forLocation: gpsLoc, dateTuple: nil) { success1 in
+            if success1 {
+                let nextMonthTuple = self.getFutureDateTuple(daysToSkip: daysInMonth(self.currentMonth!) + 1 - self.currentDay!)
+                self.fetchJSONData(forLocation: gpsLoc, dateTuple: (month: nextMonthTuple.month, nextMonthTuple.year)) { success2 in
+                    if success2 {
+                        // update widgets if available
+                        if #available(iOS 14.0, *) {
+                            // only if this is being run in the main app:
+                            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                                DispatchQueue.main.async {
+                                    WidgetCenter.shared.reloadAllTimelines()
+                                }
+                            }
+                        }
+                    } else {
+                        completion?(false)
+                    }
                 }
+            } else {
+                completion?(false)
             }
         }
     }

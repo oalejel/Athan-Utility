@@ -146,6 +146,7 @@ class AthanProvider: IntentTimelineProvider {
                 // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
                 if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
                     let updateDate = Calendar.current.date(byAdding: .second, value: -5 * 60, to: nextTime)!
+                    assert(updateDate < nextTime)
                     let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: todayTimesDict)
                     entries.append(entry)
                 }
@@ -169,6 +170,7 @@ class AthanProvider: IntentTimelineProvider {
                 for i in 0..<10 {
                     // for i = 0, updateDate = prayerDate
                     let updateDate = Calendar.current.date(byAdding: .second, value: i * Int(tenPercentIncrements), to: prayerDate)!
+                    assert(updateDate < nextTime)
                     let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: tomorrowTimesDict)
                     entries.append(entry)
                 }
@@ -176,6 +178,7 @@ class AthanProvider: IntentTimelineProvider {
                 // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
                 if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
                     let updateDate = Calendar.current.date(byAdding: .second, value: -5 * 60, to: nextTime)!
+                    assert(updateDate < nextTime)
                     let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: tomorrowTimesDict)
                     entries.append(entry)
                 }

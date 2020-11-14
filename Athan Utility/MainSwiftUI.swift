@@ -43,17 +43,20 @@ struct MainSwiftUI: View {
                 
                 ProgressBar(progress: 0.2, lineWidth: 10, outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
                 
-                Spacer()
+//                Spacer()
                 
                 VStack(alignment: .leading, spacing: 16) {
                     ForEach(0..<6) { i in
                         HStack {
-                            Text("Shurooq")
-                                .foregroundColor(.white)
+                            Text(PrayerType(rawValue: i)!.localizedString())
+                                // replace 3 with current prayer index
+                                .foregroundColor((i == 3 ? .green : (i < 3 ? .init(UIColor.lightText) : .white)))
                                 .font(.system(size: 26))
                                 .bold()
                             Spacer()
                             Text("11:00 PM")
+                                // replace 3 with current prayer index
+                                .foregroundColor((i == 3 ? .green : (i < 3 ? .init(UIColor.lightText) : .white)))
                                 .foregroundColor(.white)
                                 .font(.system(size: 26))
                                 .bold()
@@ -66,7 +69,7 @@ struct MainSwiftUI: View {
                 
                 Spacer()
 //                    .frame(width: .infinity, height: 100000, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                HStack {
+                HStack(alignment: .center) {
                     Text("Bloomfield Hills, MI")
                     Button("test") {
                         

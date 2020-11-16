@@ -15,8 +15,7 @@ struct MainSwiftUI: View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            VStack(alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/) {
-                
+            VStack(alignment: .leading, spacing: nil) {
                 Spacer()
                 HStack {
                     VStack(alignment: .leading) {
@@ -27,10 +26,12 @@ struct MainSwiftUI: View {
                             .font(.largeTitle)
                             .bold()
                             .foregroundColor(.white)
-                        Text("1h 48m left")
-                            .font(.headline)
-                            .bold()
+                        Text("time left")
+//                            .font(.headline)
+                            .fontWeight(.bold)
                             .foregroundColor(.init(white: 1, opacity: 0.2))
+                            .multilineTextAlignment(.center)
+                            
                     }
 
                     Spacer()
@@ -68,14 +69,12 @@ struct MainSwiftUI: View {
                 
                 
                 Spacer()
-//                    .frame(width: .infinity, height: 100000, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 HStack(alignment: .center) {
                     Text("Bloomfield Hills, MI")
                     Button("test") {
                         
                     }
                 }
-                
             }
             .padding()
             .padding()

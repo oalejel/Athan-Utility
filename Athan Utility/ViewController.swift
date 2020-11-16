@@ -8,8 +8,6 @@
 
 import UIKit
 import IntentsUI
-import WhatsNew
-import SqueezeButton
 import Intents
 
 class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShortcutViewControllerDelegate {

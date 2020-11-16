@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */; };
 		3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
@@ -26,6 +25,8 @@
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53C242827210010C709 /* Default-568h@2x.png */; };
 		3D15F53F242828590010C709 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53E242828590010C709 /* LaunchScreen.xib */; };
+		3D16F1042560851B00C78B12 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D16F1032560851B00C78B12 /* Adhan */; };
+		3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D20CB1D2518DA0900275206 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1C2518DA0900275206 /* WidgetKit.framework */; };
@@ -81,7 +82,27 @@
 		3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D93E9DF21829D0C002019B7 /* Intents.framework */; };
 		3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93EA092182C447002019B7 /* IntentHandler.swift */; };
 		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
+		3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
+		3DA6F026256189AD00C2C348 /* LocationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F025256189AD00C2C348 /* LocationsManager.swift */; };
 		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
+		3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAE4495256088DA00156CFF /* SwiftSpinner */; };
+		3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE451D256089D600156CFF /* WhatsNewViewController.swift */; };
+		3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE451F256089D600156CFF /* WhatsNew.xib */; };
+		3DAE452D256089D600156CFF /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */; };
+		3DAE452E256089D600156CFF /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4521256089D600156CFF /* .gitkeep */; };
+		3DAE452F256089D600156CFF /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */; };
+		3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4524256089D600156CFF /* NibLoadable.swift */; };
+		3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4526256089D600156CFF /* PresentationOption.swift */; };
+		3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */; };
+		3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */; };
+		3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4529256089D600156CFF /* WhatsNewItem.swift */; };
+		3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE452A256089D600156CFF /* WhatsNew.swift */; };
+		3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE45532560976900156CFF /* SqueezeButton.swift */; };
+		3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE455A2560984500156CFF /* AnimatedLabel.swift */; };
+		3DAE456D2560A85200156CFF /* MoonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE456C2560A85200156CFF /* MoonView.swift */; };
+		3DAE45742560A90800156CFF /* full_moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE45732560A90800156CFF /* full_moon.jpg */; };
+		3DAE457B2560AC9B00156CFF /* QiblaPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */; };
 		3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */; };
 		3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */; };
 		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
@@ -151,8 +172,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0CCA51508D1FFDEA7E7667F5 /* Pods-athanIntentsUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntentsUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntentsUI/Pods-athanIntentsUI.debug.xcconfig"; sourceTree = "<group>"; };
-		3BB636A02F5CFEAB07C455CD /* Pods-Watch Athan Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan Extension/Pods-Watch Athan Extension.release.xcconfig"; sourceTree = "<group>"; };
 		3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
 		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
 		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
@@ -174,6 +193,7 @@
 		3D11D971251C2BD9009F6146 /* Widget_Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget_Provider.swift; sourceTree = "<group>"; };
 		3D15F53C242827210010C709 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3D15F53E242828590010C709 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		3D16F10A2560859D00C78B12 /* AthanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanManager.swift; sourceTree = "<group>"; };
 		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
 		3D20CB1B2518DA0900275206 /* Athan WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Athan WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +259,25 @@
 		3D93EA072182C447002019B7 /* AthanSiriIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanSiriIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D93EA092182C447002019B7 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		3D93EA0B2182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
+		3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prayer+Extensions.swift"; sourceTree = "<group>"; };
+		3DA6F025256189AD00C2C348 /* LocationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsManager.swift; sourceTree = "<group>"; };
+		3DAE451D256089D600156CFF /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
+		3DAE451F256089D600156CFF /* WhatsNew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNew.xib; sourceTree = "<group>"; };
+		3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNewItemImageView.xib; sourceTree = "<group>"; };
+		3DAE4521256089D600156CFF /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNewItemTextView.xib; sourceTree = "<group>"; };
+		3DAE4524256089D600156CFF /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		3DAE4526256089D600156CFF /* PresentationOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationOption.swift; sourceTree = "<group>"; };
+		3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItemTextView.swift; sourceTree = "<group>"; };
+		3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItemImageView.swift; sourceTree = "<group>"; };
+		3DAE4529256089D600156CFF /* WhatsNewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItem.swift; sourceTree = "<group>"; };
+		3DAE452A256089D600156CFF /* WhatsNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
+		3DAE45532560976900156CFF /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
+		3DAE455A2560984500156CFF /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
+		3DAE456C2560A85200156CFF /* MoonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonView.swift; sourceTree = "<group>"; };
+		3DAE45732560A90800156CFF /* full_moon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = full_moon.jpg; sourceTree = "<group>"; };
+		3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaPointerView.swift; sourceTree = "<group>"; };
 		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
@@ -262,23 +301,6 @@
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
 		3DF0EE9921038E3400624E98 /* PrayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerType.swift; sourceTree = "<group>"; };
-		4E6E5FCA2F568BDE7816BD68 /* Pods-Watch Athan Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan Extension/Pods-Watch Athan Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		56534853B6887B8405906425 /* Pods-athanIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntents/Pods-athanIntents.debug.xcconfig"; sourceTree = "<group>"; };
-		588D44C38393ADE8BB926403 /* Pods_athanIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_athanIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E6BFAF7D1950F52437D6A21 /* Pods_Watch_Athan_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Watch_Athan_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F05DE2BF70FC6D726387EC4 /* Pods-Athan UtilityTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan UtilityTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan UtilityTests/Pods-Athan UtilityTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7235B34E841B705AA2B09A1B /* Pods-athanIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntents.release.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntents/Pods-athanIntents.release.xcconfig"; sourceTree = "<group>"; };
-		7D6DCA5E1E523A955B0BDCED /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
-		8E1EAF8A1EDF22F6460C7EE5 /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan Utility.release.xcconfig"; path = "Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
-		AECE86FC8077C475329F475C /* Pods-Watch Athan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan.release.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan/Pods-Watch Athan.release.xcconfig"; sourceTree = "<group>"; };
-		B2887E99AE89345A2793C938 /* Pods_Watch_Athan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Watch_Athan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3C5583EA87275A23C997C91 /* Pods_AthanToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AthanToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3F24DC2FFBCB36C7FB97E96 /* Pods_athanIntentsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_athanIntentsUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D61075A57C083D7D4EDE7DAC /* Pods_Athan_UtilityTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_UtilityTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC95ADFFAD984DE33C9E3D66 /* Pods-athanIntentsUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-athanIntentsUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-athanIntentsUI/Pods-athanIntentsUI.release.xcconfig"; sourceTree = "<group>"; };
-		E5B9FA466BB30273FA81D77D /* Pods-Watch Athan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Watch Athan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Watch Athan/Pods-Watch Athan.debug.xcconfig"; sourceTree = "<group>"; };
-		E889C73C7691953B5ECA90C2 /* Pods-Athan UtilityTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Athan UtilityTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Athan UtilityTests/Pods-Athan UtilityTests.release.xcconfig"; sourceTree = "<group>"; };
-		FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,8 +308,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */,
+				3D16F1042560851B00C78B12 /* Adhan in Frameworks */,
 				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
-				39812DA0AC1987C4DF68CC5B /* Pods_Athan_Utility.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,8 +351,6 @@
 		3D07DA721BDC58B50001EFE4 = {
 			isa = PBXGroup;
 			children = (
-				3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */,
-				3D15F53C242827210010C709 /* Default-568h@2x.png */,
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF420FC5A00000CBFFC /* Athan Utility UITests */,
 				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
@@ -337,7 +358,6 @@
 				3D20CB202518DA0900275206 /* Athan Widget */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
-				FB6B467EB412DE03F3297FE1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -356,6 +376,10 @@
 		3D07DA7D1BDC58B50001EFE4 /* Athan Utility */ = {
 			isa = PBXGroup;
 			children = (
+				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
+				3DA6F025256189AD00C2C348 /* LocationsManager.swift */,
+				3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */,
+				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
 				3D52255720CDD25800CF8C3D /* Localizable.strings */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
@@ -363,19 +387,24 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3DAE456C2560A85200156CFF /* MoonView.swift */,
+				3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */,
+				3DAE45732560A90800156CFF /* full_moon.jpg */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
-				3DCB30CA236B109200D47C7C /* UIView+Fading.swift */,
-				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
+				3DAE45662560A4F100156CFF /* Helper Views */,
 				3DC2FB072464E044005D1EF5 /* Todo.md */,
 				3D4416E71C05174700329AA0 /* General */,
 				3D4416E61C05173D00329AA0 /* Qibla */,
 				3D4416E51C05172400329AA0 /* Settings */,
 				3D4CEDA61BDD597700CA095E /* Table */,
 				3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */,
+				3DAE451C256089D600156CFF /* WhatsNew */,
 				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
-				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
+				3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */,
+				3D15F53C242827210010C709 /* Default-568h@2x.png */,
 				3D07DA8A1BDC58B60001EFE4 /* Info.plist */,
 				3D89E71520C75E6000E64118 /* Intents.intentdefinition */,
+				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -487,19 +516,65 @@
 			path = AthanSiriIntents;
 			sourceTree = "<group>";
 		};
+		3DAE451C256089D600156CFF /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				3DAE455A2560984500156CFF /* AnimatedLabel.swift */,
+				3DAE451D256089D600156CFF /* WhatsNewViewController.swift */,
+				3DAE451E256089D600156CFF /* Resources */,
+				3DAE4523256089D600156CFF /* Utils */,
+				3DAE4525256089D600156CFF /* Items */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		3DAE451E256089D600156CFF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3DAE451F256089D600156CFF /* WhatsNew.xib */,
+				3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */,
+				3DAE4521256089D600156CFF /* .gitkeep */,
+				3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3DAE4523256089D600156CFF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3DAE4524256089D600156CFF /* NibLoadable.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3DAE4525256089D600156CFF /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				3DAE4526256089D600156CFF /* PresentationOption.swift */,
+				3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */,
+				3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */,
+				3DAE4529256089D600156CFF /* WhatsNewItem.swift */,
+				3DAE452A256089D600156CFF /* WhatsNew.swift */,
+			);
+			path = Items;
+			sourceTree = "<group>";
+		};
+		3DAE45662560A4F100156CFF /* Helper Views */ = {
+			isa = PBXGroup;
+			children = (
+				3DCB30CA236B109200D47C7C /* UIView+Fading.swift */,
+				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
+				3DAE45532560976900156CFF /* SqueezeButton.swift */,
+			);
+			name = "Helper Views";
+			sourceTree = "<group>";
+		};
 		3DD3B4901C0D3B5700DC91E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				3D93E9DF21829D0C002019B7 /* Intents.framework */,
 				3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */,
 				3D89E73C20C88A0A00E64118 /* IntentsUI.framework */,
-				FC7EBD427D540D98191DC9DB /* Pods_Athan_Utility.framework */,
-				D61075A57C083D7D4EDE7DAC /* Pods_Athan_UtilityTests.framework */,
-				C3C5583EA87275A23C997C91 /* Pods_AthanToday.framework */,
-				B2887E99AE89345A2793C938 /* Pods_Watch_Athan.framework */,
-				5E6BFAF7D1950F52437D6A21 /* Pods_Watch_Athan_Extension.framework */,
-				588D44C38393ADE8BB926403 /* Pods_athanIntents.framework */,
-				D3F24DC2FFBCB36C7FB97E96 /* Pods_athanIntentsUI.framework */,
 				3D20CB1C2518DA0900275206 /* WidgetKit.framework */,
 				3D20CB1E2518DA0900275206 /* SwiftUI.framework */,
 			);
@@ -531,25 +606,6 @@
 			path = "Athan Utility UITests";
 			sourceTree = "<group>";
 		};
-		FB6B467EB412DE03F3297FE1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7D6DCA5E1E523A955B0BDCED /* Pods-Athan Utility.debug.xcconfig */,
-				8E1EAF8A1EDF22F6460C7EE5 /* Pods-Athan Utility.release.xcconfig */,
-				5F05DE2BF70FC6D726387EC4 /* Pods-Athan UtilityTests.debug.xcconfig */,
-				E889C73C7691953B5ECA90C2 /* Pods-Athan UtilityTests.release.xcconfig */,
-				E5B9FA466BB30273FA81D77D /* Pods-Watch Athan.debug.xcconfig */,
-				AECE86FC8077C475329F475C /* Pods-Watch Athan.release.xcconfig */,
-				4E6E5FCA2F568BDE7816BD68 /* Pods-Watch Athan Extension.debug.xcconfig */,
-				3BB636A02F5CFEAB07C455CD /* Pods-Watch Athan Extension.release.xcconfig */,
-				56534853B6887B8405906425 /* Pods-athanIntents.debug.xcconfig */,
-				7235B34E841B705AA2B09A1B /* Pods-athanIntents.release.xcconfig */,
-				0CCA51508D1FFDEA7E7667F5 /* Pods-athanIntentsUI.debug.xcconfig */,
-				DC95ADFFAD984DE33C9E3D66 /* Pods-athanIntentsUI.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -557,13 +613,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D07DA8D1BDC58B60001EFE4 /* Build configuration list for PBXNativeTarget "Athan Utility" */;
 			buildPhases = (
-				DA2C09126AA7E4E0017666B0 /* [CP] Check Pods Manifest.lock */,
 				3D07DA771BDC58B50001EFE4 /* Sources */,
 				3D07DA781BDC58B50001EFE4 /* Frameworks */,
 				3D07DA791BDC58B50001EFE4 /* Resources */,
 				3DD3B4A01C0D3B5700DC91E6 /* Embed App Extensions */,
 				3D3DD6011C2B1F7300FEBB3D /* Embed Watch Content */,
-				574BA20B2A8FABD86A199F59 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -572,6 +626,10 @@
 				3D20CB2A2518DA0B00275206 /* PBXTargetDependency */,
 			);
 			name = "Athan Utility";
+			packageProductDependencies = (
+				3D16F1032560851B00C78B12 /* Adhan */,
+				3DAE4495256088DA00156CFF /* SwiftSpinner */,
+			);
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
 			productType = "com.apple.product-type.application";
@@ -717,6 +775,10 @@
 				tr,
 			);
 			mainGroup = 3D07DA721BDC58B50001EFE4;
+			packageReferences = (
+				3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */,
+				3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
+			);
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -737,20 +799,25 @@
 			files = (
 				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
 				3D73FC8022875CCA0092A83C /* egypt-preview.caf in Resources */,
+				3DAE452E256089D600156CFF /* .gitkeep in Resources */,
 				3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */,
 				3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */,
+				3DAE452F256089D600156CFF /* WhatsNewItemTextView.xib in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
 				3D73FC7B22875CCA0092A83C /* alaqsa-preview.caf in Resources */,
+				3DAE452D256089D600156CFF /* WhatsNewItemImageView.xib in Resources */,
 				3D73FC7C22875CCA0092A83C /* abdulghaffar-preview.caf in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
 				3D73FC7E22875CCA0092A83C /* echo-preview.caf in Resources */,
 				3D73FC7F22875CCA0092A83C /* madina-preview.caf in Resources */,
+				3DAE45742560A90800156CFF /* full_moon.jpg in Resources */,
 				3D73FC7D22875CCA0092A83C /* abdulbaset-preview.caf in Resources */,
 				3D73FC7A22875CCA0092A83C /* makkah-preview.caf in Resources */,
+				3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */,
 				3D73FC5C2284A2020092A83C /* SiriCell.xib in Resources */,
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
 				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
@@ -798,81 +865,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		574BA20B2A8FABD86A199F59 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SqueezeButton/SqueezeButton.framework",
-				"${BUILT_PRODUCTS_DIR}/WhatsNew/WhatsNew.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SqueezeButton.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WhatsNew.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Athan Utility/Pods-Athan Utility-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DA2C09126AA7E4E0017666B0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Athan Utility-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		3D07DA771BDC58B50001EFE4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
+				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
+				3DA6F026256189AD00C2C348 /* LocationsManager.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
 				3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */,
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
+				3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
+				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
+				3DAE457B2560AC9B00156CFF /* QiblaPointerView.swift in Sources */,
+				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
+				3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
 				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
+				3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */,
+				3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */,
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
+				3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */,
+				3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */,
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */,
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
 				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
+				3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */,
 				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
+				3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */,
+				3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */,
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
+				3DAE456D2560A85200156CFF /* MoonView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 			);
@@ -1126,7 +1167,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1135,7 +1177,6 @@
 		};
 		3D07DA8E1BDC58B60001EFE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D6DCA5E1E523A955B0BDCED /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1147,7 +1188,10 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
@@ -1161,7 +1205,6 @@
 		};
 		3D07DA8F1BDC58B60001EFE4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E1EAF8A1EDF22F6460C7EE5 /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1173,7 +1216,10 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
@@ -1205,7 +1251,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1239,7 +1289,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
@@ -1268,7 +1322,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1299,7 +1357,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
@@ -1319,7 +1381,11 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1339,7 +1405,11 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 5.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1365,7 +1435,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Utility UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "omaralejel.Athan-Utility-UITests";
@@ -1392,7 +1466,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Utility UITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "omaralejel.Athan-Utility-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1460,6 +1538,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/batoulapps/adhan-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+		3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/SwiftSpinner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3D16F1032560851B00C78B12 /* Adhan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
+			productName = Adhan;
+		};
+		3DAE4495256088DA00156CFF /* SwiftSpinner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */;
+			productName = SwiftSpinner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3D07DA731BDC58B50001EFE4 /* Project object */;
 }

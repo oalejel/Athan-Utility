@@ -187,6 +187,7 @@ class AthanProvider: IntentTimelineProvider {
             
             // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
             let timeline = Timeline(entries: entries, policy: .atEnd)
+            print(timeline)
 //            print(entries)
             completion(timeline)
             return true

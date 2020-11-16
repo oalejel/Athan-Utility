@@ -7,7 +7,7 @@ DEPENDENCIES:
   - WhatsNew
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SqueezeButton
     - WhatsNew
 
@@ -17,4 +17,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cc1b11d400f783a480f42b96929d49e2f8621a53
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.1

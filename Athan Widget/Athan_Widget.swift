@@ -185,7 +185,7 @@ struct MediumWidget: View {
                         .foregroundColor(.white)
                 }
                 
-                ProgressBar(progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
+                ProgressBar(progress: max(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
                             lineWidth: 6,
                             outlineColor: .init(white: 1, opacity: 0.2),
                             colors: [.white, .white])

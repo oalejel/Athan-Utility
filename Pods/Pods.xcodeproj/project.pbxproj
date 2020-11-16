@@ -7,258 +7,259 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0738B5AF92BE597EEA01347887D78A17 /* SqueezeButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1310A5F71EB43478A78BF5E94F6BEE97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */; };
-		224BF2BE3AE7AA0698942DF197B6AEFD /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */; };
-		241A03A9157EC193AA74D199AAFF9280 /* Pods-Athan Utility-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB26DB513EAFB5C4649256734F06934F /* Pods-Athan Utility-dummy.m */; };
-		28E858133144993D38C5FE899EE5FCBE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFB40531CB700ADF867FEEE78561E78 /* Foundation.framework */; };
-		3255DCFFF0840A56008981A8EB6FEBF8 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */; };
-		3C51125663852EEBE5DC3ABC7184E0FC /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */; };
-		3D15F53A2428207F0010C709 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15F5392428207E0010C709 /* AnimatedLabel.swift */; };
-		3D15F53B2428208A0010C709 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15F5392428207E0010C709 /* AnimatedLabel.swift */; };
-		430A1F8929F75E2006CA46B22182D871 /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */; };
-		446DA5986883FFF7E7B8E5A398EE84B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFB40531CB700ADF867FEEE78561E78 /* Foundation.framework */; };
-		4BB3FAD65E7D9A24B61296BAD48FF915 /* WhatsNew-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5B2027F57CB2DCA2932491B42C476D2F /* WhatsNew-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */; };
-		685FF92CD5A95F3CCF3EF8CC62CD845A /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */; };
-		717FADED96704D22B4C765A50B6C401A /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */; };
-		843D6C369AF62D43A46D5C96F81BDA71 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */; };
-		94C99D9790AF1F2EB127E393A02B6A10 /* SqueezeButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */; };
-		A01F3EC8BBC6FC5DA4FF130971B530C9 /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */; };
-		A61FC640F20FFCF15C29BB1552106EE8 /* Pods-Athan Utility-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EA22902E7AF483228CAA1B0F4F6504B /* Pods-Athan Utility-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AC5A57AB070E377142107A8D7EC6C051 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */; };
-		B0878F407581E13A00C256E22E47E19A /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */; };
-		D476D5A44D0111894F1B496BC517D3D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFB40531CB700ADF867FEEE78561E78 /* Foundation.framework */; };
-		E1108BAB459C97AFE7384CD8708F1D2B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E404AA6957590324067E330E0EC533 /* UIKit.framework */; };
-		EDD161D6C238E69124D19C42BBE8ECCD /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */; };
-		F9DD92B47204C401F34DF127F2D6660D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */; };
+		138833003B52D2DDA2320CA78E29C39D /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05425DEE6C93D0DF05E875463C5E307F /* WhatsNewItemTextView.xib */; };
+		18DA01AA7802DA20A997BD65FF9EDDC5 /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D4C4726CAC9C5986387BBE12876A82 /* SqueezeButton.swift */; };
+		24BA09271C96966B127F02BF193CB5CE /* SqueezeButton-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BEAF3C92045A39322B9EAEC25F0CCC72 /* SqueezeButton-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2613D6F30751EA9F476891ED1CBD5178 /* WhatsNew-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DA4F31BE2F88A3A8902276758EB631E /* WhatsNew-dummy.m */; };
+		3CF2149750BB8AB95CA22273D47734D4 /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B546C9BA87DC4FE3136603F1A863141D /* PresentationOption.swift */; };
+		3D20ED4D25632A9600699A4F /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20ED4C25632A9600699A4F /* AnimatedLabel.swift */; };
+		4BDC6A135DDFAC13F534AA4C29521AAC /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30DED5CC709E8FE85FB712E198FDE5 /* NibLoadable.swift */; };
+		547EE8F3CD2110DF610276DA3AE07258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CE1A279A3FF050329EAEFF19D1FABE /* AppDelegate.swift */; };
+		54DA4BA4B96EFEC554ECA96269C645B9 /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473A14C5CA7D14A7ADCAA01016DD6FD4 /* WhatsNewItem.swift */; };
+		55070B0ED4F3DF20AB6596D849C4871B /* WhatsNew-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E8647F5B62A6C318D16D360CDC7425 /* WhatsNew-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55303C84387DC4DC09BDCA70D637313F /* Pods-Athan Utility-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BE5874CAC07CF3C300A4CAE5520F5CAA /* Pods-Athan Utility-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A9F67AA8F139B1EF5F30E3512C5679B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */; };
+		5B6363AC3AFB956FD7DA5E8BA5778F16 /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B9A7F7A2F5283863901590B239368209 /* WhatsNewItemImageView.xib */; };
+		6EE33ECA4CE88B6222E0FBBECE46503E /* SqueezeButton-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 88525683C996BBD08564766093B9FFFC /* SqueezeButton-dummy.m */; };
+		7B4F1A78DC118A9B37953C42C095C8BC /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B247295FBE5AE7E8A6DFF266CA886B /* WhatsNewItemTextView.swift */; };
+		885C2E0C7CA251E9D00F6368E7BDA44D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */; };
+		94EF0E5E149583DE323BE547BB8DCDEE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 312B988EF117AE4DE76A268D970131FE /* UIKit.framework */; };
+		966B14B25B4585AA9887BD378BCD26DF /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83A63EA2E05E4B516C8803E1E071365 /* WhatsNewItemImageView.swift */; };
+		9DD90C70149A8DFC25AFAD19A0C96E01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */; };
+		C73AAC06C55E13484A63DFA057A11D2B /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439FA6D88FF09D756B8BEECEFFA7257 /* WhatsNew.swift */; };
+		D00F52E292F03067D22FD061C15AB354 /* Pods-Athan Utility-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 42DCA15C0EB3D09F8C68042C2C41EE1F /* Pods-Athan Utility-dummy.m */; };
+		DF3196C4C6E551A89EFC0D1889E176E9 /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF8E4F4DF7618D75CD2DA88B88156FA2 /* WhatsNew.xib */; };
+		EA51F0D591AE743396D4409B5400EBDC /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B881BE51F24FC8B325DC917671D945 /* WhatsNewViewController.swift */; };
+		FFEC5557DCBFFB725D49B5B61E2D6DD2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1592BF54D9BC797F39277291FFA145 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4834B1A502600FE911245A1E0B019AB7 /* PBXContainerItemProxy */ = {
+		BD159DCAB4C2799B34012C62841A808F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 140D34CA977932A78B61B66FC63BBD8E;
+			remoteGlobalIDString = 182798D62365715DB37C1B43D0911F59;
 			remoteInfo = SqueezeButton;
 		};
-		947A28664C4F891AB5C53C2D48A28C21 /* PBXContainerItemProxy */ = {
+		CB4FB872DFBB43905EE4B0BA411CF1E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 34DAB819D6392337ACBCC04F7BA4C870;
+			remoteGlobalIDString = E2E7801E6A3FF11D25AB87ADEA441F0F;
 			remoteInfo = WhatsNew;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemTextView.xib; path = WhatsNew/Resources/WhatsNewItemTextView.xib; sourceTree = "<group>"; };
-		08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = WhatsNew/Utils/NibLoadable.swift; sourceTree = "<group>"; };
-		268D4AAA49039C134CFCD02CC7801F82 /* Pods-Athan Utility-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Athan Utility-acknowledgements.plist"; sourceTree = "<group>"; };
-		2E810BBAAC95BD16A4603950FE87829F /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
-		2EFB40531CB700ADF867FEEE78561E78 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		32D3295CFCFDE5A93DE520D121BF256B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		33210D2B403C194A86A00EA4692A3250 /* SqueezeButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SqueezeButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3D15F5392428207E0010C709 /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
-		47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-umbrella.h"; sourceTree = "<group>"; };
-		4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewViewController.swift; path = WhatsNew/WhatsNewViewController.swift; sourceTree = "<group>"; };
-		4FEF18E910062B900FAFDF2B759B6904 /* Pods-Athan Utility.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Athan Utility.modulemap"; sourceTree = "<group>"; };
-		5EA22902E7AF483228CAA1B0F4F6504B /* Pods-Athan Utility-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Athan Utility-umbrella.h"; sourceTree = "<group>"; };
-		612FBE30D68B942B61E3B64E37EE366D /* SqueezeButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-prefix.pch"; sourceTree = "<group>"; };
-		6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SqueezeButton-dummy.m"; sourceTree = "<group>"; };
-		6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WhatsNew-dummy.m"; sourceTree = "<group>"; };
-		74E404AA6957590324067E330E0EC533 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = SqueezeButtonPreview/SqueezeButton.swift; sourceTree = "<group>"; };
-		864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemImageView.xib; path = WhatsNew/Resources/WhatsNewItemImageView.xib; sourceTree = "<group>"; };
-		87D4A90F430FAF677E6FBBC4793891BD /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
-		8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemTextView.swift; path = WhatsNew/Items/WhatsNewItemTextView.swift; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WhatsNew.xcconfig; sourceTree = "<group>"; };
-		A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = SqueezeButtonPreview/ViewController.swift; sourceTree = "<group>"; };
-		A25B6D746E3D668B7E1FACF715E413D5 /* Pods-Athan Utility-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-resources.sh"; sourceTree = "<group>"; };
-		A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-umbrella.h"; sourceTree = "<group>"; };
-		AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNew.swift; path = WhatsNew/Items/WhatsNew.swift; sourceTree = "<group>"; };
-		B817A716B3EA3B638D9D186DD79CB5B4 /* Pods-Athan Utility-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Athan Utility-acknowledgements.markdown"; sourceTree = "<group>"; };
-		BC181691F000667864FCC09ED8BE624E /* WhatsNew-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-prefix.pch"; sourceTree = "<group>"; };
-		BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SqueezeButtonPreview/AppDelegate.swift; sourceTree = "<group>"; };
-		BCFE988601C0CB98C57DF493A5BD0AE3 /* SqueezeButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SqueezeButton.modulemap; sourceTree = "<group>"; };
-		C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationOption.swift; path = WhatsNew/Items/PresentationOption.swift; sourceTree = "<group>"; };
-		CB26DB513EAFB5C4649256734F06934F /* Pods-Athan Utility-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Athan Utility-dummy.m"; sourceTree = "<group>"; };
-		DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItem.swift; path = WhatsNew/Items/WhatsNewItem.swift; sourceTree = "<group>"; };
-		DF26E12629A103286313F2F77D1BE000 /* Pods-Athan Utility-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-frameworks.sh"; sourceTree = "<group>"; };
-		E0058A7265920A9FE910EE3C6728739F /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0CC948ADEA73B1553DF293A2AEE5619 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNew.xib; path = WhatsNew/Resources/WhatsNew.xib; sourceTree = "<group>"; };
-		E31B07E429C8F0A9E8BD4C983BA63159 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SqueezeButton.xcconfig; sourceTree = "<group>"; };
-		EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemImageView.swift; path = WhatsNew/Items/WhatsNewItemImageView.swift; sourceTree = "<group>"; };
-		F8780B6F1CB51AC8F6FEBD4DB148F9FC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF14E4FF2A15A7D609B0CF6A0F6CFFCA /* WhatsNew.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WhatsNew.modulemap; sourceTree = "<group>"; };
+		0134E96A70340864CD531177637B5F65 /* Pods-Athan Utility.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Athan Utility.modulemap"; sourceTree = "<group>"; };
+		05425DEE6C93D0DF05E875463C5E307F /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemTextView.xib; path = WhatsNew/Resources/WhatsNewItemTextView.xib; sourceTree = "<group>"; };
+		0A6B2E6C57F00F8091B06B9BCFBF5AE1 /* SqueezeButton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SqueezeButton.debug.xcconfig; sourceTree = "<group>"; };
+		271E7582D741300B60C94D5D65C948E0 /* SqueezeButton.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SqueezeButton.modulemap; sourceTree = "<group>"; };
+		296ADC330E5DE07ABAF7F3EAA8CD341E /* SqueezeButton-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-prefix.pch"; sourceTree = "<group>"; };
+		2CC4919DA05254D26141524A3007241E /* Pods-Athan Utility.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.debug.xcconfig"; sourceTree = "<group>"; };
+		2F30DED5CC709E8FE85FB712E198FDE5 /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = WhatsNew/Utils/NibLoadable.swift; sourceTree = "<group>"; };
+		312B988EF117AE4DE76A268D970131FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		383F5E855C3674F356F6D85B6BC59201 /* WhatsNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WhatsNew.release.xcconfig; sourceTree = "<group>"; };
+		3D20ED4C25632A9600699A4F /* AnimatedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
+		42DCA15C0EB3D09F8C68042C2C41EE1F /* Pods-Athan Utility-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Athan Utility-dummy.m"; sourceTree = "<group>"; };
+		436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		45CE1A279A3FF050329EAEFF19D1FABE /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SqueezeButtonPreview/AppDelegate.swift; sourceTree = "<group>"; };
+		473A14C5CA7D14A7ADCAA01016DD6FD4 /* WhatsNewItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItem.swift; path = WhatsNew/Items/WhatsNewItem.swift; sourceTree = "<group>"; };
+		4DA4F31BE2F88A3A8902276758EB631E /* WhatsNew-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WhatsNew-dummy.m"; sourceTree = "<group>"; };
+		4E1592BF54D9BC797F39277291FFA145 /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = SqueezeButtonPreview/ViewController.swift; sourceTree = "<group>"; };
+		5E62255F134E227245BAEF1FF9B127A0 /* Pods_Athan_Utility.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Athan_Utility.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		632C50B1939D2104F9DBBD69262574AD /* Pods-Athan Utility-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Athan Utility-frameworks.sh"; sourceTree = "<group>"; };
+		7669202A1B7F90C7FF09EAF53F687154 /* WhatsNew.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WhatsNew.modulemap; sourceTree = "<group>"; };
+		7A856F5A729BA5AB9818C212A983BA85 /* Pods-Athan Utility-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Athan Utility-acknowledgements.plist"; sourceTree = "<group>"; };
+		87E8647F5B62A6C318D16D360CDC7425 /* WhatsNew-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-umbrella.h"; sourceTree = "<group>"; };
+		88525683C996BBD08564766093B9FFFC /* SqueezeButton-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SqueezeButton-dummy.m"; sourceTree = "<group>"; };
+		97B247295FBE5AE7E8A6DFF266CA886B /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemTextView.swift; path = WhatsNew/Items/WhatsNewItemTextView.swift; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A0D4C4726CAC9C5986387BBE12876A82 /* SqueezeButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SqueezeButton.swift; path = SqueezeButtonPreview/SqueezeButton.swift; sourceTree = "<group>"; };
+		A5F282FFC5B216F75276A114B5FAFC2B /* Pods-Athan Utility.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Athan Utility.release.xcconfig"; sourceTree = "<group>"; };
+		A83A63EA2E05E4B516C8803E1E071365 /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewItemImageView.swift; path = WhatsNew/Items/WhatsNewItemImageView.swift; sourceTree = "<group>"; };
+		A9F3368D4BA2BEFABCC7613DF3671774 /* WhatsNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WhatsNew.debug.xcconfig; sourceTree = "<group>"; };
+		B546C9BA87DC4FE3136603F1A863141D /* PresentationOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationOption.swift; path = WhatsNew/Items/PresentationOption.swift; sourceTree = "<group>"; };
+		B58AFC6D846F420BFB5B781F5BEEF7D4 /* WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9A7F7A2F5283863901590B239368209 /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNewItemImageView.xib; path = WhatsNew/Resources/WhatsNewItemImageView.xib; sourceTree = "<group>"; };
+		BE5874CAC07CF3C300A4CAE5520F5CAA /* Pods-Athan Utility-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Athan Utility-umbrella.h"; sourceTree = "<group>"; };
+		BEAF3C92045A39322B9EAEC25F0CCC72 /* SqueezeButton-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SqueezeButton-umbrella.h"; sourceTree = "<group>"; };
+		CA42430AE6E1A794153DAE5E47C89A06 /* WhatsNew-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "WhatsNew-prefix.pch"; sourceTree = "<group>"; };
+		CAD0611DAA120EBB900E473176447D05 /* Pods-Athan Utility-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Athan Utility-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D298C8315E182773B8630E234AC5D990 /* Pods-Athan Utility-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Athan Utility-Info.plist"; sourceTree = "<group>"; };
+		D2B881BE51F24FC8B325DC917671D945 /* WhatsNewViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNewViewController.swift; path = WhatsNew/WhatsNewViewController.swift; sourceTree = "<group>"; };
+		D383FBC2F57593DE8D048B33DD315E33 /* WhatsNew-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "WhatsNew-Info.plist"; sourceTree = "<group>"; };
+		DEE0A3E74E1A35D72E6C375A0883E830 /* SqueezeButton-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SqueezeButton-Info.plist"; sourceTree = "<group>"; };
+		E439FA6D88FF09D756B8BEECEFFA7257 /* WhatsNew.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WhatsNew.swift; path = WhatsNew/Items/WhatsNew.swift; sourceTree = "<group>"; };
+		F2FF5A63878814BDB10251A9187BBBCE /* SqueezeButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SqueezeButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDF39BCC26CF867D27BE700C40AEEA8C /* SqueezeButton.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SqueezeButton.release.xcconfig; sourceTree = "<group>"; };
+		FF8E4F4DF7618D75CD2DA88B88156FA2 /* WhatsNew.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = WhatsNew.xib; path = WhatsNew/Resources/WhatsNew.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3C15E2575A29123A4EF205666362623A /* Frameworks */ = {
+		1F13376968AC0E60A2557107ADE8121E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D476D5A44D0111894F1B496BC517D3D0 /* Foundation.framework in Frameworks */,
+				5A9F67AA8F139B1EF5F30E3512C5679B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6338C9E48FEEDD2972B232E06ABEB335 /* Frameworks */ = {
+		85538E6B1AF11DF18A62794BBB59C485 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28E858133144993D38C5FE899EE5FCBE /* Foundation.framework in Frameworks */,
+				885C2E0C7CA251E9D00F6368E7BDA44D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D222DB19FBF3926FB647D5AA296B59C1 /* Frameworks */ = {
+		CE03FED29EBE60665F045890CD73F56E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				446DA5986883FFF7E7B8E5A398EE84B2 /* Foundation.framework in Frameworks */,
-				E1108BAB459C97AFE7384CD8708F1D2B /* UIKit.framework in Frameworks */,
+				9DD90C70149A8DFC25AFAD19A0C96E01 /* Foundation.framework in Frameworks */,
+				94EF0E5E149583DE323BE547BB8DCDEE /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		06CDD10DE71306278CF89108B3036DFD /* iOS */ = {
+		11F39F7030CD04AB8379C05D6FFD4EB2 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2EFB40531CB700ADF867FEEE78561E78 /* Foundation.framework */,
-				74E404AA6957590324067E330E0EC533 /* UIKit.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		243B654F43DFBA867FAED286DD00E0AC /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E2E009DEE5345E36AA4A72675E115183 /* WhatsNew.xib */,
-				864928B0079D3DC96FA5F8B0BCF45807 /* WhatsNewItemImageView.xib */,
-				02A44978B54A58D4D1523B433AFE41CF /* WhatsNewItemTextView.xib */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4187D7833E7501D3605842C2911FD7FE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E0CC948ADEA73B1553DF293A2AEE5619 /* Pods_Athan_Utility.framework */,
-				33210D2B403C194A86A00EA4692A3250 /* SqueezeButton.framework */,
-				E0058A7265920A9FE910EE3C6728739F /* WhatsNew.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				06CDD10DE71306278CF89108B3036DFD /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5403C00689580FE592BA5FDB4A56EBB1 /* WhatsNew */ = {
-			isa = PBXGroup;
-			children = (
-				3D15F5392428207E0010C709 /* AnimatedLabel.swift */,
-				08FA3CFB080CC297C60027ED6C7E7CDE /* NibLoadable.swift */,
-				C8D4530B8BC052509D8D4C342AA8DAD6 /* PresentationOption.swift */,
-				AD3BBC34E19A6F3F158346868E09D193 /* WhatsNew.swift */,
-				DE3403F0A6368D618CEB9CFC6BD0B3A0 /* WhatsNewItem.swift */,
-				EB947E686C1EAD2525F79399BA9106D7 /* WhatsNewItemImageView.swift */,
-				8A7452A0D4A862A0B61F1ECA656115CD /* WhatsNewItemTextView.swift */,
-				4F8B028F62F116F9D26B75FBD1221F8E /* WhatsNewViewController.swift */,
-				243B654F43DFBA867FAED286DD00E0AC /* Resources */,
-				C5D9B155E940B4D1976DF7DD9CE89136 /* Support Files */,
-			);
-			path = WhatsNew;
-			sourceTree = "<group>";
-		};
-		7C6BC5FC350A2E8ED3CC461024352E60 /* Pods-Athan Utility */ = {
-			isa = PBXGroup;
-			children = (
-				F8780B6F1CB51AC8F6FEBD4DB148F9FC /* Info.plist */,
-				4FEF18E910062B900FAFDF2B759B6904 /* Pods-Athan Utility.modulemap */,
-				B817A716B3EA3B638D9D186DD79CB5B4 /* Pods-Athan Utility-acknowledgements.markdown */,
-				268D4AAA49039C134CFCD02CC7801F82 /* Pods-Athan Utility-acknowledgements.plist */,
-				CB26DB513EAFB5C4649256734F06934F /* Pods-Athan Utility-dummy.m */,
-				DF26E12629A103286313F2F77D1BE000 /* Pods-Athan Utility-frameworks.sh */,
-				A25B6D746E3D668B7E1FACF715E413D5 /* Pods-Athan Utility-resources.sh */,
-				5EA22902E7AF483228CAA1B0F4F6504B /* Pods-Athan Utility-umbrella.h */,
-				87D4A90F430FAF677E6FBBC4793891BD /* Pods-Athan Utility.debug.xcconfig */,
-				2E810BBAAC95BD16A4603950FE87829F /* Pods-Athan Utility.release.xcconfig */,
-			);
-			name = "Pods-Athan Utility";
-			path = "Target Support Files/Pods-Athan Utility";
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				EC0DB039A3AAC22CBDEE3F701A5EA624 /* Pods */,
-				4187D7833E7501D3605842C2911FD7FE /* Products */,
-				9030358BA89299916F83B34B8F127C44 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		9030358BA89299916F83B34B8F127C44 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				7C6BC5FC350A2E8ED3CC461024352E60 /* Pods-Athan Utility */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		B11694C38BC152335F9C447E3E9B58A5 /* SqueezeButton */ = {
-			isa = PBXGroup;
-			children = (
-				BC79D8A21715BE2504027C8F10C32DFF /* AppDelegate.swift */,
-				849B45CD2B9942DE324060C416DA0720 /* SqueezeButton.swift */,
-				A25771B6B65DA2692E82660E5C645C3E /* ViewController.swift */,
-				F5434DEC1268AACB95D03EDFDB8E52D4 /* Support Files */,
-			);
-			path = SqueezeButton;
-			sourceTree = "<group>";
-		};
-		C5D9B155E940B4D1976DF7DD9CE89136 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				32D3295CFCFDE5A93DE520D121BF256B /* Info.plist */,
-				FF14E4FF2A15A7D609B0CF6A0F6CFFCA /* WhatsNew.modulemap */,
-				9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */,
-				6B38B7D9052ED8BE725E8B37E442C3C8 /* WhatsNew-dummy.m */,
-				BC181691F000667864FCC09ED8BE624E /* WhatsNew-prefix.pch */,
-				47E74A4CEE4D3C76A1CE3BFE2BB9161D /* WhatsNew-umbrella.h */,
+				7669202A1B7F90C7FF09EAF53F687154 /* WhatsNew.modulemap */,
+				4DA4F31BE2F88A3A8902276758EB631E /* WhatsNew-dummy.m */,
+				D383FBC2F57593DE8D048B33DD315E33 /* WhatsNew-Info.plist */,
+				CA42430AE6E1A794153DAE5E47C89A06 /* WhatsNew-prefix.pch */,
+				87E8647F5B62A6C318D16D360CDC7425 /* WhatsNew-umbrella.h */,
+				A9F3368D4BA2BEFABCC7613DF3671774 /* WhatsNew.debug.xcconfig */,
+				383F5E855C3674F356F6D85B6BC59201 /* WhatsNew.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/WhatsNew";
 			sourceTree = "<group>";
 		};
-		EC0DB039A3AAC22CBDEE3F701A5EA624 /* Pods */ = {
+		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B11694C38BC152335F9C447E3E9B58A5 /* SqueezeButton */,
-				5403C00689580FE592BA5FDB4A56EBB1 /* WhatsNew */,
+				E2983683FD097A93297E2F5D4E382B36 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		176339F8652C28FCC8040CC447316F4D /* WhatsNew */ = {
+			isa = PBXGroup;
+			children = (
+				3D20ED4C25632A9600699A4F /* AnimatedLabel.swift */,
+				2F30DED5CC709E8FE85FB712E198FDE5 /* NibLoadable.swift */,
+				B546C9BA87DC4FE3136603F1A863141D /* PresentationOption.swift */,
+				E439FA6D88FF09D756B8BEECEFFA7257 /* WhatsNew.swift */,
+				473A14C5CA7D14A7ADCAA01016DD6FD4 /* WhatsNewItem.swift */,
+				A83A63EA2E05E4B516C8803E1E071365 /* WhatsNewItemImageView.swift */,
+				97B247295FBE5AE7E8A6DFF266CA886B /* WhatsNewItemTextView.swift */,
+				D2B881BE51F24FC8B325DC917671D945 /* WhatsNewViewController.swift */,
+				3C80FE266189163BC05940963532984D /* Resources */,
+				11F39F7030CD04AB8379C05D6FFD4EB2 /* Support Files */,
+			);
+			path = WhatsNew;
+			sourceTree = "<group>";
+		};
+		27703A0563DE1154B3CD2E1BDA683A3B /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A85DE16DBF85F5F5F96C78DFEC2DB07 /* Pods-Athan Utility */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		3A85DE16DBF85F5F5F96C78DFEC2DB07 /* Pods-Athan Utility */ = {
+			isa = PBXGroup;
+			children = (
+				0134E96A70340864CD531177637B5F65 /* Pods-Athan Utility.modulemap */,
+				CAD0611DAA120EBB900E473176447D05 /* Pods-Athan Utility-acknowledgements.markdown */,
+				7A856F5A729BA5AB9818C212A983BA85 /* Pods-Athan Utility-acknowledgements.plist */,
+				42DCA15C0EB3D09F8C68042C2C41EE1F /* Pods-Athan Utility-dummy.m */,
+				632C50B1939D2104F9DBBD69262574AD /* Pods-Athan Utility-frameworks.sh */,
+				D298C8315E182773B8630E234AC5D990 /* Pods-Athan Utility-Info.plist */,
+				BE5874CAC07CF3C300A4CAE5520F5CAA /* Pods-Athan Utility-umbrella.h */,
+				2CC4919DA05254D26141524A3007241E /* Pods-Athan Utility.debug.xcconfig */,
+				A5F282FFC5B216F75276A114B5FAFC2B /* Pods-Athan Utility.release.xcconfig */,
+			);
+			name = "Pods-Athan Utility";
+			path = "Target Support Files/Pods-Athan Utility";
+			sourceTree = "<group>";
+		};
+		3C80FE266189163BC05940963532984D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF8E4F4DF7618D75CD2DA88B88156FA2 /* WhatsNew.xib */,
+				B9A7F7A2F5283863901590B239368209 /* WhatsNewItemImageView.xib */,
+				05425DEE6C93D0DF05E875463C5E307F /* WhatsNewItemTextView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		8D9287CA3D5E577A6E41A1C35840BC75 /* SqueezeButton */ = {
+			isa = PBXGroup;
+			children = (
+				45CE1A279A3FF050329EAEFF19D1FABE /* AppDelegate.swift */,
+				A0D4C4726CAC9C5986387BBE12876A82 /* SqueezeButton.swift */,
+				4E1592BF54D9BC797F39277291FFA145 /* ViewController.swift */,
+				F14C65CF3BE9FEA18436BD9EAC1C89E7 /* Support Files */,
+			);
+			path = SqueezeButton;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
+				E7B745824CF869C9BE1AF990A507C4C2 /* Pods */,
+				F0CF4133DB23B84CB557F87EE4E376E6 /* Products */,
+				27703A0563DE1154B3CD2E1BDA683A3B /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		E2983683FD097A93297E2F5D4E382B36 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */,
+				312B988EF117AE4DE76A268D970131FE /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		E7B745824CF869C9BE1AF990A507C4C2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8D9287CA3D5E577A6E41A1C35840BC75 /* SqueezeButton */,
+				176339F8652C28FCC8040CC447316F4D /* WhatsNew */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F5434DEC1268AACB95D03EDFDB8E52D4 /* Support Files */ = {
+		F0CF4133DB23B84CB557F87EE4E376E6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E31B07E429C8F0A9E8BD4C983BA63159 /* Info.plist */,
-				BCFE988601C0CB98C57DF493A5BD0AE3 /* SqueezeButton.modulemap */,
-				E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */,
-				6A4D67D71430D948891C1B88E248814F /* SqueezeButton-dummy.m */,
-				612FBE30D68B942B61E3B64E37EE366D /* SqueezeButton-prefix.pch */,
-				A95924888A7AAF605B124E0F14729314 /* SqueezeButton-umbrella.h */,
+				5E62255F134E227245BAEF1FF9B127A0 /* Pods_Athan_Utility.framework */,
+				F2FF5A63878814BDB10251A9187BBBCE /* SqueezeButton.framework */,
+				B58AFC6D846F420BFB5B781F5BEEF7D4 /* WhatsNew.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F14C65CF3BE9FEA18436BD9EAC1C89E7 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				271E7582D741300B60C94D5D65C948E0 /* SqueezeButton.modulemap */,
+				88525683C996BBD08564766093B9FFFC /* SqueezeButton-dummy.m */,
+				DEE0A3E74E1A35D72E6C375A0883E830 /* SqueezeButton-Info.plist */,
+				296ADC330E5DE07ABAF7F3EAA8CD341E /* SqueezeButton-prefix.pch */,
+				BEAF3C92045A39322B9EAEC25F0CCC72 /* SqueezeButton-umbrella.h */,
+				0A6B2E6C57F00F8091B06B9BCFBF5AE1 /* SqueezeButton.debug.xcconfig */,
+				FDF39BCC26CF867D27BE700C40AEEA8C /* SqueezeButton.release.xcconfig */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SqueezeButton";
@@ -267,41 +268,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1E215064DC16D85D1ECE5B06EADD239D /* Headers */ = {
+		0A57BEB112D565F1D3F0790CEBD4E9E6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A61FC640F20FFCF15C29BB1552106EE8 /* Pods-Athan Utility-umbrella.h in Headers */,
+				24BA09271C96966B127F02BF193CB5CE /* SqueezeButton-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D2D2FFB0B8E62532E524C0AC35B2822C /* Headers */ = {
+		7ABB613FD7F3B7028AF7F3BA5A79762E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BB3FAD65E7D9A24B61296BAD48FF915 /* WhatsNew-umbrella.h in Headers */,
+				55070B0ED4F3DF20AB6596D849C4871B /* WhatsNew-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DDFC702E4AE97F9D81CBF6C1B0E70C30 /* Headers */ = {
+		F9C7976B268F5BB800481432E2725487 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0738B5AF92BE597EEA01347887D78A17 /* SqueezeButton-umbrella.h in Headers */,
+				55303C84387DC4DC09BDCA70D637313F /* Pods-Athan Utility-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		140D34CA977932A78B61B66FC63BBD8E /* SqueezeButton */ = {
+		182798D62365715DB37C1B43D0911F59 /* SqueezeButton */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 071E0065DAAD1A6B9548219B4239E1ED /* Build configuration list for PBXNativeTarget "SqueezeButton" */;
+			buildConfigurationList = 6455757168B4603A5507221F70352FEB /* Build configuration list for PBXNativeTarget "SqueezeButton" */;
 			buildPhases = (
-				DDFC702E4AE97F9D81CBF6C1B0E70C30 /* Headers */,
-				32BFFB33B4B152EFCA7B65A98AB4818F /* Sources */,
-				D222DB19FBF3926FB647D5AA296B59C1 /* Frameworks */,
-				F152231668182165D55FD02376B56AEE /* Resources */,
+				0A57BEB112D565F1D3F0790CEBD4E9E6 /* Headers */,
+				E113638DA7A09B7E2E9B77AA422D5EA6 /* Sources */,
+				CE03FED29EBE60665F045890CD73F56E /* Frameworks */,
+				920E5E5FA97B5F219F5A24C08AE69442 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -309,17 +310,37 @@
 			);
 			name = SqueezeButton;
 			productName = SqueezeButton;
-			productReference = 33210D2B403C194A86A00EA4692A3250 /* SqueezeButton.framework */;
+			productReference = F2FF5A63878814BDB10251A9187BBBCE /* SqueezeButton.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		34DAB819D6392337ACBCC04F7BA4C870 /* WhatsNew */ = {
+		9A7D364C716A9A782D9BC756711433EA /* Pods-Athan Utility */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F389EB6F7256B9CE152032B0AC61EFA4 /* Build configuration list for PBXNativeTarget "WhatsNew" */;
+			buildConfigurationList = 3CD450060D6F7367F5731CE2067A08B6 /* Build configuration list for PBXNativeTarget "Pods-Athan Utility" */;
 			buildPhases = (
-				D2D2FFB0B8E62532E524C0AC35B2822C /* Headers */,
-				D2ABE8B273913DD03BFA35C91400164B /* Sources */,
-				3C15E2575A29123A4EF205666362623A /* Frameworks */,
-				C88E18513470EE3FB644A1132D8099D1 /* Resources */,
+				F9C7976B268F5BB800481432E2725487 /* Headers */,
+				F2A59A5AE7D5C2C81D715A00DDC4037D /* Sources */,
+				1F13376968AC0E60A2557107ADE8121E /* Frameworks */,
+				F7E53D238C306A3E726ECEB37FAD351C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76F022974FF790823B3E79274765FE45 /* PBXTargetDependency */,
+				AA444F484C5B7BB44A2270B939AA562C /* PBXTargetDependency */,
+			);
+			name = "Pods-Athan Utility";
+			productName = "Pods-Athan Utility";
+			productReference = 5E62255F134E227245BAEF1FF9B127A0 /* Pods_Athan_Utility.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E2E7801E6A3FF11D25AB87ADEA441F0F /* WhatsNew */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C432039362E62FB92FD436944A2C0B0 /* Build configuration list for PBXNativeTarget "WhatsNew" */;
+			buildPhases = (
+				7ABB613FD7F3B7028AF7F3BA5A79762E /* Headers */,
+				C579D620C1EA2231CE94F0AC40ED263F /* Sources */,
+				85538E6B1AF11DF18A62794BBB59C485 /* Frameworks */,
+				50489790A6F741EA069C8D5A948F8195 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -327,47 +348,19 @@
 			);
 			name = WhatsNew;
 			productName = WhatsNew;
-			productReference = E0058A7265920A9FE910EE3C6728739F /* WhatsNew.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		9B909D59AE2F02D8421F6E051939314A /* Pods-Athan Utility */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7FEB61F45F956295F4895B8D1AD117F1 /* Build configuration list for PBXNativeTarget "Pods-Athan Utility" */;
-			buildPhases = (
-				1E215064DC16D85D1ECE5B06EADD239D /* Headers */,
-				4852D879912F5A4BCCBFB0ABE798F37A /* Sources */,
-				6338C9E48FEEDD2972B232E06ABEB335 /* Frameworks */,
-				4C82A688244AF0443B51AA197F4675E6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				99A9C26BEFBAD5B1E7F803DBC6AA545D /* PBXTargetDependency */,
-				A088E5DAC8A9FD0FEB988744100CC532 /* PBXTargetDependency */,
-			);
-			name = "Pods-Athan Utility";
-			productName = "Pods-Athan Utility";
-			productReference = E0CC948ADEA73B1553DF293A2AEE5619 /* Pods_Athan_Utility.framework */;
+			productReference = B58AFC6D846F420BFB5B781F5BEEF7D4 /* WhatsNew.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 1200;
-				TargetAttributes = {
-					140D34CA977932A78B61B66FC63BBD8E = {
-						LastSwiftMigration = 1130;
-					};
-					9B909D59AE2F02D8421F6E051939314A = {
-						LastSwiftMigration = 1130;
-					};
-				};
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
 			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -375,37 +368,37 @@
 				en,
 				Base,
 			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 4187D7833E7501D3605842C2911FD7FE /* Products */;
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = F0CF4133DB23B84CB557F87EE4E376E6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9B909D59AE2F02D8421F6E051939314A /* Pods-Athan Utility */,
-				140D34CA977932A78B61B66FC63BBD8E /* SqueezeButton */,
-				34DAB819D6392337ACBCC04F7BA4C870 /* WhatsNew */,
+				9A7D364C716A9A782D9BC756711433EA /* Pods-Athan Utility */,
+				182798D62365715DB37C1B43D0911F59 /* SqueezeButton */,
+				E2E7801E6A3FF11D25AB87ADEA441F0F /* WhatsNew */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4C82A688244AF0443B51AA197F4675E6 /* Resources */ = {
+		50489790A6F741EA069C8D5A948F8195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF3196C4C6E551A89EFC0D1889E176E9 /* WhatsNew.xib in Resources */,
+				5B6363AC3AFB956FD7DA5E8BA5778F16 /* WhatsNewItemImageView.xib in Resources */,
+				138833003B52D2DDA2320CA78E29C39D /* WhatsNewItemTextView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		920E5E5FA97B5F219F5A24C08AE69442 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C88E18513470EE3FB644A1132D8099D1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				717FADED96704D22B4C765A50B6C401A /* WhatsNew.xib in Resources */,
-				224BF2BE3AE7AA0698942DF197B6AEFD /* WhatsNewItemImageView.xib in Resources */,
-				B0878F407581E13A00C256E22E47E19A /* WhatsNewItemTextView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F152231668182165D55FD02376B56AEE /* Resources */ = {
+		F7E53D238C306A3E726ECEB37FAD351C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -415,64 +408,64 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		32BFFB33B4B152EFCA7B65A98AB4818F /* Sources */ = {
+		C579D620C1EA2231CE94F0AC40ED263F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1310A5F71EB43478A78BF5E94F6BEE97 /* AppDelegate.swift in Sources */,
-				94C99D9790AF1F2EB127E393A02B6A10 /* SqueezeButton-dummy.m in Sources */,
-				3255DCFFF0840A56008981A8EB6FEBF8 /* SqueezeButton.swift in Sources */,
-				AC5A57AB070E377142107A8D7EC6C051 /* ViewController.swift in Sources */,
+				4BDC6A135DDFAC13F534AA4C29521AAC /* NibLoadable.swift in Sources */,
+				3CF2149750BB8AB95CA22273D47734D4 /* PresentationOption.swift in Sources */,
+				2613D6F30751EA9F476891ED1CBD5178 /* WhatsNew-dummy.m in Sources */,
+				3D20ED4D25632A9600699A4F /* AnimatedLabel.swift in Sources */,
+				C73AAC06C55E13484A63DFA057A11D2B /* WhatsNew.swift in Sources */,
+				54DA4BA4B96EFEC554ECA96269C645B9 /* WhatsNewItem.swift in Sources */,
+				966B14B25B4585AA9887BD378BCD26DF /* WhatsNewItemImageView.swift in Sources */,
+				7B4F1A78DC118A9B37953C42C095C8BC /* WhatsNewItemTextView.swift in Sources */,
+				EA51F0D591AE743396D4409B5400EBDC /* WhatsNewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4852D879912F5A4BCCBFB0ABE798F37A /* Sources */ = {
+		E113638DA7A09B7E2E9B77AA422D5EA6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				241A03A9157EC193AA74D199AAFF9280 /* Pods-Athan Utility-dummy.m in Sources */,
-				3D15F53A2428207F0010C709 /* AnimatedLabel.swift in Sources */,
+				547EE8F3CD2110DF610276DA3AE07258 /* AppDelegate.swift in Sources */,
+				6EE33ECA4CE88B6222E0FBBECE46503E /* SqueezeButton-dummy.m in Sources */,
+				18DA01AA7802DA20A997BD65FF9EDDC5 /* SqueezeButton.swift in Sources */,
+				FFEC5557DCBFFB725D49B5B61E2D6DD2 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D2ABE8B273913DD03BFA35C91400164B /* Sources */ = {
+		F2A59A5AE7D5C2C81D715A00DDC4037D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9DD92B47204C401F34DF127F2D6660D /* NibLoadable.swift in Sources */,
-				A01F3EC8BBC6FC5DA4FF130971B530C9 /* PresentationOption.swift in Sources */,
-				5B2027F57CB2DCA2932491B42C476D2F /* WhatsNew-dummy.m in Sources */,
-				3D15F53B2428208A0010C709 /* AnimatedLabel.swift in Sources */,
-				843D6C369AF62D43A46D5C96F81BDA71 /* WhatsNew.swift in Sources */,
-				430A1F8929F75E2006CA46B22182D871 /* WhatsNewItem.swift in Sources */,
-				3C51125663852EEBE5DC3ABC7184E0FC /* WhatsNewItemImageView.swift in Sources */,
-				685FF92CD5A95F3CCF3EF8CC62CD845A /* WhatsNewItemTextView.swift in Sources */,
-				EDD161D6C238E69124D19C42BBE8ECCD /* WhatsNewViewController.swift in Sources */,
+				D00F52E292F03067D22FD061C15AB354 /* Pods-Athan Utility-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		99A9C26BEFBAD5B1E7F803DBC6AA545D /* PBXTargetDependency */ = {
+		76F022974FF790823B3E79274765FE45 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SqueezeButton;
-			target = 140D34CA977932A78B61B66FC63BBD8E /* SqueezeButton */;
-			targetProxy = 4834B1A502600FE911245A1E0B019AB7 /* PBXContainerItemProxy */;
+			target = 182798D62365715DB37C1B43D0911F59 /* SqueezeButton */;
+			targetProxy = BD159DCAB4C2799B34012C62841A808F /* PBXContainerItemProxy */;
 		};
-		A088E5DAC8A9FD0FEB988744100CC532 /* PBXTargetDependency */ = {
+		AA444F484C5B7BB44A2270B939AA562C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = WhatsNew;
-			target = 34DAB819D6392337ACBCC04F7BA4C870 /* WhatsNew */;
-			targetProxy = 947A28664C4F891AB5C53C2D48A28C21 /* PBXContainerItemProxy */;
+			target = E2E7801E6A3FF11D25AB87ADEA441F0F /* WhatsNew */;
+			targetProxy = CB4FB872DFBB43905EE4B0BA411CF1E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0426174FF8493E9CAD4E5FB48796DA30 /* Release */ = {
+		09FD3527845E93C74CF556EEAB91FAC7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */;
+			baseConfigurationReference = 383F5E855C3674F356F6D85B6BC59201 /* WhatsNew.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -483,9 +476,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/WhatsNew/WhatsNew-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/WhatsNew/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/WhatsNew/WhatsNew-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/WhatsNew/WhatsNew.modulemap";
 				PRODUCT_MODULE_NAME = WhatsNew;
@@ -501,106 +494,12 @@
 			};
 			name = Release;
 		};
-		0A97B680E5E670DE859EB01E0217F862 /* Debug */ = {
+		0ABD0AC0F6F4FF3AC8B5C9C2BA169AFC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B8FB5027732A7C5F928AAC89A294C3B /* WhatsNew.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/WhatsNew/WhatsNew-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/WhatsNew/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/WhatsNew/WhatsNew.modulemap";
-				PRODUCT_MODULE_NAME = WhatsNew;
-				PRODUCT_NAME = WhatsNew;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		36513AFCC7BC91BDB77CDF2F407B6F2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SqueezeButton/SqueezeButton-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SqueezeButton/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SqueezeButton/SqueezeButton.modulemap";
-				PRODUCT_MODULE_NAME = SqueezeButton;
-				PRODUCT_NAME = SqueezeButton;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		77C792AE34327079FB63ABED16B477B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E803C1458CA8EEFE0810E1E50C5970EB /* SqueezeButton.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SqueezeButton/SqueezeButton-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SqueezeButton/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SqueezeButton/SqueezeButton.modulemap";
-				PRODUCT_MODULE_NAME = SqueezeButton;
-				PRODUCT_NAME = SqueezeButton;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		8B98F441E6E5BC6649A5653214894527 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87D4A90F430FAF677E6FBBC4793891BD /* Pods-Athan Utility.debug.xcconfig */;
+			baseConfigurationReference = 2CC4919DA05254D26141524A3007241E /* Pods-Athan Utility.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_MODULES = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -611,7 +510,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Athan Utility/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Athan Utility/Pods-Athan Utility-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -624,19 +523,16 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		8DDFA5FA8D4131BFD96E5E26F3672644 /* Debug */ = {
+		131356BE54884448CA49C07BEDF4BB2A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -659,15 +555,12 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -695,17 +588,114 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		AB8F41D3BB11D20385BF32FA68606D48 /* Release */ = {
+		4A439E4EA77E1355E210C8C8FFB925F2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E810BBAAC95BD16A4603950FE87829F /* Pods-Athan Utility.release.xcconfig */;
+			baseConfigurationReference = FDF39BCC26CF867D27BE700C40AEEA8C /* SqueezeButton.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SqueezeButton/SqueezeButton-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SqueezeButton/SqueezeButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SqueezeButton/SqueezeButton.modulemap";
+				PRODUCT_MODULE_NAME = SqueezeButton;
+				PRODUCT_NAME = SqueezeButton;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		654CB3D092FA8AD217BCA8E14543E44B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9F3368D4BA2BEFABCC7613DF3671774 /* WhatsNew.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/WhatsNew/WhatsNew-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/WhatsNew/WhatsNew-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/WhatsNew/WhatsNew.modulemap";
+				PRODUCT_MODULE_NAME = WhatsNew;
+				PRODUCT_NAME = WhatsNew;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C61C1EB52EE119B71939B8D0404460D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A6B2E6C57F00F8091B06B9BCFBF5AE1 /* SqueezeButton.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SqueezeButton/SqueezeButton-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SqueezeButton/SqueezeButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SqueezeButton/SqueezeButton.modulemap";
+				PRODUCT_MODULE_NAME = SqueezeButton;
+				PRODUCT_NAME = SqueezeButton;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D6AF07975CEE9EBD71A42E00C5617236 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5F282FFC5B216F75276A114B5FAFC2B /* Pods-Athan Utility.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_MODULES = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -716,7 +706,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Athan Utility/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Athan Utility/Pods-Athan Utility-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -729,7 +719,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -737,11 +726,10 @@
 			};
 			name = Release;
 		};
-		D5F759C82752B2EB010DB3CD3D69707C /* Release */ = {
+		F090CD07A80273D5A73C8EA19224ADDB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -764,15 +752,12 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -795,7 +780,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
@@ -803,43 +788,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		071E0065DAAD1A6B9548219B4239E1ED /* Build configuration list for PBXNativeTarget "SqueezeButton" */ = {
+		3CD450060D6F7367F5731CE2067A08B6 /* Build configuration list for PBXNativeTarget "Pods-Athan Utility" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				77C792AE34327079FB63ABED16B477B9 /* Debug */,
-				36513AFCC7BC91BDB77CDF2F407B6F2C /* Release */,
+				0ABD0AC0F6F4FF3AC8B5C9C2BA169AFC /* Debug */,
+				D6AF07975CEE9EBD71A42E00C5617236 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8DDFA5FA8D4131BFD96E5E26F3672644 /* Debug */,
-				D5F759C82752B2EB010DB3CD3D69707C /* Release */,
+				131356BE54884448CA49C07BEDF4BB2A /* Debug */,
+				F090CD07A80273D5A73C8EA19224ADDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7FEB61F45F956295F4895B8D1AD117F1 /* Build configuration list for PBXNativeTarget "Pods-Athan Utility" */ = {
+		6455757168B4603A5507221F70352FEB /* Build configuration list for PBXNativeTarget "SqueezeButton" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B98F441E6E5BC6649A5653214894527 /* Debug */,
-				AB8F41D3BB11D20385BF32FA68606D48 /* Release */,
+				C61C1EB52EE119B71939B8D0404460D9 /* Debug */,
+				4A439E4EA77E1355E210C8C8FFB925F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F389EB6F7256B9CE152032B0AC61EFA4 /* Build configuration list for PBXNativeTarget "WhatsNew" */ = {
+		7C432039362E62FB92FD436944A2C0B0 /* Build configuration list for PBXNativeTarget "WhatsNew" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0A97B680E5E670DE859EB01E0217F862 /* Debug */,
-				0426174FF8493E9CAD4E5FB48796DA30 /* Release */,
+				654CB3D092FA8AD217BCA8E14543E44B /* Debug */,
+				09FD3527845E93C74CF556EEAB91FAC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }

@@ -1140,7 +1140,7 @@
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1166,7 +1166,7 @@
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1198,7 +1198,7 @@
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
@@ -1232,7 +1232,7 @@
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1261,7 +1261,7 @@
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
@@ -1292,7 +1292,7 @@
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1312,7 +1312,7 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1332,7 +1332,7 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 5.0.4;
+				MARKETING_VERSION = 5.0.41;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

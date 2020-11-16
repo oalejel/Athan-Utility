@@ -91,7 +91,7 @@ struct SmallWidget: View {
                     Spacer()
                     ActivityRingView(
                         lineWidth: 10,
-                        progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
+                        progress: min(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
                         outlineColor: .init(white: 1, opacity: 0.2),
                         colors: [.white, .init(white: 1, opacity: 0.5)]
                     )
@@ -185,7 +185,7 @@ struct MediumWidget: View {
                         .foregroundColor(.white)
                 }
                 
-                ProgressBar(progress: max(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
+                ProgressBar(progress: min(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
                             lineWidth: 6,
                             outlineColor: .init(white: 1, opacity: 0.2),
                             colors: [.white, .white])

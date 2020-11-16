@@ -387,6 +387,12 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+<<<<<<< HEAD
+				3DAE456C2560A85200156CFF /* MoonView.swift */,
+				3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */,
+				3DAE45732560A90800156CFF /* full_moon.jpg */,
+=======
+>>>>>>> e453a7d3bc6a4635764b1279b5cf8976d1c2d95d
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
 				3DAE45662560A4F100156CFF /* Helper Views */,
 				3DC2FB072464E044005D1EF5 /* Todo.md */,
@@ -910,6 +916,10 @@
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
+<<<<<<< HEAD
+				3DAE456D2560A85200156CFF /* MoonView.swift in Sources */,
+=======
+>>>>>>> e453a7d3bc6a4635764b1279b5cf8976d1c2d95d
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 			);

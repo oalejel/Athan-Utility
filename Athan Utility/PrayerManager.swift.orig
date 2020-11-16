@@ -826,7 +826,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
 //            }
 =======
             
->>>>>>> e453a7d... some swift ui work, lots of ui adjustments and connections left to make
+>>>>>>> e453a7d3bc6a4635764b1279b5cf8976d1c2d95d
             for i in (startIndex)...5 {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {

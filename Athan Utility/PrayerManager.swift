@@ -214,7 +214,6 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         self.calculationCompletionClosure = nil
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LOCATION MANAGER ERROR: \(error.localizedDescription)")
     }

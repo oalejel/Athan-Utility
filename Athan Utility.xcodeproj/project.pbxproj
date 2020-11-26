@@ -28,6 +28,9 @@
 		3D16F1042560851B00C78B12 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D16F1032560851B00C78B12 /* Adhan */; };
 		3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
+		3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */; };
+		3D1E50E9256DFAD4003E2E34 /* MoonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50E8256DFAD4003E2E34 /* MoonView.swift */; };
+		3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
 		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D20CB1D2518DA0900275206 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1C2518DA0900275206 /* WidgetKit.framework */; };
 		3D20CB1F2518DA0900275206 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1E2518DA0900275206 /* SwiftUI.framework */; };
@@ -45,6 +48,7 @@
 		3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */; };
 		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
 		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
+		3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EBE9256F5DEA0010C47D /* SolarView.swift */; };
 		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
 		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
 		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
@@ -76,6 +80,7 @@
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
 		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
+		3D8CE83B256965F0006D6E46 /* PrayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -100,9 +105,6 @@
 		3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE452A256089D600156CFF /* WhatsNew.swift */; };
 		3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE45532560976900156CFF /* SqueezeButton.swift */; };
 		3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE455A2560984500156CFF /* AnimatedLabel.swift */; };
-		3DAE456D2560A85200156CFF /* MoonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE456C2560A85200156CFF /* MoonView.swift */; };
-		3DAE45742560A90800156CFF /* full_moon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE45732560A90800156CFF /* full_moon.jpg */; };
-		3DAE457B2560AC9B00156CFF /* QiblaPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */; };
 		3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */; };
 		3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */; };
 		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
@@ -195,6 +197,9 @@
 		3D15F53E242828590010C709 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3D16F10A2560859D00C78B12 /* AthanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanManager.swift; sourceTree = "<group>"; };
 		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QiblaPointerView.swift; sourceTree = "<group>"; };
+		3D1E50E8256DFAD4003E2E34 /* MoonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoonView.swift; sourceTree = "<group>"; };
+		3D1E50EF256F4620003E2E34 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
 		3D20CB1B2518DA0900275206 /* Athan WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Athan WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D20CB1C2518DA0900275206 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -229,6 +234,7 @@
 		3D52257B20CDF5D200CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D6308321C08F3D700AC32B6 /* LocationInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInputController.swift; sourceTree = "<group>"; };
 		3D6308331C08F3D700AC32B6 /* LocationInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationInputController.xib; sourceTree = "<group>"; };
+		3D73EBE9256F5DEA0010C47D /* SolarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarView.swift; sourceTree = "<group>"; };
 		3D73FC53228459FE0092A83C /* AthanSiriIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthanSiriIntents.entitlements; sourceTree = "<group>"; };
 		3D73FC55228491EA0092A83C /* ToneSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToneSettingCell.swift; sourceTree = "<group>"; };
 		3D73FC56228491EA0092A83C /* ToneSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToneSettingCell.xib; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSettings.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
 		3D93E9DF21829D0C002019B7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -275,9 +282,6 @@
 		3DAE452A256089D600156CFF /* WhatsNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		3DAE45532560976900156CFF /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
 		3DAE455A2560984500156CFF /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
-		3DAE456C2560A85200156CFF /* MoonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonView.swift; sourceTree = "<group>"; };
-		3DAE45732560A90800156CFF /* full_moon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = full_moon.jpg; sourceTree = "<group>"; };
-		3DAE457A2560AC9B00156CFF /* QiblaPointerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaPointerView.swift; sourceTree = "<group>"; };
 		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 				3D20CB202518DA0900275206 /* Athan Widget */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
+				3D20ED602563356600699A4F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -376,20 +381,20 @@
 		3D07DA7D1BDC58B50001EFE4 /* Athan Utility */ = {
 			isa = PBXGroup;
 			children = (
+				3DC2FB072464E044005D1EF5 /* Todo.md */,
+				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
+				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
 				3DA6F025256189AD00C2C348 /* LocationsManager.swift */,
-				3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */,
+				3D1E50D4256D64D0003E2E34 /* SwiftUI Views */,
+				3D8CE84125696639006D6E46 /* Settings Managers */,
 				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
 				3D52255720CDD25800CF8C3D /* Localizable.strings */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
-				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3D15F53E242828590010C709 /* LaunchScreen.xib */,
-				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
-				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
-				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
+				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3DAE45662560A4F100156CFF /* Helper Views */,
-				3DC2FB072464E044005D1EF5 /* Todo.md */,
 				3D4416E71C05174700329AA0 /* General */,
 				3D4416E61C05173D00329AA0 /* Qibla */,
 				3D4416E51C05172400329AA0 /* Settings */,
@@ -406,6 +411,18 @@
 			path = "Athan Utility";
 			sourceTree = "<group>";
 		};
+		3D1E50D4256D64D0003E2E34 /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3D1E50E8256DFAD4003E2E34 /* MoonView.swift */,
+				3D1E50EF256F4620003E2E34 /* Colors.swift */,
+				3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */,
+				3D73EBE9256F5DEA0010C47D /* SolarView.swift */,
+			);
+			name = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
 		3D20CB202518DA0900275206 /* Athan Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +433,13 @@
 				3D20CB262518DA0B00275206 /* Info.plist */,
 			);
 			path = "Athan Widget";
+			sourceTree = "<group>";
+		};
+		3D20ED602563356600699A4F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		3D4416E51C05172400329AA0 /* Settings */ = {
@@ -499,6 +523,15 @@
 				3D73FC7322875CC70092A83C /* makkah-preview.caf */,
 			);
 			name = "Notification Sound Previews";
+			sourceTree = "<group>";
+		};
+		3D8CE84125696639006D6E46 /* Settings Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */,
+				3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */,
+			);
+			name = "Settings Managers";
 			sourceTree = "<group>";
 		};
 		3D93EA082182C447002019B7 /* AthanSiriIntents */ = {
@@ -726,8 +759,6 @@
 					};
 					3D20CB1A2518DA0900275206 = {
 						CreatedOnToolsVersion = 12.0;
-						DevelopmentTeam = DL7989H5XT;
-						ProvisioningStyle = Automatic;
 					};
 					3D93EA062182C447002019B7 = {
 						CreatedOnToolsVersion = 10.0;
@@ -811,7 +842,6 @@
 				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
 				3D73FC7E22875CCA0092A83C /* echo-preview.caf in Resources */,
 				3D73FC7F22875CCA0092A83C /* madina-preview.caf in Resources */,
-				3DAE45742560A90800156CFF /* full_moon.jpg in Resources */,
 				3D73FC7D22875CCA0092A83C /* abdulbaset-preview.caf in Resources */,
 				3D73FC7A22875CCA0092A83C /* makkah-preview.caf in Resources */,
 				3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */,
@@ -871,6 +901,8 @@
 				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
 				3DA6F026256189AD00C2C348 /* LocationsManager.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
+				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
+				3D8CE83B256965F0006D6E46 /* PrayerSettings.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
@@ -881,7 +913,6 @@
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
-				3DAE457B2560AC9B00156CFF /* QiblaPointerView.swift in Sources */,
 				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
 				3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
@@ -891,6 +922,7 @@
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
 				3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */,
 				3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */,
+				3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */,
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
 				3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */,
@@ -908,8 +940,10 @@
 				3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */,
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
+				3D1E50E9256DFAD4003E2E34 /* MoonView.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
+				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 			);
@@ -1238,8 +1272,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Athan WidgetExtension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -1257,6 +1290,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
@@ -1276,8 +1310,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Athan WidgetExtension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -1294,6 +1327,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

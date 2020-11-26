@@ -10,6 +10,7 @@ import NotificationCenter
 import Adhan
 import CoreLocation.CLLocation
 
+// Managest loading and storing of settings for notitification selection and sounds to be used for notifications
 class NotificationsManager {
     
     static func calculateTimes(referenceDate: Date, coordinate: CLLocationCoordinate2D, calculationMethod: CalculationMethod, madhab: Madhab) -> PrayerTimes? {

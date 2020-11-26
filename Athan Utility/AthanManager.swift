@@ -44,36 +44,13 @@ class AthanManager {
     }
     
     // MARK: - Settings to load from storage
-    var calculationMethod: CalculationMethod = CalculationMethod.northAmerica
-    var madhab: Madhab = .shafi
-    var locationCoordinate: CLLocationCoordinate2D? = nil
-    var locationName: String? = nil
-    var prayerSettings: [PrayerType : PrayerSetting] = [:] {
-        didSet {
-            if #available(iOS 11.0, *) {
-                do {
-                    let data = try NSKeyedArchiver.archivedData(withRootObject: prayerSettings, requiringSecureCoding: false)
-                    try data.write(to: prayerSettingsArchivePath)
-                } catch {
-                    print("error archiving prayer settings")
-                }
-            } else {
-                // Fallback on earlier versions
-                NSKeyedArchiver.archiveRootObject(prayerSettings, toFile: prayerSettingsArchivePath.path)
-            }
-        }
-    }
-    
-    lazy var prayerSettingsArchivePath: URL = {
-        let fm = FileManager.default
-        var containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")
-        containerURL = containerURL?.appendingPathComponent("prayersettings.plist")
-        return containerURL!
-    }()
+    var prayerSettings = PrayerSettings.shared
+    var notificationSettings = NotificationSettings.shared
+    var locationSettings = LocationSettings.shared
     
     // MARK: - Reasons to redo notifications and interface
     func setLocation(name: String, coordinate: CLLocationCoordinate2D) {
-        NotificationsManager.createNotifications(
+        
     }
     
     // MARK: - Prayer Times
@@ -88,7 +65,7 @@ class AthanManager {
     }
     
     private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
-        guard let locationCoordinate = locationCoordinate else {
+        guard let locationCoordinate = LocationSettings.shared.locationCoordinate else {
             print("no coordinate available yet")
             return nil
         }
@@ -97,10 +74,12 @@ class AthanManager {
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
         let coordinates = Coordinates(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
         
-        var params = calculationMethod.params
-        params.madhab = madhab
+        var params = PrayerSettings.shared.calculationMethod.params
+        params.madhab = PrayerSettings.shared.madhab
         
-        if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
+        if let prayers = PrayerTimes(coordinates: coordinates,
+                                     date: date,
+                                     calculationParameters: params) {
             let formatter = DateFormatter()
             formatter.timeStyle = .medium
             formatter.timeZone = TimeZone.current

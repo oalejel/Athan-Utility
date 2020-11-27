@@ -13,8 +13,9 @@ import CoreLocation.CLLocation
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable {
     static var shared: PrayerSettings = {
-        if let s = unarchive(archiveName) as? PrayerSettings {
-            return s
+        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
+            return decoded
         } else {
             let defaultSettings = PrayerSettings()
             return defaultSettings
@@ -22,8 +23,10 @@ class PrayerSettings: Codable {
     }()
     
     static func archive() {
-        UserDefaults.standard.setValue(PrayerSettings.shared, forKey: archiveName)
-//        archiveToName(archiveName, object: shared)
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(PrayerSettings.shared) as? Data {
+            UserDefaults.standard.set(data, forKey: archiveName)
+        }
     }
     
     // default values to be overridden from settings if they exist
@@ -47,43 +50,12 @@ struct NotificationSetting: Codable {
     var alarmType = AlarmSetting.all
 }
 
-extension Prayer: Codable {
-    enum PrayerKey: CodingKey {
-        case key
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: PrayerKey.self)
-        let raw = try container.decodeIfPresent(Int.self, forKey: .key)
-        switch raw {
-        case 0:
-            self = .fajr
-        case 1:
-            self = .sunrise
-        case 2:
-            self = .dhuhr
-        case 3:
-            self = .asr
-        case 4:
-            self = .maghrib
-        case 5:
-            self = .isha
-        default:
-            self = .fajr
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        let map: [Prayer:Int] = [.fajr:0, .sunrise:1, .dhuhr:2, .asr:3, .maghrib:4, .isha:5]
-        var container = encoder.container(keyedBy: PrayerKey.self)
-        try container.encode(map[self], forKey: .key)
-    }
-}
 
 class NotificationSettings: Codable {
     static var shared: NotificationSettings = {
-        if let s = unarchive(archiveName) as? NotificationSettings {
-            return s
+        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(NotificationSettings.self, from: data) {
+            return decoded
         } else {
             let defaultSettings = NotificationSettings(settings: [:])
             defaultSettings.settings = [
@@ -105,8 +77,11 @@ class NotificationSettings: Codable {
     }
     
     static func archive() {
-        UserDefaults.standard.setValue(NotificationSettings.shared, forKey: archiveName)
-//        archiveToName(archiveName, object: shared)
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(NotificationSettings.shared) as? Data {
+            UserDefaults.standard.set(data, forKey: archiveName)
+        }
+
     }
     var settings: [Prayer:NotificationSetting]
     private static let archiveName = "notificationsettings"
@@ -115,8 +90,9 @@ class NotificationSettings: Codable {
 class LocationSettings: Codable {
     
     static var shared: LocationSettings = {
-        if let s = unarchive(archiveName) as? LocationSettings {
-            return s
+        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
+            return decoded
         } else {
             return LocationSettings()
         }
@@ -130,8 +106,10 @@ class LocationSettings: Codable {
     }
     
     static func archive() {
-        UserDefaults.standard.setValue(LocationSettings.shared, forKey: archiveName)
-//        archiveToName(archiveName, object: shared)
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
+            UserDefaults.standard.set(data, forKey: archiveName)
+        }
     }
     
     var locationName: String = "Cupertino, CA"
@@ -153,6 +131,21 @@ class LocationSettings: Codable {
 
 
 // MARK: - Archive Helpers
+
+func unarchive2(_ name: String) -> Data? {
+    let data = UserDefaults.standard.object(forKey: name) as? Data
+    return data
+}
+
+func archive2(_ name: String, object: AnyObject) {
+    print("WARNING: ADD ERROR HANDLER TO THIS")
+    do {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
+        UserDefaults.standard.setValue(data, forKey: name)
+    } catch {
+        print("error archiving prayer settings")
+    }
+}
 
 // Helper function for storing settings
 func archiveToName(_ name: String, object: AnyObject) {

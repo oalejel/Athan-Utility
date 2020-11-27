@@ -33,7 +33,7 @@ class ObservableAthanManager: ObservableObject {
     
     init() {
         // bootstrap process of initializing the athan manager?
-        let _ = AthanManager.shared
+//        let _ = AthanManager.shared
     }
     
     @Published var todayTimes: PrayerTimes!
@@ -48,6 +48,13 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     static let shared = AthanManager()
     let locationManager = CLLocationManager()
+    var heading: Double = 0.0 {
+        didSet {
+            if #available(iOS 13.0.0, *) {
+                ObservableAthanManager.shared.currentHeading = heading
+            }
+        }
+    }
     
     // will default to cupertino times at start of launch
     lazy var todayTimes: PrayerTimes! = nil {
@@ -81,15 +88,18 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     // MARK: - DidSet Helpers
     func prayerSettingsDidSetHelper() {
+        PrayerSettings.shared = prayerSettings
         PrayerSettings.archive()
     }
     
     func notificationSettingsDidSetHelper() {
+        NotificationSettings.shared = notificationSettings
         NotificationSettings.archive()
     }
     
     func locationSettingsDidSetHelper() {
-        assert(false, "just checking that this correctly gets called")
+//        assert(false, "just checking that this correctly gets called")
+        LocationSettings.shared = locationSettings
         LocationSettings.archive()
         if #available(iOS 13.0.0, *) {
             ObservableAthanManager.shared.locationName = locationSettings.locationName
@@ -112,6 +122,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        
+        locationManager.delegate = self
+        locationManager.startUpdatingHeading()
+        
         // register for going into foreground
         NotificationCenter.default.addObserver(self, selector: #selector(movedToForeground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -127,7 +141,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         // swiftui publisher gets updates through didSet
         todayTimes = calculateTimes(referenceDate: Date())
         tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400)) // add 24 hours for next day
-        currentPrayer = todayTimes.nextPrayer() ?? .fajr
+        currentPrayer = todayTimes.currentPrayer() ?? .isha
     }
     
     private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
@@ -331,12 +345,16 @@ extension AthanManager {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        heading = Double(newHeading.trueHeading)
+    }
+    
     // triggered and disabled after one measurement
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         
         CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-            if error != nil {
+            if error == nil {
                 print("successfully reverse geocoded location")
                 if let placemark = placemarks?.first {
                     let city = placemark.locality
@@ -359,7 +377,7 @@ extension AthanManager {
                     } else if let name = placemark.name {
                         shortname = name
                     } else {
-                        shortname = "\(locations.first!.coordinate.latitude), \(locations.first!.coordinate.latitude)"
+                        shortname = String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude)
                     }
                     
                     // save our location settings
@@ -375,7 +393,7 @@ extension AthanManager {
             }
             
             // error case: rely on coordinates and no geocoded name
-            self.locationSettings = LocationSettings(locationName: "\(locations.first!.coordinate.latitude), \(locations.first!.coordinate.latitude)",
+            self.locationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
                                                      coord: locations.first!.coordinate)
             self.considerRecalculations(isNewLocation: true)
             if let x = error {

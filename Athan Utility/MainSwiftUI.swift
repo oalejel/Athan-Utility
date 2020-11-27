@@ -39,6 +39,38 @@ struct MainSwiftUI: View {
     var body: some View {
         ZStack {
             GeometryReader { g in
+                
+                let hijriCal = Calendar(identifier: .islamic)
+                let dateString: String = {
+                    let df = DateFormatter()
+                    df.calendar = hijriCal
+                    df.dateStyle = .medium
+                    return df.string(from: Date())
+                }()
+                let timeRemainingString: String = {
+                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
+                                                            to: AthanManager.shared.guaranteedNextPrayerTime())
+                    
+                    return "\(comps.hour!)h \(comps.minute!)m left"
+                }()
+                let percentComplete: Double = {
+                    var currentTime: Date?
+                    if let currentPrayer = manager.todayTimes.currentPrayer() {
+                        currentTime = manager.todayTimes.time(for: currentPrayer)
+                    } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
+                        currentTime = manager.todayTimes.time(for: .isha).addingTimeInterval(-86400)
+                    }
+                    
+                    var nextTime: Date?
+                    if let nextPrayer = manager.todayTimes.nextPrayer() {
+                        nextTime = manager.todayTimes.time(for: nextPrayer)
+                    } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+                        nextTime = manager.tomorrowTimes.time(for: .fajr)
+                    }
+                    
+                    return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+                }()
+                
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                     .edgesIgnoringSafeArea(.all)
                 VStack(alignment: .leading, spacing: 0) {
@@ -67,12 +99,12 @@ struct MainSwiftUI: View {
                             
                             
                             VStack(alignment: .trailing, spacing: 0) {
-                                QiblaPointerView(angle: manager.qiblaHeading)
+                                QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading)
                                     .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                     .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
 
                                 HStack {
-                                    Text("\("1hr 12m left")")
+                                    Text("\(timeRemainingString) left")
                                         .fontWeight(.bold)
                                         .autocapitalization(.none)
                                         .foregroundColor(Color(.lightText))
@@ -81,22 +113,37 @@ struct MainSwiftUI: View {
                             }
                         }
                         
-                        ProgressBar(progress: 0.2, lineWidth: 10, outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
+                        ProgressBar(progress: CGFloat(percentComplete), lineWidth: 10,
+                                    outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
 
                         let cellFont = Font.system(size: g.size.width * 0.06)
+                        let timeFormatter: DateFormatter = {
+                            let df = DateFormatter()
+                            df.timeStyle = .short
+                            return df
+                        }()
                         
                         VStack(alignment: .leading, spacing: 16) {
                             ForEach(0..<6) { i in
                                 HStack {
-                                    Text(PrayerType(rawValue: i)!.localizedString())
-                                        // replace 3 with current prayer index
-                                        .foregroundColor((i == 3 ? .green : (i < 3 ? Color(UIColor.lightText) : .white)))
+                                    let cellPrayer = Prayer(index: i)
+                                    let highlightColor: Color = {
+                                        if cellPrayer == manager.todayTimes.currentPrayer() {
+                                            return Color.green
+                                        } else if manager.todayTimes.currentPrayer() == nil {
+                                            return Color.white
+                                        }
+                                        return i < manager.currentPrayer.rawValue() ? Color(UIColor.lightText) : Color.white
+                                    }()
+                                    
+                                    Text(cellPrayer.localizedString())
+                                        .foregroundColor(highlightColor)
                                         .font(cellFont)
                                         .bold()
                                     Spacer()
-                                    Text("11:00 PM")
+                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: cellPrayer)))
                                         // replace 3 with current prayer index
-                                        .foregroundColor((i == 3 ? .green : (i < 3 ? .init(UIColor.lightText) : .white)))
+                                        .foregroundColor(highlightColor)
                                         .foregroundColor(.white)
                                         .font(cellFont)
                                         .bold()
@@ -108,8 +155,9 @@ struct MainSwiftUI: View {
                     .padding([.leading, .trailing])
                     
                     ZStack() {
-                        SolarView()
-                        Text("\("1 Rabiʻ I, 1442")")
+                        SolarView(progress: 0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400,
+                                  sunlightFraction: manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400)
+                        Text("\(dateString)")
                             .fontWeight(.bold)
                             .foregroundColor(Color(.lightText))
                             .offset(y: 24)
@@ -123,7 +171,7 @@ struct MainSwiftUI: View {
                     
                     HStack(alignment: .center) {
                         Button(action: {
-                            print("here")
+                            AthanManager.shared.requestLocationPermission()
                         }) {
                             Text("\(manager.locationName)")
                         }

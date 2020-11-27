@@ -54,8 +54,8 @@ struct SineLine: Shape {
 // of graph instead
 @available(iOS 13.0.0, *)
 struct SolarView: View {
-    @State var progress: Double = 0
-    @State var sunlightFraction: Double = 0.5 // % of 24 hours that has sunlight
+    var progress: Double = 0
+    var sunlightFraction: Double = 0.5 // % of 24 hours that has sunlight
     
     var body: some View {
         GeometryReader  { g in
@@ -77,16 +77,13 @@ struct SolarView: View {
                                                    dash: [6, 5],
                                                    dashPhase: 0))
                         .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
-//                    Blur()
 
-//                        .mask(
-//                        )
                     Circle()
                         .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)
                         .offset(x: -0.5 * g.size.width + CGFloat(progress) * g.size.width,
                                 y: CGFloat(sunY))
-                        .onAppear { progress = 0.25 }
+//                        .onAppear { progress = 0.25 }
 
                 }
                 Spacer()

@@ -24,8 +24,8 @@ struct Triangle: Shape {
 
 @available(iOS 13.0.0, *)
 struct QiblaPointerView: View {
-    @State var angle: Double = 90
-    @State var qiblaAngle: Double = 0 // correct angle, which we should highlight and vibrate for
+    var angle: Double = 90
+    var qiblaAngle: Double = 0 // correct angle, which we should highlight and vibrate for
 //    private let pointerLength: CGFloat = 60
     // make pointerlength equal frame over
     
@@ -46,13 +46,13 @@ struct QiblaPointerView: View {
                     .strokeBorder(Color.white, lineWidth: lineWidth)
                     .padding(pointerLength)
                 
-                VStack {
-                    Triangle()
-                        .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
-                        .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
-                        .foregroundColor(.white)
-                        .rotationEffect(.degrees(angle), anchor: .center)
-                }
+                Triangle()
+                    .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
+                    .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
+                    .foregroundColor(.white)
+                    .rotationEffect(.degrees(angle), anchor: .center)
+                    .animation(Animation.default.speed(1))
+                
             }
         }
     

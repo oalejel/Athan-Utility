@@ -53,6 +53,8 @@
 		3D73EBF7257027290010C47D /* PrayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */; };
 		3D73EBFE2570294B0010C47D /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EBFD2570294B0010C47D /* Adhan */; };
 		3D73EC00257029530010C47D /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EBFF257029530010C47D /* Adhan */; };
+		3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
+		3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
 		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
 		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
 		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
@@ -968,6 +970,7 @@
 				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
 				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
+				3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3D770571251C3812007BCEAA /* Global.swift in Sources */,
 				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
@@ -990,6 +993,7 @@
 				3D73FC6C2285C3380092A83C /* Settings.swift in Sources */,
 				3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */,
 				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
+				3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */,
 				3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */,
 				3DB56CF4228369A200B9F738 /* Global.swift in Sources */,

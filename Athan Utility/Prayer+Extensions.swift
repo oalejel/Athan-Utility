@@ -100,4 +100,13 @@ extension Prayer: Codable {
     func localizedString() -> String {
         return NSLocalizedString(self.stringValue(), comment: "")
     }
+    
+    func next() -> Prayer {
+        if self == .isha {return .fajr}
+        return Prayer(index: self.rawValue() + 1)
+    }
+    func previous() -> Prayer {
+        if self == .fajr {return .isha}
+        return Prayer(index: self.rawValue() - 1)
+    }
 }

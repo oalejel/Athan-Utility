@@ -133,6 +133,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         prayerSettingsDidSetHelper()
         notificationSettingsDidSetHelper()
         locationSettingsDidSetHelper()
+        
+        // on first boot, force a refresh
+        considerRecalculations(isNewLocation: false)
     }
         
     // MARK: - Prayer Times
@@ -240,6 +243,18 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             nextPrayerTime = todayTimes.time(for: nextPrayer!)
         }
         return nextPrayerTime
+    }
+    
+    func guaranteedCurrentPrayerTime() -> Date {
+        var currentPrayer: Prayer? = todayTimes.currentPrayer()
+        var currentPrayerTime: Date! = nil
+        if currentPrayer == nil {
+            currentPrayer = .isha
+            currentPrayerTime = todayTimes.isha.addingTimeInterval(-86400) // shift back today isha approximation by a day
+        } else {
+            currentPrayerTime = todayTimes.time(for: currentPrayer!)
+        }
+        return currentPrayerTime
     }
 }
 

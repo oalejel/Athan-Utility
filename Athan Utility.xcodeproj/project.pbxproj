@@ -55,6 +55,10 @@
 		3D73EC00257029530010C47D /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EBFF257029530010C47D /* Adhan */; };
 		3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
 		3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
+		3D73EC122570DAB80010C47D /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
+		3D73EC182570DAB80010C47D /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
+		3D73EC1E257155AA0010C47D /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
+		3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
 		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
 		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
@@ -95,7 +99,6 @@
 		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
-		3DA6F026256189AD00C2C348 /* LocationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F025256189AD00C2C348 /* LocationsManager.swift */; };
 		3DAD6F34210EDE94008299E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAE4495256088DA00156CFF /* SwiftSpinner */; };
 		3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE451D256089D600156CFF /* WhatsNewViewController.swift */; };
@@ -274,7 +277,6 @@
 		3D93EA0B2182C447002019B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prayer+Extensions.swift"; sourceTree = "<group>"; };
-		3DA6F025256189AD00C2C348 /* LocationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsManager.swift; sourceTree = "<group>"; };
 		3DAE451D256089D600156CFF /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
 		3DAE451F256089D600156CFF /* WhatsNew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNew.xib; sourceTree = "<group>"; };
 		3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNewItemImageView.xib; sourceTree = "<group>"; };
@@ -393,7 +395,6 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
-				3DA6F025256189AD00C2C348 /* LocationsManager.swift */,
 				3D1E50D4256D64D0003E2E34 /* SwiftUI Views */,
 				3D8CE84125696639006D6E46 /* Settings Managers */,
 				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
@@ -913,7 +914,6 @@
 			files = (
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
 				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
-				3DA6F026256189AD00C2C348 /* LocationsManager.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
 				3D8CE83B256965F0006D6E46 /* PrayerSettings.swift in Sources */,
@@ -971,11 +971,13 @@
 				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
 				3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
+				3D73EC182570DAB80010C47D /* AthanManager.swift in Sources */,
 				3D770571251C3812007BCEAA /* Global.swift in Sources */,
 				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
 				3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */,
 				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
+				3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */,
 				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
 				3D73EBF1257027230010C47D /* PrayerSettings.swift in Sources */,
 			);
@@ -991,7 +993,9 @@
 				3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */,
 				3D73EBF7257027290010C47D /* PrayerSettings.swift in Sources */,
 				3D73FC6C2285C3380092A83C /* Settings.swift in Sources */,
+				3D73EC122570DAB80010C47D /* AthanManager.swift in Sources */,
 				3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */,
+				3D73EC1E257155AA0010C47D /* NotificationsManager.swift in Sources */,
 				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
 				3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */,
@@ -1290,6 +1294,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1328,6 +1333,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

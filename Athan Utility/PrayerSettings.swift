@@ -13,7 +13,7 @@ import CoreLocation.CLLocation
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable {
     static var shared: PrayerSettings = {
-        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+        if let data = unarchive(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
             return decoded
         } else {
@@ -25,7 +25,7 @@ class PrayerSettings: Codable {
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(PrayerSettings.shared) as? Data {
-            UserDefaults.standard.set(data, forKey: archiveName)
+            archiveToName(archiveName, object: data)
         }
     }
     
@@ -38,9 +38,7 @@ class PrayerSettings: Codable {
     private static let archiveName = "prayersettings"
 }
 
-
-
-
+// MARK: - Notification Settings
 enum AlarmSetting: Int, Codable {
     case all, noEarly, none
 }
@@ -50,10 +48,10 @@ struct NotificationSetting: Codable {
     var alarmType = AlarmSetting.all
 }
 
-
 class NotificationSettings: Codable {
+    
     static var shared: NotificationSettings = {
-        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+        if let data = unarchive(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(NotificationSettings.self, from: data) {
             return decoded
         } else {
@@ -79,7 +77,7 @@ class NotificationSettings: Codable {
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(NotificationSettings.shared) as? Data {
-            UserDefaults.standard.set(data, forKey: archiveName)
+            archiveToName(archiveName, object: data)
         }
 
     }
@@ -87,10 +85,12 @@ class NotificationSettings: Codable {
     private static let archiveName = "notificationsettings"
 }
 
+// MARK: - Location Settings
+
 class LocationSettings: Codable {
     
     static var shared: LocationSettings = {
-        if let data = UserDefaults.standard.object(forKey: archiveName) as? Data,
+        if let data = unarchive(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
             return decoded
         } else {
@@ -108,7 +108,7 @@ class LocationSettings: Codable {
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
-            UserDefaults.standard.set(data, forKey: archiveName)
+            archiveToName(archiveName, object: data)
         }
     }
     
@@ -127,28 +127,25 @@ class LocationSettings: Codable {
     private static let archiveName = "locationsettings"
 }
 
-
-
-
 // MARK: - Archive Helpers
 
-func unarchive2(_ name: String) -> Data? {
-    let data = UserDefaults.standard.object(forKey: name) as? Data
-    return data
-}
-
-func archive2(_ name: String, object: AnyObject) {
-    print("WARNING: ADD ERROR HANDLER TO THIS")
-    do {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
-        UserDefaults.standard.setValue(data, forKey: name)
-    } catch {
-        print("error archiving prayer settings")
-    }
-}
+//func unarchive2(_ name: String) -> Data? {
+//    let data = UserDefaults.standard.object(forKey: name) as? Data
+//    return data
+//}
+//
+//func archive2(_ name: String, object: Any) {
+//    print("WARNING: ADD ERROR HANDLER TO THIS")
+//    do {
+//        let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
+//        UserDefaults.standard.setValue(data, forKey: name)
+//    } catch {
+//        print("error archiving prayer settings")
+//    }
+//}
 
 // Helper function for storing settings
-func archiveToName(_ name: String, object: AnyObject) {
+func archiveToName(_ name: String, object: Any) {
     print("WARNING: ADD ERROR HANDLER TO THIS")
     let fm = FileManager.default
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!

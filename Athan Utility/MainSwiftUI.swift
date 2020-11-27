@@ -50,7 +50,11 @@ struct MainSwiftUI: View {
                 let timeRemainingString: String = {
                     let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
                                                             to: AthanManager.shared.guaranteedNextPrayerTime())
-                    
+                    if comps.hour == 0 {
+                        return "\(comps.minute!)m left"
+                    } else if comps.minute == 0 {
+                        return "\(comps.hour!)h left"
+                    }
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
                 let percentComplete: Double = {
@@ -99,12 +103,13 @@ struct MainSwiftUI: View {
                             
                             
                             VStack(alignment: .trailing, spacing: 0) {
-                                QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading)
+                                QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading,
+                                                 qiblaAngle: self.manager.qiblaHeading)
                                     .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                     .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
 
                                 HStack {
-                                    Text("\(timeRemainingString) left")
+                                    Text("\(timeRemainingString)")
                                         .fontWeight(.bold)
                                         .autocapitalization(.none)
                                         .foregroundColor(Color(.lightText))

@@ -215,14 +215,14 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     @objc func newPrayer() {
         print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
-        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
+//        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
         currentPrayer = todayTimes.nextPrayer() ?? .fajr
     }
     
     @objc func fifteenMinsLeft() {
         // trigger a didset
         print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
-        assert(currentPrayer == todayTimes.nextPrayer() ?? .fajr)
+//        assert(currentPrayer != todayTimes.nextPrayer() ?? .fajr)
         currentPrayer = todayTimes.nextPrayer() ?? .fajr
     }
     

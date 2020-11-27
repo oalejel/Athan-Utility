@@ -9,6 +9,8 @@
 import Foundation
 import Adhan
 import CoreLocation
+import UIKit
+import WidgetKit
 
 /*
  Athan manager now uses the batoul apps api to calculate prayer times
@@ -22,53 +24,114 @@ import CoreLocation
 - No storage of qibla --> user location angle is enough
  */
 
-class AthanManager {
+
+// In order to preserve backwards compatibility, properties we would have wanted to observe
+// in athan manager are stored in this object, and conditionally updated by AthanManager.s
+@available(iOS 13.0.0, *)
+class ObservableAthanManager: ObservableObject {
+    static var shared = ObservableAthanManager()
     
-    // MARK: - Updated calculations
-    var _lastRefreshedDayOfMonth: Int = 0
-    private var _todayTimes: PrayerTimes? = nil
-    private var _tomorrowTimes: PrayerTimes? = nil
+    init() {
+        // bootstrap process of initializing the athan manager?
+        let _ = AthanManager.shared
+    }
     
-    var todayTimes: PrayerTimes? {
-        get { // if new day calculating prayers, reset today and tomorrow times
-            considerRefreshTimes()
-            return _todayTimes
+    @Published var todayTimes: PrayerTimes!
+    @Published var tomorrowTimes: PrayerTimes!
+    @Published var currentPrayer: Prayer = .fajr
+    @Published var locationName: String = ""
+    @Published var qiblaHeading: Double = 0.0
+    @Published var currentHeading: Double = 0.0
+}
+
+class AthanManager: NSObject, CLLocationManagerDelegate {
+    
+    static let shared = AthanManager()
+    let locationManager = CLLocationManager()
+    
+    // will default to cupertino times at start of launch
+    lazy var todayTimes: PrayerTimes! = nil {
+        didSet {
+            if #available(iOS 13.0.0, *) {
+                ObservableAthanManager.shared.todayTimes = todayTimes
+            }
         }
     }
     
-    var tomorrowTimes: PrayerTimes? {
-        get { // if new day calculating prayers, reset today and tomorrow times
-            considerRefreshTimes()
-            return _tomorrowTimes
+    lazy var tomorrowTimes: PrayerTimes! = nil {
+        didSet {
+            if #available(iOS 13.0.0, *) {
+                ObservableAthanManager.shared.tomorrowTimes = todayTimes
+            }
         }
     }
     
     // MARK: - Settings to load from storage
-    var prayerSettings = PrayerSettings.shared
-    var notificationSettings = NotificationSettings.shared
-    var locationSettings = LocationSettings.shared
-    
-    // MARK: - Reasons to redo notifications and interface
-    func setLocation(name: String, coordinate: CLLocationCoordinate2D) {
-        
+    var prayerSettings = PrayerSettings.shared {
+        didSet { prayerSettingsDidSetHelper() }
     }
     
+    var notificationSettings = NotificationSettings.shared {
+        didSet { notificationSettingsDidSetHelper() }
+    }
+    
+    var locationSettings = LocationSettings.shared {
+        didSet { locationSettingsDidSetHelper() }
+    }
+    
+    // MARK: - DidSet Helpers
+    func prayerSettingsDidSetHelper() {
+        PrayerSettings.archive()
+    }
+    
+    func notificationSettingsDidSetHelper() {
+        NotificationSettings.archive()
+    }
+    
+    func locationSettingsDidSetHelper() {
+        assert(false, "just checking that this correctly gets called")
+        LocationSettings.archive()
+        if #available(iOS 13.0.0, *) {
+            ObservableAthanManager.shared.locationName = locationSettings.locationName
+            ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
+                                                                Coordinates(latitude: locationSettings.locationCoordinate.latitude,
+                                                                            longitude: locationSettings.locationCoordinate.longitude)).direction
+        }
+    }
+    
+    // App lifecycle state tracking
+    private var dayOfMonth = 0
+    private var firstLaunch = true
+    var currentPrayer: Prayer? {
+        didSet {
+            if #available(iOS 13.0.0, *) {
+                ObservableAthanManager.shared.currentPrayer = currentPrayer! // should never be nil after didSet
+            }
+        }
+    }
+    
+    override init() {
+        super.init()
+        // register for going into foreground
+        NotificationCenter.default.addObserver(self, selector: #selector(movedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification, object: nil)
+        // manually call these the first time since didSet not called on init
+        prayerSettingsDidSetHelper()
+        notificationSettingsDidSetHelper()
+        locationSettingsDidSetHelper()
+    }
+        
     // MARK: - Prayer Times
     
-    func considerRefreshTimes() {
-        let dayOfMonth = Calendar.current.component(.day, from: Date())
-        if dayOfMonth != _lastRefreshedDayOfMonth {
-            _todayTimes = calculateTimes(referenceDate: Date())
-            _tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400)) // add 24 hours for next day
-            _lastRefreshedDayOfMonth = dayOfMonth // no need to store last set day to file, since recalculating is not hard
-        }
+    func refreshTimes() {
+        // swiftui publisher gets updates through didSet
+        todayTimes = calculateTimes(referenceDate: Date())
+        tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400)) // add 24 hours for next day
+        currentPrayer = todayTimes.nextPrayer() ?? .fajr
     }
     
     private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
-        guard let locationCoordinate = LocationSettings.shared.locationCoordinate else {
-            print("no coordinate available yet")
-            return nil
-        }
+        let locationCoordinate = LocationSettings.shared.locationCoordinate
         
         let cal = Calendar(identifier: Calendar.Identifier.gregorian)
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
@@ -95,7 +158,230 @@ class AthanManager {
         return nil
     }
     
-    // MARK: - CoreLocation Coordinate + location name
+    // MARK: - Timers and timer callbacks
     
+    var nextPrayerTimer: Timer?
+    var reminderTimer: Timer?
+    var newDayTimer: Timer?
     
+    func resetTimers() {
+        nextPrayerTimer?.invalidate()
+        reminderTimer?.invalidate()
+        newDayTimer?.invalidate()
+        nextPrayerTimer = nil
+        reminderTimer = nil
+        newDayTimer = nil
+        
+        let nextPrayerTime = guaranteedNextPrayerTime()
+        
+        let secondsLeft = nextPrayerTime.timeIntervalSince(Date())
+        nextPrayerTimer = Timer.scheduledTimer(timeInterval: secondsLeft,
+                             target: self, selector: #selector(newPrayer),
+                             userInfo: nil, repeats: false)
+        
+        // if > 15m and 2 seconds remaining, make a timer
+        if secondsLeft > 15 * 60 + 2 {
+            reminderTimer = Timer.scheduledTimer(timeInterval: nextPrayerTime.timeIntervalSince(Date()) - 15 * 60,
+                                                 target: self, selector: #selector(fifteenMinsLeft),
+                                                 userInfo: nil, repeats: false)
+        }
+        
+        // time til next day
+        let currentDateComponents = Calendar.current.dateComponents([.hour, .minute, .hour, .second], from: Date())
+        let accumulatedSeconds = currentDateComponents.hour! * 60 * 60 + currentDateComponents.minute! * 60 + currentDateComponents.second!
+        let remainingSecondsInDay = 86400 - accumulatedSeconds
+        print("\(remainingSecondsInDay / 3600) hours left today")
+        newDayTimer = Timer.scheduledTimer(timeInterval: TimeInterval(remainingSecondsInDay + 1), // +1 to account for slight error
+                                           target: self, selector: #selector(newDay),
+                                           userInfo: nil, repeats: false)
+    }
+    
+    @objc func newPrayer() {
+        print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
+        currentPrayer = todayTimes.nextPrayer() ?? .fajr
+    }
+    
+    @objc func fifteenMinsLeft() {
+        // trigger a didset
+        print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+        assert(currentPrayer == todayTimes.nextPrayer() ?? .fajr)
+        currentPrayer = todayTimes.nextPrayer() ?? .fajr
+    }
+    
+    @objc func newDay() {
+        considerRecalculations(isNewLocation: false)
+    }
+    
+    // MARK: - Helpers
+    
+    // calculate next prayer, considering next day's .fajr time in case we are on isha time
+    func guaranteedNextPrayerTime() -> Date {
+        var nextPrayer: Prayer? = todayTimes.nextPrayer()
+        var nextPrayerTime: Date! = nil
+        if nextPrayer == nil {
+            nextPrayer = .fajr
+            nextPrayerTime = tomorrowTimes.fajr // distinguish from today's fajr time
+        } else {
+            nextPrayerTime = todayTimes.time(for: nextPrayer!)
+        }
+        return nextPrayerTime
+    }
+}
+
+// Listen for background events
+extension AthanManager {
+    
+    func considerRecalculations(isNewLocation: Bool) {
+        var shouldRecalculate = isNewLocation // forced for when we have new locations
+        if !isNewLocation {
+            if firstLaunch { // if app was quit before opening, recalculating for whatever location we have stored
+                shouldRecalculate = true
+                let _ = LocationSettings.shared
+                // ask location settings to lookup user coordinates
+            } else if dayOfMonth != Calendar.current.component(.day, from: Date()) { // if new day of month
+                shouldRecalculate = true
+            } else { // check next athan times to see if we have 15m left or a new prayer
+                assert(todayTimes != nil, "todayTimes should not be nil at this point")
+                var nextPrayer: Prayer! = todayTimes.nextPrayer()
+                var nextPrayerTime: Date! = nil
+                if nextPrayer == nil {
+                    nextPrayer = .fajr
+                    nextPrayerTime = tomorrowTimes.fajr // distinguish from today's fajr time
+                } else {
+                    nextPrayerTime = todayTimes.time(for: nextPrayer)
+                }
+                
+                // if new prayer,
+                if currentPrayer != (todayTimes.currentPrayer() ?? .isha) {
+                    print("new prayer on launch")
+                    currentPrayer = (todayTimes.currentPrayer() ?? .isha)
+                    // notify to change gradient, update highlighting
+                    
+                } else if nextPrayerTime.timeIntervalSince(Date()) < 15 * 60 { // 15 mins left!
+                    // just update highlighting -- maybe let UI
+                    print("15m left")
+                    currentPrayer = (todayTimes.currentPrayer() ?? .isha)
+                }
+                
+                // otherwise, no new prayer or anything
+                // just proceed to refresh timers
+            }
+        }
+
+        
+        // unconditional update of day of month
+        dayOfMonth = Calendar.current.component(.day, from: Date())
+
+        // 1. refresh times
+        // 2. create notifications (if recalculating)
+        // 3. refresh widgets (if recalculating)
+        // 4. reset timers
+        if shouldRecalculate {
+            refreshTimes()
+            NotificationsManager
+                .createNotifications(coordinate: locationSettings.locationCoordinate,
+                                     calculationMethod: prayerSettings.calculationMethod,
+                                     madhab: prayerSettings.madhab,
+                                     noteSettings: notificationSettings.settings,
+                                     shortLocationName: locationSettings.locationName)
+            if #available(iOS 14.0, *) {
+                // refresh widgets only if this is being run in the main app
+                if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                    DispatchQueue.main.async {
+                        WidgetCenter.shared.reloadAllTimelines()
+                    }
+                }
+            }
+        }
+        
+        // reset timers to keep data updated if app stays on screen
+        resetTimers()
+    }
+    
+    // called by observer
+    @objc func movedToForeground() {
+        print("ENTERED FOREROUND \(Date())")
+        // 1. refresh times, notifications, widgets, timers,
+        // 2. allow location to be updated and repeat step 1
+        // first recalculation on existing location settings
+        considerRecalculations(isNewLocation: false)
+        attemptSingleLocationUpdate() // if new location is read, we will trigger concsiderRecalculations(isNewLocation: true)
+    }
+}
+
+// location services side of the manager
+extension AthanManager {
+    
+    // NOTE: leave request to use location data for when the user taps on the loc button OR
+    //  if the user launches the app from a widget for the first time
+    func requestLocationPermission() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func attemptSingleLocationUpdate() {
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.authorizedWhenInUse ||
+            status == CLAuthorizationStatus.authorizedAlways {
+            #warning("not sure if we should have this automatically called. may want a semaphore")
+            locationManager.startUpdatingLocation();
+        }
+    }
+    
+    // triggered and disabled after one measurement
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager.stopUpdatingLocation()
+        
+        CLGeocoder().reverseGeocodeLocation(locations.first!, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+            if error != nil {
+                print("successfully reverse geocoded location")
+                if let placemark = placemarks?.first {
+                    let city = placemark.locality
+                    let district = placemark.subAdministrativeArea
+                    let state = placemark.administrativeArea
+                    let country = placemark.isoCountryCode
+                    
+                    // current preferred method of prioritizing parts of a placemark's location.
+                    #warning("test for localization")
+                    var shortname = ""
+                    if let city = city, let state = state {
+                        shortname = "\(city), \(state)"
+                    } else if let district = district {
+                        shortname = district
+                        if let state = state {
+                            shortname += ", " + state
+                        } else if let country = country {
+                            shortname += ", " + country
+                        }
+                    } else if let name = placemark.name {
+                        shortname = name
+                    } else {
+                        shortname = "\(locations.first!.coordinate.latitude), \(locations.first!.coordinate.latitude)"
+                    }
+                    
+                    // save our location settings
+                    let potentialNewLocationSettings = LocationSettings(locationName: shortname,
+                                                             coord: locations.first!.coordinate)
+                    if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
+                        self.locationSettings = potentialNewLocationSettings
+                        self.considerRecalculations(isNewLocation: true)
+                    }
+                    
+                    return
+                }
+            }
+            
+            // error case: rely on coordinates and no geocoded name
+            self.locationSettings = LocationSettings(locationName: "\(locations.first!.coordinate.latitude), \(locations.first!.coordinate.latitude)",
+                                                     coord: locations.first!.coordinate)
+            self.considerRecalculations(isNewLocation: true)
+            if let x = error {
+                print("failed to reverse geocode location")
+                print(x) // fallback
+            }
+        })
+    }
 }

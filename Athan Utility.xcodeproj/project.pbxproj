@@ -49,6 +49,10 @@
 		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
 		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
 		3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EBE9256F5DEA0010C47D /* SolarView.swift */; };
+		3D73EBF1257027230010C47D /* PrayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */; };
+		3D73EBF7257027290010C47D /* PrayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */; };
+		3D73EBFE2570294B0010C47D /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EBFD2570294B0010C47D /* Adhan */; };
+		3D73EC00257029530010C47D /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EBFF257029530010C47D /* Adhan */; };
 		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
 		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
 		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
@@ -322,6 +326,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D73EC00257029530010C47D /* Adhan in Frameworks */,
 				3D20CB1F2518DA0900275206 /* SwiftUI.framework in Frameworks */,
 				3D20CB1D2518DA0900275206 /* WidgetKit.framework in Frameworks */,
 			);
@@ -331,6 +336,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D73EBFE2570294B0010C47D /* Adhan in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +683,9 @@
 			dependencies = (
 			);
 			name = "Athan WidgetExtension";
+			packageProductDependencies = (
+				3D73EBFF257029530010C47D /* Adhan */,
+			);
 			productName = "Athan WidgetExtension";
 			productReference = 3D20CB1B2518DA0900275206 /* Athan WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -694,6 +703,9 @@
 			dependencies = (
 			);
 			name = AthanSiriIntents;
+			packageProductDependencies = (
+				3D73EBFD2570294B0010C47D /* Adhan */,
+			);
 			productName = AthanSiriIntents;
 			productReference = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -962,6 +974,7 @@
 				3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */,
 				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
 				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
+				3D73EBF1257027230010C47D /* PrayerSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,6 +986,7 @@
 				3DB56CEC228367DB00B9F738 /* PrayerManager.swift in Sources */,
 				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
 				3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */,
+				3D73EBF7257027290010C47D /* PrayerSettings.swift in Sources */,
 				3D73FC6C2285C3380092A83C /* Settings.swift in Sources */,
 				3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */,
 				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
@@ -1590,6 +1604,16 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		3D16F1032560851B00C78B12 /* Adhan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
+			productName = Adhan;
+		};
+		3D73EBFD2570294B0010C47D /* Adhan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
+			productName = Adhan;
+		};
+		3D73EBFF257029530010C47D /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
 			productName = Adhan;

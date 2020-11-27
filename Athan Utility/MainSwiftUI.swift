@@ -7,9 +7,34 @@
 //
 
 import SwiftUI
+import Adhan
+
+@available(iOS 13.0.0, *)
+struct PrayerSymbol: View {
+    var prayerType: Prayer
+    var body: some View {
+        switch prayerType {
+        case .fajr:
+            Image(systemName: "light.max")
+        case .sunrise:
+            Image(systemName: "sunrise")
+        case .dhuhr:
+            Image(systemName: "sun.min")
+        case .asr:
+            Image(systemName: "sun.max")
+        case .maghrib:
+            Image(systemName: "sunset")
+        case .isha:
+            Image(systemName: "moon.stars")
+        }
+    }
+}
+
 
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
+    
+    @EnvironmentObject var manager: ObservableAthanManager
     
     var body: some View {
         ZStack {
@@ -29,10 +54,10 @@ struct MainSwiftUI: View {
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading) {
                                 
-                                Image(systemName: "sun.max")
+                                PrayerSymbol(prayerType: manager.currentPrayer)
                                     .foregroundColor(.white)
                                     .font(Font.system(.title).weight(.medium))
-                                Text("Asr")
+                                Text(manager.currentPrayer.localizedString())
                                     .font(.largeTitle)
                                     .bold()
                                     .foregroundColor(.white)
@@ -42,7 +67,7 @@ struct MainSwiftUI: View {
                             
                             
                             VStack(alignment: .trailing, spacing: 0) {
-                                QiblaPointerView(angle: 20)
+                                QiblaPointerView(angle: manager.qiblaHeading)
                                     .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                     .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
 
@@ -59,6 +84,7 @@ struct MainSwiftUI: View {
                         ProgressBar(progress: 0.2, lineWidth: 10, outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
 
                         let cellFont = Font.system(size: g.size.width * 0.06)
+                        
                         VStack(alignment: .leading, spacing: 16) {
                             ForEach(0..<6) { i in
                                 HStack {
@@ -99,7 +125,7 @@ struct MainSwiftUI: View {
                         Button(action: {
                             print("here")
                         }) {
-                            Text("\("Bloomfield Hills, MI")")
+                            Text("\(manager.locationName)")
                         }
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
@@ -162,6 +188,7 @@ struct ProgressBar: View {
 struct MainSwiftUI_Previews: PreviewProvider {
     static var previews: some View {
         MainSwiftUI()
+            .environmentObject(ObservableAthanManager.shared)
             .previewDevice("iPhone Xs")
             
     }

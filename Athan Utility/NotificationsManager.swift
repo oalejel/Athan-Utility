@@ -41,7 +41,7 @@ class NotificationsManager {
     static func createNotifications(coordinate: CLLocationCoordinate2D,
                                                    calculationMethod: CalculationMethod,
                                                    madhab: Madhab,
-                                                   prayerSettings: [Prayer:PrayerSetting],
+                                                   noteSettings: [Prayer:NotificationSetting],
                                                    shortLocationName: String) {
         let center = UNUserNotificationCenter.current()
         let noteSoundFilename = Settings.getSelectedSoundFilename()
@@ -60,7 +60,7 @@ class NotificationsManager {
             }
             
             for p in Prayer.allCases {
-                let setting = prayerSettings[p]!
+                let setting = noteSettings[p]!
                 let prayerDate = times.time(for: p)
                 let dateString = df.string(from: prayerDate)
                 

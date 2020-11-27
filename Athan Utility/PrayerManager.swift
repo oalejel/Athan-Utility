@@ -36,9 +36,9 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-enum AlarmSetting: Int {
-    case all, noEarly, none
-}
+//enum AlarmSetting: Int {
+//    case all, noEarly, none
+//}
 
 class PrayerSetting {
     var soundEnabled = true

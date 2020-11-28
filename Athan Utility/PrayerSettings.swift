@@ -13,19 +13,26 @@ import CoreLocation.CLLocation
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable {
     static var shared: PrayerSettings = {
-        if let data = unarchive(archiveName) as? Data,
-           let decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
-            return decoded
+        if let archive = checkArchive() {
+            return archive
         } else {
             let defaultSettings = PrayerSettings()
             return defaultSettings
         }
     }()
     
+    static func checkArchive() -> PrayerSettings? {
+        if let data = unarchiveData(archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
+            return decoded
+        }
+        return nil
+    }
+    
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(PrayerSettings.shared) as? Data {
-            archiveToName(archiveName, object: data)
+            archiveData(archiveName, object: data)
         }
     }
     
@@ -51,9 +58,8 @@ struct NotificationSetting: Codable {
 class NotificationSettings: Codable {
     
     static var shared: NotificationSettings = {
-        if let data = unarchive(archiveName) as? Data,
-           let decoded = try? JSONDecoder().decode(NotificationSettings.self, from: data) {
-            return decoded
+        if let archive = checkArchive() {
+            return archive
         } else {
             let defaultSettings = NotificationSettings(settings: [:])
             defaultSettings.settings = [
@@ -74,10 +80,18 @@ class NotificationSettings: Codable {
         self.settings = settings
     }
     
+    static func checkArchive() -> NotificationSettings? {
+        if let data = unarchiveData(archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(NotificationSettings.self, from: data) {
+            return decoded
+        }
+        return nil
+    }
+    
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(NotificationSettings.shared) as? Data {
-            archiveToName(archiveName, object: data)
+            archiveData(archiveName, object: data)
         }
 
     }
@@ -90,10 +104,8 @@ class NotificationSettings: Codable {
 class LocationSettings: Codable {
     
     static var shared: LocationSettings = {
-        if let data = unarchive(archiveName) as? Data,
-           let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
-            decoded.isLoadedFromArchive = true
-            return decoded
+        if let archive = checkArchive() {
+            return archive
         } else {
             return LocationSettings()
         }
@@ -105,11 +117,20 @@ class LocationSettings: Codable {
         self.locationName = locationName
         self.locationCoordinate = coord
     }
+
+    static func checkArchive() -> LocationSettings? {
+        if let data = unarchiveData(archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
+            decoded.isLoadedFromArchive = true
+            return decoded
+        }
+        return nil
+    }
     
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
-            archiveToName(archiveName, object: data)
+            archiveData(archiveName, object: data)
         }
     }
     var isLoadedFromArchive = false
@@ -146,7 +167,7 @@ class LocationSettings: Codable {
 //}
 
 // Helper function for storing settings
-func archiveToName(_ name: String, object: Any) {
+func archiveData(_ name: String, object: Any) {
     print("WARNING: ADD ERROR HANDLER TO THIS")
     let fm = FileManager.default
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!
@@ -165,7 +186,7 @@ func archiveToName(_ name: String, object: Any) {
     }
 }
 
-func unarchive(_ name: String) -> Any? {
+func unarchiveData(_ name: String) -> Any? {
     let fm = FileManager.default
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!
     url = url.appendingPathComponent("\(name)")

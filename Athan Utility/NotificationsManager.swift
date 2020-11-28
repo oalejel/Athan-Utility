@@ -43,7 +43,17 @@ class NotificationsManager {
                                                    madhab: Madhab,
                                                    noteSettings: [Prayer:NotificationSetting],
                                                    shortLocationName: String) {
+        
+        
         let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
+            if !granted {
+                print("user denied notifications")
+            }
+        }
+        
+        center.removeAllPendingNotificationRequests()
+        
         let noteSoundFilename = Settings.getSelectedSoundFilename()
         let df = DateFormatter()
         df.dateFormat = "h:mm"

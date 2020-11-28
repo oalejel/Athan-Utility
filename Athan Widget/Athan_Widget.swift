@@ -119,7 +119,7 @@ struct ProgressBar: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .foregroundColor(colors.first)
-                        .frame(width: max(0.023, progress) * g.size.width, height: lineWidth)
+                        .frame(width: max(0.01, progress) * g.size.width, height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
                     // having these circles might confuse users
                     //                    HStack(alignment: .center, spacing: 0) {
@@ -160,7 +160,9 @@ struct MediumWidget: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .lineLimit(1)
-                        .fixedSize(horizontal: false, vertical: true)
+//                        .fixedSize(horizontal: false, vertical: true)
+                        .allowsTightening(true)
+                        .minimumScaleFactor(0.5)
                     //                    Text("left")
                     //                        .foregroundColor(.init(UIColor.lightText))
                     //                        .font(.subheadline)
@@ -171,6 +173,7 @@ struct MediumWidget: View {
                     
                     Text("\(Date(), style: .time)") // remove later
                         .font(.footnote)
+                    
                 }
                 
                 ProgressBar(progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
@@ -185,8 +188,10 @@ struct MediumWidget: View {
                         ForEach(0..<3) { i in
                             Text(Prayer(index: i).localizedString())
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
-                                .font(.caption)
+                                .font(Font.system(size: 26))
                                 .fontWeight(.bold)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.5)
                             if (i < 2) {
                                 Spacer()
                             }
@@ -197,8 +202,10 @@ struct MediumWidget: View {
                         ForEach(0..<3) { i in
                             Text(entry.todayPrayerTimes[i], style: .time)
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
-                                .font(.caption)
+                                .font(Font.system(size: 26))
                                 .fontWeight(.bold)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.5)
                             if (i < 2) {
                                 Spacer()
                             }
@@ -209,8 +216,11 @@ struct MediumWidget: View {
                         ForEach(3..<6) { i in
                             Text(Prayer(index: i).localizedString())
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
-                                .font(.caption)
+                                .font(Font.system(size: 26))
                                 .fontWeight(.bold)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.5)
+                                
                             
                             if (i < 5) {
                                 Spacer()
@@ -222,8 +232,10 @@ struct MediumWidget: View {
                         ForEach(3..<6) { i in
                             Text(entry.todayPrayerTimes[i], style: .time)
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
-                                .font(.caption)
+                                .font(Font.system(size: 26))
                                 .fontWeight(.bold)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.5)
                             if (i < 5) {
                                 Spacer()
                             }
@@ -493,7 +505,7 @@ struct Athan_Widget_Previews: PreviewProvider {
             //            .environment(\.locale, Locale(identifier: "ar"))
         }
         
-        let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
+        let nextDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
         //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
         let entry = AthanEntry(date: Date(),
                                currentPrayer: .asr,

@@ -14,7 +14,8 @@ struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
 //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
-
+    
+    @State var tomorrowPeekProgress: Double = 0.0
     @State var currentPage = 0
     @State var minuteTimer: Timer? = nil
     var nextRoundMinuteTimer: Timer {
@@ -48,18 +49,19 @@ struct MainSwiftUI: View {
         
         return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
     }
-
     
+    func hijriDateString(date: Date) -> String {
+        let hijriCal = Calendar(identifier: .islamic)
+        let df = DateFormatter()
+        df.calendar = hijriCal
+        df.dateStyle = .medium
+        return df.string(from: date)
+    }
+
     var body: some View {
         ZStack {
             GeometryReader { g in
-                let hijriCal = Calendar(identifier: .islamic)
-                let dateString: String = {
-                    let df = DateFormatter()
-                    df.calendar = hijriCal
-                    df.dateStyle = .medium
-                    return df.string(from: Date())
-                }()
+                
                 let timeRemainingString: String = {
                     let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
                                                             to: AthanManager.shared.guaranteedNextPrayerTime())
@@ -82,6 +84,7 @@ struct MainSwiftUI: View {
                                 .offset(y: 12)
                             Spacer()
                         }
+                        .opacity(1 - 0.8 * tomorrowPeekProgress)
                         
                         HStack(alignment: .bottom) {
                             VStack(alignment: .leading) {
@@ -94,6 +97,7 @@ struct MainSwiftUI: View {
                                     .bold()
                                     .foregroundColor(.white)
                             }
+                            .opacity(1 - 0.8 * tomorrowPeekProgress)
 
                             Spacer() // space title | qibla
                             
@@ -103,13 +107,12 @@ struct MainSwiftUI: View {
                                     .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                     .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
 
-                                HStack {
-                                    Text("\(timeRemainingString)")
-                                        .fontWeight(.bold)
-                                        .autocapitalization(.none)
-                                        .foregroundColor(Color(.lightText))
-                                        .multilineTextAlignment(.center)
-                                }
+                                Text("\(timeRemainingString)")
+                                    .fontWeight(.bold)
+                                    .autocapitalization(.none)
+                                    .foregroundColor(Color(.lightText))
+                                    .multilineTextAlignment(.center)
+                                    .opacity(1 - 0.8 * tomorrowPeekProgress)
                             }
                         }
                         
@@ -120,6 +123,7 @@ struct MainSwiftUI: View {
                                 let _ = minuteTimer
                                 percentComplete = getPercentComplete()
                             })
+                            .opacity(1 - 0.8 * tomorrowPeekProgress)
 
                         let cellFont = Font.system(size: g.size.width * 0.06)
                         let timeFormatter: DateFormatter = {
@@ -128,104 +132,113 @@ struct MainSwiftUI: View {
                             return df
                         }()
                         
-//                        VStack(alignment: .leading, spacing: 16) {
-//                            let content: [PrayerRowContent] = Prayer.allCases.map {
-//                                var highlight = PrayerRowContent.Highlight.present
-//                                if $0 == manager.todayTimes.currentPrayer() {
-//                                    highlight = .present
-//                                } else if manager.todayTimes.currentPrayer() == nil {
-//                                    highlight = .future
-//                                } else {
-//                                    highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
-//                                }
-//                                return PrayerRowContent(date: manager.todayTimes.time(for: $0),
-//                                                        prayer: $0,
-//                                                        highlight: highlight)
-//
-//                            }
-//                            List(content) { c in
-//                                HStack {
-//                                    Text(c.prayer.localizedString())
-//                                        .foregroundColor(c.highlight.color())
-//                                        .font(cellFont)
-//                                        .bold()
-//                                    Spacer()
-//                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: c.prayer)))
-//                                        // replace 3 with current prayer index
-//                                        .foregroundColor(c.highlight.color())
-//                                        .font(cellFont)
-//                                        .bold()
-//                                }
-//                            }
-//                        }
-                        
-                        let todayContent: [PrayerRowContent] = Prayer.allCases.map {
-                            var highlight = PrayerRowContent.Highlight.present
-                            if $0 == manager.todayTimes.currentPrayer() {
-                                highlight = .present
-                            } else if manager.todayTimes.currentPrayer() == nil {
-                                highlight = .future
-                            } else {
-                                highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
-                            }
-                            return PrayerRowContent(date: manager.todayTimes.time(for: $0),
-                                                    prayer: $0,
-                                                    highlight: highlight)
-                        }
-                        let tomorrowContent: [PrayerRowContent] = Prayer.allCases.map {
-                            PrayerRowContent(date: manager.tomorrowTimes.time(for: $0),
-                                             prayer: $0,
-                                             highlight: .future)
-
-                        }
-
-                        let dayContents = [todayContent, tomorrowContent]
-                        Pages(currentPage: $currentPage) {
-                            ForEach(0..<dayContents.count) { dayIndex in
-                                VStack {
-                                    ForEach(0..<dayContents[dayIndex].count) { pIndex in
-                                        let c = dayContents[dayIndex][pIndex]
-                                        HStack {
-                                            Text(c.prayer.localizedString())
-                                                .foregroundColor(c.highlight.color())
-                                                .font(cellFont)
-                                                .bold()
-                                            Spacer()
-                                            Text(timeFormatter.string(from: manager.todayTimes.time(for: c.prayer)))
-                                                // replace 3 with current prayer index
-                                                .foregroundColor(c.highlight.color())
-                                                .font(cellFont)
-                                                .bold()
-                                        }
+                        VStack(alignment: .leading, spacing: 16) {
+                            ForEach(0..<6) { pIndex in
+                                let p = Prayer(index: pIndex)
+                                var highlight: PrayerRowContent.Highlight = {
+                                    var h = PrayerRowContent.Highlight.present
+                                    if p == manager.todayTimes.currentPrayer() {
+                                        h = .present
+                                    } else if manager.todayTimes.currentPrayer() == nil {
+                                        h = .future
+                                    } else {
+                                        h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
                                     }
+                                    return h
+                                }()
+
+                                ZStack { // stack of today and tomorrow times
+                                    HStack {
+                                        Text(p.localizedString())
+                                            .foregroundColor(highlight.color())
+                                            .font(cellFont)
+                                            .bold()
+//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
+
+                                        Spacer()
+                                        Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
+                                            // replace 3 with current prayer index
+                                            .foregroundColor(highlight.color())
+                                            .font(cellFont)
+                                            .bold()
+//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
+                                    }
+//                                    .border(Color.green)
+                                    .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                    .rotation3DEffect(
+                                                Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                axis: (x: 1, y: 0, z: 0.0),
+                                                anchor: .top,
+                                                anchorZ: 0,
+                                        perspective: 0.1
+                                            )
+                                    .animation(.linear(duration: 0.2))
+                                    
+                                    
+                                    HStack {
+                                        Text(p.localizedString())
+                                            .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                            .font(cellFont)
+                                            .bold()
+//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                        Spacer()
+                                        Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
+                                            // replace 3 with current prayer index
+                                            .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                            .font(cellFont)
+                                            .bold()
+//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                    }
+//                                    .border(Color.red)
+                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                    .rotation3DEffect(
+                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                                axis: (x: 1, y: 0, z: 0.0),
+                                                anchor: .bottom,
+                                                anchorZ: 0,
+                                        perspective: 0.1
+                                            )
+                                    .animation(.linear(duration: 0.2))
                                 }
+                                
                             }
                         }
-//                            ForEach(0..<6) { i in
-//                                HStack {
-//                                    let cellPrayer = Prayer(index: i)
-//                                    let highlightColor: Color = {
-//                                        if cellPrayer == manager.todayTimes.currentPrayer() {
-//                                            return Color.green
-//                                        } else if manager.todayTimes.currentPrayer() == nil {
-//                                            return Color.white
-//                                        }
-//                                        return i < manager.currentPrayer.rawValue() ? Color(UIColor.lightText) : Color.white
-//                                    }()
-//
-//                                    Text(cellPrayer.localizedString())
-//                                        .foregroundColor(highlightColor)
-//                                        .font(cellFont)
-//                                        .bold()
-//                                    Spacer()
-//                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: cellPrayer)))
-//                                        // replace 3 with current prayer index
-//                                        .foregroundColor(highlightColor)
-//                                        .foregroundColor(.white)
-//                                        .font(cellFont)
-//                                        .bold()
-//                                }
+                        .gesture(
+                            DragGesture(minimumDistance: 2, coordinateSpace: .global)
+                                .onChanged({ value in
+                                    // percent of drag in progress
+                                    tomorrowPeekProgress = Double(max(0.0, min(1.0, value.translation.height / -80)))
+                                })
+                                .onEnded({ _ in
+                                    withAnimation {
+                                        tomorrowPeekProgress = 0
+                                    }
+                                })
+                                
+                        )
+                        
+                        
+//                        let todayContent: [PrayerRowContent] = Prayer.allCases.map {
+//                            var highlight = PrayerRowContent.Highlight.present
+//                            if $0 == manager.todayTimes.currentPrayer() {
+//                                highlight = .present
+//                            } else if manager.todayTimes.currentPrayer() == nil {
+//                                highlight = .future
+//                            } else {
+//                                highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
 //                            }
+//                            return PrayerRowContent(date: manager.todayTimes.time(for: $0),
+//                                                    prayer: $0,
+//                                                    highlight: highlight)
+//                        }
+//                        let tomorrowContent: [PrayerRowContent] = Prayer.allCases.map {
+//                            PrayerRowContent(date: manager.tomorrowTimes.time(for: $0),
+//                                             prayer: $0,
+//                                             highlight: .future)
+//
+//                        }
+
+
                         
                         
                     }
@@ -233,12 +246,37 @@ struct MainSwiftUI: View {
                     .padding([.leading, .trailing])
                     
                     ZStack() {
-                        Text("\(dateString)")
-                            .fontWeight(.bold)
-                            .foregroundColor(Color(.lightText))
-                            .offset(y: 24)
+                        ZStack {
+                            Text("\(hijriDateString(date: Date()))")
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(.lightText))
+                                .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                .rotation3DEffect(
+                                            Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                            axis: (x: 1, y: 0, z: 0.0),
+                                            anchor: .top,
+                                            anchorZ: 0,
+                                    perspective: 0.1
+                                        )
+                                .animation(.linear(duration: 0.2))
+                            
+                            Text("\(hijriDateString(date: Date().addingTimeInterval(86400)))")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                .rotation3DEffect(
+                                    Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                            axis: (x: 1, y: 0, z: 0.0),
+                                            anchor: .bottom,
+                                            anchorZ: 0,
+                                    perspective: 0.1
+                                        )
+                                .animation(.linear(duration: 0.2))
+                        }
+                        .offset(y: 24)
                         SolarView(progress: CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))
+                            .opacity(1 - 0.8 * tomorrowPeekProgress)
                     }
                     
                     Spacer() // space footer
@@ -304,6 +342,11 @@ struct ProgressBar: View {
                         .foregroundColor(colors.first)
                         .frame(width: progress * g.size.width, height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
+                        .mask(
+                            Rectangle()
+                                .frame(width: g.size.width, height: lineWidth)
+                                .cornerRadius(lineWidth * 0.5)
+                        )
                 }
             }
             .padding(.zero)

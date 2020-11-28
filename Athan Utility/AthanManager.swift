@@ -134,8 +134,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         notificationSettingsDidSetHelper()
         locationSettingsDidSetHelper()
         
-        // on first boot, force a refresh
-        considerRecalculations(isNewLocation: false)
+        // if non-iOS devices, force a refresh since enteredForeground will not be called
+        if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
+            considerRecalculations(isNewLocation: false)
+        }
     }
         
     // MARK: - Prayer Times
@@ -263,11 +265,16 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 extension AthanManager {
     
     func considerRecalculations(isNewLocation: Bool) {
+        // reload settings in case we are running widget and app changed them
+        if let arch = LocationSettings.checkArchive() { locationSettings = arch }
+        if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
+        if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
+        
         var shouldRecalculate = isNewLocation // forced for when we have new locations
         if !isNewLocation {
             if firstLaunch { // if app was quit before opening, recalculating for whatever location we have stored
                 shouldRecalculate = true
-                let _ = LocationSettings.shared
+//                let _ = LocationSettings.shared // this is already done when the manager launches
                 // ask location settings to lookup user coordinates
             } else if dayOfMonth != Calendar.current.component(.day, from: Date()) { // if new day of month
                 shouldRecalculate = true

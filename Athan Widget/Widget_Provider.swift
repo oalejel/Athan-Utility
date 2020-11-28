@@ -19,6 +19,7 @@ struct AthanEntry: TimelineEntry {
     var todayPrayerTimes: [Date]
     
     var tellUserToOpenApp = false
+    var relevance: TimelineEntryRelevance?
     
     // I don't think I'll need intents for these widgets
     // allowing users to load times for different locations
@@ -27,6 +28,11 @@ struct AthanEntry: TimelineEntry {
 //    init(date: Date) {
 //        self.date = date
 //    }
+}
+
+enum EntryRelevance: Float {
+    case Medium = 1
+    case High = 2
 }
 
 class AthanProvider: IntentTimelineProvider {
@@ -42,6 +48,10 @@ class AthanProvider: IntentTimelineProvider {
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
         if manager.locationSettings.isLoadedFromArchive {
+            // WARNING: no foreground updates here --> must manually tell manager to refresh
+            // for now, dont call enterForeground since that will request new location
+            manager.considerRecalculations(isNewLocation: false)
+            
             let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
             let entry = AthanEntry(date: Date(),
                                    currentPrayer: manager.currentPrayer ?? Prayer.isha,
@@ -66,6 +76,10 @@ class AthanProvider: IntentTimelineProvider {
         // IGNORE THIS : NOTE: users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
         // at the very least allow the widget provider to request new data on the last entry if we only have one day left of data!
         
+        // WARNING: no foreground updates here --> must manually tell manager to refresh
+        // for now, dont call enterForeground since that will request new location
+        manager.considerRecalculations(isNewLocation: false)
+        
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),
                                    currentPrayer: Prayer.fajr, // dummy data
@@ -83,11 +97,13 @@ class AthanProvider: IntentTimelineProvider {
         // on a new day (at like 1 AM), where there is no entry made above that
         // precedes the current time
         let todayTimesArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
+        let tomorrowTimesArray = Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
         let nowEntry = AthanEntry(date: Date(),
                                   currentPrayer: manager.currentPrayer ?? Prayer.isha,
                                   currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
                                   nextPrayerDate: manager.guaranteedNextPrayerTime(),
-                                  todayPrayerTimes: todayTimesArray)
+                                  todayPrayerTimes: todayTimesArray,
+                                  relevance: TimelineEntryRelevance.init(score: EntryRelevance.High.rawValue))
         entries.append(nowEntry)
         
         // create entries with 10% increments between now and the next prayer, unless there are less than 5 mins left,
@@ -107,18 +123,31 @@ class AthanProvider: IntentTimelineProvider {
             // make 10% increments
             // create a timestamp for every 10% increment between prayerDate and the next prayer date
             // this allows the view to update in order to show a proper competion status
-            let percentSplit = 10.0
+            
             let timeRange = manager.guaranteedNextPrayerTime().timeIntervalSince(Date())
-            let tenPercentIncrements = floor(timeRange / percentSplit) // seconds between each 10%
+            // avoid splitting up too much: pick larger of 10% or min(% worth of 10 mins, 0.5)
+            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
-            for percent in 0..<Int(percentSplit) {
+            for increment in 1..<Int(100.0 / percentSplit) {
                 // for i = 0, updateDate = prayerDate
-                let updateDate = Calendar.current.date(byAdding: .second, value: percent * Int(tenPercentIncrements), to: Date())!
+                var relevance = TimelineEntryRelevance(score: 0)
+//                if Int(increment) == 0 { // we already prioritize the now entry. skipping increment 1
+//                    relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue)
+//                } else
+                if increment == Int(100 / percentSplit) - 1 { // if less than 5 mins left, make last one high relevance
+                    if percentIncrements < 5 * 60 {
+                        relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: 5 * 60)
+                    }
+                }
+                // for i = 0, updateDate = prayerDate
+                let updateDate = Calendar.current.date(byAdding: .second, value: increment * Int(percentIncrements), to: Date())!
                 let entry = AthanEntry(date: updateDate,
                                        currentPrayer: manager.currentPrayer ?? Prayer.isha,
                                        currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
                                        nextPrayerDate: manager.guaranteedNextPrayerTime(),
-                                       todayPrayerTimes: todayTimesArray)
+                                       todayPrayerTimes: todayTimesArray,
+                                       relevance: relevance)
                 entries.append(entry)
             }
         }
@@ -140,30 +169,42 @@ class AthanProvider: IntentTimelineProvider {
             
             // create a timestamp for every 10% increment between prayerDate and the next prayer date
             // this allows the view to update in order to show a proper competion status
-            let percentSplit = 10.0
             let timeRange = nextTime.timeIntervalSince(prayerDate)
-            let tenPercentIncrements = floor(timeRange / percentSplit) // seconds between each 10%
+            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
-            for percent in 0..<Int(percentSplit) {
+            for increment in 0..<Int(100.0 / percentSplit) {
                 // for i = 0, updateDate = prayerDate
-                let updateDate = Calendar.current.date(byAdding: .second, value: percent * Int(tenPercentIncrements), to: prayerDate)!
+                var relevance = TimelineEntryRelevance(score: 0)
+                if Int(increment) == 0 {
+                    relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue)
+                } else if increment == Int(100 / percentSplit) - 1 { // if less than 5 mins left, make last one high relevance
+                    if percentIncrements < 5 * 60 {
+                        relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: 5 * 60)
+                    }
+                }
+                
+                // for i = 0, updateDate = prayerDate
+                let updateDate = Calendar.current.date(byAdding: .second, value: increment * Int(percentIncrements), to: prayerDate)!
                 let entry = AthanEntry(date: updateDate,
                                        currentPrayer: iterationPrayer,
                                        currentPrayerDate: prayerDate,
                                        nextPrayerDate: nextTime,
-                                       todayPrayerTimes: todayTimesArray)
+                                       todayPrayerTimes: todayTimesArray,
+                                       relevance: relevance)
                 entries.append(entry)
             }
             
             // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
-            if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
+            if percentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
                 let updateDate = nextTime.addingTimeInterval(-5 * 60)
 //                assert(updateDate < nextTime)
                 let entry = AthanEntry(date: updateDate,
                                        currentPrayer: iterationPrayer,
                                        currentPrayerDate: prayerDate,
                                        nextPrayerDate: nextTime,
-                                       todayPrayerTimes: todayTimesArray)
+                                       todayPrayerTimes: todayTimesArray,
+                                       relevance: TimelineEntryRelevance.init(score: EntryRelevance.Medium.rawValue))
                 entries.append(entry)
             }
         }
@@ -172,44 +213,57 @@ class AthanProvider: IntentTimelineProvider {
         // DO NOT GO UP TO ISHA
         for tomorrowPIndex in 0..<2 {
             let iterationPrayer = Prayer(index: tomorrowPIndex)
-            let prayerDate = manager.todayTimes.time(for: iterationPrayer)
+            let prayerDate = manager.tomorrowTimes.time(for: iterationPrayer)
             
             // get time of prayer that follows this one
             // will NOT have to worry about isha -> tomorrow since tomorrowPIndex never goes to 5
             let nextPrayer = Prayer(index: tomorrowPIndex + 1)
-            let nextTime = manager.todayTimes.time(for: nextPrayer)
+            let nextTime = manager.tomorrowTimes.time(for: nextPrayer)
             
             // create a timestamp for every 10% increment between prayerDate and the next prayer date
             // this allows the view to update in order to show a proper competion status
-            let percentSplit = 10.0
             let timeRange = nextTime.timeIntervalSince(prayerDate)
-            let tenPercentIncrements = floor(timeRange / percentSplit) // seconds between each 10%
+            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
-            for percent in 0..<Int(percentSplit) {
+            for increment in 0..<Int(100.0 / percentSplit) {
                 // for i = 0, updateDate = prayerDate
-                let updateDate = Calendar.current.date(byAdding: .second, value: percent * Int(tenPercentIncrements), to: prayerDate)!
+                var relevance = TimelineEntryRelevance(score: 0)
+                if Int(increment) == 0 {
+                    relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue)
+                } else if increment == Int(100 / percentSplit) - 1 { // if less than 5 mins left, make last one high relevance
+                    if percentIncrements < 5 * 60 {
+                        relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: 5 * 60)
+                    }
+                }
+                
+                let updateDate = Calendar.current.date(byAdding: .second, value: increment * Int(percentIncrements), to: prayerDate)!
                 let entry = AthanEntry(date: updateDate,
                                        currentPrayer: iterationPrayer,
                                        currentPrayerDate: prayerDate,
                                        nextPrayerDate: nextTime,
-                                       todayPrayerTimes: todayTimesArray)
+                                       todayPrayerTimes: tomorrowTimesArray,
+                                       relevance: relevance)
                 entries.append(entry)
             }
             
             // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
-            if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
+            if percentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
                 let updateDate = nextTime.addingTimeInterval(-5 * 60)
                 let entry = AthanEntry(date: updateDate,
                                        currentPrayer: iterationPrayer,
                                        currentPrayerDate: prayerDate,
                                        nextPrayerDate: nextTime,
-                                       todayPrayerTimes: todayTimesArray)
+                                       todayPrayerTimes: tomorrowTimesArray,
+                                       relevance: TimelineEntryRelevance.init(score: EntryRelevance.Medium.rawValue))
                 entries.append(entry)
             }
             
             // no worry for type == isha, since tomorrow's entries only go up to maghrib
         }
-        
+        print("--- WIDGET TIMELINE ---")
+        print(entries)
+        print("^^^ WIDGET TIMELINE ^^^")
         // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)

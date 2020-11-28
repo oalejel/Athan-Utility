@@ -54,28 +54,6 @@ struct ActivityRingView: View {
     }
 }
 
-struct PrayerSymbol: View {
-    var prayerType: Prayer
-    var body: some View {
-        switch prayerType {
-        case .fajr:
-            Image(systemName: "light.max")
-        case .sunrise:
-            Image(systemName: "sunrise")
-        case .dhuhr:
-            Image(systemName: "sun.min")
-        case .asr:
-            Image(systemName: "sun.max")
-        case .maghrib:
-            Image(systemName: "sunset")
-        case .isha:
-            Image(systemName: "moon.stars")
-        default:
-            Image(systemName: "sun.min")
-        }
-    }
-}
-
 struct SmallWidget: View {
     var entry: AthanEntry
     var df: RelativeDateTimeFormatter = {
@@ -97,6 +75,8 @@ struct SmallWidget: View {
                         colors: [.white, .init(white: 1, opacity: 0.5)]
                     )
                     .scaledToFit()
+                    
+                   
                 }
                 
                 PrayerSymbol(prayerType: entry.currentPrayer)
@@ -113,6 +93,8 @@ struct SmallWidget: View {
                     .foregroundColor(.init(UIColor.lightText))
                     .font(.system(size: 12))
                     .bold()
+                Text("\(Date(), style: .time)") // remove later
+                    .font(.footnote)
             }
             .padding()
             
@@ -186,6 +168,9 @@ struct MediumWidget: View {
                     Spacer()
                     PrayerSymbol(prayerType: entry.currentPrayer)
                         .foregroundColor(.white)
+                    
+                    Text("\(Date(), style: .time)") // remove later
+                        .font(.footnote)
                 }
                 
                 ProgressBar(progress: CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate)),
@@ -444,26 +429,27 @@ struct Athan_WidgetEntryView : View {
     var body: some View {
         // none means that we have a placeholder
         // nil means error
-        switch (family, entry.currentPrayer) {
+        switch (family, entry.tellUserToOpenApp) {
         
-        case (.systemSmall, nil):
+        case (.systemSmall, true):
             SmallErrorWidget()
-        case (.systemMedium, nil):
+        case (.systemMedium, true):
             MediumErrorWidget()
-            
+        case (.systemLarge, true): // ignored since not in supported list
+            LargeWidget(entry: entry)
+
 //        case (.systemSmall, .some(Prayer.none)):
 //            SmallPlaceholderWidget()
 //        case (.systemMedium, .some(Prayer.none)):
 //            MediumPlaceholderWidget()
 
-        case (.systemSmall, _):
+        case (.systemSmall, false):
             SmallWidget(entry: entry)
-        case (.systemMedium, _):
+        case (.systemMedium, false):
             MediumWidget(entry: entry)
-            
-        case (.systemLarge, _):
-            // this family is not in the supported list, so this wont be run
+        case (.systemLarge, false): // ignored since not in supported list
             LargeWidget(entry: entry)
+            
         @unknown default:
             SmallErrorWidget()
         }

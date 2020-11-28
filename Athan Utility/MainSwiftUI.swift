@@ -10,36 +10,49 @@ import SwiftUI
 import Adhan
 
 @available(iOS 13.0.0, *)
-struct PrayerSymbol: View {
-    var prayerType: Prayer
-    var body: some View {
-        switch prayerType {
-        case .fajr:
-            Image(systemName: "light.max")
-        case .sunrise:
-            Image(systemName: "sunrise")
-        case .dhuhr:
-            Image(systemName: "sun.min")
-        case .asr:
-            Image(systemName: "sun.max")
-        case .maghrib:
-            Image(systemName: "sunset")
-        case .isha:
-            Image(systemName: "moon.stars")
-        }
-    }
-}
-
-
-@available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
+//    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
+
+    @State var currentPage = 0
+    @State var minuteTimer: Timer? = nil
+    var nextRoundMinuteTimer: Timer {
+        let comps = Calendar.current.dateComponents([.second], from: Date())
+        let secondsTilNextMinute = comps.second!
+        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+                              repeats: false) { _ in
+            percentComplete = getPercentComplete()
+            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+                percentComplete = getPercentComplete()
+            })
+         }
+    }
+
+    @State var percentComplete: Double = 0.0
+    
+    func getPercentComplete() -> Double {
+        var currentTime: Date?
+        if let currentPrayer = manager.todayTimes.currentPrayer() {
+            currentTime = manager.todayTimes.time(for: currentPrayer)
+        } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
+            currentTime = manager.todayTimes.time(for: .isha).addingTimeInterval(-86400)
+        }
+        
+        var nextTime: Date?
+        if let nextPrayer = manager.todayTimes.nextPrayer() {
+            nextTime = manager.todayTimes.time(for: nextPrayer)
+        } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+            nextTime = manager.tomorrowTimes.time(for: .fajr)
+        }
+        
+        return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+    }
+
     
     var body: some View {
         ZStack {
             GeometryReader { g in
-                
                 let hijriCal = Calendar(identifier: .islamic)
                 let dateString: String = {
                     let df = DateFormatter()
@@ -56,23 +69,6 @@ struct MainSwiftUI: View {
                         return "\(comps.hour!)h left"
                     }
                     return "\(comps.hour!)h \(comps.minute!)m left"
-                }()
-                let percentComplete: Double = {
-                    var currentTime: Date?
-                    if let currentPrayer = manager.todayTimes.currentPrayer() {
-                        currentTime = manager.todayTimes.time(for: currentPrayer)
-                    } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
-                        currentTime = manager.todayTimes.time(for: .isha).addingTimeInterval(-86400)
-                    }
-                    
-                    var nextTime: Date?
-                    if let nextPrayer = manager.todayTimes.nextPrayer() {
-                        nextTime = manager.todayTimes.time(for: nextPrayer)
-                    } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
-                        nextTime = manager.tomorrowTimes.time(for: .fajr)
-                    }
-                    
-                    return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
                 }()
                 
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
@@ -101,7 +97,6 @@ struct MainSwiftUI: View {
 
                             Spacer() // space title | qibla
                             
-                            
                             VStack(alignment: .trailing, spacing: 0) {
                                 QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading,
                                                  qiblaAngle: self.manager.qiblaHeading)
@@ -120,6 +115,11 @@ struct MainSwiftUI: View {
                         
                         ProgressBar(progress: CGFloat(percentComplete), lineWidth: 10,
                                     outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
+                            .onAppear(perform: { // wake update timers that will update progress
+                                let _ = nextRoundMinuteTimer
+                                let _ = minuteTimer
+                                percentComplete = getPercentComplete()
+                            })
 
                         let cellFont = Font.system(size: g.size.width * 0.06)
                         let timeFormatter: DateFormatter = {
@@ -128,54 +128,127 @@ struct MainSwiftUI: View {
                             return df
                         }()
                         
-                        VStack(alignment: .leading, spacing: 16) {
-                            ForEach(0..<6) { i in
-                                HStack {
-                                    let cellPrayer = Prayer(index: i)
-                                    let highlightColor: Color = {
-                                        if cellPrayer == manager.todayTimes.currentPrayer() {
-                                            return Color.green
-                                        } else if manager.todayTimes.currentPrayer() == nil {
-                                            return Color.white
+//                        VStack(alignment: .leading, spacing: 16) {
+//                            let content: [PrayerRowContent] = Prayer.allCases.map {
+//                                var highlight = PrayerRowContent.Highlight.present
+//                                if $0 == manager.todayTimes.currentPrayer() {
+//                                    highlight = .present
+//                                } else if manager.todayTimes.currentPrayer() == nil {
+//                                    highlight = .future
+//                                } else {
+//                                    highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
+//                                }
+//                                return PrayerRowContent(date: manager.todayTimes.time(for: $0),
+//                                                        prayer: $0,
+//                                                        highlight: highlight)
+//
+//                            }
+//                            List(content) { c in
+//                                HStack {
+//                                    Text(c.prayer.localizedString())
+//                                        .foregroundColor(c.highlight.color())
+//                                        .font(cellFont)
+//                                        .bold()
+//                                    Spacer()
+//                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: c.prayer)))
+//                                        // replace 3 with current prayer index
+//                                        .foregroundColor(c.highlight.color())
+//                                        .font(cellFont)
+//                                        .bold()
+//                                }
+//                            }
+//                        }
+                        
+                        let todayContent: [PrayerRowContent] = Prayer.allCases.map {
+                            var highlight = PrayerRowContent.Highlight.present
+                            if $0 == manager.todayTimes.currentPrayer() {
+                                highlight = .present
+                            } else if manager.todayTimes.currentPrayer() == nil {
+                                highlight = .future
+                            } else {
+                                highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
+                            }
+                            return PrayerRowContent(date: manager.todayTimes.time(for: $0),
+                                                    prayer: $0,
+                                                    highlight: highlight)
+                        }
+                        let tomorrowContent: [PrayerRowContent] = Prayer.allCases.map {
+                            PrayerRowContent(date: manager.tomorrowTimes.time(for: $0),
+                                             prayer: $0,
+                                             highlight: .future)
+
+                        }
+
+                        let dayContents = [todayContent, tomorrowContent]
+                        Pages(currentPage: $currentPage) {
+                            ForEach(0..<dayContents.count) { dayIndex in
+                                VStack {
+                                    ForEach(0..<dayContents[dayIndex].count) { pIndex in
+                                        let c = dayContents[dayIndex][pIndex]
+                                        HStack {
+                                            Text(c.prayer.localizedString())
+                                                .foregroundColor(c.highlight.color())
+                                                .font(cellFont)
+                                                .bold()
+                                            Spacer()
+                                            Text(timeFormatter.string(from: manager.todayTimes.time(for: c.prayer)))
+                                                // replace 3 with current prayer index
+                                                .foregroundColor(c.highlight.color())
+                                                .font(cellFont)
+                                                .bold()
                                         }
-                                        return i < manager.currentPrayer.rawValue() ? Color(UIColor.lightText) : Color.white
-                                    }()
-                                    
-                                    Text(cellPrayer.localizedString())
-                                        .foregroundColor(highlightColor)
-                                        .font(cellFont)
-                                        .bold()
-                                    Spacer()
-                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: cellPrayer)))
-                                        // replace 3 with current prayer index
-                                        .foregroundColor(highlightColor)
-                                        .foregroundColor(.white)
-                                        .font(cellFont)
-                                        .bold()
+                                    }
                                 }
                             }
                         }
+//                            ForEach(0..<6) { i in
+//                                HStack {
+//                                    let cellPrayer = Prayer(index: i)
+//                                    let highlightColor: Color = {
+//                                        if cellPrayer == manager.todayTimes.currentPrayer() {
+//                                            return Color.green
+//                                        } else if manager.todayTimes.currentPrayer() == nil {
+//                                            return Color.white
+//                                        }
+//                                        return i < manager.currentPrayer.rawValue() ? Color(UIColor.lightText) : Color.white
+//                                    }()
+//
+//                                    Text(cellPrayer.localizedString())
+//                                        .foregroundColor(highlightColor)
+//                                        .font(cellFont)
+//                                        .bold()
+//                                    Spacer()
+//                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: cellPrayer)))
+//                                        // replace 3 with current prayer index
+//                                        .foregroundColor(highlightColor)
+//                                        .foregroundColor(.white)
+//                                        .font(cellFont)
+//                                        .bold()
+//                                }
+//                            }
+                        
+                        
                     }
                     .padding([.leading, .trailing])
                     .padding([.leading, .trailing])
                     
                     ZStack() {
-                        SolarView(progress: 0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400,
-                                  sunlightFraction: manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400)
                         Text("\(dateString)")
                             .fontWeight(.bold)
                             .foregroundColor(Color(.lightText))
                             .offset(y: 24)
-
+                        SolarView(progress: CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                  sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))
                     }
                     
-//                        .frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
-
                     Spacer() // space footer
                     
                     
                     HStack(alignment: .center) {
                         Button(action: {
+                            // tap vibration
+                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                            lightImpactFeedbackGenerator.impactOccurred()
                             AthanManager.shared.requestLocationPermission()
                         }) {
                             Text("\(manager.locationName)")
@@ -186,7 +259,9 @@ struct MainSwiftUI: View {
                         Spacer()
                         
                         Button(action: {
-                            print("here")
+                            // tap vibration
+                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                            lightImpactFeedbackGenerator.impactOccurred()
                         }) {
                             Image(systemName: "gear")
                         }

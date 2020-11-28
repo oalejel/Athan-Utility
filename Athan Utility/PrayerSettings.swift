@@ -92,6 +92,7 @@ class LocationSettings: Codable {
     static var shared: LocationSettings = {
         if let data = unarchive(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
+            decoded.isLoadedFromArchive = true
             return decoded
         } else {
             return LocationSettings()
@@ -111,7 +112,7 @@ class LocationSettings: Codable {
             archiveToName(archiveName, object: data)
         }
     }
-    
+    var isLoadedFromArchive = false
     var locationName: String = "Cupertino, CA"
     var locationCoordinate: CLLocationCoordinate2D {
         get {

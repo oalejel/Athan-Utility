@@ -21,8 +21,8 @@ struct Blur: UIViewRepresentable {
 
 @available(iOS 13.0.0, *)
 struct SineLine: Shape {
-    @State var amplitude: Double = 50
-    @State var verticalOffset: Double = 0
+    @State var amplitude: CGFloat = 50
+    @State var verticalOffset: CGFloat = 0
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -34,9 +34,8 @@ struct SineLine: Shape {
 //        path.addLine(to: CGPoint(x: 0, y: rect.midY))
         // Loop and draw steps in straingt line segments
         for i in 0...steps {
-            
             let x = CGFloat(i) * stepX
-            let y = (cos(Double(i) * 2 * Double.pi / Double(steps)) * amplitude) + verticalOffset + Double(rect.midY)
+            let y = (cos(CGFloat(i) * 2 * CGFloat.pi / CGFloat(steps)) * amplitude) + verticalOffset + rect.midY
             
             if i == 0 {
                 path.move(to: CGPoint(x: x, y: CGFloat(y)))
@@ -54,21 +53,55 @@ struct SineLine: Shape {
 // of graph instead
 @available(iOS 13.0.0, *)
 struct SolarView: View {
-    var progress: Double = 0
-    var sunlightFraction: Double = 0.5 // % of 24 hours that has sunlight
+    @State var progress: CGFloat = 0
+    var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
+    
+    @State var isDragging = false
+    @State var manualProgress: CGFloat = 0
+    
+    @State var hidingCircle = false
     
     var body: some View {
         GeometryReader  { g in
-            let amplitude = Double(g.size.height / 4)
-            let verticalOffset: Double = amplitude - 2 * amplitude * sunlightFraction
-            let sunY: Double = cos(progress * 2 * Double.pi) * amplitude + verticalOffset
+            let amplitude: CGFloat = g.size.height / 4
+            let verticalOffset: CGFloat = amplitude - 2 * amplitude * sunlightFraction
+//            let sunY: CGFloat = cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset
             
             VStack {
                 Spacer()
                 ZStack {
                     Rectangle()
+                        .foregroundColor(.init(.sRGB, white: 1, opacity: 0.00000000001)) // hack to avoid full transparency and allow input
+                        .gesture(
+                            DragGesture(minimumDistance: 2, coordinateSpace: .global)
+                                .onChanged({ value in
+                                    withAnimation(.linear(duration: 0.3)) {
+                                        isDragging = true
+                                        manualProgress = value.location.x / g.size.width
+                                    }
+                                })
+                                .onEnded({ value in
+                                    print("let go")
+                                    withAnimation(.linear(duration: 0.1)) {
+                                        isDragging = false
+//                                        manualProgress = progress // TODO: get animation to travel path accurately
+                                    }
+                                })
+                        )
+
+                    Rectangle()
                         .frame(width: g.size.width, height: 1)
                         .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                    Rectangle()
+                        .frame(width: 1,
+                               height: abs(cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset),
+                               alignment: .center)
+                        .offset(x: manualProgress * g.size.width - 0.5 * g.size.width,
+                                y: 0.5 * (cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset))
+                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        .opacity(isDragging ? 1 : 0)
+                        .animation(.linear(duration: 0.3))
+                    
                     SineLine(amplitude: amplitude, verticalOffset: verticalOffset)
                         .stroke(style: StrokeStyle(lineWidth: 2,
                                                    lineCap: .round,
@@ -81,10 +114,9 @@ struct SolarView: View {
                     Circle()
                         .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)
-                        .offset(x: -0.5 * g.size.width + CGFloat(progress) * g.size.width,
-                                y: CGFloat(sunY))
-//                        .onAppear { progress = 0.25 }
-
+                        .offset(x: (isDragging ? manualProgress : progress) * g.size.width - 0.5 * g.size.width,
+                                y: cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
+//                        .animation(.linear(duration: 0.3))
                 }
                 Spacer()
             }

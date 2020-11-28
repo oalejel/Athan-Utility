@@ -68,7 +68,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var tomorrowTimes: PrayerTimes! = nil {
         didSet {
             if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.tomorrowTimes = todayTimes
+                ObservableAthanManager.shared.tomorrowTimes = tomorrowTimes
             }
         }
     }
@@ -227,6 +227,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     @objc func newDay() {
+        // will update dayOfMonth
         considerRecalculations(isNewLocation: false)
     }
     
@@ -297,7 +298,6 @@ extension AthanManager {
                 // just proceed to refresh timers
             }
         }
-
         
         // unconditional update of day of month
         dayOfMonth = Calendar.current.component(.day, from: Date())

@@ -18,6 +18,8 @@ struct AthanEntry: TimelineEntry {
     var nextPrayerDate: Date // will refer to Fajr of next day if prayerType is isha
     var todayPrayerTimes: [Date]
     
+    var tellUserToOpenApp = false
+    
     // I don't think I'll need intents for these widgets
     // allowing users to load times for different locations
     // is a feature for another day
@@ -39,22 +41,43 @@ class AthanProvider: IntentTimelineProvider {
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
-        let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
-        let entry = AthanEntry(date: Date(),
-                               currentPrayer: manager.currentPrayer ?? Prayer.isha,
-                               currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
-                               nextPrayerDate: manager.guaranteedNextPrayerTime(),
-                               todayPrayerTimes: timeArray)
-        
-        completion(entry)
+        if manager.locationSettings.isLoadedFromArchive {
+            let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
+            let entry = AthanEntry(date: Date(),
+                                   currentPrayer: manager.currentPrayer ?? Prayer.isha,
+                                   currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
+                                   nextPrayerDate: manager.guaranteedNextPrayerTime(),
+                                   todayPrayerTimes: timeArray)
+            
+            completion(entry)
+        } else { // if not loaded from settings, give user an error
+            let openAppEntry = AthanEntry(date: Date(),
+                                   currentPrayer: Prayer.fajr, // dummy data
+                                   currentPrayerDate: Date(),
+                                   nextPrayerDate: Date(),
+                                   todayPrayerTimes: [],
+                                   tellUserToOpenApp: true)
+            completion(openAppEntry)
+        }
     }
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<AthanEntry>) -> ()) {
         var entries: [AthanEntry] = []
-        // NOTE: users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
+        // IGNORE THIS : NOTE: users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
         // at the very least allow the widget provider to request new data on the last entry if we only have one day left of data!
         
-    
+        if !manager.locationSettings.isLoadedFromArchive {
+            let openAppEntry = AthanEntry(date: Date(),
+                                   currentPrayer: Prayer.fajr, // dummy data
+                                   currentPrayerDate: Date(),
+                                   nextPrayerDate: Date(),
+                                   todayPrayerTimes: [],
+                                   tellUserToOpenApp: true)
+            
+            let timeline = Timeline(entries: [openAppEntry], policy: .atEnd)
+            completion(timeline)
+            return
+        }
         
         // first, add a snapshot entry for NOW, since we may be on isha time
         // on a new day (at like 1 AM), where there is no entry made above that
@@ -82,7 +105,22 @@ class AthanProvider: IntentTimelineProvider {
             } // otherwise too little time left to give another update for current prayer
         } else {
             // make 10% increments
-            
+            // create a timestamp for every 10% increment between prayerDate and the next prayer date
+            // this allows the view to update in order to show a proper competion status
+            let percentSplit = 10.0
+            let timeRange = manager.guaranteedNextPrayerTime().timeIntervalSince(Date())
+            let tenPercentIncrements = floor(timeRange / percentSplit) // seconds between each 10%
+
+            for percent in 0..<Int(percentSplit) {
+                // for i = 0, updateDate = prayerDate
+                let updateDate = Calendar.current.date(byAdding: .second, value: percent * Int(tenPercentIncrements), to: Date())!
+                let entry = AthanEntry(date: updateDate,
+                                       currentPrayer: manager.currentPrayer ?? Prayer.isha,
+                                       currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
+                                       nextPrayerDate: manager.guaranteedNextPrayerTime(),
+                                       todayPrayerTimes: todayTimesArray)
+                entries.append(entry)
+            }
         }
         
 

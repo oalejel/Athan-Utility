@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Pages",
+        "repositoryURL": "https://github.com/nachonavarro/Pages",
+        "state": {
+          "branch": null,
+          "revision": "4cdbe4ff2f9ddbfda8cf0376a2acb678a1a0a0a2",
+          "version": "0.1.5"
+        }
+      },
+      {
         "package": "SwiftSpinner",
         "repositoryURL": "https://github.com/icanzilb/SwiftSpinner",
         "state": {

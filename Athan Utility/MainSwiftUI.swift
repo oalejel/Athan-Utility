@@ -16,8 +16,17 @@ struct MainSwiftUI: View {
 //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
     @State var tomorrowPeekProgress: Double = 0.0
-    @State var currentPage = 0
     @State var minuteTimer: Timer? = nil
+    
+    @State var fajrOverrideString: String = ""
+    @State var sunriseOverrideString: String = ""
+    @State var dhuhrOverrideString: String = ""
+    @State var asrOverrideString: String = ""
+    @State var maghribOverrideString: String = ""
+    @State var ishaOverrideString: String = ""
+    
+    @State var settingsToggled = false
+    
     var nextRoundMinuteTimer: Timer {
         let comps = Calendar.current.dateComponents([.second], from: Date())
         let secondsTilNextMinute = comps.second!
@@ -132,75 +141,85 @@ struct MainSwiftUI: View {
                             return df
                         }()
                         
-                        VStack(alignment: .leading, spacing: 16) {
-                            ForEach(0..<6) { pIndex in
-                                let p = Prayer(index: pIndex)
-                                var highlight: PrayerRowContent.Highlight = {
-                                    var h = PrayerRowContent.Highlight.present
-                                    if p == manager.todayTimes.currentPrayer() {
-                                        h = .present
-                                    } else if manager.todayTimes.currentPrayer() == nil {
-                                        h = .future
-                                    } else {
-                                        h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
-                                    }
-                                    return h
-                                }()
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(.clear) // to allow gestures from middle of box
+                            VStack(alignment: .leading, spacing: 16) {
+                                ForEach(0..<6) { pIndex in
+                                    let p = Prayer(index: pIndex)
+                                    let highlight: PrayerRowContent.Highlight = {
+                                        var h = PrayerRowContent.Highlight.present
+                                        if p == manager.todayTimes.currentPrayer() {
+                                            h = .present
+                                        } else if manager.todayTimes.currentPrayer() == nil {
+                                            h = .future
+                                        } else {
+                                            h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
+                                        }
+                                        return h
+                                    }()
 
-                                ZStack { // stack of today and tomorrow times
-                                    HStack {
-                                        Text(p.localizedString())
-                                            .foregroundColor(highlight.color())
-                                            .font(cellFont)
-                                            .bold()
-//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
+                                    ZStack { // stack of today and tomorrow times
+                                        HStack {
+                                            Text(p.localizedString())
+//                                            TextField(p.localizedString(), text: [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex], onEditingChanged: { _ in
+//
+//                                            }, onCommit: {
+//                                                print("committed overwrite prayer name")
+//                                            })
+//                                                .disableAutocorrection(true)
+                                                .foregroundColor(highlight.color())
+                                                .font(cellFont)
+                                                .bold()
+    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
 
-                                        Spacer()
-                                        Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
-                                            // replace 3 with current prayer index
-                                            .foregroundColor(highlight.color())
-                                            .font(cellFont)
-                                            .bold()
-//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
+                                            Spacer()
+                                            Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
+                                                // replace 3 with current prayer index
+                                                .foregroundColor(highlight.color())
+                                                .font(cellFont)
+                                                .bold()
+    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
+                                        }
+    //                                    .border(Color.green)
+                                        .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                        .rotation3DEffect(
+                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .top,
+                                                    anchorZ: 0,
+                                            perspective: 0.1
+                                                )
+                                        .animation(.linear(duration: 0.2))
+                                        
+                                        
+                                        HStack {
+                                            Text(p.localizedString())
+                                                .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                                .font(cellFont)
+                                                .bold()
+    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                            Spacer()
+                                            Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
+                                                // replace 3 with current prayer index
+                                                .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                                .font(cellFont)
+                                                .bold()
+    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                        }
+    //                                    .border(Color.red)
+                                        .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                        .rotation3DEffect(
+                                            Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .bottom,
+                                                    anchorZ: 0,
+                                            perspective: 0.1
+                                                )
+                                        .animation(.linear(duration: 0.2))
                                     }
-//                                    .border(Color.green)
-                                    .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
-                                    .rotation3DEffect(
-                                                Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                                axis: (x: 1, y: 0, z: 0.0),
-                                                anchor: .top,
-                                                anchorZ: 0,
-                                        perspective: 0.1
-                                            )
-                                    .animation(.linear(duration: 0.2))
                                     
-                                    
-                                    HStack {
-                                        Text(p.localizedString())
-                                            .foregroundColor(PrayerRowContent.Highlight.future.color())
-                                            .font(cellFont)
-                                            .bold()
-//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
-                                        Spacer()
-                                        Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
-                                            // replace 3 with current prayer index
-                                            .foregroundColor(PrayerRowContent.Highlight.future.color())
-                                            .font(cellFont)
-                                            .bold()
-//                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
-                                    }
-//                                    .border(Color.red)
-                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
-                                    .rotation3DEffect(
-                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                                axis: (x: 1, y: 0, z: 0.0),
-                                                anchor: .bottom,
-                                                anchorZ: 0,
-                                        perspective: 0.1
-                                            )
-                                    .animation(.linear(duration: 0.2))
                                 }
-                                
                             }
                         }
                         .gesture(
@@ -300,8 +319,11 @@ struct MainSwiftUI: View {
                             // tap vibration
                             let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                             lightImpactFeedbackGenerator.impactOccurred()
+                            
+                            settingsToggled.toggle()
                         }) {
-                            Image(systemName: "gear")
+                            settingsToggled ? Image(systemName: "xmark") : Image(systemName: "gear")
+                            
                         }
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))

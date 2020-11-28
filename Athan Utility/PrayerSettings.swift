@@ -11,12 +11,12 @@ import Adhan
 import CoreLocation.CLLocation
 
 // Manages loading and storing of settings for calculations
-class PrayerSettings: Codable {
+class PrayerSettings: Codable, NSCopying {
     static var shared: PrayerSettings = {
         if let archive = checkArchive() {
             return archive
         } else {
-            let defaultSettings = PrayerSettings()
+            let defaultSettings = PrayerSettings(method: CalculationMethod.northAmerica, madhab: .shafi, customNames: [:])
             return defaultSettings
         }
     }()
@@ -29,6 +29,12 @@ class PrayerSettings: Codable {
         return nil
     }
     
+    init(method: CalculationMethod, madhab: Madhab, customNames: [Prayer:String]) {
+        self.calculationMethod = method
+        self.madhab = madhab
+        self.customNames = customNames
+    }
+    
     static func archive() {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(PrayerSettings.shared) as? Data {
@@ -37,12 +43,16 @@ class PrayerSettings: Codable {
     }
     
     // default values to be overridden from settings if they exist
-    var calculationMethod: CalculationMethod = CalculationMethod.northAmerica
-    var madhab: Madhab = .shafi
-    // store potential override names for athan times
+    var calculationMethod: CalculationMethod
+    var madhab: Madhab
+    var customNames: [Prayer:String] // store potential override names for athan times
     
-    var customNames: [Prayer:String] = [:]
     private static let archiveName = "prayersettings"
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = PrayerSettings(method: calculationMethod, madhab: madhab, customNames: customNames)
+        return copy
+    }
 }
 
 // MARK: - Notification Settings
@@ -55,7 +65,7 @@ struct NotificationSetting: Codable {
     var alarmType = AlarmSetting.all
 }
 
-class NotificationSettings: Codable {
+class NotificationSettings: Codable, NSCopying {
     
     static var shared: NotificationSettings = {
         if let archive = checkArchive() {
@@ -97,25 +107,30 @@ class NotificationSettings: Codable {
     }
     var settings: [Prayer:NotificationSetting]
     private static let archiveName = "notificationsettings"
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = NotificationSettings(settings: settings)
+        return copy
+    }
+
 }
 
 // MARK: - Location Settings
 
-class LocationSettings: Codable {
+class LocationSettings: Codable, NSCopying {
     
     static var shared: LocationSettings = {
         if let archive = checkArchive() {
             return archive
         } else {
-            return LocationSettings()
+            return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322))
         }
     }()
     
-    init() {}
-    
     init(locationName: String, coord: CLLocationCoordinate2D) {
         self.locationName = locationName
-        self.locationCoordinate = coord
+        self.lat = coord.latitude
+        self.lon = coord.latitude
     }
 
     static func checkArchive() -> LocationSettings? {
@@ -134,7 +149,9 @@ class LocationSettings: Codable {
         }
     }
     var isLoadedFromArchive = false
-    var locationName: String = "Cupertino, CA"
+    var locationName: String
+    private var lat: Double
+    private var lon: Double
     var locationCoordinate: CLLocationCoordinate2D {
         get {
             .init(latitude: lat, longitude: lon)
@@ -144,27 +161,15 @@ class LocationSettings: Codable {
             lon = newValue.longitude
         }
     }
-    private var lat: Double = 37.3230
-    private var lon: Double = -122.0322
     private static let archiveName = "locationsettings"
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate)
+        return copy
+    }
 }
 
 // MARK: - Archive Helpers
-
-//func unarchive2(_ name: String) -> Data? {
-//    let data = UserDefaults.standard.object(forKey: name) as? Data
-//    return data
-//}
-//
-//func archive2(_ name: String, object: Any) {
-//    print("WARNING: ADD ERROR HANDLER TO THIS")
-//    do {
-//        let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
-//        UserDefaults.standard.setValue(data, forKey: name)
-//    } catch {
-//        print("error archiving prayer settings")
-//    }
-//}
 
 // Helper function for storing settings
 func archiveData(_ name: String, object: Any) {

@@ -150,11 +150,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
-        let locationCoordinate = LocationSettings.shared.locationCoordinate
+        let coord = locationSettings.locationCoordinate
         
         let cal = Calendar(identifier: Calendar.Identifier.gregorian)
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
-        let coordinates = Coordinates(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
+        let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
         
         var params = PrayerSettings.shared.calculationMethod.params
         params.madhab = PrayerSettings.shared.madhab

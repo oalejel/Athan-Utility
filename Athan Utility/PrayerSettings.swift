@@ -130,7 +130,7 @@ class LocationSettings: Codable, NSCopying {
     init(locationName: String, coord: CLLocationCoordinate2D) {
         self.locationName = locationName
         self.lat = coord.latitude
-        self.lon = coord.latitude
+        self.lon = coord.longitude
     }
 
     static func checkArchive() -> LocationSettings? {

@@ -10,7 +10,8 @@ import SwiftUI
 
 @available(iOS 13.0.0, *)
 struct MoonView: View {
-    @State var percentage: Double = 0.4
+//    @State var percentage: Double = 0.4
+    var percentage = SwiftySuncalc().getMoonIllumination(date: Date())["phase"]!
     
     var body: some View {
         GeometryReader { g in

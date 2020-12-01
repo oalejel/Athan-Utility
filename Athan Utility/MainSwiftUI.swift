@@ -88,7 +88,8 @@ struct MainSwiftUI: View {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(alignment: .center, spacing: 0) {
                             Spacer()
-                            MoonView(percentage: 0.3)
+//                            MoonView(percentage: 0.3)
+                                MoonView3D()
                                 .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                 .offset(y: 12)
                             Spacer()

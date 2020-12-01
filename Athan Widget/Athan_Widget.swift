@@ -478,9 +478,9 @@ struct Athan_Widget: Widget {
             Athan_WidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Athan Widget")
-        .description("Use Athan Widgets to view upcoming salah times at a glance.")
         // lets not support the large widget family for now...
         .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
+        .description("Use Athan Widgets to view upcoming salah times at a glance.")
     }
 }
 

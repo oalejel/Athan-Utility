@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+
+
 @available(iOS 13.0.0, *)
 struct Blur: UIViewRepresentable {
     var style: UIBlurEffect.Style = .systemMaterial
@@ -48,28 +50,63 @@ struct SineLine: Shape {
     }
 }
 
-
 // TODO: have peak always be around the same y pos, and just adjust amplitude
 // of graph instead
 @available(iOS 13.0.0, *)
 struct SolarView: View {
-    @State var progress: CGFloat = 0
+    var progress: CGFloat = 0
     var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
     
     @State var isDragging = false
     @State var manualProgress: CGFloat = 0
-    
     @State var hidingCircle = false
+    @State var dhuhrTime: Date
+    
+    let df: DateFormatter = {
+       let d = DateFormatter()
+        d.dateFormat = "hh:mm a"
+        return d
+    }()
     
     var body: some View {
         GeometryReader  { g in
             let amplitude: CGFloat = g.size.height / 4
-            let verticalOffset: CGFloat = amplitude - 2 * amplitude * sunlightFraction
+//            let verticalOffset: CGFloat = amplitude - 2 * amplitude * sunlightFraction
+//            let verticalOffset: CGFloat = amplitude - 2 * amplitude * cos(sunlightFraction * CGFloat.pi / 2)
+            let theta = CGFloat.pi - 2 * CGFloat.pi * CGFloat(AthanManager.shared.todayTimes.dhuhr.timeIntervalSince(AthanManager.shared.todayTimes.sunrise) / 86400.0)
+            let verticalOffset: CGFloat = -1 * amplitude * cos(theta)
 //            let sunY: CGFloat = cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset
-            
+        
             VStack {
                 Spacer()
                 ZStack {
+                    HStack {
+                        Spacer()
+                        VStack {
+                            let time = dhuhrTime.addingTimeInterval(86400 * (Double(manualProgress) - 0.5))
+                            Text(df.string(from: time))
+//                                .font(Font.body.weight(.semibold))
+                                .font(.system(size: 12, design: .monospaced))
+                                .bold()
+                                .foregroundColor(Color(.lightText))
+                                .padding([.top, .bottom], 6)
+                                .padding([.leading, .trailing], 8)
+                                .background(
+                                    Rectangle()
+//                                        .foregroundColor(.init(.sRGB, white: 1, opacity: 0.2))
+//                                        .foregroundColor(Color(.lightText))
+                                        .addBorder(Color(.lightText), width: 2, cornerRadius: 8)
+//                                        .cornerRadius(4)
+                                        .foregroundColor(.clear)
+//                                        .border(Color(.lightText))
+                                )
+                                .padding()
+                            Spacer()
+                        }
+                    }
+                    .opacity(isDragging ? 1 : 0)
+                    .animation(.linear(duration: 0.3))
+                    
                     Rectangle()
                         .foregroundColor(.init(.sRGB, white: 1, opacity: 0.00000000001)) // hack to avoid full transparency and allow input
                         .gesture(
@@ -129,7 +166,7 @@ struct SolarViewPreview: PreviewProvider {
     static var previews: some View {
 //        let timeDiff = 10.1 // hours
         
-        SolarView(progress: 0.3, sunlightFraction: 0.6)
+        SolarView(progress: 0.3, sunlightFraction: 0.6, dhuhrTime: Date())
             .background(Rectangle()
                             .foregroundColor(.blue), alignment: .center)
             .frame(width: 380, height: 200, alignment: .center)

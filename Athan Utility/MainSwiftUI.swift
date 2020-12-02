@@ -13,7 +13,6 @@ import Adhan
 struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
-//    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
     @State var tomorrowPeekProgress: Double = 0.0
     @State var minuteTimer: Timer? = nil
@@ -24,12 +23,11 @@ struct MainSwiftUI: View {
     @State var asrOverrideString: String = ""
     @State var maghribOverrideString: String = ""
     @State var ishaOverrideString: String = ""
-    
     @State var settingsToggled = false
     
     var nextRoundMinuteTimer: Timer {
         let comps = Calendar.current.dateComponents([.second], from: Date())
-        let secondsTilNextMinute = comps.second!
+        let secondsTilNextMinute = 60 - comps.second!
         return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
                               repeats: false) { _ in
             percentComplete = getPercentComplete()
@@ -88,8 +86,7 @@ struct MainSwiftUI: View {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(alignment: .center, spacing: 0) {
                             Spacer()
-//                            MoonView(percentage: 0.3)
-                                MoonView3D()
+                            MoonView3D()
                                 .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                 .offset(y: 12)
                             Spacer()
@@ -144,7 +141,7 @@ struct MainSwiftUI: View {
                         
                         ZStack {
                             Rectangle()
-                                .foregroundColor(.clear) // to allow gestures from middle of box
+                                .foregroundColor(.init(.sRGB, white: 1, opacity: 0.000001)) // to allow gestures from middle of box
                             VStack(alignment: .leading, spacing: 16) {
                                 ForEach(0..<6) { pIndex in
                                     let p = Prayer(index: pIndex)
@@ -172,7 +169,6 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(highlight.color())
                                                 .font(cellFont)
                                                 .bold()
-    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
 
                                             Spacer()
                                             Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
@@ -180,9 +176,7 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(highlight.color())
                                                 .font(cellFont)
                                                 .bold()
-    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90), axis: (x: 1, y: 0, z: 0))
                                         }
-    //                                    .border(Color.green)
                                         .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
                                         .rotation3DEffect(
                                                     Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
@@ -257,10 +251,6 @@ struct MainSwiftUI: View {
 //                                             highlight: .future)
 //
 //                        }
-
-
-                        
-                        
                     }
                     .padding([.leading, .trailing])
                     .padding([.leading, .trailing])
@@ -294,13 +284,15 @@ struct MainSwiftUI: View {
                                 .animation(.linear(duration: 0.2))
                         }
                         .offset(y: 24)
-                        SolarView(progress: CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
-                                  sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))
+                        // include percentComplete * 0 to trigger refresh based on Date()
+                        SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                  sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+                                  dhuhrTime: manager.todayTimes.dhuhr)
                             .opacity(1 - 0.8 * tomorrowPeekProgress)
+
                     }
                     
                     Spacer() // space footer
-                    
                     
                     HStack(alignment: .center) {
                         Button(action: {
@@ -320,28 +312,18 @@ struct MainSwiftUI: View {
                             // tap vibration
                             let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                             lightImpactFeedbackGenerator.impactOccurred()
-                            
                             settingsToggled.toggle()
                         }) {
                             settingsToggled ? Image(systemName: "xmark") : Image(systemName: "gear")
-                            
                         }
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
                     }
                     .padding([.leading, .trailing, .bottom])
                     .padding([.leading, .trailing, .bottom])
-                    
-//                    Spacer()
-//                    Spacer()
-                    
                 }
-//                .padding()
-//                .padding()
-                
             }
         }
-        
     }
 }
 

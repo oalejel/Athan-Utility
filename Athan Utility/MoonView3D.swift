@@ -7,22 +7,27 @@
 //
 
 import Foundation
-
 import SwiftUI
 import SceneKit
-
+import Adhan
+#warning("make this a public thing on github later")
 @available(iOS 13.0.0, *)
 struct MoonView3D: View {
+    @State var currentPrayer: Prayer? = nil // inelegant solution just used to trigger a refresh
     var body: some View {
         GeometryReader { g in
             ZStack {
                 ScenekitView()
                     .frame(width: g.size.width, height: g.size.width, alignment: .center)
+//                    .onReceive(<#T##publisher: Publisher##Publisher#>, perform: <#T##(Publisher.Output) -> Void#>)
+//                Rectangle()
+//                    .opacity(0)
+//                    .foregroundColor(currentPrayer == Prayer.fajr ? Color.green : Color.white) // arbitrary update for refresh
             }
         }
     }
 }
-
+ 
 @available(iOS 13.0.0, *)
 final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelegate, UIGestureRecognizerDelegate {
     let scene = SCNScene()
@@ -34,11 +39,9 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
     let scnView = SCNView()
     let sphere = SCNNode()
     #warning("might need a dummy binding to get view to update when app updates?")
-                
+    
     func makeUIView(context: Context) -> SCNView {
-        
         sphere.geometry = SCNSphere(radius: 1)
-//        sphere.geometry?.subdivisionLevel = 200
         
         sphere.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "moon_texture.jpg")!
         sphere.geometry?.firstMaterial?.isDoubleSided = true
@@ -61,7 +64,6 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         ambientLightNode.light!.color = UIColor(white: 0.2, alpha: 1)
         scene.rootNode.addChildNode(ambientLightNode)
 
-        
         centeredLightParent.position = .init(x: 0, y: 0, z: 0)
 
         // create and add a light to the scene
@@ -69,13 +71,11 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         lightNode.light = SCNLight()
         lightNode.light!.type = .omni
         lightNode.position = SCNVector3(x: 0, y: 0, z: -70)
-//        lightNode.pivot = SCNMatrix4MakeTranslation(0.5, 0.5, 0.5)
         
         centeredLightParent.addChildNode(lightNode)
         scene.rootNode.addChildNode(centeredLightParent)
         
         // retrieve the SCNView
-        
         scnView.cameraControlConfiguration.allowsTranslation = false
         scnView.allowsCameraControl = true
         scnView.cameraControlConfiguration.rotationSensitivity = 0.5
@@ -90,13 +90,11 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
     }
     
     @objc func panGesture(g: UIPanGestureRecognizer) {
-        
-        print(atan2(scnView.pointOfView!.worldPosition.x, scnView.pointOfView!.worldPosition.z))
-//        print(acos(scnView.pointOfView!.worldPosition.x / 80))
+//        print(atan2(scnView.pointOfView!.worldPosition.x, scnView.pointOfView!.worldPosition.z))
         if allowTouches && g.state == .ended { // if done panning, start a 1 second timer to animate back to position
-            Timer.scheduledTimer(withTimeInterval: 1.4, repeats: false) { t in
-                print("gonna rotate!")
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
                 self.scene.rootNode.removeAllAnimations()
+                self.scnView.pointOfView!.removeAllAnimations() // unclear if this helps stop rotation inertia from user
                 self.rotateMoon()
             }
         }
@@ -111,10 +109,9 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         DispatchQueue.main.async {
             self.allowTouches = false
         }
-        // since hte method used moves the moon independently of the camera control
-
-        let offsetAngle: CGFloat = CGFloat(atan2(scnView.pointOfView!.worldPosition.x, scnView.pointOfView!.worldPosition.z))
         
+        // since the method used moves the moon independently of the camera control
+        let offsetAngle: CGFloat = CGFloat(atan2(scnView.pointOfView!.worldPosition.x, scnView.pointOfView!.worldPosition.z))
         print("rotationg to: ", offsetAngle)
         let sequence = SCNAction.sequence([
             .rotateTo(x: 0, y: offsetAngle, z: 0, duration: 1),
@@ -143,7 +140,8 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         let currentMoonPercent = SwiftySuncalc().getMoonIllumination(date: Date())["phase"]!
         
         // start off on last moon percent
-        let startOffset = CGFloat(lastMoonPercent) * CGFloat.pi * 2
+        let startOffset = -2 * CGFloat(lastMoonPercent) * CGFloat.pi
+        centeredLightParent.rotation = .init(x: 0, y: 0, z: 0, w: 0) // reset back to zero in case we are reopening app
         centeredLightParent.simdLocalRotate(by: .init(angle: Float(startOffset), axis: .init(x: 0, y: 1, z: 0)))
         
         var offsetToAnimate: CGFloat = 0
@@ -161,16 +159,12 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
             self.pendingRotation = false
             self.rotationSemaphore.signal()
         }
-        #warning("todo: save last seen moon percent")
+        // #warning("todo: save last seen moon percent")
+        MoonSettings.lastSeenMoonPercent = currentMoonPercent
     }
-    
-    
-    
-
 
     func updateUIView(_ scnView: SCNView, context: Context) {
         scnView.scene = scene
-        
         // always animate light to correct position when view updated
         rotateLight()
     }

@@ -38,11 +38,9 @@ struct SineLine: Shape {
         for i in 0...steps {
             let x = CGFloat(i) * stepX
             let y = (cos(CGFloat(i) * 2 * CGFloat.pi / CGFloat(steps)) * amplitude) + verticalOffset + rect.midY
-            
             if i == 0 {
                 path.move(to: CGPoint(x: x, y: CGFloat(y)))
             }
-            
             path.addLine(to: CGPoint(x: x, y: CGFloat(y)))
         }
 
@@ -78,7 +76,7 @@ struct SolarView: View {
 //            let sunY: CGFloat = cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset
         
             VStack {
-                Spacer()
+//                Spacer()
                 ZStack {
                     HStack {
                         Spacer()
@@ -129,6 +127,7 @@ struct SolarView: View {
                     Rectangle()
                         .frame(width: g.size.width, height: 1)
                         .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        
                     Rectangle()
                         .frame(width: 1,
                                height: abs(cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset),
@@ -155,7 +154,7 @@ struct SolarView: View {
                                 y: cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
 //                        .animation(.linear(duration: 0.3))
                 }
-                Spacer()
+//                Spacer()
             }
         }
     }

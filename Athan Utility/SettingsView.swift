@@ -43,6 +43,9 @@ import Adhan
  }
  */
 
+enum SettingsSectionType {
+    case General, Sounds, Prayer
+}
 
 @available(iOS 13.0.0, *)
 struct SettingsView: View {
@@ -50,7 +53,7 @@ struct SettingsView: View {
 //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
         
     var tempLocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
-    var tempNotificationSettings = NotificationSettings.shared.copy() as! NotificationSettings
+    @State var tempNotificationSettings = NotificationSettings.shared.copy() as! NotificationSettings
     var tempPrayerSettings = PrayerSettings.shared.copy() as! PrayerSettings
     
     @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
@@ -63,12 +66,12 @@ struct SettingsView: View {
     @State var maghribOverride: String = ""
     @State var ishaOverride: String = ""
     
+    @State var activeSection = SettingsSectionType.General
+    @State var dismissSounds = false
+    
     let calculationMethods = CalculationMethod.usefulCases()
     let madhabs = Madhab.allCases
     
-    @State var dummy = false
-    
-        
     var x: Int = {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
@@ -78,159 +81,197 @@ struct SettingsView: View {
     }()
 
     var body: some View {
-        
-//        NavigationView {
-//            Form {
-//                Section(footer: Text("Note: Enabling logging may slow down the app")) {
-//                    Picker(selection: $selectedMadhab, label: Text("Select a color")) {
-//                        ForEach(0..<2) { i in
-//                            Text("test").tag(madhabs[i])
-//                        }
-//                    }.pickerStyle(SegmentedPickerStyle())
-//
-//                }
-//
-//                Section {
-//                    Button(action: {
-//                    // activate theme!
-//                    }) {
-//                        Text("Save changes")
-//                    }
-//                }
-//            }
-//            .foregroundColor(Color.blue)
-//            .background(
-//                LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
-//                                .edgesIgnoringSafeArea(.all)
-//            )
-////            .navigationBarTitle("Settings")
-////            .foregroundColor(Color.red)
-//
-//
-//
-//        }
-        
-
-        
-        ZStack {
-            GeometryReader { g in
-                LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
-                    .edgesIgnoringSafeArea(.all)
-                
-                
-                ScrollView(showsIndicators: true) {
-                    VStack(alignment: .leading, spacing: nil) {
-                                                
-                        Text("Settings")
-                            .font(.largeTitle)
-                            .bold()
-                            .foregroundColor(.white)
-                            .padding(.bottom)
-                            
-                        VStack(alignment: .leading) {
-                            Text("Calculation method")
-                                .font(.headline)
-                                .bold()
-                                .foregroundColor(.white)
-                            Divider()
-                                .background(Color.white)
-                            Picker(selection: $selectedMethod, label: Text("Picker"), content: {
-                                ForEach(0..<calculationMethods.count) { mIndex in
-                                    let method = calculationMethods[mIndex]
-                                    Text(method.stringValue())
-                                        .foregroundColor(.white)
-                                        .tag(method)
-                                }
-                            })
-                            .pickerStyle(WheelPickerStyle())
-                            .labelsHidden()
-                            .foregroundColor(.white)
-                            .frame(width: g.size.width * 0.8)
-                            
-                            Text("Madhab")
-                                .font(.headline)
-                                .bold()
-                                .foregroundColor(.white)
-                            Divider()
-                                .background(Color.white)
-                            
-                            Picker(selection: $selectedMadhab, label: Text("Picker"), content: {
-                                ForEach(0..<madhabs.count) { mIndex in
-                                    let madhab = madhabs[mIndex]
-                                    Text(madhab.stringValue())
-                                        .foregroundColor(.white)
-                                        .autocapitalization(UITextAutocapitalizationType.words)
-                                        .tag(madhab)
-                                }
-                            })
-                            .pickerStyle(SegmentedPickerStyle())
-                            .labelsHidden()
-                            .foregroundColor(.white)
-                            .frame(width: g.size.width * 0.8)
-                            
-                            Text("Fajr Settings")
-                                .font(.headline)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(.top)
-                            
-                            
-                                
-                            Divider()
-                                .background(Color.white)
-                            ZStack {
-//                                Rectangle()
-//                                    .foregroundColor(.init(.sRGB, white: 1, opacity: 0.1))
-//                                    .cornerRadius(8)
-                                VStack {
-                                    Toggle(isOn: .constant(true), label: {
-                                        Text("New prayer alarm")
-                                    })
-                                        .font(Font.headline)
-                                        .foregroundColor(.white)
-                                        .padding([.top, .leading, .trailing], 12)
-                                    
-                                    Toggle(isOn: .constant(true), label: {
-                                            Text("15 minute alarm")
-                                    })
-                                        .font(Font.headline)
-                                        .foregroundColor(.white)
-                                        .padding([.top, .leading, .trailing], 12)
-
-//                                    [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex]
-                                    HStack {
-                                        Text("Custom name")
-                                            .font(Font.headline)
-                                            .foregroundColor(.white)
-                                        Spacer()
-                                        TextField("Fajr", text: $fajrOverride)
-                                            .disableAutocorrection(true)
-                                            .foregroundColor(Color.red)
-                                            
-//                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        
-
-//                                        TextField("Fajr", text: $fajrOverride) { (change) in
-//
-//                                        } onCommit: {
-//
-//                                        }
-                                    }
-                                        .padding([.top, .leading, .trailing], 12)
-                                    
-
-                                }
-                            }
+        GeometryReader { g in
+            switch activeSection {
+            case .Sounds:
+                SoundSettingView(tempNotificationSettings: $tempNotificationSettings, activeSection: $activeSection)
+                    .transition(.move(edge: .trailing))
+            case .Prayer:
+                PrayerSettingsView()
+                    .transition(.move(edge: .trailing))
+            case .General:
+                VStack(spacing: 0) {
+                    Divider()
+                        .foregroundColor(Color(.lightText))
+                        .onAppear {
+                            print(tempNotificationSettings.selectedSoundIndex)
                         }
 
+                    ScrollView(showsIndicators: true) {
+                        VStack(alignment: .leading, spacing: nil) {
+                                                    
+                            Text("Settings")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(.white)
+                                .padding(.bottom)
+                                
+                            VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Calculation method")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+
+                                    Divider()
+                                        .background(Color.white)
+                                }
+                                
+                                Picker(selection: $selectedMethod, label: Text("Picker"), content: {
+                                    ForEach(0..<calculationMethods.count) { mIndex in
+                                        let method = calculationMethods[mIndex]
+                                        Text(method.stringValue())
+                                            .foregroundColor(.white)
+                                            .tag(method)
+                                    }
+                                })
+                                .pickerStyle(WheelPickerStyle())
+                                .labelsHidden()
+                                .foregroundColor(.white)
+                                .frame(width: g.size.width * 0.8)
+                                .padding([.leading, .trailing])
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Madhab")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                    Divider()
+                                        .background(Color.white)
+                                }
+                                
+                                Picker(selection: $selectedMadhab, label: Text("Picker"), content: {
+                                    ForEach(0..<madhabs.count) { mIndex in
+                                        let madhab = madhabs[mIndex]
+                                        Text(madhab.stringValue())
+                                            .foregroundColor(.white)
+                                            .autocapitalization(UITextAutocapitalizationType.words)
+                                            .tag(madhab)
+                                    }
+                                })
+                                .pickerStyle(SegmentedPickerStyle())
+                                .labelsHidden()
+                                .foregroundColor(.white)
+                                
+                                Text("The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.")
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
+                                    .font(.caption)
+                                    .foregroundColor(Color(.lightText))
+                                
+                                
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Athan sounds")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                    Divider()
+                                        .background(Color.white)
+                                }
+                                .padding(.top)
+                                
+                                ZStack {
+                                    Button(action: {
+                                        print("show athan sounds view")
+                                        withAnimation {
+                                            activeSection = .Sounds
+                                        }
+                                    }, label: {
+                                        HStack {
+                                            Text(NotificationSettings.noteSoundNames[tempNotificationSettings.selectedSoundIndex])
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                                .padding()
+                                            Spacer()
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(.white)
+                                                .font(Font.headline.weight(.bold))
+                                                .padding()
+                                        }
+                                    })
+                                    .buttonStyle(GradientButtonStyle())
+                                }
+
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Notifications and customizations")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        .padding(.top)
+                                    Divider()
+                                        .background(Color.white)
+                                }
+
+                                ForEach(0..<6) { pIndex in
+                                    ZStack {
+                                        Button(action: {
+                                            
+                                        }, label: {
+                                            HStack {
+                                                Text("\(Prayer(index: pIndex).stringValue())")
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .padding()
+                                                Spacer()
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .padding()
+                                            }
+                                        })
+                                        .buttonStyle(GradientButtonStyle())
+                                    }
+                                }
+                                
+                                
+                                
+                                
+
+                                
+                            }
+                        }
+                        .padding()
+                        .padding()
+
+                    }
+                    
+                    Divider()
+                        .background(Color(.lightText))
+    //                    Rectangle()
+    //                        .frame(width: g.size.width, height: 1)
+    //                        .foregroundColor(Color(.lightText))
+                    
+                    
+                    
+                    
+                    HStack(alignment: .center) {
+                        Spacer()
+                        Button(action: {
+                            // tap vibration
+                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                            lightImpactFeedbackGenerator.impactOccurred()
+                        }) {
+                            Text("Done")
+                                .foregroundColor(Color(.lightText))
+                                .font(Font.body.weight(.bold))
+                        }
                     }
                     .padding()
-                    .padding()
+                    .padding([.leading, .trailing, .bottom])
+//                    .padding([.leading, .trailing, .bottom])
 
                 }
+                .transition(.opacity)
                 .frame(width: g.size.width)
+                .padding(.top)
+
             }
         }
+    
         
     }
 }
@@ -238,7 +279,12 @@ struct SettingsView: View {
 @available(iOS 13.0.0, *)
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+                .edgesIgnoringSafeArea(.all)
+            SettingsView()
+            
+        }
             .environmentObject(ObservableAthanManager.shared)
             .previewDevice("iPhone Xs")
             

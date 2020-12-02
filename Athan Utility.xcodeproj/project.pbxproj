@@ -23,6 +23,9 @@
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
+		3D13E89225773BFD0041F1AC /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E89125773BFD0041F1AC /* SettingCell.swift */; };
+		3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E898257757100041F1AC /* PrayerSettingsView.swift */; };
+		3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */; };
 		3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53C242827210010C709 /* Default-568h@2x.png */; };
 		3D15F53F242828590010C709 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53E242828590010C709 /* LaunchScreen.xib */; };
 		3D16F1042560851B00C78B12 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D16F1032560851B00C78B12 /* Adhan */; };
@@ -213,6 +216,9 @@
 		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
 		3D11D971251C2BD9009F6146 /* Widget_Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget_Provider.swift; sourceTree = "<group>"; };
+		3D13E89125773BFD0041F1AC /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		3D13E898257757100041F1AC /* PrayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSettingsView.swift; sourceTree = "<group>"; };
+		3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingView.swift; sourceTree = "<group>"; };
 		3D15F53C242827210010C709 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3D15F53E242828590010C709 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		3D16F10A2560859D00C78B12 /* AthanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanManager.swift; sourceTree = "<group>"; };
@@ -449,6 +455,9 @@
 			children = (
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
+				3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */,
+				3D13E898257757100041F1AC /* PrayerSettingsView.swift */,
+				3D13E89125773BFD0041F1AC /* SettingCell.swift */,
 				3D73EC412571D6B20010C47D /* PrayerRows.swift */,
 				3D1E50EF256F4620003E2E34 /* Colors.swift */,
 				3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */,
@@ -970,8 +979,10 @@
 				3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */,
 				3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */,
 				3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */,
+				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
+				3D13E89225773BFD0041F1AC /* SettingCell.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
 				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
@@ -999,6 +1010,7 @@
 				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */,
+				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
 				3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */,
 				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,

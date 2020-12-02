@@ -105,6 +105,9 @@ class NotificationSettings: Codable, NSCopying {
         }
 
     }
+    var selectedSoundIndex = 2
+    static let noteSoundNames = ["iOS Default", "Echo", "Makkah", "Madina",
+                                 "Al-Aqsa", "Egypt", "Abdulbaset", "Abdulghaffar"]
     var settings: [Prayer:NotificationSetting]
     private static let archiveName = "notificationsettings"
     

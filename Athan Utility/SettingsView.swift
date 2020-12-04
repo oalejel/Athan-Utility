@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Adhan
+import StoreKit
 
 /*
  Necessary features of setings:
@@ -52,12 +53,12 @@ struct SettingsView: View {
     @EnvironmentObject var manager: ObservableAthanManager
 //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
         
-    var tempLocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
+    @State var tempLocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
     @State var tempNotificationSettings = NotificationSettings.shared.copy() as! NotificationSettings
-    var tempPrayerSettings = PrayerSettings.shared.copy() as! PrayerSettings
+    @State var tempPrayerSettings = PrayerSettings.shared.copy() as! PrayerSettings
     
-    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
-    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
+//    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
+//    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
     
     @State var fajrOverride: String = ""
     @State var sunriseOverride: String = ""
@@ -65,6 +66,8 @@ struct SettingsView: View {
     @State var asrOverride: String = ""
     @State var maghribOverride: String = ""
     @State var ishaOverride: String = ""
+    
+    @Binding var parentSession: CurrentView // used to trigger transition back
     
     @State var activeSection = SettingsSectionType.General
     @State var dismissSounds = false
@@ -76,6 +79,8 @@ struct SettingsView: View {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
         UITableView.appearance().backgroundColor = .clear
+//        UITableView.appearance().tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
+//        UITableView.appearance().tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
         
         return 0
     }()
@@ -117,19 +122,29 @@ struct SettingsView: View {
                                         .background(Color.white)
                                 }
                                 
-                                Picker(selection: $selectedMethod, label: Text("Picker"), content: {
+                                Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
                                     ForEach(0..<calculationMethods.count) { mIndex in
                                         let method = calculationMethods[mIndex]
                                         Text(method.stringValue())
                                             .foregroundColor(.white)
                                             .tag(method)
+                                            .listRowInsets(EdgeInsets())
                                     }
                                 })
+                                
                                 .pickerStyle(WheelPickerStyle())
                                 .labelsHidden()
+                                .scaledToFit()
                                 .foregroundColor(.white)
-                                .frame(width: g.size.width * 0.8)
-                                .padding([.leading, .trailing])
+//                                .frame(width: g.size.width * 0.8)
+//                                .padding([.leading, .trailing])
+                                
+                                Text("Calculation methods primarily differ in  Fajr and Isha sun angles.")
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
+                                    .font(.caption)
+                                    .foregroundColor(Color(.lightText))
+                                    .padding(.bottom)
                                 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("Madhab")
@@ -140,7 +155,7 @@ struct SettingsView: View {
                                         .background(Color.white)
                                 }
                                 
-                                Picker(selection: $selectedMadhab, label: Text("Picker"), content: {
+                                Picker(selection: $tempPrayerSettings.madhab, label: Text("Picker"), content: {
                                     ForEach(0..<madhabs.count) { mIndex in
                                         let madhab = madhabs[mIndex]
                                         Text(madhab.stringValue())
@@ -158,18 +173,17 @@ struct SettingsView: View {
                                     .lineLimit(nil)
                                     .font(.caption)
                                     .foregroundColor(Color(.lightText))
-                                
+                                    .padding(.bottom)
                                 
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text("Athan sounds")
+                                    Text("Athan sound")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                     Divider()
                                         .background(Color.white)
                                 }
-                                .padding(.top)
                                 
                                 ZStack {
                                     Button(action: {
@@ -227,26 +241,33 @@ struct SettingsView: View {
                                     }
                                 }
                                 
-                                
-                                
+//                                Button(action: {
+//
+//                                }, label: {
+//                                    HStack() {
+//                                        Spacer()
+//                                        Text("Rate Athan Utility!")
+//                                            .font(.headline)
+//                                            .bold()
+//                                            .foregroundColor(.white)
+//                                            .padding()
+//                                        Spacer()
+//                                    }
+//                                })
+//                                .buttonStyle(GradientButtonStyle())
                                 
 
-                                
                             }
+                    
                         }
                         .padding()
                         .padding()
-
                     }
-                    
                     Divider()
                         .background(Color(.lightText))
     //                    Rectangle()
     //                        .frame(width: g.size.width, height: 1)
     //                        .foregroundColor(Color(.lightText))
-                    
-                    
-                    
                     
                     HStack(alignment: .center) {
                         Spacer()
@@ -254,6 +275,8 @@ struct SettingsView: View {
                             // tap vibration
                             let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                             lightImpactFeedbackGenerator.impactOccurred()
+                            
+                            parentSession = .Main // tell parent to go back
                         }) {
                             Text("Done")
                                 .foregroundColor(Color(.lightText))
@@ -268,11 +291,8 @@ struct SettingsView: View {
                 .transition(.opacity)
                 .frame(width: g.size.width)
                 .padding(.top)
-
             }
         }
-    
-        
     }
 }
 
@@ -282,11 +302,10 @@ struct SettingsView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            SettingsView()
+            SettingsView(parentSession: .constant(.Settings))
             
         }
             .environmentObject(ObservableAthanManager.shared)
             .previewDevice("iPhone Xs")
-            
     }
 }

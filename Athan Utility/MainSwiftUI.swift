@@ -96,7 +96,7 @@ struct MainSwiftUI: View {
                         Text("Locatoin view")
                             .transition(.opacity)
                     case .Settings:
-                        SettingsView()
+                        SettingsView(parentSession: $currentView)
                             .transition(.opacity)
                     case .Main:
                         VStack(alignment: .leading, spacing: 0) {

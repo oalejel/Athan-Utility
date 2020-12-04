@@ -8,13 +8,18 @@
 
 import SwiftUI
 
+@available(iOS 13.0.0, *)
 struct GradientButtonStyle: ButtonStyle {
-    @available(iOS 13.0.0, *)
+    let foregroundColor: Color
+    init(color: Color = .init(.sRGB, white: 1, opacity: 0.1)) {
+        foregroundColor = color
+    }
+    
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .background(
                 Rectangle()
-                    .foregroundColor(.init(.sRGB, white: 1, opacity: 0.1))
+                    .foregroundColor(foregroundColor)
             )
             .cornerRadius(12)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)

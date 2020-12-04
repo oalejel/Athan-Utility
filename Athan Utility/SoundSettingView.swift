@@ -51,9 +51,6 @@ struct SoundSettingView: View {
                                         .font(Font.headline.weight(.bold))
                                         .padding()
                                         .opacity(selectedSoundIndex == sIndex ? 1 : 0)
-                                    //                                if tempNotificationSettings.selectedSoundIndex == sIndex {
-                                    //
-                                    //                                }
                                 }
                             })
                             .buttonStyle(GradientButtonStyle())

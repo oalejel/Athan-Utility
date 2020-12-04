@@ -126,7 +126,7 @@ class AthanProvider: IntentTimelineProvider {
             
             let timeRange = manager.guaranteedNextPrayerTime().timeIntervalSince(Date())
             // avoid splitting up too much: pick larger of 10% or min(% worth of 10 mins, 0.5)
-            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentSplit = max(20, 100 * min(0.5, 600 / timeRange))
             let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
             for increment in 1..<Int(100.0 / percentSplit) {
@@ -152,7 +152,6 @@ class AthanProvider: IntentTimelineProvider {
             }
         }
         
-
         // create entry for every prayer AFTER the current prayer today
         // this prevents putting in entries for dates before now
         for pIndex in (1 + (manager.currentPrayer ?? Prayer.isha).rawValue())..<6 {
@@ -170,7 +169,7 @@ class AthanProvider: IntentTimelineProvider {
             // create a timestamp for every 10% increment between prayerDate and the next prayer date
             // this allows the view to update in order to show a proper competion status
             let timeRange = nextTime.timeIntervalSince(prayerDate)
-            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentSplit = max(20, 100 * min(0.5, 600 / timeRange))
             let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
             for increment in 0..<Int(100.0 / percentSplit) {
@@ -209,9 +208,9 @@ class AthanProvider: IntentTimelineProvider {
             }
         }
         
-        // now add times for tomorrow up til dhuhr time (when we reach asr, we want tomorrow's times to be ready for isha -> fajr's calc
+        // now add times for tomorrow up til fajr time (when we reach asr, we want tomorrow's times to be ready for isha -> fajr's calc
         // DO NOT GO UP TO ISHA
-        for tomorrowPIndex in 0..<2 {
+        for tomorrowPIndex in 0..<1 {
             let iterationPrayer = Prayer(index: tomorrowPIndex)
             let prayerDate = manager.tomorrowTimes.time(for: iterationPrayer)
             
@@ -223,7 +222,7 @@ class AthanProvider: IntentTimelineProvider {
             // create a timestamp for every 10% increment between prayerDate and the next prayer date
             // this allows the view to update in order to show a proper competion status
             let timeRange = nextTime.timeIntervalSince(prayerDate)
-            let percentSplit = max(10.0, 100 * min(0.5, 600 / timeRange))
+            let percentSplit = max(20, 100 * min(0.5, 600 / timeRange))
             let percentIncrements = floor(timeRange * percentSplit / 100) // seconds between each 10%
 
             for increment in 0..<Int(100.0 / percentSplit) {

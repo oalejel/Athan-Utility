@@ -466,7 +466,7 @@ public class SwiftySuncalc
      */
     public func getPosition(date: Date, lat: Double, lng: Double) -> Dictionary<String, Double>
     {
-        var lw = rad * -lng,
+        let lw = rad * -lng,
         phi = rad * lat,
         d = toDays(date: date),
         
@@ -556,7 +556,7 @@ public class SwiftySuncalc
      */
     public func getMoonPosition(date: Date, lat: Double, lng: Double) -> Dictionary<String, Double>
     {
-        var lw: Double = rad * -lng,
+        let lw: Double = rad * -lng,
         phi: Double = rad * lat,
         d: Double = toDays(date: date),
         
@@ -600,7 +600,7 @@ public class SwiftySuncalc
             d = toDays(date: Date())
         }
         
-        var s: Dictionary<String, Double> = sunCoords(d: d),
+        let s: Dictionary<String, Double> = sunCoords(d: d),
         m: Dictionary<String, Double> = moonCoords(d: d),
         // Distance from Earth to Sun in km
         sdist: Double = 149598000.0,

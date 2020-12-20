@@ -10,7 +10,6 @@
 //
 
 import UIKit
-import SqueezeButton
 
 open class SwiftSpinner: UIView {
     

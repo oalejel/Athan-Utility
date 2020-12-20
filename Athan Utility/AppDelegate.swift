@@ -13,10 +13,20 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // NOTE: ask for notifications permissions once features are shown so that the
         // user can digest the app before allowing notifications
+        
+        if #available(iOS 13.0.0, *) {
+            // assuming swift ui works in this case/
+            print("SWIFT UI WILL HANDLE IOS 13+")
+        } else {
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let sb = UIStoryboard(name: "Main", bundle: Bundle.main)
+            window?.rootViewController = sb.instantiateInitialViewController()
+            window?.makeKeyAndVisible()
+        }
         
         UNUserNotificationCenter.current().delegate = self
         if let shortcut = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {

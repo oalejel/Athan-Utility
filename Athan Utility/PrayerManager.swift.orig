@@ -36,21 +36,13 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-enum DeprecatedAlarmEnum: Int {
+enum AlarmSetting: Int {
     case all, noEarly, none
 }
 
-class AlarmSetting: Codable {
+class PrayerSetting {
     var soundEnabled = true
-    var startAlarmEnabled = true
-    
-    var reminderMinutes = 15
-    var reminderAlarmEnabled = true
-}
-
-class DeprecatedPrayerSetting {
-    var soundEnabled = true
-    var alarmType = DeprecatedAlarmEnum.all
+    var alarmType = AlarmSetting.all
 }
 
 class PrayerManager: NSObject, CLLocationManagerDelegate {
@@ -116,7 +108,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var timesSettings: [PrayerType : AlarmSetting]!
     var soundsSettings: [PrayerType : Bool] = [:]
     // ultimate settings object..
-    var prayerSettings: [PrayerType : DeprecatedPrayerSetting] = [:]
+    var prayerSettings: [PrayerType : PrayerSetting] = [:]
     
     var delegate: PrayerManagerDelegate?
     
@@ -221,6 +213,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
         
         self.calculationCompletionClosure = nil
     }
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LOCATION MANAGER ERROR: \(error.localizedDescription)")
@@ -358,9 +351,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             for i in 0...5 {
                 let p = PrayerType(rawValue: i)!
                 let pSettingDict = prayersDict[p.stringValue()]
-                let s = DeprecatedPrayerSetting()
+                let s = PrayerSetting()
                 if let at = pSettingDict?["alarmtype"] as? NSNumber {
-                    s.alarmType = DeprecatedAlarmEnum(rawValue: Int(truncating: at))!
+                    s.alarmType = AlarmSetting(rawValue: Int(truncating: at))!
                     if let sound = pSettingDict?["soundenabled"] as? Bool {
                         s.soundEnabled = sound
                     }
@@ -369,7 +362,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         } else {
             for i in 0...5 {
-                let s = DeprecatedPrayerSetting()
+                let s = PrayerSetting()
                 let p = PrayerType(rawValue: i)!
                 prayerSettings[p] = s
             }
@@ -827,9 +820,13 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             if currentPrayer == .isha {
                 startIndex = 0
             }
+<<<<<<< HEAD
 //            if currentPrayer == .none {
 //                startIndex = 0
 //            }
+=======
+            
+>>>>>>> e453a7d3bc6a4635764b1279b5cf8976d1c2d95d
             for i in (startIndex)...5 {
                 let p = PrayerType(rawValue: i)!
                 if let pDate = todayPrayerTimes[p.rawValue] {

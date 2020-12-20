@@ -17,14 +17,14 @@ class PrayerSettingController: UITableViewController {
     var switches: [UISwitch] = []
     var switchesOn: [Bool] = [true,true,true]
     var switchesEnabled: [Bool] = [true,true,true]
-    var initialSettings: PrayerSetting!
+    var initialSettings: DeprecatedPrayerSetting!
     
     init(style: UITableView.Style, prayer: PrayerType) {
         super.init(style: style)
         p = prayer
         //create a settings object to be compared later
         let initialSettingsPointer = Global.manager.prayerSettings[p]
-        initialSettings = PrayerSetting()
+        initialSettings = DeprecatedPrayerSetting()
         initialSettings.alarmType = initialSettingsPointer!.alarmType
         initialSettings.soundEnabled = initialSettingsPointer!.soundEnabled
         
@@ -129,9 +129,9 @@ class PrayerSettingController: UITableViewController {
             case 2:
                 Global.manager.prayerSettings[p]?.alarmType = .all
             case 1:
-                Global.manager.prayerSettings[p]?.alarmType = AlarmSetting.noEarly
+                Global.manager.prayerSettings[p]?.alarmType = DeprecatedAlarmEnum.noEarly
             case 0:
-                Global.manager.prayerSettings[p]?.alarmType = AlarmSetting.none
+                Global.manager.prayerSettings[p]?.alarmType = DeprecatedAlarmEnum.none
                 Global.manager.prayerSettings[p]?.soundEnabled = false
             default:
                 break

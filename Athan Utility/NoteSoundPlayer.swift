@@ -19,10 +19,7 @@ class NoteSoundPlayer: NSObject {
         audioPlayer?.stop()
         
         do {
-            var fileName = Settings.noteSoundFileNames[index]
-            if fileName == "DEFAULT" {
-                AudioServicesPlaySystemSound(1315);
-            } else {
+            if var fileName = NotificationSettings.Sounds(rawValue: index)?.filename() {
                 if isPreview { fileName += "-preview" }
                 if let asset = NSDataAsset(name: fileName) {
                     try audioPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
@@ -37,6 +34,8 @@ class NoteSoundPlayer: NSObject {
                     }
                     
                 }
+            } else {
+                AudioServicesPlaySystemSound(1315);
             }
         } catch {
             fatalError("unable to play audio file")

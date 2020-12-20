@@ -36,13 +36,21 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-//enum AlarmSetting: Int {
-//    case all, noEarly, none
-//}
+enum DeprecatedAlarmEnum: Int {
+    case all, noEarly, none
+}
 
-class PrayerSetting {
+class AlarmSetting: Codable {
     var soundEnabled = true
-    var alarmType = AlarmSetting.all
+    var startAlarmEnabled = true
+    
+    var reminderMinutes = 15
+    var reminderAlarmEnabled = true
+}
+
+class DeprecatedPrayerSetting {
+    var soundEnabled = true
+    var alarmType = DeprecatedAlarmEnum.all
 }
 
 class PrayerManager: NSObject, CLLocationManagerDelegate {
@@ -108,7 +116,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
     var timesSettings: [PrayerType : AlarmSetting]!
     var soundsSettings: [PrayerType : Bool] = [:]
     // ultimate settings object..
-    var prayerSettings: [PrayerType : PrayerSetting] = [:]
+    var prayerSettings: [PrayerType : DeprecatedPrayerSetting] = [:]
     
     var delegate: PrayerManagerDelegate?
     
@@ -350,9 +358,9 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             for i in 0...5 {
                 let p = PrayerType(rawValue: i)!
                 let pSettingDict = prayersDict[p.stringValue()]
-                let s = PrayerSetting()
+                let s = DeprecatedPrayerSetting()
                 if let at = pSettingDict?["alarmtype"] as? NSNumber {
-                    s.alarmType = AlarmSetting(rawValue: Int(truncating: at))!
+                    s.alarmType = DeprecatedAlarmEnum(rawValue: Int(truncating: at))!
                     if let sound = pSettingDict?["soundenabled"] as? Bool {
                         s.soundEnabled = sound
                     }
@@ -361,7 +369,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
             }
         } else {
             for i in 0...5 {
-                let s = PrayerSetting()
+                let s = DeprecatedPrayerSetting()
                 let p = PrayerType(rawValue: i)!
                 prayerSettings[p] = s
             }

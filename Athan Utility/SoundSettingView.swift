@@ -13,7 +13,7 @@ struct SoundSettingView: View {
     
     #warning("make sure updating this value changes earlier settings?")
     @Binding var tempNotificationSettings: NotificationSettings
-    @State var selectedSoundIndex = 0
+    @State var viewSelectedSound = NotificationSettings.Sounds.ios_default
     @Binding var activeSection: SettingsSectionType
     
     var body: some View {
@@ -27,20 +27,20 @@ struct SoundSettingView: View {
                         .foregroundColor(.white)
                         .padding(.bottom)
                         .onAppear {
-                            selectedSoundIndex = tempNotificationSettings.selectedSoundIndex
+                            viewSelectedSound = tempNotificationSettings.selectedSound
                         }
-                    ForEach(0..<NotificationSettings.noteSoundNames.count) { sIndex in
+                    ForEach(0..<NotificationSettings.Sounds.allCases.count) { sIndex in
                         ZStack {
                             Button(action: {
                                 // play sound effect
                                 // set setting, making checkmark change
                                 withAnimation {
-                                    selectedSoundIndex = sIndex
-                                    tempNotificationSettings.selectedSoundIndex = selectedSoundIndex
+                                    viewSelectedSound = NotificationSettings.Sounds(rawValue: sIndex)!
+                                    tempNotificationSettings.selectedSound = viewSelectedSound
                                 }
                             }, label: {
                                 HStack {
-                                    Text(NotificationSettings.noteSoundNames[sIndex])
+                                    Text(NotificationSettings.Sounds(rawValue: sIndex)!.localizedString())
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -50,7 +50,7 @@ struct SoundSettingView: View {
                                         .foregroundColor(.white)
                                         .font(Font.headline.weight(.bold))
                                         .padding()
-                                        .opacity(selectedSoundIndex == sIndex ? 1 : 0)
+                                        .opacity(viewSelectedSound.rawValue == sIndex ? 1 : 0)
                                 }
                             })
                             .buttonStyle(GradientButtonStyle())

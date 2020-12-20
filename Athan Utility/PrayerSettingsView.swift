@@ -7,13 +7,67 @@
 //
 
 import SwiftUI
+import Adhan
+
+/*
+ Custom offset: 0 minutes
+ Custom name: (Fajr)
+ 15 minute reminder [switch]
+ normal reminder [switch]
+ Play athan sound [switch] (if no, play no sound?)
+ 
+ would be nice if users could run app 
+ */
 
 @available(iOS 13.0.0, *)
 struct PrayerSettingsView: View {
-        
-    var body: some View {
-        Text("test")
+    @Binding var setting: AlarmSetting
+    var prayer: Prayer = .fajr
+    // state to keep strings in view updated
+    // commit this value to storage later if changed
     
+    @State var customPrayerName: String? = nil
+    
+    var body: some View {
+        ScrollView(showsIndicators: true) {
+            VStack(alignment: .leading, spacing: nil) {
+                                        
+                Text("\(customPrayerName ?? prayer.localizedString()) settings")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(.white)
+                    .padding(.bottom)
+                    
+                VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Alarms")
+                            .font(.headline)
+                            .bold()
+                            .foregroundColor(.white)
+                        Divider()
+                            .background(Color.white)
+                        
+                        HStack {
+                            Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
+                                Text("Reminder alarm")
+                                    .font(.headline)
+                                    .bold()
+                                    .foregroundColor(.white)
+
+                            })
+                        }
+                        .padding()
+
+                        
+                    }
+
+                    
+                }
+            }
+        }
+        .padding()
+        
+        
     }
 }
 
@@ -23,7 +77,7 @@ struct PrayerSettingsView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            PrayerSettingsView()
+            PrayerSettingsView(setting: .constant(AlarmSetting()))
             
         }
             .environmentObject(ObservableAthanManager.shared)

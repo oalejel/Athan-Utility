@@ -147,6 +147,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         todayTimes = calculateTimes(referenceDate: Date())
         tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400)) // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer() ?? .isha
+        assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
     
     private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
@@ -215,17 +216,38 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
                                            userInfo: nil, repeats: false)
     }
     
+    private func watchForImminentPrayerUpdate() {
+        // enter a background thread loop to wait on a change in case this timer is triggered too early
+        let samplePrayer = todayTimes.currentPrayer()
+        let nextTime = guaranteedNextPrayerTime()
+        let timeUntilChange = nextTime.timeIntervalSince(Date())
+        if timeUntilChange < 5 && timeUntilChange > 0 {
+            DispatchQueue.global().async {
+                // wait on a change
+                while (samplePrayer == self.todayTimes.currentPrayer()) {
+                    // do nothing
+                } // on break, we can update our prayer
+                DispatchQueue.main.async {
+                    self.currentPrayer = self.todayTimes.currentPrayer() ?? .isha
+                }
+            }
+        } else {
+            currentPrayer = todayTimes.currentPrayer() ?? .isha
+        }
+    }
+    
     @objc func newPrayer() {
-        print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+//        print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
 //        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
-        currentPrayer = todayTimes.nextPrayer() ?? .fajr
+        watchForImminentPrayerUpdate()
     }
     
     @objc func fifteenMinsLeft() {
         // trigger a didset
-        print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+//        print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
 //        assert(currentPrayer != todayTimes.nextPrayer() ?? .fajr)
-        currentPrayer = todayTimes.nextPrayer() ?? .fajr
+//        currentPrayer = todayTimes.currentPrayer() ?? .isha
+        watchForImminentPrayerUpdate()
     }
     
     @objc func newDay() {
@@ -237,21 +259,25 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     // calculate next prayer, considering next day's .fajr time in case we are on isha time
     func guaranteedNextPrayerTime() -> Date {
-        var nextPrayer: Prayer? = todayTimes.nextPrayer()
+        let currentPrayer = todayTimes.currentPrayer()
+        // do not use api nextPrayeras it does not distinguish tomorrow fajr from today fajr nil
+//        var nextPrayer: Prayer? = todayTimes.nextPrayer()
         var nextPrayerTime: Date! = nil
-        if nextPrayer == nil {
-            nextPrayer = .fajr
-            nextPrayerTime = tomorrowTimes.fajr // distinguish from today's fajr time
-        } else {
-            nextPrayerTime = todayTimes.time(for: nextPrayer!)
+        if currentPrayer == .isha { // case for reading from tomorrow fajr times
+            nextPrayerTime = tomorrowTimes.fajr
+        } else if currentPrayer == nil { // case for reading from today's fajr times
+            nextPrayerTime = todayTimes.fajr
+        } else { // otherwise, next prayer time is based on today
+            nextPrayerTime = todayTimes.time(for: currentPrayer!.next())
         }
+        
         return nextPrayerTime
     }
     
     func guaranteedCurrentPrayerTime() -> Date {
         var currentPrayer: Prayer? = todayTimes.currentPrayer()
         var currentPrayerTime: Date! = nil
-        if currentPrayer == nil {
+        if currentPrayer == nil { // case of new day before fajr
             currentPrayer = .isha
             currentPrayerTime = todayTimes.isha.addingTimeInterval(-86400) // shift back today isha approximation by a day
         } else {

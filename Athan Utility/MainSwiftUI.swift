@@ -78,10 +78,13 @@ struct MainSwiftUI: View {
                 let timeRemainingString: String = {
                     let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
                                                             to: AthanManager.shared.guaranteedNextPrayerTime())
-                    if comps.hour == 0 {
-                        return "\(comps.minute!)m left"
-                    } else if comps.minute == 0 {
+                    // 1h 2m | 1h | 53m | 10s
+                    if comps.hour == 0 && comps.minute == 0 {
+                        return "<1m left"
+                    } else if comps.minute == 0 { // only
                         return "\(comps.hour!)h left"
+                    } else if comps.hour == 0 { // only mins
+                        return "\(comps.minute!)m left"
                     }
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
@@ -93,7 +96,7 @@ struct MainSwiftUI: View {
                     
                     switch currentView {
                     case .Location:
-                        Text("Locatoin view")
+                        Text("Location view")
                             .transition(.opacity)
                     case .Settings:
                         SettingsView(parentSession: $currentView)
@@ -131,12 +134,27 @@ struct MainSwiftUI: View {
                                             .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
 
-                                        Text("\(timeRemainingString)")
-                                            .fontWeight(.bold)
-                                            .autocapitalization(.none)
-                                            .foregroundColor(Color(.lightText))
-                                            .multilineTextAlignment(.center)
-                                            .opacity(1 - 0.8 * tomorrowPeekProgress)
+
+                                        
+                                        // for now, time remaining will only show seconds on ios >=14
+                                        if #available(iOS 14.0, *) {
+                                            Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
+                                                .fontWeight(.bold)
+                                                .autocapitalization(.none)
+                                                .foregroundColor(Color(.lightText))
+                                                .multilineTextAlignment(.center)
+                                                .opacity(1 - 0.8 * tomorrowPeekProgress)
+
+                                        } else {
+                                            // Fallback on earlier versions
+                                            Text("\(timeRemainingString)")
+                                                .fontWeight(.bold)
+                                                .autocapitalization(.none)
+                                                .foregroundColor(Color(.lightText))
+                                                .multilineTextAlignment(.center)
+                                                .opacity(1 - 0.8 * tomorrowPeekProgress)
+
+                                        }
                                     }
                                 }
                                 
@@ -347,6 +365,7 @@ struct MainSwiftUI: View {
                             .padding([.leading, .trailing, .bottom])
                             .padding([.leading, .trailing, .bottom])
                         }
+                        .transition(.opacity)
                     }
                     
                 }
@@ -373,13 +392,8 @@ struct ProgressBar: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .foregroundColor(colors.first)
-                        .frame(width: progress * g.size.width, height: lineWidth)
+                        .frame(width: max(lineWidth, progress * g.size.width), height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
-                        .mask(
-                            Rectangle()
-                                .frame(width: g.size.width, height: lineWidth)
-                                .cornerRadius(lineWidth * 0.5)
-                        )
                 }
             }
             .padding(.zero)

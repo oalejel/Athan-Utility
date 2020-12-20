@@ -101,6 +101,7 @@ extension Prayer: Codable {
         return NSLocalizedString(self.stringValue(), comment: "")
     }
     
+    // never returns nil
     func next() -> Prayer {
         if self == .isha {return .fajr}
         return Prayer(index: self.rawValue() + 1)

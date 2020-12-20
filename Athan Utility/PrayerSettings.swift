@@ -56,16 +56,45 @@ class PrayerSettings: Codable, NSCopying {
 }
 
 // MARK: - Notification Settings
-enum AlarmSetting: Int, Codable {
-    case all, noEarly, none
-}
 
-struct NotificationSetting: Codable {
-    var soundEnabled = true
-    var alarmType = AlarmSetting.all
-}
 
 class NotificationSettings: Codable, NSCopying {
+    enum Sounds: Int, CaseIterable, Codable {
+        case ios_default
+        case echo
+        case makkah
+        case madina
+        case alaqsa
+        case egypt
+        case abdulbaset
+        case abdulghaffar
+        
+        func localizedString() -> String { #warning("make this use localized strings")
+            switch self {
+            case .ios_default: return "iOS Default"
+            case .echo: return "Echo"
+            case .makkah: return "Makkah"
+            case .madina: return "Madina"
+            case .alaqsa: return "Al-Aqsa"
+            case .egypt: return "Egypt"
+            case .abdulbaset: return "Abdulbaset"
+            case .abdulghaffar: return "Abdulghaffar"
+            }
+        }
+        
+        func filename() -> String? {
+            switch self {
+            case .ios_default: return nil // no file associated
+            case .echo: return "echo"
+            case .makkah: return "makkah"
+            case .madina: return "madina"
+            case .alaqsa: return "alaqsa"
+            case .egypt: return "egypt"
+            case .abdulbaset: return "abdulbaset"
+            case .abdulghaffar: return "abdulghaffar"
+            }
+        }
+    }
     
     static var shared: NotificationSettings = {
         if let archive = checkArchive() {
@@ -73,12 +102,12 @@ class NotificationSettings: Codable, NSCopying {
         } else {
             let defaultSettings = NotificationSettings(settings: [:])
             defaultSettings.settings = [
-                .fajr : NotificationSetting(soundEnabled: true, alarmType: .all),
-                .sunrise : NotificationSetting(soundEnabled: true, alarmType: .all),
-                .dhuhr : NotificationSetting(soundEnabled: true, alarmType: .all),
-                .asr : NotificationSetting(soundEnabled: true, alarmType: .all),
-                .maghrib : NotificationSetting(soundEnabled: true, alarmType: .all),
-                .isha : NotificationSetting(soundEnabled: true, alarmType: .all),
+                .fajr : AlarmSetting(),
+                .sunrise : AlarmSetting(),
+                .dhuhr : AlarmSetting(),
+                .asr : AlarmSetting(),
+                .maghrib : AlarmSetting(),
+                .isha : AlarmSetting()
             ]
             
             
@@ -86,7 +115,7 @@ class NotificationSettings: Codable, NSCopying {
         }
     }()
     
-    init(settings: [Prayer:NotificationSetting]) {
+    init(settings: [Prayer:AlarmSetting]) {
         self.settings = settings
     }
     
@@ -105,10 +134,8 @@ class NotificationSettings: Codable, NSCopying {
         }
 
     }
-    var selectedSoundIndex = 2
-    static let noteSoundNames = ["iOS Default", "Echo", "Makkah", "Madina",
-                                 "Al-Aqsa", "Egypt", "Abdulbaset", "Abdulghaffar"]
-    var settings: [Prayer:NotificationSetting]
+    var selectedSound = Sounds.makkah
+    var settings: [Prayer:AlarmSetting]
     private static let archiveName = "notificationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {

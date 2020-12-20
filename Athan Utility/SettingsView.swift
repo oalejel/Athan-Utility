@@ -92,14 +92,15 @@ struct SettingsView: View {
                 SoundSettingView(tempNotificationSettings: $tempNotificationSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
             case .Prayer:
-                PrayerSettingsView()
+                #warning("change binding")
+                PrayerSettingsView(setting: .constant(AlarmSetting()))
                     .transition(.move(edge: .trailing))
             case .General:
                 VStack(spacing: 0) {
                     Divider()
                         .foregroundColor(Color(.lightText))
                         .onAppear {
-                            print(tempNotificationSettings.selectedSoundIndex)
+                            print(tempNotificationSettings.selectedSound)
                         }
 
                     ScrollView(showsIndicators: true) {
@@ -139,7 +140,7 @@ struct SettingsView: View {
 //                                .frame(width: g.size.width * 0.8)
 //                                .padding([.leading, .trailing])
                                 
-                                Text("Calculation methods primarily differ in  Fajr and Isha sun angles.")
+                                Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
                                     .fixedSize(horizontal: false, vertical: true)
                                     .lineLimit(nil)
                                     .font(.caption)
@@ -193,7 +194,7 @@ struct SettingsView: View {
                                         }
                                     }, label: {
                                         HStack {
-                                            Text(NotificationSettings.noteSoundNames[tempNotificationSettings.selectedSoundIndex])
+                                            Text(tempNotificationSettings.selectedSound.localizedString())
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -275,8 +276,9 @@ struct SettingsView: View {
                             // tap vibration
                             let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                             lightImpactFeedbackGenerator.impactOccurred()
-                            
-                            parentSession = .Main // tell parent to go back
+                            withAnimation {
+                                parentSession = .Main // tell parent to go back
+                            }
                         }) {
                             Text("Done")
                                 .foregroundColor(Color(.lightText))

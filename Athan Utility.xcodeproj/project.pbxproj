@@ -102,6 +102,7 @@
 		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3D8CE83B256965F0006D6E46 /* PrayerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */; };
+		3D9054AF25808DFB00A0F72A /* Old_widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9054AE25808DFB00A0F72A /* Old_widget.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -136,6 +137,7 @@
 		3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3DB56CF4228369A200B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6AF502576FE06006241D4 /* View+Extensions.swift */; };
+		3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */; };
 		3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB30CA236B109200D47C7C /* UIView+Fading.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
@@ -292,6 +294,7 @@
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSettings.swift; sourceTree = "<group>"; };
+		3D9054AE25808DFB00A0F72A /* Old_widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Old_widget.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
 		3D93E9DF21829D0C002019B7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -319,6 +322,7 @@
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DB6AF502576FE06006241D4 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
+		3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Old_Frequent_Widget_Provider copy.swift"; sourceTree = "<group>"; };
 		3DCB30CA236B109200D47C7C /* UIView+Fading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -473,6 +477,8 @@
 			children = (
 				3D20CB212518DA0900275206 /* Athan_Widget.swift */,
 				3D11D971251C2BD9009F6146 /* Widget_Provider.swift */,
+				3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */,
+				3D9054AE25808DFB00A0F72A /* Old_widget.swift */,
 				3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */,
 				3D20CB242518DA0B00275206 /* Assets.xcassets */,
 				3D20CB262518DA0B00275206 /* Info.plist */,
@@ -1040,6 +1046,8 @@
 				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
 				3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */,
 				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
+				3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */,
+				3D9054AF25808DFB00A0F72A /* Old_widget.swift in Sources */,
 				3D73EC3B25717ED20010C47D /* PrayerSymbol.swift in Sources */,
 				3D73EBF1257027230010C47D /* PrayerSettings.swift in Sources */,
 			);

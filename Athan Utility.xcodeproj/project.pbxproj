@@ -144,6 +144,7 @@
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
 		3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */; };
 		3DD51AF620FC5A00000CBFFC /* Athan_Utility_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD51AF520FC5A00000CBFFC /* Athan_Utility_UITests.swift */; };
+		3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */; };
 		3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */; };
 		3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DF0EE9B21038E3D00624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
@@ -338,6 +339,7 @@
 		3DD843B820CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3DD843B920CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3DD843BC20CE5D3200D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationSettingController.swift; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
 				3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */,
 				3D13E898257757100041F1AC /* PrayerSettingsView.swift */,
@@ -1027,6 +1030,7 @@
 				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
+				3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

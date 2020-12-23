@@ -28,44 +28,67 @@ struct PrayerSettingsView: View {
     
     @State var customPrayerName: String? = nil
     
+    @Binding var activeSection: SettingsSectionType
+    
     var body: some View {
-        ScrollView(showsIndicators: true) {
-            VStack(alignment: .leading, spacing: nil) {
-                                        
-                Text("\(customPrayerName ?? prayer.localizedString()) settings")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(.white)
-                    .padding(.bottom)
-                    
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Alarms")
-                            .font(.headline)
-                            .bold()
-                            .foregroundColor(.white)
-                        Divider()
-                            .background(Color.white)
+        VStack {
+            ScrollView(showsIndicators: true) {
+                VStack(alignment: .leading, spacing: nil) {
+                                            
+                    Text("\(customPrayerName ?? prayer.localizedString()) settings")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.bottom)
                         
-                        HStack {
-                            Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
-                                Text("Reminder alarm")
-                                    .font(.headline)
-                                    .bold()
-                                    .foregroundColor(.white)
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Alarms")
+                                .font(.headline)
+                                .bold()
+                                .foregroundColor(.white)
+                            Divider()
+                                .background(Color.white)
+                            
+                            HStack {
+                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
+                                    Text("Reminder alarm")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
 
-                            })
+                                })
+                            }
+                            .padding()
+
+                            
                         }
-                        .padding()
 
                         
                     }
-
-                    
                 }
             }
+            .padding()
+            
+            HStack(alignment: .center) {
+                Spacer()
+                
+                Button(action: {
+                    // tap vibration
+                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                    lightImpactFeedbackGenerator.impactOccurred()
+                    withAnimation {
+                        self.activeSection = .General
+                    }
+                }) {
+                    Text("Done")
+                        .foregroundColor(Color(.lightText))
+                        .font(Font.body.weight(.bold))
+                }
+            }
+            .padding()
+            .padding([.leading, .trailing, .bottom])
         }
-        .padding()
         
         
     }
@@ -77,7 +100,7 @@ struct PrayerSettingsView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            PrayerSettingsView(setting: .constant(AlarmSetting()))
+            PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: .constant(.Prayer))
             
         }
             .environmentObject(ObservableAthanManager.shared)

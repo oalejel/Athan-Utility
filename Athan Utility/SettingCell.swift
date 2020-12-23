@@ -9,7 +9,7 @@
 import SwiftUI
 
 @available(iOS 13.0.0, *)
-struct GradientButtonStyle: ButtonStyle {
+struct ScalingButtonStyle: ButtonStyle {
     let foregroundColor: Color
     init(color: Color = .init(.sRGB, white: 1, opacity: 0.1)) {
         foregroundColor = color

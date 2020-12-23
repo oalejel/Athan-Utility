@@ -13,6 +13,7 @@ enum CurrentView {
     case Main, Settings, Location
 }
 
+
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
@@ -92,11 +93,13 @@ struct MainSwiftUI: View {
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                     .edgesIgnoringSafeArea(.all)
                 
+                    
+                
                 VStack(alignment: .leading) {
                     
                     switch currentView {
                     case .Location:
-                        Text("Location view")
+                        LocationSettingsView(parentSession: $currentView)
                             .transition(.opacity)
                     case .Settings:
                         SettingsView(parentSession: $currentView)
@@ -366,9 +369,11 @@ struct MainSwiftUI: View {
                             .padding([.leading, .trailing, .bottom])
                         }
                         .transition(.opacity)
+//                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                     }
                     
                 }
+                
             }
         }
     }

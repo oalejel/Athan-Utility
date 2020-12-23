@@ -11,6 +11,48 @@ import SwiftUI
 import Intents
 import Adhan
 
+struct ActivityRingView: View {
+    @State var lineWidth: CGFloat = 7
+    var progress: CGFloat = 0.0
+    @State var outlineColor: Color
+    var colors: [Color] = [Color.white, Color.gray]
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(outlineColor, lineWidth: lineWidth * 1.1)
+            //                .blur(radius: 1)
+            Circle()
+                .trim(from: 0, to: progress)
+                .stroke(
+                    AngularGradient(
+                        gradient: Gradient(colors: colors),
+                        center: .center,
+                        startAngle: .degrees(0),
+                        endAngle: .degrees(360)
+                    ),
+                    style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
+                ).rotationEffect(.degrees(-90))
+            //                .opacity(0)
+            //            Circle()
+            ////                .frame(width: lineWidth, height: lineWidth)
+            //                .foregroundColor(.red)
+            //                .offset(y: (lineWidth / 20) * 0)
+            Circle()
+                .trim(from: 0, to: 0.001) // just fills circle
+                .stroke(colors.first!, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+
+
+            //            Circle()
+            //                .frame(width: lineWidth, height: lineWidth)
+            //                .foregroundColor(progress > 0.95 ? colors[1] : colors[1].opacity(0))
+            //                .offset(y: (lineWidth / 20) * -150)
+            //                .rotationEffect(Angle.degrees(360 * Double(progress)))
+            //                .shadow(color: progress > 0.96 ? Color.black.opacity(0.1): Color.clear, radius: (lineWidth / 20) * 3, x: (lineWidth / 20) * 4, y: 0)
+        }
+    }
+}
 
 struct SmallWidget: View {
     var entry: AthanEntry
@@ -27,18 +69,28 @@ struct SmallWidget: View {
                 HStack(alignment: .bottom) {
                     
                     Spacer()
+<<<<<<< HEAD
+                    ActivityRingView(
+                        lineWidth: 10,
+                        progress: min(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
+                        outlineColor: .init(white: 1, opacity: 0.2),
+                        colors: [.white, .init(white: 1, opacity: 0.5)]
+                    )
+                    .scaledToFit()
+=======
                     Text("\(entry.nextPrayerDate, style: .relative) left")
                         .foregroundColor(.init(UIColor.lightText))
     //                    .font(.subheadline)
                         .fontWeight(.bold)
                         .font(.system(size: 12))
-                        .minimumScaleFactor(0.01)
+                        .minimumScaleFactor(0.05)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(1)
                         .multilineTextAlignment(.trailing)
                     
 
 
+>>>>>>> simpler-widgets
                 }
                 Spacer()
 
@@ -53,11 +105,6 @@ struct SmallWidget: View {
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
-                        .lineLimit(1)
-//                        .fixedSize(horizontal: false, vertical: true)
-                        .allowsTightening(true)
-                        .minimumScaleFactor(0.01)
-
                     Spacer()
                 }
 
@@ -67,7 +114,7 @@ struct SmallWidget: View {
                     .foregroundColor(.init(UIColor.lightText))
                     .fontWeight(.bold)
                     .font(.system(size: 14))
-                    .minimumScaleFactor(0.01)
+                    .minimumScaleFactor(0.05)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(1)
                     .multilineTextAlignment(.trailing)
@@ -131,8 +178,19 @@ struct MediumWidget: View {
 //                    Text("\(Date(), style: .time)") // remove later
 //                        .font(.footnote)
                 }
+<<<<<<< HEAD
+                
+                ProgressBar(progress: min(1, CGFloat(Date().timeIntervalSince(entry.currentPrayerDate) / entry.nextPrayerDate.timeIntervalSince(entry.currentPrayerDate))),
+                            lineWidth: 6,
+                            outlineColor: .init(white: 1, opacity: 0.2),
+                            colors: [.white, .white])
+                //                Spacer()
+                //                    .frame(maxWidth: .infinity)
+                
+=======
             
 
+>>>>>>> simpler-widgets
                 HStack {
                     VStack(alignment: .leading) {
                         ForEach(0..<3) { i in

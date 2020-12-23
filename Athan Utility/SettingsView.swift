@@ -17,11 +17,11 @@ import StoreKit
  madhab (hanafi)
  calculation method
  arabic mode
-
+ 
  15 minute reminder?
  normal reminder?
  alarm sound for every prayer?
-
+ 
  siri shortcut
  
  ==========
@@ -44,6 +44,56 @@ import StoreKit
  }
  */
 
+
+
+@available(iOS 13.0.0, *)
+private struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGPoint = .zero
+    
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
+        value = nextValue()
+    }
+}
+
+@available(iOS 13.0.0, *)
+struct MyScrollView<Content: View>: View {
+    let axes: Axis.Set
+    let showsIndicators: Bool
+    let offsetChanged: (CGPoint) -> Void
+    let content: Content
+    
+    init(
+        axes: Axis.Set = .vertical,
+        showsIndicators: Bool = true,
+        offsetChanged: @escaping (CGPoint) -> Void = { _ in },
+        @ViewBuilder content: () -> Content
+    ) {
+        self.axes = axes
+        self.showsIndicators = showsIndicators
+        self.offsetChanged = offsetChanged
+        self.content = content()
+    }
+    
+    var body: some View {
+        SwiftUI.ScrollView(axes, showsIndicators: showsIndicators) {
+            GeometryReader { geometry in
+                Color.clear.preference(
+                    key: ScrollOffsetPreferenceKey.self,
+                    value: geometry.frame(in: .named("scrollView")).origin
+                )
+            }.frame(width: 0, height: 0)
+            content
+        }
+        .coordinateSpace(name: "scrollView")
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self, perform: offsetChanged)
+    }
+}
+
+
+
+
+
+
 enum SettingsSectionType {
     case General, Sounds, Prayer
 }
@@ -51,14 +101,14 @@ enum SettingsSectionType {
 @available(iOS 13.0.0, *)
 struct SettingsView: View {
     @EnvironmentObject var manager: ObservableAthanManager
-//    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
-        
+    //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
+    
     @State var tempLocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
     @State var tempNotificationSettings = NotificationSettings.shared.copy() as! NotificationSettings
     @State var tempPrayerSettings = PrayerSettings.shared.copy() as! PrayerSettings
     
-//    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
-//    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
+    //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
+    //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
     
     @State var fajrOverride: String = ""
     @State var sunriseOverride: String = ""
@@ -79,12 +129,12 @@ struct SettingsView: View {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
         UITableView.appearance().backgroundColor = .clear
-//        UITableView.appearance().tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
-//        UITableView.appearance().tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
+        //        UITableView.appearance().tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
+        //        UITableView.appearance().tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: Double.leastNonzeroMagnitude))
         
         return 0
     }()
-
+    
     var body: some View {
         GeometryReader { g in
             switch activeSection {
@@ -93,7 +143,7 @@ struct SettingsView: View {
                     .transition(.move(edge: .trailing))
             case .Prayer:
                 #warning("change binding")
-                PrayerSettingsView(setting: .constant(AlarmSetting()))
+                PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
             case .General:
                 VStack(spacing: 0) {
@@ -102,23 +152,23 @@ struct SettingsView: View {
                         .onAppear {
                             print(tempNotificationSettings.selectedSound)
                         }
-
-                    ScrollView(showsIndicators: true) {
+                    
+                    MyScrollView(axes: [.vertical], showsIndicators: true, offsetChanged: { _ in print("scroll") }) {
                         VStack(alignment: .leading, spacing: nil) {
-                                                    
+                            
                             Text("Settings")
                                 .font(.largeTitle)
                                 .bold()
                                 .foregroundColor(.white)
                                 .padding(.bottom)
-                                
+                            
                             VStack(alignment: .leading) {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("Calculation method")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
-
+                                    
                                     Divider()
                                         .background(Color.white)
                                 }
@@ -137,8 +187,8 @@ struct SettingsView: View {
                                 .labelsHidden()
                                 .scaledToFit()
                                 .foregroundColor(.white)
-//                                .frame(width: g.size.width * 0.8)
-//                                .padding([.leading, .trailing])
+                                //                                .frame(width: g.size.width * 0.8)
+                                //                                .padding([.leading, .trailing])
                                 
                                 Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
                                     .fixedSize(horizontal: false, vertical: true)
@@ -206,9 +256,9 @@ struct SettingsView: View {
                                                 .padding()
                                         }
                                     })
-                                    .buttonStyle(GradientButtonStyle())
+                                    .buttonStyle(ScalingButtonStyle())
                                 }
-
+                                
                                 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("Notifications and customizations")
@@ -219,11 +269,13 @@ struct SettingsView: View {
                                     Divider()
                                         .background(Color.white)
                                 }
-
+                                
                                 ForEach(0..<6) { pIndex in
                                     ZStack {
                                         Button(action: {
-                                            
+                                            withAnimation {
+                                                activeSection = .Prayer
+                                            }
                                         }, label: {
                                             HStack {
                                                 Text("\(Prayer(index: pIndex).stringValue())")
@@ -238,37 +290,33 @@ struct SettingsView: View {
                                                     .padding()
                                             }
                                         })
-                                        .buttonStyle(GradientButtonStyle())
+                                        .buttonStyle(ScalingButtonStyle())
                                     }
                                 }
                                 
-//                                Button(action: {
-//
-//                                }, label: {
-//                                    HStack() {
-//                                        Spacer()
-//                                        Text("Rate Athan Utility!")
-//                                            .font(.headline)
-//                                            .bold()
-//                                            .foregroundColor(.white)
-//                                            .padding()
-//                                        Spacer()
-//                                    }
-//                                })
-//                                .buttonStyle(GradientButtonStyle())
-                                
-
+//                                                                Button(action: {
+//                                
+//                                                                }, label: {
+//                                                                    HStack() {
+//                                                                        Spacer()
+//                                                                        Text("Rate Athan Utility!")
+//                                                                            .font(.headline)
+//                                                                            .bold()
+//                                                                            .foregroundColor(.white)
+//                                                                            .padding()
+//                                                                        Spacer()
+//                                                                    }
+//                                                                })
+//                                                                .buttonStyle(GradientButtonStyle())
                             }
-                    
+                            
                         }
                         .padding()
                         .padding()
                     }
+                    .edgesIgnoringSafeArea(.all)
                     Divider()
                         .background(Color(.lightText))
-    //                    Rectangle()
-    //                        .frame(width: g.size.width, height: 1)
-    //                        .foregroundColor(Color(.lightText))
                     
                     HStack(alignment: .center) {
                         Spacer()
@@ -287,12 +335,14 @@ struct SettingsView: View {
                     }
                     .padding()
                     .padding([.leading, .trailing, .bottom])
-//                    .padding([.leading, .trailing, .bottom])
-
+                    //                    .padding([.leading, .trailing, .bottom])
+                    
                 }
-                .transition(.opacity)
+                .edgesIgnoringSafeArea(.all)
+                //                .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                 .frame(width: g.size.width)
                 .padding(.top)
+                .transition(.opacity)
             }
         }
     }
@@ -307,7 +357,7 @@ struct SettingsView_Previews: PreviewProvider {
             SettingsView(parentSession: .constant(.Settings))
             
         }
-            .environmentObject(ObservableAthanManager.shared)
-            .previewDevice("iPhone Xs")
+        .environmentObject(ObservableAthanManager.shared)
+        .previewDevice("iPhone Xs")
     }
 }

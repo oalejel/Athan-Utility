@@ -14,6 +14,7 @@ struct SoundSettingView: View {
     #warning("make sure updating this value changes earlier settings?")
     @Binding var tempNotificationSettings: NotificationSettings
     @State var viewSelectedSound = NotificationSettings.Sounds.ios_default
+    
     @Binding var activeSection: SettingsSectionType
     
     var body: some View {
@@ -53,7 +54,7 @@ struct SoundSettingView: View {
                                         .opacity(viewSelectedSound.rawValue == sIndex ? 1 : 0)
                                 }
                             })
-                            .buttonStyle(GradientButtonStyle())
+                            .buttonStyle(ScalingButtonStyle())
                         }
                     }
                 }

@@ -1,0 +1,256 @@
+//
+//  Widget_Bundle.swift
+//  Athan Utility
+//
+//  Created by Omar Al-Ejel on 9/23/20.
+//  Copyright © 2020 Omar Alejel. All rights reserved.
+//
+
+import SwiftUI
+import WidgetKit
+import Intents
+import Adhan
+
+struct AthanEntry: TimelineEntry {
+    let date: Date // just represents time to update the timeline. != always equal start of prayer
+    var currentPrayer: Prayer
+    var currentPrayerDate: Date
+    var nextPrayerDate: Date // will refer to Fajr of next day if prayerType is isha
+    var todayPrayerTimes: [Date]
+
+    var tellUserToOpenApp = false
+    var relevance: TimelineEntryRelevance?
+
+}
+
+enum EntryRelevance: Float {
+    case Medium = 1
+    case High = 2
+}
+
+class AthanProvider: IntentTimelineProvider {
+    var manager = AthanManager.shared
+
+    func placeholder(in context: Context) -> AthanEntry {
+        // let UI handle case with nil data
+        let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        // pass .none for placeholders
+        return AthanEntry(date: Date(), currentPrayer: Prayer.fajr, currentPrayerDate: Date(),
+                          nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(), Date(), Date(), Date(), Date()])
+    }
+
+    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
+        if manager.locationSettings.isLoadedFromArchive {
+            // WARNING: no foreground updates here --> must manually tell manager to refresh
+            // for now, dont call enterForeground since that will request new location
+            manager.considerRecalculations(isNewLocation: false)
+
+            let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
+            let entry = AthanEntry(date: Date(),
+                                   currentPrayer: manager.currentPrayer ?? Prayer.isha,
+                                   currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
+                                   nextPrayerDate: manager.guaranteedNextPrayerTime(),
+                                   todayPrayerTimes: timeArray)
+
+            completion(entry)
+        } else { // if not loaded from settings, give user an error
+            let openAppEntry = AthanEntry(date: Date(),
+                                   currentPrayer: Prayer.fajr, // dummy data
+                                   currentPrayerDate: Date(),
+                                   nextPrayerDate: Date(),
+                                   todayPrayerTimes: [],
+                                   tellUserToOpenApp: true)
+            completion(openAppEntry)
+        }
+    }
+
+    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<AthanEntry>) -> ()) {
+        var entries: [AthanEntry] = []
+        // OLD goal (leaving for later): users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
+        // at the very least allow the widget provider to request new data on the last entry if we only have one day left of data!
+<<<<<<< HEAD
+        
+        // returns success indicating that we called completion
+        func generateTimeline(man: PrayerManager) -> Bool {
+            // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+            
+            guard man.todayPrayerTimes.count == 6 && man.tomorrowPrayerTimes.count == 6 else {
+                print("Incomplete prayer times for today")
+                return false
+            }
+            
+            // store times as ptype -> date dict
+            var todayTimesDict = [PrayerType:Date]()
+            man.todayPrayerTimes.forEach { (k, v) in
+                todayTimesDict[PrayerType(rawValue: k)!] = v
+            }
+            var tomorrowTimesDict = [PrayerType:Date]()
+            man.tomorrowPrayerTimes.forEach { (k, v) in
+                tomorrowTimesDict[PrayerType(rawValue: k)!] = v
+            }
+            
+            // first, add a snapshot entry for NOW, since we may be on isha time
+            // on a new day (at like 1 AM), where there is no entry made above that
+            // precedes the current time
+            let nowEntry = AthanEntry(date: Date(), currentPrayer: man.currentPrayer, currentPrayerDate: man.currentPrayerTime(), nextPrayerDate: man.nextPrayerTime()!, todayPrayerTimes: todayTimesDict)
+            entries.append(nowEntry)
+
+            // create entry for every prayer of today
+            // maybe its ok if we put things that have dates after now?
+            for i in 0...5 {
+                let type = PrayerType(rawValue: i)!
+                let prayerDate = man.todayPrayerTimes[i]!
+                
+                // get time of prayer that follows this one
+                guard var nextTime = todayTimesDict[type.next()] else {
+                    print("Widget failed to load next prayer time")
+                    return false
+                }
+                
+                // we should really be reading from tomorrow's fajr time in this case
+                if type == .isha {
+                    nextTime = man.tomorrowPrayerTimes[0]!
+                }
+                
+                // create a timestamp for every 10% increment between prayerDate and the next prayer date
+                // this allows the view to update in order to show a proper competion status
+                let timeRange = nextTime.timeIntervalSince(prayerDate)
+                let tenPercentIncrements = floor(timeRange / 10) // seconds between each 10%
+                
+                for i in 0..<10 {
+                    // for i = 0, updateDate = prayerDate
+                    let updateDate = Calendar.current.date(byAdding: .second, value: i * Int(tenPercentIncrements), to: prayerDate)!
+                    let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: todayTimesDict)
+                    entries.append(entry)
+                }
+                
+                // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
+                if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
+                    let updateDate = Calendar.current.date(byAdding: .second, value: -5 * 60, to: nextTime)!
+                    assert(updateDate < nextTime)
+                    let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: todayTimesDict)
+                    entries.append(entry)
+                }
+            }
+            
+            // now add times for tomorrow up til asr time (when we reach asr, we want tomorrow's times to be ready for isha -> fajr's calc
+            for i in 0..<1 {
+                let type = PrayerType(rawValue: i)!
+                let prayerDate = man.tomorrowPrayerTimes[i]!
+                
+                // get time of prayer that follows this one
+                guard let nextTime = man.tomorrowPrayerTimes[type.next().rawValue] else {
+                    print("Widget failed to load next prayer time")
+                    return false
+                }
+                
+                // repeat what we did for today's times with the 10% increment updates
+                let timeRange = nextTime.timeIntervalSince(prayerDate)
+                let tenPercentIncrements = floor(timeRange / 10) // seconds between each 10%
+                
+                for i in 0..<10 {
+                    // for i = 0, updateDate = prayerDate
+                    let updateDate = Calendar.current.date(byAdding: .second, value: i * Int(tenPercentIncrements), to: prayerDate)!
+                    assert(updateDate < nextTime)
+                    let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: tomorrowTimesDict)
+                    entries.append(entry)
+                }
+                
+                // add a timestamp for when we have 5 minutes left iff our previous timestamps do not cover that time range
+                if tenPercentIncrements > 5 * 60 { // subtract 5 mins from next prayer's time for a 5 minute update ust so we're precise near the end
+                    let updateDate = Calendar.current.date(byAdding: .second, value: -5 * 60, to: nextTime)!
+                    assert(updateDate < nextTime)
+                    let entry = AthanEntry(date: updateDate, currentPrayer: type, currentPrayerDate: prayerDate, nextPrayerDate: nextTime, todayPrayerTimes: tomorrowTimesDict)
+                    entries.append(entry)
+                }
+                // no worry for type == isha, since tomorrow's entries only go up to maghrib
+            }
+            
+            // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
+            let timeline = Timeline(entries: entries, policy: .atEnd)
+            print(timeline)
+//            print(entries)
+=======
+
+        // WARNING: no foreground updates here --> must manually tell manager to refresh
+        // for now, dont call enterForeground since that will request new location
+        manager.considerRecalculations(isNewLocation: false)
+
+        if !manager.locationSettings.isLoadedFromArchive {
+            let openAppEntry = AthanEntry(date: Date(),
+                                   currentPrayer: Prayer.fajr, // dummy data
+                                   currentPrayerDate: Date(),
+                                   nextPrayerDate: Date(),
+                                   todayPrayerTimes: [],
+                                   tellUserToOpenApp: true)
+
+            let timeline = Timeline(entries: [openAppEntry], policy: .atEnd)
+>>>>>>> simpler-widgets
+            completion(timeline)
+            return
+        }
+
+        let todayTimesArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
+        let tomorrowTimesArray = Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
+
+        // first, add a snapshot entry for NOW, since we may be on isha time
+        // on a new day (at like 1 AM), where there is no entry made above that
+        // precedes the current time
+        let nowEntry = AthanEntry(date: Date(),
+                                  currentPrayer: manager.currentPrayer ?? Prayer.isha,
+                                  currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
+                                  nextPrayerDate: manager.guaranteedNextPrayerTime(),
+                                  todayPrayerTimes: todayTimesArray,
+                                  relevance: TimelineEntryRelevance.init(score: EntryRelevance.High.rawValue))
+        entries.append(nowEntry)
+
+        // create a single entry for every remaining prayer of the day
+        // if we are currently on isha after 12 am, then the next prayer we loop for will be fajr
+        for pIndex in (1 + (manager.currentPrayer?.rawValue() ?? -1))..<6 {
+            let iterationPrayer = Prayer(index: pIndex) // the prayer we want to create a single update for
+            let prayerDate = manager.todayTimes.time(for: iterationPrayer)
+
+            // get time of prayer that follows this one. isha will have fajr tomorrow
+            var nextPrayer = Prayer.fajr
+            var nextTime = manager.tomorrowTimes.fajr
+            if iterationPrayer != .isha {
+                nextPrayer = Prayer(index: pIndex + 1)
+                nextTime = manager.todayTimes.time(for: nextPrayer)
+            }
+
+            // create single entry for prayer to be triggered on prayerDate
+            let entry = AthanEntry(date: prayerDate,
+                                   currentPrayer: iterationPrayer,
+                                   currentPrayerDate: prayerDate,
+                                   nextPrayerDate: nextTime,
+                                   todayPrayerTimes: todayTimesArray)
+            entries.append(entry)
+        }
+
+        // now add times for tomorrow up til maghrib time
+        // note that after first day of updates, we will only ever be preparing the next day's timeline
+        for tomorrowPIndex in 0..<5 {
+            let iterationPrayer = Prayer(index: tomorrowPIndex)
+            let prayerDate = manager.tomorrowTimes.time(for: iterationPrayer)
+
+            // get time of prayer that follows this one
+            // will NOT have to worry about isha -> tomorrow since tomorrowPIndex never goes to 5
+            let nextPrayer = Prayer(index: tomorrowPIndex + 1)
+            let nextTime = manager.tomorrowTimes.time(for: nextPrayer)
+
+            let entry = AthanEntry(date: prayerDate,
+                                   currentPrayer: iterationPrayer,
+                                   currentPrayerDate: prayerDate,
+                                   nextPrayerDate: nextTime,
+                                   todayPrayerTimes: tomorrowTimesArray)
+            entries.append(entry)
+            // no worry for type == isha, since tomorrow's entries only go up to maghrib
+        }
+        print("--- WIDGET TIMELINE ---")
+        print(entries)
+        print("^^^ WIDGET TIMELINE ^^^")
+        // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
+    }
+}

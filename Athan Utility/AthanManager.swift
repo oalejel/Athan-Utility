@@ -86,6 +86,8 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         didSet { locationSettingsDidSetHelper() }
     }
     
+    var locationPermissionsGranted = false
+    
     // MARK: - DidSet Helpers
     func prayerSettingsDidSetHelper() {
         PrayerSettings.shared = prayerSettings
@@ -389,7 +391,10 @@ extension AthanManager {
         if status == CLAuthorizationStatus.authorizedWhenInUse ||
             status == CLAuthorizationStatus.authorizedAlways {
             #warning("not sure if we should have this automatically called. may want a semaphore")
-            locationManager.startUpdatingLocation();
+            locationManager.startUpdatingLocation()
+            locationPermissionsGranted = true
+        } else {
+            locationPermissionsGranted = false
         }
     }
     

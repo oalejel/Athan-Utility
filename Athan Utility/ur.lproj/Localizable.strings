@@ -76,3 +76,5 @@
 "Check current and upcoming salah times with the Notification Center widget." = ".نوٹیفکیشن سینٹر ویجیٹ کے ساتھ موجودہ اور آنے والے سالہ وقت چیک کریں";
 
 "A new way to visualize salah times throughout the day." = ".پورے دن میں سالہ وقت کا اندازہ کرنے کا ایک نیا طریقہ";
+
+"left" = ""; // for now, dont say "10 mins left" over progress bar. just show time left

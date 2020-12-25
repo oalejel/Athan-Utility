@@ -74,3 +74,5 @@
 "Check current and upcoming salah times with the Notification Center widget." = "Bildirim Merkezi küçük aracıyla mevcut ve yaklaşan salah sürelerini kontrol edin.";
 
 "A new way to visualize salah times throughout the day." = "Gün boyunca salah sürelerini görselleştirmenin yeni bir yolu.";
+
+"left" = ""; // for now, dont say "10 mins left" over progress bar. just show time left

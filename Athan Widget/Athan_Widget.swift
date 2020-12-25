@@ -11,7 +11,6 @@ import SwiftUI
 import Intents
 import Adhan
 
-
 struct SmallWidget: View {
     var entry: AthanEntry
     var df: RelativeDateTimeFormatter = {
@@ -71,28 +70,12 @@ struct SmallWidget: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(1)
                     .multilineTextAlignment(.trailing)
-
-
-
-
-//                Text("update \(Date(), style: .time)") // remove later
-//                    .font(.system(size: 8))
-//                    .foregroundColor(.white)
-//                HStack {
-//                    Text("fajr \(entry.todayPrayerTimes[0], style: .time)") // remove later
-//                        .font(.system(size: 8))
-//                        .foregroundColor(.white)
-//                    Text("\(entry.todayPrayerTimes[0], style: .date)") // remove later
-//                        .font(.system(size: 4))
-//                        .foregroundColor(.white)
-//                }
-
             }
             .padding()
         }
     }
 }
-
+          
 
 struct MediumWidget: View {
     var entry: AthanEntry
@@ -108,7 +91,7 @@ struct MediumWidget: View {
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text("\(entry.nextPrayerDate, style: .relative) left")
+                    Text("\(entry.nextPrayerDate, style: .relative) \(NSLocalizedString("left", comment: ""))")
                         .foregroundColor(.init(UIColor.lightText))
                         .font(.subheadline)
                         .fontWeight(.bold)
@@ -131,7 +114,6 @@ struct MediumWidget: View {
 //                    Text("\(Date(), style: .time)") // remove later
 //                        .font(.footnote)
                 }
-            
 
                 HStack {
                     VStack(alignment: .leading) {
@@ -147,7 +129,9 @@ struct MediumWidget: View {
                             }
                         }
                     }
+                    
                     Spacer()
+                    
                     VStack(alignment: .trailing) {
                         ForEach(0..<3) { i in
                             Text(entry.todayPrayerTimes[i], style: .time)
@@ -161,12 +145,16 @@ struct MediumWidget: View {
                             }
                         }
                     }
+                    
                     Spacer()
+                    
                     Rectangle()
                         .frame(width: 1)
                         .opacity(0.5)
                         .foregroundColor(Color(.lightText))
+                    
                     Spacer()
+                    
                     VStack(alignment: .leading) {
                         ForEach(3..<6) { i in
                             Text(Prayer(index: i).localizedString())
@@ -182,7 +170,9 @@ struct MediumWidget: View {
                             }
                         }
                     }
+                    
                     Spacer()
+                    
                     VStack(alignment: .leading) {
                         ForEach(3..<6) { i in
                             Text(entry.todayPrayerTimes[i], style: .time)

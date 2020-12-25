@@ -87,6 +87,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     var locationPermissionsGranted = false
+    var captureLocationUpdateClosure: ((LocationSettings?) -> ())?
     
     // MARK: - DidSet Helpers
     func prayerSettingsDidSetHelper() {
@@ -169,12 +170,12 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             formatter.timeStyle = .medium
             formatter.timeZone = TimeZone.current
 
-            print("fajr \(formatter.string(from: prayers.fajr))")
-            print("sunrise \(formatter.string(from: prayers.sunrise))")
-            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
-            print("asr \(formatter.string(from: prayers.asr))")
-            print("maghrib \(formatter.string(from: prayers.maghrib))")
-            print("isha \(formatter.string(from: prayers.isha))")
+//            print("fajr \(formatter.string(from: prayers.fajr))")
+//            print("sunrise \(formatter.string(from: prayers.sunrise))")
+//            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
+//            print("asr \(formatter.string(from: prayers.asr))")
+//            print("maghrib \(formatter.string(from: prayers.maghrib))")
+//            print("isha \(formatter.string(from: prayers.isha))")
             return prayers
         }
         return nil
@@ -370,7 +371,10 @@ extension AthanManager {
         // 2. allow location to be updated and repeat step 1
         // first recalculation on existing location settings
         considerRecalculations(isNewLocation: false)
-        attemptSingleLocationUpdate() // if new location is read, we will trigger concsiderRecalculations(isNewLocation: true)
+        
+        if AthanDefaults.useCurrentLocation {
+            attemptSingleLocationUpdate() // if new location is read, we will trigger concsiderRecalculations(isNewLocation: true)
+        }
     }
 }
 
@@ -383,7 +387,9 @@ extension AthanManager {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func attemptSingleLocationUpdate() {
+    // pass a capture closure to take the location update
+    func attemptSingleLocationUpdate(captureClosure: ((LocationSettings?) -> ())? = nil) {
+        self.captureLocationUpdateClosure = captureClosure
         locationManager.startUpdatingLocation()
     }
     
@@ -436,7 +442,11 @@ extension AthanManager {
                     // save our location settings
                     let potentialNewLocationSettings = LocationSettings(locationName: shortname,
                                                              coord: locations.first!.coordinate)
-                    if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
+                    
+                    if let captureClosue = self.captureLocationUpdateClosure  {
+                        captureClosue(potentialNewLocationSettings)
+                        self.captureLocationUpdateClosure = nil
+                    } else if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
                         self.locationSettings = potentialNewLocationSettings
                         self.considerRecalculations(isNewLocation: true)
                     }
@@ -445,13 +455,22 @@ extension AthanManager {
                 }
             }
             
+            let namelessLocationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
+                                                   coord: locations.first!.coordinate)
             // error case: rely on coordinates and no geocoded name
-            self.locationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
-                                                     coord: locations.first!.coordinate)
+            if let captureClosue = self.captureLocationUpdateClosure  {
+                captureClosue(namelessLocationSettings)
+                self.captureLocationUpdateClosure = nil
+            } else {
+                self.locationSettings = namelessLocationSettings
+            }
+            
             self.considerRecalculations(isNewLocation: true)
             if let x = error {
                 print("failed to reverse geocode location")
                 print(x) // fallback
+                self.captureLocationUpdateClosure?(nil)
+                self.captureLocationUpdateClosure = nil
             }
         })
     }

@@ -12,43 +12,16 @@ import MapKit
 
 
 @available(iOS 13.0.0, *)
-final class MapView : NSObject, UIViewRepresentable, MKMapViewDelegate {
-    typealias UIViewType = MKMapView
-    
-    @Binding var centeredLocation: CLLocationCoordinate2D
-    
-    init(centeredLocation: Binding<CLLocationCoordinate2D>) {
-        self._centeredLocation = centeredLocation
+struct ActivityIndicator: UIViewRepresentable {
+    @Binding var isAnimating: Bool
+    let style: UIActivityIndicatorView.Style
+
+    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+        return UIActivityIndicatorView(style: style)
     }
-    
-    func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        mapView.delegate = self
-        return mapView
-    }
-    
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        // avoid cenering when regionDidChange is called
-        uiView.delegate = self
-        if uiView.centerCoordinate.latitude != centeredLocation.latitude &&
-            uiView.centerCoordinate.longitude != centeredLocation.longitude {
-            uiView.setCenter(centeredLocation, animated: true)
-            uiView.setRegion(MKCoordinateRegion(center: centeredLocation, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)), animated: true)
-        }
-    }
-    
-    // MARK: - Map View Delegate
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        
-        // ignore region changes that dont change center coordinate
-        if mapView.centerCoordinate.latitude != centeredLocation.latitude &&
-            mapView.centerCoordinate.longitude != centeredLocation.longitude {
-            print("center coord did change with region")
-            DispatchQueue.main.async {
-                self.centeredLocation = mapView.centerCoordinate
-            }
-        }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
+        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }
 
@@ -57,29 +30,36 @@ struct LocationSettingsView: View {
     
     #warning("make sure updating this value changes earlier settings?")
     
+    // start text field as a copy of the location settings loc name
+    @State var textFieldText: String = "\(LocationSettings.shared.locationName)"
     
-    // start text field as location settings loc name
-    @State var textFieldText: String = LocationSettings.shared.locationName
-    @State var mapCoordinate: CLLocationCoordinate2D = LocationSettings.shared.locationCoordinate
+    // state shared with map view 
+    @State var boundCoordinate = LocationSettings.shared.locationCoordinate
+    @State var unboundCoordinate = LocationSettings.shared.locationCoordinate
+    @State var usingCurrentLocation = AthanDefaults.useCurrentLocation
     
     @State var templocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
     @Binding var parentSession: CurrentView // used to trigger transition back
     
-    @State var usingCurrentLocation = false
+    @State var awaitingLocationUpdate = false
     // is the currently inputted location string understandable
     @State var erroneousLocation = false
     
+    @State var timer: Timer?
+    
     let geocoder = CLGeocoder()
+    var mapView: MapView?
     
     var setup: Int = {
         UITextField.appearance().clearButtonMode = .always
         UITextField.appearance().tintColor = .white
+        AthanManager.shared.requestLocationPermission()
         return 0
     }()
     
     var body: some View {
+        
         GeometryReader { g in
-            
             VStack(alignment: .leading) {
                 Text("Set Location")
                     .font(.largeTitle)
@@ -91,7 +71,20 @@ struct LocationSettingsView: View {
                     .minimumScaleFactor(0.01)
                 
                 ZStack {
-                    MapView(centeredLocation: $mapCoordinate)
+                    MapView(center: $boundCoordinate, usingCurrentLocation: $usingCurrentLocation) { loc in
+                        
+                        // if the source of the update is not a manual input,
+                        // we don't want to set the location name
+                        print(loc)
+                        if !usingCurrentLocation {
+                            print("creating timer")
+                            unboundCoordinate = loc
+                            timer?.invalidate()
+                            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
+                                queryCoordinate(coord: loc)
+                            }
+                        }
+                    }
                         .cornerRadius(12)
 
                     VStack {
@@ -112,7 +105,7 @@ struct LocationSettingsView: View {
 //                                Image(systemName: "mappin.and.ellipse")
 //                                    .foregroundColor(Color(.label))
 //                                    .font(.subheadline)
-                                Text("\(mapCoordinate.latitude, specifier: "%.2f")˚, \(mapCoordinate.longitude, specifier: "%.2f")˚")
+                                Text("\(unboundCoordinate.latitude, specifier: "%.2f")˚, \(unboundCoordinate.longitude, specifier: "%.2f")˚")
                                     .foregroundColor(Color(.secondaryLabel))
                                     .font(.subheadline)
                             }
@@ -132,79 +125,136 @@ struct LocationSettingsView: View {
                     }
                 }
 
-                HStack {
-//                    Image(systemName: "location.fill")
-//                        .padding([.leading])
-//                        .foregroundColor(.white)
-                    Text("Location:")
-                        .foregroundColor(.white)
-                        .bold()
-                        .padding([.leading])
-                    TextField("Location Name", text: $textFieldText) { (didChange) in
-                        erroneousLocation = false // reset potential error
-                    } onCommit: {
-                        queryLocation(text: textFieldText)
+                // Input text field for location
+                if !usingCurrentLocation {
+                    HStack {
+                        Text("Location:")
+                            .foregroundColor(erroneousLocation ? .red : .white)
+                            .bold()
+                            .padding([.leading])
+                        TextField("Location Name", text: $textFieldText) { (didChange) in
+                            erroneousLocation = false // reset potential error
+                        } onCommit: {
+                            queryLocation(text: textFieldText)
+                        }
+                        .textContentType(.location)
+                        .foregroundColor(erroneousLocation ? .red : Color(.lightText))
+                        .disableAutocorrection(true)
+                        .padding([.trailing, .top, .bottom])
                     }
-                    .foregroundColor(erroneousLocation ? .red : Color(.lightText))
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .disableAutocorrection(true)
-                    .padding([.trailing, .top, .bottom])
+                    .background(
+                        Rectangle()
+                            .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
+                            .cornerRadius(12)
+                    )
+                    .transition(.scale)
                 }
-                .background(
-                    Rectangle()
-                        .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
-                        .cornerRadius(12)
-                )
+                
+                
                 
                 Spacer()
                 
+                // gps locate button
+                
                 Button(action: {
-                    withAnimation {
-                        if AthanManager.shared.locationPermissionsGranted {
-                            
+                    if AthanManager.shared.locationPermissionsGranted {
+                        // set map to current location
+                        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                        lightImpactFeedbackGenerator.impactOccurred()
+                        
+                        if usingCurrentLocation {
+                            // if in tracking state, switch to custom state
+                            AthanDefaults.useCurrentLocation = false
+                            #warning("maybe leave all state change savig to later")
+                            withAnimation {
+                                usingCurrentLocation = false
+                            }
+                        } else {
+                            AthanDefaults.useCurrentLocation = true
+                            awaitingLocationUpdate = true
+                            // at this point, we already know whether location permissions were granted
+                            // just ask athanmanager to ask for a location update and capture it
+                            AthanManager.shared.attemptSingleLocationUpdate { capturedLocationSettings in
+                                let settings = capturedLocationSettings ?? AthanManager.shared.locationSettings.copy() as! LocationSettings
+                                textFieldText = settings.locationName
+                                boundCoordinate = settings.locationCoordinate
+                                
+                                awaitingLocationUpdate = false
+                                withAnimation {
+                                    usingCurrentLocation = true
+                                }
+                            }
                         }
                     }
                 }, label: {
                     HStack {
                         Spacer()
-                        Image(systemName: AthanManager.shared.locationPermissionsGranted ? "location.fill" : "location.slash.fill")
-                            .foregroundColor(.white)
-                            .padding([.leading])
-    //                    Spacer()
-                        Text("Set to GPS Location")
-                            .foregroundColor(.white)
-                            .bold()
-                            .padding([.top, .bottom, .trailing])
-                            .lineLimit(1)
-                            .allowsTightening(true)
-                            .minimumScaleFactor(0.01)
+                        if usingCurrentLocation {
+                            Image(systemName: "mappin")
+                                .foregroundColor(.gray)
+                                .padding([.leading])
+                            
+                            Text("Set Location Manually")
+                                .foregroundColor(.gray)
+                                .bold()
+                                .padding([.top, .bottom, .trailing])
+                                .lineLimit(1)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.01)
+                        } else {
+                            if awaitingLocationUpdate {
+                                ActivityIndicator(isAnimating: .constant(true), style: .white)
+                            } else {
+                                Image(systemName: AthanManager.shared.locationPermissionsGranted ? "location.fill" : "location.slash.fill")
+                                    .foregroundColor(.white)
+                                    .padding([.leading])
+                            }
+                            
+                            Text("Use Current Location")
+                                .foregroundColor(.white)
+                                .bold()
+                                .padding([.top, .bottom, .trailing])
+                                .lineLimit(1)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.01)
+                                
+                        }
                             
                         Spacer()
                     }
                     .background(
                         Rectangle()
-                            .foregroundColor(.blue)
+                            .foregroundColor(usingCurrentLocation ? .white : .blue)
                             .cornerRadius(12)
                     )
+                    
                 })
                 .buttonStyle(ScalingButtonStyle())
                 .opacity(AthanManager.shared.locationPermissionsGranted ? 1 : 0.2)
 
                 Spacer()
-                
-                Text("Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data.")
+            
+                Text(AthanManager.shared.locationPermissionsGranted ? "Athan Utility does not collect user data." : "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data."
+                )
                     .font(.subheadline)
                     .foregroundColor(Color(.lightText))
-                    .padding(4)
-//                    .opacity()
+                .padding([.bottom])
+
                 Spacer()
                 HStack(alignment: .center) {
-                    Spacer()
-                    
                     Button(action: {
-                        // tap vibration
-                        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                        lightImpactFeedbackGenerator.impactOccurred()
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        
+                        // save settings if we don't have erroneous input
+                        if !erroneousLocation {
+                            AthanDefaults.useCurrentLocation = usingCurrentLocation
+                            AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate)
+                            
+                            // force athan manager to recalculate 
+                            AthanManager.shared.considerRecalculations(isNewLocation: true)
+                            print("new settings: \(AthanManager.shared.locationSettings)")
+                        }
+                        
                         withAnimation {
                             self.parentSession = .Main
                         }
@@ -213,13 +263,13 @@ struct LocationSettingsView: View {
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }
+                    Spacer()
                 }
             }
             .padding()
             .padding([.leading, .trailing, .bottom])
         }
     }
-    
     
     func queryLocation(text: String) {
         // reverse geocode location
@@ -231,11 +281,39 @@ struct LocationSettingsView: View {
             }
             
             print("GEOCODER - found coordinate")
-            mapCoordinate = coord
+            boundCoordinate = coord
         }
     }
     
-    
+    func queryCoordinate(coord: CLLocationCoordinate2D) {
+        // reverse geocode coordinate
+        geocoder.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
+            
+            guard let placemark = placemarks?.first, error == nil else {
+                erroneousLocation = true
+                print("failed to understand address, \(error!)")
+                return
+            }
+            
+            print("GEOCODER - found placemark")
+//            let city = placemark.locality
+//            let district = placemark.subAdministrativeArea
+//            let state = placemark.administrativeArea
+//            let country = placemark.isoCountryCode
+//            if let name = placemark.name {
+//                textFieldText = name // hoping this will handle most localization cases
+//            } else
+            if let city = placemark.locality {
+                textFieldText = city
+            } else if let state = placemark.administrativeArea {
+                textFieldText = state
+            } else {
+                textFieldText = String(format: "%.2f°, %.2f°",
+                                       coord.latitude,
+                                       coord.longitude)
+            }
+        }
+    }
 }
 
 @available(iOS 13.0.0, *)
@@ -250,3 +328,4 @@ struct LocationSettingView_Previews: PreviewProvider {
         .previewDevice("iPhone Xs")
     }
 }
+

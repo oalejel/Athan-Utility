@@ -1,5 +1,10 @@
 #  Todo list 
+Before updating 
+- run with breakpoints everywhere to confirm control flow 
+- keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
 
-- consider whether user with no cellular data but with GPS should have app automatically put in new coordinates without name of place... maybe its for the best!
-- add settings for prayer calculation method. api has about a dozen methods to pick from. a uipickerview in the settings panel will do. also specify the method somewhere in the main page to make the app as informative as possible. 
+For later 
+- dragging up on times table should bring up a monthly times table instead of just tomorrow times. nobody cares about tomorrow's times!
+- allow users to add additional locations, and set one of the options as the "my location" for notifications and stuff
+- be more efficent with notifications by not wasting notification budget on notifications from earlier in the day 
 

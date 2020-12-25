@@ -50,6 +50,10 @@
 		3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */; };
 		3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */; };
+		3D59923825930F5E006355CB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59923725930F5E006355CB /* MapView.swift */; };
+		3D59923F25939F5A006355CB /* AthanDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59923E25939F5A006355CB /* AthanDefaults.swift */; };
+		3D5992452593A039006355CB /* AthanDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59923E25939F5A006355CB /* AthanDefaults.swift */; };
+		3D59924B2593A03A006355CB /* AthanDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59923E25939F5A006355CB /* AthanDefaults.swift */; };
 		3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6105032572D04E00C1D067 /* SettingsView.swift */; };
 		3D6105102572F21700C1D067 /* CalculationMethod+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */; };
 		3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */; };
@@ -262,6 +266,8 @@
 		3D52257920CDF55700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D52257A20CDF5BA00CF8C3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/QiblaViewController.xib; sourceTree = "<group>"; };
 		3D52257B20CDF5D200CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
+		3D59923725930F5E006355CB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		3D59923E25939F5A006355CB /* AthanDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanDefaults.swift; sourceTree = "<group>"; };
 		3D6105032572D04E00C1D067 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalculationMethod+Extensions.swift"; sourceTree = "<group>"; };
 		3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Madhab+Extensions.swift"; sourceTree = "<group>"; };
@@ -400,9 +406,9 @@
 			children = (
 				3D07DA7D1BDC58B50001EFE4 /* Athan Utility */,
 				3DD51AF420FC5A00000CBFFC /* Athan Utility UITests */,
-				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
-				3D93EA082182C447002019B7 /* AthanSiriIntents */,
 				3D20CB202518DA0900275206 /* Athan Widget */,
+				3D93EA082182C447002019B7 /* AthanSiriIntents */,
+				3DD3B4931C0D3B5700DC91E6 /* AthanToday */,
 				3DD3B4901C0D3B5700DC91E6 /* Frameworks */,
 				3D07DA7C1BDC58B50001EFE4 /* Products */,
 				3D20ED602563356600699A4F /* Recovered References */,
@@ -425,16 +431,13 @@
 			isa = PBXGroup;
 			children = (
 				3DC2FB072464E044005D1EF5 /* Todo.md */,
+				3D52255720CDD25800CF8C3D /* Localizable.strings */,
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
-				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D1E50D4256D64D0003E2E34 /* SwiftUI Views */,
 				3D8CE84125696639006D6E46 /* Settings Managers */,
-				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
-				3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */,
-				3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */,
-				3D52255720CDD25800CF8C3D /* Localizable.strings */,
+				3D599260259403E0006355CB /* Extensions */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D15F53E242828590010C709 /* LaunchScreen.xib */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
@@ -459,8 +462,11 @@
 		3D1E50D4256D64D0003E2E34 /* SwiftUI Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
 				3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */,
+				3D59923E25939F5A006355CB /* AthanDefaults.swift */,
+				3D59923725930F5E006355CB /* MapView.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
 				3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */,
 				3D13E898257757100041F1AC /* PrayerSettingsView.swift */,
@@ -563,6 +569,16 @@
 				3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */,
 			);
 			name = Table;
+			sourceTree = "<group>";
+		};
+		3D599260259403E0006355CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
+				3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */,
+				3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		3D73FC8122875CCF0092A83C /* Notification Sound Previews */ = {
@@ -985,6 +1001,7 @@
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
 				3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */,
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
+				3D59923F25939F5A006355CB /* AthanDefaults.swift in Sources */,
 				3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */,
 				3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */,
 				3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */,
@@ -1009,6 +1026,7 @@
 				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
 				3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */,
 				3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */,
+				3D59923825930F5E006355CB /* MapView.swift in Sources */,
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */,
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
@@ -1038,6 +1056,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D5992452593A039006355CB /* AthanDefaults.swift in Sources */,
 				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
 				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
@@ -1071,6 +1090,7 @@
 				3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */,
 				3D73EC1E257155AA0010C47D /* NotificationsManager.swift in Sources */,
 				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
+				3D59924B2593A03A006355CB /* AthanDefaults.swift in Sources */,
 				3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */,
 				3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */,

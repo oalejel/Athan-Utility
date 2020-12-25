@@ -27,12 +27,12 @@ class NotificationsManager {
             formatter.timeStyle = .medium
             formatter.timeZone = TimeZone.current
             
-            print("fajr \(formatter.string(from: prayers.fajr))")
-            print("sunrise \(formatter.string(from: prayers.sunrise))")
-            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
-            print("asr \(formatter.string(from: prayers.asr))")
-            print("maghrib \(formatter.string(from: prayers.maghrib))")
-            print("isha \(formatter.string(from: prayers.isha))")
+//            print("fajr \(formatter.string(from: prayers.fajr))")
+//            print("sunrise \(formatter.string(from: prayers.sunrise))")
+//            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
+//            print("asr \(formatter.string(from: prayers.asr))")
+//            print("maghrib \(formatter.string(from: prayers.maghrib))")
+//            print("isha \(formatter.string(from: prayers.isha))")
             return prayers
         }
         return nil
@@ -79,7 +79,7 @@ class NotificationsManager {
                 for dayOffset in 0..<(lastOffset + 1) {
                     let calcDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date())!
                     let isFinalDayOfNotifications = lastOffset == dayOffset
-                    print("making notifications for \(calcDate)")
+//                    print("making notifications for \(calcDate)")
                     guard let times = calculateTimes(referenceDate: calcDate, coordinate: coordinate, calculationMethod: calculationMethod, madhab: madhab) else {
                         print("encountered nil calculating times for notifications")
                         return
@@ -130,7 +130,7 @@ class NotificationsManager {
                             // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                             let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
                             let noteRequest = UNNotificationRequest(identifier: noteID, content: noteContent, trigger: noteTrigger)
-                            center.add(noteRequest) {_ in print(p.localizedString(), "d: ", dateComp.day!, " \(dateComp.hour!):\(dateComp.minute!)") }
+                            center.add(noteRequest) {_ in /*print(p.localizedString(), "d: ", dateComp.day!, " \(dateComp.hour!):\(dateComp.minute!)")*/ }
                             noteCount += 1
                         }
                         
@@ -165,7 +165,7 @@ class NotificationsManager {
                             let preNoteID = "pre_note_\(preNoteComponents.day!)_\(preNoteComponents.hour!)_\(preNoteComponents.minute!)"
                             
                             let preNoteRequest = UNNotificationRequest(identifier: preNoteID, content: preNoteContent, trigger: preNoteTrigger)
-                            center.add(preNoteRequest) {_ in print("R: ", p.localizedString(), "d: ", preNoteComponents.day!, " \(preNoteComponents.hour!):\(preNoteComponents.minute!)") }
+                            center.add(preNoteRequest) {_ in /*print("R: ", p.localizedString(), "d: ", preNoteComponents.day!, " \(preNoteComponents.hour!):\(preNoteComponents.minute!)")*/ }
                             noteCount += 1
                         }
                     }

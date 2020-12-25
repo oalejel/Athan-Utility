@@ -156,122 +156,130 @@ struct SettingsView: View {
                     MyScrollView(axes: [.vertical], showsIndicators: true, offsetChanged: { _ in print("scroll") }) {
                         VStack(alignment: .leading, spacing: nil) {
                             
-                            Text("Settings")
+                            Text("Settings") // title
                                 .font(.largeTitle)
                                 .bold()
                                 .foregroundColor(.white)
                                 .padding(.bottom)
                             
                             VStack(alignment: .leading) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Calculation method")
-                                        .font(.headline)
-                                        .bold()
-                                        .foregroundColor(.white)
+                                Group { // calculation method group
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Calculation method")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                        
+                                        Divider()
+                                            .background(Color.white)
+                                    }
                                     
-                                    Divider()
-                                        .background(Color.white)
-                                }
-                                
-                                Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
-                                    ForEach(0..<calculationMethods.count) { mIndex in
-                                        let method = calculationMethods[mIndex]
-                                        Text(method.stringValue())
-                                            .foregroundColor(.white)
-                                            .tag(method)
-                                            .listRowInsets(EdgeInsets())
-                                    }
-                                })
-                                
-                                .pickerStyle(WheelPickerStyle())
-                                .labelsHidden()
-                                .scaledToFit()
-                                .foregroundColor(.white)
-                                //                                .frame(width: g.size.width * 0.8)
-                                //                                .padding([.leading, .trailing])
-                                
-                                Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .lineLimit(nil)
-                                    .font(.caption)
-                                    .foregroundColor(Color(.lightText))
-                                    .padding(.bottom)
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Madhab")
-                                        .font(.headline)
-                                        .bold()
-                                        .foregroundColor(.white)
-                                    Divider()
-                                        .background(Color.white)
-                                }
-                                
-                                Picker(selection: $tempPrayerSettings.madhab, label: Text("Picker"), content: {
-                                    ForEach(0..<madhabs.count) { mIndex in
-                                        let madhab = madhabs[mIndex]
-                                        Text(madhab.stringValue())
-                                            .foregroundColor(.white)
-                                            .autocapitalization(UITextAutocapitalizationType.words)
-                                            .tag(madhab)
-                                    }
-                                })
-                                .pickerStyle(SegmentedPickerStyle())
-                                .labelsHidden()
-                                .foregroundColor(.white)
-                                
-                                Text("The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.")
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .lineLimit(nil)
-                                    .font(.caption)
-                                    .foregroundColor(Color(.lightText))
-                                    .padding(.bottom)
-                                
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Athan sound")
-                                        .font(.headline)
-                                        .bold()
-                                        .foregroundColor(.white)
-                                    Divider()
-                                        .background(Color.white)
-                                }
-                                
-                                ZStack {
-                                    Button(action: {
-                                        print("show athan sounds view")
-                                        withAnimation {
-                                            activeSection = .Sounds
-                                        }
-                                    }, label: {
-                                        HStack {
-                                            Text(tempNotificationSettings.selectedSound.localizedString())
-                                                .font(.headline)
-                                                .bold()
+                                    Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
+                                        ForEach(0..<calculationMethods.count) { mIndex in
+                                            let method = calculationMethods[mIndex]
+                                            Text(method.stringValue())
                                                 .foregroundColor(.white)
-                                                .padding()
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundColor(.white)
-                                                .font(Font.headline.weight(.bold))
-                                                .padding()
+                                                .tag(method)
+                                                .listRowInsets(EdgeInsets())
                                         }
                                     })
-                                    .buttonStyle(ScalingButtonStyle())
-                                }
+                                    .pickerStyle(WheelPickerStyle())
+                                    .labelsHidden()
+                                    .scaledToFit()
+                                    .foregroundColor(.white)
+                                    //                                .frame(width: g.size.width * 0.8)
+                                    //                                .padding([.leading, .trailing])
+                                    Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .lineLimit(nil)
+                                        .font(.caption)
+                                        .foregroundColor(Color(.lightText))
+                                        .padding(.bottom)
+
+                                } // calculation method group
+                                
+                                Group { // madhab group
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Madhab")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                        Divider()
+                                            .background(Color.white)
+                                    }
+                                    
+                                    Picker(selection: $tempPrayerSettings.madhab, label: Text("Picker"), content: {
+                                        ForEach(0..<madhabs.count) { mIndex in
+                                            let madhab = madhabs[mIndex]
+                                            Text(madhab.stringValue())
+                                                .foregroundColor(.white)
+                                                .autocapitalization(UITextAutocapitalizationType.words)
+                                                .tag(madhab)
+                                        }
+                                    })
+                                    .pickerStyle(SegmentedPickerStyle())
+                                    .labelsHidden()
+                                    .foregroundColor(.white)
+                                    Text("The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.")
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .lineLimit(nil)
+                                        .font(.caption)
+                                        .foregroundColor(Color(.lightText))
+                                        .padding(.bottom)
+
+                                } // madhab group
                                 
                                 
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Notifications and customizations")
-                                        .font(.headline)
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .padding(.top)
-                                    Divider()
-                                        .background(Color.white)
-                                }
                                 
-                                ForEach(0..<6) { pIndex in
+                                Group { // athan sounds group
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Athan sound")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                        Divider()
+                                            .background(Color.white)
+                                    }
+                                    
                                     ZStack {
+                                        Button(action: {
+                                            print("show athan sounds view")
+                                            withAnimation {
+                                                activeSection = .Sounds
+                                            }
+                                        }, label: {
+                                            HStack {
+                                                Text(tempNotificationSettings.selectedSound.localizedString())
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .padding()
+                                                Spacer()
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
+                                                    .padding()
+                                            }
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
+                                    }
+                                } // athan sounds group
+                                
+                                
+                                
+                                Group {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Notifications and customizations")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding(.top)
+                                        Divider()
+                                            .background(Color.white)
+                                    }
+                                    
+                                    ForEach(0..<6) { pIndex in
                                         Button(action: {
                                             withAnimation {
                                                 activeSection = .Prayer
@@ -287,6 +295,7 @@ struct SettingsView: View {
                                                 Image(systemName: "chevron.right")
                                                     .foregroundColor(.white)
                                                     .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
                                                     .padding()
                                             }
                                         })
@@ -294,20 +303,62 @@ struct SettingsView: View {
                                     }
                                 }
                                 
-//                                                                Button(action: {
-//                                
-//                                                                }, label: {
-//                                                                    HStack() {
-//                                                                        Spacer()
-//                                                                        Text("Rate Athan Utility!")
-//                                                                            .font(.headline)
-//                                                                            .bold()
-//                                                                            .foregroundColor(.white)
-//                                                                            .padding()
-//                                                                        Spacer()
-//                                                                    }
-//                                                                })
-//                                                                .buttonStyle(GradientButtonStyle())
+                                Group {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Use Arabic Language")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding(.top)
+                                        Divider()
+                                            .background(Color.white)
+                                    }
+                                    
+                                    Button(action: {
+                                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                    }, label: {
+                                        HStack {
+                                            Text("Change Language")
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                                .padding()
+                                            Spacer()
+                                            Image(systemName: "globe")
+                                                .foregroundColor(.white)
+                                                .font(Font.headline.weight(.bold))
+                                                .padding()
+                                        }
+                                    })
+                                    .buttonStyle(ScalingButtonStyle())
+                                    
+//                                    HStack {
+//                                        Toggle(isOn: AthanDefaults.arabicMode, label: {
+//                                            Text("Arabic Mode")
+//                                                .font(.headline)
+//                                                .bold()
+//                                                .foregroundColor(.white)
+//
+//                                        })
+//                                    }
+//                                    .padding()
+
+                                }
+
+                                Button(action: {
+                                     
+                                }, label: {
+                                    HStack() {
+                                        Spacer()
+                                        Text("Rate Athan Utility!")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding()
+                                        Spacer()
+                                    }
+                                })
+                                .buttonStyle(ScalingButtonStyle())
                             }
                             
                         }
@@ -336,12 +387,11 @@ struct SettingsView: View {
                     .padding()
                     .padding([.leading, .trailing, .bottom])
                     //                    .padding([.leading, .trailing, .bottom])
-                    
                 }
-                .edgesIgnoringSafeArea(.all)
+//                .edgesIgnoringSafeArea(.all)
                 //                .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                 .frame(width: g.size.width)
-                .padding(.top)
+                .padding([.top])
                 .transition(.opacity)
             }
         }

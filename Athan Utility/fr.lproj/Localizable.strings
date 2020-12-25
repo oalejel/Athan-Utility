@@ -14,11 +14,11 @@
 "M_letter" = "M";
 "I_letter" = "I";
 
-"Fajr" = "Fajjr";
-"Shurooq" = "Shurooq";
-"Thuhr" = "Dhouhr";
-"Asr" = "Asr";
-"Maghrib" = "Maghrib";
+"Fajr" = "Fejr";
+"Shurooq" = "Shuruk";
+"Thuhr" = "Dhuhr";
+"Asr" = "Asser";
+"Maghrib" = "Maghreb";
 "Isha" = "Icha";
 
 "Cancel" = "Annuler";
@@ -73,3 +73,5 @@
 "Check current and upcoming salah times with the Notification Center widget." = "Vérifiez les heures de prière actuelles et à venir avec le widget Centre de notifications.";
 
 "A new way to visualize salah times throughout the day." = "Une nouvelle façon de visualiser les heures de salah tout au long de la journée.";
+
+"left" = ""; // for now, dont say "10 mins left" over progress bar. just show time left

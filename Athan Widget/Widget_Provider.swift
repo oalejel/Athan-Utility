@@ -99,10 +99,12 @@ class AthanProvider: IntentTimelineProvider {
                                   todayPrayerTimes: todayTimesArray,
                                   relevance: TimelineEntryRelevance.init(score: EntryRelevance.High.rawValue))
         entries.append(nowEntry)
+        
+        
 
         // create a single entry for every remaining prayer of the day
-        // if we are currently on isha after 12 am, then the next prayer we loop for will be fajr
-        for pIndex in (1 + (manager.currentPrayer?.rawValue() ?? -1))..<6 {
+        // if we are currently on isha after 12 am, nextPrayer will return fajr
+        for pIndex in (manager.todayTimes.nextPrayer()?.rawValue() ?? 6)..<6 {
             let iterationPrayer = Prayer(index: pIndex) // the prayer we want to create a single update for
             let prayerDate = manager.todayTimes.time(for: iterationPrayer)
 
@@ -143,7 +145,9 @@ class AthanProvider: IntentTimelineProvider {
             // no worry for type == isha, since tomorrow's entries only go up to maghrib
         }
         print("--- WIDGET TIMELINE ---")
-        print(entries)
+        entries.map { "\($0.currentPrayer) - \($0.date) -> \($0.nextPrayerDate)" }.forEach {
+            print($0)
+        }
         print("^^^ WIDGET TIMELINE ^^^")
         // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
         let timeline = Timeline(entries: entries, policy: .atEnd)

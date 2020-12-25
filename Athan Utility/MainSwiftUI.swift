@@ -37,14 +37,14 @@ struct MainSwiftUI: View {
         let comps = Calendar.current.dateComponents([.second], from: Date())
         let secondsTilNextMinute = 60 - comps.second!
         return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-                              repeats: false) { _ in
+                                    repeats: false) { _ in
             percentComplete = getPercentComplete()
             minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
                 percentComplete = getPercentComplete()
             })
-         }
+        }
     }
-
+    
     @State var percentComplete: Double = 0.0
     
     func getPercentComplete() -> Double {
@@ -70,15 +70,20 @@ struct MainSwiftUI: View {
         let df = DateFormatter()
         df.calendar = hijriCal
         df.dateStyle = .medium
+    
+        if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
+            df.locale = Locale(identifier: "ar_SY")
+        }
+        
         return df.string(from: date)
     }
-
+    
     var body: some View {
         ZStack {
             GeometryReader { g in
                 let timeRemainingString: String = {
                     let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
-                                                            to: AthanManager.shared.guaranteedNextPrayerTime())
+                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
                     // 1h 2m | 1h | 53m | 10s
                     if comps.hour == 0 && comps.minute == 0 {
                         return "<1m left"
@@ -93,7 +98,7 @@ struct MainSwiftUI: View {
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                     .edgesIgnoringSafeArea(.all)
                 
-                    
+                
                 
                 VStack(alignment: .leading) {
                     
@@ -128,26 +133,26 @@ struct MainSwiftUI: View {
                                             .foregroundColor(.white)
                                     }
                                     .opacity(1 - 0.8 * tomorrowPeekProgress)
-
+                                    
                                     Spacer() // space title | qibla
                                     
                                     VStack(alignment: .trailing, spacing: 0) {
                                         QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading,
                                                          qiblaAngle: self.manager.qiblaHeading)
+                                            .flipsForRightToLeftLayoutDirection(true)
                                             .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
-
-
+                                        
                                         
                                         // for now, time remaining will only show seconds on ios >=14
                                         if #available(iOS 14.0, *) {
-                                            Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
+                                            Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) \(NSLocalizedString("left", comment: ""))")
                                                 .fontWeight(.bold)
                                                 .autocapitalization(.none)
                                                 .foregroundColor(Color(.lightText))
                                                 .multilineTextAlignment(.center)
                                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
-
+                                            
                                         } else {
                                             // Fallback on earlier versions
                                             Text("\(timeRemainingString)")
@@ -156,7 +161,7 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(Color(.lightText))
                                                 .multilineTextAlignment(.center)
                                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
-
+                                            
                                         }
                                     }
                                 }
@@ -169,11 +174,14 @@ struct MainSwiftUI: View {
                                         percentComplete = getPercentComplete()
                                     })
                                     .opacity(1 - 0.8 * tomorrowPeekProgress)
-
+                                
                                 let cellFont = Font.system(size: g.size.width * 0.06)
                                 let timeFormatter: DateFormatter = {
                                     let df = DateFormatter()
                                     df.timeStyle = .short
+                                    if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
+                                        df.locale = Locale(identifier: "ar_SY")
+                                    }
                                     return df
                                 }()
                                 
@@ -194,20 +202,20 @@ struct MainSwiftUI: View {
                                                 }
                                                 return h
                                             }()
-
+                                            
                                             ZStack { // stack of today and tomorrow times
                                                 HStack {
                                                     Text(p.localizedString())
-        //                                            TextField(p.localizedString(), text: [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex], onEditingChanged: { _ in
-        //
-        //                                            }, onCommit: {
-        //                                                print("committed overwrite prayer name")
-        //                                            })
-        //                                                .disableAutocorrection(true)
+                                                        //                                            TextField(p.localizedString(), text: [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex], onEditingChanged: { _ in
+                                                        //
+                                                        //                                            }, onCommit: {
+                                                        //                                                print("committed overwrite prayer name")
+                                                        //                                            })
+                                                        //                                                .disableAutocorrection(true)
                                                         .foregroundColor(highlight.color())
                                                         .font(cellFont)
                                                         .bold()
-
+                                                    
                                                     Spacer()
                                                     Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
                                                         // replace 3 with current prayer index
@@ -217,12 +225,12 @@ struct MainSwiftUI: View {
                                                 }
                                                 .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
                                                 .rotation3DEffect(
-                                                            Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                                            axis: (x: 1, y: 0, z: 0.0),
-                                                            anchor: .top,
-                                                            anchorZ: 0,
+                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .top,
+                                                    anchorZ: 0,
                                                     perspective: 0.1
-                                                        )
+                                                )
                                                 .animation(.linear(duration: 0.2))
                                                 
                                                 
@@ -231,24 +239,24 @@ struct MainSwiftUI: View {
                                                         .foregroundColor(PrayerRowContent.Highlight.future.color())
                                                         .font(cellFont)
                                                         .bold()
-            //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                                    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
                                                     Spacer()
                                                     Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
                                                         // replace 3 with current prayer index
                                                         .foregroundColor(PrayerRowContent.Highlight.future.color())
                                                         .font(cellFont)
                                                         .bold()
-            //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
+                                                    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
                                                 }
-            //                                    .border(Color.red)
+                                                //                                    .border(Color.red)
                                                 .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
                                                 .rotation3DEffect(
                                                     Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                                            axis: (x: 1, y: 0, z: 0.0),
-                                                            anchor: .bottom,
-                                                            anchorZ: 0,
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .bottom,
+                                                    anchorZ: 0,
                                                     perspective: 0.1
-                                                        )
+                                                )
                                                 .animation(.linear(duration: 0.2))
                                             }
                                             
@@ -266,29 +274,9 @@ struct MainSwiftUI: View {
                                                 tomorrowPeekProgress = 0
                                             }
                                         })
-                                        
+                                    
                                 )
                                 
-                                
-        //                        let todayContent: [PrayerRowContent] = Prayer.allCases.map {
-        //                            var highlight = PrayerRowContent.Highlight.present
-        //                            if $0 == manager.todayTimes.currentPrayer() {
-        //                                highlight = .present
-        //                            } else if manager.todayTimes.currentPrayer() == nil {
-        //                                highlight = .future
-        //                            } else {
-        //                                highlight = $0.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
-        //                            }
-        //                            return PrayerRowContent(date: manager.todayTimes.time(for: $0),
-        //                                                    prayer: $0,
-        //                                                    highlight: highlight)
-        //                        }
-        //                        let tomorrowContent: [PrayerRowContent] = Prayer.allCases.map {
-        //                            PrayerRowContent(date: manager.tomorrowTimes.time(for: $0),
-        //                                             prayer: $0,
-        //                                             highlight: .future)
-        //
-        //                        }
                             }
                             .padding([.leading, .trailing])
                             .padding([.leading, .trailing])
@@ -300,12 +288,12 @@ struct MainSwiftUI: View {
                                         .foregroundColor(Color(.lightText))
                                         .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
                                         .rotation3DEffect(
-                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .top,
-                                                    anchorZ: 0,
+                                            Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                            axis: (x: 1, y: 0, z: 0.0),
+                                            anchor: .top,
+                                            anchorZ: 0,
                                             perspective: 0.1
-                                                )
+                                        )
                                         .animation(.linear(duration: 0.2))
                                     
                                     Text("\(hijriDateString(date: Date().addingTimeInterval(86400)))")
@@ -314,11 +302,11 @@ struct MainSwiftUI: View {
                                         .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
                                         .rotation3DEffect(
                                             Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .bottom,
-                                                    anchorZ: 0,
+                                            axis: (x: 1, y: 0, z: 0.0),
+                                            anchor: .bottom,
+                                            anchorZ: 0,
                                             perspective: 0.1
-                                                )
+                                        )
                                         .animation(.linear(duration: 0.2))
                                 }
                                 .offset(y: 24)
@@ -327,20 +315,17 @@ struct MainSwiftUI: View {
                                           sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
                                           dhuhrTime: manager.todayTimes.dhuhr)
                                     .opacity(1 - 0.8 * tomorrowPeekProgress)
-
+                                
                             }
                             
-//                            Spacer() // space footer
                             
-//                            .padding([.leading, .trailing])
-//                            .padding([.leading, .trailing])
                             
                             HStack(alignment: .center) {
+                                
+                                // Location button
                                 Button(action: {
-                                    // tap vibration
                                     let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                                     lightImpactFeedbackGenerator.impactOccurred()
-                                    AthanManager.shared.requestLocationPermission()
                                     withAnimation {
                                         currentView = (currentView != .Main) ? .Main : .Location
                                     }
@@ -349,11 +334,11 @@ struct MainSwiftUI: View {
                                 }
                                 .foregroundColor(Color(.lightText))
                                 .font(Font.body.weight(.bold))
-
+                                
                                 Spacer()
                                 
+                                // Settings button
                                 Button(action: {
-                                    // tap vibration
                                     let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                                     lightImpactFeedbackGenerator.impactOccurred()
                                     withAnimation {
@@ -369,7 +354,7 @@ struct MainSwiftUI: View {
                             .padding([.leading, .trailing, .bottom])
                         }
                         .transition(.opacity)
-//                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
+                    //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                     }
                     
                 }
@@ -413,6 +398,6 @@ struct MainSwiftUI_Previews: PreviewProvider {
         MainSwiftUI()
             .environmentObject(ObservableAthanManager.shared)
             .previewDevice("iPhone Xs")
-            
+        
     }
 }

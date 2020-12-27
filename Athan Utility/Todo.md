@@ -2,6 +2,9 @@
 Before updating 
 - run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
+- if custom alert time is longer than interval between two prayers, then use 15 minutse instead
+- make sure notifications are always recalcualted when locations are changed
+- get timezone of custom locations OR just tell user that the times they see are according to their iphone's timezone
 
 For later 
 - dragging up on times table should bring up a monthly times table instead of just tomorrow times. nobody cares about tomorrow's times!

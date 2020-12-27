@@ -31,14 +31,16 @@ struct SmallWidget: View {
     //                    .font(.subheadline)
                         .fontWeight(.bold)
                         .font(.system(size: 12))
-                        .minimumScaleFactor(0.01)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .lineLimit(1)
+                        
+//                        .minimumScaleFactor(0.01)
+//                        .fixedSize(horizontal: false, vertical: true)
+//                        .lineLimit(1)
                         .multilineTextAlignment(.trailing)
                     
 
 
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 Spacer()
 
 
@@ -93,16 +95,11 @@ struct MediumWidget: View {
                         .fontWeight(.bold)
                     Text("\(entry.nextPrayerDate, style: .relative) \(NSLocalizedString("left", comment: ""))")
                         .foregroundColor(.init(UIColor.lightText))
-                        .font(.subheadline)
+                        .font(.system(size: 14))
                         .fontWeight(.bold)
-                        .lineLimit(1)
-//                        .fixedSize(horizontal: false, vertical: true)
-                        .allowsTightening(true)
-                        .minimumScaleFactor(0.01)
-                    //                    Text("left")
-                    //                        .foregroundColor(.init(UIColor.lightText))
-                    //                        .font(.subheadline)
-                    //                        .fontWeight(.bold)
+//                        .lineLimit(1)
+//                        .allowsTightening(true)
+//                        .minimumScaleFactor(0.01)
                     Spacer()
                     
                     PrayerSymbol(prayerType: entry.currentPrayer)

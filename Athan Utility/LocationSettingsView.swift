@@ -26,7 +26,13 @@ struct ActivityIndicator: UIViewRepresentable {
 }
 
 @available(iOS 13.0.0, *)
-struct LocationSettingsView: View {
+struct LocationSettingsView: View, Equatable {
+    
+    static func == (lhs: LocationSettingsView, rhs: LocationSettingsView) -> Bool {
+        // << return yes on view properties which identifies that the
+        // view is equal and should not be refreshed (ie. `body` is not rebuilt)
+        return (lhs.usingCurrentLocation == rhs.usingCurrentLocation)
+    }
     
     #warning("make sure updating this value changes earlier settings?")
     
@@ -75,7 +81,7 @@ struct LocationSettingsView: View {
                         
                         // if the source of the update is not a manual input,
                         // we don't want to set the location name
-                        print(loc)
+//                        print(loc)
                         if !usingCurrentLocation {
                             print("creating timer")
                             unboundCoordinate = loc
@@ -105,7 +111,7 @@ struct LocationSettingsView: View {
 //                                Image(systemName: "mappin.and.ellipse")
 //                                    .foregroundColor(Color(.label))
 //                                    .font(.subheadline)
-                                Text("\(unboundCoordinate.latitude, specifier: "%.2f")˚, \(unboundCoordinate.longitude, specifier: "%.2f")˚")
+                                Text("\(boundCoordinate.latitude, specifier: "%.2f")˚, \(boundCoordinate.longitude, specifier: "%.2f")˚")
                                     .foregroundColor(Color(.secondaryLabel))
                                     .font(.subheadline)
                             }
@@ -132,9 +138,25 @@ struct LocationSettingsView: View {
                             .foregroundColor(erroneousLocation ? .red : .white)
                             .bold()
                             .padding([.leading])
-                        TextField("Location Name", text: $textFieldText) { (didChange) in
-                            erroneousLocation = false // reset potential error
+                        TextField("Location Name", text: $textFieldText) { isEditing in
+                            if isEditing {
+                                erroneousLocation = false // reset potential error
+                            }
                         } onCommit: {
+                            // if we have a degree symbol, or a comma between two numbers, only attempt to query coordinat
+                            if textFieldText.contains(",") {
+                                // use shorter of the two substrings
+                                let rep1 = textFieldText.replacingOccurrences(of: "°", with: "")
+                                let rep2 = rep1.replacingOccurrences(of: " ", with: "")
+                                let split = rep2.split(separator: ",")
+                                                         
+                                if split.count == 2 {
+                                    if let lat = CLLocationDegrees(split[0]), let lon = CLLocationDegrees(split[1]) {
+                                        queryCoordinate(coord: CLLocationCoordinate2D(latitude: lat, longitude: lon))
+                                        return
+                                    }
+                                }
+                            }
                             queryLocation(text: textFieldText)
                         }
                         .textContentType(.location)
@@ -149,7 +171,6 @@ struct LocationSettingsView: View {
                     )
                     .transition(.scale)
                 }
-                
                 
                 
                 Spacer()
@@ -175,6 +196,7 @@ struct LocationSettingsView: View {
                             // at this point, we already know whether location permissions were granted
                             // just ask athanmanager to ask for a location update and capture it
                             AthanManager.shared.attemptSingleLocationUpdate { capturedLocationSettings in
+                                print("CALLBACK")
                                 let settings = capturedLocationSettings ?? AthanManager.shared.locationSettings.copy() as! LocationSettings
                                 textFieldText = settings.locationName
                                 boundCoordinate = settings.locationCoordinate
@@ -250,7 +272,7 @@ struct LocationSettingsView: View {
                             AthanDefaults.useCurrentLocation = usingCurrentLocation
                             AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate)
                             
-                            // force athan manager to recalculate 
+                            // force athan manager to recalculate
                             AthanManager.shared.considerRecalculations(isNewLocation: true)
                             print("new settings: \(AthanManager.shared.locationSettings)")
                         }
@@ -290,8 +312,12 @@ struct LocationSettingsView: View {
         geocoder.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
             
             guard let placemark = placemarks?.first, error == nil else {
-                erroneousLocation = true
-                print("failed to understand address, \(error!)")
+//                erroneousLocation = true
+                erroneousLocation = false // no need to show error for a coordinate. leave it as is
+                textFieldText = String(format: "%.2f°, %.2f°",
+                                       coord.latitude,
+                                       coord.longitude)
+//                boundCoordinate = coord; #warning("telling map to change coordinate might make it cause a second call to this function")
                 return
             }
             

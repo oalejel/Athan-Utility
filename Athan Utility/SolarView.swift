@@ -51,7 +51,11 @@ struct SineLine: Shape {
 // TODO: have peak always be around the same y pos, and just adjust amplitude
 // of graph instead
 @available(iOS 13.0.0, *)
-struct SolarView: View {
+struct SolarView: View, Equatable {
+    static func == (lhs: SolarView, rhs: SolarView) -> Bool {
+        return true
+    }
+    
     var progress: CGFloat = 0
     var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
     
@@ -113,6 +117,11 @@ struct SolarView: View {
                                     withAnimation(.linear(duration: 0.3)) {
                                         isDragging = true
                                         manualProgress = value.location.x / g.size.width
+                                        if UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft {
+                                            manualProgress = (g.size.width - value.location.x) / g.size.width
+                                        } else {
+                                            manualProgress = value.location.x / g.size.width
+                                        }
                                     }
                                 })
                                 .onEnded({ value in

@@ -100,6 +100,7 @@
 		3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D770583251C3849007BCEAA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
+		3D7A34C42597936F00FBCEAB /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */; };
 		3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* SettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* SettingsViewController.xib */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
@@ -141,6 +142,9 @@
 		3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3DB56CF4228369A200B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6AF502576FE06006241D4 /* View+Extensions.swift */; };
+		3DC65DBA2597AA5400481FD9 /* ScrollOffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DB92597AA5400481FD9 /* ScrollOffsetPreferenceKey.swift */; };
+		3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */; };
+		3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */; };
 		3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */; };
 		3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB30CA236B109200D47C7C /* UIView+Fading.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
@@ -294,6 +298,7 @@
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
 		3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Convenience.swift; sourceTree = "<group>"; };
 		3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		3D7D42C11C00E5380013956C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -329,6 +334,9 @@
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DB6AF502576FE06006241D4 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
+		3DC65DB92597AA5400481FD9 /* ScrollOffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetPreferenceKey.swift; sourceTree = "<group>"; };
+		3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableScrollView.swift; sourceTree = "<group>"; };
+		3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingView.swift; sourceTree = "<group>"; };
 		3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Old_Frequent_Widget_Provider copy.swift"; sourceTree = "<group>"; };
 		3DCB30CA236B109200D47C7C /* UIView+Fading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -435,6 +443,8 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
+				3DC65DB92597AA5400481FD9 /* ScrollOffsetPreferenceKey.swift */,
+				3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */,
 				3D1E50D4256D64D0003E2E34 /* SwiftUI Views */,
 				3D8CE84125696639006D6E46 /* Settings Managers */,
 				3D599260259403E0006355CB /* Extensions */,
@@ -464,19 +474,18 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
-				3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */,
-				3D59923E25939F5A006355CB /* AthanDefaults.swift */,
-				3D59923725930F5E006355CB /* MapView.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
+				3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */,
+				3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */,
 				3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */,
+				3D59923725930F5E006355CB /* MapView.swift */,
+				3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */,
 				3D13E898257757100041F1AC /* PrayerSettingsView.swift */,
 				3D13E89125773BFD0041F1AC /* SettingCell.swift */,
 				3D73EC412571D6B20010C47D /* PrayerRows.swift */,
-				3D1E50EF256F4620003E2E34 /* Colors.swift */,
 				3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */,
 				3D73EBE9256F5DEA0010C47D /* SolarView.swift */,
 				3D73EC3425717EB80010C47D /* PrayerSymbol.swift */,
-				3DB6AF502576FE06006241D4 /* View+Extensions.swift */,
 			);
 			name = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -574,6 +583,8 @@
 		3D599260259403E0006355CB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3D1E50EF256F4620003E2E34 /* Colors.swift */,
+				3DB6AF502576FE06006241D4 /* View+Extensions.swift */,
 				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
 				3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */,
 				3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */,
@@ -598,6 +609,7 @@
 		3D8CE84125696639006D6E46 /* Settings Managers */ = {
 			isa = PBXGroup;
 			children = (
+				3D59923E25939F5A006355CB /* AthanDefaults.swift */,
 				3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */,
 				3D8CE83A256965F0006D6E46 /* PrayerSettings.swift */,
 			);
@@ -990,13 +1002,16 @@
 			files = (
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
 				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
+				3D7A34C42597936F00FBCEAB /* GeneralSettingsView.swift in Sources */,
 				3D73EC422571D6B30010C47D /* PrayerRows.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
 				3D8CE83B256965F0006D6E46 /* PrayerSettings.swift in Sources */,
+				3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */,
 				3D73EC3525717EB80010C47D /* PrayerSymbol.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3D9B9FFD2575425F00F02EFD /* SwifySuncalc.swift in Sources */,
+				3DC65DBA2597AA5400481FD9 /* ScrollOffsetPreferenceKey.swift in Sources */,
 				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
 				3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */,
@@ -1046,6 +1061,7 @@
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
 				3D6105102572F21700C1D067 /* CalculationMethod+Extensions.swift in Sources */,
 				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
+				3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 				3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */,

@@ -24,8 +24,8 @@ struct Triangle: Shape {
 
 @available(iOS 13.0.0, *)
 struct QiblaPointerView: View {
-    var angle: Double = 90
-    var qiblaAngle: Double = 0 // correct angle, which we should highlight and vibrate for
+    @Binding var angle: Double
+    @Binding var qiblaAngle: Double // correct angle, which we should highlight and vibrate for
 //    private let pointerLength: CGFloat = 60
     // make pointerlength equal frame over
     
@@ -51,9 +51,8 @@ struct QiblaPointerView: View {
                     .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
                     .foregroundColor(.white)
 //                    .rotationEffect(.degrees(angle), anchor: .center)
-                    .shortRotationEffect(.degrees(angle), id: 1)
+                    .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
                     .animation(Animation.default.speed(1))
-                
             }
         }
     
@@ -124,7 +123,7 @@ func getAngle() -> Angle {
 @available(iOS 13.0.0, *)
 struct QiblaPointerPreview: PreviewProvider {
     static var previews: some View {
-        QiblaPointerView()
+        QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13))
             .background(Rectangle(), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }

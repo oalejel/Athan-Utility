@@ -33,17 +33,24 @@ struct MainSwiftUI: View {
     
     @State var currentView = CurrentView.Main
     
-    var nextRoundMinuteTimer: Timer {
-        let comps = Calendar.current.dateComponents([.second], from: Date())
-        let secondsTilNextMinute = 60 - comps.second!
-        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-                                    repeats: false) { _ in
-            percentComplete = getPercentComplete()
-            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-                percentComplete = getPercentComplete()
-            })
-        }
-    }
+    @State var todayHijriString = hijriDateString(date: Date())
+    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
+    
+    @State var nextRoundMinuteTimer: Timer?
+//    {
+//        // this gets called again when the view appears -- have it invalidated on appear
+//        let comps = Calendar.current.dateComponents([.second], from: Date())
+//        let secondsTilNextMinute = 60 - comps.second!
+//        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+//                                    repeats: false) { _ in
+//            percentComplete = getPercentComplete()
+//            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+//                percentComplete = getPercentComplete()
+//                todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+//                tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+//            })
+//        }
+//    }
     
     @State var percentComplete: Double = 0.0
     
@@ -65,12 +72,12 @@ struct MainSwiftUI: View {
         return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
     }
     
-    func hijriDateString(date: Date) -> String {
+    static func hijriDateString(date: Date) -> String {
         let hijriCal = Calendar(identifier: .islamic)
         let df = DateFormatter()
         df.calendar = hijriCal
         df.dateStyle = .medium
-    
+        print("here")
         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
             df.locale = Locale(identifier: "ar_SY")
         }
@@ -98,16 +105,17 @@ struct MainSwiftUI: View {
                 LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                     .edgesIgnoringSafeArea(.all)
                 
-                
-                
                 VStack(alignment: .leading) {
                     
                     switch currentView {
                     case .Location:
                         LocationSettingsView(parentSession: $currentView)
+                            .equatable()
                             .transition(.opacity)
+                    
                     case .Settings:
                         SettingsView(parentSession: $currentView)
+//                            .equatable()
                             .transition(.opacity)
                     case .Main:
                         VStack(alignment: .leading, spacing: 0) {
@@ -137,9 +145,8 @@ struct MainSwiftUI: View {
                                     Spacer() // space title | qibla
                                     
                                     VStack(alignment: .trailing, spacing: 0) {
-                                        QiblaPointerView(angle: self.manager.qiblaHeading - self.manager.currentHeading,
-                                                         qiblaAngle: self.manager.qiblaHeading)
-                                            .flipsForRightToLeftLayoutDirection(true)
+                                        QiblaPointerView(angle: $manager.currentHeading,
+                                                         qiblaAngle: $manager.qiblaHeading)
                                             .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
                                         
@@ -150,7 +157,10 @@ struct MainSwiftUI: View {
                                                 .fontWeight(.bold)
                                                 .autocapitalization(.none)
                                                 .foregroundColor(Color(.lightText))
-                                                .multilineTextAlignment(.center)
+                                                .multilineTextAlignment(.trailing)
+                                                .minimumScaleFactor(0.01)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .lineLimit(1)
                                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
                                             
                                         } else {
@@ -159,7 +169,10 @@ struct MainSwiftUI: View {
                                                 .fontWeight(.bold)
                                                 .autocapitalization(.none)
                                                 .foregroundColor(Color(.lightText))
-                                                .multilineTextAlignment(.center)
+                                                .multilineTextAlignment(.trailing)
+                                                .minimumScaleFactor(0.01)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .lineLimit(1)
                                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
                                             
                                         }
@@ -169,10 +182,27 @@ struct MainSwiftUI: View {
                                 ProgressBar(progress: CGFloat(percentComplete), lineWidth: 10,
                                             outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
                                     .onAppear(perform: { // wake update timers that will update progress
-                                        let _ = nextRoundMinuteTimer
-                                        let _ = minuteTimer
+                                        nextRoundMinuteTimer = {
+                                            // this gets called again when the view appears -- have it invalidated on appear
+                                            let comps = Calendar.current.dateComponents([.second], from: Date())
+                                            let secondsTilNextMinute = 60 - comps.second!
+                                            return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+                                                                        repeats: false) { _ in
+                                                percentComplete = getPercentComplete()
+                                                minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+                                                    percentComplete = getPercentComplete()
+                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+                                                })
+                                            }
+                                        }()
                                         percentComplete = getPercentComplete()
                                     })
+                                    .onDisappear {
+                                        minuteTimer?.invalidate()
+                                        nextRoundMinuteTimer?.invalidate()
+                                        minuteTimer?.invalidate()
+                                    }
                                     .opacity(1 - 0.8 * tomorrowPeekProgress)
                                 
                                 let cellFont = Font.system(size: g.size.width * 0.06)
@@ -283,7 +313,7 @@ struct MainSwiftUI: View {
                             
                             ZStack() {
                                 ZStack {
-                                    Text("\(hijriDateString(date: Date()))")
+                                    Text("\(todayHijriString)")
                                         .fontWeight(.bold)
                                         .foregroundColor(Color(.lightText))
                                         .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
@@ -296,7 +326,7 @@ struct MainSwiftUI: View {
                                         )
                                         .animation(.linear(duration: 0.2))
                                     
-                                    Text("\(hijriDateString(date: Date().addingTimeInterval(86400)))")
+                                    Text("\(tomorrowHijriString))")
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
                                         .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
@@ -314,6 +344,7 @@ struct MainSwiftUI: View {
                                 SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
                                           sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
                                           dhuhrTime: manager.todayTimes.dhuhr)
+                                    .equatable()
                                     .opacity(1 - 0.8 * tomorrowPeekProgress)
                                 
                             }
@@ -321,7 +352,6 @@ struct MainSwiftUI: View {
                             
                             
                             HStack(alignment: .center) {
-                                
                                 // Location button
                                 Button(action: {
                                     let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -356,9 +386,7 @@ struct MainSwiftUI: View {
                         .transition(.opacity)
                     //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                     }
-                    
                 }
-                
             }
         }
     }

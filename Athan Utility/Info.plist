@@ -32,7 +32,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Athan Utility uses your location to determine prayer information</string>
+	<string>Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>Athan times for requested regions are used by Siri.</string>
 	<key>UIApplicationSceneManifest</key>

@@ -42,6 +42,7 @@ class ObservableAthanManager: ObservableObject {
     @Published var locationName: String = ""
     @Published var qiblaHeading: Double = 0.0
     @Published var currentHeading: Double = 0.0
+    @Published var locationPermissionsGranted = false
 }
 
 class AthanManager: NSObject, CLLocationManagerDelegate {
@@ -86,7 +87,13 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         didSet { locationSettingsDidSetHelper() }
     }
     
-    var locationPermissionsGranted = false
+    var locationPermissionsGranted = false {
+        didSet {
+            if #available(iOS 13.0.0, *) {
+                ObservableAthanManager.shared.locationPermissionsGranted = locationPermissionsGranted
+            }
+        }
+    }
     var captureLocationUpdateClosure: ((LocationSettings?) -> ())?
     
     // MARK: - DidSet Helpers
@@ -139,7 +146,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         
         // if non-iOS devices, force a refresh since enteredForeground will not be called
         if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
-            considerRecalculations(isNewLocation: false)
+            considerRecalculations(force: false)
         }
     }
         
@@ -255,7 +262,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     @objc func newDay() {
         // will update dayOfMonth
-        considerRecalculations(isNewLocation: false)
+        considerRecalculations(force: false)
     }
     
     // MARK: - Helpers
@@ -293,14 +300,14 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 // Listen for background events
 extension AthanManager {
     
-    func considerRecalculations(isNewLocation: Bool) {
+    func considerRecalculations(force: Bool) {
         // reload settings in case we are running widget and app changed them
         if let arch = LocationSettings.checkArchive() { locationSettings = arch }
         if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
         if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
         
-        var shouldRecalculate = isNewLocation // forced for when we have new locations
-        if !isNewLocation {
+        var shouldRecalculate = force // forced for when we have new locations
+        if !force {
             if firstLaunch { // if app was quit before opening, recalculating for whatever location we have stored
                 shouldRecalculate = true
 //                let _ = LocationSettings.shared // this is already done when the manager launches
@@ -370,9 +377,9 @@ extension AthanManager {
         // 1. refresh times, notifications, widgets, timers,
         // 2. allow location to be updated and repeat step 1
         // first recalculation on existing location settings
-        considerRecalculations(isNewLocation: false)
+        considerRecalculations(force: false)
         
-        if AthanDefaults.useCurrentLocation {
+        if locationSettings.useCurrentLocation {
             attemptSingleLocationUpdate() // if new location is read, we will trigger concsiderRecalculations(isNewLocation: true)
         }
     }
@@ -441,14 +448,14 @@ extension AthanManager {
                     
                     // save our location settings
                     let potentialNewLocationSettings = LocationSettings(locationName: shortname,
-                                                             coord: locations.first!.coordinate)
+                                                                        coord: locations.first!.coordinate, useCurrentLocation: true)
                     
                     if let captureClosue = self.captureLocationUpdateClosure  {
                         captureClosue(potentialNewLocationSettings)
                         self.captureLocationUpdateClosure = nil
-                    } else if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
+                    } else if self.locationSettings.locationName != potentialNewLocationSettings.locationName { // if not same location, update
                         self.locationSettings = potentialNewLocationSettings
-                        self.considerRecalculations(isNewLocation: true)
+                        self.considerRecalculations(force: true)
                     }
                     
                     return
@@ -456,7 +463,7 @@ extension AthanManager {
             }
             
             let namelessLocationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
-                                                   coord: locations.first!.coordinate)
+                                                            coord: locations.first!.coordinate, useCurrentLocation: true)
             // error case: rely on coordinates and no geocoded name
             if let captureClosue = self.captureLocationUpdateClosure  {
                 captureClosue(namelessLocationSettings)
@@ -465,7 +472,7 @@ extension AthanManager {
                 self.locationSettings = namelessLocationSettings
             }
             
-            self.considerRecalculations(isNewLocation: true)
+            self.considerRecalculations(force: true)
             if let x = error {
                 print("failed to reverse geocode location")
                 print(x) // fallback

@@ -100,7 +100,6 @@
 		3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D770583251C3849007BCEAA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
-		3D7A34C42597936F00FBCEAB /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */; };
 		3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* SettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* SettingsViewController.xib */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
@@ -298,7 +297,6 @@
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
 		3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Convenience.swift; sourceTree = "<group>"; };
 		3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan WidgetExtension.entitlements"; sourceTree = "<group>"; };
-		3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		3D7D42C11C00E5380013956C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
@@ -479,7 +477,6 @@
 				3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */,
 				3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */,
 				3D59923725930F5E006355CB /* MapView.swift */,
-				3D7A34C32597936F00FBCEAB /* GeneralSettingsView.swift */,
 				3D13E898257757100041F1AC /* PrayerSettingsView.swift */,
 				3D13E89125773BFD0041F1AC /* SettingCell.swift */,
 				3D73EC412571D6B20010C47D /* PrayerRows.swift */,
@@ -1002,7 +999,6 @@
 			files = (
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
 				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
-				3D7A34C42597936F00FBCEAB /* GeneralSettingsView.swift in Sources */,
 				3D73EC422571D6B30010C47D /* PrayerRows.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,

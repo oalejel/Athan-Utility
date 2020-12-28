@@ -12,6 +12,10 @@ import CoreLocation.CLLocation
 
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable, NSCopying {
+//    static func == (lhs: PrayerSettings, rhs: PrayerSettings) -> Bool {
+//        lhs.calculationMethod == rhs.calculationMethod && lhs.customNames == rhs.customNames && lhs.madhab == rhs.madhab
+//    }
+    
     static var shared: PrayerSettings = {
         if let archive = checkArchive() {
             return archive
@@ -150,36 +154,46 @@ class NotificationSettings: Codable, NSCopying {
 class LocationSettings: Codable, NSCopying {
     
     static var shared: LocationSettings = {
+        let x = Date()
+        print("here1", x)
         if let archive = checkArchive() {
+            print("here2", x)
             return archive
         } else {
-            return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322))
+            print("here3", x)
+            return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), useCurrentLocation: false)
         }
     }()
     
-    init(locationName: String, coord: CLLocationCoordinate2D) {
+    init(locationName: String, coord: CLLocationCoordinate2D, useCurrentLocation: Bool) {
         self.locationName = locationName
         self.lat = coord.latitude
         self.lon = coord.longitude
+        self.useCurrentLocation = useCurrentLocation
     }
 
     static func checkArchive() -> LocationSettings? {
         if let data = unarchiveData(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
             decoded.isLoadedFromArchive = true
+            print("))) check gives: \(decoded.locationName)")
             return decoded
         }
         return nil
     }
     
     static func archive() {
+        print(")) SAVING: \(LocationSettings.shared.locationName)")
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
             archiveData(archiveName, object: data)
         }
+        let check = checkArchive()
+        
     }
     var isLoadedFromArchive = false
     var locationName: String
+    var useCurrentLocation = false
     private var lat: Double
     private var lon: Double
     var locationCoordinate: CLLocationCoordinate2D {
@@ -194,7 +208,7 @@ class LocationSettings: Codable, NSCopying {
     private static let archiveName = "locationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate)
+        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, useCurrentLocation: useCurrentLocation)
         return copy
     }
 }

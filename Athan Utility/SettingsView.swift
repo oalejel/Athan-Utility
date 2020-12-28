@@ -53,9 +53,9 @@ struct SettingsView: View {
     @EnvironmentObject var manager: ObservableAthanManager
     //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
-    @State var tempLocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
-    @State var tempNotificationSettings = NotificationSettings.shared.copy() as! NotificationSettings
-    @State var tempPrayerSettings = PrayerSettings.shared.copy() as! PrayerSettings
+    @State var tempLocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
+    @State var tempNotificationSettings = AthanManager.shared.notificationSettings.copy() as! NotificationSettings
+    @State var tempPrayerSettings = AthanManager.shared.prayerSettings.copy() as! PrayerSettings
     
     //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
     //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
@@ -75,9 +75,6 @@ struct SettingsView: View {
     let calculationMethods = CalculationMethod.usefulCases()
     let madhabs = Madhab.allCases
     @State var savedOffset = CGFloat(0)
-    
-//    @available(iOS 14.0, *)
-//    @State var proxy: ScrollViewProxy?
     
     var x: Int = {
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
@@ -102,7 +99,6 @@ struct SettingsView: View {
             case .General:
                 if #available(iOS 14.0, *) {
                     ScrollViewReader { proxy in
-                        
                         GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, fajrOverride: $fajrOverride, sunriseOverride: $sunriseOverride, dhuhrOverride: $dhuhrOverride, asrOverride: $asrOverride, maghribOverride: $maghribOverride, ishaOverride: $ishaOverride, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
                             savedOffset: $savedOffset, proxy: proxy)
                     }

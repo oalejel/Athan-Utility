@@ -26,9 +26,9 @@
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Athan Widget uses your location to calculate athan times.</string>
+	<string>Athan Widget uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Athan Widget uses your location to calculate athan times.</string>
+	<string>Athan Widget uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSWidgetWantsLocation</key>
 	<true/>
 </dict>

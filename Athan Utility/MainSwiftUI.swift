@@ -37,20 +37,20 @@ struct MainSwiftUI: View {
     @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
     
     @State var nextRoundMinuteTimer: Timer?
-//    {
-//        // this gets called again when the view appears -- have it invalidated on appear
-//        let comps = Calendar.current.dateComponents([.second], from: Date())
-//        let secondsTilNextMinute = 60 - comps.second!
-//        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-//                                    repeats: false) { _ in
-//            percentComplete = getPercentComplete()
-//            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-//                percentComplete = getPercentComplete()
-//                todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-//                tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
-//            })
-//        }
-//    }
+    //    {
+    //        // this gets called again when the view appears -- have it invalidated on appear
+    //        let comps = Calendar.current.dateComponents([.second], from: Date())
+    //        let secondsTilNextMinute = 60 - comps.second!
+    //        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+    //                                    repeats: false) { _ in
+    //            percentComplete = getPercentComplete()
+    //            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+    //                percentComplete = getPercentComplete()
+    //                todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+    //                tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+    //            })
+    //        }
+    //    }
     
     @State var percentComplete: Double = 0.0
     
@@ -109,13 +109,13 @@ struct MainSwiftUI: View {
                     
                     switch currentView {
                     case .Location:
-                        LocationSettingsView(parentSession: $currentView)
+                        LocationSettingsView(parentSession: $currentView, locationPermissionGranted: $manager.locationPermissionsGranted)
                             .equatable()
                             .transition(.opacity)
-                    
+                        
                     case .Settings:
                         SettingsView(parentSession: $currentView)
-//                            .equatable()
+                            //                            .equatable()
                             .transition(.opacity)
                     case .Main:
                         VStack(alignment: .leading, spacing: 0) {
@@ -311,77 +311,110 @@ struct MainSwiftUI: View {
                             .padding([.leading, .trailing])
                             .padding([.leading, .trailing])
                             
-                            ZStack() {
-                                ZStack {
-                                    Text("\(todayHijriString)")
-                                        .fontWeight(.bold)
+                            
+                            ZStack {
+                                
+                                VStack {
+                                    Spacer()
+                                    HStack(alignment: .center) {
+                                        // Location button
+                                        Button(action: {
+                                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                            lightImpactFeedbackGenerator.impactOccurred()
+                                            withAnimation {
+                                                currentView = (currentView != .Main) ? .Main : .Location
+                                            }
+                                        }) {
+                                            HStack(spacing: 1) {
+                                                Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation ? "location.fill" : "location.slash")
+                                                    .foregroundColor(Color(.lightText))
+                                                    .font(Font.body)
+                                                
+                                                Text("\(manager.locationName)")
+                                                    .foregroundColor(Color(.lightText))
+                                                    .font(Font.body.weight(.bold))
+                                                    
+                                            }
+                                        }
+                                        .padding(12)
+                                        .offset(x: -14, y: 12)
+                                        
+                                        Spacer()
+                                        
+                                        // Settings button
+                                        Button(action: {
+                                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                            lightImpactFeedbackGenerator.impactOccurred()
+                                            withAnimation {
+                                                currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                            }
+                                        }) {
+                                            Image(systemName: "gear")
+                                                .padding(12)
+                                        }
                                         .foregroundColor(Color(.lightText))
-                                        .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
-                                        .rotation3DEffect(
-                                            Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                            axis: (x: 1, y: 0, z: 0.0),
-                                            anchor: .top,
-                                            anchorZ: 0,
-                                            perspective: 0.1
-                                        )
-                                        .animation(.linear(duration: 0.2))
+                                        .font(Font.body.weight(.bold))
+                                        .offset(x: 12, y: 12)
+                                    }
+                                    .padding([.leading, .trailing, .bottom])
+                                    .padding([.leading, .trailing, .bottom])
+                                }
+                                
+                                
+                                VStack {
+                                    ZStack() {
+                                        ZStack {
+                                            Text("\(todayHijriString)")
+                                                .fontWeight(.bold)
+                                                .foregroundColor(Color(.lightText))
+                                                .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                                .rotation3DEffect(
+                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .top,
+                                                    anchorZ: 0,
+                                                    perspective: 0.1
+                                                )
+                                                .animation(.linear(duration: 0.2))
+                                            
+                                            Text("\(tomorrowHijriString))")
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.white)
+                                                .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                                .rotation3DEffect(
+                                                    Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .bottom,
+                                                    anchorZ: 0,
+                                                    perspective: 0.1
+                                                )
+                                                .animation(.linear(duration: 0.2))
+                                        }
+                                        .offset(y: 24)
+                                        // include percentComplete * 0 to trigger refresh based on Date()
+                                        SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                                  sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+                                                  dhuhrTime: manager.todayTimes.dhuhr)
+                                            .equatable()
+                                            .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                    }
                                     
-                                    Text("\(tomorrowHijriString))")
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                        .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
-                                        .rotation3DEffect(
-                                            Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                            axis: (x: 1, y: 0, z: 0.0),
-                                            anchor: .bottom,
-                                            anchorZ: 0,
-                                            perspective: 0.1
-                                        )
-                                        .animation(.linear(duration: 0.2))
+                                    // dummy stack used for proper offset
+                                    HStack(alignment: .center) {
+                                        Text("Spacer")
+                                            .font(Font.body.weight(.bold))
+                                        Spacer()
+                                        Image(systemName: "gear")
+                                            .font(Font.body.weight(.bold))
+                                    }
+                                    .opacity(0)
+                                    .padding([.leading, .trailing, .bottom])
+                                    .padding([.leading, .trailing, .bottom])
                                 }
-                                .offset(y: 24)
-                                // include percentComplete * 0 to trigger refresh based on Date()
-                                SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
-                                          sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
-                                          dhuhrTime: manager.todayTimes.dhuhr)
-                                    .equatable()
-                                    .opacity(1 - 0.8 * tomorrowPeekProgress)
-                                
                             }
                             
                             
                             
-                            HStack(alignment: .center) {
-                                // Location button
-                                Button(action: {
-                                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                                    lightImpactFeedbackGenerator.impactOccurred()
-                                    withAnimation {
-                                        currentView = (currentView != .Main) ? .Main : .Location
-                                    }
-                                }) {
-                                    Text("\(manager.locationName)")
-                                }
-                                .foregroundColor(Color(.lightText))
-                                .font(Font.body.weight(.bold))
-                                
-                                Spacer()
-                                
-                                // Settings button
-                                Button(action: {
-                                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                                    lightImpactFeedbackGenerator.impactOccurred()
-                                    withAnimation {
-                                        currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
-                                    }
-                                }) {
-                                    Image(systemName: "gear")
-                                }
-                                .foregroundColor(Color(.lightText))
-                                .font(Font.body.weight(.bold))
-                            }
-                            .padding([.leading, .trailing, .bottom])
-                            .padding([.leading, .trailing, .bottom])
                         }
                         .transition(.opacity)
                     //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))

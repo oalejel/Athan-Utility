@@ -10,7 +10,12 @@ import MapKit
 import SwiftUI
 
 @available(iOS 13.0.0, *)
-struct MapView: UIViewRepresentable {
+struct MapView: UIViewRepresentable, Equatable {
+    static func == (lhs: MapView, rhs: MapView) -> Bool {
+        lhs.center.latitude == rhs.center.latitude && lhs.center.longitude == rhs.center.longitude
+            && lhs.usingCurrentLocation == rhs.usingCurrentLocation
+    }
+    
     typealias UIViewType = MKMapView
     let mapView = MKMapView()
     
@@ -114,6 +119,7 @@ struct MapView: UIViewRepresentable {
         }
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            print(">> region did change")
             if gestureFlag {
                 gestureFlag = false
                 print("> MARKED REGION CHANGED")

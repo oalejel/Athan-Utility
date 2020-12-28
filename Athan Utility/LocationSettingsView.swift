@@ -10,7 +10,6 @@ import SwiftUI
 import CoreLocation.CLLocation
 import MapKit
 
-
 @available(iOS 13.0.0, *)
 struct ActivityIndicator: UIViewRepresentable {
     @Binding var isAnimating: Bool
@@ -31,21 +30,24 @@ struct LocationSettingsView: View, Equatable {
     static func == (lhs: LocationSettingsView, rhs: LocationSettingsView) -> Bool {
         // << return yes on view properties which identifies that the
         // view is equal and should not be refreshed (ie. `body` is not rebuilt)
-        return (lhs.usingCurrentLocation == rhs.usingCurrentLocation)
+        return (lhs.usingCurrentLocation == rhs.usingCurrentLocation && rhs.templocationSettings.locationName == lhs.templocationSettings.locationName
+                    && lhs.locationPermissionGranted == rhs.locationPermissionGranted && rhs.unboundCoordinate.latitude == lhs.unboundCoordinate.latitude)
     }
     
     #warning("make sure updating this value changes earlier settings?")
     
     // start text field as a copy of the location settings loc name
-    @State var textFieldText: String = "\(LocationSettings.shared.locationName)"
+    @State var textFieldText: String = "\(AthanManager.shared.locationSettings.locationName)"
     
-    // state shared with map view 
-    @State var boundCoordinate = LocationSettings.shared.locationCoordinate
-    @State var unboundCoordinate = LocationSettings.shared.locationCoordinate
-    @State var usingCurrentLocation = AthanDefaults.useCurrentLocation
+    // state shared with map view. save coordinate, usingcurrent, and name on exit
+    @State var boundCoordinate = AthanManager.shared.locationSettings.locationCoordinate
+    @State var unboundCoordinate = AthanManager.shared.locationSettings.locationCoordinate
+    @State var usingCurrentLocation = AthanManager.shared.locationSettings.useCurrentLocation
     
-    @State var templocationSettings: LocationSettings = LocationSettings.shared.copy() as! LocationSettings
+    @State var templocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
     @Binding var parentSession: CurrentView // used to trigger transition back
+    
+    @Binding var locationPermissionGranted: Bool
     
     @State var awaitingLocationUpdate = false
     // is the currently inputted location string understandable
@@ -67,31 +69,32 @@ struct LocationSettingsView: View, Equatable {
         
         GeometryReader { g in
             VStack(alignment: .leading) {
-                Text("Set Location")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(.white)
-                    .padding(0)
-                    .lineLimit(1)
-                    .allowsTightening(true)
-                    .minimumScaleFactor(0.01)
                 
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Set Location")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .allowsTightening(true)
+                        .minimumScaleFactor(0.01)
+                        .padding(.bottom)
+                    
                 ZStack {
                     MapView(center: $boundCoordinate, usingCurrentLocation: $usingCurrentLocation) { loc in
-                        
                         // if the source of the update is not a manual input,
                         // we don't want to set the location name
-//                        print(loc)
                         if !usingCurrentLocation {
                             print("creating timer")
                             unboundCoordinate = loc
                             timer?.invalidate()
                             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
-                                queryCoordinate(coord: loc)
+                                queryAndSaveCoordinate(coord: loc)
                             }
                         }
                     }
-                        .cornerRadius(12)
+                    .equatable()
+                    .cornerRadius(12)
 
                     VStack {
                         Image(systemName: "mappin")
@@ -111,7 +114,7 @@ struct LocationSettingsView: View, Equatable {
 //                                Image(systemName: "mappin.and.ellipse")
 //                                    .foregroundColor(Color(.label))
 //                                    .font(.subheadline)
-                                Text("\(boundCoordinate.latitude, specifier: "%.2f")˚, \(boundCoordinate.longitude, specifier: "%.2f")˚")
+                                Text("\(unboundCoordinate.latitude, specifier: "%.2f")˚, \(unboundCoordinate.longitude, specifier: "%.2f")˚")
                                     .foregroundColor(Color(.secondaryLabel))
                                     .font(.subheadline)
                             }
@@ -130,6 +133,8 @@ struct LocationSettingsView: View, Equatable {
                         Spacer()
                     }
                 }
+            }
+                
 
                 // Input text field for location
                 if !usingCurrentLocation {
@@ -152,7 +157,7 @@ struct LocationSettingsView: View, Equatable {
                                                          
                                 if split.count == 2 {
                                     if let lat = CLLocationDegrees(split[0]), let lon = CLLocationDegrees(split[1]) {
-                                        queryCoordinate(coord: CLLocationCoordinate2D(latitude: lat, longitude: lon))
+                                        queryAndSaveCoordinate(coord: CLLocationCoordinate2D(latitude: lat, longitude: lon))
                                         return
                                     }
                                 }
@@ -172,26 +177,24 @@ struct LocationSettingsView: View, Equatable {
                     .transition(.scale)
                 }
                 
-                
                 Spacer()
                 
-                // gps locate button
-                
-                Button(action: {
-                    if AthanManager.shared.locationPermissionsGranted {
+                Button(action: { // gps locate button
+                    if locationPermissionGranted {
                         // set map to current location
                         let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         lightImpactFeedbackGenerator.impactOccurred()
                         
                         if usingCurrentLocation {
                             // if in tracking state, switch to custom state
-                            AthanDefaults.useCurrentLocation = false
+//                            AthanDefaults.useCurrentLocation = false
                             #warning("maybe leave all state change savig to later")
                             withAnimation {
                                 usingCurrentLocation = false
                             }
                         } else {
-                            AthanDefaults.useCurrentLocation = true
+                            timer?.invalidate() // prevent a timer that is still trying to calculate a location from proceeding
+//                            AthanDefaults.useCurrentLocation = true
                             awaitingLocationUpdate = true
                             // at this point, we already know whether location permissions were granted
                             // just ask athanmanager to ask for a location update and capture it
@@ -199,13 +202,19 @@ struct LocationSettingsView: View, Equatable {
                                 print("CALLBACK")
                                 let settings = capturedLocationSettings ?? AthanManager.shared.locationSettings.copy() as! LocationSettings
                                 textFieldText = settings.locationName
-                                boundCoordinate = settings.locationCoordinate
+                                boundCoordinate = settings.locationCoordinate // change map location
+                                unboundCoordinate = settings.locationCoordinate // change stored location
                                 
                                 awaitingLocationUpdate = false
                                 withAnimation {
                                     usingCurrentLocation = true
                                 }
                             }
+                        }
+                    } else {
+                        // open settings for locations
+                        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
+                            UIApplication.shared.open(settingsURL, completionHandler: { _ in })
                         }
                     }
                 }, label: {
@@ -227,7 +236,7 @@ struct LocationSettingsView: View, Equatable {
                             if awaitingLocationUpdate {
                                 ActivityIndicator(isAnimating: .constant(true), style: .white)
                             } else {
-                                Image(systemName: AthanManager.shared.locationPermissionsGranted ? "location.fill" : "location.slash.fill")
+                                Image(systemName: locationPermissionGranted ? "location.fill" : "location.slash.fill")
                                     .foregroundColor(.white)
                                     .padding([.leading])
                             }
@@ -239,7 +248,6 @@ struct LocationSettingsView: View, Equatable {
                                 .lineLimit(1)
                                 .allowsTightening(true)
                                 .minimumScaleFactor(0.01)
-                                
                         }
                             
                         Spacer()
@@ -249,14 +257,13 @@ struct LocationSettingsView: View, Equatable {
                             .foregroundColor(usingCurrentLocation ? .white : .blue)
                             .cornerRadius(12)
                     )
-                    
                 })
                 .buttonStyle(ScalingButtonStyle())
-                .opacity(AthanManager.shared.locationPermissionsGranted ? 1 : 0.2)
+                .opacity(usingCurrentLocation || locationPermissionGranted ? 1 : 0.2)
 
                 Spacer()
             
-                Text(AthanManager.shared.locationPermissionsGranted ? "Athan Utility does not collect user data." : "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data."
+                Text(locationPermissionGranted ? "Athan Utility does not collect user data." : "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data."
                 )
                     .font(.subheadline)
                     .foregroundColor(Color(.lightText))
@@ -264,17 +271,17 @@ struct LocationSettingsView: View, Equatable {
 
                 Spacer()
                 HStack(alignment: .center) {
-                    Button(action: {
+                    Spacer()
+                    Button(action: { // DONE BUTTON
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         
                         // save settings if we don't have erroneous input
                         if !erroneousLocation {
-                            AthanDefaults.useCurrentLocation = usingCurrentLocation
-                            AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate)
+                            AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, useCurrentLocation: usingCurrentLocation)
                             
                             // force athan manager to recalculate
-                            AthanManager.shared.considerRecalculations(isNewLocation: true)
-                            print("new settings: \(AthanManager.shared.locationSettings)")
+                            AthanManager.shared.considerRecalculations(force: true)
+                            print("new settings: \(textFieldText), \(unboundCoordinate.latitude), \(unboundCoordinate.longitude)")
                         }
                         
                         withAnimation {
@@ -285,7 +292,6 @@ struct LocationSettingsView: View, Equatable {
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }
-                    Spacer()
                 }
             }
             .padding()
@@ -294,7 +300,7 @@ struct LocationSettingsView: View, Equatable {
     }
     
     func queryLocation(text: String) {
-        // reverse geocode location
+        // reverse geocode address
         geocoder.geocodeAddressString(text) { (placemarks, error) in
             guard let coord = placemarks?.first?.location?.coordinate, error == nil else {
                 erroneousLocation = true
@@ -303,20 +309,22 @@ struct LocationSettingsView: View, Equatable {
             }
             
             print("GEOCODER - found coordinate")
-            boundCoordinate = coord
+            boundCoordinate = coord // tell map to change
+            unboundCoordinate = coord
         }
     }
     
-    func queryCoordinate(coord: CLLocationCoordinate2D) {
+    func queryAndSaveCoordinate(coord: CLLocationCoordinate2D) {
         // reverse geocode coordinate
         geocoder.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
-            
             guard let placemark = placemarks?.first, error == nil else {
 //                erroneousLocation = true
+                if !usingCurrentLocation { return } // in case user switches back to not using current location
                 erroneousLocation = false // no need to show error for a coordinate. leave it as is
                 textFieldText = String(format: "%.2f°, %.2f°",
                                        coord.latitude,
                                        coord.longitude)
+                unboundCoordinate = coord
 //                boundCoordinate = coord; #warning("telling map to change coordinate might make it cause a second call to this function")
                 return
             }
@@ -329,7 +337,11 @@ struct LocationSettingsView: View, Equatable {
 //            if let name = placemark.name {
 //                textFieldText = name // hoping this will handle most localization cases
 //            } else
-            if let city = placemark.locality {
+            if Locale.preferredLanguages.first?.hasPrefix("en") ?? false, // at least in english, we can be sure that "city, state" will format correctly
+               let city = placemark.locality,
+               let state = placemark.administrativeArea {
+                textFieldText = "\(city), \(state)"
+            } else if let city = placemark.locality {
                 textFieldText = city
             } else if let state = placemark.administrativeArea {
                 textFieldText = state
@@ -338,6 +350,7 @@ struct LocationSettingsView: View, Equatable {
                                        coord.latitude,
                                        coord.longitude)
             }
+            unboundCoordinate = coord
         }
     }
 }
@@ -348,7 +361,7 @@ struct LocationSettingView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            LocationSettingsView(parentSession: .constant(.Location))
+            LocationSettingsView(parentSession: .constant(.Location), locationPermissionGranted: .constant(true))
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

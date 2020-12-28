@@ -43,7 +43,7 @@ class AthanProvider: IntentTimelineProvider {
         if manager.locationSettings.isLoadedFromArchive {
             // WARNING: no foreground updates here --> must manually tell manager to refresh
             // for now, dont call enterForeground since that will request new location
-            manager.considerRecalculations(isNewLocation: false)
+            manager.considerRecalculations(force: false)
 
             let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
             let entry = AthanEntry(date: Date(),
@@ -71,7 +71,7 @@ class AthanProvider: IntentTimelineProvider {
 
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
-        manager.considerRecalculations(isNewLocation: false)
+        manager.considerRecalculations(force: false)
 
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),

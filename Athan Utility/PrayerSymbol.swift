@@ -19,13 +19,26 @@ struct PrayerSymbol: View {
         case .sunrise:
             Image(systemName: "sunrise")
         case .dhuhr:
-            Image(systemName: "sun.min")
-        case .asr:
             Image(systemName: "sun.max")
+        case .asr:
+            Image(systemName: "sun.min")
         case .maghrib:
             Image(systemName: "sunset")
         case .isha:
             Image(systemName: "moon.stars")
+        }
+    }
+}
+
+enum PrayerHighlightType {
+    case past
+    case present
+    case future
+    func color() -> Color {
+        switch self {
+        case .past: return Color(.lightText)
+        case .present: return .green
+        case .future: return .white
         }
     }
 }

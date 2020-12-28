@@ -26,45 +26,134 @@ struct PrayerSettingsView: View {
     // state to keep strings in view updated
     // commit this value to storage later if changed
     
-    @State var customPrayerName: String? = nil
+    @State var customPrayerName: String = ""
     
     @Binding var activeSection: SettingsSectionType
     
+    #warning("uncomment this once we're done with the sufti ui canvas debugger")
+//    var step: Int = {
+//        UIStepper.appearance().tintColor = .white
+//       return 0
+//    }()
+    
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text("\(customPrayerName == "" ? prayer.localizedString() : customPrayerName) settings")
+                .font(.largeTitle)
+                .bold()
+                .foregroundColor(.white)
+                .padding([.leading])
+            
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
-                                            
-                    Text("\(customPrayerName ?? prayer.localizedString()) settings")
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.bottom)
-                        
-                    VStack(alignment: .leading) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Alarms")
+                    
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Athan Alarm")
                                 .font(.headline)
                                 .bold()
                                 .foregroundColor(.white)
                             Divider()
                                 .background(Color.white)
                             
-                            HStack {
+                            VStack {
                                 Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
-                                    Text("Reminder alarm")
+                                    Text("Enable Alerts")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
-
+                                        
+                                    
                                 })
+                                .padding(.top, 12)
+                                
+                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
+                                    Text("Play Sound")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                })
+                                
+//                                ZStack {
+//                                    Stepper(
+//                                        onIncrement: { },
+//                                        onDecrement: {  },
+//                                        label: {
+//                                            Text("Minute Offset")
+//                                                .font(.headline)
+//                                                .bold()
+//                                                .foregroundColor(.white)
+//        //                                        .padding([.bottom])
+//                                        })
+//                                        .accentColor(.white)
+//
+//
+//                                    Text("1")
+//                                        .foregroundColor(Color(.lightText))
+//                                }
+//                                .padding(.bottom, 12)
+                                                                
                             }
-                            .padding()
+                            .padding([.leading, .trailing])
+                            .background(
+                                Rectangle()
+                                    .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
+                                    .cornerRadius(12)
+                            )
+                            .padding(.bottom)
+                            
+                            //                                Text("Increasing minute adjustments sets back athan times for cus")
+                            //                                    .font(.subheadline)
+                            
+                            Text("Reminder Alarm")
+                                .font(.headline)
+                                .bold()
+                                .foregroundColor(.white)
+                            Divider()
+                                .background(Color.white)
+                            VStack {
+                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
+                                    Text("Enable Alerts")
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        
+                                    
+                                })
+                                .padding(.top, 12)
+                                                                
+                                
+                                ZStack {
+                                    Stepper(
+                                        onIncrement: { },
+                                        onDecrement: {  },
+                                        label: {
+                                            Text("Minute offset")
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+        //                                        .padding([.bottom])
+                                        })
+                                        .accentColor(.white)
+
+                                    
+                                    Text("15")
+                                        .foregroundColor(Color(.lightText))
+                                }
+                                .padding(.bottom, 12)
+
+                            }
+                            .padding([.leading, .trailing])
+                            .background(
+                                Rectangle()
+                                    .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
+                                    .cornerRadius(12)
+                            )
+                            .padding(.bottom, 12)
 
                             
                         }
-
-                        
                     }
                 }
             }
@@ -103,7 +192,7 @@ struct PrayerSettingsView_Previews: PreviewProvider {
             PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: .constant(.Prayer))
             
         }
-            .environmentObject(ObservableAthanManager.shared)
-            .previewDevice("iPhone Xs")
+        .environmentObject(ObservableAthanManager.shared)
+        .previewDevice("iPhone 12 mini")
     }
 }

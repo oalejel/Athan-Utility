@@ -82,7 +82,7 @@ extension Prayer: Codable {
         case .fajr:
             return "Fajr"
         case .sunrise:
-            return "Shurooq"
+            return "Sunrise"
         case .dhuhr:
             return "Thuhr"
         case .asr:

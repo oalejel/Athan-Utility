@@ -165,7 +165,7 @@ struct GeneralSettingView: View {
                                     
                                     Group { // calculation method group
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Calculation method")
+                                            Text("Calculation Method")
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -174,6 +174,38 @@ struct GeneralSettingView: View {
                                                 .background(Color.white)
                                         }
                                         
+                                        Button(action: { // calculation method button
+                                            
+                                        }, label: {
+                                            HStack {
+                                                Text(tempPrayerSettings.calculationMethod.stringValue())
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                
+                                                Spacer()
+                                                
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
+                                                //                                                .padding()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
+                                        
+                                        Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .lineLimit(nil)
+                                            .font(.caption)
+                                            .foregroundColor(Color(.lightText))
+                                            .padding(.bottom)
+
+
+                                        
+                                        /*
                                         Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
                                             ForEach(0..<calculationMethods.count) { mIndex in
                                                 let method = calculationMethods[mIndex]
@@ -187,6 +219,7 @@ struct GeneralSettingView: View {
                                         .labelsHidden()
                                         .scaledToFit()
                                         .foregroundColor(.white)
+                                        
                                         //                                .frame(width: g.size.width * 0.8)
                                         //                                .padding([.leading, .trailing])
                                         Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
@@ -195,6 +228,10 @@ struct GeneralSettingView: View {
                                             .font(.caption)
                                             .foregroundColor(Color(.lightText))
                                             .padding(.bottom)
+                                        */
+                                        
+                                        
+                                        
                                     } // calculation method group
                                     
                                     
@@ -266,10 +303,9 @@ struct GeneralSettingView: View {
                                     } // athan sounds group
                                     
                                     
-                                    
                                     Group {
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Notifications and customizations")
+                                            Text("Notifications")
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -285,11 +321,14 @@ struct GeneralSettingView: View {
                                                 }
                                             }, label: {
                                                 HStack {
+                                                    PrayerSymbol(prayerType: Prayer(index: pIndex))
+                                                        .padding([.leading, .top, .bottom])
+
                                                     Text("\(Prayer(index: pIndex).stringValue())")
                                                         .font(.headline)
                                                         .bold()
                                                         .foregroundColor(.white)
-                                                        .padding()
+                                                        
                                                     Spacer()
                                                     Image(systemName: "chevron.right")
                                                         .foregroundColor(.white)
@@ -299,6 +338,7 @@ struct GeneralSettingView: View {
                                                 }
                                             })
                                             .buttonStyle(ScalingButtonStyle())
+                                            .padding(.top, 1)
                                         }
                                     }
                                     
@@ -363,6 +403,7 @@ struct GeneralSettingView: View {
                             }
                         }
                     }
+                    .frame(width: g.size.width)
                 }
                 .edgesIgnoringSafeArea(.all)
                 

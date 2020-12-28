@@ -154,13 +154,9 @@ class NotificationSettings: Codable, NSCopying {
 class LocationSettings: Codable, NSCopying {
     
     static var shared: LocationSettings = {
-        let x = Date()
-        print("here1", x)
         if let archive = checkArchive() {
-            print("here2", x)
             return archive
         } else {
-            print("here3", x)
             return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), useCurrentLocation: false)
         }
     }()
@@ -176,20 +172,16 @@ class LocationSettings: Codable, NSCopying {
         if let data = unarchiveData(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
             decoded.isLoadedFromArchive = true
-            print("))) check gives: \(decoded.locationName)")
             return decoded
         }
         return nil
     }
     
     static func archive() {
-        print(")) SAVING: \(LocationSettings.shared.locationName)")
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
             archiveData(archiveName, object: data)
         }
-        let check = checkArchive()
-        
     }
     var isLoadedFromArchive = false
     var locationName: String

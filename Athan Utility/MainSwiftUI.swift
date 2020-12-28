@@ -221,8 +221,8 @@ struct MainSwiftUI: View {
                                     VStack(alignment: .leading, spacing: 18) {
                                         ForEach(0..<6) { pIndex in
                                             let p = Prayer(index: pIndex)
-                                            let highlight: PrayerRowContent.Highlight = {
-                                                var h = PrayerRowContent.Highlight.present
+                                            let highlight: PrayerRowContent.PrayerHighlightType = {
+                                                var h = PrayerRowContent.PrayerHighlightType.present
                                                 if p == manager.todayTimes.currentPrayer() {
                                                     h = .present
                                                 } else if manager.todayTimes.currentPrayer() == nil {
@@ -266,14 +266,14 @@ struct MainSwiftUI: View {
                                                 
                                                 HStack {
                                                     Text(p.localizedString())
-                                                        .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                                        .foregroundColor(PrayerRowContent.PrayerHighlightType.future.color())
                                                         .font(cellFont)
                                                         .bold()
                                                     //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
                                                     Spacer()
                                                     Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
                                                         // replace 3 with current prayer index
-                                                        .foregroundColor(PrayerRowContent.Highlight.future.color())
+                                                        .foregroundColor(PrayerRowContent.PrayerHighlightType.future.color())
                                                         .font(cellFont)
                                                         .bold()
                                                     //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))

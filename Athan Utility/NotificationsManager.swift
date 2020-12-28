@@ -59,14 +59,6 @@ class NotificationsManager {
                 
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
                 center.removeAllPendingNotificationRequests()
                 
                 let noteSoundFilename = Settings.getSelectedSoundFilename()

@@ -11,7 +11,6 @@
  moon phase, starting at the phase last stored in user defaults.
  */
 
-
 import Foundation
 import SwiftUI
 import SceneKit
@@ -20,7 +19,7 @@ import Adhan
 #warning("make this a public thing on github later")
 @available(iOS 13.0.0, *)
 struct MoonView3D: View {
-//    @State var currentPrayer: Prayer? = nil // inelegant solution just used to trigger a refresh
+    //    @State var currentPrayer: Prayer? = nil // inelegant solution just used to trigger a refresh
     var body: some View {
         GeometryReader { g in
             ZStack {
@@ -30,7 +29,7 @@ struct MoonView3D: View {
         }
     }
 }
- 
+
 @available(iOS 13.0.0, *)
 final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelegate, UIGestureRecognizerDelegate {
     
@@ -68,9 +67,9 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         ambientLightNode.light!.type = .ambient
         ambientLightNode.light!.color = UIColor(white: 0.2, alpha: 1)
         scene.rootNode.addChildNode(ambientLightNode)
-
+        
         centeredLightParent.position = .init(x: 0, y: 0, z: 0)
-
+        
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
@@ -141,7 +140,7 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         }
         
         let lastMoonPercent = MoonSettings.lastSeenMoonPercent
-        let currentMoonPercent = SwiftySuncalc().getMoonIllumination(date: Date())["phase"]!
+        let currentMoonPercent = SwiftySuncalc().getMoonIllumination(date: Date().addingTimeInterval(86443 * 9))["phase"]!
         
         // start off on last moon percent
         let startOffset = -2 * CGFloat(lastMoonPercent) * CGFloat.pi
@@ -166,7 +165,7 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         // #warning("todo: save last seen moon percent")
         MoonSettings.lastSeenMoonPercent = currentMoonPercent
     }
-
+    
     func updateUIView(_ scnView: SCNView, context: Context) {
         scnView.scene = scene
         // always animate light to correct position when view updated

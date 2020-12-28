@@ -1,48 +1,49 @@
 //
-//  SoundSettingView.swift
+//  CalculationMethodView.swift
 //  Athan Utility
 //
-//  Created by Omar Al-Ejel on 12/2/20.
+//  Created by Omar Al-Ejel on 12/27/20.
 //  Copyright © 2020 Omar Alejel. All rights reserved.
 //
 
 import SwiftUI
+import Adhan
 
 @available(iOS 13.0.0, *)
-struct SoundSettingView: View {
+struct CalculationMethodView: View {
     
     #warning("make sure updating this value changes earlier settings?")
-    @Binding var tempNotificationSettings: NotificationSettings
-    @State var viewSelectedSound = NotificationSettings.Sounds.ios_default
+    @Binding var tempPrayerSettings: PrayerSettings
+    @State var viewSelectedMethod = CalculationMethod.northAmerica
     
     @Binding var activeSection: SettingsSectionType
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Notification sound")
+            Text("Calculation Method")
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
                 .onAppear {
-                    viewSelectedSound = tempNotificationSettings.selectedSound
+                    viewSelectedMethod = tempPrayerSettings.calculationMethod
                 }
                 .padding([.leading, .trailing, .top])
 
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
                     
-                    ForEach(0..<NotificationSettings.Sounds.allCases.count) { sIndex in
+                    ForEach(0..<CalculationMethod.allCases.count) { mIndex in
                         ZStack {
                             Button(action: {
                                 // play sound effect
                                 // set setting, making checkmark change
                                 withAnimation {
-                                    viewSelectedSound = NotificationSettings.Sounds(rawValue: sIndex)!
-                                    tempNotificationSettings.selectedSound = viewSelectedSound
+                                    viewSelectedMethod = CalculationMethod(index: mIndex)
+                                    tempPrayerSettings.calculationMethod = viewSelectedMethod
                                 }
                             }, label: {
                                 HStack {
-                                    Text(NotificationSettings.Sounds(rawValue: sIndex)!.localizedString())
+                                    Text(CalculationMethod(index: mIndex).stringValue())
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -52,7 +53,7 @@ struct SoundSettingView: View {
                                         .foregroundColor(.white)
                                         .font(Font.headline.weight(.bold))
                                         .padding()
-                                        .opacity(viewSelectedSound.rawValue == sIndex ? 1 : 0)
+                                        .opacity(viewSelectedMethod == CalculationMethod(index: mIndex) ? 1 : 0)
                                 }
                             })
                             .buttonStyle(ScalingButtonStyle())
@@ -87,12 +88,12 @@ struct SoundSettingView: View {
 }
 
 @available(iOS 13.0.0, *)
-struct SoundSettingView_Previews: PreviewProvider {
+struct MethodSettingView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
                 .edgesIgnoringSafeArea(.all)
-            SoundSettingView(tempNotificationSettings: .constant(NotificationSettings(settings: [:])), activeSection: .constant(.Sounds))
+            CalculationMethodView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:])), activeSection: .CalculationMethod)
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

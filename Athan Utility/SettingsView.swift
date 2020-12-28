@@ -45,7 +45,7 @@ import StoreKit
  */
 
 enum SettingsSectionType {
-    case General, Sounds, Prayer
+    case General, Sounds, Prayer, CalculationMethod
 }
 
 @available(iOS 13.0.0, *)
@@ -96,6 +96,11 @@ struct SettingsView: View {
                 #warning("change binding")
                 PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                
+            case .CalculationMethod:
+                CalculationMethodView(tempPrayerSettings: .constant(tempPrayerSettings), viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
+                    .transition(.move(edge: .trailing))
+                
             case .General:
                 if #available(iOS 14.0, *) {
                     ScrollViewReader { proxy in

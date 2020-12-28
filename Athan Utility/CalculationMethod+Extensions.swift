@@ -46,4 +46,12 @@ extension CalculationMethod {
             return "Other"
         }
     }
+    
+    init(index: Int) {
+        let cases = Array(CalculationMethod.allCases)
+        if index >= cases.count {
+            fatalError("index for initializing calculation method out of bounds")
+        }
+        self = cases[index]
+    }
 }

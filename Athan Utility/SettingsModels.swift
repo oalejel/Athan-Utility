@@ -61,7 +61,6 @@ class PrayerSettings: Codable, NSCopying {
 
 // MARK: - Notification Settings
 
-
 class NotificationSettings: Codable, NSCopying {
     enum Sounds: Int, CaseIterable, Codable {
         case ios_default
@@ -138,6 +137,7 @@ class NotificationSettings: Codable, NSCopying {
         }
 
     }
+    
     var selectedSound = Sounds.makkah
     var settings: [Prayer:AlarmSetting]
     private static let archiveName = "notificationsettings"
@@ -201,6 +201,66 @@ class LocationSettings: Codable, NSCopying {
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, useCurrentLocation: useCurrentLocation)
+        return copy
+    }
+}
+
+class AppearanceSettings: Codable, NSCopying {
+    
+    static var shared: AppearanceSettings = {
+        if let archive = checkArchive() {
+            return archive
+        } else {
+            // I prefer not having UIColor extensions in a UIKit-agnostic class, so specifying rgb values like this is better
+            return AppearanceSettings(colorDict: [
+                nil: [[0, 0, 0], [0, 0.478431, 0.999999]], // black to blue hue when not using dynamic colors
+                .fajr: [[Float(8)/255, Float(14)/255, Float(39)/255], [Float(1)/255, Float(69)/255, Float(106)/255]],
+                .sunrise: [[Float(8)/255, Float(57)/255, Float(99)/255], [Float(151)/255, Float(144)/255, Float(102)/255]],
+                .dhuhr: [[Float(15)/255, Float(83)/255, Float(175)/255], [Float(82)/255, Float(158)/255, Float(168)/255]],
+                .asr: [[Float(62)/255, Float(175)/255, Float(235)/255], [Float(0)/255, Float(79)/255, Float(126)/255]],
+                .maghrib: [[Float(0)/255, Float(34)/255, Float(97)/255], [Float(163)/255, Float(65)/255, Float(53)/255]],
+                .isha: [[Float(0)/255, Float(1)/255, Float(12)/255], [Float(8)/255, Float(17)/255, Float(88)/255]]
+            ])
+        }
+    }()
+    
+    init(colorDict: [Prayer?:[[Float]]], isDynamic: Bool = true) {
+        self.colorDict = colorDict
+        self.isDynamic = isDynamic
+    }
+
+    static func checkArchive() -> AppearanceSettings? {
+        if let data = unarchiveData(archiveName) as? Data,
+           let decoded = try? JSONDecoder().decode(AppearanceSettings.self, from: data) {
+            return decoded
+        }
+        return nil
+    }
+    
+    static func archive() {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(AppearanceSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
+            archiveData(archiveName, object: data)
+        }
+    }
+    var isDynamic: Bool
+    private var colorDict: [Prayer?:[[Float]]] = [:]
+    func colorTuplesForContext(optionalPrayer: Prayer?) -> ((Double, Double, Double), (Double, Double, Double)){
+        let colorArray = colorDict[optionalPrayer] ?? [[0, 0, 0], [0, 1, 0]]
+        let color1 = (Double(colorArray[0][0]), Double(colorArray[0][1]), Double(colorArray[0][2]))
+        let color2 = (Double(colorArray[1][0]), Double(colorArray[1][1]), Double(colorArray[1][2]))
+        return (color1, color2)
+    }
+    
+    func setRGBPairForContext(optionalPrayer: Prayer?, color1: (Float, Float, Float), color2: (Float, Float, Float)) {
+        colorDict[optionalPrayer] = [[color1.0, color1.1, color1.2], [color2.0, color2.1, color2.2]]
+    }
+//        nil: ((1, 2, 3), (1, 2, 3))
+    
+    private static let archiveName = "appearancesettings"
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = AppearanceSettings(colorDict: colorDict, isDynamic: isDynamic)
         return copy
     }
 }

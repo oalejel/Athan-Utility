@@ -31,19 +31,19 @@ struct CalculationMethodView: View {
 
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
-                    
-                    ForEach(0..<CalculationMethod.allCases.count) { mIndex in
+                    let methods = CalculationMethod.usefulCases()
+                    ForEach(methods, id: \.self) { method in
                         ZStack {
                             Button(action: {
                                 // play sound effect
                                 // set setting, making checkmark change
                                 withAnimation {
-                                    viewSelectedMethod = CalculationMethod(index: mIndex)
+                                    viewSelectedMethod = method
                                     tempPrayerSettings.calculationMethod = viewSelectedMethod
                                 }
                             }, label: {
                                 HStack {
-                                    Text(CalculationMethod(index: mIndex).stringValue())
+                                    Text(method.stringValue())
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -53,7 +53,7 @@ struct CalculationMethodView: View {
                                         .foregroundColor(.white)
                                         .font(Font.headline.weight(.bold))
                                         .padding()
-                                        .opacity(viewSelectedMethod == CalculationMethod(index: mIndex) ? 1 : 0)
+                                        .opacity(viewSelectedMethod == method ? 1 : 0)
                                 }
                             })
                             .buttonStyle(ScalingButtonStyle())
@@ -91,9 +91,9 @@ struct CalculationMethodView: View {
 struct MethodSettingView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            CalculationMethodView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:])), activeSection: .CalculationMethod)
+            CalculationMethodView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:])), activeSection: .constant(.CalculationMethod))
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

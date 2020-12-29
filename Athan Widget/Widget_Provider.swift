@@ -20,7 +20,7 @@ struct AthanEntry: TimelineEntry {
 
     var tellUserToOpenApp = false
     var relevance: TimelineEntryRelevance?
-
+    var gradient: Gradient
 }
 
 enum EntryRelevance: Float {
@@ -36,7 +36,7 @@ class AthanProvider: IntentTimelineProvider {
         let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
         // pass .none for placeholders
         return AthanEntry(date: Date(), currentPrayer: Prayer.fajr, currentPrayerDate: Date(),
-                          nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(), Date(), Date(), Date(), Date()])
+                          nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(), Date(), Date(), Date(), Date()], gradient: Gradient(colors: [.black, .blue]))
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
@@ -44,13 +44,16 @@ class AthanProvider: IntentTimelineProvider {
             // WARNING: no foreground updates here --> must manually tell manager to refresh
             // for now, dont call enterForeground since that will request new location
             manager.considerRecalculations(force: false)
-
+            
+            let useDynamicColors = manager.appearanceSettings.isDynamic
+            let colors = manager.appearanceSettings.colors(for: useDynamicColors ? (manager.currentPrayer ?? Prayer.isha) : nil)
             let timeArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
             let entry = AthanEntry(date: Date(),
                                    currentPrayer: manager.currentPrayer ?? Prayer.isha,
                                    currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
                                    nextPrayerDate: manager.guaranteedNextPrayerTime(),
-                                   todayPrayerTimes: timeArray)
+                                   todayPrayerTimes: timeArray,
+                                   gradient: Gradient(colors: [colors.0, colors.1]))
 
             completion(entry)
         } else { // if not loaded from settings, give user an error
@@ -59,7 +62,8 @@ class AthanProvider: IntentTimelineProvider {
                                    currentPrayerDate: Date(),
                                    nextPrayerDate: Date(),
                                    todayPrayerTimes: [],
-                                   tellUserToOpenApp: true)
+                                   tellUserToOpenApp: true,
+                                   gradient: Gradient(colors: [.black, .blue]))
             completion(openAppEntry)
         }
     }
@@ -72,19 +76,21 @@ class AthanProvider: IntentTimelineProvider {
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
         manager.considerRecalculations(force: false)
-
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),
                                    currentPrayer: Prayer.fajr, // dummy data
                                    currentPrayerDate: Date(),
                                    nextPrayerDate: Date(),
                                    todayPrayerTimes: [],
-                                   tellUserToOpenApp: true)
+                                   tellUserToOpenApp: true,
+                                   gradient: Gradient(colors: [.black, .blue]))
 
             let timeline = Timeline(entries: [openAppEntry], policy: .atEnd)
             completion(timeline)
             return
         }
+        
+        let useDynamicColors = manager.appearanceSettings.isDynamic
 
         let todayTimesArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         let tomorrowTimesArray = Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
@@ -92,12 +98,14 @@ class AthanProvider: IntentTimelineProvider {
         // first, add a snapshot entry for NOW, since we may be on isha time
         // on a new day (at like 1 AM), where there is no entry made above that
         // precedes the current time
+        let nowColors = manager.appearanceSettings.colors(for: useDynamicColors ? (manager.currentPrayer ?? Prayer.isha) : nil)
         let nowEntry = AthanEntry(date: Date(),
                                   currentPrayer: manager.currentPrayer ?? Prayer.isha,
                                   currentPrayerDate: manager.guaranteedCurrentPrayerTime(),
                                   nextPrayerDate: manager.guaranteedNextPrayerTime(),
                                   todayPrayerTimes: todayTimesArray,
-                                  relevance: TimelineEntryRelevance.init(score: EntryRelevance.High.rawValue))
+                                  relevance: TimelineEntryRelevance.init(score: EntryRelevance.High.rawValue),
+                                  gradient: Gradient(colors: [nowColors.0, nowColors.1]))
         entries.append(nowEntry)
         
         
@@ -105,8 +113,10 @@ class AthanProvider: IntentTimelineProvider {
         // create a single entry for every remaining prayer of the day
         // if we are currently on isha after 12 am, nextPrayer will return fajr
         for pIndex in (manager.todayTimes.nextPrayer()?.rawValue() ?? 6)..<6 {
+            
             let iterationPrayer = Prayer(index: pIndex) // the prayer we want to create a single update for
             let prayerDate = manager.todayTimes.time(for: iterationPrayer)
+            let pColors = manager.appearanceSettings.colors(for: useDynamicColors ? iterationPrayer : nil)
 
             // get time of prayer that follows this one. isha will have fajr tomorrow
             var nextPrayer = Prayer.fajr
@@ -121,7 +131,8 @@ class AthanProvider: IntentTimelineProvider {
                                    currentPrayer: iterationPrayer,
                                    currentPrayerDate: prayerDate,
                                    nextPrayerDate: nextTime,
-                                   todayPrayerTimes: todayTimesArray)
+                                   todayPrayerTimes: todayTimesArray,
+                                   gradient: Gradient(colors: [pColors.0, pColors.1]))
             entries.append(entry)
         }
 
@@ -130,7 +141,8 @@ class AthanProvider: IntentTimelineProvider {
         for tomorrowPIndex in 0..<5 {
             let iterationPrayer = Prayer(index: tomorrowPIndex)
             let prayerDate = manager.tomorrowTimes.time(for: iterationPrayer)
-
+            let pColors = manager.appearanceSettings.colors(for: useDynamicColors ? iterationPrayer : nil)
+            
             // get time of prayer that follows this one
             // will NOT have to worry about isha -> tomorrow since tomorrowPIndex never goes to 5
             let nextPrayer = Prayer(index: tomorrowPIndex + 1)
@@ -140,7 +152,8 @@ class AthanProvider: IntentTimelineProvider {
                                    currentPrayer: iterationPrayer,
                                    currentPrayerDate: prayerDate,
                                    nextPrayerDate: nextTime,
-                                   todayPrayerTimes: tomorrowTimesArray)
+                                   todayPrayerTimes: tomorrowTimesArray,
+                                   gradient: Gradient(colors: [pColors.0, pColors.1]))
             entries.append(entry)
             // no worry for type == isha, since tomorrow's entries only go up to maghrib
         }

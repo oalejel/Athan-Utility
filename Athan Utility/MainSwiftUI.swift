@@ -73,6 +73,7 @@ struct MainSwiftUI: View {
     }
     
     static func hijriDateString(date: Date) -> String {
+        
         let hijriCal = Calendar(identifier: .islamic)
         let df = DateFormatter()
         df.calendar = hijriCal
@@ -102,7 +103,8 @@ struct MainSwiftUI: View {
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
                 
-                LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+                
+                LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(alignment: .leading) {
@@ -221,8 +223,8 @@ struct MainSwiftUI: View {
                                     VStack(alignment: .leading, spacing: 18) {
                                         ForEach(0..<6) { pIndex in
                                             let p = Prayer(index: pIndex)
-                                            let highlight: PrayerRowContent.PrayerHighlightType = {
-                                                var h = PrayerRowContent.PrayerHighlightType.present
+                                            let highlight: PrayerHighlightType = {
+                                                var h = PrayerHighlightType.present
                                                 if p == manager.todayTimes.currentPrayer() {
                                                     h = .present
                                                 } else if manager.todayTimes.currentPrayer() == nil {
@@ -266,14 +268,14 @@ struct MainSwiftUI: View {
                                                 
                                                 HStack {
                                                     Text(p.localizedString())
-                                                        .foregroundColor(PrayerRowContent.PrayerHighlightType.future.color())
+                                                        .foregroundColor(PrayerHighlightType.future.color())
                                                         .font(cellFont)
                                                         .bold()
                                                     //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
                                                     Spacer()
                                                     Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
                                                         // replace 3 with current prayer index
-                                                        .foregroundColor(PrayerRowContent.PrayerHighlightType.future.color())
+                                                        .foregroundColor(PrayerHighlightType.future.color())
                                                         .font(cellFont)
                                                         .bold()
                                                     //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
@@ -360,9 +362,9 @@ struct MainSwiftUI: View {
                                     .padding([.leading, .trailing, .bottom])
                                 }
                                 
-                                
                                 VStack {
                                     ZStack() {
+                                        VStack(alignment: .center) {
                                         ZStack {
                                             Text("\(todayHijriString)")
                                                 .fontWeight(.bold)
@@ -389,6 +391,11 @@ struct MainSwiftUI: View {
                                                     perspective: 0.1
                                                 )
                                                 .animation(.linear(duration: 0.2))
+                                        }
+//                                            Text("Tap the Hijri date to view\nan athan times table.")
+//                                                .foregroundColor(.white)
+//                                                .font(.subheadline)
+                                                
                                         }
                                         .offset(y: 24)
                                         // include percentComplete * 0 to trigger refresh based on Date()

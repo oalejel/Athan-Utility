@@ -87,6 +87,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         didSet { locationSettingsDidSetHelper() }
     }
     
+    var appearanceSettings = AppearanceSettings.shared {
+        didSet { appearanceSettingsDidSetHelper() }
+    }
+    
     var locationPermissionsGranted = false {
         didSet {
             if #available(iOS 13.0.0, *) {
@@ -117,6 +121,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
                                                                 Coordinates(latitude: locationSettings.locationCoordinate.latitude,
                                                                             longitude: locationSettings.locationCoordinate.longitude)).direction
         }
+    }
+    
+    func appearanceSettingsDidSetHelper() {
+        AppearanceSettings.shared = appearanceSettings
+        AppearanceSettings.archive()
     }
     
     // App lifecycle state tracking
@@ -355,7 +364,7 @@ extension AthanManager {
                 .createNotifications(coordinate: locationSettings.locationCoordinate,
                                      calculationMethod: prayerSettings.calculationMethod,
                                      madhab: prayerSettings.madhab,
-                                     noteSettings: notificationSettings.settings,
+                                     noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
             if #available(iOS 14.0, *) {
                 // refresh widgets only if this is being run in the main app

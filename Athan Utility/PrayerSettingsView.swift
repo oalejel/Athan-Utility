@@ -21,29 +21,54 @@ import Adhan
 
 @available(iOS 13.0.0, *)
 struct PrayerSettingsView: View {
-    @Binding var setting: AlarmSetting
-    var prayer: Prayer = .fajr
-    // state to keep strings in view updated
-    // commit this value to storage later if changed
     
-    @State var customPrayerName: String = ""
-    
+    @Binding var noteSettings: NotificationSettings
+    @State var prayer: Prayer = .fajr
     @Binding var activeSection: SettingsSectionType
     
-    #warning("uncomment this once we're done with the sufti ui canvas debugger")
-//    var step: Int = {
-//        UIStepper.appearance().tintColor = .white
-//       return 0
-//    }()
-    
+    // adjust setting object on disappear
+    @State var athanAlertEnabled = false
+    @State var athanSoundEnabled = false
+    @State var reminderAlertEnabled = false
+    @State var reminderOffset = 15
+
     
     var body: some View {
+        // intermediate bindings taht depend on each other
+        let athanOn = Binding<Bool>(get: { athanAlertEnabled }, set: {
+            athanAlertEnabled = $0
+            if !athanAlertEnabled { // power to switch off reminder
+                reminderAlertEnabled = false
+                athanSoundEnabled = false
+            }
+        })
+        let soundOn = Binding<Bool>(get: { athanSoundEnabled }, set: {
+            athanSoundEnabled = $0
+            if athanSoundEnabled { // power to switch on regular
+                athanAlertEnabled = true
+            }
+        })
+        let reminderOn = Binding<Bool>(get: { reminderAlertEnabled }, set: {
+            reminderAlertEnabled = $0
+            if reminderAlertEnabled { // power to switch on regular
+                athanAlertEnabled = true
+            }
+        })
+
+        
         VStack(alignment: .leading) {
-            Text("\(customPrayerName == "" ? prayer.localizedString() : customPrayerName) settings")
+            Text("\(prayer.localizedString()) settings")
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
-                .padding([.leading])
+                .padding([.leading, .top])
+                .padding([.leading, .top])
+                .onAppear {
+                    athanAlertEnabled = noteSettings.settings[prayer]?.athanAlertEnabled ?? true
+                    athanSoundEnabled = noteSettings.settings[prayer]?.athanSoundEnabled ?? true
+                    reminderAlertEnabled = noteSettings.settings[prayer]?.reminderAlertEnabled ?? true
+                    reminderOffset = noteSettings.settings[prayer]?.reminderOffset ?? 15
+                }
             
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
@@ -57,9 +82,9 @@ struct PrayerSettingsView: View {
                             Divider()
                                 .background(Color.white)
                             
-                            VStack {
-                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
-                                    Text("Enable Alerts")
+                            VStack(alignment: .leading) {
+                                Toggle(isOn: athanOn, label: {
+                                    Text("Enabled")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -68,12 +93,20 @@ struct PrayerSettingsView: View {
                                 })
                                 .padding(.top, 12)
                                 
-                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
+                                Toggle(isOn: soundOn, label: {
                                     Text("Play Sound")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                 })
+                                
+                                Text("Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.")
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
+                                    .font(.caption)
+                                    .foregroundColor(Color(.lightText))
+                                    .padding(.bottom, 12)
+
                                 
 //                                ZStack {
 //                                    Stepper(
@@ -112,37 +145,50 @@ struct PrayerSettingsView: View {
                                 .foregroundColor(.white)
                             Divider()
                                 .background(Color.white)
-                            VStack {
-                                Toggle(isOn: .constant(setting.reminderAlarmEnabled), label: {
-                                    Text("Enable Alerts")
+                            VStack(alignment: .leading) {
+                                Toggle(isOn: reminderOn, label: {
+                                    Text("Enabled")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
-                                        
-                                    
                                 })
                                 .padding(.top, 12)
-                                                                
                                 
                                 ZStack {
-                                    Stepper(
-                                        onIncrement: { },
-                                        onDecrement: {  },
-                                        label: {
-                                            Text("Minute offset")
-                                                .font(.headline)
-                                                .bold()
-                                                .foregroundColor(.white)
-        //                                        .padding([.bottom])
-                                        })
-                                        .accentColor(.white)
+                                    HStack {
+                                        Text("Minute offset: \(reminderOffset)m")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .fixedSize(horizontal: true, vertical: false)
+                                            .lineLimit(1)
+
+                                        Stepper("", value: $reminderOffset, in: ClosedRange(1..<60))
+                                            .accentColor(.white)
+                                    }
+                                    
+//                                    Stepper(
+//                                        onIncrement: { },
+//                                        onDecrement: {  },
+//                                        label: {
+//                                            Text("Minute offset")
+//                                                .font(.headline)
+//                                                .bold()
+//                                                .foregroundColor(.white)
+//        //                                        .padding([.bottom])
+//                                        })
 
                                     
-                                    Text("15")
-                                        .foregroundColor(Color(.lightText))
+//                                    Text("\(reminderOffset)")
+//                                        .foregroundColor(Color(.lightText))
                                 }
-                                .padding(.bottom, 12)
-
+                                
+                                Text("When minute offsets are longer than the time between \(prayer.localizedString()) and \(prayer.next().localizedString()), reminders will default to 15 minutes.")
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
+                                    .font(.caption)
+                                    .foregroundColor(Color(.lightText))
+                                    .padding(.bottom, 12)
                             }
                             .padding([.leading, .trailing])
                             .background(
@@ -158,14 +204,20 @@ struct PrayerSettingsView: View {
                 }
             }
             .padding()
+            .padding([.leading, .trailing])
             
             HStack(alignment: .center) {
                 Spacer()
                 
                 Button(action: {
-                    // tap vibration
-                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                    lightImpactFeedbackGenerator.impactOccurred()
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    // save settings
+                    let setting = AlarmSetting()
+                    setting.athanAlertEnabled = athanAlertEnabled
+                    setting.athanSoundEnabled = athanSoundEnabled
+                    setting.reminderAlertEnabled = reminderAlertEnabled
+                    setting.reminderOffset = reminderOffset
+                    noteSettings.settings[prayer] = setting
                     withAnimation {
                         self.activeSection = .General
                     }
@@ -187,9 +239,9 @@ struct PrayerSettingsView: View {
 struct PrayerSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: .constant(.Prayer))
+            PrayerSettingsView(noteSettings: .constant(NotificationSettings(settings: [:])), activeSection: .constant(.Prayer(.fajr)))
             
         }
         .environmentObject(ObservableAthanManager.shared)

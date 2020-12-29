@@ -7,13 +7,20 @@ Before updating
 - get timezone of custom locations OR just tell user that the times they see are according to their iphone's timezone
 - find out why main ui is refreshed every second
 - fix thing where location re-pans on the first try in custom mode 
-
+- find the use of every .constant() to make sure its intentional
+- test everything in dark and light mode, including the non ios 13+ version
+- localize widgets
+- monitor transition between every prayer time and end of solar midnight
 - test on ios 13 
 - test on ios 12 
 - test on iphone X and Xr and mini 
 - test on iphone 7 ios 14, 13, and 12
 - add review request after foreground in ios (ensure not widget) is opened for the third time
-
+- athan should play when we open the app within 1 minute of athan starting 
+- athan should be stopped whenever we modify any settings 
+- user should be able to stop athan playing 
+- solar view does not reset when i reopen app after changing time. sus?
+- consider switching row buttons to use a longpress gesture that scales intead, that way we wont have incorrect long press measurements that case them to scale unnecessarily
 For later 
 - dragging up on times table should bring up a monthly times table instead of just tomorrow times. nobody cares about tomorrow's times!
 - allow users to add additional locations, and set one of the options as the "my location" for notifications and stuff

@@ -30,6 +30,7 @@ struct PrayerSymbol: View {
     }
 }
 
+@available(iOS 13.0.0, *)
 enum PrayerHighlightType {
     case past
     case present

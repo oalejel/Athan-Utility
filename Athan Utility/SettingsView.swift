@@ -45,7 +45,7 @@ import StoreKit
  */
 
 enum SettingsSectionType {
-    case General, Sounds, Prayer, CalculationMethod
+    case General, Sounds, Prayer(Prayer), CalculationMethod, CustomNames, Colors
 }
 
 @available(iOS 13.0.0, *)
@@ -53,19 +53,14 @@ struct SettingsView: View {
     @EnvironmentObject var manager: ObservableAthanManager
     //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
+    // settings state held at top level, saved to athan manager by general view
     @State var tempLocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
     @State var tempNotificationSettings = AthanManager.shared.notificationSettings.copy() as! NotificationSettings
     @State var tempPrayerSettings = AthanManager.shared.prayerSettings.copy() as! PrayerSettings
+    @State var tempAppearanceSettings = AthanManager.shared.appearanceSettings.copy() as! AppearanceSettings
     
     //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
     //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
-    
-    @State var fajrOverride: String = ""
-    @State var sunriseOverride: String = ""
-    @State var dhuhrOverride: String = ""
-    @State var asrOverride: String = ""
-    @State var maghribOverride: String = ""
-    @State var ishaOverride: String = ""
     
     @Binding var parentSession: CurrentView // used to trigger transition back
     
@@ -92,23 +87,28 @@ struct SettingsView: View {
             case .Sounds:
                 SoundSettingView(tempNotificationSettings: $tempNotificationSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-            case .Prayer:
+            case .Prayer(let p):
                 #warning("change binding")
-                PrayerSettingsView(setting: .constant(AlarmSetting()), activeSection: $activeSection)
+                PrayerSettingsView(noteSettings: $tempNotificationSettings, prayer: p, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                
+            case .Colors:
+                ColorsView(tempAppearanceSettings: $tempAppearanceSettings, activeSection: $activeSection)
+                    .transition(.move(edge: .trailing))
+            case .CustomNames:
+                NameOverridesView(tempPrayerSettings: $tempPrayerSettings, activeSection: $activeSection)
+                    .transition(.move(edge: .trailing))
             case .CalculationMethod:
-                CalculationMethodView(tempPrayerSettings: .constant(tempPrayerSettings), viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
+                CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
                 
             case .General:
                 if #available(iOS 14.0, *) {
                     ScrollViewReader { proxy in
-                        GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, fajrOverride: $fajrOverride, sunriseOverride: $sunriseOverride, dhuhrOverride: $dhuhrOverride, asrOverride: $asrOverride, maghribOverride: $maghribOverride, ishaOverride: $ishaOverride, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
+                        GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, tempAppearanceSettings: $tempAppearanceSettings, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
                             savedOffset: $savedOffset, proxy: proxy)
                     }
                 } else { // pre-ios 13 wont have the scrollview offset adjusted back
-                    GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, fajrOverride: $fajrOverride, sunriseOverride: $sunriseOverride, dhuhrOverride: $dhuhrOverride, asrOverride: $asrOverride, maghribOverride: $maghribOverride, ishaOverride: $ishaOverride, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
+                    GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, tempAppearanceSettings: $tempAppearanceSettings, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
                         savedOffset: $savedOffset, proxy: nil)
                 }
             }
@@ -120,7 +120,7 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             SettingsView(parentSession: .constant(.Settings))
             

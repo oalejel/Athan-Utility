@@ -41,11 +41,11 @@ enum DeprecatedAlarmEnum: Int {
 }
 
 class AlarmSetting: Codable {
-    var soundEnabled = true
-    var startAlarmEnabled = true
+    var athanAlertEnabled = true
+    var athanSoundEnabled = true // might make sense to also silence reminder in this case
     
-    var reminderMinutes = 15
-    var reminderAlarmEnabled = true
+    var reminderAlertEnabled = true
+    var reminderOffset = 15
 }
 
 class DeprecatedPrayerSetting {

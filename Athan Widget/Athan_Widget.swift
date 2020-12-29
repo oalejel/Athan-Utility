@@ -20,7 +20,7 @@ struct SmallWidget: View {
     }()
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
 
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .bottom) {
@@ -308,7 +308,8 @@ struct Athan_Widget_Previews: PreviewProvider {
                                    todayPrayerTimes: [
                                     nextDate, nextDate, nextDate,
                                     nextDate, nextDate, nextDate
-                                   ])
+                                   ],
+                                   gradient: Gradient(colors: [.black, .blue]))
 
             Athan_WidgetEntryView(entry: entry)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
@@ -326,7 +327,8 @@ struct Athan_Widget_Previews: PreviewProvider {
                                todayPrayerTimes: [
                                 nextDate, nextDate, nextDate,
                                 nextDate, nextDate, nextDate
-                               ])
+                               ],
+                               gradient: Gradient(colors: [.black, .blue]))
 
 
         Athan_WidgetEntryView(entry: entry)

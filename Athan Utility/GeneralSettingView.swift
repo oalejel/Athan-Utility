@@ -14,22 +14,22 @@ import StoreKit
 struct GeneralSettingView: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
-    //    var timer = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
     @Binding var tempLocationSettings: LocationSettings
     @Binding var tempNotificationSettings: NotificationSettings
     @Binding var tempPrayerSettings: PrayerSettings
+    @Binding var tempAppearanceSettings: AppearanceSettings
     
     //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
     //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
     
-    @Binding var fajrOverride: String
-    @Binding var sunriseOverride: String
-    @Binding var dhuhrOverride: String
-    @Binding var asrOverride: String
-    @Binding var maghribOverride: String
-    @Binding var ishaOverride: String
-    
+    //    @Binding var fajrOverride: String
+    //    @Binding var sunriseOverride: String
+    //    @Binding var dhuhrOverride: String
+    //    @Binding var asrOverride: String
+    //    @Binding var maghribOverride: String
+    //    @Binding var ishaOverride: String
+    //
     @Binding var parentSession: CurrentView // used to trigger transition back
     
     @Binding var activeSection: SettingsSectionType
@@ -55,22 +55,15 @@ struct GeneralSettingView: View {
                         print(tempNotificationSettings.selectedSound)
                     }
                 
-                
                 TrackableScrollView(contentOffset: $contentOffset) {
-                    
-                    
                     ZStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: nil) {
-                            
-                            
-                            
                             VStack(alignment: .leading, spacing: 0) {
                                 
                                 Text("Settings") // title
                                     .font(.largeTitle)
                                     .bold()
                                     .foregroundColor(.white)
-                                    //                                .padding(.bottom)
                                     .onDisappear {
                                         savedOffset = contentOffset
                                     }
@@ -83,12 +76,8 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                 
-                                
-                                
                                 VStack(alignment: .leading) { // stack of each settings selector
-                                    
                                     Group { // Color picker
-                                        
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text("Appearance")
                                                 .font(.headline)
@@ -100,7 +89,9 @@ struct GeneralSettingView: View {
                                         }
                                         
                                         Button(action: {
-                                            
+                                            withAnimation {
+                                                activeSection = .Colors
+                                            }
                                         }, label: {
                                             HStack {
                                                 Text("Colors")
@@ -111,32 +102,60 @@ struct GeneralSettingView: View {
                                                 
                                                 Spacer()
                                                     .frame(maxWidth: .infinity)
-                                                let c1 = Color.blue
-                                                let c2 = Color.black
+                                                
+                                                
+                                                
                                                 
                                                 GeometryReader { circleG in
+                                                    let colorPairs: [(Color, Color)] = tempAppearanceSettings.isDynamic ? Prayer.allCases.reversed().map { tempAppearanceSettings.colors(for: $0) } : [tempAppearanceSettings.colors(for: nil)]
+                                                    
                                                     HStack {
                                                         Spacer()
                                                         ZStack {
-                                                            Circle()
-                                                                .strokeBorder(Color(.sRGB, white: 1, opacity: 0.5), lineWidth: 1)
-                                                                .background(Circle().foregroundColor(c1))
-                                                                .frame(width: circleG.size.height, height: circleG.size.height)
-                                                            
-                                                            Circle()
-                                                                .strokeBorder(Color(.sRGB, white: 1, opacity: 0.5), lineWidth: 1)
-                                                                .background(Circle().foregroundColor(c2))
-                                                                .offset(x: circleG.size.height / -2, y: 0)
-                                                                .frame(width: circleG.size.height, height: circleG.size.height)
-                                                            
+                                                            ForEach(0..<colorPairs.count) { cIndex in
+                                                                let gradPair = colorPairs[cIndex]
+                                                                Circle()
+                                                                    .strokeBorder(Color(.sRGB, white: 1, opacity: 0.5), lineWidth: 1)
+                                                                    .background(
+                                                                        LinearGradient(gradient: Gradient(colors: [gradPair.0, gradPair.1]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                                                                            .mask(Circle())
+                                                                        //                                                                        Circle().foregroundColor(.white)
+                                                                    )
+                                                                    .frame(width: circleG.size.height, height: circleG.size.height)
+                                                                    .offset(x: CGFloat(cIndex) * circleG.size.height / -2, y: 0)
+                                                            }
                                                         }
                                                     }
                                                 }
+                                                
                                                 Image(systemName: "chevron.right")
                                                     .foregroundColor(.white)
                                                     .font(Font.headline.weight(.bold))
                                                     .flipsForRightToLeftLayoutDirection(true)
                                                 //                                                .padding()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
+                                        
+                                        Button(action: {
+                                            withAnimation {
+                                                activeSection = .CustomNames
+                                            }
+                                        }, label: {
+                                            HStack {
+                                                Text("Custom Prayer Names")
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                
+                                                Spacer()
+                                                
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
                                             }
                                             .padding()
                                         })
@@ -175,7 +194,9 @@ struct GeneralSettingView: View {
                                         }
                                         
                                         Button(action: { // calculation method button
-                                            
+                                            withAnimation {
+                                                activeSection = .CalculationMethod
+                                            }
                                         }, label: {
                                             HStack {
                                                 Text(tempPrayerSettings.calculationMethod.stringValue())
@@ -202,33 +223,31 @@ struct GeneralSettingView: View {
                                             .font(.caption)
                                             .foregroundColor(Color(.lightText))
                                             .padding(.bottom)
-
-
                                         
                                         /*
-                                        Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
-                                            ForEach(0..<calculationMethods.count) { mIndex in
-                                                let method = calculationMethods[mIndex]
-                                                Text(method.stringValue())
-                                                    .foregroundColor(.white)
-                                                    .tag(method)
-                                                    .listRowInsets(EdgeInsets())
-                                            }
-                                        })
-                                        .pickerStyle(WheelPickerStyle())
-                                        .labelsHidden()
-                                        .scaledToFit()
-                                        .foregroundColor(.white)
-                                        
-                                        //                                .frame(width: g.size.width * 0.8)
-                                        //                                .padding([.leading, .trailing])
-                                        Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .lineLimit(nil)
-                                            .font(.caption)
-                                            .foregroundColor(Color(.lightText))
-                                            .padding(.bottom)
-                                        */
+                                         Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
+                                         ForEach(0..<calculationMethods.count) { mIndex in
+                                         let method = calculationMethods[mIndex]
+                                         Text(method.stringValue())
+                                         .foregroundColor(.white)
+                                         .tag(method)
+                                         .listRowInsets(EdgeInsets())
+                                         }
+                                         })
+                                         .pickerStyle(WheelPickerStyle())
+                                         .labelsHidden()
+                                         .scaledToFit()
+                                         .foregroundColor(.white)
+                                         
+                                         //                                .frame(width: g.size.width * 0.8)
+                                         //                                .padding([.leading, .trailing])
+                                         Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
+                                         .fixedSize(horizontal: false, vertical: true)
+                                         .lineLimit(nil)
+                                         .font(.caption)
+                                         .foregroundColor(Color(.lightText))
+                                         .padding(.bottom)
+                                         */
                                         
                                         
                                         
@@ -275,33 +294,34 @@ struct GeneralSettingView: View {
                                                 .background(Color.white)
                                         }
                                         
-                                        ZStack {
-                                            Button(action: {
-                                                print("show athan sounds view")
-                                                //                                            savedOffset = contentOffset
-                                                //                                            print("SAVED: \(contentOffset)")
-                                                withAnimation {
-                                                    activeSection = .Sounds
-                                                }
-                                            }, label: {
-                                                HStack {
-                                                    Text(tempNotificationSettings.selectedSound.localizedString())
-                                                        .font(.headline)
-                                                        .bold()
-                                                        .foregroundColor(.white)
-                                                        .padding()
-                                                    Spacer()
-                                                    Image(systemName: "chevron.right")
-                                                        .foregroundColor(.white)
-                                                        .font(Font.headline.weight(.bold))
-                                                        .flipsForRightToLeftLayoutDirection(true)
-                                                        .padding()
-                                                }
-                                            })
-                                            .buttonStyle(ScalingButtonStyle())
-                                        }
+                                        Button(action: {
+                                            print("show athan sounds view")
+                                            withAnimation {
+                                                activeSection = .Sounds
+                                            }
+                                        }, label: {
+                                            HStack {
+                                                Text(tempNotificationSettings.selectedSound.localizedString())
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .padding()
+                                                Spacer()
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
+                                                    .padding()
+                                            }
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
                                     } // athan sounds group
                                     
+                                    Text("Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.")
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .lineLimit(nil)
+                                        .font(.caption)
+                                        .foregroundColor(Color(.lightText))
                                     
                                     Group {
                                         VStack(alignment: .leading, spacing: 4) {
@@ -314,22 +334,44 @@ struct GeneralSettingView: View {
                                                 .background(Color.white)
                                         }
                                         
-                                        ForEach(0..<6) { pIndex in
+                                        let prayers = Prayer.allCases
+                                        ForEach(prayers, id: \.self) { p in
                                             Button(action: {
                                                 withAnimation {
-                                                    activeSection = .Prayer
+                                                    activeSection = .Prayer(p)
                                                 }
                                             }, label: {
                                                 HStack {
-                                                    PrayerSymbol(prayerType: Prayer(index: pIndex))
+                                                    PrayerSymbol(prayerType: p)
                                                         .padding([.leading, .top, .bottom])
-
-                                                    Text("\(Prayer(index: pIndex).stringValue())")
+                                                        .foregroundColor(.white)
+                                                    
+                                                    Text("\(p.stringValue())")
                                                         .font(.headline)
                                                         .bold()
                                                         .foregroundColor(.white)
-                                                        
+                                                    
                                                     Spacer()
+                                                    
+                                                    HStack(spacing: 0) {
+                                                        Group { // tags to preview settings
+                                                            if let setting = tempNotificationSettings.settings[p] {
+                                                                Image(systemName: setting.athanSoundEnabled ? "bell.circle" : "bell.slash.circle")
+                                                                Image(systemName: setting.athanSoundEnabled ? "speaker.wave.2.circle" : "speaker.slash.circle")
+                                                                if setting.reminderAlertEnabled {
+                                                                    Image(systemName: "clock.arrow.circlepath")
+//                                                                    Image(systemName: "arrow.right")
+//                                                                    Text("\(setting.reminderOffset)")
+//                                                                        .fixedSize(horizontal: true, vertical: true)
+//                                                                        .lineLimit(1)
+                                                                }
+                                                            }
+                                                        }
+                                                        .foregroundColor(.white)
+                                                        .font(Font.headline)
+                                                        .flipsForRightToLeftLayoutDirection(true)
+                                                    }
+                                                    
                                                     Image(systemName: "chevron.right")
                                                         .foregroundColor(.white)
                                                         .font(Font.headline.weight(.bold))
@@ -432,6 +474,7 @@ struct GeneralSettingView: View {
                         AthanManager.shared.prayerSettings = tempPrayerSettings
                         AthanManager.shared.notificationSettings = tempNotificationSettings
                         AthanManager.shared.locationSettings = tempLocationSettings // unnecessary but will keep for now
+                        AthanManager.shared.appearanceSettings = tempAppearanceSettings
                         
                         AthanManager.shared.considerRecalculations(force: true)
                         

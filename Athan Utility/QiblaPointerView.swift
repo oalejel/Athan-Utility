@@ -12,12 +12,10 @@ import SwiftUI
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-
         path.move(to: CGPoint(x: rect.midX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-
         return path
     }
 }
@@ -26,9 +24,6 @@ struct Triangle: Shape {
 struct QiblaPointerView: View {
     @Binding var angle: Double
     @Binding var qiblaAngle: Double // correct angle, which we should highlight and vibrate for
-//    private let pointerLength: CGFloat = 60
-    // make pointerlength equal frame over
-    
     var body: some View {
         GeometryReader { g in
             let pointerLength = g.size.width / 6
@@ -41,7 +36,6 @@ struct QiblaPointerView: View {
                     .frame(width: (g.size.width - pointerLength * 2) / 2.2,
                            height:  (g.size.width - pointerLength * 2) / 2.2,
                            alignment: .center)
-                
                 Circle()
                     .strokeBorder(Color.white, lineWidth: lineWidth)
                     .padding(pointerLength)

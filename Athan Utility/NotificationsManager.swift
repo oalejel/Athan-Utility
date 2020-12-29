@@ -38,12 +38,12 @@ class NotificationsManager {
         return nil
     }
     
+    // generate as many notificiations as possible for the prayer
     static func createNotifications(coordinate: CLLocationCoordinate2D,
                                     calculationMethod: CalculationMethod,
                                     madhab: Madhab,
-                                    noteSettings: [Prayer:AlarmSetting],
+                                    noteSettings: NotificationSettings,
                                     shortLocationName: String) {
-        
         
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
@@ -51,17 +51,14 @@ class NotificationsManager {
                 print("user denied notifications")
                 return
             }
-            let x = center.getPendingNotificationRequests { (nots) in
+            center.getPendingNotificationRequests { (notes) in
                 print("pending notes: ")
-                print(nots.count)
-                
-                
-                
-                
+                print(notes.count)
                 
                 center.removeAllPendingNotificationRequests()
                 
-                let noteSoundFilename = Settings.getSelectedSoundFilename()
+//                let noteSoundFilename = Settings.
+                let noteSoundFilename = noteSettings.selectedSound.filename()
                 let df = DateFormatter()
                 df.dateFormat = "h:mm"
                 
@@ -78,7 +75,7 @@ class NotificationsManager {
                     }
                     
                     for p in Prayer.allCases {
-                        let setting = noteSettings[p]!
+                        let setting = noteSettings.settings[p]!
                         let prayerDate = times.time(for: p)
                         let dateString = df.string(from: prayerDate)
                         
@@ -86,29 +83,24 @@ class NotificationsManager {
                         let noteContent = UNMutableNotificationContent()
                         
                         //schedule a normal if settings allow
-                        if setting.startAlarmEnabled || setting.reminderAlarmEnabled {
-                            if setting.soundEnabled {
-                                if noteSoundFilename == "DEFAULT" {
-                                    noteContent.sound = .default
-                                } else {
-                                    let soundName = UNNotificationSoundName(rawValue: "\(noteSoundFilename)-preview.caf")
-                                    noteContent.sound = UNNotificationSound(named: soundName)
-                                }
+                        if setting.athanAlertEnabled { // note: will always have athan alert enabled if reminder enabled
+                            if setting.athanSoundEnabled, let noteSoundFilename = noteSoundFilename {
+                                let soundName = UNNotificationSoundName(rawValue: "\(noteSoundFilename)-preview.caf")
+                                noteContent.sound = UNNotificationSound(named: soundName)
+                            } else { // always play default sound. user can use ios deliver quietly if they want to
+                                noteContent.sound = .default
                             }
                             
                             var alertString = ""
                             // finalFlag indicates that we have reached the limit for stored
                             // local notifications, and should let the user know
-                            if isFinalDayOfNotifications {
-                                if p == .isha {
-                                    let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
-                                    alertString = String(format: localizedAlertString, p.localizedString(), dateString)
-                                }
+                            if isFinalDayOfNotifications && p == .isha {
+                                let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
+                                alertString = String(format: localizedAlertString, p.localizedString(), dateString)
                             } else {
                                 // Alternative string stores a shorter version of the location
                                 // in order to show "San Francisco" instead of "San Francisco, CA, USA"
                                 let localizedStandardNote = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
-                                
                                 alertString = String(format: localizedStandardNote,
                                                      p.localizedString(), shortLocationName, dateString)
                             }
@@ -127,23 +119,24 @@ class NotificationsManager {
                         }
                         
                         // if user would ALSO like to get notified 15 minutes prior
-                        if setting.reminderAlarmEnabled {
+                        if setting.reminderAlertEnabled {
                             // adding a reminder for 15 minutes before the actual prayer time
                             let preNoteContent = UNMutableNotificationContent()
-                            let preDate = Calendar.current.date(byAdding: .minute, value: -15, to: prayerDate)! //prayerDate.addingTimeInterval(-900) // 15 mins before
+                            let preDate = Calendar.current.date(byAdding: .minute, value: -1 * setting.reminderOffset, to: prayerDate)!
                             preNoteContent.userInfo = ["intendedFireDate": preDate]
                             let preNoteComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)
                             
                             let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
                             
                             //use a standard note tone when giving a 15m reminder
-                            if setting.soundEnabled {
+                            if setting.athanSoundEnabled {
                                 preNoteContent.sound = .default
                             }
                             
-                            var alertString = ""
-                            let localized15mAlert = NSLocalizedString("15m left til %1$@ in %2$@! [%3$@]", comment: "")
-                            alertString = String(format: localized15mAlert,
+                            let localizedMinutes = NumberFormatter.localizedString(from: NSNumber(value: setting.reminderOffset), number: .none)
+                            let localized15mAlert = NSLocalizedString("%1$@m left til %2$@ in %3$@! [%4$@]", comment: "")
+                            var alertString = String(format: localized15mAlert,
+                                                 localizedMinutes,
                                                  p.localizedString(),
                                                  shortLocationName,
                                                  dateString)
@@ -161,11 +154,6 @@ class NotificationsManager {
                             noteCount += 1
                         }
                     }
-                    
-                    
-                    
-                    
-                    
                 }
                 print(noteCount, " NOTIFICATIONS SUBMITTED TO NC")
                 

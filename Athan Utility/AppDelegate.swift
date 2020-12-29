@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if #available(iOS 13.0.0, *) {
             // assuming swift ui works in this case/
+            UIView.appearance().tintColor = .white
             print("SWIFT UI WILL HANDLE IOS 13+")
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)

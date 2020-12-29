@@ -26,7 +26,8 @@ struct SoundSettingView: View {
                 .onAppear {
                     viewSelectedSound = tempNotificationSettings.selectedSound
                 }
-                .padding([.leading, .trailing, .top])
+                .padding([.leading, .top])
+                .padding([.leading, .top])
 
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
@@ -39,6 +40,7 @@ struct SoundSettingView: View {
                                 withAnimation {
                                     viewSelectedSound = NotificationSettings.Sounds(rawValue: sIndex)!
                                     tempNotificationSettings.selectedSound = viewSelectedSound
+                                    NoteSoundPlayer.playFullAudio(for: sIndex)
                                 }
                             }, label: {
                                 HStack {
@@ -60,6 +62,7 @@ struct SoundSettingView: View {
                     }
                 }
                 .padding()
+                .padding([.leading, .trailing])
             }
             
             HStack(alignment: .center) {
@@ -67,8 +70,10 @@ struct SoundSettingView: View {
                 
                 Button(action: {
                     // tap vibration
-                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                    lightImpactFeedbackGenerator.impactOccurred()
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    // save
+                    tempNotificationSettings.selectedSound = viewSelectedSound
+                    NoteSoundPlayer.fadeAndStopAudio() // fade out any potentially playing sounds
                     withAnimation {
                         self.activeSection = .General
                     }
@@ -90,7 +95,7 @@ struct SoundSettingView: View {
 struct SoundSettingView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .init(x: 2, y: 2))
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             SoundSettingView(tempNotificationSettings: .constant(NotificationSettings(settings: [:])), activeSection: .constant(.Sounds))
         }

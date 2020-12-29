@@ -13,14 +13,23 @@ import Adhan
 extension UIColor {
     static let athanTransparentWhite: UIColor = UIColor(white: 1, alpha: 0.2)
     
-    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+    var rgb: (red: CGFloat, green: CGFloat, blue: CGFloat) {
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
         getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-        return (red, green, blue, alpha)
+        return (red, green, blue)
+    }
+    var rgbFloat: (red: Float, green: Float, blue: Float) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        return (Float(red), Float(green), Float(blue))
     }
 }
 

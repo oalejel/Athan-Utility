@@ -25,6 +25,7 @@ struct MoonView3D: View {
             ZStack {
                 ScenekitView()
                     .frame(width: g.size.width, height: g.size.width, alignment: .center)
+                    .cornerRadius(g.size.width / 2, antialiased: true)
             }
         }
     }

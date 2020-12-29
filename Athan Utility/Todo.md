@@ -5,6 +5,8 @@ Before updating
 - if custom alert time is longer than interval between two prayers, then use 15 minutse instead
 - make sure notifications are always recalcualted when locations are changed
 - get timezone of custom locations OR just tell user that the times they see are according to their iphone's timezone
+- confirm that entry of coordinates when locations or maps arent allowed still works
+- ios 13 color preview should change to current prayer when changing color modes
 - find out why main ui is refreshed every second
 - fix thing where location re-pans on the first try in custom mode 
 - find the use of every .constant() to make sure its intentional

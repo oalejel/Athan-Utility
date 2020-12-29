@@ -43,6 +43,7 @@ class ObservableAthanManager: ObservableObject {
     @Published var qiblaHeading: Double = 0.0
     @Published var currentHeading: Double = 0.0
     @Published var locationPermissionsGranted = false
+    @Published var appearance: AppearanceSettings = AppearanceSettings.defaultSetting()
 }
 
 class AthanManager: NSObject, CLLocationManagerDelegate {
@@ -126,6 +127,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func appearanceSettingsDidSetHelper() {
         AppearanceSettings.shared = appearanceSettings
         AppearanceSettings.archive()
+        if #available(iOS 13.0.0, *) {
+            ObservableAthanManager.shared.appearance = appearanceSettings
+        }
     }
     
     // App lifecycle state tracking
@@ -169,12 +173,13 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
     
-    private func calculateTimes(referenceDate: Date) -> PrayerTimes? {
+    // NOTE: this function MUST not have SIDE EFFECTS
+    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil) -> PrayerTimes? {
         let coord = locationSettings.locationCoordinate
         
         let cal = Calendar(identifier: Calendar.Identifier.gregorian)
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
-        let coordinates = Coordinates(latitude: coord.latitude, longitude: coord.longitude)
+        let coordinates = Coordinates(latitude: customCoordinate?.latitude ?? coord.latitude, longitude: customCoordinate?.longitude ?? coord.longitude)
         
         var params = PrayerSettings.shared.calculationMethod.params
         params.madhab = PrayerSettings.shared.madhab
@@ -314,6 +319,7 @@ extension AthanManager {
         if let arch = LocationSettings.checkArchive() { locationSettings = arch }
         if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
         if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
+        if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
         
         var shouldRecalculate = force // forced for when we have new locations
         if !force {
@@ -366,18 +372,22 @@ extension AthanManager {
                                      madhab: prayerSettings.madhab,
                                      noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
-            if #available(iOS 14.0, *) {
-                // refresh widgets only if this is being run in the main app
-                if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
-                    DispatchQueue.main.async {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
-                }
-            }
+            resetWidgets()
         }
         
         // reset timers to keep data updated if app stays on screen
         resetTimers()
+    }
+    
+    func resetWidgets() {
+        if #available(iOS 14.0, *) {
+            // refresh widgets only if this is being run in the main app
+            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                DispatchQueue.main.async {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
+        }
     }
     
     // called by observer

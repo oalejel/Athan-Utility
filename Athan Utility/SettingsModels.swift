@@ -212,21 +212,26 @@ class AppearanceSettings: Codable, NSCopying {
             return archive
         } else {
             // I prefer not having UIColor extensions in a UIKit-agnostic class, so specifying rgb values like this is better
-            return AppearanceSettings(colorDict: [
-                nil: [[0, 0, 0], [0, 0.478431, 0.999999]], // black to blue hue when not using dynamic colors
-                .fajr: [[Float(8)/255, Float(14)/255, Float(39)/255], [Float(1)/255, Float(69)/255, Float(106)/255]],
-                .sunrise: [[Float(8)/255, Float(57)/255, Float(99)/255], [Float(151)/255, Float(144)/255, Float(102)/255]],
-                .dhuhr: [[Float(15)/255, Float(83)/255, Float(175)/255], [Float(82)/255, Float(158)/255, Float(168)/255]],
-                .asr: [[Float(62)/255, Float(175)/255, Float(235)/255], [Float(0)/255, Float(79)/255, Float(126)/255]],
-                .maghrib: [[Float(0)/255, Float(34)/255, Float(97)/255], [Float(163)/255, Float(65)/255, Float(53)/255]],
-                .isha: [[Float(0)/255, Float(1)/255, Float(12)/255], [Float(8)/255, Float(17)/255, Float(88)/255]]
-            ])
+            return defaultSetting()
         }
     }()
     
-    init(colorDict: [Prayer?:[[Float]]], isDynamic: Bool = true) {
+    static func defaultSetting() -> AppearanceSettings {
+        AppearanceSettings(colorDict: [
+            nil: [[0, 0, 0], [Float(4)/255, Float(65)/255, Float(125)/255]], // black to blue hue when not using dynamic colors
+            .fajr: [[Float(8)/255, Float(14)/255, Float(39)/255], [Float(1)/255, Float(69)/255, Float(106)/255]],
+            .sunrise: [[Float(8)/255, Float(57)/255, Float(99)/255], [Float(151)/255, Float(144)/255, Float(102)/255]],
+            .dhuhr: [[Float(15)/255, Float(83)/255, Float(175)/255], [Float(82)/255, Float(158)/255, Float(168)/255]],
+            .asr: [[Float(62)/255, Float(175)/255, Float(235)/255], [Float(0)/255, Float(79)/255, Float(126)/255]],
+            .maghrib: [[Float(0)/255, Float(34)/255, Float(97)/255], [Float(163)/255, Float(65)/255, Float(53)/255]],
+            .isha: [[Float(0)/255, Float(1)/255, Float(12)/255], [Float(8)/255, Float(17)/255, Float(88)/255]]
+        ])
+    }
+    
+    init(colorDict: [Prayer?:[[Float]]], isDynamic: Bool = true, id: Int = 0) {
         self.colorDict = colorDict
         self.isDynamic = isDynamic
+        self.id = id 
     }
 
     static func checkArchive() -> AppearanceSettings? {
@@ -244,6 +249,7 @@ class AppearanceSettings: Codable, NSCopying {
         }
     }
     var isDynamic: Bool
+    var id = 0 // used to check if appearance settings are stale
     private var colorDict: [Prayer?:[[Float]]] = [:]
     func colorTuplesForContext(optionalPrayer: Prayer?) -> ((Double, Double, Double), (Double, Double, Double)){
         let colorArray = colorDict[optionalPrayer] ?? [[0, 0, 0], [0, 1, 0]]
@@ -260,7 +266,7 @@ class AppearanceSettings: Codable, NSCopying {
     private static let archiveName = "appearancesettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = AppearanceSettings(colorDict: colorDict, isDynamic: isDynamic)
+        let copy = AppearanceSettings(colorDict: colorDict, isDynamic: isDynamic, id: id)
         return copy
     }
 }

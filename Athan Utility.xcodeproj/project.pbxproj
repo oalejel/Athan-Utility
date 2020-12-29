@@ -15,6 +15,8 @@
 		3D0789732599B8C50047DD00 /* NameOverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789722599B8C50047DD00 /* NameOverridesView.swift */; };
 		3D07897A259A6E5E0047DD00 /* ColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D078979259A6E5E0047DD00 /* ColorsView.swift */; };
 		3D078985259AE0FF0047DD00 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
+		3D078992259B0C580047DD00 /* Colorful in Frameworks */ = {isa = PBXBuildFile; productRef = 3D078991259B0C580047DD00 /* Colorful */; };
+		3D07899A259B10EE0047DD00 /* ColorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D078999259B10EE0047DD00 /* ColorKit */; };
 		3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */; };
 		3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA801BDC58B60001EFE4 /* ViewController.swift */; };
 		3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA851BDC58B60001EFE4 /* Assets.xcassets */; };
@@ -366,6 +368,8 @@
 				3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */,
 				3D73EC5B2571DF770010C47D /* Pages in Frameworks */,
 				3D16F1042560851B00C78B12 /* Adhan in Frameworks */,
+				3D07899A259B10EE0047DD00 /* ColorKit in Frameworks */,
+				3D078992259B0C580047DD00 /* Colorful in Frameworks */,
 				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -757,6 +761,8 @@
 				3D16F1032560851B00C78B12 /* Adhan */,
 				3DAE4495256088DA00156CFF /* SwiftSpinner */,
 				3D73EC5A2571DF770010C47D /* Pages */,
+				3D078991259B0C580047DD00 /* Colorful */,
+				3D078999259B10EE0047DD00 /* ColorKit */,
 			);
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
@@ -911,6 +917,8 @@
 				3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */,
 				3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
 				3D73EC592571DF770010C47D /* XCRemoteSwiftPackageReference "Pages" */,
+				3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */,
+				3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */,
 			);
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
 			projectDirPath = "";
@@ -1706,6 +1714,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hayashi311/Color-Picker-for-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
+		3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kieranb662/SwiftUI-Color-Kit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/batoulapps/adhan-swift";
@@ -1733,6 +1757,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D078991259B0C580047DD00 /* Colorful */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */;
+			productName = Colorful;
+		};
+		3D078999259B10EE0047DD00 /* ColorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */;
+			productName = ColorKit;
+		};
 		3D16F1032560851B00C78B12 /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;

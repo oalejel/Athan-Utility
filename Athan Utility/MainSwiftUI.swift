@@ -13,6 +13,92 @@ enum CurrentView {
     case Main, Settings, Location
 }
 
+@available(iOS 13.0.0, *)
+extension View {
+    func onValueChanged<Value: Equatable>(_ value: Value, completion: (Value) -> Void) -> some View {
+        completion(value)
+        return self
+    }
+}
+
+@available(iOS 13.0.0, *)
+struct GradientView: View, Equatable {
+    static func == (lhs: GradientView, rhs: GradientView) -> Bool {
+        lhs.currentPrayer == rhs.currentPrayer && lhs.appearance.id == rhs.appearance.id
+    }
+    
+    @Binding var currentPrayer: Prayer
+    @State var lastShownPrayer: Prayer? = nil
+    @Binding var appearance: AppearanceSettings
+    @State private var firstPlane: Bool = true
+    
+    @State private var gradientA: [Color] = {
+        let settings = AthanManager.shared.appearanceSettings
+        let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
+        return [startColors.0, startColors.1]
+    }()
+        
+    @State private var gradientB: [Color] = { // setting here is useless
+        let settings = AthanManager.shared.appearanceSettings
+        let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
+        return [startColors.0, startColors.1]
+    }()
+    
+    @State var lastTimerDate = Date(timeIntervalSinceNow: -100)
+
+    func adjustGradient(gradient: [Color]) {
+        gradientA = gradient
+        gradientB = gradient
+    }
+    
+    func setGradient(gradient: [Color]) {
+        if firstPlane {
+            gradientB = gradient
+        } else {
+            gradientA = gradient
+        }
+        firstPlane = !firstPlane
+    }
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: gradientA), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: gradientB), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+                .opacity(firstPlane ? 0 : 1)
+                .onValueChanged(currentPrayer) { x in
+                    // start a 0.1 second timer that updates the view
+                    // to avoid state change issues
+                    print("GRADIENT PRAYER CHANGED")
+                    
+                    // if last fire of timer happened sufficiently long ago,
+                    // we know that the state change is being caused by a change in currentPrayer
+                    if lastTimerDate.timeIntervalSinceNow < -0.02 {
+                        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
+                            lastTimerDate = Date()
+                            print("GRADIENT TIMER CALLED")
+                            let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
+                            withAnimation {
+                                setGradient(gradient: [startColors.0, startColors.1])
+                            }
+                        })
+                    }
+                }
+        }
+        
+        //                                                    let settings = AthanManager.shared.appearanceSettings
+        //                                                    let startColors = settings.colors(for: settings.isDynamic ? manager.currentPrayer : nil)
+        //
+        //                                                    if let lastShown = lastShownPrayer {
+        //                                                        setGradient(gradient: [startColors.0, startColors.1])
+        //                                                    } else {
+        //                                                        adjustGradient(gradient: [startColors.0, startColors.1])
+        //                                                    }
+        //                                                    lastShownPrayer = manager.currentPrayer
+
+    }
+}
 
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
@@ -37,23 +123,9 @@ struct MainSwiftUI: View {
     @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
     
     @State var nextRoundMinuteTimer: Timer?
-    //    {
-    //        // this gets called again when the view appears -- have it invalidated on appear
-    //        let comps = Calendar.current.dateComponents([.second], from: Date())
-    //        let secondsTilNextMinute = 60 - comps.second!
-    //        return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-    //                                    repeats: false) { _ in
-    //            percentComplete = getPercentComplete()
-    //            minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-    //                percentComplete = getPercentComplete()
-    //                todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-    //                tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
-    //            })
-    //        }
-    //    }
-    
     @State var percentComplete: Double = 0.0
     
+
     func getPercentComplete() -> Double {
         var currentTime: Date?
         if let currentPrayer = manager.todayTimes.currentPrayer() {
@@ -73,7 +145,6 @@ struct MainSwiftUI: View {
     }
     
     static func hijriDateString(date: Date) -> String {
-        
         let hijriCal = Calendar(identifier: .islamic)
         let df = DateFormatter()
         df.calendar = hijriCal
@@ -103,12 +174,10 @@ struct MainSwiftUI: View {
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
                 
-                
-                LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .edgesIgnoringSafeArea(.all)
+                GradientView(currentPrayer: $manager.currentPrayer, appearance: $manager.appearance)
+                    .equatable()
                 
                 VStack(alignment: .leading) {
-                    
                     switch currentView {
                     case .Location:
                         LocationSettingsView(parentSession: $currentView, locationPermissionGranted: $manager.locationPermissionsGranted)
@@ -117,7 +186,6 @@ struct MainSwiftUI: View {
                         
                     case .Settings:
                         SettingsView(parentSession: $currentView)
-                            //                            .equatable()
                             .transition(.opacity)
                     case .Main:
                         VStack(alignment: .leading, spacing: 0) {
@@ -127,6 +195,7 @@ struct MainSwiftUI: View {
                                     MoonView3D()
                                         .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                         .offset(y: 12)
+                                        .shadow(radius: 3)
                                     Spacer()
                                 }
                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
@@ -137,6 +206,7 @@ struct MainSwiftUI: View {
                                         PrayerSymbol(prayerType: manager.currentPrayer)
                                             .foregroundColor(.white)
                                             .font(Font.system(.title).weight(.medium))
+                                            
                                         Text(manager.currentPrayer.localizedString())
                                             .font(.largeTitle)
                                             .bold()
@@ -401,7 +471,8 @@ struct MainSwiftUI: View {
                                         // include percentComplete * 0 to trigger refresh based on Date()
                                         SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
                                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
-                                                  dhuhrTime: manager.todayTimes.dhuhr)
+                                                  dhuhrTime: manager.todayTimes.dhuhr,
+                                                  sunriseTime: manager.todayTimes.sunrise)
                                             .equatable()
                                             .opacity(1 - 0.8 * tomorrowPeekProgress)
                                     }

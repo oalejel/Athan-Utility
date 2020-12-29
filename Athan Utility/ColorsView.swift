@@ -34,7 +34,7 @@ struct ColorsView: View {
     @State var ishaColor1: Color = .white
     @State var ishaColor2: Color = .white
     
-    @State var selectedPreviewPrayer = AthanManager.shared.currentPrayer
+    @State var selectedPreviewPrayer = AthanManager.shared.currentPrayer ?? .fajr
     @State var previewGradientOpacity = 0.0
     @State var previewGradient = Gradient(colors: [])
     
@@ -46,12 +46,14 @@ struct ColorsView: View {
     @State var ignoreOnChange2 = 0
     
     func adjustGradient(gradient: [Color]) {
-        if firstPlane {
-            gradientA = gradient
-        }
-        else {
-            gradientB = gradient
-        }
+        gradientA = gradient
+        gradientB = gradient
+        //        if firstPlane {
+        //            gradientA = gradient
+        //        }
+        //        else {
+        //            gradientB = gradient
+        //        }
     }
     
     func setGradient(gradient: [Color]) {
@@ -64,6 +66,35 @@ struct ColorsView: View {
         firstPlane = !firstPlane
     }
     
+    func copyFromTempSettings() {
+        isDynamic = tempAppearanceSettings.isDynamic
+        
+        // prepare preview gradient behind the picker
+        let startColors = tempAppearanceSettings.colors(for: isDynamic ? selectedPreviewPrayer : nil)
+        
+        // copy current prayer last
+        (nilColor1, nilColor2) = tempAppearanceSettings.colors(for: nil)
+        (fajrColor1, fajrColor2) = tempAppearanceSettings.colors(for: .fajr)
+        (sunriseColor1, sunriseColor2) = tempAppearanceSettings.colors(for: .sunrise)
+        (dhuhrColor1, dhuhrColor2) = tempAppearanceSettings.colors(for: .dhuhr)
+        (asrColor1, asrColor2) = tempAppearanceSettings.colors(for: .asr)
+        (maghribColor1, maghribColor2) = tempAppearanceSettings.colors(for: .maghrib)
+        (ishaColor1, ishaColor2) = tempAppearanceSettings.colors(for: .isha)
+        if isDynamic {
+            switch selectedPreviewPrayer {
+            case .fajr: (fajrColor1, fajrColor2) = tempAppearanceSettings.colors(for: .fajr)
+            case .sunrise: (sunriseColor1, sunriseColor2) = tempAppearanceSettings.colors(for: .sunrise)
+            case .dhuhr: (dhuhrColor1, dhuhrColor2) = tempAppearanceSettings.colors(for: .dhuhr)
+            case .asr: (asrColor1, asrColor2) = tempAppearanceSettings.colors(for: .asr)
+            case .maghrib: (maghribColor1, maghribColor2) = tempAppearanceSettings.colors(for: .maghrib)
+            case .isha: (ishaColor1, ishaColor2) = tempAppearanceSettings.colors(for: .isha)
+            }
+        }
+        
+        gradientA = [startColors.0, startColors.1]
+        gradientB = [startColors.0, startColors.1]
+    }
+    
     var body: some View {
         
         ZStack {
@@ -72,67 +103,159 @@ struct ColorsView: View {
                 .opacity(previewGradientOpacity)
             LinearGradient(gradient: Gradient(colors: gradientB), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
+                .opacity(previewGradientOpacity)
                 .opacity(firstPlane ? 0 : 1)
             
             
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Colors")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(.white)
-                    .padding([.leading, .trailing, .top])
-                    .onAppear {
-                        // initial setup on first appearance
-                        isDynamic = tempAppearanceSettings.isDynamic
-                        
-                        (nilColor1, nilColor2) = tempAppearanceSettings.colors(for: nil)
-                        (fajrColor1, fajrColor2) = tempAppearanceSettings.colors(for: .fajr)
-                        (sunriseColor1, sunriseColor2) = tempAppearanceSettings.colors(for: .sunrise)
-                        (dhuhrColor1, dhuhrColor2) = tempAppearanceSettings.colors(for: .dhuhr)
-                        (asrColor1, asrColor2) = tempAppearanceSettings.colors(for: .asr)
-                        (maghribColor1, maghribColor2) = tempAppearanceSettings.colors(for: .maghrib)
-                        (ishaColor1, ishaColor2) = tempAppearanceSettings.colors(for: .isha)
-                        
-                        // prepare preview gradient behind the picker
-                        let startColors = tempAppearanceSettings.colors(for: isDynamic ? selectedPreviewPrayer : nil)
-                        gradientA = [startColors.0, startColors.1]
-                        gradientB = [startColors.0, startColors.1]
-                        
-                        withAnimation(Animation.linear(duration: 0.5).delay(0.4)) {
-                            previewGradientOpacity = 1
+            VStack(alignment: .leading) {
+                Group {
+                    Text("Colors")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding([.top])
+                        .onAppear {
+                            // initial setup on first appearance
+                            copyFromTempSettings()
+                            withAnimation(Animation.linear(duration: 0.5).delay(1)) {
+                                previewGradientOpacity = 1
+                            }
                         }
-                    }
-                    .padding([.leading, .trailing, .top])
+                    
+                    Picker(selection: $isDynamic.animation(.linear), label: Text("Picker"), content: {
+                        ForEach([true, false], id: \.self) { dynamic in
+                            Text(dynamic ? "Dynamic" : "Static")
+                        }
+                    })
+                    .pickerStyle(SegmentedPickerStyle())
+                    .labelsHidden()
+                    .foregroundColor(.white)
+                    
+                    Divider()
+                        .background(Color.white)
+                }
+                .padding([.leading, .trailing])
+                .padding([.leading, .trailing])
+                
                 
                 ScrollView(showsIndicators: true) {
+                    Divider()
+                        .background(Color.init(.sRGB, white: 1, opacity: 0.0000001))
+                        .opacity(0)
+                    
                     VStack(alignment: .leading, spacing: 8) {
-                        Picker(selection: $isDynamic, label: Text("Picker"), content: {
-                            ForEach([true, false], id: \.self) { dynamic in
-                                Text(dynamic ? "Dynamic" : "Static")
-                            }
-                        })
-                        .pickerStyle(SegmentedPickerStyle())
-                        .labelsHidden()
-                        .foregroundColor(.white)
                         let color1Bindings = [$fajrColor1, $sunriseColor1, $dhuhrColor1, $asrColor1, $maghribColor1, $ishaColor1]
                         let color2Bindings = [$fajrColor2, $sunriseColor2, $dhuhrColor2, $asrColor2, $maghribColor2, $ishaColor2]
                         if #available(iOS 14.0, *) {
-                            ForEach(Prayer.allCases, id: \.self) { p in
-                                let c1 = (color1Bindings[p.rawValue()]).wrappedValue
-                                let c2 = (color2Bindings[p.rawValue()]).wrappedValue
-                                
+                            if isDynamic {
+                                ForEach(Prayer.allCases, id: \.self) { p in
+                                    let c1 = (color1Bindings[p.rawValue()]).wrappedValue
+                                    let c2 = (color2Bindings[p.rawValue()]).wrappedValue
+                                    
+                                    HStack {
+                                        Image(systemName: "arrow.up.backward")
+                                            .foregroundColor(.white)
+                                            .padding(.leading)
+                                            .onAppear {
+                                                if p == .fajr {
+                                                    let c1 = (color1Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
+                                                    let c2 = (color2Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
+
+                                                    withAnimation(.easeIn) {
+                                                        setGradient(gradient: [c1, c2])
+                                                    }
+                                                }
+                                            }
+                                        
+                                        ColorPicker(selection: color1Bindings[p.rawValue()], supportsOpacity: false) {}
+                                            .fixedSize()
+                                            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0)) // flip to deal with annoying padding inconsistenncy
+                                            //                                        .onChange(color1Bindings[p.rawValue()]) { }
+                                            .onChange(of: c1) { v in
+                                                print("on change 1 \(p)")
+                                                // if we dont get a suspicious start, do not worry about ignore count
+                                                if ignoreOnChange1 < 8 { // threshold trick to avoid strange onChange calls when first appearing
+                                                    let rgb = UIColor(c1).rgb
+                                                    if rgb.0 + rgb.1 + rgb.2 < 2.8 {
+                                                        ignoreOnChange1 = 8
+                                                    } else {
+                                                        ignoreOnChange1 += 1
+                                                        return
+                                                    }
+                                                }
+                                                selectedPreviewPrayer = p
+                                                // using the local c1s onChange leads to using stale values
+                                                let cc1 = (color1Bindings[p.rawValue()]).wrappedValue
+                                                let cc2 = (color2Bindings[p.rawValue()]).wrappedValue
+                                                
+                                                if isDynamic {
+                                                    adjustGradient(gradient: [cc1, cc2])
+                                                }
+                                            }
+                                        Spacer()
+                                        Text(p.localizedString())
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding()
+                                        Spacer()
+                                        ColorPicker(selection: color2Bindings[p.rawValue()], supportsOpacity: false) {}
+                                            .fixedSize()
+                                            .onChange(of: c2) { v in
+                                                print("on change 2 \(p)")
+                                                if ignoreOnChange2 < 8 {
+                                                    let rgb = UIColor(c2).rgb
+                                                    if rgb.0 + rgb.1 + rgb.2 < 2.8 {
+                                                        ignoreOnChange2 = 8
+                                                    } else {
+                                                        ignoreOnChange2 += 1
+                                                        return
+                                                    }
+                                                }
+                                                selectedPreviewPrayer = p
+                                                // using the local c1s onChange leads to using stale values
+                                                let cc1 = (color1Bindings[p.rawValue()]).wrappedValue
+                                                let cc2 = (color2Bindings[p.rawValue()]).wrappedValue
+                                                if isDynamic {
+                                                    adjustGradient(gradient: [cc1, cc2])
+                                                }
+                                            }
+                                        
+                                        Image(systemName: "arrow.down.right")
+                                            .foregroundColor(.white)
+                                            .padding(.trailing)
+                                    }
+                                    .background(
+                                        Rectangle()
+                                            .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
+                                            .cornerRadius(12)
+                                            .onTapGesture {
+                                                selectedPreviewPrayer = p
+                                                withAnimation(.easeIn) {
+                                                    setGradient(gradient: [c1, c2])
+                                                }
+                                            }
+                                    )
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke((selectedPreviewPrayer == p) ? Color.white : Color.clear, lineWidth: 2)
+                                    )
+                                }
+                                .transition(.opacity)
+                            } else {
                                 HStack {
                                     Image(systemName: "arrow.up.backward")
                                         .foregroundColor(.white)
                                         .padding(.leading)
-                                    ColorPicker(selection: color1Bindings[p.rawValue()], supportsOpacity: false) {}
+                                    ColorPicker(selection: $nilColor1, supportsOpacity: false) {}
                                         .fixedSize()
                                         .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0)) // flip to deal with annoying padding inconsistenncy
-//                                        .onChange(color1Bindings[p.rawValue()]) { }
-                                        .onChange(of: c1) { v in
+                                        //                                        .onChange(color1Bindings[p.rawValue()]) { }
+                                        .onChange(of: nilColor1) { v in
+                                            //                                            print("on change 1")
                                             // if we dont get a suspicious start, do not worry about ignore count
                                             if ignoreOnChange1 < 8 { // threshold trick to avoid strange onChange calls when first appearing
-                                                let rgb = UIColor(c1).rgba
+                                                let rgb = UIColor(nilColor1).rgb
                                                 if rgb.0 + rgb.1 + rgb.2 < 2.8 {
                                                     ignoreOnChange1 = 8
                                                 } else {
@@ -140,20 +263,27 @@ struct ColorsView: View {
                                                     return
                                                 }
                                             }
-                                            adjustGradient(gradient: [c1, c2])
+                                            
+                                            // using the local c1s onChange leads to using stale values
+                                            if !isDynamic {
+                                                adjustGradient(gradient: [nilColor1, nilColor2])
+                                            }
                                         }
+                                    
                                     Spacer()
-                                    Text(p.localizedString())
+                                    Text("Gradient")
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                         .padding()
                                     Spacer()
-                                    ColorPicker(selection: color2Bindings[p.rawValue()], supportsOpacity: false) {}
+                                    
+                                    ColorPicker(selection: $nilColor2, supportsOpacity: false) {}
                                         .fixedSize()
-                                        .onChange(of: c2) { v in
+                                        .onChange(of: nilColor2) { v in
+                                            //                                            print("on change 2")
                                             if ignoreOnChange2 < 8 {
-                                                let rgb = UIColor(c2).rgba
+                                                let rgb = UIColor(nilColor2).rgb
                                                 if rgb.0 + rgb.1 + rgb.2 < 2.8 {
                                                     ignoreOnChange2 = 8
                                                 } else {
@@ -161,30 +291,30 @@ struct ColorsView: View {
                                                     return
                                                 }
                                             }
-                                            adjustGradient(gradient: [c1, c2])
+                                            // using the local c1s onChange leads to using stale values
+                                            if !isDynamic {
+                                                adjustGradient(gradient: [nilColor1, nilColor2])
+                                            }
                                         }
                                     
                                     Image(systemName: "arrow.down.right")
                                         .foregroundColor(.white)
                                         .padding(.trailing)
                                 }
+                                
                                 .background(
-
                                     Rectangle()
                                         .foregroundColor(Color.init(.sRGB, white: 1, opacity: 0.1))
                                         .cornerRadius(12)
-                                        .onTapGesture {
-                                            selectedPreviewPrayer = p
+                                        .onAppear {
                                             withAnimation(.easeIn) {
-                                                setGradient(gradient: [c1, c2])
+                                                setGradient(gradient: [nilColor1, nilColor2])
                                             }
                                         }
                                 )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke((selectedPreviewPrayer == p) ? Color.white : Color.clear, lineWidth: 2)
-                                )
+                                .transition(.opacity)
                             }
+                            
                         } else {
                             // Fallback on earlier versions
                             Text("Color customization only available on iOS 14+")
@@ -195,9 +325,38 @@ struct ColorsView: View {
                                 .padding(.top)
                         }
                     }
-                    .padding()
+                    .padding([.leading, .trailing])
                     .padding([.leading, .trailing])
                 }
+                
+                Button(action: {
+                    DispatchQueue.main.async {
+                        tempAppearanceSettings = AppearanceSettings.defaultSetting()
+                        tempAppearanceSettings.isDynamic = isDynamic
+                        copyFromTempSettings()
+                    }
+//                    selectedPreviewPrayer = isDynamic ? selectedPreviewPrayer.next() : nil
+                }, label: {
+                    HStack {
+                        Spacer()
+                        Text("Reset Defaults")
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding([.top, .bottom, .trailing])
+                            .lineLimit(1)
+                            .allowsTightening(true)
+                            .minimumScaleFactor(0.01)
+                        Spacer()
+                    }
+                    .background(
+                        Rectangle()
+                            .foregroundColor(.init(.sRGB, white: 1, opacity: 0.2))
+                            .cornerRadius(12)
+                    )
+                })
+                .buttonStyle(ScalingButtonStyle())
+                .padding([.leading, .trailing])
+                .padding([.leading, .trailing])
                 
                 Spacer()
                 
@@ -208,7 +367,21 @@ struct ColorsView: View {
                         // tap vibration
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         tempAppearanceSettings.isDynamic = isDynamic
-                        withAnimation {
+                        tempAppearanceSettings.id = AthanManager.shared.appearanceSettings.id + Int(arc4random())
+                        if #available(iOS 14.0, *) { #warning("ensure we want to limit this to ios 14+")
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: nil, color1: UIColor(nilColor1).rgbFloat, color2: UIColor(nilColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .fajr, color1: UIColor(fajrColor1).rgbFloat, color2: UIColor(fajrColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .sunrise, color1: UIColor(sunriseColor1).rgbFloat, color2: UIColor(sunriseColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .dhuhr, color1: UIColor(dhuhrColor1).rgbFloat, color2: UIColor(dhuhrColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .asr, color1: UIColor(asrColor1).rgbFloat, color2: UIColor(asrColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .maghrib, color1: UIColor(maghribColor1).rgbFloat, color2: UIColor(maghribColor2).rgbFloat)
+                            tempAppearanceSettings.setRGBPairForContext(optionalPrayer: .isha, color1: UIColor(ishaColor1).rgbFloat, color2: UIColor(ishaColor2).rgbFloat)
+                        }
+                        
+                        // user should be able to quickly check widgets to see that the interface changed
+                        AthanManager.shared.appearanceSettings = tempAppearanceSettings
+                        AthanManager.shared.resetWidgets()
+                        withAnimation() {
                             self.activeSection = .General
                         }
                     }) {
@@ -217,11 +390,11 @@ struct ColorsView: View {
                             .font(Font.body.weight(.bold))
                     }
                 }
+                .zIndex(3)
                 .padding()
                 .padding([.leading, .trailing, .bottom])
             }
         }
-        
     }
 }
 

@@ -474,6 +474,8 @@ struct GeneralSettingView: View {
                         AthanManager.shared.prayerSettings = tempPrayerSettings
                         AthanManager.shared.notificationSettings = tempNotificationSettings
                         AthanManager.shared.locationSettings = tempLocationSettings // unnecessary but will keep for now
+                        
+                        // appearance settings already get saved when we leave the colors view
                         AthanManager.shared.appearanceSettings = tempAppearanceSettings
                         
                         AthanManager.shared.considerRecalculations(force: true)

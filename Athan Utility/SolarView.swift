@@ -63,6 +63,7 @@ struct SolarView: View, Equatable {
     @State var manualProgress: CGFloat = 0
     @State var hidingCircle = false
     @State var dhuhrTime: Date
+    @State var sunriseTime: Date
     
     let df: DateFormatter = {
        let d = DateFormatter()
@@ -70,12 +71,41 @@ struct SolarView: View, Equatable {
         return d
     }()
     
+    func colorForProgress() -> (Color, Color, CGFloat) {
+        // 0->sunrise - 0.05
+        // sunrise-0.05 -> sunrise + 0.05
+        // sunrise + 0.05 -> maghrib - 0.05
+        // maghrib - 0.05 -> isha
+        // isha -> 1
+        let sunrisePercent = 0.5 - CGFloat(dhuhrTime.timeIntervalSince(sunriseTime) / 86400.0)
+        let sunsetPercent = 1 - sunrisePercent
+        let yellow = Color(.sRGB, red: Double(255)/255, green: Double(242)/255, blue: Double(171)/255, opacity: 1)
+        let orange = Color(.sRGB, red: Double(255)/255, green: Double(202)/255, blue: Double(171)/255, opacity: 1)
+        
+        let progressOfInterest = isDragging ? manualProgress : progress
+        switch progressOfInterest {
+        case _ where progressOfInterest > sunsetPercent + 0.05:
+            return (Color.clear, .white, 3)
+        case _ where progressOfInterest > sunsetPercent - 0.05:
+            return (Color.orange, orange, 7)
+        case _ where progressOfInterest > sunrisePercent + 0.05:
+            return (Color.white, yellow, 3)
+        case _ where progressOfInterest > sunrisePercent - 0.05:
+            return (Color.orange, orange, 7)
+        case _ where progressOfInterest >= 0:
+            return (Color.clear, .white, 3)
+        default:
+            print("sun progress out of bounds?")
+            return (Color.clear, .white, 3)
+        }
+    }
+    
     var body: some View {
         GeometryReader  { g in
             let amplitude: CGFloat = g.size.height / 4
 //            let verticalOffset: CGFloat = amplitude - 2 * amplitude * sunlightFraction
 //            let verticalOffset: CGFloat = amplitude - 2 * amplitude * cos(sunlightFraction * CGFloat.pi / 2)
-            let theta = CGFloat.pi - 2 * CGFloat.pi * CGFloat(AthanManager.shared.todayTimes.dhuhr.timeIntervalSince(AthanManager.shared.todayTimes.sunrise) / 86400.0)
+            let theta = CGFloat.pi - 2 * CGFloat.pi * CGFloat(dhuhrTime.timeIntervalSince(sunriseTime) / 86400.0)
             let verticalOffset: CGFloat = -1 * amplitude * cos(theta)
 //            let sunY: CGFloat = cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset
         
@@ -135,7 +165,8 @@ struct SolarView: View, Equatable {
 
                     Rectangle()
                         .frame(width: g.size.width, height: 1)
-                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        .foregroundColor(Color(.lightText))
+//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         
                     Rectangle()
                         .frame(width: 1,
@@ -143,7 +174,8 @@ struct SolarView: View, Equatable {
                                alignment: .center)
                         .offset(x: manualProgress * g.size.width - 0.5 * g.size.width,
                                 y: 0.5 * (cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset))
-                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        .foregroundColor(Color(.lightText))
+//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .opacity(isDragging ? 1 : 0)
                         .animation(.linear(duration: 0.3))
                     
@@ -154,10 +186,16 @@ struct SolarView: View, Equatable {
                                                    miterLimit: 4,
                                                    dash: [6, 5],
                                                    dashPhase: 0))
-                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        .foregroundColor(Color(.lightText))
 
+                    let sunAppearance = colorForProgress()
                     Circle()
-                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
+                        .foregroundColor(sunAppearance.1)
+                        .shadow(color: sunAppearance.0, radius: sunAppearance.2)
+                        .animation(.linear)
+//                        .foregroundColor(Color(.lightText))
+//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)
                         .offset(x: (isDragging ? manualProgress : progress) * g.size.width - 0.5 * g.size.width,
                                 y: cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
@@ -174,7 +212,7 @@ struct SolarViewPreview: PreviewProvider {
     static var previews: some View {
 //        let timeDiff = 10.1 // hours
         
-        SolarView(progress: 0.3, sunlightFraction: 0.6, dhuhrTime: Date())
+        SolarView(progress: 0.3, sunlightFraction: 0.6, dhuhrTime: Date(), sunriseTime: Date(timeIntervalSinceNow: -1000))
             .background(Rectangle()
                             .foregroundColor(.blue), alignment: .center)
             .frame(width: 380, height: 200, alignment: .center)

@@ -11,6 +11,33 @@
         }
       },
       {
+        "package": "bez",
+        "repositoryURL": "https://github.com/kieranb662/bez.git",
+        "state": {
+          "branch": null,
+          "revision": "3a3319c64431056b277ece9ea9780799c2ed4cf0",
+          "version": "1.0.8"
+        }
+      },
+      {
+        "package": "CGExtender",
+        "repositoryURL": "https://github.com/kieranb662/CGExtender.git",
+        "state": {
+          "branch": null,
+          "revision": "3417457a041a238f4b0df9d702fd8d85bbdd6810",
+          "version": "1.0.4"
+        }
+      },
+      {
+        "package": "Colorful",
+        "repositoryURL": "https://github.com/hayashi311/Color-Picker-for-iOS",
+        "state": {
+          "branch": null,
+          "revision": "a2f4419367e5e06187f317a649f3ef7b9c5e9d0a",
+          "version": "3.0.1"
+        }
+      },
+      {
         "package": "Pages",
         "repositoryURL": "https://github.com/nachonavarro/Pages",
         "state": {
@@ -20,12 +47,39 @@
         }
       },
       {
+        "package": "Shapes",
+        "repositoryURL": "https://github.com/kieranb662/Shapes.git",
+        "state": {
+          "branch": null,
+          "revision": "cd3983671dfe784609d52723f98013f953d7bb14",
+          "version": "1.0.10"
+        }
+      },
+      {
+        "package": "Sliders",
+        "repositoryURL": "https://github.com/kieranb662/Sliders.git",
+        "state": {
+          "branch": null,
+          "revision": "ac29c6161a377ddf6bfde51486034d0c59704393",
+          "version": "1.0.11"
+        }
+      },
+      {
         "package": "SwiftSpinner",
         "repositoryURL": "https://github.com/icanzilb/SwiftSpinner",
         "state": {
           "branch": null,
           "revision": "b11109c98524526af3a1c6f69c5818862acda6fb",
           "version": "2.1.0"
+        }
+      },
+      {
+        "package": "ColorKit",
+        "repositoryURL": "https://github.com/kieranb662/SwiftUI-Color-Kit",
+        "state": {
+          "branch": null,
+          "revision": "3b87c421e70fe7db6816e721e6acd01ae962d343",
+          "version": "1.0.3"
         }
       }
     ]

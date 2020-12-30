@@ -82,7 +82,7 @@ struct LocationSettingsView: View, Equatable {
                 VStack(alignment: .leading) {
                     
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("Set Location")
+                        Text(Strings.setLocation)
                             .font(.largeTitle)
                             .bold()
                             .foregroundColor(.white)
@@ -151,11 +151,11 @@ struct LocationSettingsView: View, Equatable {
                     // Input text field for location
                     if !usingCurrentLocation {
                         HStack {
-                            Text("Location:")
+                            Text(Strings.locationColon)
                                 .foregroundColor(erroneousLocation ? .red : .white)
                                 .bold()
                                 .padding([.leading])
-                            TextField("Location Name", text: $textFieldText) { isEditing in
+                            TextField(Strings.locationName, text: $textFieldText) { isEditing in
                                 if isEditing {
                                     erroneousLocation = false // reset potential error
                                 }
@@ -238,7 +238,7 @@ struct LocationSettingsView: View, Equatable {
                                     .foregroundColor(.gray)
                                     .padding([.leading])
                                 
-                                Text("Set Location Manually")
+                                Text(Strings.setLocationManually)
                                     .foregroundColor(.gray)
                                     .bold()
                                     .padding([.top, .bottom, .trailing])
@@ -254,7 +254,7 @@ struct LocationSettingsView: View, Equatable {
                                         .padding([.leading])
                                 }
                                 
-                                Text("Use Current Location")
+                                Text(Strings.useCurrentLocation)
                                     .foregroundColor(.white)
                                     .bold()
                                     .padding([.top, .bottom, .trailing])
@@ -276,7 +276,7 @@ struct LocationSettingsView: View, Equatable {
                     
                     Spacer()
                     
-                    Text(locationPermissionGranted ? "Athan Utility does not collect user data." : "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data."
+                    Text(locationPermissionGranted ? Strings.doesNotCollectData : Strings.locationDisabledAndDoesNotCollectData
                     )
                     .font(.subheadline)
                     .foregroundColor(Color(.lightText))
@@ -301,7 +301,7 @@ struct LocationSettingsView: View, Equatable {
                                 self.parentSession = .Main
                             }
                         }) {
-                            Text("Done")
+                            Text(Strings.done)
                                 .foregroundColor(Color(.lightText))
                                 .font(Font.body.weight(.bold))
                         }

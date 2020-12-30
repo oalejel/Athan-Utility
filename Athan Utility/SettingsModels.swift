@@ -81,17 +81,17 @@ class NotificationSettings: Codable, NSCopying {
         
         func localizedString() -> String { #warning("make this use localized strings")
             switch self {
-            case .ios_default: return "iOS Default"
-            case .echo: return "Echo"
-            case .makkah: return "Makkah"
-            case .madina: return "Madina"
-            case .alaqsa: return "Al-Aqsa"
-            case .egypt: return "Egypt"
-            case .abdulbaset: return "Abdulbaset"
-            case .abdulghaffar: return "Abdulghaffar"
+            case .ios_default: return NSLocalizedString("iOS Default", comment: "")
+                case .echo: return NSLocalizedString("Echo", comment: "")
+                case .makkah: return NSLocalizedString("Makkah", comment: "")
+                case .madina: return NSLocalizedString("Madina", comment: "")
+                case .alaqsa: return NSLocalizedString("Al-Aqsa", comment: "")
+                case .egypt: return NSLocalizedString("Egypt", comment: "")
+                case .abdulbaset: return NSLocalizedString("Abdulbaset", comment: "")
+                case .abdulghaffar: return NSLocalizedString("Abdulghaffar", comment: "")
             }
         }
-        
+                
         func filename() -> String? {
             switch self {
             case .ios_default: return nil // no file associated

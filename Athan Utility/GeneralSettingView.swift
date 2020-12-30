@@ -9,6 +9,8 @@
 import SwiftUI
 import Adhan
 import StoreKit
+import MessageUI
+
 
 @available(iOS 13.0.0, *)
 struct GeneralSettingView: View {
@@ -42,6 +44,12 @@ struct GeneralSettingView: View {
     @State var contentOffset = CGFloat(0)
     @Binding var savedOffset: CGFloat
     @State var scrollHeight = CGFloat(300) // wills adjust on appear
+    @State var showPrivacyView = false
+    
+    // contact developer
+    @State private var result: Result<MFMailComposeResult, Error>? = nil
+    @State private var isShowingMailView = false
+
     
     @available(iOS 14.0, *)
     @State var proxy: ScrollViewProxy?
@@ -60,7 +68,7 @@ struct GeneralSettingView: View {
                         VStack(alignment: .leading, spacing: nil) {
                             VStack(alignment: .leading, spacing: 0) {
                                 
-                                Text("Settings") // title
+                                Text(Strings.settings) // title
                                     .font(.largeTitle)
                                     .bold()
                                     .foregroundColor(.white)
@@ -79,7 +87,7 @@ struct GeneralSettingView: View {
                                 VStack(alignment: .leading) { // stack of each settings selector
                                     Group { // Color picker
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Appearance")
+                                            Text(Strings.appearance)
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -94,7 +102,7 @@ struct GeneralSettingView: View {
                                             }
                                         }, label: {
                                             HStack {
-                                                Text("Colors")
+                                                Text(Strings.colors)
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -144,7 +152,7 @@ struct GeneralSettingView: View {
                                             }
                                         }, label: {
                                             HStack {
-                                                Text("Custom Prayer Names")
+                                                Text(Strings.customPrayerNames)
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -165,7 +173,7 @@ struct GeneralSettingView: View {
                                             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                                         }, label: {
                                             HStack {
-                                                Text("Change Language")
+                                                Text(Strings.changeLanguage)
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -184,7 +192,7 @@ struct GeneralSettingView: View {
                                     
                                     Group { // calculation method group
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Calculation Method")
+                                            Text(Strings.calculationMethod)
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -199,7 +207,7 @@ struct GeneralSettingView: View {
                                             }
                                         }, label: {
                                             HStack {
-                                                Text(tempPrayerSettings.calculationMethod.stringValue())
+                                                Text(tempPrayerSettings.calculationMethod.localizedString())
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -211,13 +219,12 @@ struct GeneralSettingView: View {
                                                     .foregroundColor(.white)
                                                     .font(Font.headline.weight(.bold))
                                                     .flipsForRightToLeftLayoutDirection(true)
-                                                //                                                .padding()
                                             }
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle())
                                         
-                                        Text("Calculation methods primarily differ in Fajr and Isha sun angles.")
+                                        Text(Strings.calculationDescription)
                                             .fixedSize(horizontal: false, vertical: true)
                                             .lineLimit(nil)
                                             .font(.caption)
@@ -228,7 +235,7 @@ struct GeneralSettingView: View {
                                          Picker(selection: $tempPrayerSettings.calculationMethod, label: Text("Picker"), content: {
                                          ForEach(0..<calculationMethods.count) { mIndex in
                                          let method = calculationMethods[mIndex]
-                                         Text(method.stringValue())
+                                         Text(method.localizedString())
                                          .foregroundColor(.white)
                                          .tag(method)
                                          .listRowInsets(EdgeInsets())
@@ -256,7 +263,7 @@ struct GeneralSettingView: View {
                                     
                                     Group { // madhab group
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Madhab")
+                                            Text(Strings.madhab)
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -276,7 +283,8 @@ struct GeneralSettingView: View {
                                         .pickerStyle(SegmentedPickerStyle())
                                         .labelsHidden()
                                         .foregroundColor(.white)
-                                        Text("The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.")
+                                        
+                                        Text(Strings.methodDescription)
                                             .fixedSize(horizontal: false, vertical: true)
                                             .lineLimit(nil)
                                             .font(.caption)
@@ -286,7 +294,7 @@ struct GeneralSettingView: View {
                                     
                                     Group { // athan sounds group
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Athan sound")
+                                            Text(Strings.athanSound)
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -317,7 +325,7 @@ struct GeneralSettingView: View {
                                         .buttonStyle(ScalingButtonStyle())
                                     } // athan sounds group
                                     
-                                    Text("Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.")
+                                    Text(Strings.athanSoundDescription)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .lineLimit(nil)
                                         .font(.caption)
@@ -325,7 +333,7 @@ struct GeneralSettingView: View {
                                     
                                     Group {
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text("Notifications")
+                                            Text(Strings.notifications)
                                                 .font(.headline)
                                                 .bold()
                                                 .foregroundColor(.white)
@@ -342,14 +350,26 @@ struct GeneralSettingView: View {
                                                 }
                                             }, label: {
                                                 HStack {
+                                                    
+//                                                    VStack {
+//                                                        Spacer()
+//                                                        PrayerSymbol(prayerType: p)
+//                                                            .foregroundColor(.white)
+//                                                            .padding([.leading, .top, .bottom])
+//                                                            .frame(width: 26)
+//                                                        Spacer()
+//                                                    }
+                                                    
                                                     PrayerSymbol(prayerType: p)
                                                         .padding([.leading, .top, .bottom])
                                                         .foregroundColor(.white)
+                                                        .frame(width: 26)
                                                     
-                                                    Text("\(p.stringValue())")
+                                                    Text("\(p.localizedOrCustomString())")
                                                         .font(.headline)
                                                         .bold()
                                                         .foregroundColor(.white)
+                                                        .padding(.leading, 2)
                                                     
                                                     Spacer()
                                                     
@@ -384,18 +404,66 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                     
+                                    Divider()
+                                        .background(Color.white)
+                                    
+                                    Group {
                                     HStack { // about the developer
                                         Spacer()
                                         VStack(alignment: .center) {
-                                            Text("Developed by")
-                                                .font(Font.headline.weight(.medium))
-                                            Text("Omar Al-Ejel")
+                                            Text(Strings.developedBy)
                                                 .font(Font.headline.weight(.medium))
                                         }
                                         .foregroundColor(.white)
                                         Spacer()
                                     }
                                     .padding([.top, .bottom])
+                                    
+                                    Button(action: { // send feedback
+                                        self.isShowingMailView.toggle()
+                                    }, label: {
+                                        HStack {
+                                            Spacer()
+                                            Image(systemName: "envelope")
+                                                .font(Font.headline.weight(.medium))
+                                                .foregroundColor(.white)
+                                            Text(Strings.sendFeedback)
+                                                .font(Font.headline.weight(.medium))
+                                                .foregroundColor(.white)
+                                            Spacer()
+                                        }
+                                        .padding()
+                                    })
+                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                    .sheet(isPresented: $isShowingMailView) {
+                                        MailView(result: $result) { composer in
+                                            composer.setSubject("Feedback for Athan Utility")
+                                            composer.title = "Email Developer"
+                                            composer.setToRecipients(["omalsecondary@gmail.com"])
+                                        }
+                                    }
+
+                                    
+                                    
+                                    Button(action: { // send feedback
+                                        showPrivacyView.toggle()
+                                    }, label: {
+                                        HStack {
+                                            Spacer()
+                                            Image(systemName: "hand.raised.fill")
+                                                .font(Font.headline.weight(.medium))
+                                                .foregroundColor(.white)
+                                            Text(Strings.privacyNotes)
+                                                .font(Font.headline.weight(.medium))
+                                                .foregroundColor(.white)
+                                            Spacer()
+                                        }
+                                        .padding()
+                                    })
+                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                    .sheet(isPresented: $showPrivacyView) {
+                                        PrivacyInfoView()
+                                    }
                                     
                                     Button(action: { // rate the app
                                         SKStoreReviewController.requestReview()
@@ -405,21 +473,21 @@ struct GeneralSettingView: View {
                                                 ForEach(0..<5) { i in
                                                     Image(systemName: "star.fill")
                                                         .foregroundColor(.orange)
+                                                        .font(Font.headline.weight(.medium))
                                                 }
                                             }
                                             HStack() {
                                                 Spacer()
-                                                Text("Rate Athan Utility!")
-                                                    .font(.headline)
-                                                    .bold()
-                                                    .foregroundColor(.blue)
+                                                Text(Strings.rateAthanUtility)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
                                                 Spacer()
                                             }
                                         }.padding()
                                         
                                     })
-                                    .buttonStyle(ScalingButtonStyle(color: .white))
-                                    
+                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                    }
                                 }
                             }
                             .padding()
@@ -484,7 +552,7 @@ struct GeneralSettingView: View {
                             parentSession = .Main // tell parent to go back
                         }
                     }) {
-                        Text("Done")
+                        Text(Strings.done)
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }

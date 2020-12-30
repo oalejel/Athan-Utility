@@ -19,7 +19,7 @@ struct SoundSettingView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Notification sound")
+            Text(Strings.athanSound)
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
@@ -78,7 +78,7 @@ struct SoundSettingView: View {
                         self.activeSection = .General
                     }
                 }) {
-                    Text("Done")
+                    Text(Strings.done)
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
                 }

@@ -110,7 +110,7 @@ struct ColorsView: View {
             VStack(alignment: .leading) {
                 Group {
                     VStack(alignment: .leading, spacing: 0) {
-                    Text("Colors")
+                    Text(Strings.colors)
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.white)
@@ -125,7 +125,7 @@ struct ColorsView: View {
                     
                     Picker(selection: $isDynamic.animation(.linear), label: Text("Picker"), content: {
                         ForEach([true, false], id: \.self) { dynamic in
-                            Text(dynamic ? "Dynamic" : "Static")
+                            Text(dynamic ? Strings.dynamic : Strings.static)
                         }
                     })
                     .pickerStyle(SegmentedPickerStyle())
@@ -174,7 +174,7 @@ struct ColorsView: View {
                                             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0)) // flip to deal with annoying padding inconsistenncy
                                             //                                        .onChange(color1Bindings[p.rawValue()]) { }
                                             .onChange(of: c1) { v in
-                                                print("on change 1 \(p)")
+//                                                print("on change 1 \(p)")
                                                 // if we dont get a suspicious start, do not worry about ignore count
                                                 if ignoreOnChange1 < 8 { // threshold trick to avoid strange onChange calls when first appearing
                                                     let rgb = UIColor(c1).rgb
@@ -195,7 +195,7 @@ struct ColorsView: View {
                                                 }
                                             }
                                         Spacer()
-                                        Text(p.localizedString())
+                                        Text(p.localizedOrCustomString())
                                             .font(.headline)
                                             .bold()
                                             .foregroundColor(.white)
@@ -204,7 +204,7 @@ struct ColorsView: View {
                                         ColorPicker(selection: color2Bindings[p.rawValue()], supportsOpacity: false) {}
                                             .fixedSize()
                                             .onChange(of: c2) { v in
-                                                print("on change 2 \(p)")
+//                                                print("on change 2 \(p)")
                                                 if ignoreOnChange2 < 8 {
                                                     let rgb = UIColor(c2).rgb
                                                     if rgb.0 + rgb.1 + rgb.2 < 2.8 {
@@ -273,7 +273,7 @@ struct ColorsView: View {
                                         }
                                     
                                     Spacer()
-                                    Text("Gradient")
+                                    Text(Strings.gradient)
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -319,7 +319,7 @@ struct ColorsView: View {
                             
                         } else {
                             // Fallback on earlier versions
-                            Text("Color customization only available on iOS 14+")
+                            Text(Strings.colorsiOSRequirement)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .lineLimit(nil)
                                 .font(.headline)
@@ -341,7 +341,7 @@ struct ColorsView: View {
                 }, label: {
                     HStack {
                         Spacer()
-                        Text("Reset Defaults")
+                        Text(Strings.restoreDefaults)
                             .foregroundColor(.white)
                             .bold()
                             .padding([.top, .bottom, .trailing])
@@ -387,7 +387,7 @@ struct ColorsView: View {
                             self.activeSection = .General
                         }
                     }) {
-                        Text("Done")
+                        Text(Strings.done)
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }

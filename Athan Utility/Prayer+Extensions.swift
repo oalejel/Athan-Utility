@@ -96,8 +96,15 @@ extension Prayer: Codable {
         }
     }
     
-    // use overridden name if provided
+    // do not use override names here
     func localizedString() -> String {
+        return NSLocalizedString(self.stringValue(), comment: "")
+    }
+    
+    // use overridden name if provided
+    func localizedOrCustomString() -> String {
+        let custom = PrayerSettings.shared.customNames[self]
+        if let custom = custom, custom != "" { return custom }
         return NSLocalizedString(self.stringValue(), comment: "")
     }
     

@@ -32,7 +32,7 @@ struct NameOverridesView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Custom Names")
+            Text(Strings.customPrayerNames)
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
@@ -66,6 +66,7 @@ struct NameOverridesView: View {
                                 }
                                 
                                 
+                                // DO NOT USE CUSTOM STRING IN THIS LABEL
                                 Text(p.localizedString())
                                     .bold()
                                     .foregroundColor(.white)
@@ -83,7 +84,7 @@ struct NameOverridesView: View {
                             }
                         }
                         
-                        Text("Replace Athan spelling used in the Athan Utility widget, notifications, and main interface.")
+                        Text(Strings.customNamesDescription)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(nil)
                             .font(.caption)
@@ -115,7 +116,7 @@ struct NameOverridesView: View {
                         self.activeSection = .General
                     }
                 }) {
-                    Text("Done")
+                    Text(Strings.done)
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
                 }

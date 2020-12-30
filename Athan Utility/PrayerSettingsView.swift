@@ -31,7 +31,7 @@ struct PrayerSettingsView: View {
     @State var athanSoundEnabled = false
     @State var reminderAlertEnabled = false
     @State var reminderOffset = 15
-
+    
     
     var body: some View {
         // intermediate bindings taht depend on each other
@@ -54,10 +54,10 @@ struct PrayerSettingsView: View {
                 athanAlertEnabled = true
             }
         })
-
+        
         
         VStack(alignment: .leading) {
-            Text("\(prayer.localizedString()) settings")
+            Text("\(prayer.localizedOrCustomString()) \(Strings.settings)")
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
@@ -75,7 +75,7 @@ struct PrayerSettingsView: View {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("Athan Alarm")
+                            Text(Strings.athanNotification)
                                 .font(.headline)
                                 .bold()
                                 .foregroundColor(.white)
@@ -84,49 +84,47 @@ struct PrayerSettingsView: View {
                             
                             VStack(alignment: .leading) {
                                 Toggle(isOn: athanOn, label: {
-                                    Text("Enabled")
+                                    Text(Strings.enabled)
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
-                                        
-                                    
                                 })
                                 .padding(.top, 12)
                                 
                                 Toggle(isOn: soundOn, label: {
-                                    Text("Play Sound")
+                                    Text(Strings.playSound)
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                 })
                                 
-                                Text("Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.")
+                                Text(Strings.playSoundDescription)
                                     .fixedSize(horizontal: false, vertical: true)
                                     .lineLimit(nil)
                                     .font(.caption)
                                     .foregroundColor(Color(.lightText))
                                     .padding(.bottom, 12)
-
                                 
-//                                ZStack {
-//                                    Stepper(
-//                                        onIncrement: { },
-//                                        onDecrement: {  },
-//                                        label: {
-//                                            Text("Minute Offset")
-//                                                .font(.headline)
-//                                                .bold()
-//                                                .foregroundColor(.white)
-//        //                                        .padding([.bottom])
-//                                        })
-//                                        .accentColor(.white)
-//
-//
-//                                    Text("1")
-//                                        .foregroundColor(Color(.lightText))
-//                                }
-//                                .padding(.bottom, 12)
-                                                                
+                                
+                                //                                ZStack {
+                                //                                    Stepper(
+                                //                                        onIncrement: { },
+                                //                                        onDecrement: {  },
+                                //                                        label: {
+                                //                                            Text("Minute Offset")
+                                //                                                .font(.headline)
+                                //                                                .bold()
+                                //                                                .foregroundColor(.white)
+                                //        //                                        .padding([.bottom])
+                                //                                        })
+                                //                                        .accentColor(.white)
+                                //
+                                //
+                                //                                    Text("1")
+                                //                                        .foregroundColor(Color(.lightText))
+                                //                                }
+                                //                                .padding(.bottom, 12)
+                                
                             }
                             .padding([.leading, .trailing])
                             .background(
@@ -139,7 +137,7 @@ struct PrayerSettingsView: View {
                             //                                Text("Increasing minute adjustments sets back athan times for cus")
                             //                                    .font(.subheadline)
                             
-                            Text("Reminder Alarm")
+                            Text(Strings.reminderNotification)
                                 .font(.headline)
                                 .bold()
                                 .foregroundColor(.white)
@@ -147,7 +145,7 @@ struct PrayerSettingsView: View {
                                 .background(Color.white)
                             VStack(alignment: .leading) {
                                 Toggle(isOn: reminderOn, label: {
-                                    Text("Enabled")
+                                    Text(Strings.enabled)
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -156,34 +154,21 @@ struct PrayerSettingsView: View {
                                 
                                 ZStack {
                                     HStack {
-                                        Text("Minute offset: \(reminderOffset)m")
+                                        Text("\(String(format: Strings.minuteOffset, reminderOffset))\(Strings.minuteCharacter)")
+//                                        Text("Minute offset: \(reminderOffset)m")
                                             .font(.headline)
                                             .bold()
                                             .foregroundColor(.white)
                                             .fixedSize(horizontal: true, vertical: false)
                                             .lineLimit(1)
-
-                                        Stepper("", value: $reminderOffset, in: ClosedRange(1..<60))
+                                        
+                                        Stepper("", value: $reminderOffset, in: ClosedRange(1..<120))
                                             .accentColor(.white)
                                     }
-                                    
-//                                    Stepper(
-//                                        onIncrement: { },
-//                                        onDecrement: {  },
-//                                        label: {
-//                                            Text("Minute offset")
-//                                                .font(.headline)
-//                                                .bold()
-//                                                .foregroundColor(.white)
-//        //                                        .padding([.bottom])
-//                                        })
-
-                                    
-//                                    Text("\(reminderOffset)")
-//                                        .foregroundColor(Color(.lightText))
                                 }
                                 
-                                Text("When minute offsets are longer than the time between \(prayer.localizedString()) and \(prayer.next().localizedString()), reminders will default to 15 minutes.")
+                                Text(String(format: Strings.offsetDescription, prayer.localizedOrCustomString(), prayer.next().localizedOrCustomString()))
+//                                Text("When minute offsets are longer than the time between \(prayer.localizedString()) and \(prayer.next().localizedString()), reminders will default to 15 minutes.")
                                     .fixedSize(horizontal: false, vertical: true)
                                     .lineLimit(nil)
                                     .font(.caption)
@@ -197,7 +182,7 @@ struct PrayerSettingsView: View {
                                     .cornerRadius(12)
                             )
                             .padding(.bottom, 12)
-
+                            
                             
                         }
                     }
@@ -222,7 +207,7 @@ struct PrayerSettingsView: View {
                         self.activeSection = .General
                     }
                 }) {
-                    Text("Done")
+                    Text(Strings.done)
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
                 }

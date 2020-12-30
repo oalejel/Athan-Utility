@@ -47,7 +47,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
         northNeedle.fillColor = UIColor(red: 0.92, green: 0.72, blue: 0.1666, alpha: 1.0).cgColor
         dismissButton.backgroundColor = .darkerGray
         dismissButton.titleLabel?.textColor = .white
-        dismissButton.accessibilityLabel = "done"
+        dismissButton.accessibilityLabel = Strings.done
         view.backgroundColor = .black
 //        } else {
 //            northNeedle.fillColor = UIColor.red.cgColor

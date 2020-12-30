@@ -34,9 +34,12 @@ class AthanProvider: IntentTimelineProvider {
     func placeholder(in context: Context) -> AthanEntry {
         // let UI handle case with nil data
         let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        let useDynamicColors = manager.appearanceSettings.isDynamic
+        let colors = manager.appearanceSettings.colors(for: useDynamicColors ? (manager.currentPrayer ?? Prayer.isha) : nil)
+
         // pass .none for placeholders
-        return AthanEntry(date: Date(), currentPrayer: Prayer.fajr, currentPrayerDate: Date(),
-                          nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(), Date(), Date(), Date(), Date()], gradient: Gradient(colors: [.black, .blue]))
+        return AthanEntry(date: Date(timeIntervalSinceNow: 100), currentPrayer: Prayer.fajr, currentPrayerDate: Date(),
+                          nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(timeIntervalSinceNow: 200), Date(), Date(), Date(), Date()], gradient: Gradient(colors: [colors.0, colors.1]))
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {

@@ -23,9 +23,9 @@ class NotificationsManager {
         params.madhab = madhab
         
         if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .medium
-            formatter.timeZone = TimeZone.current
+//            let formatter = DateFormatter()
+//            formatter.timeStyle = .medium
+//            formatter.timeZone = TimeZone.current
             
 //            print("fajr \(formatter.string(from: prayers.fajr))")
 //            print("sunrise \(formatter.string(from: prayers.sunrise))")
@@ -60,7 +60,9 @@ class NotificationsManager {
 //                let noteSoundFilename = Settings.
                 let noteSoundFilename = noteSettings.selectedSound.filename()
                 let df = DateFormatter()
-                df.dateFormat = "h:mm"
+//                df.dateFormat = "h:mm"
+                df.timeStyle = .short
+                #warning("change this to use a number formatter or something")
                 
                 // loop over 5 days worth of times
                 var noteCount = 0
@@ -95,14 +97,14 @@ class NotificationsManager {
                             // finalFlag indicates that we have reached the limit for stored
                             // local notifications, and should let the user know
                             if isFinalDayOfNotifications && p == .isha {
-                                let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
-                                alertString = String(format: localizedAlertString, p.localizedString(), dateString)
+                                let alertAndReopenMessage = Strings.reopenNotificationMessage
+                                alertString = String(format: alertAndReopenMessage, p.localizedOrCustomString(), dateString)
                             } else {
                                 // Alternative string stores a shorter version of the location
                                 // in order to show "San Francisco" instead of "San Francisco, CA, USA"
-                                let localizedStandardNote = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
-                                alertString = String(format: localizedStandardNote,
-                                                     p.localizedString(), shortLocationName, dateString)
+                                let noteMessage = Strings.standardNotificationMessage
+                                alertString = String(format: noteMessage,
+                                                     p.localizedOrCustomString(), shortLocationName, dateString)
                             }
                             
                             // set the notification body
@@ -114,15 +116,30 @@ class NotificationsManager {
                             // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                             let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
                             let noteRequest = UNNotificationRequest(identifier: noteID, content: noteContent, trigger: noteTrigger)
-                            center.add(noteRequest) {_ in /*print(p.localizedString(), "d: ", dateComp.day!, " \(dateComp.hour!):\(dateComp.minute!)")*/ }
+                            center.add(noteRequest) {_ in /*print(p.localizedOrCustomString(), "d: ", dateComp.day!, " \(dateComp.hour!):\(dateComp.minute!)")*/ }
                             noteCount += 1
                         }
                         
                         // if user would ALSO like to get notified 15 minutes prior
                         if setting.reminderAlertEnabled {
                             // adding a reminder for 15 minutes before the actual prayer time
+                            
+                            // if the offset is too large, then default to 15 minutes
+                            var minuteOffset = setting.reminderOffset
+                            if p.previous() != .isha { // almost always safe to assume time between isha and fajr is large enough
+                                let previousDate = times.time(for: p.previous())
+                                let interval = Int(prayerDate.timeIntervalSince(previousDate) / 60)
+                                if interval < minuteOffset {
+                                    if interval > 15 {
+                                        minuteOffset = 15
+                                    } else {
+                                        minuteOffset = interval / 2
+                                    }
+                                }
+                            }
+                           
                             let preNoteContent = UNMutableNotificationContent()
-                            let preDate = Calendar.current.date(byAdding: .minute, value: -1 * setting.reminderOffset, to: prayerDate)!
+                            let preDate = Calendar.current.date(byAdding: .minute, value: -1 * minuteOffset, to: prayerDate)!
                             preNoteContent.userInfo = ["intendedFireDate": preDate]
                             let preNoteComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)
                             
@@ -134,8 +151,8 @@ class NotificationsManager {
                             }
                             
                             let localizedMinutes = NumberFormatter.localizedString(from: NSNumber(value: setting.reminderOffset), number: .none)
-                            let localized15mAlert = NSLocalizedString("%1$@m left til %2$@ in %3$@! [%4$@]", comment: "")
-                            var alertString = String(format: localized15mAlert,
+                            let reminderMessage = Strings.reminderNotificationMessage
+                            var alertString = String(format: reminderMessage,
                                                  localizedMinutes,
                                                  p.localizedString(),
                                                  shortLocationName,
@@ -156,7 +173,6 @@ class NotificationsManager {
                     }
                 }
                 print(noteCount, " NOTIFICATIONS SUBMITTED TO NC")
-                
             }
         }
     }

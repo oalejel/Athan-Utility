@@ -7,6 +7,7 @@
 //
 
 import Adhan
+import Foundation
 
 extension CalculationMethod {
     // exclude "other"
@@ -16,34 +17,34 @@ extension CalculationMethod {
         return methods
     }
     
-    func stringValue() -> String {
+    func localizedString() -> String {
         switch self {
         case .muslimWorldLeague:
-            return "Muslim World League"
+            return NSLocalizedString("Muslim World League", comment: "")
         case .egyptian:
-            return "Egyptian"
+            return NSLocalizedString("Egyptian", comment: "")
         case .karachi:
-            return "Karachi"
+            return NSLocalizedString("Karachi", comment: "")
         case .ummAlQura:
-            return "Umm Al-Qura"
+            return NSLocalizedString("Umm Al-Qura", comment: "")
         case .dubai:
-            return "Dubai"
+            return NSLocalizedString("Dubai", comment: "")
         case .moonsightingCommittee:
-            return "Moonsighting Committee"
+            return NSLocalizedString("Moonsighting Committee", comment: "")
         case .northAmerica:
-            return "North America"
+            return NSLocalizedString("North America", comment: "")
         case .kuwait:
-            return "Kuwait"
+            return NSLocalizedString("Kuwait", comment: "")
         case .qatar:
-            return "Qatar"
+            return NSLocalizedString("Qatar", comment: "")
         case .singapore:
-            return "Singapore"
+            return NSLocalizedString("Singapore", comment: "")
         case .tehran:
-            return "Tehran"
+            return NSLocalizedString("Tehran", comment: "")
         case .turkey:
-            return "Turkey"
+            return NSLocalizedString("Turkey", comment: "")
         case .other:
-            return "Other"
+            return NSLocalizedString("Other", comment: "")
         }
     }
     

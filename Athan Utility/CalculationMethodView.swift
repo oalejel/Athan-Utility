@@ -43,7 +43,7 @@ struct CalculationMethodView: View {
                                 }
                             }, label: {
                                 HStack {
-                                    Text(method.stringValue())
+                                    Text(method.localizedString())
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -74,7 +74,7 @@ struct CalculationMethodView: View {
                         self.activeSection = .General
                     }
                 }) {
-                    Text("Done")
+                    Text(Strings.done)
                         .foregroundColor(Color(.lightText))
                         .font(Font.body.weight(.bold))
                 }
@@ -83,6 +83,7 @@ struct CalculationMethodView: View {
             .padding([.leading, .trailing, .bottom])
 
         }
+        .padding([.leading, .trailing, .top])
         
     }
 }

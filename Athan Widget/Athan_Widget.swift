@@ -18,110 +18,132 @@ struct SmallWidget: View {
         d.dateTimeStyle = .numeric
         return d
     }()
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-
+            
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .bottom) {
                     
                     Spacer()
-                    Text("\(entry.nextPrayerDate, style: .relative) left")
-                        .foregroundColor(.init(UIColor.lightText))
-    //                    .font(.subheadline)
-                        .fontWeight(.bold)
-                        .font(.system(size: 12))
-                        
-//                        .minimumScaleFactor(0.01)
-//                        .fixedSize(horizontal: false, vertical: true)
-//                        .lineLimit(1)
-                        .multilineTextAlignment(.trailing)
-                    
+                    HStack(spacing: 0) {
+                        Text(entry.nextPrayerDate, style: .relative)
+                            .foregroundColor(.init(UIColor.lightText))
+        //                    .font(.subheadline)
+                            .fontWeight(.bold)
+                            .font(.system(size: 12))
+    //                        .minimumScaleFactor(0.01)
+    //                        .fixedSize(horizontal: false, vertical: true)
+    //                        .lineLimit(1)
+                            .multilineTextAlignment(.trailing)
 
-
+                        Text(" \(Strings.left)")
+                            .foregroundColor(.init(UIColor.lightText))
+        //                    .font(.subheadline)
+                            .fontWeight(.bold)
+                            .font(.system(size: 12))
+    //                        .minimumScaleFactor(0.01)
+    //                        .fixedSize(horizontal: false, vertical: true)
+    //                        .lineLimit(1)
+                            .multilineTextAlignment(.trailing)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 Spacer()
-
-
+                
                 PrayerSymbol(prayerType: entry.currentPrayer)
                     .foregroundColor(.white)
-//                    .opacity(0.8)
+                    //                    .opacity(0.8)
                     .font(.headline)
-//                    .padding([.bottom], 4)
+                //                    .padding([.bottom], 4)
                 HStack {
-                    Text(entry.currentPrayer.localizedString())
+                    Text(entry.currentPrayer.localizedOrCustomString())
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
                         .lineLimit(1)
-//                        .fixedSize(horizontal: false, vertical: true)
+                        //                        .fixedSize(horizontal: false, vertical: true)
                         .allowsTightening(true)
                         .minimumScaleFactor(0.01)
-
+                    
                     Spacer()
                 }
-
                 
-                Text("\(entry.currentPrayer.next().localizedString()) at \(entry.nextPrayerDate, style: .time)")
-                    //                Text("\(entry.nextPrayerDate, style: .relative) left")
-                    .foregroundColor(.init(UIColor.lightText))
-                    .fontWeight(.bold)
-                    .font(.system(size: 14))
-                    .minimumScaleFactor(0.01)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .lineLimit(1)
-                    .multilineTextAlignment(.trailing)
+                HStack(spacing: 0) {
+                    Text(entry.currentPrayer.next().localizedOrCustomString())
+                        //                Text("\(entry.nextPrayerDate, style: .relative) left")
+                        .foregroundColor(.init(UIColor.lightText))
+                        .fontWeight(.bold)
+                        .font(.system(size: 14))
+                        .minimumScaleFactor(0.01)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .multilineTextAlignment(.trailing)
+
+                    Text(" ")
+//                    Text(Strings.at.count != 0 ? " \(Strings.at)\(" ")" : " ")
+                        //                Text("\(entry.nextPrayerDate, style: .relative) left")
+                        .foregroundColor(.init(UIColor.lightText))
+                        .fontWeight(.bold)
+                        .font(.system(size: 14))
+                        .minimumScaleFactor(0.01)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .multilineTextAlignment(.trailing)
+                    
+                    Text(entry.nextPrayerDate, style: .time)
+                        .foregroundColor(.init(UIColor.lightText))
+                        .fontWeight(.bold)
+                        .font(.system(size: 14))
+                        .minimumScaleFactor(0.01)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .multilineTextAlignment(.trailing)
+                }
             }
             .padding()
         }
     }
 }
-          
 
 struct MediumWidget: View {
     var entry: AthanEntry
     @State var progress: CGFloat = 0.5
-    var tempNames = ["Fajr", "Shurooq", "Thuhr", "Asr", "Maghrib", "Isha"]
-
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .lastTextBaseline, spacing: nil) {
-                    Text(entry.currentPrayer.localizedString())
+                    Text(entry.currentPrayer.localizedOrCustomString())
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
-                    Text("\(entry.nextPrayerDate, style: .relative) \(NSLocalizedString("left", comment: ""))")
+                    Text("\(entry.nextPrayerDate, style: .relative) \(Strings.left)")
                         .foregroundColor(.init(UIColor.lightText))
                         .font(.system(size: 14))
                         .fontWeight(.bold)
-//                        .lineLimit(1)
-//                        .allowsTightening(true)
-//                        .minimumScaleFactor(0.01)
+                    //                        .lineLimit(1)
+                    //                        .allowsTightening(true)
+                    //                        .minimumScaleFactor(0.01)
                     Spacer()
                     
                     PrayerSymbol(prayerType: entry.currentPrayer)
                         .foregroundColor(.white)
-    //                    .opacity(0.8)
                         .font(.headline)
-//                        .padding([.bottom], 4)
-
-//                    Text("\(Date(), style: .time)") // remove later
-//                        .font(.footnote)
                 }
-
+                
                 HStack {
                     VStack(alignment: .leading) {
                         ForEach(0..<3) { i in
-                            Text(Prayer(index: i).localizedString())
+                            Text(Prayer(index: i).localizedOrCustomString())
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
                                 .font(Font.system(size: 24))
                                 .fontWeight(.bold)
                                 .allowsTightening(true)
                                 .minimumScaleFactor(0.5)
-                            if (i < 2) {
+                            if i < 2 {
                                 Spacer()
                             }
                         }
@@ -154,14 +176,14 @@ struct MediumWidget: View {
                     
                     VStack(alignment: .leading) {
                         ForEach(3..<6) { i in
-                            Text(Prayer(index: i).localizedString())
+                            Text(Prayer(index: i).localizedOrCustomString())
                                 .foregroundColor(i == entry.currentPrayer.rawValue() ? .green : (i < entry.currentPrayer.rawValue() ? .init(UIColor.lightText) : .white))
                                 .font(Font.system(size: 26))
                                 .fontWeight(.bold)
                                 .allowsTightening(true)
                                 .minimumScaleFactor(0.5)
-
-
+                            
+                            
                             if (i < 5) {
                                 Spacer()
                             }
@@ -184,7 +206,7 @@ struct MediumWidget: View {
                         }
                     }
                 }.padding(.top, 10)
-
+                
             }
             .padding()
         }
@@ -204,7 +226,7 @@ struct SmallErrorWidget: View {
                     .foregroundColor(.white)
                     .font(.body)
                     .fontWeight(.bold)
-
+                
             }
             .padding()
         }
@@ -217,7 +239,7 @@ struct MediumErrorWidget: View {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
             VStack(alignment: .leading, spacing: 4) {
                 Spacer()
-
+                
                 HStack {
                     VStack(alignment: .leading) {
                         Image(systemName: "sun.max")
@@ -227,7 +249,7 @@ struct MediumErrorWidget: View {
                             .font(.body)
                             .fontWeight(.bold)
                     }
-
+                    
                     Spacer(minLength: 100)
                 }
             }
@@ -248,32 +270,32 @@ struct LargeWidget: View {
 struct Athan_WidgetEntryView : View {
     var entry: AthanEntry
     @Environment(\.widgetFamily) var family: WidgetFamily
-
+    
     @ViewBuilder
     var body: some View {
         // none means that we have a placeholder
         // nil means error
         switch (family, entry.tellUserToOpenApp) {
-
+        
         case (.systemSmall, true):
             SmallErrorWidget()
         case (.systemMedium, true):
             MediumErrorWidget()
         case (.systemLarge, true): // ignored since not in supported list
             LargeWidget(entry: entry)
-
-//        case (.systemSmall, .some(Prayer.none)):
-//            SmallPlaceholderWidget()
-//        case (.systemMedium, .some(Prayer.none)):
-//            MediumPlaceholderWidget()
-
+            
+        //        case (.systemSmall, .some(Prayer.none)):
+        //            SmallPlaceholderWidget()
+        //        case (.systemMedium, .some(Prayer.none)):
+        //            MediumPlaceholderWidget()
+        
         case (.systemSmall, false):
             SmallWidget(entry: entry)
         case (.systemMedium, false):
             MediumWidget(entry: entry)
         case (.systemLarge, false): // ignored since not in supported list
             LargeWidget(entry: entry)
-
+            
         @unknown default:
             SmallErrorWidget()
         }
@@ -283,9 +305,9 @@ struct Athan_WidgetEntryView : View {
 @main
 struct Athan_Widget: Widget {
     let kind: String = "Athan_Widget"
-
+    
     var body: some WidgetConfiguration {
-
+        
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
             Athan_WidgetEntryView(entry: entry)
         }
@@ -310,14 +332,14 @@ struct Athan_Widget_Previews: PreviewProvider {
                                     nextDate, nextDate, nextDate
                                    ],
                                    gradient: Gradient(colors: [.black, .blue]))
-
+            
             Athan_WidgetEntryView(entry: entry)
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .flipsForRightToLeftLayoutDirection(true)
             //            .environment(\.layoutDirection, .rightToLeft)
             //            .environment(\.locale, Locale(identifier: "ar"))
         }
-
+        
         let nextDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
         //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
         let entry = AthanEntry(date: Date(),
@@ -329,11 +351,11 @@ struct Athan_Widget_Previews: PreviewProvider {
                                 nextDate, nextDate, nextDate
                                ],
                                gradient: Gradient(colors: [.black, .blue]))
-
-
+        
+        
         Athan_WidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
-
+        
         //        Athan_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
         //            .previewContext(WidgetPreviewContext(family: .systemLarge))
     }

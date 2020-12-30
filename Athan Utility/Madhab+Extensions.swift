@@ -7,14 +7,15 @@
 //
 
 import Adhan
+import Foundation
 
 extension Madhab {
     func stringValue() -> String {
         switch self {
         case .hanafi:
-            return "Hanafi"
+            return NSLocalizedString("Hanafi", comment: "")
         case .shafi:
-            return "Shafi"
+            return NSLocalizedString("Shafi", comment: "")
         }
     }
 }

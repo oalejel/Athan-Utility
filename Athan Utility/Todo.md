@@ -1,5 +1,8 @@
 #  Todo list 
 Before updating 
+
+- finish privacy info view
+- app ignoring custom location and swithcing to current for some reaosn....
 - run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
 - if custom alert time is longer than interval between two prayers, then use 15 minutse instead
@@ -23,8 +26,10 @@ Before updating
 - user should be able to stop athan playing 
 - solar view does not reset when i reopen app after changing time. sus?
 - consider switching row buttons to use a longpress gesture that scales intead, that way we wont have incorrect long press measurements that case them to scale unnecessarily
+
 For later 
 - dragging up on times table should bring up a monthly times table instead of just tomorrow times. nobody cares about tomorrow's times!
 - allow users to add additional locations, and set one of the options as the "my location" for notifications and stuff
 - be more efficent with notifications by not wasting notification budget on notifications from earlier in the day 
+- consider matching baseline for prayer anme and time left in main interface
 

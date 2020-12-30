@@ -196,6 +196,7 @@ struct MainSwiftUI: View {
                                         .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                         .offset(y: 12)
                                         .shadow(radius: 3)
+                                        .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
                                 }
                                 .opacity(1 - 0.8 * tomorrowPeekProgress)
@@ -207,7 +208,7 @@ struct MainSwiftUI: View {
                                             .foregroundColor(.white)
                                             .font(Font.system(.title).weight(.medium))
                                         
-                                        Text(manager.currentPrayer.localizedString())
+                                        Text(manager.currentPrayer.localizedOrCustomString())
                                             .font(.largeTitle)
                                             .bold()
                                             .foregroundColor(.white)
@@ -307,7 +308,7 @@ struct MainSwiftUI: View {
                                             
                                             ZStack { // stack of today and tomorrow times
                                                 HStack {
-                                                    Text(p.localizedString())
+                                                    Text(p.localizedOrCustomString())
                                                         //                                            TextField(p.localizedString(), text: [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex], onEditingChanged: { _ in
                                                         //
                                                         //                                            }, onCommit: {
@@ -337,7 +338,7 @@ struct MainSwiftUI: View {
                                                 
                                                 
                                                 HStack {
-                                                    Text(p.localizedString())
+                                                    Text(p.localizedOrCustomString())
                                                         .foregroundColor(PrayerHighlightType.future.color())
                                                         .font(cellFont)
                                                         .bold()
@@ -449,7 +450,7 @@ struct MainSwiftUI: View {
                                                     )
                                                     .animation(.linear(duration: 0.2))
                                                 
-                                                Text("\(tomorrowHijriString))")
+                                                Text("\(tomorrowHijriString)")
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.white)
                                                     .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))

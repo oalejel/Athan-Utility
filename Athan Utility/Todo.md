@@ -2,6 +2,7 @@
 Before updating 
 
 - finish privacy info view
+- tapping qibla brings it into focus by switching with the moon, and shows a degrees label or something
 - app ignoring custom location and swithcing to current for some reaosn....
 - run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 

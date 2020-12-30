@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Adhan
+import Combine
 
 enum CurrentView {
     case Main, Settings, Location
@@ -101,19 +102,21 @@ struct GradientView: View, Equatable {
 }
 
 @available(iOS 13.0.0, *)
+class DragState: ObservableObject {
+    @Published var progress: Double = 0
+    @Published var dragIncrement: Int = 0
+    @Published var showCalendar: Bool = false
+}
+
+@available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
     
-    @State var tomorrowPeekProgress: Double = 0.0
+    //    var tomorrowPeekProgress = CurrentValueSubject<Double, Never>(0.0)
+    @ObservedObject var dragState = DragState()
     @State var minuteTimer: Timer? = nil
     
-    @State var fajrOverrideString: String = ""
-    @State var sunriseOverrideString: String = ""
-    @State var dhuhrOverrideString: String = ""
-    @State var asrOverrideString: String = ""
-    @State var maghribOverrideString: String = ""
-    @State var ishaOverrideString: String = ""
     @State var settingsToggled = false
     @State var locationSettingsToggled = false
     
@@ -124,7 +127,6 @@ struct MainSwiftUI: View {
     
     @State var nextRoundMinuteTimer: Timer?
     @State var percentComplete: Double = 0.0
-    
     
     func getPercentComplete() -> Double {
         var currentTime: Date?
@@ -157,7 +159,92 @@ struct MainSwiftUI: View {
         return df.string(from: date)
     }
     
+    
+    let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
+    let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
+    
+    // publishes counter of 4 ticks
+    //    var dragPublisher: AnyPublisher<Double, Never> {
+    //        return dragState.$progress
+    //            .eraseToAnyPublisher()
+    //    }
+    
+    // necessary to allow ARC to throw out unused values
+    var dragCancellable: AnyCancellable?
+    
+    init() {
+        dragCancellable = dragState.$progress
+            .receive(on: RunLoop.main)
+            // pass along last value, and whether we had an increase
+            .scan((0.0, 0), { [self] (tup, new) -> (Double, Int) in
+                let r1 = Int(tup.0 / 0.33)
+                let r2 = Int(new / 0.33)
+                
+                if r1 != r2 {
+                    print(r1, r2)
+                    if r2 > r1 {
+                        if r2 == 3 {
+                            DispatchQueue.main.async {
+                                //                                print("STRONG")
+                                self.strongImpactGenerator.impactOccurred()
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                //                                print("WEAK")
+                                self.weakImpactGenerator.impactOccurred()
+                            }
+                        }
+                    }
+                }
+                
+                return (new, r2)
+            })
+            .map { v in
+                //                print("PUHING: \(v.1)")
+                return v.1
+            }
+            .assign(to: \.dragIncrement, on: dragState)
+        //            .eraseToAnyPublisher()
+        //            .assign(to: \.dragIncrement, on: self)
+        
+        //        cancellablePub2 = dragState.$progress
+        //            .receive(on: RunLoop.main) // latch showcalendar
+        ////            .map {
+        ////                $0 > 0.999
+        ////            }
+        ////            .buffer(size: 2, prefetch: .keepFull, whenFull: .dropOldest)
+        //            .scan(false, { (isOn, prog) -> Bool in
+        //                if prog > 0.999 {
+        //                    return true
+        //                } // else return last value we published
+        //                return
+        ////                return
+        //                isOn || prog > 0.999 // latch. if was true, stay true until we get both to be false
+        //            })
+        //            .assign(to: \.showCalendar, on: dragState)
+        
+        
+        
+        //        cancellablePub3 = dragState.$progress
+        //            .receive(on: RunLoop.main) // latch showcalendar
+        //            .scan(0, { (i, out) -> Double in
+        //                return (i > out) ? i : out
+        //            })
+        //
+        ////            .buffer(size: 2, prefetch: .keepFull, whenFull: .dropOldest)
+        ////            .scan(false, { (isOn, prog) -> Bool in
+        ////                isOn || prog > 0.999 // latch. if was true, stay true until we get both to be false
+        ////            })
+        //            .assign(to: \.highestProgress, on: dragState)
+        
+        //        highestProgress
+        
+    }
+    
+    @GestureState private var dragOffset = CGSize.zero
+    
     var body: some View {
+        
         ZStack {
             GeometryReader { g in
                 let timeRemainingString: String = {
@@ -176,6 +263,9 @@ struct MainSwiftUI: View {
                 
                 GradientView(currentPrayer: $manager.currentPrayer, appearance: $manager.appearance)
                     .equatable()
+                    .sheet(isPresented: $dragState.showCalendar) { // set highest progress back to 0 when we know the view disappeared
+                        CalendarView()
+                    }
                 
                 VStack(alignment: .leading) {
                     switch currentView {
@@ -199,7 +289,7 @@ struct MainSwiftUI: View {
                                         .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
                                 }
-                                .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                .opacity(1 - 0.8 * dragState.progress)
                                 
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading) {
@@ -213,7 +303,7 @@ struct MainSwiftUI: View {
                                             .bold()
                                             .foregroundColor(.white)
                                     }
-                                    .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                    .opacity(1 - 0.8 * dragState.progress)
                                     
                                     Spacer() // space title | qibla
                                     
@@ -234,7 +324,7 @@ struct MainSwiftUI: View {
                                                 .minimumScaleFactor(0.01)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .lineLimit(1)
-                                                .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                                .opacity(1 - 0.8 * dragState.progress)
                                             
                                         } else {
                                             // Fallback on earlier versions
@@ -246,7 +336,7 @@ struct MainSwiftUI: View {
                                                 .minimumScaleFactor(0.01)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .lineLimit(1)
-                                                .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                                .opacity(1 - 0.8 * dragState.progress)
                                             
                                         }
                                     }
@@ -276,7 +366,7 @@ struct MainSwiftUI: View {
                                         nextRoundMinuteTimer?.invalidate()
                                         minuteTimer?.invalidate()
                                     }
-                                    .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                    .opacity(1 - 0.8 * dragState.progress)
                                 
                                 let cellFont = Font.system(size: g.size.width * 0.06)
                                 let timeFormatter: DateFormatter = {
@@ -291,7 +381,8 @@ struct MainSwiftUI: View {
                                 ZStack {
                                     Rectangle()
                                         .foregroundColor(.init(.sRGB, white: 1, opacity: 0.000001)) // to allow gestures from middle of box
-                                    VStack(alignment: .leading, spacing: 18) {
+                                    
+                                    VStack(alignment: .leading, spacing: 18) { // bottom of prayer names
                                         ForEach(0..<6) { pIndex in
                                             let p = Prayer(index: pIndex)
                                             let highlight: PrayerHighlightType = {
@@ -306,84 +397,90 @@ struct MainSwiftUI: View {
                                                 return h
                                             }()
                                             
-                                            ZStack { // stack of today and tomorrow times
-                                                HStack {
-                                                    Text(p.localizedOrCustomString())
-                                                        //                                            TextField(p.localizedString(), text: [$fajrOverrideString, $sunriseOverrideString, $dhuhrOverrideString, $asrOverrideString, $maghribOverrideString, $ishaOverrideString][pIndex], onEditingChanged: { _ in
-                                                        //
-                                                        //                                            }, onCommit: {
-                                                        //                                                print("committed overwrite prayer name")
-                                                        //                                            })
-                                                        //                                                .disableAutocorrection(true)
-                                                        .foregroundColor(highlight.color())
-                                                        .font(cellFont)
-                                                        .bold()
-                                                    
-                                                    Spacer()
-                                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
-                                                        // replace 3 with current prayer index
-                                                        .foregroundColor(highlight.color())
-                                                        .font(cellFont)
-                                                        .bold()
-                                                }
-                                                .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
-                                                .rotation3DEffect(
-                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .top,
-                                                    anchorZ: 0,
-                                                    perspective: 0.1
-                                                )
-                                                .animation(.linear(duration: 0.2))
+                                            HStack {
+                                                Text(p.localizedOrCustomString())
+                                                    .foregroundColor(highlight.color())
+                                                    .font(cellFont)
+                                                    .bold()
                                                 
-                                                
-                                                HStack {
-                                                    Text(p.localizedOrCustomString())
-                                                        .foregroundColor(PrayerHighlightType.future.color())
-                                                        .font(cellFont)
-                                                        .bold()
-                                                    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
-                                                    Spacer()
-                                                    Text(timeFormatter.string(from: manager.tomorrowTimes.time(for: p)))
-                                                        // replace 3 with current prayer index
-                                                        .foregroundColor(PrayerHighlightType.future.color())
-                                                        .font(cellFont)
-                                                        .bold()
-                                                    //                                            .rotation3DEffect(.degrees(tomorrowPeekProgress * 90 - 90), axis: (x: 1, y: 0, z: 0))
-                                                }
-                                                //                                    .border(Color.red)
-                                                .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
-                                                .rotation3DEffect(
-                                                    Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .bottom,
-                                                    anchorZ: 0,
-                                                    perspective: 0.1
-                                                )
-                                                .animation(.linear(duration: 0.2))
+                                                Spacer()
+                                                Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
+                                                    // replace 3 with current prayer index
+                                                    .foregroundColor(highlight.color())
+                                                    .font(cellFont)
+                                                    .bold()
                                             }
-                                            
+                                            .opacity(min(1, 1 - 0.8 * dragState.progress))
+                                            .rotation3DEffect(
+                                                Angle(degrees: dragState.progress * 90 - 0.001),
+                                                axis: (x: 1, y: 0, z: 0.0),
+                                                anchor: .top,
+                                                anchorZ: 0,
+                                                perspective: 0.1
+                                            )
+                                            .animation(.linear(duration: 0.2))
                                         }
                                     }
+                                    
+                                    VStack(alignment: .center, spacing: 18) {
+                                        Text("Show Calendar")
+                                            .font(Font.body.bold())
+                                        Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle") // arrow.up.circle.fill
+                                            .font(.title)
+                                        Image(systemName: dragState.dragIncrement > 1 ? "circle.fill" : "circle")
+                                            .font(Font.body.bold())
+                                        Image(systemName: dragState.dragIncrement > 0 ? "circle.fill" : "circle")
+                                            .font(Font.body.bold())
+                                    }
+                                    .foregroundColor(Color(.lightText))
+                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
+                                    .animation(.linear(duration: 0.2))
+                                    
+                                    //                                    HStack {
+                                    //                                        Text("text")
+                                    //                                            .foregroundColor(PrayerHighlightType.future.color())
+                                    //                                            .font(cellFont)
+                                    //                                            .bold()
+                                    //                                        Spacer()
+                                    //                                    }
+                                    //                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                    //                                    .rotation3DEffect(
+                                    //                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                    //                                        axis: (x: 1, y: 0, z: 0.0),
+                                    //                                        anchor: .bottom,
+                                    //                                        anchorZ: 0,
+                                    //                                        perspective: 0.1
+                                    //                                    )
                                 }
+                                
                                 .gesture(
-                                    DragGesture(minimumDistance: 2, coordinateSpace: .global)
-                                        .onChanged({ value in
-                                            // percent of drag in progress
-                                            tomorrowPeekProgress = Double(max(0.0, min(1.0, value.translation.height / -80)))
-                                        })
+                                    DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
                                         .onEnded({ _ in
-                                            withAnimation {
-                                                tomorrowPeekProgress = 0
+                                            withAnimation(Animation.linear(duration: 0.05)) {
+                                                dragState.progress = 0
                                             }
                                         })
-                                    
+                                        .updating($dragOffset, body: { (value, state, transaction) in
+                                            //                                            state = value.translation
+                                            //                                            dragState.showCalendar = false
+                                            dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
+                                            if dragState.progress > 0.999 {
+                                                dragState.showCalendar = true
+                                                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { t in
+                                                    // if still on max after half a second, go back to zero
+                                                    // this is necessary because swiftui has a big where onEnded is
+                                                    // not called if a sheet apepars
+                                                    if dragState.progress > 0.999 {
+                                                        dragState.progress = 0
+                                                    }
+                                                }
+                                                
+                                            }
+                                        })
                                 )
-                                
                             }
                             .padding([.leading, .trailing])
                             .padding([.leading, .trailing])
-                            
                             
                             ZStack {
                                 
@@ -392,8 +489,7 @@ struct MainSwiftUI: View {
                                     HStack(alignment: .center) {
                                         // Location button
                                         Button(action: {
-                                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                                            lightImpactFeedbackGenerator.impactOccurred()
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 currentView = (currentView != .Main) ? .Main : .Location
                                             }
@@ -439,29 +535,36 @@ struct MainSwiftUI: View {
                                             ZStack {
                                                 Text("\(todayHijriString)")
                                                     .fontWeight(.bold)
+                                                    .lineLimit(1)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                                    .padding([.trailing, .leading])
                                                     .foregroundColor(Color(.lightText))
-                                                    .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                                    .opacity(min(1, 1 - 0.8 * dragState.progress))
                                                     .rotation3DEffect(
-                                                        Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                        Angle(degrees: dragState.progress * 90 - 0.001),
                                                         axis: (x: 1, y: 0, z: 0.0),
                                                         anchor: .top,
                                                         anchorZ: 0,
                                                         perspective: 0.1
                                                     )
-                                                    .animation(.linear(duration: 0.2))
+                                                    .animation(.linear(duration: 0.05))
                                                 
                                                 Text("\(tomorrowHijriString)")
                                                     .fontWeight(.bold)
+                                                    .lineLimit(1)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                                    .padding([.trailing, .leading])
                                                     .foregroundColor(.white)
-                                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
                                                     .rotation3DEffect(
-                                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                                        Angle(degrees: max(0, dragState.progress - 0.3) * 90 - 90),
                                                         axis: (x: 1, y: 0, z: 0.0),
                                                         anchor: .bottom,
                                                         anchorZ: 0,
                                                         perspective: 0.1
                                                     )
-                                                    .animation(.linear(duration: 0.2))
+                                                    .animation(.linear(duration: 0.05))
+                                                
                                             }
                                             //                                            Text("Tap the Hijri date to view\nan athan times table.")
                                             //                                                .foregroundColor(.white)
@@ -475,7 +578,7 @@ struct MainSwiftUI: View {
                                                   dhuhrTime: manager.todayTimes.dhuhr,
                                                   sunriseTime: manager.todayTimes.sunrise)
                                             .equatable()
-                                            .opacity(1 - 0.8 * tomorrowPeekProgress)
+                                            .opacity(1 - 0.8 * dragState.progress)
                                     }
                                     
                                     // dummy stack used for proper offset

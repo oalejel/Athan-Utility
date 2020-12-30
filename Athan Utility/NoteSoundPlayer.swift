@@ -32,7 +32,6 @@ class NoteSoundPlayer: NSObject {
                             self.audioPlayer?.setVolume(0, fadeDuration: 1)
                         }
                     }
-                    
                 }
             } else {
                 AudioServicesPlaySystemSound(1315);

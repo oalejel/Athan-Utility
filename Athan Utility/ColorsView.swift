@@ -80,16 +80,16 @@ struct ColorsView: View {
         (asrColor1, asrColor2) = tempAppearanceSettings.colors(for: .asr)
         (maghribColor1, maghribColor2) = tempAppearanceSettings.colors(for: .maghrib)
         (ishaColor1, ishaColor2) = tempAppearanceSettings.colors(for: .isha)
-        if isDynamic {
-            switch selectedPreviewPrayer {
-            case .fajr: (fajrColor1, fajrColor2) = tempAppearanceSettings.colors(for: .fajr)
-            case .sunrise: (sunriseColor1, sunriseColor2) = tempAppearanceSettings.colors(for: .sunrise)
-            case .dhuhr: (dhuhrColor1, dhuhrColor2) = tempAppearanceSettings.colors(for: .dhuhr)
-            case .asr: (asrColor1, asrColor2) = tempAppearanceSettings.colors(for: .asr)
-            case .maghrib: (maghribColor1, maghribColor2) = tempAppearanceSettings.colors(for: .maghrib)
-            case .isha: (ishaColor1, ishaColor2) = tempAppearanceSettings.colors(for: .isha)
-            }
-        }
+//        if isDynamic {
+//            switch selectedPreviewPrayer {
+//            case .fajr: fajrColor1 = tempAppearanceSettings.colors(for: .fajr).0.opacity(0.999999)
+//            case .sunrise: sunriseColor1 = tempAppearanceSettings.colors(for: .sunrise).0.opacity(0.999999)
+//            case .dhuhr: dhuhrColor1 = tempAppearanceSettings.colors(for: .dhuhr).0.opacity(0.999999)
+//            case .asr: asrColor1 = .red
+//            case .maghrib: maghribColor1 = tempAppearanceSettings.colors(for: .maghrib).0.opacity(0.999999)
+//            case .isha: ishaColor1 = tempAppearanceSettings.colors(for: .isha).0.opacity(0.999999)
+//            }
+//        }
         
         gradientA = [startColors.0, startColors.1]
         gradientB = [startColors.0, startColors.1]
@@ -109,6 +109,7 @@ struct ColorsView: View {
             
             VStack(alignment: .leading) {
                 Group {
+                    VStack(alignment: .leading, spacing: 0) {
                     Text("Colors")
                         .font(.largeTitle)
                         .bold()
@@ -130,6 +131,7 @@ struct ColorsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .labelsHidden()
                     .foregroundColor(.white)
+                }
                     
                     Divider()
                         .background(Color.white)

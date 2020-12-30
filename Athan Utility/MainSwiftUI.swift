@@ -37,7 +37,7 @@ struct GradientView: View, Equatable {
         let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
         return [startColors.0, startColors.1]
     }()
-        
+    
     @State private var gradientB: [Color] = { // setting here is useless
         let settings = AthanManager.shared.appearanceSettings
         let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
@@ -45,7 +45,7 @@ struct GradientView: View, Equatable {
     }()
     
     @State var lastTimerDate = Date(timeIntervalSinceNow: -100)
-
+    
     func adjustGradient(gradient: [Color]) {
         gradientA = gradient
         gradientB = gradient
@@ -96,7 +96,7 @@ struct GradientView: View, Equatable {
         //                                                        adjustGradient(gradient: [startColors.0, startColors.1])
         //                                                    }
         //                                                    lastShownPrayer = manager.currentPrayer
-
+        
     }
 }
 
@@ -125,7 +125,7 @@ struct MainSwiftUI: View {
     @State var nextRoundMinuteTimer: Timer?
     @State var percentComplete: Double = 0.0
     
-
+    
     func getPercentComplete() -> Double {
         var currentTime: Date?
         if let currentPrayer = manager.todayTimes.currentPrayer() {
@@ -206,7 +206,7 @@ struct MainSwiftUI: View {
                                         PrayerSymbol(prayerType: manager.currentPrayer)
                                             .foregroundColor(.white)
                                             .font(Font.system(.title).weight(.medium))
-                                            
+                                        
                                         Text(manager.currentPrayer.localizedString())
                                             .font(.largeTitle)
                                             .bold()
@@ -405,7 +405,7 @@ struct MainSwiftUI: View {
                                                 Text("\(manager.locationName)")
                                                     .foregroundColor(Color(.lightText))
                                                     .font(Font.body.weight(.bold))
-                                                    
+                                                
                                             }
                                         }
                                         .padding(12)
@@ -435,37 +435,37 @@ struct MainSwiftUI: View {
                                 VStack {
                                     ZStack() {
                                         VStack(alignment: .center) {
-                                        ZStack {
-                                            Text("\(todayHijriString)")
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color(.lightText))
-                                                .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
-                                                .rotation3DEffect(
-                                                    Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .top,
-                                                    anchorZ: 0,
-                                                    perspective: 0.1
-                                                )
-                                                .animation(.linear(duration: 0.2))
-                                            
-                                            Text("\(tomorrowHijriString))")
-                                                .fontWeight(.bold)
-                                                .foregroundColor(.white)
-                                                .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
-                                                .rotation3DEffect(
-                                                    Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .bottom,
-                                                    anchorZ: 0,
-                                                    perspective: 0.1
-                                                )
-                                                .animation(.linear(duration: 0.2))
-                                        }
-//                                            Text("Tap the Hijri date to view\nan athan times table.")
-//                                                .foregroundColor(.white)
-//                                                .font(.subheadline)
+                                            ZStack {
+                                                Text("\(todayHijriString)")
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(Color(.lightText))
+                                                    .opacity(min(1, 1 - 0.8 * tomorrowPeekProgress))
+                                                    .rotation3DEffect(
+                                                        Angle(degrees: min(tomorrowPeekProgress * 100, 90)),
+                                                        axis: (x: 1, y: 0, z: 0.0),
+                                                        anchor: .top,
+                                                        anchorZ: 0,
+                                                        perspective: 0.1
+                                                    )
+                                                    .animation(.linear(duration: 0.2))
                                                 
+                                                Text("\(tomorrowHijriString))")
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(.white)
+                                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                                    .rotation3DEffect(
+                                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                                        axis: (x: 1, y: 0, z: 0.0),
+                                                        anchor: .bottom,
+                                                        anchorZ: 0,
+                                                        perspective: 0.1
+                                                    )
+                                                    .animation(.linear(duration: 0.2))
+                                            }
+                                            //                                            Text("Tap the Hijri date to view\nan athan times table.")
+                                            //                                                .foregroundColor(.white)
+                                            //                                                .font(.subheadline)
+                                            
                                         }
                                         .offset(y: 24)
                                         // include percentComplete * 0 to trigger refresh based on Date()
@@ -490,9 +490,6 @@ struct MainSwiftUI: View {
                                     .padding([.leading, .trailing, .bottom])
                                 }
                             }
-                            
-                            
-                            
                         }
                         .transition(.opacity)
                     //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))

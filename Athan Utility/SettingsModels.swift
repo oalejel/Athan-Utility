@@ -20,7 +20,14 @@ class PrayerSettings: Codable, NSCopying {
         if let archive = checkArchive() {
             return archive
         } else {
-            let defaultSettings = PrayerSettings(method: CalculationMethod.northAmerica, madhab: .shafi, customNames: [:])
+            let defaultSettings = PrayerSettings(method: CalculationMethod.northAmerica, madhab: .shafi, customNames: [
+                .fajr:"",
+                .sunrise: "",
+                .dhuhr: "",
+                .asr: "",
+                .maghrib: "",
+                .isha: ""
+            ])
             return defaultSettings
         }
     }()

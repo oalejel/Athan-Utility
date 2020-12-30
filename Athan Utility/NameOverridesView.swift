@@ -23,23 +23,80 @@ struct NameOverridesView: View {
     @State var maghribOverride: String = ""
     @State var ishaOverride: String = ""
     
+    var setup: Int = {
+        UITextField.appearance().clearButtonMode = .always
+        UITextField.appearance().tintColor = .white
+        AthanManager.shared.requestLocationPermission()
+        return 0
+    }()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Custom Salah Names")
+            Text("Custom Names")
                 .font(.largeTitle)
                 .bold()
                 .foregroundColor(.white)
                 .onAppear {
                     // initial setup on first appearance
+                    fajrOverride = tempPrayerSettings.customNames[.fajr] ?? ""
+                    sunriseOverride = tempPrayerSettings.customNames[.sunrise] ?? ""
+                    dhuhrOverride = tempPrayerSettings.customNames[.dhuhr] ?? ""
+                    asrOverride = tempPrayerSettings.customNames[.asr] ?? ""
+                    maghribOverride = tempPrayerSettings.customNames[.maghrib] ?? ""
+                    ishaOverride = tempPrayerSettings.customNames[.isha] ?? ""
                 }
                 .padding([.leading, .trailing, .top])
+                .padding([.leading, .trailing, .top])
             
-            VStack {
-                TextField("test", text: $fajrOverride)
-                TextField("test", text: $sunriseOverride)
-                TextField("test", text: $dhuhrOverride)
+            GeometryReader { g in
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        let bindings = [$fajrOverride, $sunriseOverride, $dhuhrOverride, $asrOverride, $maghribOverride, $ishaOverride]
+                        
+                        ForEach(Prayer.allCases, id: \.self) { p in
+                            //                            GeometryReader { g2 in
+                            HStack(alignment: .center) {
+                                
+                                VStack {
+                                    Spacer()
+                                    PrayerSymbol(prayerType: p)
+                                        .foregroundColor(.white)
+                                        .frame(width: 26)
+                                    Spacer()
+                                }
+                                
+                                
+                                Text(p.localizedString())
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .font(Font.system(size: 22))
+                                    .fixedSize(horizontal: true, vertical: true)
+                                
+                                
+                                Spacer()
+                                
+                                TextField(" \(p.localizedString())", text: bindings[p.rawValue()])
+                                    .font(Font.body.italic())
+                                    .padding([.leading])
+                                    .frame(width: g.size.width / 2)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                            }
+                        }
+                        
+                        Text("Replace Athan spelling used in the Athan Utility widget, notifications, and main interface.")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(nil)
+                            .font(.caption)
+                            .foregroundColor(Color(.lightText))
+                            .padding(.top)
+                    }
+                    .padding(.top, 12)
+                    .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
+                }
             }
-
+            .padding(.top)
+            
             Spacer()
             
             HStack(alignment: .center) {
@@ -48,6 +105,12 @@ struct NameOverridesView: View {
                 Button(action: {
                     // tap vibration
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    tempPrayerSettings.customNames[.fajr] = fajrOverride
+                    tempPrayerSettings.customNames[.sunrise] = sunriseOverride
+                    tempPrayerSettings.customNames[.dhuhr] = dhuhrOverride
+                    tempPrayerSettings.customNames[.asr] = asrOverride
+                    tempPrayerSettings.customNames[.maghrib] = maghribOverride
+                    tempPrayerSettings.customNames[.isha] = ishaOverride
                     withAnimation {
                         self.activeSection = .General
                     }
@@ -59,9 +122,7 @@ struct NameOverridesView: View {
             }
             .padding()
             .padding([.leading, .trailing, .bottom])
-
         }
-        
     }
 }
 

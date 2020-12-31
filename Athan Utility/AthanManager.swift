@@ -415,7 +415,9 @@ extension AthanManager {
     
     // pass a capture closure to take the location update
     func attemptSingleLocationUpdate(captureClosure: ((LocationSettings?) -> ())? = nil) {
-        self.captureLocationUpdateClosure = captureClosure
+        if let capture = captureClosure {
+            self.captureLocationUpdateClosure = capture
+        }
         locationManager.startUpdatingLocation()
     }
     
@@ -423,8 +425,10 @@ extension AthanManager {
         if status == CLAuthorizationStatus.authorizedWhenInUse ||
             status == CLAuthorizationStatus.authorizedAlways {
             #warning("not sure if we should have this automatically called. may want a semaphore")
-            locationManager.startUpdatingLocation()
             locationPermissionsGranted = true
+            if locationSettings.useCurrentLocation {
+                attemptSingleLocationUpdate()
+            }
         } else {
             locationPermissionsGranted = false
         }

@@ -44,11 +44,12 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
     // ensure that no threads interfere with an ongoing light rotation
     var pendingRotation = false
     var rotationSemaphore = DispatchSemaphore(value: 1)
+    let moonImage = UIImage(named: "moon_texture.jpg")!
     
     func makeUIView(context: Context) -> SCNView {
         sphere.geometry = SCNSphere(radius: 1)
         
-        sphere.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "moon_texture.jpg")!
+        sphere.geometry?.firstMaterial?.diffuse.contents = moonImage
         sphere.geometry?.firstMaterial?.isDoubleSided = true
         // moon displacement map
         // sphere.geometry?.firstMaterial?.normal.contents = UIImage(named: "moon_disp.jpg")!
@@ -74,6 +75,7 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
+        lightNode.light?.intensity = 2000
         lightNode.light!.type = .omni
         lightNode.position = SCNVector3(x: 0, y: 0, z: -70)
         
@@ -90,7 +92,7 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         let gestRec = UIPanGestureRecognizer(target: self, action: #selector(panGesture(g:)))
         gestRec.delegate = self
         scnView.addGestureRecognizer(gestRec)
-        
+        scnView.prepare(scene, shouldAbortBlock: nil)
         return scnView
     }
     

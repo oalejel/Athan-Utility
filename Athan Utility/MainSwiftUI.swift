@@ -382,7 +382,10 @@ struct MainSwiftUI: View {
                                     VStack(alignment: .center, spacing: 18) {
                                         Text("Show Calendar")
                                             .font(Font.body.bold())
-                                        Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle") // arrow.up.circle.fill
+                                            .scaleEffect(dragState.progress > 0.999 ? 1.3 : 1)
+                                            .animation(.spring())
+                                        
+                                        Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle")
                                             .font(.title)
                                         Image(systemName: dragState.dragIncrement > 1 ? "circle.fill" : "circle")
                                             .font(Font.body.bold())
@@ -413,25 +416,24 @@ struct MainSwiftUI: View {
                                 .gesture(
                                     DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
                                         .onEnded({ _ in
-                                            withAnimation(Animation.linear(duration: 0.05)) {
-                                                dragState.progress = 0
-                                            }
-                                        })
-                                        .updating($dragOffset, body: { (value, state, transaction) in
-                                            //                                            state = value.translation
-                                            //                                            dragState.showCalendar = false
-                                            dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
                                             if dragState.progress > 0.999 {
                                                 dragState.showCalendar = true
-                                                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { t in
+                                                Timer.scheduledTimer(withTimeInterval: 0.9, repeats: false) { t in
                                                     // if still on max after half a second, go back to zero
-                                                    // this is necessary because swiftui has a big where onEnded is
+                                                    // this is necessary because swiftui has a bug where onEnded is
                                                     // not called if a sheet apepars
                                                     if dragState.progress > 0.999 {
                                                         dragState.progress = 0
                                                     }
                                                 }
                                                 
+                                            }
+                                        })
+                                        .updating($dragOffset, body: { (value, state, transaction) in
+                                            //                                            state = value.translation
+                                            //                                            dragState.showCalendar = false
+                                            if dragState.progress < 0.999 {
+                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
                                             }
                                         })
                                 )

@@ -18,6 +18,8 @@ Before updating
 - test everything in dark and light mode, including the non ios 13+ version
 - localize widgets
 - monitor transition between every prayer time and end of solar midnight
+- check that on fresh installation, moon animates
+- add siri button to settings
 - test on ios 13 
 - test on ios 12 
 - test on iphone X and Xr and mini 

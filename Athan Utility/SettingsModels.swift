@@ -162,6 +162,7 @@ class LocationSettings: Codable, NSCopying {
     
     static var shared: LocationSettings = {
         if let archive = checkArchive() {
+            print("> location archive: ", archive.locationName, archive.isLoadedFromArchive, archive.useCurrentLocation)
             return archive
         } else {
             return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), useCurrentLocation: false)
@@ -188,6 +189,11 @@ class LocationSettings: Codable, NSCopying {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(LocationSettings.shared) as? Data { // weird runtime bug: encode fails unless i put an unnecessary as? Data cast
             archiveData(archiveName, object: data)
+        }
+        if let check = checkArchive() {
+            print("> empty found in archive", check.locationName, check.isLoadedFromArchive, check.useCurrentLocation)
+        } else {
+            print("> empty found in archive")
         }
     }
     var isLoadedFromArchive = false

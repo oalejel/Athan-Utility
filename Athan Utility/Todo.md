@@ -1,6 +1,7 @@
 #  Todo list 
 Before updating 
-
+- ask OKZZ if drag shuld also do rotations
+- test out a hue of green with slight transparency in widgets
 - finish privacy info view
 - tapping qibla brings it into focus by switching with the moon, and shows a degrees label or something
 - app ignoring custom location and swithcing to current for some reaosn....
@@ -34,3 +35,4 @@ For later
 - be more efficent with notifications by not wasting notification budget on notifications from earlier in the day 
 - consider matching baseline for prayer anme and time left in main interface
 
+- get moon to load earlier 

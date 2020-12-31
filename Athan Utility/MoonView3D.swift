@@ -141,7 +141,7 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         }
         
         let lastMoonPercent = MoonSettings.lastSeenMoonPercent
-        let currentMoonPercent = SwiftySuncalc().getMoonIllumination(date: Date().addingTimeInterval(86443 * 9))["phase"]!
+        let currentMoonPercent = SwiftySuncalc().getMoonIllumination(date: Date())["phase"]!
         
         // start off on last moon percent
         let startOffset = -2 * CGFloat(lastMoonPercent) * CGFloat.pi

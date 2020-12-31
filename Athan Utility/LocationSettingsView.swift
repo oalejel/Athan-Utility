@@ -61,17 +61,20 @@ struct LocationSettingsView: View, Equatable {
         
     @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.currentPrayer
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
-    var setup: Int = {
-        UITextField.appearance().clearButtonMode = .always
-        UITextField.appearance().tintColor = .white
-        AthanManager.shared.requestLocationPermission()
-        return 0
-    }()
+//    var setup: Int = {
+//    }()
     
     func updateLocalizedPrayer(coord: CLLocationCoordinate2D) {
         let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate)
         localizedCurrentPrayer = times?.currentPrayer() ?? .isha
     }
+    
+    let x: Int = {
+        UITextField.appearance().clearButtonMode = .always
+        UITextField.appearance().tintColor = .white
+        AthanManager.shared.requestLocationPermission()
+        return 0
+    }()
     
     var body: some View {
         ZStack {

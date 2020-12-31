@@ -111,7 +111,9 @@ class DragState: ObservableObject {
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
+    
     @EnvironmentObject var manager: ObservableAthanManager
+    let moon = MoonView3D()
     
     //    var tomorrowPeekProgress = CurrentValueSubject<Double, Never>(0.0)
     @ObservedObject var dragState = DragState()
@@ -159,15 +161,8 @@ struct MainSwiftUI: View {
         return df.string(from: date)
     }
     
-    
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    
-    // publishes counter of 4 ticks
-    //    var dragPublisher: AnyPublisher<Double, Never> {
-    //        return dragState.$progress
-    //            .eraseToAnyPublisher()
-    //    }
     
     // necessary to allow ARC to throw out unused values
     var dragCancellable: AnyCancellable?
@@ -185,12 +180,10 @@ struct MainSwiftUI: View {
                     if r2 > r1 {
                         if r2 == 3 {
                             DispatchQueue.main.async {
-                                //                                print("STRONG")
                                 self.strongImpactGenerator.impactOccurred()
                             }
                         } else {
                             DispatchQueue.main.async {
-                                //                                print("WEAK")
                                 self.weakImpactGenerator.impactOccurred()
                             }
                         }
@@ -200,45 +193,9 @@ struct MainSwiftUI: View {
                 return (new, r2)
             })
             .map { v in
-                //                print("PUHING: \(v.1)")
                 return v.1
             }
             .assign(to: \.dragIncrement, on: dragState)
-        //            .eraseToAnyPublisher()
-        //            .assign(to: \.dragIncrement, on: self)
-        
-        //        cancellablePub2 = dragState.$progress
-        //            .receive(on: RunLoop.main) // latch showcalendar
-        ////            .map {
-        ////                $0 > 0.999
-        ////            }
-        ////            .buffer(size: 2, prefetch: .keepFull, whenFull: .dropOldest)
-        //            .scan(false, { (isOn, prog) -> Bool in
-        //                if prog > 0.999 {
-        //                    return true
-        //                } // else return last value we published
-        //                return
-        ////                return
-        //                isOn || prog > 0.999 // latch. if was true, stay true until we get both to be false
-        //            })
-        //            .assign(to: \.showCalendar, on: dragState)
-        
-        
-        
-        //        cancellablePub3 = dragState.$progress
-        //            .receive(on: RunLoop.main) // latch showcalendar
-        //            .scan(0, { (i, out) -> Double in
-        //                return (i > out) ? i : out
-        //            })
-        //
-        ////            .buffer(size: 2, prefetch: .keepFull, whenFull: .dropOldest)
-        ////            .scan(false, { (isOn, prog) -> Bool in
-        ////                isOn || prog > 0.999 // latch. if was true, stay true until we get both to be false
-        ////            })
-        //            .assign(to: \.highestProgress, on: dragState)
-        
-        //        highestProgress
-        
     }
     
     @GestureState private var dragOffset = CGSize.zero
@@ -282,7 +239,7 @@ struct MainSwiftUI: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(alignment: .center, spacing: 0) {
                                     Spacer()
-                                    MoonView3D()
+                                    moon
                                         .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                         .offset(y: 12)
                                         .shadow(radius: 3)

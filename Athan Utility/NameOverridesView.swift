@@ -11,7 +11,6 @@ import Adhan
 
 @available(iOS 13.0.0, *)
 struct NameOverridesView: View {
-    
     #warning("make sure updating this value changes earlier settings?")
     @Binding var tempPrayerSettings: PrayerSettings
     @Binding var activeSection: SettingsSectionType
@@ -23,7 +22,7 @@ struct NameOverridesView: View {
     @State var maghribOverride: String = ""
     @State var ishaOverride: String = ""
     
-    var setup: Int = {
+    let x: Int = {
         UITextField.appearance().clearButtonMode = .always
         UITextField.appearance().tintColor = .white
         AthanManager.shared.requestLocationPermission()

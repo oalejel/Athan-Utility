@@ -22,101 +22,30 @@ extension View {
     }
 }
 
-@available(iOS 13.0.0, *)
-struct GradientView: View, Equatable {
-    static func == (lhs: GradientView, rhs: GradientView) -> Bool {
-        lhs.currentPrayer == rhs.currentPrayer && lhs.appearance.id == rhs.appearance.id
-    }
-    
-    @Binding var currentPrayer: Prayer
-    @State var lastShownPrayer: Prayer? = nil
-    @Binding var appearance: AppearanceSettings
-    @State private var firstPlane: Bool = true
-    
-    @State private var gradientA: [Color] = {
-        let settings = AthanManager.shared.appearanceSettings
-        let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
-        return [startColors.0, startColors.1]
-    }()
-    
-    @State private var gradientB: [Color] = { // setting here is useless
-        let settings = AthanManager.shared.appearanceSettings
-        let startColors = settings.colors(for: settings.isDynamic ? AthanManager.shared.currentPrayer : nil)
-        return [startColors.0, startColors.1]
-    }()
-    
-    @State var lastTimerDate = Date(timeIntervalSinceNow: -100)
-    
-    func adjustGradient(gradient: [Color]) {
-        gradientA = gradient
-        gradientB = gradient
-    }
-    
-    func setGradient(gradient: [Color]) {
-        if firstPlane {
-            gradientB = gradient
-        } else {
-            gradientA = gradient
-        }
-        firstPlane = !firstPlane
-    }
-    
-    var body: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: gradientA), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-            LinearGradient(gradient: Gradient(colors: gradientB), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-                .opacity(firstPlane ? 0 : 1)
-                .onValueChanged(currentPrayer) { x in
-                    // start a 0.1 second timer that updates the view
-                    // to avoid state change issues
-                    print("GRADIENT PRAYER CHANGED")
-                    
-                    // if last fire of timer happened sufficiently long ago,
-                    // we know that the state change is being caused by a change in currentPrayer
-                    if lastTimerDate.timeIntervalSinceNow < -0.02 {
-                        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
-                            lastTimerDate = Date()
-                            print("GRADIENT TIMER CALLED")
-                            let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
-                            withAnimation {
-                                setGradient(gradient: [startColors.0, startColors.1])
-                            }
-                        })
-                    }
-                }
-        }
-        
-        //                                                    let settings = AthanManager.shared.appearanceSettings
-        //                                                    let startColors = settings.colors(for: settings.isDynamic ? manager.currentPrayer : nil)
-        //
-        //                                                    if let lastShown = lastShownPrayer {
-        //                                                        setGradient(gradient: [startColors.0, startColors.1])
-        //                                                    } else {
-        //                                                        adjustGradient(gradient: [startColors.0, startColors.1])
-        //                                                    }
-        //                                                    lastShownPrayer = manager.currentPrayer
-        
-    }
-}
 
 @available(iOS 13.0.0, *)
-class DragState: ObservableObject {
+class CalendarDragState: ObservableObject {
     @Published var progress: Double = 0
     @Published var dragIncrement: Int = 0
     @Published var showCalendar: Bool = false
 }
 
 @available(iOS 13.0.0, *)
+class DayProgressState: ObservableObject {
+    @Published var manualDayProgress: CGFloat = 0.0 // a changes b and c
+    @Published var previewCurrentPrayerProgress: Double = 0 // changed by a if dragging
+    @Published var previewPrayer: Prayer? = nil
+    @Published var nonOptionalPreviewPrayer: Prayer = .fajr
+    @Published var isDragging = false
+}
+
+@available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
-    
     @EnvironmentObject var manager: ObservableAthanManager
-    let moon = MoonView3D()
-    
-    //    var tomorrowPeekProgress = CurrentValueSubject<Double, Never>(0.0)
-    @ObservedObject var dragState = DragState()
+
+    @ObservedObject var dragState = CalendarDragState()
+    @ObservedObject var dayProgressState = DayProgressState()
     @State var minuteTimer: Timer? = nil
     
     @State var settingsToggled = false
@@ -125,7 +54,7 @@ struct MainSwiftUI: View {
     @State var currentView = CurrentView.Main
     
     @State var todayHijriString = hijriDateString(date: Date())
-    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
+//    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
     
     @State var nextRoundMinuteTimer: Timer?
     @State var percentComplete: Double = 0.0
@@ -164,8 +93,16 @@ struct MainSwiftUI: View {
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
+    // MARK: - Combine Properties
     // necessary to allow ARC to throw out unused values
     var dragCancellable: AnyCancellable?
+    
+    // solar manual day progress publishes to our subscriber
+    // subscriber combines that stream's data with the current prayer
+    // to indicate the visible prayer via a visible prayer state
+    var previewPrayerCancellable: AnyCancellable?
+    var previewCurrentPrayerProgressCancellable: AnyCancellable?
+    var nonOptionalPreviewPrayerCancellable: AnyCancellable?
     
     init() {
         dragCancellable = dragState.$progress
@@ -196,12 +133,58 @@ struct MainSwiftUI: View {
                 return v.1
             }
             .assign(to: \.dragIncrement, on: dragState)
+        
+        
+        // for calculating progress of CURRENT prayer
+        previewCurrentPrayerProgressCancellable = dayProgressState.$manualDayProgress
+            .receive(on: RunLoop.main)
+            .combineLatest(dayProgressState.$isDragging, dayProgressState.$previewPrayer)
+            .map { [self] tuple in
+                if tuple.1 { // if is dragging, compute current prayer
+                    let manualProg = Double(tuple.0)
+
+                    var currentTime: Date?
+                    if let currentPrayer = tuple.2 {
+                        currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
+                    } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
+                        currentTime = ObservableAthanManager.shared.todayTimes.time(for: .isha).addingTimeInterval(-86400)
+                    }
+                    
+                    var nextTime: Date?
+                    if tuple.2 != .isha, let nextPrayer = tuple.2?.next()  {
+                        nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
+                    } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+                        nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
+                    }
+                    let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(manualProg * 86400))
+                    return inputDate.timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+                }
+                return self.percentComplete // return real world truth
+            }
+            .assign(to: \.previewCurrentPrayerProgress, on: dayProgressState)
+                
+        // publish preview prayer for given date and dragging state
+        previewPrayerCancellable = dayProgressState.$manualDayProgress
+            .receive(on: RunLoop.main)
+            .combineLatest(dayProgressState.$isDragging)
+            .map { [self] tuple in
+                if tuple.1 { // if dragging, calculate current prayer based on time
+                    let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(tuple.0 * 86400))
+                    return ObservableAthanManager.shared.todayTimes.currentPrayer(at: inputDate)
+                }
+                return ObservableAthanManager.shared.currentPrayer // else, return ground truth
+            }
+            .assign(to: \.previewPrayer, on: dayProgressState)
+        
+        nonOptionalPreviewPrayerCancellable = dayProgressState.$previewPrayer
+            .receive(on: RunLoop.main)
+            .map { $0 ?? .isha }
+            .assign(to: \.nonOptionalPreviewPrayer, on: dayProgressState)
     }
     
     @GestureState private var dragOffset = CGSize.zero
     
     var body: some View {
-        
         ZStack {
             GeometryReader { g in
                 let timeRemainingString: String = {
@@ -218,9 +201,10 @@ struct MainSwiftUI: View {
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
                 
-                GradientView(currentPrayer: $manager.currentPrayer, appearance: $manager.appearance)
+
+                
+                GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
-                    
                 
                 VStack(alignment: .leading) {
                     switch currentView {
@@ -237,7 +221,7 @@ struct MainSwiftUI: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(alignment: .center, spacing: 0) {
                                     Spacer()
-                                    moon
+                                    MoonView3D()
                                         .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                         .offset(y: 12)
                                         .shadow(radius: 3)
@@ -249,11 +233,11 @@ struct MainSwiftUI: View {
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading) {
                                         
-                                        PrayerSymbol(prayerType: manager.currentPrayer)
+                                        PrayerSymbol(prayerType: dayProgressState.previewPrayer ?? .isha)
                                             .foregroundColor(.white)
                                             .font(Font.system(.title).weight(.medium))
                                         
-                                        Text(manager.currentPrayer.localizedOrCustomString())
+                                        Text((dayProgressState.previewPrayer ?? .isha).localizedOrCustomString())
                                             .font(.largeTitle)
                                             .bold()
                                             .foregroundColor(.white)
@@ -280,8 +264,8 @@ struct MainSwiftUI: View {
                                                 .minimumScaleFactor(0.01)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .lineLimit(1)
+                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
                                                 .opacity(1 - 0.8 * dragState.progress)
-                                            
                                         } else {
                                             // Fallback on earlier versions
                                             Text("\(timeRemainingString)")
@@ -292,13 +276,13 @@ struct MainSwiftUI: View {
                                                 .minimumScaleFactor(0.01)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .lineLimit(1)
+                                                .opacity(dayProgressState.isDragging ? 0 : 1)
                                                 .opacity(1 - 0.8 * dragState.progress)
-                                            
                                         }
                                     }
                                 }
                                 
-                                ProgressBar(progress: CGFloat(percentComplete), lineWidth: 10,
+                                ProgressBar(progress: CGFloat(dayProgressState.previewCurrentPrayerProgress), lineWidth: 10,
                                             outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
                                     .onAppear(perform: { // wake update timers that will update progress
                                         nextRoundMinuteTimer = {
@@ -311,7 +295,7 @@ struct MainSwiftUI: View {
                                                 minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
                                                     percentComplete = getPercentComplete()
                                                     todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+//                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
                                                 })
                                             }
                                         }()
@@ -343,9 +327,9 @@ struct MainSwiftUI: View {
                                             let p = Prayer(index: pIndex)
                                             let highlight: PrayerHighlightType = {
                                                 var h = PrayerHighlightType.present
-                                                if p == manager.todayTimes.currentPrayer() {
+                                                if p == dayProgressState.previewPrayer {
                                                     h = .present
-                                                } else if manager.todayTimes.currentPrayer() == nil {
+                                                } else if dayProgressState.previewPrayer == nil {
                                                     h = .future
                                                 } else {
                                                     h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
@@ -539,11 +523,27 @@ struct MainSwiftUI: View {
 //                                        }
                                         
                                         // include percentComplete * 0 to trigger refresh based on Date()
-                                        SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                        
+                                        
+                                        
+//                                SolarView(
+//                                    dayProgress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+//                                          sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+//                                    manualDayProgress: dayProgressState.manualDayProgress,
+//                                    isDragging: dayProgressState.isDragging,
+//                                    dhuhrTime: manager.todayTimes.dhuhr,
+//                                    sunriseTime: manager.todayTimes.sunrise
+//                                )
+//                                    .equatable()
+                                        SolarView(dayProgress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                                  manualDayProgress: $dayProgressState.manualDayProgress,
+                                                  isDragging: $dayProgressState.isDragging,
                                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+                                                  hidingCircle: true,
                                                   dhuhrTime: manager.todayTimes.dhuhr,
                                                   sunriseTime: manager.todayTimes.sunrise)
-                                            .equatable()
+
+                                        
                                             
                                     }
                                     .opacity(1 - 0.8 * dragState.progress)

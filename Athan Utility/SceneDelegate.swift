@@ -20,7 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let _ = AthanManager.shared
-        let contentView = MainSwiftUI().environmentObject(ObservableAthanManager.shared)
+        let man = ObservableAthanManager.shared
+        let contentView = MainSwiftUI()
+            .environmentObject(man)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

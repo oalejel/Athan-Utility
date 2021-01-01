@@ -53,16 +53,15 @@ struct SineLine: Shape {
 @available(iOS 13.0.0, *)
 struct SolarView: View, Equatable {
     static func == (lhs: SolarView, rhs: SolarView) -> Bool {
-        return true
+        return lhs.isDragging == rhs.isDragging && lhs.dayProgress == rhs.dayProgress && lhs.sunlightFraction == rhs.sunlightFraction
     }
     
+    @State var dayProgress: CGFloat
+    @Binding var manualDayProgress: CGFloat
+    @Binding var isDragging: Bool
 
+    @State var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
     
-    var progress: CGFloat = 0
-    var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
-    
-    @State var isDragging = false
-    @State var manualProgress: CGFloat = 0
     @State var hidingCircle = false
     @State var dhuhrTime: Date
     @State var sunriseTime: Date
@@ -84,7 +83,7 @@ struct SolarView: View, Equatable {
         let yellow = Color(.sRGB, red: Double(255)/255, green: Double(242)/255, blue: Double(171)/255, opacity: 1)
         let orange = Color(.sRGB, red: Double(255)/255, green: Double(202)/255, blue: Double(171)/255, opacity: 1)
         
-        let progressOfInterest = isDragging ? manualProgress : progress
+        let progressOfInterest = isDragging ? manualDayProgress : dayProgress
         switch progressOfInterest {
         case _ where progressOfInterest > sunsetPercent + 0.05:
             return (Color.clear, .white, 3)
@@ -117,7 +116,7 @@ struct SolarView: View, Equatable {
                     HStack {
                         Spacer()
                         VStack {
-                            let time = dhuhrTime.addingTimeInterval(86400 * (Double(manualProgress) - 0.5))
+                            let time = dhuhrTime.addingTimeInterval(86400 * (Double(manualDayProgress) - 0.5))
                             Text(df.string(from: time))
 //                                .font(Font.body.weight(.semibold))
                                 .font(.system(size: 12, design: .monospaced))
@@ -148,11 +147,11 @@ struct SolarView: View, Equatable {
                                 .onChanged({ value in
                                     withAnimation(.linear(duration: 0.3)) {
                                         isDragging = true
-                                        manualProgress = value.location.x / g.size.width
+                                        manualDayProgress = value.location.x / g.size.width
                                         if UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft {
-                                            manualProgress = (g.size.width - value.location.x) / g.size.width
+                                            manualDayProgress = (g.size.width - value.location.x) / g.size.width
                                         } else {
-                                            manualProgress = value.location.x / g.size.width
+                                            manualDayProgress = value.location.x / g.size.width
                                         }
                                     }
                                 })
@@ -160,7 +159,7 @@ struct SolarView: View, Equatable {
                                     print("let go")
                                     withAnimation(.linear(duration: 0.1)) {
                                         isDragging = false
-//                                        manualProgress = progress // TODO: get animation to travel path accurately
+//                                        manualDayProgress = progress // TODO: get animation to travel path accurately
                                     }
                                 })
                         )
@@ -172,10 +171,10 @@ struct SolarView: View, Equatable {
                         
                     Rectangle()
                         .frame(width: 1,
-                               height: abs(cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset),
+                               height: abs(cos(manualDayProgress * 2 * CGFloat.pi) * amplitude + verticalOffset),
                                alignment: .center)
-                        .offset(x: manualProgress * g.size.width - 0.5 * g.size.width,
-                                y: 0.5 * (cos(manualProgress * 2 * CGFloat.pi) * amplitude + verticalOffset))
+                        .offset(x: manualDayProgress * g.size.width - 0.5 * g.size.width,
+                                y: 0.5 * (cos(manualDayProgress * 2 * CGFloat.pi) * amplitude + verticalOffset))
                         .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .opacity(isDragging ? 1 : 0)
@@ -199,8 +198,8 @@ struct SolarView: View, Equatable {
 //                        .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)
-                        .offset(x: (isDragging ? manualProgress : progress) * g.size.width - 0.5 * g.size.width,
-                                y: cos((isDragging ? manualProgress : progress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
+                        .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
+                                y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
 //                        .animation(.linear(duration: 0.3))
                 }
 //                Spacer()
@@ -209,14 +208,14 @@ struct SolarView: View, Equatable {
     }
 }
 
-@available(iOS 13.0.0, *)
-struct SolarViewPreview: PreviewProvider {
-    static var previews: some View {
-//        let timeDiff = 10.1 // hours
-        
-        SolarView(progress: 0.3, sunlightFraction: 0.6, dhuhrTime: Date(), sunriseTime: Date(timeIntervalSinceNow: -1000))
-            .background(Rectangle()
-                            .foregroundColor(.blue), alignment: .center)
-            .frame(width: 380, height: 200, alignment: .center)
-    }
-}
+//@available(iOS 13.0.0, *)
+//struct SolarViewPreview: PreviewProvider {
+//    static var previews: some View {
+////        let timeDiff = 10.1 // hours
+//
+//        SolarView(dayProgress: .constant(0.3), sunlightFraction: 0.6, dhuhrTime: Date(), sunriseTime: Date(timeIntervalSinceNow: -1000))
+//            .background(Rectangle()
+//                            .foregroundColor(.blue), alignment: .center)
+//            .frame(width: 380, height: 200, alignment: .center)
+//    }
+//}

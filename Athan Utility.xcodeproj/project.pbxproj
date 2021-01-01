@@ -162,6 +162,11 @@
 		3DD51AF620FC5A00000CBFFC /* Athan_Utility_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD51AF520FC5A00000CBFFC /* Athan_Utility_UITests.swift */; };
 		3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */; };
 		3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */; };
+		3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF645F259EFE42004EE51F /* GradientView.swift */; };
+		3DEF6477259F0AE6004EE51F /* EditVoiceShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6473259F0AE6004EE51F /* EditVoiceShortcutView.swift */; };
+		3DEF6478259F0AE6004EE51F /* IntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6474259F0AE6004EE51F /* IntentButton.swift */; };
+		3DEF6479259F0AE6004EE51F /* IntentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6475259F0AE6004EE51F /* IntentView.swift */; };
+		3DEF647A259F0AE6004EE51F /* AddVoiceShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6476259F0AE6004EE51F /* AddVoiceShortcutView.swift */; };
 		3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DF0EE9B21038E3D00624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 /* End PBXBuildFile section */
@@ -368,6 +373,11 @@
 		3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationSettingController.swift; sourceTree = "<group>"; };
+		3DEF645F259EFE42004EE51F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		3DEF6473259F0AE6004EE51F /* EditVoiceShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditVoiceShortcutView.swift; sourceTree = "<group>"; };
+		3DEF6474259F0AE6004EE51F /* IntentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntentButton.swift; sourceTree = "<group>"; };
+		3DEF6475259F0AE6004EE51F /* IntentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntentView.swift; sourceTree = "<group>"; };
+		3DEF6476259F0AE6004EE51F /* AddVoiceShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVoiceShortcutView.swift; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
 		3DF0EE9921038E3400624E98 /* PrayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerType.swift; sourceTree = "<group>"; };
@@ -510,12 +520,14 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3DEF645F259EFE42004EE51F /* GradientView.swift */,
 				3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */,
 				3D0789CC259C5F0A0047DD00 /* MailView.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
 				3DB9EE50259D026E00601E1E /* CalendarView.swift */,
 				3D73EBE9256F5DEA0010C47D /* SolarView.swift */,
 				3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */,
+				3DEF6480259F0AEB004EE51F /* Siri */,
 				3D73EC3425717EB80010C47D /* PrayerSymbol.swift */,
 				3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */,
 				3D0789C5259C5DAB0047DD00 /* PrivacyInfoView.swift */,
@@ -753,6 +765,17 @@
 				3DD51AF720FC5A00000CBFFC /* Info.plist */,
 			);
 			path = "Athan Utility UITests";
+			sourceTree = "<group>";
+		};
+		3DEF6480259F0AEB004EE51F /* Siri */ = {
+			isa = PBXGroup;
+			children = (
+				3DEF6476259F0AE6004EE51F /* AddVoiceShortcutView.swift */,
+				3DEF6473259F0AE6004EE51F /* EditVoiceShortcutView.swift */,
+				3DEF6474259F0AE6004EE51F /* IntentButton.swift */,
+				3DEF6475259F0AE6004EE51F /* IntentView.swift */,
+			);
+			name = Siri;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1037,6 +1060,7 @@
 				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
+				3DEF6477259F0AE6004EE51F /* EditVoiceShortcutView.swift in Sources */,
 				3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */,
 				3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */,
 				3D0789A7259C23760047DD00 /* Strings.swift in Sources */,
@@ -1052,6 +1076,7 @@
 				3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */,
 				3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */,
 				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
+				3DEF6479259F0AE6004EE51F /* IntentView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
 				3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */,
@@ -1060,9 +1085,11 @@
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
 				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
 				3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */,
+				3DEF647A259F0AE6004EE51F /* AddVoiceShortcutView.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
 				3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */,
+				3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */,
 				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
@@ -1096,6 +1123,7 @@
 				3D0789CD259C5F0A0047DD00 /* MailView.swift in Sources */,
 				3D6105102572F21700C1D067 /* CalculationMethod+Extensions.swift in Sources */,
 				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
+				3DEF6478259F0AE6004EE51F /* IntentButton.swift in Sources */,
 				3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,

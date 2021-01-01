@@ -162,7 +162,7 @@ struct CalendarView: View, Equatable {
                     Spacer()
                     VStack {
                         Button(action: {
-//                            self.presentationMode.wrappedValue.dismiss()
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             showCalendar = false
                             print("exit")
                         }, label: {

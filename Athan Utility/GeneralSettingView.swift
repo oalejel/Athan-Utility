@@ -96,6 +96,14 @@ struct GeneralSettingView: View {
                                                 .background(Color.white)
                                         }
                                         
+                                        let intent: NextPrayerIntent = {
+                                            let _intent = NextPrayerIntent()
+                                            _intent.suggestedInvocationPhrase = "Next prayer time"
+                                            return _intent
+                                        }()
+                                        
+                                        IntentView(intent: intent)
+                                        
                                         Button(action: {
                                             withAnimation {
                                                 activeSection = .Colors

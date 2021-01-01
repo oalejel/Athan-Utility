@@ -56,6 +56,8 @@ struct SolarView: View, Equatable {
         return true
     }
     
+
+    
     var progress: CGFloat = 0
     var sunlightFraction: CGFloat = 0.5 // % of 24 hours that has sunlight
     

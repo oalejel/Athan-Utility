@@ -56,7 +56,7 @@
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "[%3$@] %2$@ حان وقت ال%1$@ في";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m left til %2$@ in %3$@! [%4$@]" = "[%4$@] !%3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
+"%1$@m left til %2$@ in %3$@ [%4$@]" = "[%4$@] %3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
 
 
 // "What's New" listed feature titles and subtitles

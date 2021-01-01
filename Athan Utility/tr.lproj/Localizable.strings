@@ -58,7 +58,7 @@
 // NOTE: change in conjugation for different locations means that separating the location, %2$@, will fit all cases
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ zamani : %2$@ [%3$@]";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m left til %2$@ in %3$@! [%4$@]" = "%2$@ kadar %1$@ dakika kaldı : %3$@ [%4$@]";
+"%1$@m left til %2$@ in %3$@ [%4$@]" = "%2$@ kadar %1$@ dakika kaldı : %3$@ [%4$@]";
 
 // "What's New" listed feature titles and subtitles
 "Offline Storage" = "Çevrimdışı Depolama";

@@ -220,9 +220,7 @@ struct MainSwiftUI: View {
                 
                 GradientView(currentPrayer: $manager.currentPrayer, appearance: $manager.appearance)
                     .equatable()
-                    .sheet(isPresented: $dragState.showCalendar) { // set highest progress back to 0 when we know the view disappeared
-                        CalendarView()
-                    }
+                    
                 
                 VStack(alignment: .leading) {
                     switch currentView {
@@ -269,6 +267,7 @@ struct MainSwiftUI: View {
                                                          qiblaAngle: $manager.qiblaHeading)
                                             .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
+                                            .opacity(1 - 0.8 * dragState.progress)
                                         
                                         
                                         // for now, time remaining will only show seconds on ios >=14
@@ -380,7 +379,10 @@ struct MainSwiftUI: View {
                                     }
                                     
                                     VStack(alignment: .center, spacing: 18) {
-                                        Text("Show Calendar")
+                                        ActivityIndicator(isAnimating: $dragState.showCalendar, style: .medium)
+                                            .foregroundColor(dragState.showCalendar ? Color(.lightText) : Color.clear)
+
+                                        Text(Strings.showCalendar)
                                             .font(Font.body.bold())
                                             .scaleEffect(dragState.progress > 0.999 ? 1.3 : 1)
                                             .animation(.spring())
@@ -412,7 +414,6 @@ struct MainSwiftUI: View {
                                     //                                        perspective: 0.1
                                     //                                    )
                                 }
-                                
                                 .gesture(
                                     DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
                                         .onEnded({ _ in
@@ -426,15 +427,18 @@ struct MainSwiftUI: View {
                                                         dragState.progress = 0
                                                     }
                                                 }
-                                                
+                                            } else {
+                                                withAnimation {
+                                                    dragState.progress = 0
+                                                }
                                             }
                                         })
                                         .updating($dragOffset, body: { (value, state, transaction) in
                                             //                                            state = value.translation
                                             //                                            dragState.showCalendar = false
-                                            if dragState.progress < 0.999 {
-                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
-                                            }
+//                                            if dragState.progress < 0.999 {
+                                            dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
+//                                            }
                                         })
                                 )
                             }
@@ -487,58 +491,62 @@ struct MainSwiftUI: View {
                                     .padding([.leading, .trailing, .bottom])
                                     .padding([.leading, .trailing, .bottom])
                                 }
+                                .opacity(1 - 0.8 * dragState.progress)
+                                
                                 
                                 VStack {
                                     ZStack() {
-                                        VStack(alignment: .center) {
-                                            ZStack {
-                                                Text("\(todayHijriString)")
-                                                    .fontWeight(.bold)
-                                                    .lineLimit(1)
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                    .padding([.trailing, .leading])
-                                                    .foregroundColor(Color(.lightText))
-                                                    .opacity(min(1, 1 - 0.8 * dragState.progress))
-                                                    .rotation3DEffect(
-                                                        Angle(degrees: dragState.progress * 90 - 0.001),
-                                                        axis: (x: 1, y: 0, z: 0.0),
-                                                        anchor: .top,
-                                                        anchorZ: 0,
-                                                        perspective: 0.1
-                                                    )
-                                                    .animation(.linear(duration: 0.05))
+                                        Text("\(todayHijriString)")
+                                            .fontWeight(.bold)
+                                            .lineLimit(1)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .padding([.trailing, .leading])
+                                            .foregroundColor(Color(.lightText))
+                                            .offset(y: 24)
+//                                        VStack(alignment: .center) {
+//                                            ZStack {
+//                                                    .opacity(min(1, 1 - 0.8 * dragState.progress))
+//                                                    .rotation3DEffect(
+//                                                        Angle(degrees: dragState.progress * 90 - 0.001),
+//                                                        axis: (x: 1, y: 0, z: 0.0),
+//                                                        anchor: .top,
+//                                                        anchorZ: 0,
+//                                                        perspective: 0.1
+//                                                    )
+//                                                    .animation(.linear(duration: 0.05))
                                                 
-                                                Text("\(tomorrowHijriString)")
-                                                    .fontWeight(.bold)
-                                                    .lineLimit(1)
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                    .padding([.trailing, .leading])
-                                                    .foregroundColor(.white)
-                                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
-                                                    .rotation3DEffect(
-                                                        Angle(degrees: max(0, dragState.progress - 0.3) * 90 - 90),
-                                                        axis: (x: 1, y: 0, z: 0.0),
-                                                        anchor: .bottom,
-                                                        anchorZ: 0,
-                                                        perspective: 0.1
-                                                    )
-                                                    .animation(.linear(duration: 0.05))
+//                                                Text("\(tomorrowHijriString)")
+//                                                    .fontWeight(.bold)
+//                                                    .lineLimit(1)
+//                                                    .fixedSize(horizontal: false, vertical: true)
+//                                                    .padding([.trailing, .leading])
+//                                                    .foregroundColor(.white)
+//                                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
+//                                                    .rotation3DEffect(
+//                                                        Angle(degrees: max(0, dragState.progress - 0.3) * 90 - 90),
+//                                                        axis: (x: 1, y: 0, z: 0.0),
+//                                                        anchor: .bottom,
+//                                                        anchorZ: 0,
+//                                                        perspective: 0.1
+//                                                    )
+//                                                    .animation(.linear(duration: 0.05))
                                                 
-                                            }
+//                                            }
                                             //                                            Text("Tap the Hijri date to view\nan athan times table.")
                                             //                                                .foregroundColor(.white)
                                             //                                                .font(.subheadline)
                                             
-                                        }
-                                        .offset(y: 24)
+//                                        }
+                                        
                                         // include percentComplete * 0 to trigger refresh based on Date()
                                         SolarView(progress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
                                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
                                                   dhuhrTime: manager.todayTimes.dhuhr,
                                                   sunriseTime: manager.todayTimes.sunrise)
                                             .equatable()
-                                            .opacity(1 - 0.8 * dragState.progress)
+                                            
                                     }
+                                    .opacity(1 - 0.8 * dragState.progress)
                                     
                                     // dummy stack used for proper offset
                                     HStack(alignment: .center) {
@@ -555,6 +563,10 @@ struct MainSwiftUI: View {
                             }
                         }
                         .transition(.opacity)
+                        .sheet(isPresented: $dragState.showCalendar) { // set highest progress back to 0 when we know the view disappeared
+                            CalendarView(showCalendar: $dragState.showCalendar)
+                                .equatable()
+                        }
                     //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                     }
                 }

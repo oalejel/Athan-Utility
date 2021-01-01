@@ -1003,7 +1003,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                     }
                                 }
                                 
-                                let localized15mAlert = NSLocalizedString("15m left til %1$@ in %2$@! [%3$@]", comment: "")
+                                let localized15mAlert = NSLocalizedString("15m left til %1$@ in %2$@ [%3$@]", comment: "")
                                 if let alt = alternativeString {
                                     alertString = String(format: localized15mAlert, p.localizedString(), alt, dateString)
                                 } else {

@@ -158,11 +158,13 @@ struct PrayerSettingsView: View {
                                             .font(.headline)
                                             .bold()
                                             .foregroundColor(.white)
-                                            .fixedSize(horizontal: true, vertical: false)
-                                            .lineLimit(1)
+//                                            .fixedSize(horizontal: true, vertical: false)
+//                                            .lineLimit(1)
+                                        Spacer()
                                         
                                         Stepper("", value: $reminderOffset, in: ClosedRange(1..<120))
                                             .accentColor(.white)
+                                            .labelsHidden()
                                     }
                                 }
                                 

@@ -191,7 +191,7 @@ struct CalendarView: View, Equatable {
                 }
                 
                 HStack {
-                    Text("Calendar")
+                    Text(Strings.calendar)
                         .font(Font.largeTitle.bold()) // let font colors be naturally chosen based on dark / light mode here
 //                        .onAppear {
 //                            model.generateStartMonths()

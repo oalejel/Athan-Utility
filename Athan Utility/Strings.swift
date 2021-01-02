@@ -69,6 +69,7 @@ class Strings {
     static var locationName = NSLocalizedString("Location Name", comment: "")
     static var locationColon = NSLocalizedString("Location:", comment: "")
     static var showCalendar = NSLocalizedString("Show Calendar", comment: "")
-    
+    static var calendar = NSLocalizedString("Calendar", comment: "")
+    static var colorDescription = NSLocalizedString("Select a color picker to customize gradients.", comment: "")
 }
 

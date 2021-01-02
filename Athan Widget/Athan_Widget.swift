@@ -38,15 +38,17 @@ struct SmallWidget: View {
     //                        .lineLimit(1)
                             .multilineTextAlignment(.trailing)
 
-                        Text(" \(Strings.left)")
-                            .foregroundColor(.init(UIColor.lightText))
-        //                    .font(.subheadline)
-                            .fontWeight(.bold)
-                            .font(.system(size: 12))
-    //                        .minimumScaleFactor(0.01)
-    //                        .fixedSize(horizontal: false, vertical: true)
-    //                        .lineLimit(1)
-                            .multilineTextAlignment(.trailing)
+                        if Strings.left != "" {
+                            Text(" \(Strings.left)")
+                                .foregroundColor(.init(UIColor.lightText))
+            //                    .font(.subheadline)
+                                .fontWeight(.bold)
+                                .font(.system(size: 12))
+        //                        .minimumScaleFactor(0.01)
+        //                        .fixedSize(horizontal: false, vertical: true)
+        //                        .lineLimit(1)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -120,6 +122,7 @@ struct MediumWidget: View {
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.bold)
+                        .fixedSize(horizontal: true, vertical: true)
                     Text("\(entry.nextPrayerDate, style: .relative) \(Strings.left)")
                         .foregroundColor(.init(UIColor.lightText))
                         .font(.system(size: 14))

@@ -123,7 +123,7 @@ struct ColorsView: View {
                             }
                         }
                         
-                    Text("Select a color picker to customize gradients.")
+                    Text(Strings.colorDescription)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(nil)
                         .font(.caption)
@@ -359,7 +359,6 @@ struct ColorsView: View {
                                 )
                                 .transition(.opacity)
                             }
-                            
                         } else {
                             // Fallback on earlier versions
                             Text(Strings.colorsiOSRequirement)

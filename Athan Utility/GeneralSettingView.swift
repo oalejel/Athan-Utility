@@ -406,8 +406,6 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                     
-                                    Divider()
-                                        .background(Color.white)
                                     
                                     let intent: NextPrayerIntent = {
                                         let _intent = NextPrayerIntent()
@@ -415,13 +413,26 @@ struct GeneralSettingView: View {
                                         return _intent
                                     }()
                                     
-                                    IntentView(intent: intent)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.bottom)
-                                    
+                                    VStack(spacing: 8) {
                                     Divider()
                                         .background(Color.white)
 
+                                    HStack(alignment: .center) {
+
+                                        Text("Siri")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+//                                            .padding(.leading, 2)
+                                        Spacer()
+                                        IntentView(intent: intent)
+
+                                    }
+                                    Divider()
+                                        .background(Color.white)
+                                    }
+
+                                                                        
                                     
                                     Group {
 

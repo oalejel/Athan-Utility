@@ -122,7 +122,6 @@ struct MainSwiftUI: View {
         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
             df.locale = Locale(identifier: "ar_SY")
         }
-        
         return df.string(from: date)
     }
     
@@ -263,6 +262,7 @@ struct MainSwiftUI: View {
                         VStack(alignment: .leading, spacing: 0) {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(alignment: .center, spacing: 0) {
+                                    
                                     Spacer()
                                     MoonView3D()
                                         .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
@@ -270,6 +270,7 @@ struct MainSwiftUI: View {
                                         .shadow(radius: 3)
                                         .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
+//                                    AthanPlayView(currentPrayer: manager.currentPrayer, currentPrayerDate: AthanManager.shared.guaranteedCurrentPrayerTime())
                                 }
                                 .opacity(1 - 0.8 * dragState.progress)
                                 

@@ -12,10 +12,12 @@ import Adhan
 @available(iOS 13.0.0, *)
 struct AthanPlayView: View {
     
-    
     @State var currentPrayer: Prayer?
     @State var currentPrayerDate: Date
-    @State var startPlaying: Bool = false
+    @State var lastPlayedPrayer: Prayer? = nil
+    
+    // if currentPrayerDate is <1 min in the past,
+    // set
     
     var body: some View {
         Image(systemName: "stop.fill")

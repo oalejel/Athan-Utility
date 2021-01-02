@@ -6,6 +6,14 @@
   Copyright © 2018 Omar Alejel. All rights reserved.
 */
 
+"Fajr" = "Fajr";
+"Sunrise" = "Sunrise";
+"Thuhr" = "Thuhr";
+"Asr" = "Asr";
+"Maghrib" = "Maghrib";
+"Isha" = "Isha";
+
+// MARK: - Old athan app
 
 // single letter for fajr, shurooq, etc
 "F_letter" = "F";
@@ -14,13 +22,6 @@
 "A_letter" = "A";
 "M_letter" = "M";
 "I_letter" = "I";
-
-"Fajr" = "Fajr";
-"Sunrise" = "Sunrise";
-"Thuhr" = "Thuhr";
-"Asr" = "Asr";
-"Maghrib" = "Maghrib";
-"Isha" = "Isha";
 
 "Settings" = "Settings";
 "Cancel" = "Cancel";
@@ -86,7 +87,7 @@
 "Settings" = "Settings";
 
 "Appearance" = "Appearance";
-"colors" = "Colors";
+"Colors" = "Colors";
 "Custom Prayer Names" = "Custom Prayer Names";
 "Change Language" = "Change Language";
 
@@ -162,5 +163,7 @@
 "Location Name" = "Location Name";
 "Location:" = "Location:";
 "Show Calendar" = "Show Calendar";
+"Calendar" = "Calendar";
 
+"Select a color picker to customize gradients." = "Select a color picker to customize gradients.";
 

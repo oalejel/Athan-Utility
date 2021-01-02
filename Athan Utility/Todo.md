@@ -1,8 +1,10 @@
 #  Todo list 
 Before updating 
-
+- change "left til " to "until"
+- switch siri response accofrding to mohsen
 - solar view progress not accurately reflected in first 5th of the day when we are before fajr time 
-
+- test bad input to location search
+- show acivity indicator on location search 
 
 - must understand time zone constraint. seems that you can only guarantee ability to use app given coordinates and without wifi IFF the user has the right time zone set on their devices
     - location settings should store the time zone of a location, defaulting to cupertino's 

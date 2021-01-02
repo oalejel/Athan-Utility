@@ -10,33 +10,36 @@ import NotificationCenter
 import Adhan
 import CoreLocation.CLLocation
 
+// could make this an extension of athan manager tbh. uses too many heavy lifting helpers from athan manager?..
+// but... not necessarily the case that all devices using athan amanger will be notification capabale
+
 // Managest loading and storing of settings for notitification selection and sounds to be used for notifications
 class NotificationsManager {
     
-    static func calculateTimes(referenceDate: Date, coordinate: CLLocationCoordinate2D, calculationMethod: CalculationMethod, madhab: Madhab) -> PrayerTimes? {
-        
-        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
-        let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
-        let coordinates = Coordinates(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        
-        var params = calculationMethod.params
-        params.madhab = madhab
-        
-        if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
-//            let formatter = DateFormatter()
-//            formatter.timeStyle = .medium
-//            formatter.timeZone = TimeZone.current
-            
-//            print("fajr \(formatter.string(from: prayers.fajr))")
-//            print("sunrise \(formatter.string(from: prayers.sunrise))")
-//            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
-//            print("asr \(formatter.string(from: prayers.asr))")
-//            print("maghrib \(formatter.string(from: prayers.maghrib))")
-//            print("isha \(formatter.string(from: prayers.isha))")
-            return prayers
-        }
-        return nil
-    }
+//    static func calculateTimes(referenceDate: Date, coordinate: CLLocationCoordinate2D, calculationMethod: CalculationMethod, madhab: Madhab) -> PrayerTimes? {
+//
+//        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+//        let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
+//        let coordinates = Coordinates(latitude: coordinate.latitude, longitude: coordinate.longitude)
+//
+//        var params = calculationMethod.params
+//        params.madhab = madhab
+//
+//        if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
+////            let formatter = DateFormatter()
+////            formatter.timeStyle = .medium
+////            formatter.timeZone = TimeZone.current
+//
+////            print("fajr \(formatter.string(from: prayers.fajr))")
+////            print("sunrise \(formatter.string(from: prayers.sunrise))")
+////            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
+////            print("asr \(formatter.string(from: prayers.asr))")
+////            print("maghrib \(formatter.string(from: prayers.maghrib))")
+////            print("isha \(formatter.string(from: prayers.isha))")
+//            return prayers
+//        }
+//        return nil
+//    }
     
     // generate as many notificiations as possible for the prayer
     static func createNotifications(coordinate: CLLocationCoordinate2D,
@@ -71,7 +74,12 @@ class NotificationsManager {
                     let calcDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: Date())!
                     let isFinalDayOfNotifications = lastOffset == dayOffset
 //                    print("making notifications for \(calcDate)")
-                    guard let times = calculateTimes(referenceDate: calcDate, coordinate: coordinate, calculationMethod: calculationMethod, madhab: madhab) else {
+//                    guard let times = calculateTimes(referenceDate: calcDate, coordinate: coordinate, calculationMethod: calculationMethod, madhab: madhab) else {
+//                        print("encountered nil calculating times for notifications")
+//                        return
+//                    }
+                    
+                    guard let times = AthanManager.shared.calculateTimes(referenceDate: calcDate, customCoordinate: coordinate, customTimeZone: AthanManager.shared.locationSettings.timeZone) else {
                         print("encountered nil calculating times for notifications")
                         return
                     }

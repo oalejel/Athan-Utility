@@ -165,15 +165,20 @@ class LocationSettings: Codable, NSCopying {
             print("> location archive: ", archive.locationName, archive.isLoadedFromArchive, archive.useCurrentLocation)
             return archive
         } else {
-            return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), useCurrentLocation: false)
+            return LocationSettings.defaultSetting()
         }
     }()
     
-    init(locationName: String, coord: CLLocationCoordinate2D, useCurrentLocation: Bool) {
+    init(locationName: String, coord: CLLocationCoordinate2D, timeZone: TimeZone, useCurrentLocation: Bool) {
         self.locationName = locationName
         self.lat = coord.latitude
         self.lon = coord.longitude
         self.useCurrentLocation = useCurrentLocation
+        self.timeZone = timeZone
+    }
+    
+    static func defaultSetting() -> LocationSettings {
+        return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), timeZone: TimeZone(identifier: "America/Los_Angeles")!, useCurrentLocation: false)
     }
 
     static func checkArchive() -> LocationSettings? {
@@ -191,13 +196,14 @@ class LocationSettings: Codable, NSCopying {
             archiveData(archiveName, object: data)
         }
         if let check = checkArchive() {
-            print("> empty found in archive", check.locationName, check.isLoadedFromArchive, check.useCurrentLocation)
+            print("> found loc settings in archive", check.locationName, check.isLoadedFromArchive, check.useCurrentLocation)
         } else {
             print("> empty found in archive")
         }
     }
     var isLoadedFromArchive = false
     var locationName: String
+    var timeZone: TimeZone
     var useCurrentLocation = false
     private var lat: Double
     private var lon: Double
@@ -213,7 +219,7 @@ class LocationSettings: Codable, NSCopying {
     private static let archiveName = "locationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, useCurrentLocation: useCurrentLocation)
+        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation)
         return copy
     }
 }

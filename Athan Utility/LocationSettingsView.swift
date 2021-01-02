@@ -31,7 +31,7 @@ struct LocationSettingsView: View, Equatable {
     static func == (lhs: LocationSettingsView, rhs: LocationSettingsView) -> Bool {
         // << return yes on view properties which identifies that the
         // view is equal and should not be refreshed (ie. `body` is not rebuilt)
-        return (lhs.usingCurrentLocation == rhs.usingCurrentLocation && rhs.templocationSettings.locationName == lhs.templocationSettings.locationName
+        return (lhs.usingCurrentLocation == rhs.usingCurrentLocation
                     && lhs.locationPermissionGranted == rhs.locationPermissionGranted && rhs.unboundCoordinate.latitude == lhs.unboundCoordinate.latitude)
     }
     
@@ -44,6 +44,8 @@ struct LocationSettingsView: View, Equatable {
     @State var boundCoordinate = AthanManager.shared.locationSettings.locationCoordinate
     @State var unboundCoordinate = AthanManager.shared.locationSettings.locationCoordinate
     @State var usingCurrentLocation = AthanManager.shared.locationSettings.useCurrentLocation
+    
+    @State var timeZone = AthanManager.shared.locationSettings.timeZone
     
     @State var templocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
     @Binding var parentSession: CurrentView // used to trigger transition back
@@ -61,11 +63,14 @@ struct LocationSettingsView: View, Equatable {
         
     @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.currentPrayer
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
-//    var setup: Int = {
-//    }()
-    
+
     func updateLocalizedPrayer(coord: CLLocationCoordinate2D) {
-        let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate)
+//        var cal = Calendar(identifier: .gregorian)
+//        cal.timeZone = timeZone
+//        var comps = cal.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone], from: Date())
+//        comps.calendar = cal
+//        let componentsDate = cal.date(from: comps)
+        let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate, customTimeZone: timeZone)
         localizedCurrentPrayer = times?.currentPrayer() ?? .isha
     }
     
@@ -102,7 +107,7 @@ struct LocationSettingsView: View, Equatable {
                                     print("creating timer")
                                     unboundCoordinate = loc
                                     boundCoordinate = loc
-                                    updateLocalizedPrayer(coord: unboundCoordinate)
+//                                    updateLocalizedPrayer(coord: unboundCoordinate)
                                     timer?.invalidate()
                                     timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
                                         queryAndSaveCoordinate(coord: loc)
@@ -221,6 +226,7 @@ struct LocationSettingsView: View, Equatable {
                                     textFieldText = settings.locationName
                                     boundCoordinate = settings.locationCoordinate // change map location
                                     unboundCoordinate = settings.locationCoordinate // change stored location
+                                    timeZone = settings.timeZone
                                     updateLocalizedPrayer(coord: unboundCoordinate)
                                     
                                     awaitingLocationUpdate = false
@@ -295,7 +301,7 @@ struct LocationSettingsView: View, Equatable {
                             
                             // save settings if we don't have erroneous input
                             if !erroneousLocation {
-                                AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, useCurrentLocation: usingCurrentLocation)
+                                AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation)
                                 
                                 // force athan manager to recalculate
                                 AthanManager.shared.considerRecalculations(force: true)
@@ -321,7 +327,7 @@ struct LocationSettingsView: View, Equatable {
     func queryLocation(text: String) {
         // reverse geocode address
         geocoder.geocodeAddressString(text) { (placemarks, error) in
-            guard let coord = placemarks?.first?.location?.coordinate, error == nil else {
+            guard let placemark = placemarks?.first, let coord = placemark.location?.coordinate, error == nil else {
                 erroneousLocation = true
                 print("failed to understand address, \(error!)")
                 return
@@ -330,6 +336,9 @@ struct LocationSettingsView: View, Equatable {
             print("GEOCODER - found coordinate")
             boundCoordinate = coord // tell map to change
             unboundCoordinate = coord
+            if placemark.timeZone == nil { print("!!! BAD: time zone for placemark nil")}
+            timeZone = placemark.timeZone ?? timeZone //
+
             updateLocalizedPrayer(coord: unboundCoordinate)
         }
     }
@@ -345,6 +354,8 @@ struct LocationSettingsView: View, Equatable {
                                        coord.latitude,
                                        coord.longitude)
                 unboundCoordinate = coord
+                // timeZone = timeZone -> if user gives coordinates without being able to lookup, trust that their device timezone is correct
+                timeZone = Calendar.current.timeZone
                 updateLocalizedPrayer(coord: unboundCoordinate)
                 //                boundCoordinate = coord; #warning("telling map to change coordinate might make it cause a second call to this function")
                 return
@@ -361,7 +372,11 @@ struct LocationSettingsView: View, Equatable {
             if Locale.preferredLanguages.first?.hasPrefix("en") ?? false, // at least in english, we can be sure that "city, state" will format correctly
                let city = placemark.locality,
                let state = placemark.administrativeArea {
-                textFieldText = "\(city), \(state)"
+                if city == state {
+                    textFieldText = city // some nationalities seem to define their locality and admin area as the same things
+                } else {
+                    textFieldText = "\(city), \(state)"
+                }
             } else if let city = placemark.locality {
                 textFieldText = city
             } else if let state = placemark.administrativeArea {
@@ -372,6 +387,8 @@ struct LocationSettingsView: View, Equatable {
                                        coord.longitude)
             }
             unboundCoordinate = coord
+            if placemark.timeZone == nil { print("!!! BAD: time zone for placemark nil")}
+            timeZone = placemark.timeZone ?? timeZone //
             updateLocalizedPrayer(coord: unboundCoordinate)
         }
     }

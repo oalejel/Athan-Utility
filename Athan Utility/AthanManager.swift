@@ -167,17 +167,28 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     func refreshTimes() {
         // swiftui publisher gets updates through didSet
-        todayTimes = calculateTimes(referenceDate: Date())
-        tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400)) // add 24 hours for next day
+        let tz = locationSettings.timeZone
+        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz) {
+            todayTimes = today
+            tomorrowTimes = tomorrow
+        } else {
+            print("DANGER: unable to calculate times. should handle this accordingly for places on the north pole lol")
+            // default back to settings defaults
+            locationSettings = LocationSettings.defaultSetting()
+            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone) // guaranteed fallback
+            tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone)
+        } // should never fail on cupertino time.
+         // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer() ?? .isha
         assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
     
     // NOTE: this function MUST not have SIDE EFFECTS
-    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil) -> PrayerTimes? {
+    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil) -> PrayerTimes? {
         let coord = locationSettings.locationCoordinate
         
-        let cal = Calendar(identifier: Calendar.Identifier.gregorian)
+        var cal = Calendar(identifier: Calendar.Identifier.gregorian)
+        cal.timeZone = customTimeZone ?? cal.timeZone // if we want to pass a custom time zone not based on the device time zone
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
         let coordinates = Coordinates(latitude: customCoordinate?.latitude ?? coord.latitude, longitude: customCoordinate?.longitude ?? coord.longitude)
         
@@ -187,9 +198,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         if let prayers = PrayerTimes(coordinates: coordinates,
                                      date: date,
                                      calculationParameters: params) {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .medium
-            formatter.timeZone = TimeZone.current
+//            let formatter = DateFormatter()
+//            formatter.timeStyle = .medium
+//            formatter.timeZone = TimeZone.current
 
 //            print("fajr \(formatter.string(from: prayers.fajr))")
 //            print("sunrise \(formatter.string(from: prayers.sunrise))")
@@ -468,9 +479,11 @@ extension AthanManager {
                         shortname = String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude)
                     }
                     
+                    if placemark.timeZone == nil { print("!!! BAD: time zone for placemark nil")}
+                    let timeZone = placemark.timeZone ?? Calendar.current.timeZone
                     // save our location settings
                     let potentialNewLocationSettings = LocationSettings(locationName: shortname,
-                                                                        coord: locations.first!.coordinate, useCurrentLocation: true)
+                                                                        coord: locations.first!.coordinate, timeZone: timeZone, useCurrentLocation: true)
                     
                     if let captureClosue = self.captureLocationUpdateClosure  {
                         captureClosue(potentialNewLocationSettings)
@@ -484,8 +497,9 @@ extension AthanManager {
                 }
             }
             
+            // user calendar timezone, trusting user is giving coordinates that make sense for their time zone
             let namelessLocationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
-                                                            coord: locations.first!.coordinate, useCurrentLocation: true)
+                                                            coord: locations.first!.coordinate, timeZone: Calendar.current.timeZone, useCurrentLocation: true)
             // error case: rely on coordinates and no geocoded name
             if let captureClosue = self.captureLocationUpdateClosure  {
                 captureClosue(namelessLocationSettings)

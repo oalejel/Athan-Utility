@@ -1,5 +1,10 @@
 #  Todo list 
 Before updating 
+- must understand time zone constraint. seems that you can only guarantee ability to use app given coordinates and without wifi IFF the user has the right time zone set on their devices
+    - location settings should store the time zone of a location, defaulting to cupertino's 
+    - when the user enters the name of a location or gets the name of a location from a coordinate lookup, they will get a resulting time zone to use on the data
+    - the time zone that is spit out should be used to adjust the components for the "current date" in the locations gradient view, which will then reconstruct a new offset date 
+        - get time zone -> get components from Date() using time zone 
 - fix issue where reopening app in location view centeres the map again
 - ask OKZZ if drag shuld also do rotations
 - test out a hue of green with slight transparency in widgets

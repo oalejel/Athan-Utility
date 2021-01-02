@@ -498,6 +498,7 @@ struct MainSwiftUI: View {
                                                 Text("\(manager.locationName)")
                                                     .foregroundColor(Color(.lightText))
                                                     .font(Font.body.weight(.bold))
+                                                    .lineLimit(1)
                                                 
                                             }
                                         }
@@ -645,7 +646,7 @@ struct ProgressBar: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .foregroundColor(colors.first)
-                        .frame(width: max(lineWidth, progress * g.size.width), height: lineWidth)
+                        .frame(width: min(g.size.width, max(lineWidth, progress * g.size.width)), height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
                 }
             }

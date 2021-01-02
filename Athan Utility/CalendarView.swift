@@ -86,7 +86,7 @@ class MonthModel: ObservableObject {
     }
     
     func generateDayModel(for dayDate: Date) -> DayModel {
-        return DayModel(times: AthanManager.shared.calculateTimes(referenceDate: dayDate),
+        return DayModel(times: AthanManager.shared.calculateTimes(referenceDate: dayDate, customTimeZone: AthanManager.shared.locationSettings.timeZone),
                         moonPhase: suncalc.getMoonIllumination(date: dayDate)["phase"]!)
     }
     

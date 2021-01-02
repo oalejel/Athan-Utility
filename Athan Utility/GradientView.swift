@@ -62,7 +62,7 @@ struct GradientView: View, Equatable {
                     
                     // if last fire of timer happened sufficiently long ago,
                     // we know that the state change is being caused by a change in currentPrayer
-                    if lastTimerDate.timeIntervalSinceNow < -0.02 {
+                    if abs(lastTimerDate.timeIntervalSinceNow) > 0.02 {
                         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
                             lastTimerDate = Date()
 //                            print("GRADIENT TIMER CALLED")

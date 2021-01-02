@@ -10,7 +10,7 @@ import UIKit
 import IntentsUI
 import Intents
 
-class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShortcutViewControllerDelegate {
+class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelegate {
     
     // MARK: - Class Properties
     
@@ -19,7 +19,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     var progressView: ElapsedView!
     
     //    @IBOutlet weak var locationLabel: UILabel!
-    var manager: PrayerManager!
+    var manager = AthanManager.shared
     var showSpinner = false
     
     //    @IBOutlet weak var settingsButton: SqueezeButton!
@@ -46,7 +46,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     var locationIsSynced = false {
         didSet {
             // show/hide the current location image in case we lost location
-            let imageName: UIImage? = manager.gpsStrings != nil ? UIImage(named: "arrow") : nil
+            let imageName: UIImage? = manager.locationPermissionsGranted ? UIImage(named: "arrow") : nil
             DispatchQueue.main.async {
                 self.locationButton.setImage(imageName, for: .normal)
             }
@@ -59,7 +59,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        manager.movedToForeground()
         // by default, hide siri recommendation view
         siriButtonView.isHidden = true
         
@@ -80,11 +80,9 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         view.backgroundColor = UIColor.black
         
         //this will also set the manager variable equal to this (could cause a problem)!
-        manager = PrayerManager(delegate: self)
-        Global.manager = manager
         
         // register for foreground updates in case user moves to new location and opens app in that place
-        NotificationCenter.default.addObserver(manager!, selector: #selector(PrayerManager.enteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+//        NotificationCenter.default.addObserver(manager!, selector: #selector(PrayerManager.enteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         // add siri button, which will request siri permissions this function
         // checks for compatibility and whether the user has interacted with the button
@@ -136,8 +134,8 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         infoButton.layer.cornerRadius = radius
         refreshButton.layer.cornerRadius = radius
         qiblaButton.layer.cornerRadius = radius
+        locationButton.layer.cornerRadius = 6
     }
-    
     
     var addedGrad = false
     override func viewWillAppear(_ animated: Bool) {
@@ -155,7 +153,8 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         
         progressView.setNeedsDisplay()
         softResetPrayerVisuals()
-        manager.calculateCurrentPrayer()
+        dataReady()
+//        manager.calculateCurrentPrayer()
         // though this is called by hard reset, we always want to refresh this animation
         clock.refreshTime()
     }
@@ -164,65 +163,7 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     override func viewDidAppear(_ animated: Bool) {
         //show what's new if never presented before!
         //        #warning("change mode from debug to majorVersion")
-        let loadClosure = {
-            DispatchQueue.main.async {
-                // if we were in a mode to show the spinner, then show it and being location request
-                if self.showSpinner {
-                    let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
-                    SwiftSpinner.show(loadingString, animated: true)
-                    self.showSpinner = false
-                }
-                // always do a location request on first appearance of view
-                self.manager.readyToRequestPermissions()
-            }
-        }
-        
-        if WhatsNew.shouldPresent(with: .majorVersion) {
-            let title1 = NSLocalizedString("Offline Storage", comment: "")
-            let title2 = NSLocalizedString("15 minute reminders", comment: "")
-            let title3 = NSLocalizedString("Today Extension", comment: "")
-            let title4 = NSLocalizedString("Athan clock face", comment: "")
-            let title5 = "Multiple Calculation Methods"
-            let title6 = NSLocalizedString("Qibla", comment: "")
-            
-            let subtitle1 = NSLocalizedString("Athan Utility stores months of athan data for offline use.", comment: "")
-            let subtitle2 = NSLocalizedString("Get reminded before the next athan takes place. Configurable in app preferences.", comment: "")
-            let subtitle3 = NSLocalizedString("Check current and upcoming salah times with the Notification Center widget.", comment: "")
-            let subtitle4 = NSLocalizedString("A new way to visualize salah times throughout the day.", comment: "")
-            let subtitle5 = "Pick from a list of international calculation methods."
-            // no subtitle for qibla
-            
-            let whatsNewVC = WhatsNewViewController(items: [
-                WhatsNewItem.text(title: title1,
-                                  subtitle: subtitle1),
-                //image: UIImage(named: "no_wifi_icon") ?? UIImage()),
-                WhatsNewItem.text(title: title2,
-                                  subtitle: subtitle2),
-                //image: UIImage(named: "timer_icon") ?? UIImage()),
-                WhatsNewItem.text(title: title3,
-                                  subtitle: subtitle3),
-                //image: UIImage(named: "widget_icon") ?? UIImage()),
-                WhatsNewItem.text(title: title4,
-                                  subtitle: subtitle4),
-                WhatsNewItem.text(title: title5,
-                                  subtitle: title5),
-                WhatsNewItem.text(title: title6,
-                                  subtitle: "")
-            ])
-            //            #warning("change mode from debug to majorVersion")
-            whatsNewVC.presentationOption = .majorVersion
-            whatsNewVC.titleStrings = ["السلام عليكم", "Peace Be Upon You", "Paix à Vous", "Selamünaleyküm", "平和は貴方とともに", "שָׁלוֹם עֲלֵיכֶם", "Que La Paz Está Con Usted", "Friede Sei Mit Dir"]
-            whatsNewVC.titleColor = .white
-            whatsNewVC.buttonBackgroundColor = .darkerGray
-            whatsNewVC.buttonTextColor = .lightGray
-            whatsNewVC.itemSubtitleColor = .darkGray
-            whatsNewVC.itemTitleColor = .gray
-            whatsNewVC.view.backgroundColor = .black
-            whatsNewVC.presentIfNeeded(on: self)
-            whatsNewVC.onDismissal = loadClosure // show spinner and load data when dismissed
-        } else {
-            loadClosure()
-        }
+        self.manager.attemptSingleLocationUpdate()
     }
     
     
@@ -245,16 +186,12 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     @objc func enteredForeground() {
         print("entered foreground")
         // must reset timers, since they are not accurate in background
-        manager.calculateCurrentPrayer()
-        manager.setTimers()
-        
         softResetPrayerVisuals()
         clock.refreshTime()
     }
     
     @objc func enteredBackground() {
         clock.pause()
-        manager.saveSettings()
         // if we started playing audio, don't let it resume on enter foreground
         NoteSoundPlayer.stopAudio()
     }
@@ -348,15 +285,13 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     // MARK: - PrayerManagerDelegate
     
     // When called, assume that location and times have changed
-    func dataReady(manager: PrayerManager) {
+    func dataReady() {
         //        lastUpdate = Date()
         
         DispatchQueue.main.async { () -> Void in
             self.hardResetPrayerVisuals()
             SwiftSpinner.hide()
-            if let location = manager.readableLocationString {
-                self.locationButton.setTitle(location, for: .normal)
-            }
+            self.locationButton.setTitle(AthanManager.shared.locationSettings.locationName, for: .normal)
             
             // now that we actually have a qibla heading, we can have a dynamic quick action
             let icon = UIApplicationShortcutIcon(type: .location)
@@ -366,15 +301,15 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     }
     
     //specific to individual prayers
-    func newPrayer(manager: PrayerManager) {
+    func newPrayer() {
         softResetPrayerVisuals()
         
-        if manager.dataExists {
-            let timeElapsed = Date().timeIntervalSince(self.manager.currentPrayerTime())
-            if timeElapsed < 3 { // only play athan if its been < 2 seconds since athan
-                NoteSoundPlayer.playFullAudio(for: Settings.getSelectedSoundIndex())
-            }
+//        if manager.dataExists {
+        let timeElapsed = Date().timeIntervalSince(self.manager.guaranteedCurrentPrayerTime())
+        if timeElapsed < 3 { // only play athan if its been < 2 seconds since athan
+            NoteSoundPlayer.playFullAudio(for: Settings.getSelectedSoundIndex())
         }
+//        }
         
         // keep track of last time we updated our visuals
         //        lastUpdate = Date()
@@ -383,33 +318,33 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     /// readjust only visual things that need changing within the same day. Does not include reloading table data.
     func softResetPrayerVisuals(fifteenMinutesLeft: Bool = false) {
-        if manager.dataExists {
+//        if manager.dataExists {
             refreshProgressBar()
             
-            let pIndex = manager.currentPrayer.rawValue
+            let pIndex = manager.currentPrayer?.rawValue() ?? 5
             var cellIndex = pIndex
             if cellIndex > 5 { cellIndex = 5 }
             table.highlightCellAtIndex(cellIndex, color: Global.statusColor)
-            clock.refreshPrayerBubbles(manager.currentPrayer, fifteenMinutesLeft: fifteenMinutesLeft)
+        clock.refreshPrayerBubbles(manager.currentPrayer ?? .isha, fifteenMinutesLeft: fifteenMinutesLeft)
             //            progressView?.progressLayer.backgroundColor = Global.statusColor.cgColor
-        }
+//        }
     }
     
     
     /// readjust all visual representations, **including** things reset in softResetPrayerVisuals
     func hardResetPrayerVisuals() {
-        if manager.dataExists {
+//        if manager.dataExists {
             // soft
             refreshProgressBar()
-            clock.refreshPrayerBubbles(manager.currentPrayer)
-            table.highlightCellAtIndex(self.manager.currentPrayer.rawValue, color: Global.statusColor)
+        clock.refreshPrayerBubbles(manager.currentPrayer ?? .isha)
+        table.highlightCellAtIndex((self.manager.currentPrayer ?? .isha).rawValue(), color: Global.statusColor)
             //            progressView?.progressLayer.backgroundColor = Global.statusColor.cgColor
             
             // hard
-            table.reloadCellsWithTimes(self.manager.todayPrayerTimes)
-            clock.setPrayerBubbles(manager)
+            table.reloadCellsWithTimes(self.manager.todayTimes)
+            clock.setPrayerBubbles()
             clock.refreshTime()
-        }
+//        }
     }
     
     
@@ -420,21 +355,15 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     
     func refreshProgressBar() {
-        if self.manager.dataExists {
-            let startTime = self.manager.currentPrayerTime()
-            if let endTime = self.manager.nextPrayerTime() {
-                let timeElapsed = Date().timeIntervalSince(startTime as Date)
-                let interval = endTime.timeIntervalSince(startTime as Date)
-                self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
-            }
-        }
+//        if self.manager.dataExists {
+            let startTime = AthanManager.shared.guaranteedCurrentPrayerTime()
+            let endTime = AthanManager.shared.guaranteedNextPrayerTime()
+            let timeElapsed = Date().timeIntervalSince(startTime as Date)
+            let interval = endTime.timeIntervalSince(startTime as Date)
+            self.progressView.setup(CGFloat(interval), timeElapsed: CGFloat(timeElapsed))
+//        }
     }
     
-    func loadingHandler() {
-        let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
-        SwiftSpinner.show(loadingString, animated: true)
-        manager.userRequestsReload()
-    }
     
     
     func hideLoadingView() {
@@ -482,17 +411,17 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
     
     // Refresh app data. Originates from button with rotating arrows
     @IBAction func refreshPressed(_ sender: AnyObject) {
-//        // tell manager that if we were locked on a location, we now want a new one
-        manager.shouldSyncLocation = true
-        // get new data
-        loadingHandler()
+        // tell manager that if we were locked on a location, we now want a new one
+        let loadingString = NSLocalizedString("Loading Prayer Data", comment: "")
+//        SwiftSpinner.show(loadingString, animated: true)
+        manager.attemptSingleLocationUpdate { locSettings in
+            self.locationButton.setTitle(locSettings?.locationName ?? "Location Disabled", for: .normal)
+        }
     }
-    
     
     // Show alarm controls. Originates from bell button
     @IBAction func alarmsButtonPressed(_ sender: AnyObject) {
         let prayerSettingsController = SettingsViewController()
-        prayerSettingsController.manager = manager
         let navController = OptionsNavigatonController(rootViewController: prayerSettingsController)
         present(navController, animated: true, completion: nil)
     }
@@ -519,9 +448,9 @@ class ViewController: UIViewController, PrayerManagerDelegate, INUIAddVoiceShort
         DispatchQueue.main.async {
             Global.openQibla = false
             let qvc = QiblaViewController()
-            qvc.qiblaOffset = self.manager.qibla
-            qvc.headingManager = self.manager
-            self.manager.headingDelegate = qvc
+            qvc.qiblaOffset = self.manager.heading
+//            qvc.headingManager = self.manager
+//            self.manager.headingDelegate = qvc
             self.present(qvc, animated: true) { () -> Void in
                 // do something
             }

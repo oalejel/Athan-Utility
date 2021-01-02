@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 // QiblaViewController displays a compass arrow in Qibla mode
-class QiblaViewController: UIViewController, HeadingDelegate {
+class QiblaViewController: UIViewController {
     var needleLayer: CAShapeLayer!
     var qiblaOffset: Double!
     let bounds = UIScreen.main.bounds
@@ -82,7 +82,7 @@ class QiblaViewController: UIViewController, HeadingDelegate {
     
     @IBAction func dismiss(_ sender: AnyObject) {
         Global.openQibla = false
-        headingManager.headingDelegate = nil
+//        headingManager.headingDelegate = nil
         presentingViewController?.dismiss(animated: true, completion: { () -> Void in
             // do nothing for now
         })

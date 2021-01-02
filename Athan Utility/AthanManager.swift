@@ -38,7 +38,7 @@ class ObservableAthanManager: ObservableObject {
     
     @Published var todayTimes: PrayerTimes!
     @Published var tomorrowTimes: PrayerTimes!
-    @Published var currentPrayer: Prayer = .fajr
+    @Published var currentPrayer: Prayer! = .fajr
     @Published var locationName: String = ""
     @Published var qiblaHeading: Double = 0.0
     @Published var currentHeading: Double = 0.0
@@ -313,7 +313,6 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 
 // Listen for background events
 extension AthanManager {
-    
     func considerRecalculations(force: Bool) {
         // reload settings in case we are running widget and app changed them
         if let arch = LocationSettings.checkArchive() { locationSettings = arch }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Adhan
 
 enum Meridiem {
     case am, pm
@@ -394,7 +395,7 @@ class ClockView: UIView {
     
     //MARK: Bubbles
     
-    func placeBubble(_ p: PrayerType, angle: CGFloat, mer: Meridiem, highlight: Bool) {
+    func placeBubble(_ p: Prayer, angle: CGFloat, mer: Meridiem, highlight: Bool) {
         let pName = p.stringValue()
         let localizedLetter = NSLocalizedString("\(pName[pName.startIndex])_letter", comment: "")
         
@@ -402,7 +403,7 @@ class ClockView: UIView {
         
         if prayerBubbleViews.count == 6 {
             //if we already made them then just
-            b = prayerBubbleViews[p.rawValue]
+            b = prayerBubbleViews[p.rawValue()]
         } else {
             //add it if there isnt already one...
             b = BubbleTextView(letter: localizedLetter.first ?? " ".first!)
@@ -431,9 +432,9 @@ class ClockView: UIView {
         b.center = CGPoint(x: xRect + (b.frame.size.width / 2), y: yRect + (b.frame.size.height / 2))
     }
     
-    func refreshPrayerBubbles(_ currentPrayer: PrayerType, fifteenMinutesLeft: Bool = false) {
+    func refreshPrayerBubbles(_ currentPrayer: Prayer, fifteenMinutesLeft: Bool = false) {
         for (index, bubble) in prayerBubbleViews.enumerated() {
-            if index == currentPrayer.rawValue {
+            if index == currentPrayer.rawValue() {
                 bubble.backgroundColor = Global.statusColor
             } else {
                 bubble.backgroundColor = UIColor.white
@@ -441,33 +442,30 @@ class ClockView: UIView {
         }
     }
     
-    func setPrayerBubbles(_ manager: PrayerManager) {
+    func setPrayerBubbles() {
         DispatchQueue.main.async { () -> Void in
             let curDate = Date()
             self.currentMeridiem = Calendar.current.component(.hour, from: curDate) > 11 ? .am : .pm
-            var p = PrayerType.fajr
+            var p = Prayer.fajr
             for _ in 0...5 {
-                if let pDate = manager.todayPrayerTimes[p.rawValue] {
-                    let hours = Float(Calendar.current.component(.hour, from: pDate))
-                    let minutes = Float(Calendar.current.component(.minute, from: pDate))
-                    let seconds = Float(Calendar.current.component(.second, from: pDate))
-                    
-                    // warning: ensure that hour -> meridiem calculations are consistent
-                    var merid: Meridiem = .am
-                    if (hours > 11) {
-                        merid = .pm
-                    }
-                    
-                    var outOfTwelve = hours + (minutes / 60)
-                    outOfTwelve += seconds / 3600
-                    let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
-                    
-                    let hightLight = p == manager.currentPrayer
-                    self.placeBubble(p, angle: angle, mer: merid, highlight: hightLight)
-                    p = p.next()
-                } else {
-                    print("error with today prayer times!")
+                let pDate = AthanManager.shared.todayTimes.time(for: p)
+                let hours = Float(Calendar.current.component(.hour, from: pDate))
+                let minutes = Float(Calendar.current.component(.minute, from: pDate))
+                let seconds = Float(Calendar.current.component(.second, from: pDate))
+                
+                // warning: ensure that hour -> meridiem calculations are consistent
+                var merid: Meridiem = .am
+                if (hours > 11) {
+                    merid = .pm
                 }
+                
+                var outOfTwelve = hours + (minutes / 60)
+                outOfTwelve += seconds / 3600
+                let angle = (CGFloat(outOfTwelve / 6) * CGFloat(Double.pi)) - CGFloat(0.5 * Double.pi)
+                
+                let hightLight = p == AthanManager.shared.currentPrayer
+                self.placeBubble(p, angle: angle, mer: merid, highlight: hightLight)
+                p = p.next()
             }
         }
     }

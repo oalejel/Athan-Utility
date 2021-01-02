@@ -101,6 +101,7 @@ struct LocationSettingsView: View, Equatable {
                                 if !usingCurrentLocation {
                                     print("creating timer")
                                     unboundCoordinate = loc
+                                    boundCoordinate = loc
                                     updateLocalizedPrayer(coord: unboundCoordinate)
                                     timer?.invalidate()
                                     timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
@@ -182,6 +183,7 @@ struct LocationSettingsView: View, Equatable {
                             .textContentType(.location)
                             .foregroundColor(erroneousLocation ? .red : Color(.lightText))
                             .disableAutocorrection(true)
+                            .autocapitalization(UITextAutocapitalizationType.words)
                             .padding([.trailing, .top, .bottom])
                         }
                         .background(

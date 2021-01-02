@@ -53,10 +53,10 @@ struct SineLine: Shape {
 @available(iOS 13.0.0, *)
 struct SolarView: View, Equatable {
     static func == (lhs: SolarView, rhs: SolarView) -> Bool {
-        return lhs.isDragging == rhs.isDragging && lhs.dayProgress == rhs.dayProgress && lhs.sunlightFraction == rhs.sunlightFraction
+        return lhs.isDragging == rhs.isDragging && lhs.dayProgress == rhs.dayProgress && lhs.sunlightFraction == rhs.sunlightFraction && lhs.manualDayProgress == rhs.manualDayProgress
     }
     
-    @State var dayProgress: CGFloat
+    @Binding var dayProgress: CGFloat
     @Binding var manualDayProgress: CGFloat
     @Binding var isDragging: Bool
 

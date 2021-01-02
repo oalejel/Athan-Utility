@@ -32,17 +32,41 @@ class CalendarDragState: ObservableObject {
 
 @available(iOS 13.0.0, *)
 class DayProgressState: ObservableObject {
+    // user input based publishers
     @Published var manualDayProgress: CGFloat = 0.0 // a changes b and c
-    @Published var previewCurrentPrayerProgress: Double = 0 // changed by a if dragging
-    @Published var previewPrayer: Prayer? = nil
-    @Published var nonOptionalPreviewPrayer: Prayer = .fajr
     @Published var isDragging = false
+    
+    @Published var manualCurrentPrayerProgress: Double = 0
+    @Published var truthCurrentPrayerProgress: Double = 0
+    @Published var previewPrayerProgress: Double = 0 // changed by a if dragging
+//    @Published var previewPrayer: Prayer? = nil
+    
+    @Published var manualPrayer: Prayer? = nil
+    @Published var previewPrayer: Prayer? = nil // agreement between manager and user
+    @Published var nonOptionalPreviewPrayer: Prayer = .fajr
+    
 }
 
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
+    
+    // MARK: - Combine Properties
+    // necessary to allow ARC to throw out unused values
+    var dragCancellable: AnyCancellable?
+    
+    // solar manual day progress publishes to our subscriber
+    // subscriber combines that stream's data with the current prayer
+    // to indicate the visible prayer via a visible prayer state
+    
+    var previewManualPrayerProgressCancellable: AnyCancellable?
+    var previewConsensusPrayerProgressCancellable: AnyCancellable?
+    
+    var previewManualPrayerCancellable: AnyCancellable? // manual.prog -> intermediate manual.p
+    var consensusPreviewPrayerCancellable: AnyCancellable? // manual.p + manager.p -> visible
+    var nonOptionalPreviewPrayerCancellable: AnyCancellable?
+
 
     @ObservedObject var dragState = CalendarDragState()
     @ObservedObject var dayProgressState = DayProgressState()
@@ -57,21 +81,33 @@ struct MainSwiftUI: View {
 //    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
     
     @State var nextRoundMinuteTimer: Timer?
-    @State var percentComplete: Double = 0.0
+//    @State var percentComplete: Double = 0.0
+    let secondsTimer = Timer.publish(
+            every: 1, // second
+            on: .main,
+            in: .common
+        ).autoconnect()
+    @State var relativeTimeStr: String = ""
+    func relativeTime(for referenceDate: Date) -> String {
+            let formatter = RelativeDateTimeFormatter()
+        
+            formatter.unitsStyle = .full
+            return formatter.localizedString(for: referenceDate, relativeTo: Date())
+    }
     
     func getPercentComplete() -> Double {
         var currentTime: Date?
-        if let currentPrayer = manager.todayTimes.currentPrayer() {
-            currentTime = manager.todayTimes.time(for: currentPrayer)
+        if let currentPrayer = ObservableAthanManager.shared.todayTimes.currentPrayer() {
+            currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
         } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
-            currentTime = manager.todayTimes.time(for: .isha).addingTimeInterval(-86400)
+            currentTime = ObservableAthanManager.shared.todayTimes.time(for: .isha).addingTimeInterval(-86400)
         }
         
         var nextTime: Date?
-        if let nextPrayer = manager.todayTimes.nextPrayer() {
-            nextTime = manager.todayTimes.time(for: nextPrayer)
+        if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer() {
+            nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
         } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
-            nextTime = manager.tomorrowTimes.time(for: .fajr)
+            nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
         }
         
         return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
@@ -93,16 +129,6 @@ struct MainSwiftUI: View {
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
-    // MARK: - Combine Properties
-    // necessary to allow ARC to throw out unused values
-    var dragCancellable: AnyCancellable?
-    
-    // solar manual day progress publishes to our subscriber
-    // subscriber combines that stream's data with the current prayer
-    // to indicate the visible prayer via a visible prayer state
-    var previewPrayerCancellable: AnyCancellable?
-    var previewCurrentPrayerProgressCancellable: AnyCancellable?
-    var nonOptionalPreviewPrayerCancellable: AnyCancellable?
     
     init() {
         dragCancellable = dragState.$progress
@@ -134,48 +160,65 @@ struct MainSwiftUI: View {
             }
             .assign(to: \.dragIncrement, on: dragState)
         
-        
         // for calculating progress of CURRENT prayer
-        previewCurrentPrayerProgressCancellable = dayProgressState.$manualDayProgress
+        previewManualPrayerProgressCancellable = dayProgressState.$manualDayProgress
+            .receive(on: RunLoop.main)
+            .combineLatest(dayProgressState.$manualPrayer)
+            .map { tuple in
+                let manualProg = Double(tuple.0)
+
+                var currentTime: Date?
+                if let currentPrayer = tuple.1 {
+                    currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
+                } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
+                    currentTime = ObservableAthanManager.shared.todayTimes.time(for: .isha).addingTimeInterval(-86400)
+                }
+                
+                var nextTime: Date?
+                if tuple.1 != .isha, let nextPrayer = tuple.1?.next()  {
+                    nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
+                } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+                    nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
+                }
+                let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(manualProg * 86400))
+                return inputDate.timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+            }
+            .assign(to: \.manualCurrentPrayerProgress, on: dayProgressState)
+        
+        // assign to previewCurrentPrayerProgress
+        previewConsensusPrayerProgressCancellable = Publishers.CombineLatest(dayProgressState.$manualCurrentPrayerProgress, dayProgressState.$truthCurrentPrayerProgress)
             .receive(on: RunLoop.main)
             .combineLatest(dayProgressState.$isDragging, dayProgressState.$previewPrayer)
-            .map { [self] tuple in
-                if tuple.1 { // if is dragging, compute current prayer
-                    let manualProg = Double(tuple.0)
-
-                    var currentTime: Date?
-                    if let currentPrayer = tuple.2 {
-                        currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
-                    } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
-                        currentTime = ObservableAthanManager.shared.todayTimes.time(for: .isha).addingTimeInterval(-86400)
-                    }
-                    
-                    var nextTime: Date?
-                    if tuple.2 != .isha, let nextPrayer = tuple.2?.next()  {
-                        nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
-                    } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
-                        nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
-                    }
-                    let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(manualProg * 86400))
-                    return inputDate.timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+            .map { tuple in
+                if tuple.1 { // if is dragging, use manual prayer
+                    return tuple.0.0
                 }
-                return self.percentComplete // return real world truth
+                return tuple.0.1 // return real world truth
             }
-            .assign(to: \.previewCurrentPrayerProgress, on: dayProgressState)
+            .assign(to: \.previewPrayerProgress, on: dayProgressState)
                 
         // publish preview prayer for given date and dragging state
-        previewPrayerCancellable = dayProgressState.$manualDayProgress
+        previewManualPrayerCancellable = dayProgressState.$manualDayProgress
+            .receive(on: RunLoop.main)
+            .map { manualProg in
+                let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(TimeInterval((86400 / -2) + manualProg * 86400))
+                return ObservableAthanManager.shared.todayTimes.currentPrayer(at: inputDate)
+            }
+            .assign(to: \.manualPrayer, on: dayProgressState)
+        
+        // merge manual prayer with ground truth pubs and pick truth if not dragging
+        consensusPreviewPrayerCancellable = Publishers.CombineLatest(dayProgressState.$manualPrayer, ObservableAthanManager.shared.$currentPrayer)
             .receive(on: RunLoop.main)
             .combineLatest(dayProgressState.$isDragging)
-            .map { [self] tuple in
-                if tuple.1 { // if dragging, calculate current prayer based on time
-                    let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(tuple.0 * 86400))
-                    return ObservableAthanManager.shared.todayTimes.currentPrayer(at: inputDate)
+            .map { tuple in
+                if tuple.1 {// if dragging, use calculated current prayer based on drag
+                    return tuple.0.0
                 }
-                return ObservableAthanManager.shared.currentPrayer // else, return ground truth
+                return tuple.0.1 // else, return ground truth
             }
             .assign(to: \.previewPrayer, on: dayProgressState)
         
+        // read from consensus
         nonOptionalPreviewPrayerCancellable = dayProgressState.$previewPrayer
             .receive(on: RunLoop.main)
             .map { $0 ?? .isha }
@@ -200,8 +243,6 @@ struct MainSwiftUI: View {
                     }
                     return "\(comps.hour!)h \(comps.minute!)m left"
                 }()
-                
-
                 
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
@@ -253,58 +294,70 @@ struct MainSwiftUI: View {
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
                                             .opacity(1 - 0.8 * dragState.progress)
                                         
-                                        
-                                        // for now, time remaining will only show seconds on ios >=14
-                                        if #available(iOS 14.0, *) {
-                                            Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) \(NSLocalizedString("left", comment: ""))")
-                                                .fontWeight(.bold)
-                                                .autocapitalization(.none)
-                                                .foregroundColor(Color(.lightText))
-                                                .multilineTextAlignment(.trailing)
-                                                .minimumScaleFactor(0.01)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .lineLimit(1)
-                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                                .opacity(1 - 0.8 * dragState.progress)
-                                        } else {
-                                            // Fallback on earlier versions
-                                            Text("\(timeRemainingString)")
-                                                .fontWeight(.bold)
-                                                .autocapitalization(.none)
-                                                .foregroundColor(Color(.lightText))
-                                                .multilineTextAlignment(.trailing)
-                                                .minimumScaleFactor(0.01)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .lineLimit(1)
-                                                .opacity(dayProgressState.isDragging ? 0 : 1)
-                                                .opacity(1 - 0.8 * dragState.progress)
-                                        }
+                                        Text("\(timeRemainingString)")
+                                            .fontWeight(.bold)
+                                            .autocapitalization(.none)
+                                            .foregroundColor(Color(.lightText))
+                                            .multilineTextAlignment(.trailing)
+                                            .minimumScaleFactor(0.01)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .lineLimit(1)
+                                            .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                            .opacity(1 - 0.8 * dragState.progress)
+                                            .onReceive(secondsTimer) { _ in
+                                                print("fire second timer")
+                                                relativeTimeStr = relativeTime(for: AthanManager.shared.guaranteedNextPrayerTime())
+                                            }
                                     }
                                 }
-                                
-                                ProgressBar(progress: CGFloat(dayProgressState.previewCurrentPrayerProgress), lineWidth: 10,
+                                                                
+                                ProgressBar(progress: CGFloat(dayProgressState.previewPrayerProgress), lineWidth: 10,
                                             outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
                                     .onAppear(perform: { // wake update timers that will update progress
+                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                         nextRoundMinuteTimer = {
                                             // this gets called again when the view appears -- have it invalidated on appear
                                             let comps = Calendar.current.dateComponents([.second], from: Date())
                                             let secondsTilNextMinute = 60 - comps.second!
                                             return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
                                                                         repeats: false) { _ in
-                                                percentComplete = getPercentComplete()
+                                                dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                                 minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-                                                    percentComplete = getPercentComplete()
+                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                                     todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-//                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+    //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
                                                 })
                                             }
                                         }()
-                                        percentComplete = getPercentComplete()
                                     })
                                     .onDisappear {
                                         minuteTimer?.invalidate()
                                         nextRoundMinuteTimer?.invalidate()
                                         minuteTimer?.invalidate()
+                                    }
+                                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                                        minuteTimer?.invalidate()
+                                        nextRoundMinuteTimer?.invalidate()
+                                        minuteTimer?.invalidate()
+                                        print("moving to background!")
+                                    }
+                                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                                        print("Moving back to the foreground!")
+                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                        nextRoundMinuteTimer = {
+                                            // this gets called again when the view appears -- have it invalidated on appear
+                                            let comps = Calendar.current.dateComponents([.second], from: Date())
+                                            let secondsTilNextMinute = 60 - comps.second!
+                                            return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+                                                                        repeats: false) { _ in
+                                                dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+    //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+                                                })
+                                            }
+                                        }()
                                     }
                                     .opacity(1 - 0.8 * dragState.progress)
                                 
@@ -363,7 +416,7 @@ struct MainSwiftUI: View {
                                     }
                                     
                                     VStack(alignment: .center, spacing: 18) {
-                                        ActivityIndicator(isAnimating: $dragState.showCalendar, style: .medium)
+                                        ActivityIndicator(isAnimating: $dragState.showCalendar, style: .white)
                                             .foregroundColor(dragState.showCalendar ? Color(.lightText) : Color.clear)
 
                                         Text(Strings.showCalendar)
@@ -418,11 +471,7 @@ struct MainSwiftUI: View {
                                             }
                                         })
                                         .updating($dragOffset, body: { (value, state, transaction) in
-                                            //                                            state = value.translation
-                                            //                                            dragState.showCalendar = false
-//                                            if dragState.progress < 0.999 {
                                             dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
-//                                            }
                                         })
                                 )
                             }
@@ -535,16 +584,19 @@ struct MainSwiftUI: View {
 //                                    sunriseTime: manager.todayTimes.sunrise
 //                                )
 //                                    .equatable()
-                                        SolarView(dayProgress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+//                                        SolarView(dayProgress: CGFloat(0.0000001 * dayProgressState.truthCurrentPrayerProgress) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
+                                        SolarView(dayProgress: .constant(CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)),
                                                   manualDayProgress: $dayProgressState.manualDayProgress,
                                                   isDragging: $dayProgressState.isDragging,
                                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
                                                   hidingCircle: true,
                                                   dhuhrTime: manager.todayTimes.dhuhr,
                                                   sunriseTime: manager.todayTimes.sunrise)
-
-                                        
-                                            
+                                            .equatable()
+                                            .onDisappear {
+                                                dayProgressState.manualDayProgress = 0
+                                                dayProgressState.isDragging = false
+                                            }
                                     }
                                     .opacity(1 - 0.8 * dragState.progress)
                                     

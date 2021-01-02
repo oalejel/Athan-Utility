@@ -96,13 +96,7 @@ struct GeneralSettingView: View {
                                                 .background(Color.white)
                                         }
                                         
-                                        let intent: NextPrayerIntent = {
-                                            let _intent = NextPrayerIntent()
-                                            _intent.suggestedInvocationPhrase = "Next prayer time"
-                                            return _intent
-                                        }()
                                         
-                                        IntentView(intent: intent)
                                         
                                         Button(action: {
                                             withAnimation {
@@ -415,7 +409,22 @@ struct GeneralSettingView: View {
                                     Divider()
                                         .background(Color.white)
                                     
+                                    let intent: NextPrayerIntent = {
+                                        let _intent = NextPrayerIntent()
+                                        _intent.suggestedInvocationPhrase = "Next prayer time"
+                                        return _intent
+                                    }()
+                                    
+                                    IntentView(intent: intent)
+                                        .frame(maxWidth: .infinity)
+                                        .padding(.bottom)
+                                    
+                                    Divider()
+                                        .background(Color.white)
+
+                                    
                                     Group {
+
                                     HStack { // about the developer
                                         Spacer()
                                         VStack(alignment: .center) {
@@ -426,7 +435,7 @@ struct GeneralSettingView: View {
                                         Spacer()
                                     }
                                     .padding([.top, .bottom])
-                                    
+                                                                            
                                     Button(action: { // send feedback
                                         self.isShowingMailView.toggle()
                                     }, label: {

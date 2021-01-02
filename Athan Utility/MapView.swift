@@ -12,8 +12,12 @@ import SwiftUI
 @available(iOS 13.0.0, *)
 struct MapView: UIViewRepresentable, Equatable {
     static func == (lhs: MapView, rhs: MapView) -> Bool {
-        lhs.center.latitude == rhs.center.latitude && lhs.center.longitude == rhs.center.longitude
+        let res = lhs.center.latitude == rhs.center.latitude && lhs.center.longitude == rhs.center.longitude
             && lhs.usingCurrentLocation == rhs.usingCurrentLocation
+        if res == false {
+            print("MAP NOT EQUAL")
+        }
+        return res
     }
     
     typealias UIViewType = MKMapView
@@ -37,11 +41,13 @@ struct MapView: UIViewRepresentable, Equatable {
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
 //        uiView.setCenter(center, animated: true)
         print("> map updateUIView called")
+        
         if abs(uiView.centerCoordinate.latitude - center.latitude) > 0.00001 &&
             abs(uiView.centerCoordinate.longitude - center.longitude) > 0.00001 {
             uiView.setCenter(center, animated: true)
             uiView.setRegion(MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)), animated: true)
         }
+        
         uiView.isUserInteractionEnabled = !usingCurrentLocation
     }
 
@@ -70,6 +76,8 @@ struct MapView: UIViewRepresentable, Equatable {
             mapView.mapView.addGestureRecognizer(pan)
             mapView.mapView.addGestureRecognizer(pinch)
             mapView.mapView.addGestureRecognizer(tap)
+            
+            
         }
         
         var gestureFlag = false
@@ -134,6 +142,8 @@ struct MapView: UIViewRepresentable, Equatable {
 //                }
             }
         }
+        
+        
 //
 ////            // ignore region changes that dont change center coordinate
 ////            if abs(mapView.centerCoordinate.latitude - mapView.center.latitude) > 0.00001 &&

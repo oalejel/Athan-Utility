@@ -15,8 +15,6 @@
 		3D0789732599B8C50047DD00 /* NameOverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789722599B8C50047DD00 /* NameOverridesView.swift */; };
 		3D07897A259A6E5E0047DD00 /* ColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D078979259A6E5E0047DD00 /* ColorsView.swift */; };
 		3D078985259AE0FF0047DD00 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
-		3D078992259B0C580047DD00 /* Colorful in Frameworks */ = {isa = PBXBuildFile; productRef = 3D078991259B0C580047DD00 /* Colorful */; };
-		3D07899A259B10EE0047DD00 /* ColorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3D078999259B10EE0047DD00 /* ColorKit */; };
 		3D0789A7259C23760047DD00 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
 		3D0789A8259C23760047DD00 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
 		3D0789A9259C23760047DD00 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
@@ -82,7 +80,6 @@
 		3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3D73EC3525717EB80010C47D /* PrayerSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EC3425717EB80010C47D /* PrayerSymbol.swift */; };
 		3D73EC3B25717ED20010C47D /* PrayerSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EC3425717EB80010C47D /* PrayerSymbol.swift */; };
-		3D73EC5B2571DF770010C47D /* Pages in Frameworks */ = {isa = PBXBuildFile; productRef = 3D73EC5A2571DF770010C47D /* Pages */; };
 		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
 		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
 		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
@@ -167,6 +164,8 @@
 		3DEF6478259F0AE6004EE51F /* IntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6474259F0AE6004EE51F /* IntentButton.swift */; };
 		3DEF6479259F0AE6004EE51F /* IntentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6475259F0AE6004EE51F /* IntentView.swift */; };
 		3DEF647A259F0AE6004EE51F /* AddVoiceShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6476259F0AE6004EE51F /* AddVoiceShortcutView.swift */; };
+		3DEF6487259FEC73004EE51F /* AthanPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6486259FEC73004EE51F /* AthanPlayView.swift */; };
+		3DEF648E259FF57D004EE51F /* BackwardsCompatibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */; };
 		3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DF0EE9B21038E3D00624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 /* End PBXBuildFile section */
@@ -378,6 +377,8 @@
 		3DEF6474259F0AE6004EE51F /* IntentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntentButton.swift; sourceTree = "<group>"; };
 		3DEF6475259F0AE6004EE51F /* IntentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntentView.swift; sourceTree = "<group>"; };
 		3DEF6476259F0AE6004EE51F /* AddVoiceShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVoiceShortcutView.swift; sourceTree = "<group>"; };
+		3DEF6486259FEC73004EE51F /* AthanPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanPlayView.swift; sourceTree = "<group>"; };
+		3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardsCompatibleViewController.swift; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
 		3DF0EE9921038E3400624E98 /* PrayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerType.swift; sourceTree = "<group>"; };
@@ -389,10 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */,
-				3D73EC5B2571DF770010C47D /* Pages in Frameworks */,
 				3D16F1042560851B00C78B12 /* Adhan in Frameworks */,
-				3D07899A259B10EE0047DD00 /* ColorKit in Frameworks */,
-				3D078992259B0C580047DD00 /* Colorful in Frameworks */,
 				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,6 +495,7 @@
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D15F53E242828590010C709 /* LaunchScreen.xib */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
+				3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */,
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3DAE45662560A4F100156CFF /* Helper Views */,
 				3D4416E71C05174700329AA0 /* General */,
@@ -520,6 +519,7 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3DEF6486259FEC73004EE51F /* AthanPlayView.swift */,
 				3DEF645F259EFE42004EE51F /* GradientView.swift */,
 				3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */,
 				3D0789CC259C5F0A0047DD00 /* MailView.swift */,
@@ -801,9 +801,6 @@
 			packageProductDependencies = (
 				3D16F1032560851B00C78B12 /* Adhan */,
 				3DAE4495256088DA00156CFF /* SwiftSpinner */,
-				3D73EC5A2571DF770010C47D /* Pages */,
-				3D078991259B0C580047DD00 /* Colorful */,
-				3D078999259B10EE0047DD00 /* ColorKit */,
 			);
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
@@ -957,9 +954,6 @@
 			packageReferences = (
 				3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */,
 				3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
-				3D73EC592571DF770010C47D /* XCRemoteSwiftPackageReference "Pages" */,
-				3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */,
-				3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */,
 			);
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
 			projectDirPath = "";
@@ -1065,6 +1059,7 @@
 				3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */,
 				3D0789A7259C23760047DD00 /* Strings.swift in Sources */,
 				3D73EC3525717EB80010C47D /* PrayerSymbol.swift in Sources */,
+				3DEF648E259FF57D004EE51F /* BackwardsCompatibleViewController.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3D9B9FFD2575425F00F02EFD /* SwifySuncalc.swift in Sources */,
 				3D07894C25998D8E0047DD00 /* CalculationMethodView.swift in Sources */,
@@ -1122,6 +1117,7 @@
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
 				3D0789CD259C5F0A0047DD00 /* MailView.swift in Sources */,
 				3D6105102572F21700C1D067 /* CalculationMethod+Extensions.swift in Sources */,
+				3DEF6487259FEC73004EE51F /* AthanPlayView.swift in Sources */,
 				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
 				3DEF6478259F0AE6004EE51F /* IntentButton.swift in Sources */,
 				3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */,
@@ -1768,36 +1764,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hayashi311/Color-Picker-for-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.1;
-			};
-		};
-		3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kieranb662/SwiftUI-Color-Kit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.3;
-			};
-		};
 		3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/batoulapps/adhan-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.0;
-			};
-		};
-		3D73EC592571DF770010C47D /* XCRemoteSwiftPackageReference "Pages" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/nachonavarro/Pages";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.5;
 			};
 		};
 		3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */ = {
@@ -1811,16 +1783,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3D078991259B0C580047DD00 /* Colorful */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D078990259B0C580047DD00 /* XCRemoteSwiftPackageReference "Color-Picker-for-iOS" */;
-			productName = Colorful;
-		};
-		3D078999259B10EE0047DD00 /* ColorKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D078998259B10EE0047DD00 /* XCRemoteSwiftPackageReference "SwiftUI-Color-Kit" */;
-			productName = ColorKit;
-		};
 		3D16F1032560851B00C78B12 /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
@@ -1835,11 +1797,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
 			productName = Adhan;
-		};
-		3D73EC5A2571DF770010C47D /* Pages */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D73EC592571DF770010C47D /* XCRemoteSwiftPackageReference "Pages" */;
-			productName = Pages;
 		};
 		3DAE4495256088DA00156CFF /* SwiftSpinner */ = {
 			isa = XCSwiftPackageProductDependency;

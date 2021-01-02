@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Adhan
 
 class TableController: UITableViewController {
     var cellHeight: CGFloat = 44//sill change according to height
-    var times: [Int : Date] = [:]
+    var times: PrayerTimes?
     //var highLightIndexes: [Int:UIColor] = [:]
     var highlightIndex: Int = -1
     var highlightColor = UIColor.white
@@ -58,8 +59,8 @@ class TableController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! PrayerCell
-        if times.count == 6 {
-            let p = PrayerType(rawValue: indexPath.row)!
+        if let times = times {
+            let p = Prayer(index: indexPath.row)
             let df = Global.dateFormatter
             cell.titleLabel.text = p.localizedString()
             
@@ -69,7 +70,7 @@ class TableController: UITableViewController {
                 cell.timeLabel.font = cell.timeLabel.font.withSize(12)
             }
 
-            if let prayerDate = times[p.rawValue] {
+            let prayerDate = times.time(for: p)
                 df.timeStyle = .short
                 df.dateStyle = .none
                 
@@ -92,7 +93,7 @@ class TableController: UITableViewController {
 //                }
                 
                 cell.timeLabel.text = timeString
-            }
+            
 //            df.dateFormat = "hh:mm a"
 //            c.timeLabel.text = df.string(from: date!)
 //            if (c.timeLabel.text?.count)! < 7 {
@@ -111,7 +112,7 @@ class TableController: UITableViewController {
             }
         } else {
             if indexPath.row < 6 {
-                let p = PrayerType(rawValue: indexPath.row)!
+                let p = Prayer(index: indexPath.row)
                 cell.titleLabel.text = p.localizedString()
                 cell.timeLabel.text = "0:00"
             }
@@ -120,7 +121,7 @@ class TableController: UITableViewController {
         return cell
     }
     
-    func reloadCellsWithTimes(_ t: [Int : Date]) {
+    func reloadCellsWithTimes(_ t: PrayerTimes) {
         DispatchQueue.main.async(execute: { () -> Void in
             self.times = t
             self.tableView.reloadData()

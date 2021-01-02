@@ -239,7 +239,7 @@ struct LocationSettingsView: View, Equatable {
                         HStack {
                             Spacer()
                             if usingCurrentLocation {
-                                Image(systemName: "mappin")
+                                Image(systemName: "hand.draw.fill")
                                     .foregroundColor(.gray)
                                     .padding([.leading])
                                 

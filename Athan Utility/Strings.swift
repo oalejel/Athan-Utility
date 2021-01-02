@@ -41,7 +41,7 @@ class Strings {
     static var minuteCharacter = NSLocalizedString("minute-character", comment: "")
     static var offsetDescription = NSLocalizedString("offset-description", comment: "")
 
-    static var gradient = NSLocalizedString("gradient", comment: "")
+    static var allPrayers = NSLocalizedString("All Prayers", comment: "")
     static var privacyNotes = NSLocalizedString("Privacy Notes", comment: "")
     static var sendFeedback = NSLocalizedString("Send Feedback", comment: "")
     

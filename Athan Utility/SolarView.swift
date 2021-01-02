@@ -84,6 +84,7 @@ struct SolarView: View, Equatable {
         let orange = Color(.sRGB, red: Double(255)/255, green: Double(202)/255, blue: Double(171)/255, opacity: 1)
         
         let progressOfInterest = isDragging ? manualDayProgress : dayProgress
+//        if progressOfInterest < 0 { progressOfInterest *= -1}
         switch progressOfInterest {
         case _ where progressOfInterest > sunsetPercent + 0.05:
             return (Color.clear, .white, 3)

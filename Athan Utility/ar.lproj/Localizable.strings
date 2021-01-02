@@ -125,7 +125,7 @@
 // Colors
 "static" = "ثابتة";
 "dynamic" = "ديناميكي";
-"gradient" = "الكل";
+"All Prayers" = "الكل";
 "restore.defaults" = "استعادة الافتراضي";
 "colors.ios.requirement" = "تخصيص الألوان متاح في نظام iOS 14+.";
 

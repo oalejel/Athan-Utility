@@ -1,17 +1,16 @@
 #  Todo list 
 Before updating 
+
+- solar view progress not accurately reflected in first 5th of the day when we are before fajr time 
+
+
 - must understand time zone constraint. seems that you can only guarantee ability to use app given coordinates and without wifi IFF the user has the right time zone set on their devices
     - location settings should store the time zone of a location, defaulting to cupertino's 
     - when the user enters the name of a location or gets the name of a location from a coordinate lookup, they will get a resulting time zone to use on the data
     - the time zone that is spit out should be used to adjust the components for the "current date" in the locations gradient view, which will then reconstruct a new offset date 
         - get time zone -> get components from Date() using time zone 
-- fix issue where reopening app in location view centeres the map again
-- ask OKZZ if drag shuld also do rotations
-- test out a hue of green with slight transparency in widgets
-- test manual coordinate entry breakpoint more
 - finish privacy info view
-- tapping qibla brings it into focus by switching with the moon, and shows a degrees label or something
-- app ignoring custom location and swithcing to current for some reaosn....
+
 - run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
 - if custom alert time is longer than interval between two prayers, then use 15 minutse instead
@@ -43,5 +42,7 @@ For later
 - allow users to add additional locations, and set one of the options as the "my location" for notifications and stuff
 - be more efficent with notifications by not wasting notification budget on notifications from earlier in the day 
 - consider matching baseline for prayer anme and time left in main interface
+- tapping qibla brings it into focus by switching with the moon, and shows a degrees label or something
+
 
 - get moon to load earlier 

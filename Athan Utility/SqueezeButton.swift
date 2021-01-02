@@ -118,13 +118,13 @@ public class SqueezeButton: UIButton {
     }
     
     private func drawGradient(startColor: UIColor, endColor: UIColor, angle: CGFloat) {
-        let gradient = CAGradientLayer()
-        gradient.colors = [startColor.cgColor, endColor.cgColor]
-        gradient.startPoint = CGPoint(x: 0.5 + -0.5 * sin(angle), y: 0.5 + -0.5 * cos(angle))
-        gradient.endPoint = CGPoint(x: 0.5 + 0.5 * sin(angle), y: 0.5 + 0.5 * cos(angle))
-        gradient.frame = frame
-        gradient.frame.origin = .zero
-        layer.insertSublayer(gradient, at: 0)
+        let allPrayers = CAGradientLayer()
+        allPrayers.colors = [startColor.cgColor, endColor.cgColor]
+        allPrayers.startPoint = CGPoint(x: 0.5 + -0.5 * sin(angle), y: 0.5 + -0.5 * cos(angle))
+        allPrayers.endPoint = CGPoint(x: 0.5 + 0.5 * sin(angle), y: 0.5 + 0.5 * cos(angle))
+        allPrayers.frame = frame
+        allPrayers.frame.origin = .zero
+        layer.insertSublayer(allPrayers, at: 0)
     }
 }
 

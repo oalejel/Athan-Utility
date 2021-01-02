@@ -178,7 +178,7 @@ class LocationSettings: Codable, NSCopying {
     }
     
     static func defaultSetting() -> LocationSettings {
-        return LocationSettings(locationName: "Cupertino, CA", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), timeZone: TimeZone(identifier: "America/Los_Angeles")!, useCurrentLocation: false)
+        return LocationSettings(locationName: "Edit Location", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), timeZone: TimeZone(identifier: "America/Los_Angeles")!, useCurrentLocation: false)
     }
 
     static func checkArchive() -> LocationSettings? {

@@ -175,10 +175,12 @@ struct MainSwiftUI: View {
                 }
                 
                 var nextTime: Date?
-                if tuple.1 != .isha, let nextPrayer = tuple.1?.next()  {
-                    nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
-                } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+                if tuple.1 == .isha { // if currently isha, use TOMORROW fajr
                     nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
+                } else if let nextPrayer = tuple.1?.next()  { // if prayer is non-nil (known not isha), calculate next prayer naturall
+                    nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
+                } else { // if next prayer is nil (i.e. we are on yesterday isha) use today fajr
+                    nextTime = ObservableAthanManager.shared.todayTimes.time(for: .fajr)
                 }
                 let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(-86400 / 2 + TimeInterval(manualProg * 86400))
                 return inputDate.timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
@@ -274,22 +276,28 @@ struct MainSwiftUI: View {
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading) {
                                         
-                                        PrayerSymbol(prayerType: dayProgressState.previewPrayer ?? .isha)
+                                        PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
                                             .foregroundColor(.white)
                                             .font(Font.system(.title).weight(.medium))
+//                                            .transition(.opacity)
                                         
-                                        Text((dayProgressState.previewPrayer ?? .isha).localizedOrCustomString())
+                                        Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
                                             .font(.largeTitle)
                                             .bold()
                                             .foregroundColor(.white)
+                                            .id("title" + dayProgressState.nonOptionalPreviewPrayer.stringValue())
+//                                            .transition(.opacity)
                                     }
                                     .opacity(1 - 0.8 * dragState.progress)
+//                                    .transition(.opacity)
+                                    .animation(.linear)
                                     
                                     Spacer() // space title | qibla
                                     
                                     VStack(alignment: .trailing, spacing: 0) {
                                         QiblaPointerView(angle: $manager.currentHeading,
-                                                         qiblaAngle: $manager.qiblaHeading)
+                                                         qiblaAngle: $manager.qiblaHeading,
+                                                         hidePointer: $dragState.progress)
                                             .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
                                             .opacity(1 - 0.8 * dragState.progress)
@@ -456,7 +464,7 @@ struct MainSwiftUI: View {
                                         .onEnded({ _ in
                                             if dragState.progress > 0.999 {
                                                 dragState.showCalendar = true
-                                                Timer.scheduledTimer(withTimeInterval: 0.9, repeats: false) { t in
+                                                Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
                                                     // if still on max after half a second, go back to zero
                                                     // this is necessary because swiftui has a bug where onEnded is
                                                     // not called if a sheet apepars

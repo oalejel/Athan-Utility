@@ -122,6 +122,14 @@ struct ColorsView: View {
                                 previewGradientOpacity = 1
                             }
                         }
+                        
+                    Text("Select a color picker to customize gradients.")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(nil)
+                        .font(.caption)
+                        .foregroundColor(Color(.lightText))
+                        .padding(.bottom)
+
                     
                     Picker(selection: $isDynamic.animation(.linear), label: Text("Picker"), content: {
                         ForEach([true, false], id: \.self) { dynamic in
@@ -155,24 +163,16 @@ struct ColorsView: View {
                                     let c2 = (color2Bindings[p.rawValue()]).wrappedValue
                                     
                                     HStack {
-                                        Image(systemName: "arrow.up.backward")
-                                            .foregroundColor(.white)
-                                            .padding(.leading)
-                                            .onAppear {
-                                                if p == .fajr {
-                                                    let c1 = (color1Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
-                                                    let c2 = (color2Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
-
-                                                    withAnimation(.easeIn) {
-                                                        setGradient(gradient: [c1, c2])
-                                                    }
-                                                }
-                                            }
+//                                        Image(systemName: "arrow.up.backward")
+//                                            .foregroundColor(.white)
+//                                            .padding(.leading)
+                                            
+                                        ZStack {
                                         
                                         ColorPicker(selection: color1Bindings[p.rawValue()], supportsOpacity: false) {}
-                                            .fixedSize()
-                                            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0)) // flip to deal with annoying padding inconsistenncy
-                                            //                                        .onChange(color1Bindings[p.rawValue()]) { }
+                                            .scaleEffect(CGSize(width: 1.5, height: 1.5))
+                                            .labelsHidden()
+                                            .padding()
                                             .onChange(of: c1) { v in
 //                                                print("on change 1 \(p)")
                                                 // if we dont get a suspicious start, do not worry about ignore count
@@ -194,6 +194,23 @@ struct ColorsView: View {
                                                     adjustGradient(gradient: [cc1, cc2])
                                                 }
                                             }
+                                            .onAppear {
+                                                if p == .fajr { // set the current gradient to fajr's
+                                                    let c1 = (color1Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
+                                                    let c2 = (color2Bindings[selectedPreviewPrayer.rawValue()]).wrappedValue
+
+                                                    withAnimation(.easeIn) {
+                                                        setGradient(gradient: [c1, c2])
+                                                    }
+                                                }
+                                            }
+                                            
+//                                            Image(systemName: "pencil")
+//                                                .foregroundColor(.white)
+//                                                .font(.subheadline)
+//                                                .allowsHitTesting(false)
+                                        }
+                                        
                                         Spacer()
                                         Text(p.localizedOrCustomString())
                                             .font(.headline)
@@ -201,8 +218,12 @@ struct ColorsView: View {
                                             .foregroundColor(.white)
                                             .padding()
                                         Spacer()
+                                        
+                                        ZStack {
                                         ColorPicker(selection: color2Bindings[p.rawValue()], supportsOpacity: false) {}
-                                            .fixedSize()
+                                            .scaleEffect(CGSize(width: 1.5, height: 1.5))
+                                            .labelsHidden()
+                                            .padding()
                                             .onChange(of: c2) { v in
 //                                                print("on change 2 \(p)")
                                                 if ignoreOnChange2 < 8 {
@@ -222,10 +243,17 @@ struct ColorsView: View {
                                                     adjustGradient(gradient: [cc1, cc2])
                                                 }
                                             }
+//                                            Image(systemName: "pencil")
+//                                                .foregroundColor(.white)
+//                                                .font(.subheadline)
+//                                                .allowsHitTesting(false)
+
+                                        }
+
                                         
-                                        Image(systemName: "arrow.down.right")
-                                            .foregroundColor(.white)
-                                            .padding(.trailing)
+//                                        Image(systemName: "arrow.down.right")
+//                                            .foregroundColor(.white)
+//                                            .padding(.trailing)
                                     }
                                     .background(
                                         Rectangle()
@@ -246,13 +274,14 @@ struct ColorsView: View {
                                 .transition(.opacity)
                             } else {
                                 HStack {
-                                    Image(systemName: "arrow.up.backward")
-                                        .foregroundColor(.white)
-                                        .padding(.leading)
+//                                    Image(systemName: "arrow.up.backward")
+//                                        .foregroundColor(.white)
+//                                        .padding(.leading)
+                                    ZStack {
                                     ColorPicker(selection: $nilColor1, supportsOpacity: false) {}
-                                        .fixedSize()
-                                        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0)) // flip to deal with annoying padding inconsistenncy
-                                        //                                        .onChange(color1Bindings[p.rawValue()]) { }
+                                        .scaleEffect(CGSize(width: 1.5, height: 1.5))
+                                        .labelsHidden()
+                                        .padding()
                                         .onChange(of: nilColor1) { v in
                                             //                                            print("on change 1")
                                             // if we dont get a suspicious start, do not worry about ignore count
@@ -271,19 +300,26 @@ struct ColorsView: View {
                                                 adjustGradient(gradient: [nilColor1, nilColor2])
                                             }
                                         }
+//                                        Image(systemName: "pencil")
+//                                            .foregroundColor(.white)
+//                                            .font(.subheadline)
+//                                            .allowsHitTesting(false)
+                                    }
                                     
                                     Spacer()
-                                    Text(Strings.gradient)
+                                    Text(Strings.allPrayers)
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                         .padding()
                                     Spacer()
                                     
+                                    ZStack {
                                     ColorPicker(selection: $nilColor2, supportsOpacity: false) {}
-                                        .fixedSize()
+                                        .scaleEffect(CGSize(width: 1.5, height: 1.5))
+                                        .labelsHidden()
+                                        .padding()
                                         .onChange(of: nilColor2) { v in
-                                            //                                            print("on change 2")
                                             if ignoreOnChange2 < 8 {
                                                 let rgb = UIColor(nilColor2).rgb
                                                 if rgb.0 + rgb.1 + rgb.2 < 2.8 {
@@ -298,11 +334,18 @@ struct ColorsView: View {
                                                 adjustGradient(gradient: [nilColor1, nilColor2])
                                             }
                                         }
+//                                        Image(systemName: "pencil")
+//                                            .foregroundColor(.white)
+//                                            .font(.subheadline)
+//                                            .allowsHitTesting(false)
+                                    }
+                                        
                                     
-                                    Image(systemName: "arrow.down.right")
-                                        .foregroundColor(.white)
-                                        .padding(.trailing)
+//                                    Image(systemName: "arrow.down.right")
+//                                        .foregroundColor(.white)
+//                                        .padding(.trailing)
                                 }
+                                .flipsForRightToLeftLayoutDirection(false)
                                 
                                 .background(
                                     Rectangle()

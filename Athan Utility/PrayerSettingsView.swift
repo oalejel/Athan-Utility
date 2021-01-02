@@ -32,7 +32,6 @@ struct PrayerSettingsView: View {
     @State var reminderAlertEnabled = false
     @State var reminderOffset = 15
     
-    
     var body: some View {
         // intermediate bindings taht depend on each other
         let athanOn = Binding<Bool>(get: { athanAlertEnabled }, set: {

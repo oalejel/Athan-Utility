@@ -376,6 +376,10 @@ extension AthanManager {
         // 4. reset timers
         if shouldRecalculate {
             refreshTimes()
+        }
+        
+        // only make notifications if user has edited from the default location
+        if locationSettings.locationName != "Edit Location" {
             NotificationsManager
                 .createNotifications(coordinate: locationSettings.locationCoordinate,
                                      calculationMethod: prayerSettings.calculationMethod,

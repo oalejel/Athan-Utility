@@ -24,6 +24,7 @@ struct Triangle: Shape {
 struct QiblaPointerView: View {
     @Binding var angle: Double
     @Binding var qiblaAngle: Double // correct angle, which we should highlight and vibrate for
+    @Binding var hidePointer: Double
     var body: some View {
         GeometryReader { g in
             let pointerLength = g.size.width / 6
@@ -40,13 +41,16 @@ struct QiblaPointerView: View {
                     .strokeBorder(Color.white, lineWidth: lineWidth)
                     .padding(pointerLength)
                 
-                Triangle()
-                    .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
-                    .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
-                    .foregroundColor(.white)
-//                    .rotationEffect(.degrees(angle), anchor: .center)
-                    .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
-                    .animation(Animation.default.speed(1))
+                if hidePointer < 0.001 {
+                    Triangle()
+                        .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
+                        .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
+                        .foregroundColor(.white)
+    //                    .rotationEffect(.degrees(angle), anchor: .center)
+                        .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
+                        .animation(Animation.default.speed(1))
+                        .transition(.opacity)
+                }
             }
         }
     
@@ -117,7 +121,7 @@ func getAngle() -> Angle {
 @available(iOS 13.0.0, *)
 struct QiblaPointerPreview: PreviewProvider {
     static var previews: some View {
-        QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13))
+        QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13), hidePointer: .constant(0))
             .background(Rectangle(), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }

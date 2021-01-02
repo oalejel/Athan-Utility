@@ -128,7 +128,7 @@
 // Colors
 "static" = "Static";
 "dynamic" = "Dynamic";
-"gradient" = "Gradient";
+"All Prayers" = "All Prayers";
 "restore.defaults" = "Restore Defaults";
 "colors.ios.requirement" = "Color customization only available on iOS 14+";
 

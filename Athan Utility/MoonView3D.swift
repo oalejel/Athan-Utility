@@ -160,7 +160,9 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
             offsetToAnimate = -2 * CGFloat.pi * CGFloat((1 - lastMoonPercent) + currentMoonPercent)
         }
         
-        centeredLightParent.runAction(.rotate(by: offsetToAnimate, around: .init(0, 1, 0), duration: 2)) {
+        let rot = SCNAction.rotate(by: offsetToAnimate, around: .init(0, 1, 0), duration: 2)
+        rot.timingMode = .easeInEaseOut
+        centeredLightParent.runAction(rot) {
             self.rotationSemaphore.wait()
             self.pendingRotation = false
             self.rotationSemaphore.signal()

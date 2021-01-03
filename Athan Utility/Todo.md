@@ -1,10 +1,13 @@
 #  Todo list 
 Before updating 
-
+- limit note previews to 5 seconds to fit notification limit
+- localize info.plist
 - localize siri intents
 - loop through every key in strings.swift to confirm localizations match 
+- bug where dragging fast gets us stuck in the last simulated pryaer gradient -- found that dragging in the same "current prayer" causes gradient to not change, meaning that the gradiennt view is the culprti
 - change "left til " to "until"
 - fix spanish notification strings 
+- add donation button
 - ensure notifications use the correct minute symbol
 - switch siri response accofrding to mohsen
 - solar view progress not accurately reflected in first 5th of the day when we are before fajr time 

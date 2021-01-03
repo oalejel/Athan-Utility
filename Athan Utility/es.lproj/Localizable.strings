@@ -72,7 +72,7 @@
 // MARK: - Sounds
 "athan.sound" = "Sonido de Adhan";
 "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Adhan puede reproducir más de 5 segundos cuando tu iPhone está bloqueado o Adhan Utility está abierto.";
-"iOS Default" = "iOS Default";
+"iOS Default" = "iOS Defecto";
 "Echo" = "Eco";
 "Makkah" = "Meca";
 "Madina" = "Madina";

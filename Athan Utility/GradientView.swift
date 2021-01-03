@@ -62,10 +62,13 @@ struct GradientView: View, Equatable {
                     
                     // if last fire of timer happened sufficiently long ago,
                     // we know that the state change is being caused by a change in currentPrayer
-                    if abs(lastTimerDate.timeIntervalSinceNow) > 0.02 {
+//                    if abs(lastTimerDate.timeIntervalSinceNow) > 0.02 {
+                    if currentPrayer != lastShownPrayer {
                         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
+                            
                             lastTimerDate = Date()
 //                            print("GRADIENT TIMER CALLED")
+                            lastShownPrayer = currentPrayer
                             let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
                             withAnimation {
                                 setGradient(gradient: [startColors.0, startColors.1])

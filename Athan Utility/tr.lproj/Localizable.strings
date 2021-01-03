@@ -17,7 +17,7 @@
 // MARK: - Notifications
 "Notifications" = "Notifications";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "%1$@ zamanı [%2$@]. Bildirimleri almaya devam etmek için lütfen Athan Utility'yi tekrar açın.";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "%1$@ zamanı [%2$@]. Bildirimleri almaya devam etmek için lütfen Ezan Utility'yi tekrar açın.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 // NOTE: change in conjugation for different locations means that separating the location, %2$@, will fit all cases
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ zamani : %2$@ [%3$@]";
@@ -27,100 +27,99 @@
 // MARK: - Buttons and tags
 
 "left" = ""; // only for english
-"Done" = "Done";
+"Done" = "Bitti";
 
 // MARK: - Settings
-"Settings" = "Settings";
+"Settings" = "Ayarlar";
 
-"Appearance" = "Appearance";
-"Colors" = "Colors";
-"Custom Prayer Names" = "Custom Prayer Names";
-"Change Language" = "Change Language";
+"Appearance" = "Görünüş";
+"Colors" = "Renkler";
+"Custom Prayer Names" = "Özel Dua İsimleri";
+"Change Language" = "Dili değiştir";
 
-"Developed by Omar Al-Ejel" = "Developed by Omar Al-Ejel";
-"Rate Athan Utility!" = "Rate Athan Utility!";
-"Privacy Notes" = "Privacy Notes";
-"Send Feedback" = "Send Feedback";
+"Developed by Omar Al-Ejel" = "Omar Al-Ejel tarafından geliştirildi";
+"Rate Athan Utility!" = "Ezan Utility'yi değerlendirin!";
+"Privacy Notes" = "Gizlilik";
+"Send Feedback" = "Geribildirim Yolla";
 
 
 // MARK: - Calculation Method
-"Calculation Method" = "Calculation Method";
-"Calculation methods primarily differ in Fajr and Isha sun angles." = "Calculation methods primarily differ in Fajr and Isha sun angles.";
-"Muslim World League" = "Muslim World League";
-"Egyptian" = "Egyptian General Authority of Survey";
-"Karachi" = "Karachi";
-"Umm Al-Qura" = "Umm Al-Qura";
+"Calculation Method" = "Hesaplama Yöntemi";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Hesaplama yöntemleri öncelikle Fajr ve Isha güneş açılarında farklılık gösterir.";
+"Muslim World League" = "Müslüman Dünya Ligi";
+"Egyptian" = "Mısır Genel Araştırma Kurumu";
+"Karachi" = "Karaçi";
+"Umm Al-Qura" = "Ümmü'l-Kure";
 "Dubai" = "Dubai";
-"Moonsighting Committee" = "Moonsighting Committee";
-"North America" = "North America (ISNA)";
-"Kuwait" = "Kuwait";
-"Qatar" = "Qatar";
-"Singapore" = "Singapore";
-"Tehran" = "Tehran";
-"Turkey" = "Turkey";
+"Moonsighting Committee" = "Ay Görüş Komitesi";
+"North America" = "Kuzey Amerika (ISNA)";
+"Kuwait" = "Kuveyt";
+"Qatar" = "Katar";
+"Singapore" = "Singapur";
+"Tehran" = "Tahran";
+"Turkey" = "Türkiye";
 "Other"  = "Other";
 
 
 // MARK: - Madhab
-"Madhab" = "Madhab";
+"Madhab" = "Mezhebi";
 "Hanafi" = "Hanafi";
 "Shafi" = "Shafi";
-"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Hanefi mezhebi daha sonraki Asr zamanlarını kullanır, güneş öğleden sonra gölgenin uzunluğunun bir nesnenin uzunluğunun iki katı artmasıyla gerçekleşir.";
 
 
 // MARK: - Sounds
-"athan.sound" = "Athan Sound";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.";
-"iOS Default" = "iOS Default";
+"athan.sound" = "Ezan Ses";
+"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Ezan, iPhone'unuz kilitliyken veya Athan Utility açıldığında 5 saniyeden uzun süre oynayabilir.";
+"iOS Default" = "iOS Varsayılanı";
 "Echo" = "Echo";
-"Makkah" = "Makkah";
-"Madina" = "Madina";
-"Al-Aqsa" = "Al-Aqsa";
-"Egypt" = "Egypt";
+"Makkah" = "Mekke";
+"Madina" = "Medine";
+"Al-Aqsa" = "El-Aksa";
+"Egypt" = "Mısır";
 "Abdulbaset" = "Abdulbaset";
 "Abdulghaffar" = "Abdulghaffar";
 
 
 // MARK: - Colors
-"static" = "Static";
-"dynamic" = "Dynamic";
-"All Prayers" = "All Prayers";
-"restore.defaults" = "Restore Defaults";
-"colors.ios.requirement" = "Color customization only available on iOS 14+";
-"Select a color picker to customize gradients." = "Select a color picker to customize gradients.";
+"static" = "Sabit";
+"dynamic" = "Devingen";
+"All Prayers" = "Tüm Dualar";
+"restore.defaults" = "Varsayılanları Geri Yükle";
+"colors.ios.requirement" = "Renk özelleştirme yalnızca iOS 14+ için mevcuttur.";
+"Select a color picker to customize gradients." = "Degradeleri özelleştirmek için bir renk seçici seçin.";
 
 
 // MARK: - Custom Names
-"custom.names" = "Custom Names";
-"custom.names.description" = "Replace Athan spelling used in the Athan Utility widget, notifications, and main interface.";
+"custom.names" = "Özel İsimler";
+"custom.names.description" = "Ezan Utility pencere öğesinde, bildirimlerde ve ana arayüzde kullanılan Ezan yazımını değiştirin.";
 
 
 // MARK: - Notification Settings
-"Athan Notification" = "Athan Notification";
-"Reminder Notification" = "Reminder Notification";
-"Enabled" = "Enabled";
-"Play Sound" = "Play Sound";
-"minute.offset" = "Minute Offset: %d";
-"minute-character" = "m";
-"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.";
-"offset-description" = "When minute offsets are longer than the time between %1$@ and %2$@, reminders will default to 15 minutes.";
+"Athan Notification" = "Ezan Bildirimi";
+"Reminder Notification" = "Hatırlatma Bildirimi";
+"Enabled" = "Etkin";
+"Play Sound" = "Ses Çal";
+"minute.offset" = "Dakika Ofseti: %d";
+"minute-character" = "d";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Bu namazın bildirimlerini varsayılan iOS zilini çalmaya zorlamak için \"Ses Çal\" ı devre dışı bırakın.";
 
 
 // MARK: - Location Settings
-"Set Location" = "Set Location";
-"Set Location Manually" = "Set Location Manually";
-"Use Current Location" = "Use Current Location";
-"Athan Utility does not collect user data." = "Athan Utility does not collect user data.";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data.";
-"Location Name" = "Location Name";
-"Location:" = "Location:";
+"Set Location" = "Konum Ayarla";
+"Set Location Manually" = "Manuel";
+"Use Current Location" = "Mevcut Konumu Kullan";
+"Athan Utility does not collect user data." = "Ezan Utility kullanıcı verilerini toplamaz.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Konum hizmetleri devre dışı bırakılır ve Ayarlar'dan ayarlanabilir. Ezan Utility kullanıcı verilerini toplamaz.";
+"Location Name" = "Yer ismi";
+"Location:" = "Yer:";
 
 
 // MARK: - Calendar
-"Show Calendar" = "Show Calendar";
-"Calendar" = "Calendar";
+"Show Calendar" = "Takvimi Göster";
+"Calendar" = "Takvim";
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "Open Athan Utility to set location.";
-"Use Athan Widgets to view upcoming salah times at a glance." = "Use Athan Widgets to view upcoming salah times at a glance.";
+"Open Athan Utility to set location." = "Konumu ayarlamak için Ezan Utility'yi açın.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Yaklaşan namaz vakitlerini bir bakışta görmek için Ezan Widget'larını kullanın.";

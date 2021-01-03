@@ -47,6 +47,22 @@ class DayProgressState: ObservableObject {
     
 }
 
+@available(iOS 14.0.0, *)
+struct UpdatingTextView: View {
+    @Binding var id: Int
+    var body: some View {
+        Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
+            .fontWeight(.bold)
+            .autocapitalization(.none)
+            .foregroundColor(Color(.lightText))
+            .multilineTextAlignment(.trailing)
+            .minimumScaleFactor(0.01)
+            .fixedSize(horizontal: false, vertical: true)
+            .lineLimit(1)
+            .id(id)
+    }
+}
+
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     
@@ -87,12 +103,38 @@ struct MainSwiftUI: View {
             on: .main,
             in: .common
         ).autoconnect()
+//    @State var relativeDate: Date = AthanManager.shared.guaranteedNextPrayerTime()
     @State var relativeTimeStr: String = ""
-    func relativeTime(for referenceDate: Date) -> String {
-            let formatter = RelativeDateTimeFormatter()
+    @State var relativeDateId: Int = 0
+    func relativeTime() -> String {
+//            let formatter = RelativeDateTimeFormatter()
+//
+//            formatter.unitsStyle = .full
+//            return formatter.localizedString(for: referenceDate, relativeTo: Date())
         
-            formatter.unitsStyle = .full
-            return formatter.localizedString(for: referenceDate, relativeTo: Date())
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
+                                                    to: AthanManager.shared.guaranteedNextPrayerTime())
+        
+        if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
+            // 1h 2m | 1h | 53m | 10s
+            if comps.hour == 0 && comps.minute == 0 {
+                return "<1m left"
+            } else if comps.minute == 0 { // only
+                return "\(comps.hour!)h left"
+            } else if comps.hour == 0 { // only mins
+                return "\(comps.minute!)m left"
+            }
+            return "\(comps.hour!)h \(comps.minute!)m left"
+        } else {
+            if comps.hour == 0 && comps.minute == 0 {
+                return "<1m"
+            } else if comps.minute == 0 { // only
+                return "\(comps.hour!)h"
+            } else if comps.hour == 0 { // only mins
+                return "\(comps.minute!)m"
+            }
+            return "\(comps.hour!)h \(comps.minute!)m"        }
+
     }
     
     func getPercentComplete() -> Double {
@@ -231,19 +273,27 @@ struct MainSwiftUI: View {
     var body: some View {
         ZStack {
             GeometryReader { g in
-                let timeRemainingString: String = {
-                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
-                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
-                    // 1h 2m | 1h | 53m | 10s
-                    if comps.hour == 0 && comps.minute == 0 {
-                        return "<1m left"
-                    } else if comps.minute == 0 { // only
-                        return "\(comps.hour!)h left"
-                    } else if comps.hour == 0 { // only mins
-                        return "\(comps.minute!)m left"
-                    }
-                    return "\(comps.hour!)h \(comps.minute!)m left"
-                }()
+//                let timeRemainingString: String = {
+//                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
+//                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
+//
+//                    if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
+//                        // 1h 2m | 1h | 53m | 10s
+//                        if comps.hour == 0 && comps.minute == 0 {
+//                            return "<1m left"
+//                        } else if comps.minute == 0 { // only
+//                            return "\(comps.hour!)h left"
+//                        } else if comps.hour == 0 { // only mins
+//                            return "\(comps.minute!)m left"
+//                        }
+//                        return "\(comps.hour!)h \(comps.minute!)m left"
+//                    } else {
+//                        let df = DateFormatter()
+//                        df.locale = Locale.current
+//
+//                        return ""
+//                    }
+//                }()
                 
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
@@ -303,20 +353,53 @@ struct MainSwiftUI: View {
                                             .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
                                             .opacity(1 - 0.8 * dragState.progress)
                                         
-                                        Text("\(timeRemainingString)")
-                                            .fontWeight(.bold)
-                                            .autocapitalization(.none)
-                                            .foregroundColor(Color(.lightText))
-                                            .multilineTextAlignment(.trailing)
-                                            .minimumScaleFactor(0.01)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .lineLimit(1)
-                                            .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                            .opacity(1 - 0.8 * dragState.progress)
-                                            .onReceive(secondsTimer) { _ in
-                                                print("fire second timer")
-                                                relativeTimeStr = relativeTime(for: AthanManager.shared.guaranteedNextPrayerTime())
-                                            }
+                                        
+                                        // for now, time remaining will only show seconds on ios >=14
+                                        if #available(iOS 14.0, *) {
+                                            // for now, only allow english to use "x minutes left". others will just have time stated
+//                                            Text("\(relativeTimeStr == "." ? "" : "")\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
+//                                            Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
+                                            UpdatingTextView(id: $relativeDateId)
+                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                                .opacity(1 - 0.8 * dragState.progress)
+                                                .onReceive(secondsTimer) { _ in
+                                                    print("fire second timer")
+                                                    relativeDateId += 1
+//                                                    relativeTimeStr = relativeTime() // updating this unrelated string was the only way to get this to work
+                                                }
+                                        } else {
+                                            // Fallback on earlier versions
+                                            Text("\(relativeTimeStr)")
+                                                .fontWeight(.bold)
+                                                .autocapitalization(.none)
+                                                .foregroundColor(Color(.lightText))
+                                                .multilineTextAlignment(.trailing)
+                                                .minimumScaleFactor(0.01)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .lineLimit(1)
+                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                                .opacity(1 - 0.8 * dragState.progress)
+                                                .onReceive(secondsTimer) { _ in
+                                                    print("fire second timer")
+                                                    relativeTimeStr = relativeTime()
+                                                }
+
+                                        }
+
+//                                        Text("\(timeRemainingString)")
+//                                            .fontWeight(.bold)
+//                                            .autocapitalization(.none)
+//                                            .foregroundColor(Color(.lightText))
+//                                            .multilineTextAlignment(.trailing)
+//                                            .minimumScaleFactor(0.01)
+//                                            .fixedSize(horizontal: false, vertical: true)
+//                                            .lineLimit(1)
+//                                            .opacity(dayProgressState.isDragging ? 0.2 : 1)
+//                                            .opacity(1 - 0.8 * dragState.progress)
+//                                            .onReceive(secondsTimer) { _ in
+//                                                print("fire second timer")
+//                                                relativeTimeStr = relativeTime(for: AthanManager.shared.guaranteedNextPrayerTime())
+//                                            }
                                     }
                                 }
                                                                 

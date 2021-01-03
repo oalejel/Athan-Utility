@@ -6,15 +6,137 @@
   Copyright © 2018 Omar Alejel. All rights reserved.
 */
 
+// MARK: - Prayer Names
 "Fajr" = "Fajr";
 "Sunrise" = "Sunrise";
-"Thuhr" = "Thuhr";
+"Thuhr" = "Dhuhr";
 "Asr" = "Asr";
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
-// MARK: - Old athan app
 
+// MARK: - Notifications
+"Notifications" = "Notifications";
+// Example: Time for Fajr [2:45 pm]. Please open...
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.";
+// Example: Time for Fajr in Bloomfield Hills [2:45 pm]
+"Time for %1$@ in %2$@ [%3$@]" = "Time for %1$@ in %2$@ [%3$@]";
+// Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@m until %2$@ in %3$@ [%4$@]";
+
+
+// MARK: - Buttons and tags
+
+"left" = "left"; // only for english
+"Done" = "Done";
+
+// MARK: - Settings
+"Settings" = "Settings";
+
+"Appearance" = "Appearance";
+"Colors" = "Colors";
+"Custom Prayer Names" = "Custom Prayer Names";
+"Change Language" = "Change Language";
+
+"Developed by Omar Al-Ejel" = "Developed by Omar Al-Ejel";
+"Rate Athan Utility!" = "Rate Athan Utility!";
+"Privacy Notes" = "Privacy Notes";
+"Send Feedback" = "Send Feedback";
+
+
+// MARK: - Calculation Method
+"Calculation Method" = "Calculation Method";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Calculation methods primarily differ in Fajr and Isha sun angles.";
+"Muslim World League" = "Muslim World League";
+"Egyptian" = "Egyptian General Authority of Survey";
+"Karachi" = "Karachi";
+"Umm Al-Qura" = "Umm Al-Qura";
+"Dubai" = "Dubai";
+"Moonsighting Committee" = "Moonsighting Committee";
+"North America" = "North America (ISNA)";
+"Kuwait" = "Kuwait";
+"Qatar" = "Qatar";
+"Singapore" = "Singapore";
+"Tehran" = "Tehran";
+"Turkey" = "Turkey";
+"Other"  = "Other";
+
+
+// MARK: - Madhab
+"Madhab" = "Madhab";
+"Hanafi" = "Hanafi";
+"Shafi" = "Shafi";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
+
+
+// MARK: - Sounds
+"athan.sound" = "Athan Sound";
+"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.";
+"iOS Default" = "iOS Default";
+"Echo" = "Echo";
+"Makkah" = "Makkah";
+"Madina" = "Madina";
+"Al-Aqsa" = "Al-Aqsa";
+"Egypt" = "Egypt";
+"Abdulbaset" = "Abdulbaset";
+"Abdulghaffar" = "Abdulghaffar";
+
+
+// MARK: - Colors
+"static" = "Static";
+"dynamic" = "Dynamic";
+"All Prayers" = "All Prayers";
+"restore.defaults" = "Restore Defaults";
+"colors.ios.requirement" = "Color customization only available on iOS 14+";
+"Select a color picker to customize gradients." = "Select a color picker to customize gradients.";
+
+
+// MARK: - Custom Names
+"custom.names" = "Custom Names";
+"custom.names.description" = "Replace Athan spelling used in the Athan Utility widget, notifications, and main interface.";
+
+
+// MARK: - Notification Settings
+"Athan Notification" = "Athan Notification";
+"Reminder Notification" = "Reminder Notification";
+"Enabled" = "Enabled";
+"Play Sound" = "Play Sound";
+"minute.offset" = "Minute Offset: %d";
+"minute-character" = "m";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.";
+"offset-description" = "When minute offsets are longer than the time between %1$@ and %2$@, reminders will default to 15 minutes.";
+
+
+// MARK: - Location Settings
+"Set Location" = "Set Location";
+"Set Location Manually" = "Set Location Manually";
+"Use Current Location" = "Use Current Location";
+"Athan Utility does not collect user data." = "Athan Utility does not collect user data.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data.";
+"Location Name" = "Location Name";
+"Location:" = "Location:";
+
+
+// MARK: - Calendar
+"Show Calendar" = "Show Calendar";
+"Calendar" = "Calendar";
+
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Open Athan Utility to set location.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Use Athan Widgets to view upcoming salah times at a glance.";
+
+
+
+
+
+
+
+
+
+
+
+// MARK: - Old athan app
 // single letter for fajr, shurooq, etc
 "F_letter" = "F";
 "S_letter" = "S";
@@ -27,41 +149,23 @@
 "Cancel" = "Cancel";
 "Alarms" = "Alarms";
 "Location Search" = "Location Search";
-
 // "About" used in the context of "About the app"
 "About" = "About";
-
 // alarm settings
 "Normal & 15m" = "Normal & 15m";
 "Normal Reminder" = "Normal Reminder";
 "No Reminders" = "No Reminders";
-
 "15 minute reminder" = "15 minute reminder";
 "Sounds" = "Sounds";
-
 // location settings
 "Try Location" = "Try Location";
 "Location Search" = "Location Search";
 "Locality, State, Country" = "Locality, State, Country";
 "Try again" = "Try again";
-
 "Loading Prayer Data" = "Loading Prayer Data";
-
 "Offset: %@˚" = "Offset: %@˚";
-
 "OK" = "OK";
 "Continue" = "Continue";
-
-// notification strings
-
-// Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.";
-// Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "Time for %1$@ in %2$@ [%3$@]";
-// Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m left til %2$@ in %3$@ [%4$@]" = "%1$@m left til %2$@ in %3$@ [%4$@]";
-
-
 // "What's New" listed feature titles and subtitles
 "Offline Storage" = "Offline Storage";
 "15 minute reminders" = "15 minute reminders";
@@ -76,94 +180,4 @@
 "Check current and upcoming salah times with the Notification Center widget." = "Check current and upcoming salah times with the Notification Center widget.";
 
 "A new way to visualize salah times throughout the day." = "A new way to visualize salah times throughout the day.";
-
-
-// MARK: - SwiftUI update keys
-
-"left" = "left"; // for now, dont say "10 mins left" over progress bar. just show time left
-"Done" = "Done";
-
-// Settings general view
-"Settings" = "Settings";
-
-"Appearance" = "Appearance";
-"Colors" = "Colors";
-"Custom Prayer Names" = "Custom Prayer Names";
-"Change Language" = "Change Language";
-
-// calculation methods
-"Calculation Method" = "Calculation Method";
-"Calculation methods primarily differ in Fajr and Isha sun angles." = "Calculation methods primarily differ in Fajr and Isha sun angles.";
-"Muslim World League" = "Muslim World League";
-"Egyptian" = "Egyptian";
-"Karachi" = "Karachi";
-"Umm Al-Qura" = "Umm Al-Qura";
-"Dubai" = "Dubai";
-"Moonsighting Committee" = "Moonsighting Committee";
-"North America" = "North America (ISNA)";
-"Kuwait" = "Kuwait";
-"Qatar" = "Qatar";
-"Singapore" = "Singapore";
-"Tehran" = "Tehran";
-"Turkey" = "Turkey";
-"Other"  = "Other";
-
-"Madhab" = "Madhab";
-"Hanafi" = "Hanafi";
-"Shafi" = "Shafi";
-"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
-
-"athan.sound" = "Athan Sound";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.";
-"iOS Default" = "iOS Default";
-"Echo" = "Echo";
-"Makkah" = "Makkah";
-"Madina" = "Madina";
-"Al-Aqsa" = "Al-Aqsa";
-"Egypt" = "Egypt";
-"Abdulbaset" = "Abdulbaset";
-"Abdulghaffar" = "Abdulghaffar";
-
-"Notifications" = "Notifications";
-
-// Colors
-"static" = "Static";
-"dynamic" = "Dynamic";
-"All Prayers" = "All Prayers";
-"restore.defaults" = "Restore Defaults";
-"colors.ios.requirement" = "Color customization only available on iOS 14+";
-
-// Custom Names
-"custom.names" = "Custom Names";
-"custom.names.description" = "Replace Athan spelling used in the Athan Utility widget, notifications, and main interface.";
-
-
-// Prayer Settings
-"Athan Notification" = "Athan Notification";
-"Reminder Notification" = "Reminder Notification";
-"Enabled" = "Enabled";
-"Play Sound" = "Play Sound";
-"minute.offset" = "Minute Offset: %d";
-"minute-character" = "m";
-
-"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.";
-"offset-description" = "When minute offsets are longer than the time between %1$@ and %2$@, reminders will default to 15 minutes.";
-
-"Developed by Omar Al-Ejel" = "Developed by Omar Al-Ejel";
-"Rate Athan Utility!" = "Rate Athan Utility!";
-
-"Privacy Notes" = "Privacy Notes";
-"Send Feedback" = "Send Feedback";
-
-"Set Location" = "Set Location";
-"Set Location Manually" = "Set Location Manually";
-"Use Current Location" = "Use Current Location";
-"Athan Utility does not collect user data." = "Athan Utility does not collect user data.";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data.";
-"Location Name" = "Location Name";
-"Location:" = "Location:";
-"Show Calendar" = "Show Calendar";
-"Calendar" = "Calendar";
-
-"Select a color picker to customize gradients." = "Select a color picker to customize gradients.";
-
+// MARK: - END OF OLD LOCALIZATIONS

@@ -71,5 +71,8 @@ class Strings {
     static var showCalendar = NSLocalizedString("Show Calendar", comment: "")
     static var calendar = NSLocalizedString("Calendar", comment: "")
     static var colorDescription = NSLocalizedString("Select a color picker to customize gradients.", comment: "")
+    
+    static var widgetOpenApp = NSLocalizedString("Open Athan Utility to set location.", comment: "")
+    
+    static var widgetUsefulDescription = NSLocalizedString("Use Athan Widgets to view upcoming salah times at a glance.", comment: "")
 }
-

@@ -1,23 +1,28 @@
 #  Todo list 
 Before updating 
+
+- localize siri intents
+- loop through every key in strings.swift to confirm localizations match 
 - change "left til " to "until"
+- fix spanish notification strings 
+- ensure notifications use the correct minute symbol
 - switch siri response accofrding to mohsen
 - solar view progress not accurately reflected in first 5th of the day when we are before fajr time 
 - test bad input to location search
 - show acivity indicator on location search 
 
+- change th to dh in spanish adhan localizations
+
+- MUST check: ensure that notifications run for as long as expected WITHOUT widgets enabled
+- fix non-english time left string format
+
 - must understand time zone constraint. seems that you can only guarantee ability to use app given coordinates and without wifi IFF the user has the right time zone set on their devices
-    - location settings should store the time zone of a location, defaulting to cupertino's 
-    - when the user enters the name of a location or gets the name of a location from a coordinate lookup, they will get a resulting time zone to use on the data
-    - the time zone that is spit out should be used to adjust the components for the "current date" in the locations gradient view, which will then reconstruct a new offset date 
-        - get time zone -> get components from Date() using time zone 
 - finish privacy info view
+
+
 
 - run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
-- if custom alert time is longer than interval between two prayers, then use 15 minutse instead
-- make sure notifications are always recalcualted when locations are changed
-- get timezone of custom locations OR just tell user that the times they see are according to their iphone's timezone
 - confirm that entry of coordinates when locations or maps arent allowed still works
 - ios 13 color preview should change to current prayer when changing color modes
 - find out why main ui is refreshed every second
@@ -36,7 +41,6 @@ Before updating
 - athan should play when we open the app within 1 minute of athan starting 
 - athan should be stopped whenever we modify any settings 
 - user should be able to stop athan playing 
-- solar view does not reset when i reopen app after changing time. sus?
 - consider switching row buttons to use a longpress gesture that scales intead, that way we wont have incorrect long press measurements that case them to scale unnecessarily
 
 For later 

@@ -7,13 +7,8 @@
 */
 
 
-"F_letter" = "ف";
-"S_letter" = "ش";
-"T_letter" = "ظ";
-"A_letter" = "ع";
-"M_letter" = "م";
-"I_letter" = "ع";
 
+// MARK: - Prayer Names
 "Fajr" = "فجر";
 "Sunrise" = "شروق";
 "Thuhr" = "ظهر";
@@ -21,65 +16,25 @@
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";
 
-"Cancel" = "إلغاء";
-"Alarms" = "تنبيهات";
-"Location Search" = "بحث الموقع";
 
-// "About" used in the context of "About the app"
-"About" = "About";
 
-// alarm settings
-"Normal & 15m" = "طبيعي و ١٥ دقيقة";
-"Normal Reminder" = "تذكير طبيعي";
-"No Reminders" = "لا تذكير";
 
-"15 minute reminder" = "تذكير ١٥ دقيقة";
-"Sounds" = "اصوات";
-
-// location settings
-"Try Location" = "جرب الموقع";
-"Location Search" = "بحث الموقع";
-"Locality, State, Country" = "(الانجليزية فقط) محلية ، ولاية ، بلد";
-"Try again" = "كرر";
-
-"Loading Prayer Data" = "تحميل بيانات الصلاة";
-
-"Offset: %@˚" = "%@˚";
-
-"OK" = "تام";
-"Continue" = "استمر"; // consider trying واصل
-
-// notification strings
-
+// MARK: - Notifications
+"Notifications" = "الإشعارات";
 // Example: Time for Fajr [2:45 pm]. Please open...
 "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "حان وقت ال%1$@ [%2$@]‏. الرجاء إعادة فتح ‏هذا التطبيق للاستمرار في تلقية الإشعارات.‏";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "[%3$@] %2$@ حان وقت ال%1$@ في";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m left til %2$@ in %3$@ [%4$@]" = "[%4$@] %3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "[%4$@] %3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
 
 
-// "What's New" listed feature titles and subtitles
-"Offline Storage" = "تخزين دون اتصال";
-"15 minute reminders" = "التذكير قبل ١٥ دقيقة";
-"Today Extension" = "أداة على شريط المهام";
-"Athan clock face" = "ساعة الدوام";
-"Qibla" = "القبلة";
+// MARK: - Buttons and tags
 
-"Athan Utility stores months of athan data for offline use." = "هذا التطبيق يخزن أشهر من بيانات الاذان للاستخدام دون اتصال";
-
-"Get reminded before the next athan takes place. Configurable in app preferences." = "تذكير قبل أن يبدأ الأذان القادم. يمكن اعداده في تفضيلات التطبيق";
-
-"Check current and upcoming salah times with the Notification Center widget." = "تحقق من أوقات الصلاة باستخدام أداة مركز الاشعارات";
-
-"A new way to visualize salah times throughout the day." = "طريقة جديدة لرؤية أوقات الصلاة طوال اليوم";
-
-// MARK: - SwiftUI update keys
-
-"left" = ""; // for now, dont say "10 mins left" over progress bar. just show time left
+"left" = ""; // only for english
 "Done" = "تم";
 
-// Settings general view
+// MARK: - Settings
 "Settings" = "الإعدادات";
 
 "Appearance" = "المظهر";
@@ -87,9 +42,15 @@
 "Custom Prayer Names" = "أسماء الصلاة المخصصة";
 "Change Language" = "اللغة";
 
-// calculation methods
-"Calculation Method" = "حساب اوقات الصلاة";
-"Calculation methods primarily differ in Fajr and Isha sun angles." = "تختلف طرق الحساب بشكل أساسي في زوايا شمس الفجر والعشاء";
+"Developed by Omar Al-Ejel" = "تطوير عمر العجل";
+"Rate Athan Utility!" = "Rate Athan Utility!";
+"Privacy Notes" = "خصوصية";
+"Send Feedback" = "ارسل رأيك";
+
+
+// MARK: - Calculation Method
+"Calculation Method" = "طريقة الحساب";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "تختلف الاوقات حسب الطريقة المعتمدة بحساب زوايا شمس الفجر والعشاء";
 "Muslim World League" = "رابطة العالم الاسلامي‎";
 "Egyptian" = "مصر";
 "Karachi" = "كراتشي";
@@ -104,11 +65,15 @@
 "Turkey" = "تركيا";
 "Other"  = "Other";
 
+
+// MARK: - Madhab
 "Madhab" = "مذهب";
 "Hanafi" = "حنفي";
 "Shafi" = "شافعي";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "يستخدم المذهب الحنفي أوقات العصر المتأخرة ، ويحدث عندما يزداد طول الظل بمقدار ضعف طول الجسم منذ الظهر الشمسي.";
 
+
+// MARK: - Sounds
 "athan.sound" = "صوت الأذان";
 "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "يمكن أن يلعب الأذان لمدة تزيد عن 5 ثوانٍ عندما يكون iPhone مغلقًا أو عند فتح Athan Utility.";
 "iOS Default" = "النغمة الافتراضي";
@@ -120,36 +85,36 @@
 "Abdulbaset" = "عبد الباسط";
 "Abdulghaffar" = "عبد الغفار";
 
-"Notifications" = "الإشعارات";
 
-// Colors
+// MARK: - Colors
 "static" = "ثابتة";
 "dynamic" = "ديناميكي";
 "All Prayers" = "الكل";
 "restore.defaults" = "استعادة الافتراضي";
 "colors.ios.requirement" = "تخصيص الألوان متاح في نظام iOS 14+.";
+//////
 
-// Custom Names
+"Select a color picker to customize gradients." = "Select a color picker to customize gradients.";
+//////
+
+
+// MARK: - Custom Names
 "custom.names" = "الأسماء المخصصة";
-"custom.names.description" = "استبدل الأذان الإملائي المستخدم في أداة الأذان والإشعارات والواجهة الرئيسية";
+"custom.names.description" = "الاسم المختار سيظهر في الادوات و الاشعارات والواجهة الرئيسية";
 
 
-// Prayer Settings
+// MARK: - Notification Settings
 "Athan Notification" = "إشعار الأذان";
 "Reminder Notification" = "إشعار تذكير";
 "Enabled" = "ممكن";
 "Play Sound" = "صوت";
 "minute.offset" = ": %d تعويض الدقائق";
 "minute-character" = "د";
-
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "قم بتعطيل الصوت لإجبار إعلامات الصلاة هذه على تشغيل رنين iOS الافتراضي.";
 "offset-description" = "عندما تكون تعويضات الدقائق أطول من الوقت بين %1$@ و %2$@، سيتم تعيين التذكيرات افتراضيًا على 15 دقيقة.";
 
-"Developed by Omar Al-Ejel" = "تطوير عمر العجل";
-"Rate Athan Utility!" = "Rate Athan Utility!";
-"Privacy Notes" = "خصوصية";
-"Send Feedback" = "ارسل رأيك";
 
+// MARK: - Location Settings
 "Set Location" = "تحديد المكان";
 "Set Location Manually" = "تعيين الموقع يدويا";
 "Use Current Location" = "استخدام الموقع الحالي";
@@ -157,4 +122,14 @@
 "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "خدمات الموقع معطلة ويمكن تعديلها في الإعدادات. لا تقوم أداة الأذان بجمع بيانات المستخدم.";
 "Location Name" = "اسم الموقع";
 "Location:" = "موقع:";
+
+
+// MARK: - Calendar
+"Show Calendar" = "Show Calendar";
+"Calendar" = "Calendar";
+
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Open Athan Utility to set location.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Use Athan Widgets to view upcoming salah times at a glance.";
 

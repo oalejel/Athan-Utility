@@ -157,6 +157,8 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         notificationSettingsDidSetHelper()
         locationSettingsDidSetHelper()
         
+        refreshTimes()
+        
         // if non-iOS devices, force a refresh since enteredForeground will not be called
         if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
             considerRecalculations(force: false)

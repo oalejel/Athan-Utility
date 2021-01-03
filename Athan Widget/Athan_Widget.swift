@@ -225,7 +225,7 @@ struct SmallErrorWidget: View {
                 Spacer()
                 Image(systemName: "sun.max")
                     .foregroundColor(.white)
-                Text("Open Athan Utility to load times.")
+                Text(Strings.widgetOpenApp)
                     .foregroundColor(.white)
                     .font(.body)
                     .fontWeight(.bold)
@@ -247,7 +247,7 @@ struct MediumErrorWidget: View {
                     VStack(alignment: .leading) {
                         Image(systemName: "sun.max")
                             .foregroundColor(.white)
-                        Text("Open Athan Utility to load athan times.")
+                        Text(Strings.widgetOpenApp)
                             .foregroundColor(.white)
                             .font(.body)
                             .fontWeight(.bold)
@@ -278,7 +278,7 @@ struct Athan_WidgetEntryView : View {
     var body: some View {
         // none means that we have a placeholder
         // nil means error
-        switch (family, entry.tellUserToOpenApp) {
+        switch (family, entry.tellUserToOpenApp || AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) {
         
         case (.systemSmall, true):
             SmallErrorWidget()
@@ -317,7 +317,7 @@ struct Athan_Widget: Widget {
         .configurationDisplayName("Athan Widget")
         // lets not support the large widget family for now...
         .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
-        .description("Use Athan Widgets to view upcoming salah times at a glance.")
+        .description(Strings.widgetUsefulDescription)
     }
 }
 

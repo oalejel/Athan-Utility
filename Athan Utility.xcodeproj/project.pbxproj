@@ -384,8 +384,7 @@
 		3DEF64CB25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3DEF64CC25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3DEF64CD25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
-		3DEF64D825A23F45004EE51F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
-		3DEF64DA25A23F4A004EE51F /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = tr; path = tr.lproj/Info.plist; sourceTree = "<group>"; };
+		3DEF64EA25A244B7004EE51F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
 		3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Athan Utility.entitlements"; sourceTree = "<group>"; };
 		3DF004101C14D9A6006AB3D7 /* AthanToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AthanToday.entitlements; sourceTree = "<group>"; };
 		3DF0EE9921038E3400624E98 /* PrayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerType.swift; sourceTree = "<group>"; };
@@ -1300,8 +1299,7 @@
 		3DEF64D925A23F45004EE51F /* Info.plist */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3DEF64D825A23F45004EE51F /* Base */,
-				3DEF64DA25A23F4A004EE51F /* tr */,
+				3DEF64EA25A244B7004EE51F /* en */,
 			);
 			name = Info.plist;
 			sourceTree = "<group>";

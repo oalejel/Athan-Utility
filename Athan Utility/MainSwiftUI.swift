@@ -38,7 +38,7 @@ class DayProgressState: ObservableObject {
     @Published var manualCurrentPrayerProgress: Double = 0
     @Published var truthCurrentPrayerProgress: Double = 0
     @Published var previewPrayerProgress: Double = 0 // changed by a if dragging
-//    @Published var previewPrayer: Prayer? = nil
+    //    @Published var previewPrayer: Prayer? = nil
     
     @Published var manualPrayer: Prayer? = nil
     @Published var previewPrayer: Prayer? = nil // agreement between manager and user
@@ -66,7 +66,7 @@ struct UpdatingTextView: View {
 struct MainSwiftUI: View {
     
     @EnvironmentObject var manager: ObservableAthanManager
-    
+    @Environment(\.horizontalSizeClass) var _horizontalSizeClass
     // MARK: - Combine Properties
     // necessary to allow ARC to throw out unused values
     var dragCancellable: AnyCancellable?
@@ -81,8 +81,8 @@ struct MainSwiftUI: View {
     var previewManualPrayerCancellable: AnyCancellable? // manual.prog -> intermediate manual.p
     var consensusPreviewPrayerCancellable: AnyCancellable? // manual.p + manager.p -> visible
     var nonOptionalPreviewPrayerCancellable: AnyCancellable?
-
-
+    
+    
     @ObservedObject var dragState = CalendarDragState()
     @ObservedObject var dayProgressState = DayProgressState()
     @State var minuteTimer: Timer? = nil
@@ -93,23 +93,24 @@ struct MainSwiftUI: View {
     @State var currentView = CurrentView.Main
     
     @State var todayHijriString = hijriDateString(date: Date())
-//    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
+    //    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
     
     @State var nextRoundMinuteTimer: Timer?
-//    @State var percentComplete: Double = 0.0
+    //    @State var percentComplete: Double = 0.0
     let secondsTimer = Timer.publish(
-            every: 1, // second
-            on: .main,
-            in: .common
-        ).autoconnect()
-//    @State var relativeDate: Date = AthanManager.shared.guaranteedNextPrayerTime()
+        every: 1, // second
+        on: .main,
+        in: .common
+    ).autoconnect()
+    //    @State var relativeDate: Date = AthanManager.shared.guaranteedNextPrayerTime()
     @State var relativeTimeStr: String = ""
     @State var relativeDateId: Int = 0
-    func relativeTime() -> String {
-//            let formatter = RelativeDateTimeFormatter()
-//
-//            formatter.unitsStyle = .full
-//            return formatter.localizedString(for: referenceDate, relativeTo: Date())
+    func relativeTime() -> String { // used for ios 13
+        
+        //            let formatter = RelativeDateTimeFormatter()
+        //
+        //            formatter.unitsStyle = .full
+        //            return formatter.localizedString(for: referenceDate, relativeTo: Date())
         
         let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
                                                     to: AthanManager.shared.guaranteedNextPrayerTime())
@@ -132,8 +133,9 @@ struct MainSwiftUI: View {
             } else if comps.hour == 0 { // only mins
                 return "\(comps.minute!)m"
             }
-            return "\(comps.hour!)h \(comps.minute!)m"        }
-
+            
+            return "\(comps.hour!)h \(comps.minute!)m"
+        }
     }
     
     func getPercentComplete() -> Double {
@@ -209,7 +211,7 @@ struct MainSwiftUI: View {
             .combineLatest(dayProgressState.$manualPrayer)
             .map { tuple in
                 let manualProg = Double(tuple.0)
-
+                
                 var currentTime: Date?
                 if let currentPrayer = tuple.1 {
                     currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
@@ -241,7 +243,7 @@ struct MainSwiftUI: View {
                 return tuple.0.1 // return real world truth
             }
             .assign(to: \.previewPrayerProgress, on: dayProgressState)
-                
+        
         // publish preview prayer for given date and dragging state
         previewManualPrayerCancellable = dayProgressState.$manualDayProgress
             .receive(on: RunLoop.main)
@@ -279,27 +281,27 @@ struct MainSwiftUI: View {
     var body: some View {
         ZStack {
             GeometryReader { g in
-//                let timeRemainingString: String = {
-//                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
-//                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
-//
-//                    if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
-//                        // 1h 2m | 1h | 53m | 10s
-//                        if comps.hour == 0 && comps.minute == 0 {
-//                            return "<1m left"
-//                        } else if comps.minute == 0 { // only
-//                            return "\(comps.hour!)h left"
-//                        } else if comps.hour == 0 { // only mins
-//                            return "\(comps.minute!)m left"
-//                        }
-//                        return "\(comps.hour!)h \(comps.minute!)m left"
-//                    } else {
-//                        let df = DateFormatter()
-//                        df.locale = Locale.current
-//
-//                        return ""
-//                    }
-//                }()
+                //                let timeRemainingString: String = {
+                //                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
+                //                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
+                //
+                //                    if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
+                //                        // 1h 2m | 1h | 53m | 10s
+                //                        if comps.hour == 0 && comps.minute == 0 {
+                //                            return "<1m left"
+                //                        } else if comps.minute == 0 { // only
+                //                            return "\(comps.hour!)h left"
+                //                        } else if comps.hour == 0 { // only mins
+                //                            return "\(comps.minute!)m left"
+                //                        }
+                //                        return "\(comps.hour!)h \(comps.minute!)m left"
+                //                    } else {
+                //                        let df = DateFormatter()
+                //                        df.locale = Locale.current
+                //
+                //                        return ""
+                //                    }
+                //                }()
                 
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
@@ -315,9 +317,12 @@ struct MainSwiftUI: View {
                         SettingsView(parentSession: $currentView)
                             .transition(.opacity)
                     case .Main:
-                        VStack(alignment: .leading, spacing: 0) {
-                            VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            if _horizontalSizeClass == .regular {
                                 HStack(alignment: .center, spacing: 0) {
+                                    
+                                    
+                                    
                                     
                                     Spacer()
                                     MoonView3D()
@@ -326,353 +331,375 @@ struct MainSwiftUI: View {
                                         .shadow(radius: 3)
                                         .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
-//                                    AthanPlayView(currentPrayer: manager.currentPrayer, currentPrayerDate: AthanManager.shared.guaranteedCurrentPrayerTime())
+                                    //                                    AthanPlayView(currentPrayer: manager.currentPrayer, currentPrayerDate: AthanManager.shared.guaranteedCurrentPrayerTime())
                                 }
                                 .opacity(1 - 0.8 * dragState.progress)
-                                
-                                HStack(alignment: .bottom) {
-                                    VStack(alignment: .leading) {
-                                        
-                                        PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
-                                            .foregroundColor(.white)
-                                            .font(Font.system(.title).weight(.medium))
-//                                            .transition(.opacity)
-                                        
-                                        Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
-                                            .font(.largeTitle)
-                                            .bold()
-                                            .foregroundColor(.white)
-                                            .id("title" + dayProgressState.nonOptionalPreviewPrayer.stringValue())
-//                                            .transition(.opacity)
-                                    }
-                                    .opacity(1 - 0.8 * dragState.progress)
-//                                    .transition(.opacity)
-                                    .animation(.linear)
-                                    
-                                    Spacer() // space title | qibla
-                                    
-                                    VStack(alignment: .trailing, spacing: 0) {
-                                        QiblaPointerView(angle: $manager.currentHeading,
-                                                         qiblaAngle: $manager.qiblaHeading,
-                                                         hidePointer: $dragState.progress)
-                                            .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
-                                            .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
-                                            .opacity(1 - 0.8 * dragState.progress)
-                                        
-                                        
-                                        // for now, time remaining will only show seconds on ios >=14
-                                        if #available(iOS 14.0, *) {
-                                            // for now, only allow english to use "x minutes left". others will just have time stated
-//                                            Text("\(relativeTimeStr == "." ? "" : "")\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
-//                                            Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
-                                            UpdatingTextView(id: $relativeDateId)
-                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                                .opacity(1 - 0.8 * dragState.progress)
-                                                .onReceive(secondsTimer) { _ in
-                                                    print("fire second timer")
-                                                    relativeDateId += 1
-//                                                    relativeTimeStr = relativeTime() // updating this unrelated string was the only way to get this to work
-                                                }
-                                        } else {
-                                            // Fallback on earlier versions
-                                            Text("\(relativeTimeStr)")
-                                                .fontWeight(.bold)
-                                                .autocapitalization(.none)
-                                                .foregroundColor(Color(.lightText))
-                                                .multilineTextAlignment(.trailing)
-                                                .minimumScaleFactor(0.01)
-                                                .fixedSize(horizontal: false, vertical: true)
-                                                .lineLimit(1)
-                                                .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                                .opacity(1 - 0.8 * dragState.progress)
-                                                .onReceive(secondsTimer) { _ in
-                                                    print("fire second timer")
-                                                    relativeTimeStr = relativeTime()
-                                                }
-
-                                        }
-
-//                                        Text("\(timeRemainingString)")
-//                                            .fontWeight(.bold)
-//                                            .autocapitalization(.none)
-//                                            .foregroundColor(Color(.lightText))
-//                                            .multilineTextAlignment(.trailing)
-//                                            .minimumScaleFactor(0.01)
-//                                            .fixedSize(horizontal: false, vertical: true)
-//                                            .lineLimit(1)
-//                                            .opacity(dayProgressState.isDragging ? 0.2 : 1)
-//                                            .opacity(1 - 0.8 * dragState.progress)
-//                                            .onReceive(secondsTimer) { _ in
-//                                                print("fire second timer")
-//                                                relativeTimeStr = relativeTime(for: AthanManager.shared.guaranteedNextPrayerTime())
-//                                            }
-                                    }
-                                }
-                                                                
-                                ProgressBar(progress: CGFloat(dayProgressState.previewPrayerProgress), lineWidth: 10,
-                                            outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
-                                    .onAppear(perform: { // wake update timers that will update progress
-                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                        nextRoundMinuteTimer = {
-                                            // this gets called again when the view appears -- have it invalidated on appear
-                                            let comps = Calendar.current.dateComponents([.second], from: Date())
-                                            let secondsTilNextMinute = 60 - comps.second!
-                                            return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-                                                                        repeats: false) { _ in
-                                                dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                                minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-//                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-    //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
-                                                })
-                                            }
-                                        }()
-                                    })
-                                    .onDisappear {
-                                        minuteTimer?.invalidate()
-                                        nextRoundMinuteTimer?.invalidate()
-                                        minuteTimer?.invalidate()
-                                    }
-                                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                                        minuteTimer?.invalidate()
-                                        nextRoundMinuteTimer?.invalidate()
-                                        minuteTimer?.invalidate()
-                                        print("moving to background!")
-                                    }
-                                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                                        print("Moving back to the foreground!")
-                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                        nextRoundMinuteTimer = {
-                                            // this gets called again when the view appears -- have it invalidated on appear
-                                            let comps = Calendar.current.dateComponents([.second], from: Date())
-                                            let secondsTilNextMinute = 60 - comps.second!
-                                            return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
-                                                                        repeats: false) { _ in
-                                                dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                                minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
-                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-//                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
-    //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
-                                                })
-                                            }
-                                        }()
-                                    }
-                                    .opacity(1 - 0.8 * dragState.progress)
-                                
-                                let cellFont = Font.system(size: g.size.width * 0.06)
-                                let timeFormatter: DateFormatter = {
-                                    let df = DateFormatter()
-                                    df.timeStyle = .short
-                                    if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
-                                        df.locale = Locale(identifier: "ar_SY")
-                                    }
-                                    return df
-                                }()
-                                
-                                ZStack {
-                                    Rectangle()
-                                        .foregroundColor(.init(.sRGB, white: 1, opacity: 0.000001)) // to allow gestures from middle of box
-                                    
-                                    VStack(alignment: .leading, spacing: 18) { // bottom of prayer names
-                                        ForEach(0..<6) { pIndex in
-                                            let p = Prayer(index: pIndex)
-                                            let highlight: PrayerHighlightType = {
-                                                var h = PrayerHighlightType.present
-                                                if p == dayProgressState.previewPrayer {
-                                                    h = .present
-                                                } else if dayProgressState.previewPrayer == nil {
-                                                    h = .future
-                                                } else {
-                                                    h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
-                                                }
-                                                return h
-                                            }()
+                            }
+                            VStack(alignment: .leading, spacing: 0) {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    if _horizontalSizeClass != .regular {
+                                        HStack(alignment: .center, spacing: 0) {
                                             
-                                            HStack {
-                                                Text(p.localizedOrCustomString())
-                                                    .foregroundColor(highlight.color())
-                                                    .font(cellFont)
-                                                    .bold()
+                                            
+                                            
+                                            
+                                            Spacer()
+                                            MoonView3D()
+                                                .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
+                                                .offset(y: 18)
+                                                .shadow(radius: 3)
+                                                .flipsForRightToLeftLayoutDirection(false)
+                                            Spacer()
+                                            //                                    AthanPlayView(currentPrayer: manager.currentPrayer, currentPrayerDate: AthanManager.shared.guaranteedCurrentPrayerTime())
+                                        }
+                                        .opacity(1 - 0.8 * dragState.progress)
+                                    }
+                                    
+                                    HStack(alignment: .bottom) {
+                                        VStack(alignment: .leading) {
+                                            
+                                            PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
+                                                .foregroundColor(.white)
+                                                .font(Font.system(.title).weight(.medium))
+                                            //                                            .transition(.opacity)
+                                            
+                                            Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
+                                                .font(.largeTitle)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                                .id("title" + dayProgressState.nonOptionalPreviewPrayer.stringValue())
+                                            //                                            .transition(.opacity)
+                                        }
+                                        .opacity(1 - 0.8 * dragState.progress)
+                                        //                                    .transition(.opacity)
+                                        .animation(.linear)
+                                        
+                                        Spacer() // space title | qibla
+                                        
+                                        VStack(alignment: .trailing, spacing: 0) {
+                                            QiblaPointerView(angle: $manager.currentHeading,
+                                                             qiblaAngle: $manager.qiblaHeading,
+                                                             hidePointer: $dragState.progress)
+                                                .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
+                                                .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
+                                                .opacity(1 - 0.8 * dragState.progress)
+                                            
+                                            
+                                            // for now, time remaining will only show seconds on ios >=14
+                                            if #available(iOS 14.0, *) {
+                                                // for now, only allow english to use "x minutes left". others will just have time stated
+                                                //                                            Text("\(relativeTimeStr == "." ? "" : "")\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
+                                                //                                            Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
+                                                UpdatingTextView(id: $relativeDateId)
+                                                    .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                                    .opacity(1 - 0.8 * dragState.progress)
+                                                    .onReceive(secondsTimer) { _ in
+                                                        print("fire second timer")
+                                                        relativeDateId += 1
+                                                        //                                                    relativeTimeStr = relativeTime() // updating this unrelated string was the only way to get this to work
+                                                    }
+                                            } else {
+                                                // Fallback on earlier versions
+                                                Text("\(relativeTimeStr)")
+                                                    .fontWeight(.bold)
+                                                    .autocapitalization(.none)
+                                                    .foregroundColor(Color(.lightText))
+                                                    .multilineTextAlignment(.trailing)
+                                                    .minimumScaleFactor(0.01)
+                                                    .fixedSize(horizontal: false, vertical: true)
+                                                    .lineLimit(1)
+                                                    .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                                    .opacity(1 - 0.8 * dragState.progress)
+                                                    .onReceive(secondsTimer) { _ in
+                                                        print("fire second timer")
+                                                        relativeTimeStr = relativeTime()
+                                                    }
                                                 
-                                                Spacer()
-                                                Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
-                                                    // replace 3 with current prayer index
-                                                    .foregroundColor(highlight.color())
-                                                    .font(cellFont)
-                                                    .bold()
                                             }
-                                            .opacity(min(1, 1 - 0.8 * dragState.progress))
-                                            .rotation3DEffect(
-                                                Angle(degrees: dragState.progress * 90 - 0.001),
-                                                axis: (x: 1, y: 0, z: 0.0),
-                                                anchor: .top,
-                                                anchorZ: 0,
-                                                perspective: 0.1
-                                            )
-                                            .animation(.linear(duration: 0.2))
+                                            
+                                            //                                        Text("\(timeRemainingString)")
+                                            //                                            .fontWeight(.bold)
+                                            //                                            .autocapitalization(.none)
+                                            //                                            .foregroundColor(Color(.lightText))
+                                            //                                            .multilineTextAlignment(.trailing)
+                                            //                                            .minimumScaleFactor(0.01)
+                                            //                                            .fixedSize(horizontal: false, vertical: true)
+                                            //                                            .lineLimit(1)
+                                            //                                            .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                                            //                                            .opacity(1 - 0.8 * dragState.progress)
+                                            //                                            .onReceive(secondsTimer) { _ in
+                                            //                                                print("fire second timer")
+                                            //                                                relativeTimeStr = relativeTime(for: AthanManager.shared.guaranteedNextPrayerTime())
+                                            //                                            }
                                         }
                                     }
                                     
-                                    VStack(alignment: .center, spacing: 18) {
-                                        ActivityIndicator(isAnimating: $dragState.showCalendar, style: .white)
-                                            .foregroundColor(dragState.showCalendar ? Color(.lightText) : Color.clear)
-
-                                        Text(Strings.showCalendar)
-                                            .font(Font.body.bold())
-                                            .scaleEffect(dragState.progress > 0.999 ? 1.3 : 1)
-                                            .animation(.spring())
-                                        
-                                        Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle")
-                                            .font(.title)
-                                        Image(systemName: dragState.dragIncrement > 1 ? "circle.fill" : "circle")
-                                            .font(Font.body.bold())
-                                        Image(systemName: dragState.dragIncrement > 0 ? "circle.fill" : "circle")
-                                            .font(Font.body.bold())
-                                    }
-                                    .foregroundColor(Color(.lightText))
-                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
-                                    .animation(.linear(duration: 0.2))
+                                    ProgressBar(progress: CGFloat(dayProgressState.previewPrayerProgress), lineWidth: 10,
+                                                outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
+                                        .onAppear(perform: { // wake update timers that will update progress
+                                            dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                            nextRoundMinuteTimer = {
+                                                // this gets called again when the view appears -- have it invalidated on appear
+                                                let comps = Calendar.current.dateComponents([.second], from: Date())
+                                                let secondsTilNextMinute = 60 - comps.second!
+                                                return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+                                                                            repeats: false) { _ in
+                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                    minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+                                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                        //                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+                                                        //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+                                                    })
+                                                }
+                                            }()
+                                        })
+                                        .onDisappear {
+                                            minuteTimer?.invalidate()
+                                            nextRoundMinuteTimer?.invalidate()
+                                            minuteTimer?.invalidate()
+                                        }
+                                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                                            minuteTimer?.invalidate()
+                                            nextRoundMinuteTimer?.invalidate()
+                                            minuteTimer?.invalidate()
+                                            print("moving to background!")
+                                        }
+                                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                                            print("Moving back to the foreground!")
+                                            dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                            nextRoundMinuteTimer = {
+                                                // this gets called again when the view appears -- have it invalidated on appear
+                                                let comps = Calendar.current.dateComponents([.second], from: Date())
+                                                let secondsTilNextMinute = 60 - comps.second!
+                                                return Timer.scheduledTimer(withTimeInterval: TimeInterval(secondsTilNextMinute),
+                                                                            repeats: false) { _ in
+                                                    dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                    minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
+                                                        dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
+                                                        //                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+                                                        //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
+                                                    })
+                                                }
+                                            }()
+                                        }
+                                        .opacity(1 - 0.8 * dragState.progress)
                                     
-                                    //                                    HStack {
-                                    //                                        Text("text")
-                                    //                                            .foregroundColor(PrayerHighlightType.future.color())
-                                    //                                            .font(cellFont)
-                                    //                                            .bold()
-                                    //                                        Spacer()
-                                    //                                    }
-                                    //                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
-                                    //                                    .rotation3DEffect(
-                                    //                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
-                                    //                                        axis: (x: 1, y: 0, z: 0.0),
-                                    //                                        anchor: .bottom,
-                                    //                                        anchorZ: 0,
-                                    //                                        perspective: 0.1
-                                    //                                    )
-                                }
-                                .gesture(
-                                    DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
-                                        .onEnded({ _ in
-                                            if dragState.progress > 0.999 {
-                                                dragState.showCalendar = true
-                                                Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
-                                                    // if still on max after half a second, go back to zero
-                                                    // this is necessary because swiftui has a bug where onEnded is
-                                                    // not called if a sheet apepars
-                                                    if dragState.progress > 0.999 {
+                                    let cellFont = Font.system(size: min(50, g.size.width * 0.06))
+                                    let timeFormatter: DateFormatter = {
+                                        let df = DateFormatter()
+                                        df.timeStyle = .short
+                                        if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
+                                            df.locale = Locale(identifier: "ar_SY")
+                                        }
+                                        return df
+                                    }()
+                                    
+                                    ZStack {
+                                        Rectangle()
+                                            .foregroundColor(.init(.sRGB, white: 1, opacity: 0.000001)) // to allow gestures from middle of box
+                                        
+                                        VStack(alignment: .leading, spacing: 18) { // bottom of prayer names
+                                            ForEach(0..<6) { pIndex in
+                                                let p = Prayer(index: pIndex)
+                                                let highlight: PrayerHighlightType = {
+                                                    var h = PrayerHighlightType.present
+                                                    if p == dayProgressState.previewPrayer {
+                                                        h = .present
+                                                    } else if dayProgressState.previewPrayer == nil {
+                                                        h = .future
+                                                    } else {
+                                                        h = p.rawValue() < manager.currentPrayer.rawValue() ? .past : .future
+                                                    }
+                                                    return h
+                                                }()
+                                                
+                                                HStack {
+                                                    Text(p.localizedOrCustomString())
+                                                        .foregroundColor(highlight.color())
+                                                        .font(cellFont)
+                                                        .bold()
+                                                    
+                                                    Spacer()
+                                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
+                                                        // replace 3 with current prayer index
+                                                        .foregroundColor(highlight.color())
+                                                        .font(cellFont)
+                                                        .bold()
+                                                }
+                                                .opacity(min(1, 1 - 0.8 * dragState.progress))
+                                                .rotation3DEffect(
+                                                    Angle(degrees: dragState.progress * 90 - 0.001),
+                                                    axis: (x: 1, y: 0, z: 0.0),
+                                                    anchor: .top,
+                                                    anchorZ: 0,
+                                                    perspective: 0.1
+                                                )
+                                                .animation(.linear(duration: 0.2))
+                                            }
+                                        }
+                                        
+                                        VStack(alignment: .center, spacing: 18) {
+                                            ActivityIndicator(isAnimating: $dragState.showCalendar, style: .white)
+                                                .foregroundColor(dragState.showCalendar ? Color(.lightText) : Color.clear)
+                                            
+                                            Text(Strings.showCalendar)
+                                                .font(Font.body.bold())
+                                                .scaleEffect(dragState.progress > 0.999 ? 1.3 : 1)
+                                                .animation(.spring())
+                                            
+                                            Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle")
+                                                .font(.title)
+                                            Image(systemName: dragState.dragIncrement > 1 ? "circle.fill" : "circle")
+                                                .font(Font.body.bold())
+                                            Image(systemName: dragState.dragIncrement > 0 ? "circle.fill" : "circle")
+                                                .font(Font.body.bold())
+                                        }
+                                        .foregroundColor(Color(.lightText))
+                                        .opacity(max(0, dragState.progress * 1.3 - 0.3))
+                                        .animation(.linear(duration: 0.2))
+                                        
+                                        //                                    HStack {
+                                        //                                        Text("text")
+                                        //                                            .foregroundColor(PrayerHighlightType.future.color())
+                                        //                                            .font(cellFont)
+                                        //                                            .bold()
+                                        //                                        Spacer()
+                                        //                                    }
+                                        //                                    .opacity(max(0, tomorrowPeekProgress * 1.3 - 0.3))
+                                        //                                    .rotation3DEffect(
+                                        //                                        Angle(degrees: max(0, tomorrowPeekProgress - 0.3) * 100 - 90),
+                                        //                                        axis: (x: 1, y: 0, z: 0.0),
+                                        //                                        anchor: .bottom,
+                                        //                                        anchorZ: 0,
+                                        //                                        perspective: 0.1
+                                        //                                    )
+                                    }
+                                    .gesture(
+                                        DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
+                                            .onEnded({ _ in
+                                                if dragState.progress > 0.999 {
+                                                    dragState.showCalendar = true
+                                                    Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
+                                                        // if still on max after half a second, go back to zero
+                                                        // this is necessary because swiftui has a bug where onEnded is
+                                                        // not called if a sheet apepars
+                                                        if dragState.progress > 0.999 {
+                                                            dragState.progress = 0
+                                                        }
+                                                    }
+                                                } else {
+                                                    withAnimation {
                                                         dragState.progress = 0
                                                     }
                                                 }
-                                            } else {
+                                            })
+                                            .updating($dragOffset, body: { (value, state, transaction) in
+                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
+                                            })
+                                    )
+                                }
+                                .padding([.leading, .trailing])
+                                .padding([.leading, .trailing])
+                                
+                                ZStack {
+                                    
+                                    VStack {
+                                        Spacer()
+                                        HStack(alignment: .center) {
+                                            // Location button
+                                            Button(action: {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
-                                                    dragState.progress = 0
+                                                    currentView = (currentView != .Main) ? .Main : .Location
+                                                }
+                                            }) {
+                                                HStack(spacing: 1) {
+                                                    Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation ? "location.fill" : "location.slash")
+                                                        .foregroundColor(Color(.lightText))
+                                                        .font(Font.body)
+                                                    
+                                                    Text("\(manager.locationName)")
+                                                        .foregroundColor(Color(.lightText))
+                                                        .font(Font.body.weight(.bold))
+                                                        .lineLimit(1)
+                                                    
                                                 }
                                             }
-                                        })
-                                        .updating($dragOffset, body: { (value, state, transaction) in
-                                            dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
-                                        })
-                                )
-                            }
-                            .padding([.leading, .trailing])
-                            .padding([.leading, .trailing])
-                            
-                            ZStack {
-                                
-                                VStack {
-                                    Spacer()
-                                    HStack(alignment: .center) {
-                                        // Location button
-                                        Button(action: {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            withAnimation {
-                                                currentView = (currentView != .Main) ? .Main : .Location
+                                            .padding(12)
+                                            .offset(x: -14, y: 12)
+                                            
+                                            Spacer()
+                                            
+                                            // Settings button
+                                            Button(action: {
+                                                let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                                lightImpactFeedbackGenerator.impactOccurred()
+                                                withAnimation {
+                                                    currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                                }
+                                            }) {
+                                                Image(systemName: "gear")
+                                                    .padding(12)
                                             }
-                                        }) {
-                                            HStack(spacing: 1) {
-                                                Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation ? "location.fill" : "location.slash")
-                                                    .foregroundColor(Color(.lightText))
-                                                    .font(Font.body)
-                                                
-                                                Text("\(manager.locationName)")
-                                                    .foregroundColor(Color(.lightText))
-                                                    .font(Font.body.weight(.bold))
-                                                    .lineLimit(1)
-                                                
-                                            }
-                                        }
-                                        .padding(12)
-                                        .offset(x: -14, y: 12)
-                                        
-                                        Spacer()
-                                        
-                                        // Settings button
-                                        Button(action: {
-                                            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                                            lightImpactFeedbackGenerator.impactOccurred()
-                                            withAnimation {
-                                                currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
-                                            }
-                                        }) {
-                                            Image(systemName: "gear")
-                                                .padding(12)
-                                        }
-                                        .foregroundColor(Color(.lightText))
-                                        .font(Font.body.weight(.bold))
-                                        .offset(x: 12, y: 12)
-                                    }
-                                    .padding([.leading, .trailing, .bottom])
-                                    .padding([.leading, .trailing, .bottom])
-                                }
-                                .opacity(1 - 0.8 * dragState.progress)
-                                
-                                
-                                VStack {
-                                    ZStack() {
-                                        Text(MainSwiftUI.hijriDateString(date: Date()))
-                                            .fontWeight(.bold)
-                                            .lineLimit(1)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .padding([.trailing, .leading])
                                             .foregroundColor(Color(.lightText))
-//                                            .offset(y: 24)
-                                            .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
-                                                
-                                        // calculate progress of day
-                                        let _dayProg: CGFloat = {
-                                            var todayDhuhrReference = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
-                                            if todayDhuhrReference < 0 {
-                                                todayDhuhrReference += 1
-                                            }
-                                            return todayDhuhrReference
-                                        }()
-                                        SolarView(dayProgress: .constant(_dayProg),
-                                                  manualDayProgress: $dayProgressState.manualDayProgress,
-                                                  isDragging: $dayProgressState.isDragging,
-                                                  sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
-                                                  hidingCircle: true,
-                                                  dhuhrTime: manager.todayTimes.dhuhr,
-                                                  sunriseTime: manager.todayTimes.sunrise)
-                                            .equatable()
-                                            .onDisappear {
-                                                dayProgressState.manualDayProgress = 0
-                                                dayProgressState.isDragging = false
-                                            }
+                                            .font(Font.body.weight(.bold))
+                                            .offset(x: 12, y: 12)
+                                        }
+                                        .padding([.leading, .trailing, .bottom])
+                                        .padding([.leading, .trailing, .bottom])
                                     }
                                     .opacity(1 - 0.8 * dragState.progress)
                                     
-                                    // dummy stack used for proper offset
-                                    HStack(alignment: .center) {
-                                        Text("Spacer")
-                                            .font(Font.body.weight(.bold))
-                                        Spacer()
-                                        Image(systemName: "gear")
-                                            .font(Font.body.weight(.bold))
+                                    
+                                    VStack {
+                                        ZStack() {
+                                            Text(MainSwiftUI.hijriDateString(date: Date()))
+                                                .fontWeight(.bold)
+                                                .lineLimit(1)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .padding([.trailing, .leading])
+                                                .foregroundColor(Color(.lightText))
+                                                //                                            .offset(y: 24)
+                                                .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
+                                            
+                                            // calculate progress of day
+                                            let _dayProg: CGFloat = {
+                                                var todayDhuhrReference = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
+                                                if todayDhuhrReference < 0 {
+                                                    todayDhuhrReference += 1
+                                                }
+                                                return todayDhuhrReference
+                                            }()
+                                            SolarView(dayProgress: .constant(_dayProg),
+                                                      manualDayProgress: $dayProgressState.manualDayProgress,
+                                                      isDragging: $dayProgressState.isDragging,
+                                                      sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+                                                      hidingCircle: true,
+                                                      dhuhrTime: manager.todayTimes.dhuhr,
+                                                      sunriseTime: manager.todayTimes.sunrise)
+                                                .equatable()
+                                                .onDisappear {
+                                                    dayProgressState.manualDayProgress = 0
+                                                    dayProgressState.isDragging = false
+                                                }
+                                        }
+                                        .opacity(1 - 0.8 * dragState.progress)
+                                        
+                                        // dummy stack used for proper offset
+                                        HStack(alignment: .center) {
+                                            Text("Spacer")
+                                                .font(Font.body.weight(.bold))
+                                            Spacer()
+                                            Image(systemName: "gear")
+                                                .font(Font.body.weight(.bold))
+                                        }
+                                        .opacity(0)
+                                        .padding([.leading, .trailing, .bottom])
+                                        .padding([.leading, .trailing, .bottom])
                                     }
-                                    .opacity(0)
-                                    .padding([.leading, .trailing, .bottom])
-                                    .padding([.leading, .trailing, .bottom])
                                 }
                             }
+                            .padding(_horizontalSizeClass == .regular ? 24 : 0)
                         }
                         .transition(.opacity)
                         .sheet(isPresented: $dragState.showCalendar) { // set highest progress back to 0 when we know the view disappeared

@@ -144,7 +144,7 @@ struct SolarView: View, Equatable {
                     Rectangle()
                         .foregroundColor(.init(.sRGB, white: 1, opacity: 0.00000000001)) // hack to avoid full transparency and allow input
                         .gesture(
-                            DragGesture(minimumDistance: 2, coordinateSpace: .global)
+                            DragGesture(minimumDistance: 2, coordinateSpace: .local)
                                 .onChanged({ value in
                                     withAnimation(.linear(duration: 0.3)) {
                                         isDragging = true

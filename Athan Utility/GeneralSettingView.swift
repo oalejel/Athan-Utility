@@ -407,27 +407,31 @@ struct GeneralSettingView: View {
                                     }
                                     
                                     
-                                    let intent: NextPrayerIntent = {
-                                        let _intent = NextPrayerIntent()
-                                        _intent.suggestedInvocationPhrase = "Next prayer time"
-                                        return _intent
-                                    }()
+//                                    let intent: NextPrayerIntent = {
+//                                        let _intent = NextPrayerIntent()
+//                                        _intent.suggestedInvocationPhrase = "Next prayer time"
+//                                        return _intent
+//                                    }()
                                     
                                     VStack(spacing: 8) {
                                     Divider()
                                         .background(Color.white)
 
-                                    HStack(alignment: .center) {
+//                                    HStack(alignment: .center) {
 
-                                        Text("Siri")
-                                            .font(.headline)
-                                            .bold()
-                                            .foregroundColor(.white)
-//                                            .padding(.leading, 2)
-                                        Spacer()
-                                        IntentView(intent: intent)
+//                                        Text("Siri")
+//                                            .font(.headline)
+//                                            .bold()
+//                                            .foregroundColor(.white)
+////                                            .padding(.leading, 2)
+//                                        Spacer()
+//                                        IntentView()
+                                        IntentIntegratedController()
+                                            .frame(height: 50)
+//                                            .border(Color.green)
+//                                            .fixedSize(horizontal: true, vertical: false)
 
-                                    }
+//                                    }
                                     Divider()
                                         .background(Color.white)
                                     }

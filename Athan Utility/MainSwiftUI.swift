@@ -145,12 +145,13 @@ struct MainSwiftUI: View {
         }
         
         var nextTime: Date?
-        if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer() {
-            nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
-        } else { // if next prayer is nil (i.e. we are on isha) use tomorrow fajr
+        if ObservableAthanManager.shared.todayTimes.nextPrayer() == .isha { // if currently isha, use TOMORROW fajr
             nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
+        } else if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer() { // if prayer is non-nil (known not isha), calculate next prayer naturally
+            nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
+        } else { // if next prayer is nil (i.e. we are on yesterday isha) use today fajr
+            nextTime = ObservableAthanManager.shared.todayTimes.time(for: .fajr)
         }
-        
         return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
     }
     
@@ -245,6 +246,10 @@ struct MainSwiftUI: View {
         previewManualPrayerCancellable = dayProgressState.$manualDayProgress
             .receive(on: RunLoop.main)
             .map { manualProg in
+                // reference point dhuhr changes based on which day is closer.
+                // if we are 51% away from "today dhuhr," that's because we still
+                // haven't reached yesterday's solar midnight
+                
                 let inputDate = ObservableAthanManager.shared.todayTimes.dhuhr.addingTimeInterval(TimeInterval((86400 / -2) + manualProg * 86400))
                 return ObservableAthanManager.shared.todayTimes.currentPrayer(at: inputDate)
             }
@@ -631,57 +636,16 @@ struct MainSwiftUI: View {
                                             .foregroundColor(Color(.lightText))
 //                                            .offset(y: 24)
                                             .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
-
-//                                        VStack(alignment: .center) {
-//                                            ZStack {
-//                                                    .opacity(min(1, 1 - 0.8 * dragState.progress))
-//                                                    .rotation3DEffect(
-//                                                        Angle(degrees: dragState.progress * 90 - 0.001),
-//                                                        axis: (x: 1, y: 0, z: 0.0),
-//                                                        anchor: .top,
-//                                                        anchorZ: 0,
-//                                                        perspective: 0.1
-//                                                    )
-//                                                    .animation(.linear(duration: 0.05))
                                                 
-//                                                Text("\(tomorrowHijriString)")
-//                                                    .fontWeight(.bold)
-//                                                    .lineLimit(1)
-//                                                    .fixedSize(horizontal: false, vertical: true)
-//                                                    .padding([.trailing, .leading])
-//                                                    .foregroundColor(.white)
-//                                                    .opacity(max(0, dragState.progress * 1.3 - 0.3))
-//                                                    .rotation3DEffect(
-//                                                        Angle(degrees: max(0, dragState.progress - 0.3) * 90 - 90),
-//                                                        axis: (x: 1, y: 0, z: 0.0),
-//                                                        anchor: .bottom,
-//                                                        anchorZ: 0,
-//                                                        perspective: 0.1
-//                                                    )
-//                                                    .animation(.linear(duration: 0.05))
-                                                
-//                                            }
-                                            //                                            Text("Tap the Hijri date to view\nan athan times table.")
-                                            //                                                .foregroundColor(.white)
-                                            //                                                .font(.subheadline)
-                                            
-//                                        }
-                                        
-                                        // include percentComplete * 0 to trigger refresh based on Date()
-                                        
-                                        
-                                        
-//                                SolarView(
-//                                    dayProgress: CGFloat(0 * percentComplete) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
-//                                          sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
-//                                    manualDayProgress: dayProgressState.manualDayProgress,
-//                                    isDragging: dayProgressState.isDragging,
-//                                    dhuhrTime: manager.todayTimes.dhuhr,
-//                                    sunriseTime: manager.todayTimes.sunrise
-//                                )
-//                                    .equatable()
-//                                        SolarView(dayProgress: CGFloat(0.0000001 * dayProgressState.truthCurrentPrayerProgress) + CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400),
-                                        SolarView(dayProgress: .constant(CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)),
+                                        // calculate progress of day
+                                        let _dayProg: CGFloat = {
+                                            var todayDhuhrReference = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
+                                            if todayDhuhrReference < 0 {
+                                                todayDhuhrReference += 1
+                                            }
+                                            return todayDhuhrReference
+                                        }()
+                                        SolarView(dayProgress: .constant(_dayProg),
                                                   manualDayProgress: $dayProgressState.manualDayProgress,
                                                   isDragging: $dayProgressState.isDragging,
                                                   sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),

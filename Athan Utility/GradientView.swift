@@ -76,6 +76,21 @@ struct GradientView: View, Equatable {
                         })
                     }
                 }
+                .onValueChanged(appearance) { app in
+                    if abs(lastTimerDate.timeIntervalSinceNow) > 0.012 {
+                        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
+                            
+                            lastTimerDate = Date()
+    //                            print("GRADIENT TIMER CALLED")
+                            lastShownPrayer = currentPrayer
+                            let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
+                            withAnimation {
+                                setGradient(gradient: [startColors.0, startColors.1])
+                            }
+                        })
+                    }
+
+                }
         }
         
         //                                                    let settings = AthanManager.shared.appearanceSettings

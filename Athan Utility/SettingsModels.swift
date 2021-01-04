@@ -225,7 +225,11 @@ class LocationSettings: Codable, NSCopying {
     }
 }
 
-class AppearanceSettings: Codable, NSCopying {
+class AppearanceSettings: Codable, NSCopying, Equatable {
+    static func == (lhs: AppearanceSettings, rhs: AppearanceSettings) -> Bool {
+        lhs.id == rhs.id && lhs.isDynamic == rhs.isDynamic
+    }
+    
     
     static var shared: AppearanceSettings = {
         if let archive = checkArchive() {

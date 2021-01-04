@@ -9,6 +9,7 @@
 import SwiftUI
 import Adhan
 import Combine
+import StoreKit
 
 enum CurrentView {
     case Main, Settings, Location
@@ -147,7 +148,7 @@ struct MainSwiftUI: View {
         }
         
         var nextTime: Date?
-        if ObservableAthanManager.shared.todayTimes.nextPrayer() == .isha { // if currently isha, use TOMORROW fajr
+        if ObservableAthanManager.shared.todayTimes.currentPrayer() == .isha { // if currently isha, use TOMORROW fajr
             nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
         } else if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer() { // if prayer is non-nil (known not isha), calculate next prayer naturally
             nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
@@ -173,7 +174,6 @@ struct MainSwiftUI: View {
     
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
-    
     
     init() {
         dragCancellable = dragState.$progress
@@ -468,8 +468,16 @@ struct MainSwiftUI: View {
                                             print("Moving back to the foreground!")
                                             
                                             // if user has entered the app from a blank state exactly 5 times, ask them if they are willing to review the app
-                                            
-                                            
+                                            let checkCount = UserDefaults.standard.integer(forKey: "rating-req-ct")
+                                            if checkCount == 3 {
+                                                Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
+                                                    SKStoreReviewController.requestReview()
+                                                }
+                                                UserDefaults.standard.setValue(checkCount + 1, forKey: "rating-req-ct")
+                                            } else if checkCount < 3 {
+                                                UserDefaults.standard.setValue(checkCount + 1, forKey: "rating-req-ct")
+                                            }
+
                                             
                                             dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                             nextRoundMinuteTimer = {

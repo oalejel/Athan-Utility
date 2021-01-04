@@ -79,7 +79,7 @@ class NotificationSettings: Codable, NSCopying {
         case abdulbaset
         case abdulghaffar
         
-        func localizedString() -> String { #warning("make this use localized strings")
+        func localizedString() -> String { 
             switch self {
             case .ios_default: return NSLocalizedString("iOS Default", comment: "")
                 case .echo: return NSLocalizedString("Echo", comment: "")
@@ -110,7 +110,7 @@ class NotificationSettings: Codable, NSCopying {
         if let archive = checkArchive() {
             return archive
         } else {
-            let defaultSettings = NotificationSettings(settings: [:], selectedSound: .abdulghaffar)
+            let defaultSettings = NotificationSettings(settings: [:], selectedSound: .alaqsa)
             defaultSettings.settings = [
                 .fajr : AlarmSetting(),
                 .sunrise : AlarmSetting(),

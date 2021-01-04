@@ -161,7 +161,6 @@
 		3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */; };
 		3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF645F259EFE42004EE51F /* GradientView.swift */; };
 		3DEF6487259FEC73004EE51F /* AthanPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6486259FEC73004EE51F /* AthanPlayView.swift */; };
-		3DEF648E259FF57D004EE51F /* BackwardsCompatibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */; };
 		3DEF64F725A245C9004EE51F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DEF64F925A245C9004EE51F /* InfoPlist.strings */; };
 		3DEF654125A2B0FF004EE51F /* NewSiri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF654025A2B0FF004EE51F /* NewSiri.swift */; };
 		3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
@@ -371,7 +370,6 @@
 		3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationSettingController.swift; sourceTree = "<group>"; };
 		3DEF645F259EFE42004EE51F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		3DEF6486259FEC73004EE51F /* AthanPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanPlayView.swift; sourceTree = "<group>"; };
-		3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackwardsCompatibleViewController.swift; sourceTree = "<group>"; };
 		3DEF64C825A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		3DEF64C925A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3DEF64CA25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -502,7 +500,6 @@
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
 				3D15F53E242828590010C709 /* LaunchScreen.xib */,
 				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
-				3DEF648D259FF57D004EE51F /* BackwardsCompatibleViewController.swift */,
 				3D07DA821BDC58B60001EFE4 /* Main.storyboard */,
 				3DAE45662560A4F100156CFF /* Helper Views */,
 				3D4416E71C05174700329AA0 /* General */,
@@ -1065,7 +1062,6 @@
 				3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */,
 				3D0789A7259C23760047DD00 /* Strings.swift in Sources */,
 				3D73EC3525717EB80010C47D /* PrayerSymbol.swift in Sources */,
-				3DEF648E259FF57D004EE51F /* BackwardsCompatibleViewController.swift in Sources */,
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3D9B9FFD2575425F00F02EFD /* SwifySuncalc.swift in Sources */,
 				3D07894C25998D8E0047DD00 /* CalculationMethodView.swift in Sources */,
@@ -1437,7 +1433,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1465,7 +1461,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1499,7 +1495,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1538,7 +1534,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1572,7 +1568,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1607,7 +1603,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1633,7 +1629,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1657,7 +1653,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

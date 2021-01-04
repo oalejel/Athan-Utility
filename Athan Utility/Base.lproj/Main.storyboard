@@ -93,7 +93,7 @@
                                     <segue destination="G1K-Bo-b0q" kind="embed" identifier="Progress" id="kiZ-1Y-d2b"/>
                                 </connections>
                             </containerView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ca1-eh-7yQ" customClass="SqueezeButton" customModule="SqueezeButton">
+                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ca1-eh-7yQ" customClass="SqueezeButton" customModule="SqueezeButton">
                                 <rect key="frame" x="37.5" y="630" width="300" height="29"/>
                                 <color key="backgroundColor" red="0.22508285980000001" green="0.22508285980000001" blue="0.22508285980000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -454,6 +454,10 @@
         <scene sceneID="koh-1u-mJI">
             <objects>
                 <viewController id="uBu-QG-UIy" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bRk-9M-qcN"/>
+                        <viewControllerLayoutGuide type="bottom" id="3dZ-77-shN"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Tmz-cz-e5A">
                         <rect key="frame" x="0.0" y="0.0" width="327" height="20"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

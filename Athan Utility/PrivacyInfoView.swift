@@ -73,7 +73,7 @@ struct PrivacyInfoView: View {
                 
                 let text =
                     """
-I developed this ad-free, 100% private athan app because athan apps have no reason to collect our muslim brothers and sisters' data. \
+I developed this ad-free, 100% private athan app because athan apps have no reason to collect our data. \
 Athan Utility calculates everything on-device. If given permissions, iOS location services simply allow athan utility \
 to conveniently refresh calculation coordinates so that you don't have to enter approximate coordinates \
 every time you visit a new city. By Allah, this app will never be allowed to betray its users.

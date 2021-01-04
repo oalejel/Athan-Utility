@@ -42,7 +42,7 @@ class LocationInputController: UIViewController {
         
         activityIndicator.stopAnimating()
         
-        inputTextField.text = Global.manager.readableLocationString ?? ""
+        inputTextField.text = AthanManager.shared.locationSettings.locationName
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.activityIndicator._hide()

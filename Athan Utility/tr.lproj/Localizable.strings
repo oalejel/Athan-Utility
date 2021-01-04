@@ -101,6 +101,7 @@
 "Enabled" = "Etkin";
 "Play Sound" = "Ses Çal";
 "minute.offset" = "Dakika Ofseti: %@";
+"offset-description" = "Dakika ofsetleri %1$@ ile %2$@ arasındaki süreden uzun olduğunda, hatırlatıcılar varsayılan olarak 15 dakikaya ayarlanır.";
 "minute-character" = "d";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Bu namazın bildirimlerini varsayılan iOS zilini çalmaya zorlamak için \"Ses Çal\" ı devre dışı bırakın.";
 

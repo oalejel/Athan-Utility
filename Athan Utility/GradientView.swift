@@ -56,6 +56,7 @@ struct GradientView: View, Equatable {
                 .edgesIgnoringSafeArea(.all)
                 .opacity(firstPlane ? 0 : 1)
                 .onValueChanged(currentPrayer) { x in
+                    print("CP CHANGE: ", currentPrayer)
                     // start a 0.1 second timer that updates the view
                     // to avoid state change issues
 //                    print("GRADIENT PRAYER CHANGED")
@@ -66,6 +67,7 @@ struct GradientView: View, Equatable {
                     if currentPrayer != lastShownPrayer {
                         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
                             
+                            if abs(lastTimerDate.timeIntervalSinceNow) > 0.012 {
                             lastTimerDate = Date()
 //                            print("GRADIENT TIMER CALLED")
                             lastShownPrayer = currentPrayer
@@ -73,19 +75,24 @@ struct GradientView: View, Equatable {
                             withAnimation {
                                 setGradient(gradient: [startColors.0, startColors.1])
                             }
+                            }
                         })
                     }
                 }
                 .onValueChanged(appearance) { app in
+                    print("AP CHANGE: ", appearance.id, appearance.isDynamic)
                     if abs(lastTimerDate.timeIntervalSinceNow) > 0.012 {
                         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
                             
-                            lastTimerDate = Date()
-    //                            print("GRADIENT TIMER CALLED")
-                            lastShownPrayer = currentPrayer
-                            let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
-                            withAnimation {
-                                setGradient(gradient: [startColors.0, startColors.1])
+                            // check again in case something else tried to mess
+                            if abs(lastTimerDate.timeIntervalSinceNow) > 0.012 {
+                                lastTimerDate = Date()
+        //                            print("GRADIENT TIMER CALLED")
+                                lastShownPrayer = currentPrayer
+                                let startColors = appearance.colors(for: appearance.isDynamic ? currentPrayer : nil)
+                                withAnimation {
+                                    setGradient(gradient: [startColors.0, startColors.1])
+                                }
                             }
                         })
                     }

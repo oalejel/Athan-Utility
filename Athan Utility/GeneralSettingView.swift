@@ -11,7 +11,6 @@ import Adhan
 import StoreKit
 import MessageUI
 
-
 @available(iOS 13.0.0, *)
 struct GeneralSettingView: View {
     

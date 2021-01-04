@@ -87,15 +87,16 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
         // add siri button, which will request siri permissions this function
         // checks for compatibility and whether the user has interacted with the button
         
-        INVoiceShortcutCenter.shared.getAllVoiceShortcuts(completion: { (shortcuts, err) in
-            if shortcuts == nil || shortcuts?.count == 0 {
-                DispatchQueue.main.async {
-                    self.prepareSiriButtonView()
-                }
-            } else {
-                self.siriButtonView.isHidden = true
-            }
-        })
+        self.siriButtonView.isHidden = true
+//        INVoiceShortcutCenter.shared.getAllVoiceShortcuts(completion: { (shortcuts, err) in
+//            if shortcuts == nil || shortcuts?.count == 0 {
+//                DispatchQueue.main.async {
+//                    self.prepareSiriButtonView()
+//                }
+//            } else {
+                
+//            }
+//        })
         
         // prevent touch recognizers from delaying squeezebutton reactions
         //        let window = UIApplication.shared.windows[0]
@@ -115,9 +116,9 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.enteredBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         // Deal with a force-press app shortcut on app launch
-        if Global.openQibla {
-            self.showQibla(self)
-        }
+//        if Global.openQibla {
+//            self.showQibla(self)
+//        }
     }
     
     
@@ -201,9 +202,9 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
     
     func prepareSiriButtonView() {
         if #available(iOS 12.0, *) {
-            if UserDefaults.standard.bool(forKey: Global.HIDE_SIRI_SHORTCUTS_KEY) == true {
-                return // no reason to show button
-            }
+//            if UserDefaults.standard.bool(forKey: Global.HIDE_SIRI_SHORTCUTS_KEY) == true {
+//                return // no reason to show button
+//            }
             
             siriButtonView.isHidden = false
             siriButtonView.layer.cornerRadius = 10
@@ -250,7 +251,7 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
                 }
             } else if status == .denied {
                 // do not show siri button in future if user rejects allowing siri permissions
-                UserDefaults.standard.set(true, forKey: Global.HIDE_SIRI_SHORTCUTS_KEY)
+//                UserDefaults.standard.set(true, forKey: Global.HIDE_SIRI_SHORTCUTS_KEY)
             }
         }
     }
@@ -429,9 +430,14 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
     
     // Show conrtol for setting custom location (originates from location button @ bottom)
     @IBAction func customLocationPressed(_ sender: SqueezeButton) {
-        let v = LocationInputController()//: UIViewController!
-        let navController = OptionsNavigatonController(rootViewController: v)
-        present(navController, animated: true, completion: nil)
+        AthanManager.shared.requestLocationPermission()
+        AthanManager.shared.attemptSingleLocationUpdate()
+        AthanManager.shared.attemptSingleLocationUpdate { (loc) in
+            self.dataReady()
+        }
+//        let v = LocationInputController()//: UIViewController!
+//        let navController = OptionsNavigatonController(rootViewController: v)
+//        present(navController, animated: true, completion: nil)
     }
     
     
@@ -446,7 +452,7 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
     // Show compass direction to Kabah in Mecca. Originates from compass button.
     @IBAction func showQibla(_ sender: AnyObject) {
         DispatchQueue.main.async {
-            Global.openQibla = false
+//            Global.openQibla = false
             let qvc = QiblaViewController()
             qvc.qiblaOffset = self.manager.heading
 //            qvc.headingManager = self.manager

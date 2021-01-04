@@ -15,6 +15,7 @@ struct AddVoiceShortcutView: UIViewControllerRepresentable {
     
     //MARK: - COORDINATOR
     func makeCoordinator() -> Coordinator {
+        
         return Coordinator(context: self)
     }
 
@@ -25,16 +26,19 @@ struct AddVoiceShortcutView: UIViewControllerRepresentable {
             self.context = context
         }
         
-        
         //MARK: INUIAddVoiceShortcutViewControllerDelegate
         func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
             context.presentationMode.wrappedValue.dismiss()
-            UIView.appearance().tintColor = .white
+            DispatchQueue.main.async {
+                UIView.appearance().tintColor = .white
+            }
         }
         
         func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
             context.presentationMode.wrappedValue.dismiss()
-            UIView.appearance().tintColor = .white
+            DispatchQueue.main.async {
+                UIView.appearance().tintColor = .white
+            }
         }
     }
     
@@ -44,7 +48,6 @@ struct AddVoiceShortcutView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> INUIAddVoiceShortcutViewController {
         self.addVoiceShortcutVC.delegate = context.coordinator
-        UIView.appearance().tintColor = .systemBlue
         return self.addVoiceShortcutVC
     }
     

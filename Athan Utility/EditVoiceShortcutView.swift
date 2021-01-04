@@ -25,21 +25,26 @@ struct EditVoiceShortcutView: UIViewControllerRepresentable {
             self.context = context
         }
         
-        
-        //MARK: INUIEditVoiceShortcutViewControllerDelegate
+        // MARK: INUIEditVoiceShortcutViewControllerDelegate
         func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
             context.presentationMode.wrappedValue.dismiss()
-            UIView.appearance().tintColor = .white
+            DispatchQueue.main.async {
+                UIView.appearance().tintColor = .white
+            }
         }
         
         func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
             context.presentationMode.wrappedValue.dismiss()
-            UIView.appearance().tintColor = .white
+            DispatchQueue.main.async {
+                UIView.appearance().tintColor = .white
+            }
         }
         
         func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
             context.presentationMode.wrappedValue.dismiss()
-            UIView.appearance().tintColor = .white
+            DispatchQueue.main.async {
+                UIView.appearance().tintColor = .white
+            }
         }
     }
     
@@ -48,8 +53,8 @@ struct EditVoiceShortcutView: UIViewControllerRepresentable {
     var editVoiceShortcutVC: INUIEditVoiceShortcutViewController
     
     func makeUIViewController(context: Context) -> INUIEditVoiceShortcutViewController {
+    
         self.editVoiceShortcutVC.delegate = context.coordinator
-        UIView.appearance().tintColor = .systemBlue
         return self.editVoiceShortcutVC
     }
     

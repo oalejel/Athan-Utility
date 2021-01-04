@@ -102,7 +102,7 @@
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
-			<string>search</string>
+			<string>download</string>
 			<key>INIntentDescription</key>
 			<string>View time of next prayer, and time remaining.</string>
 			<key>INIntentDescriptionID</key>
@@ -133,11 +133,11 @@
 				<array>
 					<dict>
 						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>${upcomingTime} until ${upcomingPrayerName} at ${upcomingDate} in ${recentLocation}.</string>
+						<string> ${upcomingTime} until ${upcomingPrayerName} at ${upcomingDate} in ${recentLocation} </string>
 						<key>INIntentResponseCodeConciseFormatStringID</key>
 						<string>LHyGWg</string>
 						<key>INIntentResponseCodeFormatString</key>
-						<string>${upcomingTime} until ${upcomingPrayerName} at ${upcomingDate} in ${recentLocation}.</string>
+						<string> ${upcomingTime} until ${upcomingPrayerName} at ${upcomingDate} in ${recentLocation} </string>
 						<key>INIntentResponseCodeFormatStringID</key>
 						<string>pMpUid</string>
 						<key>INIntentResponseCodeName</key>
@@ -163,10 +163,16 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>11</integer>
+				<integer>13</integer>
+				<key>INIntentResponseOutput</key>
+				<string>upcomingDate</string>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Next prayer name</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>Ee5zwW</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>1</integer>
 						<key>INIntentResponseParameterName</key>
@@ -177,6 +183,10 @@
 						<string>String</string>
 					</dict>
 					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Next prayer date</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>4BxFDF</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>2</integer>
 						<key>INIntentResponseParameterName</key>
@@ -187,16 +197,24 @@
 						<string>String</string>
 					</dict>
 					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Time remaining</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>9LtsXD</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>3</integer>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingTime</string>
 						<key>INIntentResponseParameterTag</key>
-						<integer>8</integer>
+						<integer>13</integer>
 						<key>INIntentResponseParameterType</key>
 						<string>String</string>
 					</dict>
 					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Recent location</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>7kv1qL</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>4</integer>
 						<key>INIntentResponseParameterName</key>
@@ -215,7 +233,7 @@
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>
-			<string>Find</string>
+			<string>Get</string>
 		</dict>
 	</array>
 	<key>INTypes</key>

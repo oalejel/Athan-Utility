@@ -943,7 +943,7 @@ class PrayerManager: NSObject, CLLocationManagerDelegate {
                                 // local notifications, and should let the user know
                                 if finalFlag {
                                     if p == .isha {
-                                        let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications.", comment: "")
+                                        let localizedAlertString = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications.", comment: "")
                                         alertString = String(format: localizedAlertString, p.localizedString(), dateString)
                                     }
                                 } else {

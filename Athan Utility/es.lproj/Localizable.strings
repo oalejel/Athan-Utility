@@ -18,11 +18,11 @@
 // MARK: - Notifications
 "Notifications" = "Notificaciones";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "Tiempo para %1$@ [%2$@]. Vuelva a abrir Adhan Utility para seguir recibiendo notificaciones.";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Tiempo para %1$@ [%2$@]. Vuelva a abrir Adhan Utility para seguir recibiendo notificaciones.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "Tiempo para %1$@ en %2$@ [%3$@]";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@m hasta %2$@ en %3$@ [%4$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ min. para %2$@ en %3$@ [%4$@]";
 
 
 // MARK: - Buttons and tags
@@ -87,7 +87,7 @@
 "All Prayers" = "Todas Oraciones";
 "restore.defaults" = "Restaurar Colores";
 "colors.ios.requirement" = "Personalización de color solo disponible en iOS 14+";
-"Select a color picker to customize gradients." = "Seleccione un selector de color para personalizar los degradados.";
+"Select a color picker to customize gradients." = "Elija un selector de color para personalizar los degradados.";
 
 
 // MARK: - Custom Names
@@ -96,11 +96,11 @@
 
 
 // MARK: - Notification Settings
-"Athan Notification" = "Adhan Notificacion";
-"Reminder Notification" = "Recordatorio Notificacion";
+"Athan Notification" = "Adhan Notificación";
+"Reminder Notification" = "Recordatorio Notificación";
 "Enabled" = "Activado";
 "Play Sound" = "Reproducir Sonido";
-"minute.offset" = "Desplazamiento de minutos: %d";
+"minute.offset" = "Compensación de minutos: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Desactivar \"Reproducir Sonido\" para forzar las notificaciones de esta oración para reproducir la campana iOS predeterminada.";
 "offset-description" = "Cuando los desplazamientos por minuto son más largos que el tiempo entre %1$@ y %2$@, recordatorios tendrán por defecto 15 minutos.";

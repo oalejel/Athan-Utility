@@ -22,7 +22,6 @@ extension View {
     }
 }
 
-
 @available(iOS 13.0.0, *)
 class CalendarDragState: ObservableObject {
     @Published var progress: Double = 0
@@ -156,11 +155,13 @@ struct MainSwiftUI: View {
     }
     
     static func hijriDateString(date: Date) -> String {
-        let hijriCal = Calendar(identifier: .islamic)
+        let hijriCal = Calendar(identifier: .islamicCivil)
         let df = DateFormatter()
         df.calendar = hijriCal
         df.dateStyle = .medium
         print("here")
+        
+        // if arabic, always use arabic numerals
         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
             df.locale = Locale(identifier: "ar_SY")
         }
@@ -416,7 +417,7 @@ struct MainSwiftUI: View {
                                                 dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                                 minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
                                                     dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+//                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
     //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
                                                 })
                                             }
@@ -445,7 +446,7 @@ struct MainSwiftUI: View {
                                                 dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                                 minuteTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { _ in
                                                     dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
-                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
+//                                                    todayHijriString = MainSwiftUI.hijriDateString(date: Date())
     //                                                    tomorrowHijriString = MainSwiftUI.hijriDateString(date: Date().addingTimeInterval(86400))
                                                 })
                                             }
@@ -622,13 +623,15 @@ struct MainSwiftUI: View {
                                 
                                 VStack {
                                     ZStack() {
-                                        Text("\(todayHijriString)")
+                                        Text(MainSwiftUI.hijriDateString(date: Date()))
                                             .fontWeight(.bold)
                                             .lineLimit(1)
                                             .fixedSize(horizontal: false, vertical: true)
                                             .padding([.trailing, .leading])
                                             .foregroundColor(Color(.lightText))
-                                            .offset(y: 24)
+//                                            .offset(y: 24)
+                                            .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
+
 //                                        VStack(alignment: .center) {
 //                                            ZStack {
 //                                                    .opacity(min(1, 1 - 0.8 * dragState.progress))
@@ -714,6 +717,18 @@ struct MainSwiftUI: View {
                         }
                     //                        .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
                     }
+                }
+                
+                // top right corner gets a sound control button
+                VStack {
+                    HStack {
+                        Spacer()
+                        AthanPlayView(currentPrayer: $manager.currentPrayer)
+                            .equatable()
+                    }
+                    .padding()
+                    .padding()
+                    Spacer()
                 }
             }
         }

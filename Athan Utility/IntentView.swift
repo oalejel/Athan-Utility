@@ -22,6 +22,7 @@ struct IntentView: View {
     }
     
     @ViewBuilder func sheetContent() -> some View {
+        let _ = (UIView.appearance().tintColor = .systemBlue)
         if self.voiceShortcutVC is INUIAddVoiceShortcutViewController  {
             AddVoiceShortcutView(addVoiceShortcutVC: self.voiceShortcutVC as! INUIAddVoiceShortcutViewController)
         }

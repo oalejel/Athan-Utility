@@ -568,7 +568,9 @@ struct GeneralSettingView: View {
                         // update all settings unconditionally in case we change components of
                         // the settings
                         AthanManager.shared.prayerSettings = tempPrayerSettings
-                        AthanManager.shared.notificationSettings = tempNotificationSettings
+                        
+                        // MUST also save here because multiple views can modify this setting
+                        AthanManager.shared.notificationSettings = tempNotificationSettings // saving this in other view
                         AthanManager.shared.locationSettings = tempLocationSettings // unnecessary but will keep for now
                         
                         // appearance settings already get saved when we leave the colors view

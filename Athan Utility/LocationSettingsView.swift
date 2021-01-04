@@ -348,7 +348,7 @@ struct LocationSettingsView: View, Equatable {
         geocoder.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
             guard let placemark = placemarks?.first, error == nil else {
                 //                erroneousLocation = true
-                if !usingCurrentLocation { return } // in case user switches back to not using current location
+//                if !usingCurrentLocation { return } // in case user switches back to not using current location
                 erroneousLocation = false // no need to show error for a coordinate. leave it as is
                 textFieldText = String(format: "%.2f°, %.2f°",
                                        coord.latitude,

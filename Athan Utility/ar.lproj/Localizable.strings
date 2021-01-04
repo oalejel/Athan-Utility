@@ -22,11 +22,16 @@
 // MARK: - Notifications
 "Notifications" = "الإشعارات";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue recieving notifications." = "حان وقت ال%1$@ [%2$@]‏. الرجاء إعادة فتح ‏هذا التطبيق للاستمرار في تلقية الإشعارات.‏";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "وقت صلاة ال%1$@ {%3$@} الرجاء فتح هذا التطبيق للاستمرار في تلقية الإشعافات";
+
+//" وقت صلاة ال%1$@ [%2$@]‏. الرجاء إعادة فتح ‏هذا التطبيق للاستمرار في تلقية الإشعارات.‏";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "[%3$@] %2$@ حان وقت ال%1$@ في";
+"Time for %1$@ in %2$@ [%3$@]" = "وقت صلاة ال%1$@ في %2$@ {%3$@}";
+
+//"[%3$@] %2$@ وقت صلاة ال%1$@ في";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m until %2$@ in %3$@ [%4$@]" = "[%4$@] %3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "بقي %1$@ حتى ال%2$@ في %3$@ {%4$@}";
+//"[%4$@] %3$@ بقى %1$@ دقيقة حتى ال%2$@ في";
 
 
 // MARK: - Buttons and tags
@@ -38,12 +43,12 @@
 "Settings" = "الإعدادات";
 
 "Appearance" = "المظهر";
-"Colors" = "الوان";
+"Colors" = "الألوان";
 "Custom Prayer Names" = "أسماء الصلاة المخصصة";
 "Change Language" = "اللغة";
 
 "Developed by Omar Al-Ejel" = "تطوير عمر العجل";
-"Rate Athan Utility!" = "Rate Athan Utility!";
+"Rate Athan Utility!" = "تقييم التطبيق";
 "Privacy Notes" = "خصوصية";
 "Send Feedback" = "ارسل رأيك";
 
@@ -59,7 +64,7 @@
 "Moonsighting Committee" = "لجنة رؤية الهلال";
 "North America" = "الجمعية الإسلامية لأمريكا الشمالية";
 "Kuwait" = "الكويت";
-"Qatar" = "قتر";
+"Qatar" = "قطر";
 "Singapore" = "سنغافورة";
 "Tehran" = "طهران";
 "Turkey" = "تركيا";
@@ -70,12 +75,12 @@
 "Madhab" = "مذهب";
 "Hanafi" = "حنفي";
 "Shafi" = "شافعي";
-"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "يستخدم المذهب الحنفي أوقات العصر المتأخرة ، ويحدث عندما يزداد طول الظل بمقدار ضعف طول الجسم منذ الظهر الشمسي.";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "يستخدم المذهب الحنفي أوقات العصر المتأخرة، ويحدث هذا عندما يزداد طول الظل بمقدار ضعف طول الجسم من بعد الظهر الشمسي.";
 
 
 // MARK: - Sounds
 "athan.sound" = "صوت الأذان";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "يمكن أن يلعب الأذان لمدة تزيد عن 5 ثوانٍ عندما يكون iPhone مغلقًا أو عند فتح Athan Utility.";
+"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "يمكن أن يستمر صوت الأذان لمدة تزيد عن 5 ثوانٍ عندما يكون iPhone مغلقًا أو عند فتح التطبيق.";
 "iOS Default" = "النغمة الافتراضي";
 "Echo" = "نغمة ٢";
 "Makkah" = "مكة المكرمة";
@@ -108,28 +113,28 @@
 "Reminder Notification" = "إشعار تذكير";
 "Enabled" = "ممكن";
 "Play Sound" = "صوت";
-"minute.offset" = ": %d تعويض الدقائق";
+"minute.offset" = "%@ :تنبيه مسبق";
 "minute-character" = "د";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "قم بتعطيل الصوت لإجبار إعلامات الصلاة هذه على تشغيل رنين iOS الافتراضي.";
-"offset-description" = "عندما تكون تعويضات الدقائق أطول من الوقت بين %1$@ و %2$@، سيتم تعيين التذكيرات افتراضيًا على 15 دقيقة.";
+"offset-description" = "عندما يكون التنبيه المسبق أطول من الوقت بين ال%1$@ و ال%2$@، سيتم تعديل التذكيرات افتراضيًا الى ١٥ دقيقة.";
 
 
 // MARK: - Location Settings
 "Set Location" = "تحديد المكان";
 "Set Location Manually" = "تعيين الموقع يدويا";
 "Use Current Location" = "استخدام الموقع الحالي";
-"Athan Utility does not collect user data." = "لا تقوم أداة الأذان بجمع بيانات المستخدم.";
+"Athan Utility does not collect user data." = "ملاحظة: هذا التطبيق لا يجمع بيانات المستخدم";
 "Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "خدمات الموقع معطلة ويمكن تعديلها في الإعدادات. لا تقوم أداة الأذان بجمع بيانات المستخدم.";
 "Location Name" = "اسم الموقع";
 "Location:" = "موقع:";
 
 
 // MARK: - Calendar
-"Show Calendar" = "Show Calendar";
-"Calendar" = "Calendar";
+"Show Calendar" = "إظهار التقويم";
+"Calendar" = "التقويم";
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "Open Athan Utility to set location.";
-"Use Athan Widgets to view upcoming salah times at a glance." = "Use Athan Widgets to view upcoming salah times at a glance.";
+"Open Athan Utility to set location." = "افتح أداة الأذان لتعيين الموقع";
+"Use Athan Widgets to view upcoming salah times at a glance." = "استخدم أدوات الأذان لعرض أوقات الصلاة القادمة في لمحة.";
 

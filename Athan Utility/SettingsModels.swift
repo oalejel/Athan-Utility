@@ -110,7 +110,7 @@ class NotificationSettings: Codable, NSCopying {
         if let archive = checkArchive() {
             return archive
         } else {
-            let defaultSettings = NotificationSettings(settings: [:])
+            let defaultSettings = NotificationSettings(settings: [:], selectedSound: .abdulghaffar)
             defaultSettings.settings = [
                 .fajr : AlarmSetting(),
                 .sunrise : AlarmSetting(),
@@ -125,8 +125,9 @@ class NotificationSettings: Codable, NSCopying {
         }
     }()
     
-    init(settings: [Prayer:AlarmSetting]) {
+    init(settings: [Prayer:AlarmSetting], selectedSound: Sounds) {
         self.settings = settings
+        self.selectedSound = selectedSound
     }
     
     static func checkArchive() -> NotificationSettings? {
@@ -145,12 +146,12 @@ class NotificationSettings: Codable, NSCopying {
 
     }
     
-    var selectedSound = Sounds.makkah
+    var selectedSound: Sounds
     var settings: [Prayer:AlarmSetting]
     private static let archiveName = "notificationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = NotificationSettings(settings: settings)
+        let copy = NotificationSettings(settings: settings, selectedSound: selectedSound)
         return copy
     }
 

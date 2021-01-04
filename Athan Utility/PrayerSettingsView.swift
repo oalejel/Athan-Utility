@@ -153,7 +153,7 @@ struct PrayerSettingsView: View {
                                 
                                 ZStack {
                                     HStack {
-                                        Text("\(String(format: Strings.minuteOffset, reminderOffset))\(Strings.minuteCharacter)")
+                                        Text("\(String(format: Strings.minuteOffset, NumberFormatter.localizedString(from: NSNumber(value: reminderOffset), number: .none)))")
 //                                        Text("Minute offset: \(reminderOffset)m")
                                             .font(.headline)
                                             .bold()
@@ -168,7 +168,7 @@ struct PrayerSettingsView: View {
                                     }
                                 }
                                 
-                                Text(String(format: Strings.offsetDescription, prayer.localizedOrCustomString(), prayer.next().localizedOrCustomString()))
+                                Text(String(format: Strings.offsetDescription, prayer.previous().localizedOrCustomString(), prayer.localizedOrCustomString()))
 //                                Text("When minute offsets are longer than the time between \(prayer.localizedString()) and \(prayer.next().localizedString()), reminders will default to 15 minutes.")
                                     .fixedSize(horizontal: false, vertical: true)
                                     .lineLimit(nil)
@@ -183,8 +183,6 @@ struct PrayerSettingsView: View {
                                     .cornerRadius(12)
                             )
                             .padding(.bottom, 12)
-                            
-                            
                         }
                     }
                 }
@@ -227,7 +225,7 @@ struct PrayerSettingsView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            PrayerSettingsView(noteSettings: .constant(NotificationSettings(settings: [:])), activeSection: .constant(.Prayer(.fajr)))
+            PrayerSettingsView(noteSettings: .constant(NotificationSettings(settings: [:], selectedSound: .makkah)), activeSection: .constant(.Prayer(.fajr)))
             
         }
         .environmentObject(ObservableAthanManager.shared)

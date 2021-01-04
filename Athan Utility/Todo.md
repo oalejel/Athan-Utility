@@ -4,10 +4,6 @@ Before updating
 - bug where dragging fast gets us stuck in the last simulated pryaer gradient -- found that dragging in the same "current prayer" causes gradient to not change, meaning that the gradiennt view is the culprti
 - add donation button
 - ensure notifications use the correct minute symbol
-- switch siri response accofrding to mohsen
-- solar view progress not accurately reflected in first 5th of the day when we are before fajr time 
-- test bad input to location search
-- show acivity indicator on location search 
 
 - change th to dh in spanish adhan localizations
 
@@ -47,6 +43,8 @@ For later
 - be more efficent with notifications by not wasting notification budget on notifications from earlier in the day 
 - consider matching baseline for prayer anme and time left in main interface
 - tapping qibla brings it into focus by switching with the moon, and shows a degrees label or something
+- show acivity indicator on location search 
+
 
 
 - get moon to load earlier 

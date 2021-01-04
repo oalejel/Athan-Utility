@@ -45,7 +45,7 @@ struct MapView: UIViewRepresentable, Equatable {
         if abs(uiView.centerCoordinate.latitude - center.latitude) > 0.00001 &&
             abs(uiView.centerCoordinate.longitude - center.longitude) > 0.00001 {
             uiView.setCenter(center, animated: true)
-            uiView.setRegion(MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)), animated: true)
+            uiView.setRegion(MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)), animated: true)
         }
         
         uiView.isUserInteractionEnabled = !usingCurrentLocation

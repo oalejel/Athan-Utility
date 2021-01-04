@@ -494,7 +494,7 @@ struct GeneralSettingView: View {
                                     })
                                     .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
                                     .sheet(isPresented: $showPrivacyView) {
-                                        PrivacyInfoView()
+                                        PrivacyInfoView(isVisible: $showPrivacyView)
                                     }
                                     
                                     Button(action: { // rate the app

@@ -53,6 +53,7 @@ struct LocationSettingsView: View, Equatable {
     @Binding var locationPermissionGranted: Bool
     
     @State var awaitingLocationUpdate = false
+    @State var awaitingUserSearchLookup = false
     // is the currently inputted location string understandable
     @State var erroneousLocation = false
     
@@ -104,6 +105,7 @@ struct LocationSettingsView: View, Equatable {
                                 // if the source of the update is not a manual input,
                                 // we don't want to set the location name
                                 if !usingCurrentLocation {
+                                    awaitingUserSearchLookup = true
                                     print("creating timer")
                                     unboundCoordinate = loc
                                     boundCoordinate = loc
@@ -160,9 +162,15 @@ struct LocationSettingsView: View, Equatable {
                     // Input text field for location
                     if !usingCurrentLocation {
                         HStack {
+                            HStack {
+                            if awaitingUserSearchLookup {
+                                ActivityIndicator(isAnimating: .constant(true), style: .white)
+                            }
+                            
                             Text(Strings.locationColon)
                                 .foregroundColor(erroneousLocation ? .red : .white)
                                 .bold()
+                            }
                                 .padding([.leading])
                             TextField(Strings.locationName, text: $textFieldText) { isEditing in
                                 if isEditing {
@@ -178,11 +186,13 @@ struct LocationSettingsView: View, Equatable {
                                     
                                     if split.count == 2 {
                                         if let lat = CLLocationDegrees(split[0]), let lon = CLLocationDegrees(split[1]) {
+                                            awaitingUserSearchLookup = true
                                             queryAndSaveCoordinate(coord: CLLocationCoordinate2D(latitude: lat, longitude: lon))
                                             return
                                         }
                                     }
                                 }
+                                awaitingUserSearchLookup = true
                                 queryLocation(text: textFieldText)
                             }
                             .textContentType(.location)
@@ -327,6 +337,7 @@ struct LocationSettingsView: View, Equatable {
     func queryLocation(text: String) {
         // reverse geocode address
         geocoder.geocodeAddressString(text) { (placemarks, error) in
+            defer { awaitingUserSearchLookup = false }
             guard let placemark = placemarks?.first, let coord = placemark.location?.coordinate, error == nil else {
                 erroneousLocation = true
                 print("failed to understand address, \(error!)")
@@ -346,6 +357,7 @@ struct LocationSettingsView: View, Equatable {
     func queryAndSaveCoordinate(coord: CLLocationCoordinate2D) {
         // reverse geocode coordinate
         geocoder.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
+            defer { awaitingUserSearchLookup = false }
             guard let placemark = placemarks?.first, error == nil else {
                 //                erroneousLocation = true
 //                if !usingCurrentLocation { return } // in case user switches back to not using current location

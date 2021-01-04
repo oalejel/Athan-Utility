@@ -466,6 +466,11 @@ struct MainSwiftUI: View {
                                         }
                                         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                                             print("Moving back to the foreground!")
+                                            
+                                            // if user has entered the app from a blank state exactly 5 times, ask them if they are willing to review the app
+                                            
+                                            
+                                            
                                             dayProgressState.truthCurrentPrayerProgress = getPercentComplete()
                                             nextRoundMinuteTimer = {
                                                 // this gets called again when the view appears -- have it invalidated on appear

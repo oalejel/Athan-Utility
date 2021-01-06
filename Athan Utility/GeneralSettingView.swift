@@ -49,9 +49,8 @@ struct GeneralSettingView: View {
     @State private var result: Result<MFMailComposeResult, Error>? = nil
     @State private var isShowingMailView = false
 
-    
     @available(iOS 14.0, *)
-    @State var proxy: ScrollViewProxy?
+    @State var proxy: Any? = nil
     
     var body: some View {
         GeometryReader { g in
@@ -79,7 +78,7 @@ struct GeneralSettingView: View {
                                         
                                         if #available(iOS 14.0, *) {
                                             let id = Int((savedOffset / scrollHeight) * 100)
-                                            proxy?.scrollTo(id, anchor: .top)
+                                            (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
                                         }
                                     }
                                 

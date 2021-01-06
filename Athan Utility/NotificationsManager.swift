@@ -154,9 +154,9 @@ class NotificationsManager {
                             let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
                             
                             //use a standard note tone when giving a 15m reminder
-                            if setting.athanSoundEnabled {
-                                preNoteContent.sound = .default
-                            }
+//                            if setting.athanSoundEnabled {
+                            preNoteContent.sound = .default
+//                            }
                             
                             let localizedMinutes = NumberFormatter.localizedString(from: NSNumber(value: setting.reminderOffset), number: .none)
                             let reminderMessage = Strings.reminderNotificationMessage

@@ -105,11 +105,11 @@ struct SettingsView: View {
                 if #available(iOS 14.0, *) {
                     ScrollViewReader { proxy in
                         GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, tempAppearanceSettings: $tempAppearanceSettings, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
-                            savedOffset: $savedOffset, proxy: proxy)
+                                           savedOffset: $savedOffset, proxy: proxy)
                     }
                 } else { // pre-ios 13 wont have the scrollview offset adjusted back
                     GeneralSettingView(tempLocationSettings: $tempLocationSettings, tempNotificationSettings: $tempNotificationSettings, tempPrayerSettings: $tempPrayerSettings, tempAppearanceSettings: $tempAppearanceSettings, parentSession: $parentSession, activeSection: $activeSection, dismissSounds: $dismissSounds, settingsState: activeSection,
-                        savedOffset: $savedOffset, proxy: nil)
+                                       savedOffset: $savedOffset)
                 }
             }
         }
@@ -123,7 +123,6 @@ struct SettingsView_Previews: PreviewProvider {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             SettingsView(parentSession: .constant(.Settings))
-            
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

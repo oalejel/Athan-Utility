@@ -748,22 +748,28 @@ struct ProgressBar: View {
     var colors: [Color] = [Color.white, Color.white]
     
     var body: some View {
+        GeometryReader { g in
         ZStack {
             Rectangle()
                 .foregroundColor(outlineColor)
                 .frame(height: lineWidth)
                 .cornerRadius(lineWidth * 0.5)
-            GeometryReader { g in
+            
                 ZStack(alignment: .leading) {
+                    HStack {
                     Rectangle()
                         .foregroundColor(colors.first)
                         .frame(width: min(g.size.width, max(lineWidth, progress * g.size.width)), height: lineWidth)
                         .cornerRadius(lineWidth * 0.5)
+                    Spacer()
+                    }
+                    .frame(width: g.size.width)
                 }
             }
-            .padding(.zero)
-            .frame(height: lineWidth)
         }
+        .padding(.zero)
+        .frame(height: lineWidth)
+
     }
 }
 

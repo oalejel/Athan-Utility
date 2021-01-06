@@ -1,5 +1,7 @@
 #  Todo list 
 Before updating 
+- fajr athan should be different
+
 - loop through every key in strings.swift to confirm localizations match 
 - bug where dragging fast gets us stuck in the last simulated pryaer gradient -- found that dragging in the same "current prayer" causes gradient to not change, meaning that the gradiennt view is the culprti
 - add donation button

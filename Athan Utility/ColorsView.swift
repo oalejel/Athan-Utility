@@ -45,6 +45,12 @@ struct ColorsView: View {
     @State var ignoreOnChange1 = 0 // used to ignore first erronenous update of color pickers
     @State var ignoreOnChange2 = 0
     
+//    let x: Int = {
+//        UISegmentedControl.appearance().setTitleTextAttributes([:], for: .normal)
+//        UISegmentedControl.appearance().setTitleTextAttributes([:], for: .selected)
+//        return 0
+//    }()
+    
     func adjustGradient(gradient: [Color]) {
         gradientA = gradient
         gradientB = gradient
@@ -134,11 +140,11 @@ struct ColorsView: View {
                     Picker(selection: $isDynamic.animation(.linear), label: Text("Picker"), content: {
                         ForEach([true, false], id: \.self) { dynamic in
                             Text(dynamic ? Strings.dynamic : Strings.static)
+                                .foregroundColor(.red)
                         }
                     })
                     .pickerStyle(SegmentedPickerStyle())
                     .labelsHidden()
-                    .foregroundColor(.white)
                 }
                     
                     Divider()

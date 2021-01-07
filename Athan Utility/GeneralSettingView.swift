@@ -466,10 +466,12 @@ struct GeneralSettingView: View {
                                     })
                                     .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
                                     .sheet(isPresented: $isShowingMailView) {
-                                        MailView(result: $result) { composer in
-                                            composer.setSubject("Feedback for Athan Utility")
-                                            composer.title = "Email Developer"
-                                            composer.setToRecipients(["omalsecondary@gmail.com"])
+                                        if MFMailComposeViewController.canSendMail() {
+                                            MailView(result: $result) { composer in
+                                                composer.setSubject("Feedback for Athan Utility")
+                                                composer.title = "Email Developer"
+                                                composer.setToRecipients(["omalsecondary@gmail.com"])
+                                            }
                                         }
                                     }
 

@@ -31,17 +31,17 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
     
     
     func addVoiceShortcutViewController(_ controller: INUIAddVoiceShortcutViewController, didFinishWith voiceShortcut: INVoiceShortcut?, error: Error?) {
-        UIView.appearance().tintColor = .white
+//        UIView.appearance().tintColor = .white
         controller.dismiss(animated: true) { }
     }
     
     func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
-        UIView.appearance().tintColor = .white
+//        UIView.appearance().tintColor = .white
         controller.dismiss(animated: true) { }
     }
     
     func present(_ addVoiceShortcutViewController: INUIAddVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        UIView.appearance().tintColor = .systemBlue
+//        UIView.appearance().tintColor = .systemBlue
         addVoiceShortcutViewController.delegate = self
         addVoiceShortcutViewController.modalPresentationStyle = .formSheet
         present(addVoiceShortcutViewController, animated: true, completion: nil)
@@ -49,7 +49,7 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
     }
     
     func present(_ editVoiceShortcutViewController: INUIEditVoiceShortcutViewController, for addVoiceShortcutButton: INUIAddVoiceShortcutButton) {
-        UIView.appearance().tintColor = .systemBlue
+//        UIView.appearance().tintColor = .systemBlue
         editVoiceShortcutViewController.delegate = self
         editVoiceShortcutViewController.modalPresentationStyle = .formSheet
         present(editVoiceShortcutViewController, animated: true, completion: nil)
@@ -57,17 +57,17 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
     }
     
     func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didUpdate voiceShortcut: INVoiceShortcut?, error: Error?) {
-        UIView.appearance().tintColor = .white
+//        UIView.appearance().tintColor = .white
         controller.dismiss(animated: true) { }
     }
     
     func editVoiceShortcutViewController(_ controller: INUIEditVoiceShortcutViewController, didDeleteVoiceShortcutWithIdentifier deletedVoiceShortcutIdentifier: UUID) {
-        UIView.appearance().tintColor = .white
+//        UIView.appearance().tintColor = .white
         controller.dismiss(animated: true) { }
     }
     
     func editVoiceShortcutViewControllerDidCancel(_ controller: INUIEditVoiceShortcutViewController) {
-        UIView.appearance().tintColor = .white
+//        UIView.appearance().tintColor = .white
         controller.dismiss(animated: true) { }
     }
         

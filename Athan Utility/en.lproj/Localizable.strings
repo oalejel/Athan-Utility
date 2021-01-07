@@ -101,7 +101,7 @@
 "Reminder Notification" = "Reminder Notification";
 "Enabled" = "Enabled";
 "Play Sound" = "Play Sound";
-"minute.offset" = "Minute Offset: %@m";
+"minute.offset" = "Minutes Early: %@m";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.";
 "offset-description" = "When minute offsets are longer than the time between %1$@ and %2$@, reminders will default to 15 minutes.";

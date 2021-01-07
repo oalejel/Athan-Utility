@@ -110,10 +110,12 @@ class NotificationSettings: Codable, NSCopying {
         if let archive = checkArchive() {
             return archive
         } else {
+            let sunriseSpecificSetting = AlarmSetting()
+            sunriseSpecificSetting.athanSoundEnabled = false // no athan for shurooq
             let defaultSettings = NotificationSettings(settings: [:], selectedSound: .alaqsa)
             defaultSettings.settings = [
                 .fajr : AlarmSetting(),
-                .sunrise : AlarmSetting(),
+                .sunrise : sunriseSpecificSetting,
                 .dhuhr : AlarmSetting(),
                 .asr : AlarmSetting(),
                 .maghrib : AlarmSetting(),

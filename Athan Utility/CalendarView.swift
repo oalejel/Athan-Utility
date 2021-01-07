@@ -176,11 +176,11 @@ struct CalendarView: View, Equatable {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding([.leading, .trailing, .top], 12)
                 .onAppear {
-                    UITableView.appearance().tableFooterView = UIView()
-                    // To remove all separators including the actual ones:
-                    UITableView.appearance().separatorStyle = .none
-                    UITableView.appearance().separatorColor = .clear
-                    UITableView.appearance().showsVerticalScrollIndicator = false
+//                    UITableView.appearance().tableFooterView = UIView()
+//                    // To remove all separators including the actual ones:
+//                    UITableView.appearance().separatorStyle = .none
+//                    UITableView.appearance().separatorColor = .clear
+//                    UITableView.appearance().showsVerticalScrollIndicator = false
 
                     model = MonthModel()
                     timeFormatter = {

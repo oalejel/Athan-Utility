@@ -33,27 +33,65 @@
 					<key>INEnumValueIndex</key>
 					<integer>1</integer>
 					<key>INEnumValueName</key>
+					<string>fajr</string>
+					<key>INEnumValuePronunciationHint</key>
 					<string>Fajr</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>B5DkFz</string>
+					<key>INEnumValueSynonyms</key>
+					<array>
+						<dict>
+							<key>INEnumValueSynonymPronunciationHint</key>
+							<string>fejj ur</string>
+							<key>INEnumValueSynonymPronunciationHintID</key>
+							<string>7okRkX</string>
+							<key>INEnumValueSynonymSynonym</key>
+							<string>fajr</string>
+							<key>INEnumValueSynonymSynonymID</key>
+							<string>pso0jU</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Shurooq</string>
+					<string>Sunrise</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>Te5o3B</string>
 					<key>INEnumValueIndex</key>
 					<integer>2</integer>
 					<key>INEnumValueName</key>
-					<string>Shurooq</string>
+					<string>sunrise</string>
+					<key>INEnumValuePronunciationHint</key>
+					<string>sunrise</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>6lM9fb</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Thuhr</string>
+					<string>Dhuhr</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>74d4Kr</string>
 					<key>INEnumValueIndex</key>
 					<integer>3</integer>
 					<key>INEnumValueName</key>
-					<string>Thuhr</string>
+					<string>dhuhr</string>
+					<key>INEnumValuePronunciationHint</key>
+					<string>Thoo her</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>XmLY4b</string>
+					<key>INEnumValueSynonyms</key>
+					<array>
+						<dict>
+							<key>INEnumValueSynonymPronunciationHint</key>
+							<string>Thuhur</string>
+							<key>INEnumValueSynonymPronunciationHintID</key>
+							<string>hPdfoT</string>
+							<key>INEnumValueSynonymSynonym</key>
+							<string>dhuhr</string>
+							<key>INEnumValueSynonymSynonymID</key>
+							<string>mr0KRZ</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -63,7 +101,11 @@
 					<key>INEnumValueIndex</key>
 					<integer>4</integer>
 					<key>INEnumValueName</key>
-					<string>Asr</string>
+					<string>asr</string>
+					<key>INEnumValuePronunciationHint</key>
+					<string>Awe Sir</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>oGCUm0</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -73,7 +115,11 @@
 					<key>INEnumValueIndex</key>
 					<integer>5</integer>
 					<key>INEnumValueName</key>
-					<string>Maghrib</string>
+					<string>maghrib</string>
+					<key>INEnumValuePronunciationHint</key>
+					<string>maghribb</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>egu1zR</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -83,7 +129,11 @@
 					<key>INEnumValueIndex</key>
 					<integer>6</integer>
 					<key>INEnumValueName</key>
-					<string>Isha</string>
+					<string>isha</string>
+					<key>INEnumValuePronunciationHint</key>
+					<string>easha</string>
+					<key>INEnumValuePronunciationHintID</key>
+					<string>myvYRf</string>
 				</dict>
 			</array>
 		</dict>
@@ -107,6 +157,8 @@
 			<string>View time of next prayer, and time remaining.</string>
 			<key>INIntentDescriptionID</key>
 			<string>r18HwH</string>
+			<key>INIntentEligibleForWidgets</key>
+			<true/>
 			<key>INIntentName</key>
 			<string>NextPrayer</string>
 			<key>INIntentParameterCombinations</key>
@@ -115,14 +167,10 @@
 				<dict>
 					<key>INIntentParameterCombinationIsPrimary</key>
 					<true/>
-					<key>INIntentParameterCombinationSubtitle</key>
-					<string>Example: Fajr begins in 1 hour at 5 AM in Cupertino.</string>
-					<key>INIntentParameterCombinationSubtitleID</key>
-					<string>uhkhMz</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Ask for upcoming Athan</string>
+					<string>Ask for the next prayer time</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>BcC4RS</string>
 				</dict>
@@ -163,7 +211,7 @@
 					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
-				<integer>13</integer>
+				<integer>14</integer>
 				<key>INIntentResponseOutput</key>
 				<string>upcomingDate</string>
 				<key>INIntentResponseParameters</key>
@@ -175,12 +223,16 @@
 						<string>Ee5zwW</string>
 						<key>INIntentResponseParameterDisplayPriority</key>
 						<integer>1</integer>
+						<key>INIntentResponseParameterEnumType</key>
+						<string>PrayerTime</string>
+						<key>INIntentResponseParameterEnumTypeNamespace</key>
+						<string>y5p0RV</string>
 						<key>INIntentResponseParameterName</key>
 						<string>upcomingPrayerName</string>
 						<key>INIntentResponseParameterTag</key>
-						<integer>6</integer>
+						<integer>14</integer>
 						<key>INIntentResponseParameterType</key>
-						<string>String</string>
+						<string>Integer</string>
 					</dict>
 					<dict>
 						<key>INIntentResponseParameterDisplayName</key>

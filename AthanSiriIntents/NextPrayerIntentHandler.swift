@@ -60,12 +60,13 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling {
             timeLeftString += "\(secondsDiff) seconds"
         }
         
-        let upcomingPrayerName = upcomingPrayer.next().localizedOrCustomString()
+//        let upcomingPrayerName = upcomingPrayer.next().localizedOrCustomString()
         
         let response = NextPrayerIntentResponse(code: .success, userActivity: nil)
         response.upcomingDate = upcomingDateString
         response.upcomingTime = timeLeftString
-        response.upcomingPrayerName = upcomingPrayerName
+//        response.upcomingPrayerName = upcomingPrayerName
+        response.upcomingPrayerName = PrayerTime(rawValue: upcomingPrayer.next().rawValue() + 1) ?? PrayerTime.unknown
         response.recentLocation = manager.locationSettings.locationName
         
         // we have put together a correct response

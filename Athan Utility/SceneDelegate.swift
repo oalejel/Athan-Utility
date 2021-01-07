@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let _ = AthanManager.shared
         let man = ObservableAthanManager.shared
         let contentView = MainSwiftUI()
+            .colorScheme(.dark)
             .environmentObject(man)
 
         // Use a UIHostingController as window root view controller.

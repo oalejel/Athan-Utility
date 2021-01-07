@@ -31,6 +31,10 @@ struct PrayerSettingsView: View {
     @State var athanSoundEnabled = false
     @State var reminderAlertEnabled = false
     @State var reminderOffset = 15
+    let x: Int = {
+        UIStepper.appearance().tintColor = .white
+        return 0
+    }()
     
     var body: some View {
         // intermediate bindings taht depend on each other
@@ -163,8 +167,11 @@ struct PrayerSettingsView: View {
                                         Spacer()
                                         
                                         Stepper("", value: $reminderOffset, in: ClosedRange(1..<120))
-                                            .accentColor(.white)
+//                                            .accentColor(.white)
                                             .labelsHidden()
+//                                            .background(Color.white)
+//                                            .cornerRadius(8)
+                                            
                                     }
                                 }
                                 

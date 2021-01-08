@@ -40,13 +40,7 @@ enum DeprecatedAlarmEnum: Int {
     case all, noEarly, none
 }
 
-class AlarmSetting: Codable {
-    var athanAlertEnabled = true
-    var athanSoundEnabled = true // might make sense to also silence reminder in this case
-    
-    var reminderAlertEnabled = true
-    var reminderOffset = 15
-}
+
 
 class DeprecatedPrayerSetting {
     var soundEnabled = true

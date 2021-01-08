@@ -104,7 +104,7 @@ struct SolarView: View, Equatable {
     
     var body: some View {
         GeometryReader  { g in
-            let amplitude: CGFloat = g.size.height / 4
+            let amplitude: CGFloat = g.size.height / 2
 //            let verticalOffset: CGFloat = amplitude - 2 * amplitude * sunlightFraction
 //            let verticalOffset: CGFloat = amplitude - 2 * amplitude * cos(sunlightFraction * CGFloat.pi / 2)
             let theta = CGFloat.pi - 2 * CGFloat.pi * CGFloat(dhuhrTime.timeIntervalSince(sunriseTime) / 86400.0)
@@ -120,23 +120,27 @@ struct SolarView: View, Equatable {
                             let time = dhuhrTime.addingTimeInterval(86400 * (Double(manualDayProgress) - 0.5))
                             Text(df.string(from: time))
 //                                .font(Font.body.weight(.semibold))
-                                .font(.system(size: 12, design: .monospaced))
+                                .font(.system(size: 26, design: .monospaced))
                                 .bold()
                                 .foregroundColor(Color(.lightText))
                                 .padding([.top, .bottom], 6)
                                 .padding([.leading, .trailing], 8)
-                                .background(
-                                    Rectangle()
-//                                        .foregroundColor(.init(.sRGB, white: 1, opacity: 0.2))
-//                                        .foregroundColor(Color(.lightText))
-                                        .addBorder(Color(.lightText), width: 2, cornerRadius: 8)
-//                                        .cornerRadius(4)
-                                        .foregroundColor(.clear)
-//                                        .border(Color(.lightText))
-                                )
-                                .padding()
+//                                .background(
+//                                    Rectangle()
+////                                        .foregroundColor(.init(.sRGB, white: 1, opacity: 0.2))
+////                                        .foregroundColor(Color(.lightText))
+//                                        .addBorder(Color(.lightText), width: 2, cornerRadius: 8)
+////                                        .cornerRadius(4)
+//                                        .foregroundColor(.clear)
+////                                        .border(Color(.lightText))
+//                                        .opacity(g.size.width < 600 ? 0 : 1)
+//                                )
+//                                .padding([.trailing])
+//                                .padding([.trailing])
+                                .offset(y: -30)
                             Spacer()
                         }
+                        Spacer()
                     }
                     .opacity(isDragging ? 1 : 0)
                     .animation(.linear(duration: 0.3))
@@ -165,9 +169,10 @@ struct SolarView: View, Equatable {
                                 })
                         )
 
-                    Rectangle()
+                    Rectangle() // horizontal line
                         .frame(width: g.size.width, height: 1)
                         .foregroundColor(Color(.lightText))
+                        .offset(y: -1 * verticalOffset)
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         
                     Rectangle()
@@ -175,13 +180,24 @@ struct SolarView: View, Equatable {
                                height: abs(cos(manualDayProgress * 2 * CGFloat.pi) * amplitude + verticalOffset),
                                alignment: .center)
                         .offset(x: manualDayProgress * g.size.width - 0.5 * g.size.width,
-                                y: 0.5 * (cos(manualDayProgress * 2 * CGFloat.pi) * amplitude + verticalOffset))
+                                y: 0.5 * (cos(manualDayProgress * 2 * CGFloat.pi) * amplitude - verticalOffset))
                         .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .opacity(isDragging ? 1 : 0)
                         .animation(.linear(duration: 0.3))
                     
-                    SineLine(amplitude: amplitude, verticalOffset: verticalOffset)
+                    Text(MainSwiftUI.hijriDateString(date: Date()))
+                        .fontWeight(.bold)
+                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding([.trailing, .leading])
+                        .foregroundColor(Color(.lightText))
+                        .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
+                        //                                            .offset(y: 24)
+//                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
+
+                    
+                    SineLine(amplitude: amplitude, verticalOffset: 0)//verticalOffset)
                         .stroke(style: StrokeStyle(lineWidth: 2,
                                                    lineCap: .round,
                                                    lineJoin: .round,
@@ -200,11 +216,12 @@ struct SolarView: View, Equatable {
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)
                         .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
-                                y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude + verticalOffset)
+                                y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude) //+ verticalOffset)
 //                        .animation(.linear(duration: 0.3))
                 }
 //                Spacer()
             }
+//            .border(Color.red)
         }
     }
 }

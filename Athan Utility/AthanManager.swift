@@ -10,7 +10,9 @@ import Foundation
 import Adhan
 import CoreLocation
 import UIKit
+#if !os(watchOS)
 import WidgetKit
+#endif
 
 /*
  Athan manager now uses the batoul apps api to calculate prayer times
@@ -149,9 +151,12 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.startUpdatingHeading()
         
+        #if !os(watchOS)
         // register for going into foreground
         NotificationCenter.default.addObserver(self, selector: #selector(movedToForeground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
+        #endif
+        
         // manually call these the first time since didSet not called on init
         prayerSettingsDidSetHelper()
         notificationSettingsDidSetHelper()
@@ -382,6 +387,7 @@ extension AthanManager {
         
         // only make notifications if user has edited from the default location
         if locationSettings.locationName != "Edit Location" {
+            #if !os(watchOS) // dont schedule notes in watchos app
             NotificationsManager
                 .createNotifications(coordinate: locationSettings.locationCoordinate,
                                      calculationMethod: prayerSettings.calculationMethod,
@@ -389,6 +395,7 @@ extension AthanManager {
                                      noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
             resetWidgets()
+            #endif
         }
         
         // reset timers to keep data updated if app stays on screen
@@ -400,7 +407,9 @@ extension AthanManager {
             // refresh widgets only if this is being run in the main app
             if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
                 DispatchQueue.main.async {
-                    WidgetCenter.shared.reloadAllTimelines()
+                    #if !os(watchOS)
+                        WidgetCenter.shared.reloadAllTimelines()
+                    #endif
                 }
             }
         }

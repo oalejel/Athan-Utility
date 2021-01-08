@@ -10,6 +10,14 @@ import Foundation
 import Adhan
 import CoreLocation.CLLocation
 
+class AlarmSetting: Codable {
+    var athanAlertEnabled = true
+    var athanSoundEnabled = true // might make sense to also silence reminder in this case
+    
+    var reminderAlertEnabled = true
+    var reminderOffset = 15
+}
+
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable, NSCopying {
 //    static func == (lhs: PrayerSettings, rhs: PrayerSettings) -> Bool {

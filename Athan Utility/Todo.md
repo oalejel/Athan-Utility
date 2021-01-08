@@ -1,23 +1,15 @@
 #  Todo list 
-Before updating 
+Next version priorities 
+- force dividers to be Color.white
+- make all ipad sizes somewhat nice and usable
+- 
+
 - fajr athan should be different
 - allow ppl who dont use apple mail to send feedback
-- loop through every key in strings.swift to confirm localizations match 
-- bug where dragging fast gets us stuck in the last simulated pryaer gradient -- found that dragging in the same "current prayer" causes gradient to not change, meaning that the gradiennt view is the culprti
-- add donation button
 - ensure notifications use the correct minute symbol
 
-- change th to dh in spanish adhan localizations
-
 - MUST check: ensure that notifications run for as long as expected WITHOUT widgets enabled
-- fix non-english time left string format
 
-- must understand time zone constraint. seems that you can only guarantee ability to use app given coordinates and without wifi IFF the user has the right time zone set on their devices
-- finish privacy info view
-
-
-
-- run with breakpoints everywhere to confirm control flow 
 - keep swiftui from updating literally everything when the qibla view rotates. some states should not update everything 
 - confirm that entry of coordinates when locations or maps arent allowed still works
 - ios 13 color preview should change to current prayer when changing color modes
@@ -27,12 +19,7 @@ Before updating
 - localize widgets
 - check that on fresh installation, moon animates
 - add siri button to settings
-- test on ios 13 
-- test on ios 12 
-- test on iphone 7 ios 14, 13, and 12
 - add review request after foreground in ios (ensure not widget) is opened for the third time
-
-- user should be able to stop athan playing 
 
 
 For later 

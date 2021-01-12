@@ -86,7 +86,7 @@ class Global {
     }
     static var statusColor = UIColor.green
     
-    static var manager: PrayerManager!
+//    static var manager: PrayerManager!
     
     static var openQibla = false
 

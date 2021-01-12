@@ -1,8 +1,13 @@
 #  Todo list 
 Next version priorities 
+- improve arabic translation
+
+- need an intro screen to prod users to set location on start
 - force dividers to be Color.white
 - make all ipad sizes somewhat nice and usable
-- 
+- add detailed descriptions under each calculation method so that they dont seem like black boxes 
+- consider changing sunrise to Shurooq so that people are less confused about how its not sunrise for hours
+
 
 - fajr athan should be different
 - allow ppl who dont use apple mail to send feedback

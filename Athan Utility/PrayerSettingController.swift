@@ -17,30 +17,30 @@ class PrayerSettingController: UITableViewController {
     var switches: [UISwitch] = []
     var switchesOn: [Bool] = [true,true,true]
     var switchesEnabled: [Bool] = [true,true,true]
-    var initialSettings: DeprecatedPrayerSetting!
+//    var initialSettings: DeprecatedPrayerSetting!
     
     init(style: UITableView.Style, prayer: PrayerType) {
         super.init(style: style)
         p = prayer
         //create a settings object to be compared later
-        let initialSettingsPointer = Global.manager.prayerSettings[p]
-        initialSettings = DeprecatedPrayerSetting()
-        initialSettings.alarmType = initialSettingsPointer!.alarmType
-        initialSettings.soundEnabled = initialSettingsPointer!.soundEnabled
+//        let initialSettingsPointer = Global.manager.prayerSettings[p]
+//        initialSettings = DeprecatedPrayerSetting()
+//        initialSettings.alarmType = initialSettingsPointer!.alarmType
+//        initialSettings.soundEnabled = initialSettingsPointer!.soundEnabled
         
-        let alarmType = Global.manager.prayerSettings[p]?.alarmType
-        let soundEnabled = Global.manager.prayerSettings[p]?.soundEnabled
-        switchesOn[2] = soundEnabled!//preliminary, can be broken if others are off
-        if alarmType == .all {
-            //do nothing
-        } else if alarmType == .noEarly {
-            //1 off, no disabling
-            switchesOn[1] = false
-        } else {
-            //all off, 2 disabled
-            switchesEnabled[1...2] = [false,false]
-            switchesOn[0...2] = [false,false,false]
-        }
+//        let alarmType = Global.manager.prayerSettings[p]?.alarmType
+//        let soundEnabled = Global.manager.prayerSettings[p]?.soundEnabled
+//        switchesOn[2] = soundEnabled!//preliminary, can be broken if others are off
+//        if alarmType == .all {
+//            //do nothing
+//        } else if alarmType == .noEarly {
+//            //1 off, no disabling
+//            switchesOn[1] = false
+//        } else {
+//            //all off, 2 disabled
+//            switchesEnabled[1...2] = [false,false]
+//            switchesOn[0...2] = [false,false,false]
+//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -109,44 +109,14 @@ class PrayerSettingController: UITableViewController {
     }
     
     @objc func switched(_ sender: UISwitch) {
-        if sender != switches[2] {//test if not the sound switch
-            if sender == switches[0] {
-                if sender.isOn {
-                    switches[1].isEnabled = true
-                    switches[2].isEnabled = true
-                } else {
-                    //disable the 15 minutes alarm..
-                    switches[1].isEnabled = false
-                    switches[1].isOn = false
-                    switches[2].isEnabled = false
-                    switches[2].isOn = false
-                }
-            }
-            
-            let a = switches[0].isOn ? 1 : 0
-            let b = switches[1].isOn ? 1 : 0
-            switch (a + b) {
-            case 2:
-                Global.manager.prayerSettings[p]?.alarmType = .all
-            case 1:
-                Global.manager.prayerSettings[p]?.alarmType = DeprecatedAlarmEnum.noEarly
-            case 0:
-                Global.manager.prayerSettings[p]?.alarmType = DeprecatedAlarmEnum.none
-                Global.manager.prayerSettings[p]?.soundEnabled = false
-            default:
-                break
-            }
-        } else {
-            Global.manager.prayerSettings[p]?.soundEnabled = sender.isOn
-        }
     }
     
     #warning("move settings saving to settings.swift")
     override func viewWillDisappear(_ animated: Bool) {
-        Global.manager.saveSettings()
-        if initialSettings.alarmType != Global.manager.prayerSettings[p]!.alarmType || initialSettings.soundEnabled != Global.manager.prayerSettings[p]!.soundEnabled {
-//            Global.manager.scheduleAppropriateNotifications()
-            Settings.notificationUpdatesPending = true
-        }
+//        Global.manager.saveSettings()
+//        if initialSettings.alarmType != Global.manager.prayerSettings[p]!.alarmType || initialSettings.soundEnabled != Global.manager.prayerSettings[p]!.soundEnabled {
+////            Global.manager.scheduleAppropriateNotifications()
+//            Settings.notificationUpdatesPending = true
+//        }
     }
 }

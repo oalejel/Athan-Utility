@@ -32,7 +32,6 @@
 		3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */; };
 		3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA961BDC58E30001EFE4 /* ClockView.swift */; };
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
-		3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E89125773BFD0041F1AC /* ButtonStyles.swift */; };
 		3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E898257757100041F1AC /* PrayerSettingsView.swift */; };
@@ -100,7 +99,6 @@
 		3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */; };
 		3D770549251C3137007BCEAA /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11D971251C2BD9009F6146 /* Widget_Provider.swift */; };
-		3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */; };
 		3D770571251C3812007BCEAA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -140,7 +138,6 @@
 		3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */; };
 		3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */; };
 		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
-		3DB56CEC228367DB00B9F738 /* PrayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */; };
 		3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -270,7 +267,6 @@
 		3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerCell.xib; sourceTree = "<group>"; };
 		3D07DA961BDC58E30001EFE4 /* ClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
-		3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManager.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
 		3D11D971251C2BD9009F6146 /* Widget_Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget_Provider.swift; sourceTree = "<group>"; };
 		3D13E89125773BFD0041F1AC /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
@@ -648,7 +644,6 @@
 			isa = PBXGroup;
 			children = (
 				3D07DA901BDC58E30001EFE4 /* Global.swift */,
-				3D07DA981BDC58E30001EFE4 /* PrayerManager.swift */,
 				3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */,
 				3D73FC6A2284EE1C0092A83C /* Settings.swift */,
 				3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */,
@@ -1255,7 +1250,6 @@
 				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
 				3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */,
 				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
-				3D07DAA21BDC58E30001EFE4 /* PrayerManager.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */,
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
@@ -1285,7 +1279,6 @@
 			files = (
 				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
 				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
-				3D770564251C379B007BCEAA /* PrayerManager.swift in Sources */,
 				3D078985259AE0FF0047DD00 /* Colors.swift in Sources */,
 				3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3D73EC182570DAB80010C47D /* AthanManager.swift in Sources */,
@@ -1309,7 +1302,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */,
-				3DB56CEC228367DB00B9F738 /* PrayerManager.swift in Sources */,
 				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
 				3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */,
 				3D73EBF7257027290010C47D /* SettingsModels.swift in Sources */,

@@ -62,7 +62,7 @@ open class SwiftSpinner: UIView {
         let localizedCancelString = NSLocalizedString("Cancel", comment: "")
         cancelButton.setTitle(localizedCancelString, for: UIControl.State.normal)
         cancelButton.accessibilityLabel = "cancel" //localizedCancelString // make this localized later
-        cancelButton.addTarget(Global.manager, action: #selector(Global.manager.userCanceledDataRequest), for: .touchUpInside)
+//        cancelButton.addTarget(Global.manager, action: #selector(Global.manager.userCanceledDataRequest), for: .touchUpInside)
         cancelButton.setTitleColor(UIColor.black, for: UIControl.State())
         cancelButton.center = CGPoint(x: f.size.width / 2, y: f.size.height * 0.8)
         vibrancyView.contentView.addSubview(cancelButton)

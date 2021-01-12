@@ -14,7 +14,7 @@ import AVFoundation
 class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewControllerDelegate {
 
     var currentRow = 0
-    var manager: PrayerManager!
+//    var manager: PrayerManager!
     var soundImage: UIImage!
     var noSoundImage: UIImage!
     
@@ -126,25 +126,25 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
         cell.rightLabel.alpha = 0.5
         cell.selectionStyle = .gray
         
-        let setting = manager.prayerSettings[PrayerType(rawValue: indexPath.row)!]!
+//        let setting = []//manager.prayerSettings[PrayerType(rawValue: indexPath.row)!]!
         
         var cellText = ""
-        switch setting.alarmType {
-        case .all:
-            cellText = NSLocalizedString("Normal & 15m", comment: "")
-        case .noEarly:
-            cellText = NSLocalizedString("Normal Reminder", comment: "")
-        case .none:
-            cellText = NSLocalizedString("No Reminders", comment: "") 
-        }
+//        switch setting.alarmType {
+//        case .all:
+//            cellText = NSLocalizedString("Normal & 15m", comment: "")
+//        case .noEarly:
+//            cellText = NSLocalizedString("Normal Reminder", comment: "")
+//        case .none:
+//            cellText = NSLocalizedString("No Reminders", comment: "")
+//        }
         cell.rightLabel?.text = cellText
         
-        if setting.soundEnabled {
-            cell.iconView.image = soundImage.imageFlippedForRightToLeftLayoutDirection()
-        } else {
-            cell.iconView.image = noSoundImage.imageFlippedForRightToLeftLayoutDirection()
-        }
-        
+//        if setting.soundEnabled {
+//            cell.iconView.image = soundImage.imageFlippedForRightToLeftLayoutDirection()
+//        } else {
+//            cell.iconView.image = noSoundImage.imageFlippedForRightToLeftLayoutDirection()
+//        }
+//
         cell.iconView.contentMode = .center
         
         switch indexPath.row {
@@ -223,7 +223,7 @@ class SettingsViewController: UITableViewController, INUIAddVoiceShortcutViewCon
             #warning("potential interleaving bug: if data isnt downloaded for a new calculation method, this might conflict with the running code")
             if Settings.notificationUpdatesPending {
                 Settings.notificationUpdatesPending = false
-                Global.manager.scheduleAppropriateNotifications()
+//                Global.manager.scheduleAppropriateNotifications()
             }
             self.navigationController!.removeFromParent()
             self.removeFromParent()

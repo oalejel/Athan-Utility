@@ -16,7 +16,7 @@ class QiblaViewController: UIViewController {
     let bounds = UIScreen.main.bounds
     
     @IBOutlet weak var dismissButton: UIButton!
-    var headingManager: PrayerManager!
+//    var headingManager: PrayerManager!
     
     @IBOutlet weak var angleLabel: UILabel!
     

@@ -55,11 +55,11 @@ class CalculationSettingController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        Global.manager.saveSettings()
-        if selectedMethod != Settings.getCalculationMethodIndex() {
-            Settings.setCalculationMethodIndex(for: selectedMethod)
-            // tell prayer manager to update
-            Global.manager.userRequestsReload()
-        }
+//        Global.manager.saveSettings()
+//        if selectedMethod != Settings.getCalculationMethodIndex() {
+//            Settings.setCalculationMethodIndex(for: selectedMethod)
+//            // tell prayer manager to update
+//            Global.manager.userRequestsReload()
+//        }
     }
 }

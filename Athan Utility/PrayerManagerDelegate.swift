@@ -14,11 +14,11 @@ import Foundation
  Watchkit and Today extensions
 */
 @objc protocol PrayerManagerDelegate {
-    var manager: PrayerManager! {get set}
-    var locationIsSynced: Bool { get set }
-    
-    func dataReady(manager: PrayerManager)
-    @objc optional func newPrayer(manager: PrayerManager)
+//    var manager: PrayerManager! {get set}
+//    var locationIsSynced: Bool { get set }
+//    
+//    func dataReady(manager: PrayerManager)
+//    @objc optional func newPrayer(manager: PrayerManager)
     @objc optional func setShouldShowLoader()
     @objc optional func fifteenMinutesLeft()
     @objc optional func newMeridiem()

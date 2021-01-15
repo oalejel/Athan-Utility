@@ -1,21 +1,25 @@
 {
   "images" : [
     {
+      "filename" : "Artboard.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : "<=145"
     },
     {
+      "filename" : "Artboard-1.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">161"
     },
     {
+      "filename" : "Artboard-2.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">145"
     },
     {
+      "filename" : "Artboard-3.png",
       "idiom" : "watch",
       "scale" : "2x",
       "screen-width" : ">183"

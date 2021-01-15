@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import WatchConnectivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -22,6 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // assuming swift ui works in this case/
 //            UIView.appearance().tintColor = .white
             print("SWIFT UI WILL HANDLE IOS 13+")
+            
+            if WCSession.isSupported() {
+                WCSession.default.delegate = PhoneWatchDelegate.shared
+                WCSession.default.activate()
+            }
+//            assert(WCSession.isSupported(), "This sample requires Watch Connectivity support!")
+
             
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)

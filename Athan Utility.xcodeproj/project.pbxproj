@@ -145,9 +145,19 @@
 		3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6AF502576FE06006241D4 /* View+Extensions.swift */; };
 		3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */; };
 		3DB9EE51259D026E00601E1E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9EE50259D026E00601E1E /* CalendarView.swift */; };
+		3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55625B14A6C008E87E9 /* StarView.swift */; };
+		3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		3DBAE56825B15E2E008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		3DBAE57125B15E30008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		3DBAE57925B15F9E008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */; };
 		3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */; };
 		3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */; };
+		3DCAB78B25AEC4230075801B /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
+		3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
+		3DCAB7AB25AEC6580075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
+		3DCAB7AC25AEC65A0075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
 		3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB30CA236B109200D47C7C /* UIView+Fading.swift */; };
 		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
@@ -186,12 +196,26 @@
 			remoteGlobalIDString = 3D20CB1A2518DA0900275206;
 			remoteInfo = "Athan WidgetExtension";
 		};
+		3D3C104025AEA60D00D02B3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DEE3A5C25A6A04B00DC7331;
+			remoteInfo = "Athan Watch";
+		};
 		3D93EA1C2182C447002019B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3D93EA062182C447002019B7;
 			remoteInfo = AthanSiriIntents;
+		};
+		3DBAE58825B1632F008E87E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DEE3A6525A6A04D00DC7331;
+			remoteInfo = "Athan Watch Extension";
 		};
 		3DD51AF820FC5A00000CBFFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -374,10 +398,16 @@
 		3DB6AF502576FE06006241D4 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTaskEngine.swift; sourceTree = "<group>"; };
 		3DB9EE50259D026E00601E1E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3DBAE55625B14A6C008E87E9 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonWatchCommunication.swift; sourceTree = "<group>"; };
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
 		3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableScrollView.swift; sourceTree = "<group>"; };
 		3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingView.swift; sourceTree = "<group>"; };
 		3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Old_Frequent_Widget_Provider copy.swift"; sourceTree = "<group>"; };
+		3DCAB76F25AEB0E70075801B /* Athan Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan Watch.entitlements"; sourceTree = "<group>"; };
+		3DCAB77025AEB0EE0075801B /* Athan Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan Watch Extension.entitlements"; sourceTree = "<group>"; };
+		3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
+		3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWatchDelegate.swift; sourceTree = "<group>"; };
 		3DCB30CA236B109200D47C7C /* UIView+Fading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,6 +576,9 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
+				3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */,
+				3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */,
+				3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */,
 				3D1E50D4256D64D0003E2E34 /* SwiftUI Views */,
 				3D73FC8122875CCF0092A83C /* Notification Sound Previews */,
 				3D8CE84125696639006D6E46 /* Settings Managers */,
@@ -577,6 +610,7 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3DBAE55625B14A6C008E87E9 /* StarView.swift */,
 				3DEF6486259FEC73004EE51F /* AthanPlayView.swift */,
 				3DEF645F259EFE42004EE51F /* GradientView.swift */,
 				3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */,
@@ -827,6 +861,7 @@
 		3DEE3A5E25A6A04B00DC7331 /* Athan Watch */ = {
 			isa = PBXGroup;
 			children = (
+				3DCAB76F25AEB0E70075801B /* Athan Watch.entitlements */,
 				3DEE3A5F25A6A04D00DC7331 /* Assets.xcassets */,
 				3DEE3A6125A6A04D00DC7331 /* Info.plist */,
 			);
@@ -836,6 +871,7 @@
 		3DEE3A6A25A6A04D00DC7331 /* Athan Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3DCAB77025AEB0EE0075801B /* Athan Watch Extension.entitlements */,
 				3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */,
 				3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */,
 				3DEE3A6F25A6A04D00DC7331 /* NotificationController.swift */,
@@ -881,6 +917,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				3DBAE58925B1632F008E87E9 /* PBXTargetDependency */,
+				3D3C104125AEA60D00D02B3F /* PBXTargetDependency */,
 				3D93EA1D2182C447002019B7 /* PBXTargetDependency */,
 				3D20CB2A2518DA0B00275206 /* PBXTargetDependency */,
 			);
@@ -1018,7 +1056,6 @@
 				TargetAttributes = {
 					3D07DA7A1BDC58B50001EFE4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = DL7989H5XT;
 						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -1222,6 +1259,7 @@
 				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
+				3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */,
 				3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */,
 				3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
@@ -1229,6 +1267,7 @@
 				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
 				3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
+				3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
 				3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */,
 				3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */,
@@ -1241,6 +1280,7 @@
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
 				3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */,
+				3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */,
 				3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */,
 				3D59923825930F5E006355CB /* MapView.swift in Sources */,
 				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
@@ -1279,9 +1319,11 @@
 			files = (
 				3D770549251C3137007BCEAA /* PrayerType.swift in Sources */,
 				3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
+				3DBAE57925B15F9E008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3D078985259AE0FF0047DD00 /* Colors.swift in Sources */,
 				3D73EC0C2570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
 				3D73EC182570DAB80010C47D /* AthanManager.swift in Sources */,
+				3DCAB7AB25AEC6580075801B /* PhoneWatchDelegate.swift in Sources */,
 				3D770571251C3812007BCEAA /* Global.swift in Sources */,
 				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
@@ -1312,9 +1354,11 @@
 				3D73EC1E257155AA0010C47D /* NotificationsManager.swift in Sources */,
 				3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */,
 				3D73EC062570D0E60010C47D /* Prayer+Extensions.swift in Sources */,
+				3DCAB7AC25AEC65A0075801B /* PhoneWatchDelegate.swift in Sources */,
 				3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */,
 				3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */,
 				3DB56CF4228369A200B9F738 /* Global.swift in Sources */,
+				3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,6 +1369,7 @@
 				3D73FC6E2285C3390092A83C /* Settings.swift in Sources */,
 				3DF0EE9B21038E3D00624E98 /* PrayerType.swift in Sources */,
 				3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */,
+				3DBAE56825B15E2E008E87E9 /* CommonWatchCommunication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1341,6 +1386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DBAE57125B15E30008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3DEE3A7025A6A04D00DC7331 /* NotificationController.swift in Sources */,
 				3DEE3ACF25A6AB5000DC7331 /* Colors.swift in Sources */,
 				3DEE3A6E25A6A04D00DC7331 /* ContentView.swift in Sources */,
@@ -1350,6 +1396,7 @@
 				3DEE3A6C25A6A04D00DC7331 /* Athan_UtilityApp.swift in Sources */,
 				3DEE3A9425A6A18400DC7331 /* AthanManager.swift in Sources */,
 				3DEE3A7225A6A04D00DC7331 /* NotificationView.swift in Sources */,
+				3DCAB78B25AEC4230075801B /* WatchSessionDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,10 +1408,20 @@
 			target = 3D20CB1A2518DA0900275206 /* Athan WidgetExtension */;
 			targetProxy = 3D20CB292518DA0B00275206 /* PBXContainerItemProxy */;
 		};
+		3D3C104125AEA60D00D02B3F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DEE3A5C25A6A04B00DC7331 /* Athan Watch */;
+			targetProxy = 3D3C104025AEA60D00D02B3F /* PBXContainerItemProxy */;
+		};
 		3D93EA1D2182C447002019B7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3D93EA062182C447002019B7 /* AthanSiriIntents */;
 			targetProxy = 3D93EA1C2182C447002019B7 /* PBXContainerItemProxy */;
+		};
+		3DBAE58925B1632F008E87E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DEE3A6525A6A04D00DC7331 /* Athan Watch Extension */;
+			targetProxy = 3DBAE58825B1632F008E87E9 /* PBXContainerItemProxy */;
 		};
 		3DD51AF920FC5A00000CBFFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1596,8 +1653,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1610,6 +1668,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Athan Utility/Athan Utility Test-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1624,8 +1683,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1638,6 +1698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Athan Utility/Athan Utility Test-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1908,7 +1969,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Athan Watch/Athan Watch.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DL7989H5XT;
@@ -1920,6 +1982,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1941,7 +2004,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "Athan Watch/Athan Watch.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DL7989H5XT;
@@ -1952,6 +2016,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1970,6 +2035,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
@@ -2005,6 +2071,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;

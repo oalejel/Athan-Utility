@@ -306,6 +306,11 @@ struct MainSwiftUI: View {
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
                 
+                StarView(starCount: Int(g.size.width / 800))
+                    .equatable()
+                    .opacity(dayProgressState.nonOptionalPreviewPrayer == .isha ? 1 : 0)
+                    .animation(.linear)
+                
                 VStack(alignment: .leading) {
                     switch currentView {
                     case .Location:

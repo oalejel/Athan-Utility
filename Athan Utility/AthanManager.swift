@@ -13,6 +13,7 @@ import UIKit
 #if !os(watchOS)
 import WidgetKit
 #endif
+import WatchConnectivity
 
 /*
  Athan manager now uses the batoul apps api to calculate prayer times
@@ -107,11 +108,22 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func prayerSettingsDidSetHelper() {
         PrayerSettings.shared = prayerSettings
         PrayerSettings.archive()
+        
+        // if not running on watchOS, update the watch
+        #warning("may have unnecessary updates from widget loading up these objects. not sure since i dont think didset is called on widgets unless locations update")
+        #if !os(watchOS)
+        WCSession.default.sendMessage([PrayerSettings.archiveName : prayerSettings]) { replyDict in
+            print("watchos reply: \(replyDict)")
+        } errorHandler: { error in
+            print("> Error with WCSession send")
+        }
+        #endif
     }
     
     func notificationSettingsDidSetHelper() {
         NotificationSettings.shared = notificationSettings
         NotificationSettings.archive()
+        // no need to send these to the watch
     }
     
     func locationSettingsDidSetHelper() {
@@ -124,6 +136,14 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
                                                                 Coordinates(latitude: locationSettings.locationCoordinate.latitude,
                                                                             longitude: locationSettings.locationCoordinate.longitude)).direction
         }
+        
+        #if !os(watchOS)
+        WCSession.default.sendMessage([LocationSettings.archiveName : locationSettings]) { replyDict in
+            print("watchos reply: \(replyDict)")
+        } errorHandler: { error in
+            print("> Error with WCSession send")
+        }
+        #endif
     }
     
     func appearanceSettingsDidSetHelper() {
@@ -132,6 +152,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         if #available(iOS 13.0.0, *) {
             ObservableAthanManager.shared.appearance = appearanceSettings
         }
+        // no need to send these over to watchos
     }
     
     // App lifecycle state tracking
@@ -155,7 +176,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         // register for going into foreground
         NotificationCenter.default.addObserver(self, selector: #selector(movedToForeground),
                                                name: UIApplication.willEnterForegroundNotification, object: nil)
+        #else
+        WCSession.default.delegate = WatchSessionDelegate.shared
+        WCSession.default.activate()
         #endif
+        
         
         // manually call these the first time since didSet not called on init
         prayerSettingsDidSetHelper()

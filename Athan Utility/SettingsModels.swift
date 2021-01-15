@@ -66,7 +66,7 @@ class PrayerSettings: Codable, NSCopying {
     var madhab: Madhab
     var customNames: [Prayer:String] // store potential override names for athan times
     
-    private static let archiveName = "prayersettings"
+    static let archiveName = "prayersettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = PrayerSettings(method: calculationMethod, madhab: madhab, customNames: customNames)
@@ -158,7 +158,7 @@ class NotificationSettings: Codable, NSCopying {
     
     var selectedSound: Sounds
     var settings: [Prayer:AlarmSetting]
-    private static let archiveName = "notificationsettings"
+    static let archiveName = "notificationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = NotificationSettings(settings: settings, selectedSound: selectedSound)
@@ -227,7 +227,7 @@ class LocationSettings: Codable, NSCopying {
             lon = newValue.longitude
         }
     }
-    private static let archiveName = "locationsettings"
+    static let archiveName = "locationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation)
@@ -297,7 +297,7 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
     }
 //        nil: ((1, 2, 3), (1, 2, 3))
     
-    private static let archiveName = "appearancesettings"
+    static let archiveName = "appearancesettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = AppearanceSettings(colorDict: colorDict, isDynamic: isDynamic, id: id)
@@ -311,6 +311,7 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
 func archiveData(_ name: String, object: Any) {
     print("WARNING: ADD ERROR HANDLER TO THIS")
     let fm = FileManager.default
+    
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!
     url = url.appendingPathComponent("\(name)")
     

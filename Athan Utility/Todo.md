@@ -1,6 +1,11 @@
 #  Todo list 
 Next version priorities 
+- test if using `transferCurrentComplicationUserInfo` from phone when watch is disconnected causes watch to update complications upon reconnection
 - improve arabic translation
+- watch app should syncrhonize with iphone when the location is changed===> cant have bad complications when user changes loc
+- consider issue where location is changed while watch is not connected. will it get the update?
+- add stars behind moon during isha
+
 
 - need an intro screen to prod users to set location on start
 - force dividers to be Color.white

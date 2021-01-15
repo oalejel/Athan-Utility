@@ -79,6 +79,13 @@ final class ScenekitView : NSObject, UIViewRepresentable, SCNSceneRendererDelega
         lightNode.light!.type = .omni
         lightNode.position = SCNVector3(x: 0, y: 0, z: -70)
         
+        let ambientNode = SCNNode()
+        ambientNode.light = SCNLight()
+        ambientNode.light?.intensity = 70
+        ambientNode.light!.type = .ambient
+        ambientNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        scene.rootNode.addChildNode(ambientNode)
+        
         centeredLightParent.addChildNode(lightNode)
         scene.rootNode.addChildNode(centeredLightParent)
         

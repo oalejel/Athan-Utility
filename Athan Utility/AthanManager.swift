@@ -110,14 +110,16 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         PrayerSettings.archive()
         
         // if not running on watchOS, update the watch
-        #warning("may have unnecessary updates from widget loading up these objects. not sure since i dont think didset is called on widgets unless locations update")
-        #if !os(watchOS)
-        WCSession.default.sendMessage([PrayerSettings.archiveName : prayerSettings]) { replyDict in
-            print("watchos reply: \(replyDict)")
-        } errorHandler: { error in
-            print("> Error with WCSession send")
-        }
-        #endif
+//        #warning("may have unnecessary updates from widget loading up these objects. not sure since i dont think didset is called on widgets unless locations update")
+//        #if !os(watchOS)
+//        if WCSession.default.activationState == .activated {
+//            WCSession.default.sendMessage([PHONE_MSG_KEY : "prayerSettings"]) { replyDict in
+//                print("watchos reply: \(replyDict)")
+//            } errorHandler: { error in
+//                print("> Error with WCSession send")
+//            }
+//        }
+//        #endif
     }
     
     func notificationSettingsDidSetHelper() {
@@ -138,10 +140,17 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         }
         
         #if !os(watchOS)
-        WCSession.default.sendMessage([PHONE_MSG_KEY : locationSettings]) { replyDict in
-            print("watchos reply: \(replyDict)")
-        } errorHandler: { error in
-            print("> Error with WCSession send")
+        if WCSession.default.activationState == .activated {
+            do {
+                let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: locationSettings, prayerSettings: prayerSettings))
+                WCSession.default.sendMessage([PhoneMessage.SettingsPackage.rawValue : encoded]) { replyDict in
+                    print("watchos replyyy: \(replyDict)")
+                } errorHandler: { error in
+                    print("> Error with WCSession send")
+                }
+            } catch {
+                print(">>> unable to encode location settings response")
+            }
         }
         #endif
     }

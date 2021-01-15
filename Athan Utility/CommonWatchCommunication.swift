@@ -8,16 +8,24 @@
 
 import Foundation
 
+struct WatchPackage: Codable {
+    var locationSettings: LocationSettings
+    var prayerSettings: PrayerSettings
+}
 
 let WATCH_MSG_KEY = "watchmsg"
 let PHONE_REPLY_KEY = "phonerep"
 let WATCH_REPLY_KEY = "watchrep"
 let PHONE_MSG_KEY = "phonemsg"
 
-enum WatchMessage: Int {
-    case RequestLocationSettings
+enum WatchMessage: String {
+//    case RequestLocationSettings
+//    case RequestPrayerSettings
+    case RequestSettingsPackage
 }
 
-enum PhoneMessage {
-    case LocationSettings
+enum PhoneMessage: String {
+    case SettingsPackage
+//    case LocationSettings
+//    case PrayerSettings
 }

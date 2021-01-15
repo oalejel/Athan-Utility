@@ -12,9 +12,30 @@ import WatchConnectivity
 class PhoneWatchDelegate: NSObject, WCSessionDelegate {
     
     static let shared = PhoneWatchDelegate()
-    
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print(">>> phone->watch state: \(activationState == .activated)")
+        if error != nil {
+            print(">> error: \(error!)")
+        }
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        if session.isReachable && session.activationState == .activated {
+            print(">>> watch reachable and active")
+            
+            do {
+                let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: AthanManager.shared.locationSettings, prayerSettings: AthanManager.shared.prayerSettings))
+                WCSession.default.sendMessage([PhoneMessage.SettingsPackage.rawValue : encoded]) { replyDict in
+                    print("watchos reply: \(replyDict)")
+                } errorHandler: { error in
+                    print("> Error with WCSession send")
+                }
+            } catch {
+                print(">>> unable to encode location settings response. error: \(error)")
+            }
+            
+            
+        }
     }
     
     func sessionDidBecomeInactive(_ session: WCSession) {
@@ -29,25 +50,24 @@ class PhoneWatchDelegate: NSObject, WCSessionDelegate {
         print(">>> got request from watch")
         if let msgType = message[WATCH_MSG_KEY] as? WatchMessage {
             switch msgType {
-            case .RequestLocationSettings:
+            case .RequestSettingsPackage:
                 do {
-                    let encoded = try PropertyListEncoder().encode(AthanManager.shared.locationSettings)
-                    replyHandler([PHONE_REPLY_KEY:encoded])
+                    let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: AthanManager.shared.locationSettings, prayerSettings: AthanManager.shared.prayerSettings))
+                    replyHandler([PhoneMessage.SettingsPackage.rawValue:encoded])
                 } catch {
                     print(">>> unable to encode location settings response")
                 }
-                
             }
         }
     }
     
-//    func sessionDidBecomeInactive(_ session: WCSession) {
-//
-//    }
+    //    func sessionDidBecomeInactive(_ session: WCSession) {
+    //
+    //    }
     
-//    func sessionDidDeactivate(_ session: WCSession) {
-//
-//    }
+    //    func sessionDidDeactivate(_ session: WCSession) {
+    //
+    //    }
     
     
 }

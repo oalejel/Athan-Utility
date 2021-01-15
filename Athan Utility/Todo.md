@@ -1,6 +1,8 @@
 #  Todo list 
 Next version priorities 
 - test if using `transferCurrentComplicationUserInfo` from phone when watch is disconnected causes watch to update complications upon reconnection
+- see if only sending updates package to watch when location settings run didset is enough
+
 - improve arabic translation
 - watch app should syncrhonize with iphone when the location is changed===> cant have bad complications when user changes loc
 - consider issue where location is changed while watch is not connected. will it get the update?

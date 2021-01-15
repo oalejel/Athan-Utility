@@ -14,33 +14,38 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print(">>> watch->phone state: \(activationState == .activated)")
-        
-        // whenever we become active, request location from phone
-        if activationState == .activated {
-            print("requesting location from iphone")
-            WCSession.default.sendMessage([WATCH_MSG_KEY:WatchMessage.RequestLocationSettings]) { (replyDict) in
-                if let encodedLocSettings = replyDict[PHONE_REPLY_KEY] as? Data {
-                    do {
-                        let locSettings = try PropertyListDecoder().decode(LocationSettings.self, from: encodedLocSettings)
-                        print(">>> WATCH GOT LOCATION: \(locSettings.locationName)")
-                    } catch {
-                        print(">>> error decoding location data")
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        if session.isReachable {
+            // whenever we become active and reachable, request location from phone
+            print(">>> PHONE NOW REACHABLE")
+            if session.activationState == .activated {
+                print("requesting location from iphone")
+                WCSession.default.sendMessage([WATCH_MSG_KEY:WatchMessage.RequestSettingsPackage]) { (replyDict) in
+                    if let encodedLocSettings = replyDict[PHONE_REPLY_KEY] as? Data {
+                        do {
+                            let package = try PropertyListDecoder().decode(WatchPackage.self, from: encodedLocSettings)
+                            print(">>> WATCH GOT LOCATION: \(package.locationSettings.locationName)")
+                        } catch {
+                            print(">>> error decoding location data")
+                        }
                     }
+                } errorHandler: { error in
+                    print(">>> WATCH GOT EERROR REQUESTING LOC: \(error)")
                 }
-            } errorHandler: { error in
-                print(">>> WATCH GOT EERROR REQUESTING LOC")
             }
 
         }
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        if let x = message[PHONE_MSG_KEY] as? LocationSettings {
+        if let package = message[PhoneMessage.SettingsPackage.rawValue] as? WatchPackage {
             print("got location from phone!!")
         } else {
             print("UNABLE TO PARSE PHONE MESSAGE \(message)")
         }
-        replyHandler(["reply":"watch got the message"])
+        replyHandler([WATCH_REPLY_KEY:"watch got the message"])
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {

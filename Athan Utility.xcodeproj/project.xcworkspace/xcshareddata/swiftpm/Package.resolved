@@ -9,15 +9,6 @@
           "revision": "3723ee71c900ad3bc93868c32ff039c1322a1fb4",
           "version": "1.2.0"
         }
-      },
-      {
-        "package": "SwiftSpinner",
-        "repositoryURL": "https://github.com/icanzilb/SwiftSpinner",
-        "state": {
-          "branch": null,
-          "revision": "b11109c98524526af3a1c6f69c5818862acda6fb",
-          "version": "2.1.0"
-        }
       }
     ]
   },

@@ -1,13 +1,16 @@
 #  Todo list 
 Next version priorities 
+- BIG ISUEE: make sure watch does not show tomorrow times if we are on yesterday's isha. reuse today times 
 - test if using `transferCurrentComplicationUserInfo` from phone when watch is disconnected causes watch to update complications upon reconnection
 - see if only sending updates package to watch when location settings run didset is enough
+- have watch tell user to open app to set location
+- if user opens watch app before phone app, maybe have watch ask user for permission to set location automatically and THEN tell phone that the location has been set --> only do this if we are still on default settings
+        
 
 - improve arabic translation
 - watch app should syncrhonize with iphone when the location is changed===> cant have bad complications when user changes loc
 - consider issue where location is changed while watch is not connected. will it get the update?
 - add stars behind moon during isha
-
 
 - need an intro screen to prod users to set location on start
 - force dividers to be Color.white

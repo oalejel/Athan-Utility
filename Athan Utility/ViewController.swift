@@ -291,7 +291,7 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
         
         DispatchQueue.main.async { () -> Void in
             self.hardResetPrayerVisuals()
-            SwiftSpinner.hide()
+//            SwiftSpinner.hide()
             self.locationButton.setTitle(AthanManager.shared.locationSettings.locationName, for: .normal)
             
             // now that we actually have a qibla heading, we can have a dynamic quick action
@@ -368,7 +368,7 @@ class ViewController: UIViewController, INUIAddVoiceShortcutViewControllerDelega
     
     
     func hideLoadingView() {
-        SwiftSpinner.hide()
+//        SwiftSpinner.hide()
     }
     
     

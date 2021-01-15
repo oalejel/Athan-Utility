@@ -6,6 +6,8 @@
 //  Copyright © 2015 Omar Alejel. All rights reserved.
 //
 
+// بسم الله الرحمان الرحيم
+
 import UIKit
 import UserNotifications
 import WatchConnectivity

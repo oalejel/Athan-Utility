@@ -22,33 +22,34 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
             print(">>> PHONE NOW REACHABLE")
             if session.activationState == .activated {
                 print("requesting location from iphone")
-                WCSession.default.sendMessage([WATCH_MSG_KEY:WatchMessage.RequestSettingsPackage]) { (replyDict) in
-                    if let encodedLocSettings = replyDict[PHONE_REPLY_KEY] as? Data {
-                        do {
-                            let package = try PropertyListDecoder().decode(WatchPackage.self, from: encodedLocSettings)
-                            print(">>> WATCH GOT LOCATION: \(package.locationSettings.locationName)")
-                        } catch {
-                            print(">>> error decoding location data")
-                        }
+                WCSession.default.sendMessageData(WATCH_MSG_KEY.data(using: .ascii)!) { responseData in
+                    do {
+                        let package = try PropertyListDecoder().decode(WatchPackage.self, from: responseData)
+                        print(">>> WATCH GOT LOCATION: \(package.locationSettings.locationName)")
+                        AthanManager.shared.locationSettings = package.locationSettings
+                        AthanManager.shared.prayerSettings = package.prayerSettings
+                    } catch {
+                        print(">>> error decoding location data")
                     }
                 } errorHandler: { error in
-                    print(">>> WATCH GOT EERROR REQUESTING LOC: \(error)")
+                    
                 }
             }
-
         }
     }
     
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
-        if let package = message[PhoneMessage.SettingsPackage.rawValue] as? WatchPackage {
-            print("got location from phone!!")
-        } else {
-            print("UNABLE TO PARSE PHONE MESSAGE \(message)")
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
+            print("got message w reply handler from iphone")
+        do {
+            let package = try PropertyListDecoder().decode(WatchPackage.self, from: messageData)
+            print(">>> WATCH GOT LOCATION: \(package.locationSettings.locationName)")
+            AthanManager.shared.locationSettings = package.locationSettings
+            AthanManager.shared.prayerSettings = package.prayerSettings
+            replyHandler("watch successfully got package".data(using: .ascii)!)
+            return
+        } catch {
+            print(">> watch error decoding reponse from phone")
         }
-        replyHandler([WATCH_REPLY_KEY:"watch got the message"])
-    }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("didreceive message!!")
-    }
+        replyHandler("watch received with error".data(using: .ascii)!)
+    }        
 }

@@ -143,10 +143,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         if WCSession.default.activationState == .activated {
             do {
                 let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: locationSettings, prayerSettings: prayerSettings))
-                WCSession.default.sendMessage([PhoneMessage.SettingsPackage.rawValue : encoded]) { replyDict in
-                    print("watchos replyyy: \(replyDict)")
+                WCSession.default.sendMessageData(encoded) { (respData) in
+                    print(">>> got response from sending watch data")
                 } errorHandler: { error in
-                    print("> Error with WCSession send")
+                    print(">>> error from watch in sending data \(error)")
                 }
             } catch {
                 print(">>> unable to encode location settings response")
@@ -239,16 +239,6 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         if let prayers = PrayerTimes(coordinates: coordinates,
                                      date: date,
                                      calculationParameters: params) {
-//            let formatter = DateFormatter()
-//            formatter.timeStyle = .medium
-//            formatter.timeZone = TimeZone.current
-
-//            print("fajr \(formatter.string(from: prayers.fajr))")
-//            print("sunrise \(formatter.string(from: prayers.sunrise))")
-//            print("dhuhr \(formatter.string(from: prayers.dhuhr))")
-//            print("asr \(formatter.string(from: prayers.asr))")
-//            print("maghrib \(formatter.string(from: prayers.maghrib))")
-//            print("isha \(formatter.string(from: prayers.isha))")
             return prayers
         }
         return nil

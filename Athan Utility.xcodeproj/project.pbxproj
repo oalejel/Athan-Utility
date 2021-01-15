@@ -107,7 +107,6 @@
 		3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* SettingsViewController.swift */; };
 		3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* SettingsViewController.xib */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
-		3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
 		3D9054AF25808DFB00A0F72A /* Old_widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9054AE25808DFB00A0F72A /* Old_widget.swift */; };
@@ -121,7 +120,6 @@
 		3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9BA0192575446F00F02EFD /* MoonView3D.swift */; };
 		3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
-		3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAE4495256088DA00156CFF /* SwiftSpinner */; };
 		3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE451D256089D600156CFF /* WhatsNewViewController.swift */; };
 		3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE451F256089D600156CFF /* WhatsNew.xib */; };
 		3DAE452D256089D600156CFF /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */; };
@@ -374,7 +372,6 @@
 		3D7D42C11C00E5380013956C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3D7D42C21C00E5380013956C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
-		3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftSpinner.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		3D8CE83A256965F0006D6E46 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
@@ -474,7 +471,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DAE4496256088DA00156CFF /* SwiftSpinner in Frameworks */,
 				3D16F1042560851B00C78B12 /* Adhan in Frameworks */,
 				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
 			);
@@ -824,7 +820,6 @@
 			isa = PBXGroup;
 			children = (
 				3DCB30CA236B109200D47C7C /* UIView+Fading.swift */,
-				3D89E71320C75DBF00E64118 /* SwiftSpinner.swift */,
 				3DAE45532560976900156CFF /* SqueezeButton.swift */,
 			);
 			name = "Helper Views";
@@ -935,7 +930,6 @@
 			name = "Athan Utility";
 			packageProductDependencies = (
 				3D16F1032560851B00C78B12 /* Adhan */,
-				3DAE4495256088DA00156CFF /* SwiftSpinner */,
 			);
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
@@ -1131,7 +1125,6 @@
 			mainGroup = 3D07DA721BDC58B50001EFE4;
 			packageReferences = (
 				3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */,
-				3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
 			);
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
 			projectDirPath = "";
@@ -1305,7 +1298,6 @@
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
 				3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,
-				3D89E71420C75DC000E64118 /* SwiftSpinner.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */,
 				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
@@ -2196,14 +2188,6 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/icanzilb/SwiftSpinner";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2221,11 +2205,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
 			productName = Adhan;
-		};
-		3DAE4495256088DA00156CFF /* SwiftSpinner */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3DAE4494256088DA00156CFF /* XCRemoteSwiftPackageReference "SwiftSpinner" */;
-			productName = SwiftSpinner;
 		};
 		3DEE3AAF25A6A33C00DC7331 /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;

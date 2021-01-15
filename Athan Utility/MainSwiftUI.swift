@@ -308,7 +308,7 @@ struct MainSwiftUI: View {
                 
                 StarView(starCount: Int(g.size.width / 800))
                     .equatable()
-                    .opacity(dayProgressState.nonOptionalPreviewPrayer == .isha ? 1 : 0)
+                    .opacity(dayProgressState.nonOptionalPreviewPrayer != .isha ? 0 : 1)
                     .animation(.linear)
                 
                 VStack(alignment: .leading) {

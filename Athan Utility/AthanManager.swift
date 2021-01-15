@@ -138,7 +138,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         }
         
         #if !os(watchOS)
-        WCSession.default.sendMessage([LocationSettings.archiveName : locationSettings]) { replyDict in
+        WCSession.default.sendMessage([PHONE_MSG_KEY : locationSettings]) { replyDict in
             print("watchos reply: \(replyDict)")
         } errorHandler: { error in
             print("> Error with WCSession send")

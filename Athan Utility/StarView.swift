@@ -41,12 +41,14 @@ struct StarView: View, Equatable {
     
     @State var starCount: Int = 100
     @State var fadingIndices = 0
-    var startStates: [StarState] = []
+    static var startStates: [StarState] = []
     
     init(starCount sc: Int) {
         starCount = sc
-        for _ in 0..<starCount {
-            startStates.append(StarState())
+        if StarView.startStates.count < starCount {
+            for _ in 0..<starCount {
+                StarView.startStates.append(StarState())
+            }
         }
     }
     
@@ -54,7 +56,7 @@ struct StarView: View, Equatable {
         GeometryReader { g in
             ZStack {
                 ForEach(0..<starCount) { idx in
-                    let ss = startStates[idx]
+                    let ss = StarView.startStates[idx]
                     let randomRadius = ss.radius
                     let randomX = ss.x * g.size.width
                     let randomY = ss.y * g.size.height

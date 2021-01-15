@@ -151,6 +151,7 @@
 		3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DBAE57125B15E30008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DBAE57925B15F9E008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		3DBAE5F425B16534008E87E9 /* Athan Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3DEE3A5D25A6A04B00DC7331 /* Athan Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */; };
 		3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */; };
 		3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */; };
@@ -217,6 +218,13 @@
 			remoteGlobalIDString = 3DEE3A6525A6A04D00DC7331;
 			remoteInfo = "Athan Watch Extension";
 		};
+		3DBAE5F525B16534008E87E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DEE3A5C25A6A04B00DC7331;
+			remoteInfo = "Athan Watch";
+		};
 		3DD51AF820FC5A00000CBFFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3D07DA731BDC58B50001EFE4 /* Project object */;
@@ -240,6 +248,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
+				3DBAE5F425B16534008E87E9 /* Athan Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -921,6 +930,7 @@
 				3D3C104125AEA60D00D02B3F /* PBXTargetDependency */,
 				3D93EA1D2182C447002019B7 /* PBXTargetDependency */,
 				3D20CB2A2518DA0B00275206 /* PBXTargetDependency */,
+				3DBAE5F625B16534008E87E9 /* PBXTargetDependency */,
 			);
 			name = "Athan Utility";
 			packageProductDependencies = (
@@ -1422,6 +1432,11 @@
 			isa = PBXTargetDependency;
 			target = 3DEE3A6525A6A04D00DC7331 /* Athan Watch Extension */;
 			targetProxy = 3DBAE58825B1632F008E87E9 /* PBXContainerItemProxy */;
+		};
+		3DBAE5F625B16534008E87E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3DEE3A5C25A6A04B00DC7331 /* Athan Watch */;
+			targetProxy = 3DBAE5F525B16534008E87E9 /* PBXContainerItemProxy */;
 		};
 		3DD51AF920FC5A00000CBFFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

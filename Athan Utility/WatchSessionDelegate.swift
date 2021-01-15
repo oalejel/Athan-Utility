@@ -34,6 +34,15 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
         }
     }
     
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        if let x = message[PHONE_MSG_KEY] as? LocationSettings {
+            print("got location from phone!!")
+        } else {
+            print("UNABLE TO PARSE PHONE MESSAGE \(message)")
+        }
+        replyHandler(["reply":"watch got the message"])
+    }
+    
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("didreceive message!!")
     }

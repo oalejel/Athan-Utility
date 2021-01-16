@@ -9,7 +9,7 @@
 // MARK: - Prayer Names
 "Fajr" = "فجر";
 "Sunrise" = "شروق";
-"Thuhr" = "ظهر";
+"Dhuhr" = "ظهر";
 "Asr" = "عصر";
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";

@@ -45,17 +45,12 @@ struct ProgressBar: View {
         }
         .padding(.zero)
         .frame(height: lineWidth)
-        
     }
 }
 
-
-
 struct ContentView: View {
-    let manager = ObservableAthanManager.shared
+    @ObservedObject var manager = ObservableAthanManager.shared
     @State var progress: Float = 30
-    @State var colorSettings = AthanManager.shared.appearanceSettings
-    @State var currentPrayer = AthanManager.shared.currentPrayer ?? .isha
     
     func getPercentComplete() -> Double {
         var currentTime: Date?
@@ -80,45 +75,71 @@ struct ContentView: View {
         // user background gradient is not suitable for text with black background
         
         VStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 3) {
                 //                Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
-                HStack(alignment: .firstTextBaseline) {
-                    Text(currentPrayer.localizedOrCustomString())
+                //                VStack {//(alignment: .firstTextBaseline) {
+                ////                        .minimumScaleFactor(0.1)
+                ////                    Spacer()
+                //
+                //                }
+                if manager.currentPrayer.localizedOrCustomString().count > 5 {
+                    Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
+                    Text(manager.currentPrayer.localizedOrCustomString())
                         .font(Font.largeTitle.bold())
                         .lineLimit(1)
-                        .minimumScaleFactor(0.1)
-                    Spacer()
-                    Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.1)
+                        .fixedSize(horizontal: true, vertical: true)
+                        //                    .border(Color.red)
+                        .padding([.top], -8)
+                } else {
+                    HStack(alignment: .lastTextBaseline) {
+                        Text(manager.currentPrayer.localizedOrCustomString())
+                            .font(Font.largeTitle.bold())
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: true)
+                            //                    .border(Color.red)
+                            .padding([.top], -8)
+                        Spacer()
+                        Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.1)
+                    }
                 }
                 
                 ProgressBar(progress: CGFloat(getPercentComplete()), lineWidth: 8,
                             outlineColor: Color(.sRGB, white: 1, opacity: 0.4),
                             colors: [.white])
-                //                ProgressView("", value: getPercentComplete() * 100, total: 100)
-                //                    .font(Font.largeTitle.bold())
-                //                    .lineLimit(1)
-                //                    .minimumScaleFactor(0.1)
-                //                    .progressViewStyle(CircularProgressViewStyle(tint: Color.red))
-                
             }
-            .gradientForeground(colors: watchColorsForPrayer(currentPrayer))
-//            .navigationTitle(manager.locationName)
+            .gradientForeground(colors: watchColorsForPrayer(manager.currentPrayer))
+            //            .navigationTitle(manager.locationName)
             
             ScrollView {
-                
                 // show k = 6 - current prayers left over for today
-                if currentPrayer != .isha {
-                    ForEach(currentPrayer.rawValue()..<6, id: \.self) { pIndex in
+                if manager.currentPrayer != .isha {
+                    ForEach(manager.currentPrayer.rawValue()..<6, id: \.self) { pIndex in
                         let prayer = Prayer(index: pIndex)
                         HStack {
                             Text(prayer.localizedOrCustomString())
                             Spacer()
                             Text(manager.todayTimes.time(for: prayer), style: .time)
                         }
-                        .foregroundColor(currentPrayer.rawValue() == pIndex ? .green : .white)
+                        .foregroundColor(manager.currentPrayer.rawValue() == pIndex ? .green : .white)
                     }
+                }
+                
+                // show k prayers for tomorrow
+                //                ForEach(0..<(currentPrayer.rawValue() + 1), id: \.self) { pIndex in
+                // if isha refer's to yesterday's isha, use today times
+                if manager.currentPrayer == .isha && Date() < manager.todayTimes.isha {
+                    ForEach(0..<6, id: \.self) { pIndex in
+                        let prayer = Prayer(index: pIndex)
+                        HStack {
+                            Text(prayer.localizedOrCustomString())
+                            Spacer()
+                            Text(manager.todayTimes.time(for: prayer), style: .time)
+                        }
+                        .foregroundColor(.gray)
+                    }
+                } else { // case where it is same day that isha began
                     HStack {
                         VStack {
                             Divider()
@@ -130,22 +151,6 @@ struct ContentView: View {
                             Divider()
                         }
                     }
-                }
-                
-                // show k prayers for tomorrow
-                //                ForEach(0..<(currentPrayer.rawValue() + 1), id: \.self) { pIndex in
-                // if isha refer's to yesterday's isha, use today times
-                if currentPrayer == .isha && Date() < manager.todayTimes.isha {
-                    ForEach(0..<6, id: \.self) { pIndex in
-                        let prayer = Prayer(index: pIndex)
-                        HStack {
-                            Text(prayer.localizedOrCustomString())
-                            Spacer()
-                            Text(manager.todayTimes.time(for: prayer), style: .time)
-                        }
-                        .foregroundColor(.gray)
-                    }
-                } else { // case where it is same day that isha began
                     ForEach(0..<6, id: \.self) { pIndex in
                         let prayer = Prayer(index: pIndex)
                         HStack {
@@ -160,7 +165,7 @@ struct ContentView: View {
                 Divider()
                 
                 VStack(alignment: .leading) {
-                    Text("Location:")
+                    Text(Strings.locationColon)
                         .bold()
                     HStack {
                         Text(manager.locationName)
@@ -173,19 +178,10 @@ struct ContentView: View {
                     }
                 }
             }
-        }.padding(.top, -6)
-    }
-    
-    func watchColorsForPrayer(_ p: Prayer) -> [Color] {
-        switch p {
-        case .fajr:
-            return [Color.white, .blue]
-        case .isha:
-            return [Color.white, .purple, .purple]
-        default:
-            return [Color.white, .blue]
         }
     }
+    
+    
 }
 
 extension View {
@@ -204,5 +200,23 @@ struct ContentView_Previews: PreviewProvider {
             ContentView()
                 .previewDevice("Apple Watch Series 6 - 40mm")
         }
+    }
+}
+
+func watchColorsForPrayer(_ p: Prayer) -> [Color] {
+    switch p {
+    case .fajr:
+        return [.init(red: 208/255, green: 226/255 , blue: 1), .init(red: 0/255, green: 83/255 , blue: 233/255)]
+    case .sunrise:
+        return [.init(red: 229/255, green: 255/255, blue: 229/255), .init(red: 0/255, green: 136/255 , blue: 211/255)]
+    case .dhuhr:
+        return [.init(red: 216/255, green: 254/255, blue: 1), .init(red: 24/255, green: 109/255 , blue: 203/255)]
+    case .asr:
+        return [.init(red: 205/255, green: 238/255, blue: 255/255), .init(red: 0/255, green: 143/255 , blue: 205/255)]
+    case .maghrib:
+        return [.init(red: 254/255, green: 240/255, blue: 240/255), .init(red: 255/255, green: 97/255 , blue: 55/255)]
+    case .isha:
+        return [.init(red: 246/255, green: 237/255, blue: 255/255), .init(red: 77/255, green: 70/255 , blue: 255/255)]
+    //            return [Color.white, .purple, .purple]
     }
 }

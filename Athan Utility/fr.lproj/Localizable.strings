@@ -10,7 +10,7 @@
 // MARK: - Prayer Names
 "Fajr" = "Fejr";
 "Sunrise" = "Shuruk";
-"Thuhr" = "Dhuhr";
+"Dhuhr" = "Dhuhr";
 "Asr" = "Asser";
 "Maghrib" = "Maghreb";
 "Isha" = "Icha";

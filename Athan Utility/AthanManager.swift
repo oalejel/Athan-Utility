@@ -12,7 +12,10 @@ import CoreLocation
 import UIKit
 #if !os(watchOS)
 import WidgetKit
+#else
+import ClockKit
 #endif
+
 import WatchConnectivity
 
 /*
@@ -65,7 +68,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var todayTimes: PrayerTimes! = nil {
         didSet {
             if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.todayTimes = todayTimes
+//                DispatchQueue.main.async {
+                    ObservableAthanManager.shared.todayTimes = self.todayTimes
+//                }
+                
             }
         }
     }
@@ -73,7 +79,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var tomorrowTimes: PrayerTimes! = nil {
         didSet {
             if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.tomorrowTimes = tomorrowTimes
+//                DispatchQueue.main.async {
+                    ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
+//                }
             }
         }
     }
@@ -98,7 +106,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     var locationPermissionsGranted = false {
         didSet {
             if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.locationPermissionsGranted = locationPermissionsGranted
+                ObservableAthanManager.shared.locationPermissionsGranted = self.locationPermissionsGranted
             }
         }
     }
@@ -130,19 +138,55 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     func locationSettingsDidSetHelper() {
 //        assert(false, "just checking that this correctly gets called")
-        LocationSettings.shared = locationSettings
+        
+        // if watchos, we may need to immediately updat ecomplications
+        // but we need to be conservative with complication updsates, so confirm that location has changed
+        let newSettings = LocationSettings.shared.copy() as! LocationSettings // used for reference if we need a comparison for watchOS
+        LocationSettings.shared = self.locationSettings
         LocationSettings.archive()
+
+        #if os(watchOS)
+        let LAT_KEY = "lastLat"
+        let LON_KEY = "lastLon"
+        let lastLat = UserDefaults.standard.double(forKey: LAT_KEY)
+        let lastLon = UserDefaults.standard.double(forKey: LON_KEY)
+        let estimatedLat = Int(lastLat * 10) // compare doubles with precision within 10 degrees
+        let estimatedLon = Int(lastLon * 10)
+        let comparedLat = Int(newSettings.locationCoordinate.latitude * 10) // must compare against old stored settings
+        let comparedLon = Int(newSettings.locationCoordinate.longitude * 10)
+        // if we have a signficant change in coordinates, save and update all complications
+        print("comparing stored and new lats: \(estimatedLat), \(comparedLat)")
+        if estimatedLat != comparedLat || estimatedLon != comparedLon {
+            self.considerRecalculations(force: true) // since nobody will call recalculate if we change settings quietly - maybe change this behavior
+            
+            print(">>> NEW LOCATION \(self.locationSettings.locationName) : update complications!")
+            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.latitude), forKey: LAT_KEY)
+            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.longitude), forKey: LON_KEY)
+
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
+                return
+            }
+            for complication in activeComplications {
+                complicationServer.reloadTimeline(for: complication)
+            }
+        }
+        #endif
+        
         if #available(iOS 13.0.0, *) {
-            ObservableAthanManager.shared.locationName = locationSettings.locationName
-            ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
-                                                                Coordinates(latitude: locationSettings.locationCoordinate.latitude,
-                                                                            longitude: locationSettings.locationCoordinate.longitude)).direction
+//            DispatchQueue.main.async {
+                ObservableAthanManager.shared.locationName = self.locationSettings.locationName
+                ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
+                                                                    Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
+                                                                                longitude: self.locationSettings.locationCoordinate.longitude)).direction
+//            }
         }
         
         #if !os(watchOS)
-        if WCSession.default.activationState == .activated {
+        if WCSession.default.activationState == .activated && WCSession.default.isReachable {
             do {
-                let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: locationSettings, prayerSettings: prayerSettings))
+                print("*** PHONE SENDING INFO MESSAGE ON LOCATION CHANGE FOR UNREACHABLE WATCH")
+                let encoded = try PropertyListEncoder().encode(WatchPackage(locationSettings: self.locationSettings, prayerSettings: self.prayerSettings))
                 WCSession.default.sendMessageData(encoded) { (respData) in
                     print(">>> got response from sending watch data")
                 } errorHandler: { error in
@@ -151,8 +195,29 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             } catch {
                 print(">>> unable to encode location settings response")
             }
+        } else if WCSession.default.activationState == .activated {
+            // also a complication update --- TODO: might need to track state for a pending settings change
+            // in case we arent activated yet
+
+            // just send something to tell complications to update
+            for existingTransfers in WCSession.default.outstandingUserInfoTransfers {
+                existingTransfers.cancel()
+            }
+            #warning("ensure we dont go over the limit for user info transfers")
+            print("*** PHONE SENDING INFO DICT ON LOCATION CHANGE FOR UNREACHABLE WATCH")
+            WCSession.default.transferCurrentComplicationUserInfo([
+                "locname" : self.locationSettings.locationName,
+                "latitude" : self.locationSettings.locationCoordinate.latitude,
+                "longitude" : self.locationSettings.locationCoordinate.longitude,
+                "currentloc" : self.locationSettings.useCurrentLocation,
+                "timezoneid" : self.locationSettings.timeZone.identifier
+            ])
+        } else {
+            print(">>>> NOT ACTIVATED")
         }
         #endif
+
+    
     }
     
     func appearanceSettingsDidSetHelper() {
@@ -170,7 +235,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     var currentPrayer: Prayer? {
         didSet {
             if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.currentPrayer = currentPrayer! // should never be nil after didSet
+                DispatchQueue.main.async {
+                    ObservableAthanManager.shared.currentPrayer = self.currentPrayer! // should never be nil after didSet
+                }
             }
         }
     }
@@ -356,11 +423,13 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 // Listen for background events
 extension AthanManager {
     func considerRecalculations(force: Bool) {
-        // reload settings in case we are running widget and app changed them
-        if let arch = LocationSettings.checkArchive() { locationSettings = arch }
-        if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
-        if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
-        if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
+        if !force {
+            // reload settings in case we are running widget and app changed them
+            if let arch = LocationSettings.checkArchive() { locationSettings = arch }
+            if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
+            if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
+            if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
+        }
         
         var shouldRecalculate = force // forced for when we have new locations
         if !force {

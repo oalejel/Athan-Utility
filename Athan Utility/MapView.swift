@@ -14,9 +14,9 @@ struct MapView: UIViewRepresentable, Equatable {
     static func == (lhs: MapView, rhs: MapView) -> Bool {
         let res = lhs.center.latitude == rhs.center.latitude && lhs.center.longitude == rhs.center.longitude
             && lhs.usingCurrentLocation == rhs.usingCurrentLocation
-        if res == false {
-            print("MAP NOT EQUAL")
-        }
+//        if res == false {
+//            print("MAP NOT EQUAL")
+//        }
         return res
     }
     

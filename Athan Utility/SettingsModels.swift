@@ -240,7 +240,6 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
         lhs.id == rhs.id && lhs.isDynamic == rhs.isDynamic
     }
     
-    
     static var shared: AppearanceSettings = {
         if let archive = checkArchive() {
             return archive

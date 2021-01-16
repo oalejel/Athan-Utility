@@ -37,6 +37,7 @@ struct StarState {
 struct StarView: View, Equatable {
     static func == (lhs: StarView, rhs: StarView) -> Bool {
         lhs.fadingIndices == rhs.fadingIndices
+//        true
     }
     
     @State var starCount: Int = 100
@@ -76,12 +77,16 @@ struct StarView: View, Equatable {
                         .animation(Animation.easeInOut(duration:2).repeatForever(autoreverses:true))
                 }
             }
+
+            .parallax(amount: 20)
+            .offset(x: g.size.width / -2, y: g.size.height / -2)
             .mask(
                 LinearGradient(gradient: Gradient(colors: [.white, .white, .clear]),
                                startPoint: .top,
                                endPoint: .bottom)
+//                    .position(x: 0, y: 0)
                     .frame(width: g.size.width, height: g.size.height)
-                    .offset(x: g.size.width / 2, y: g.size.height / 2)
+//                    .offset(x: g.size.width / 2, y: g.size.height / 2)
             )
         }
     }

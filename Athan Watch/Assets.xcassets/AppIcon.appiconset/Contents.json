@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "watch icon with larger border.png",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -8,6 +9,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "watch icon with larger border-1.png",
       "idiom" : "watch",
       "role" : "notificationCenter",
       "scale" : "2x",
@@ -15,18 +17,21 @@
       "subtype" : "42mm"
     },
     {
+      "filename" : "watch icon with larger border-2.png",
       "idiom" : "watch",
       "role" : "companionSettings",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "watch icon with larger border-3.png",
       "idiom" : "watch",
       "role" : "companionSettings",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "watch icon with larger border-4.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -34,6 +39,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "watch icon with larger border-5.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -41,6 +47,7 @@
       "subtype" : "40mm"
     },
     {
+      "filename" : "watch icon with larger border-6.png",
       "idiom" : "watch",
       "role" : "appLauncher",
       "scale" : "2x",
@@ -48,6 +55,7 @@
       "subtype" : "44mm"
     },
     {
+      "filename" : "watch icon with larger border-7.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -55,6 +63,7 @@
       "subtype" : "38mm"
     },
     {
+      "filename" : "watch icon with larger border-8.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -62,6 +71,7 @@
       "subtype" : "42mm"
     },
     {
+      "filename" : "watch icon with larger border-9.png",
       "idiom" : "watch",
       "role" : "quickLook",
       "scale" : "2x",
@@ -69,6 +79,7 @@
       "subtype" : "44mm"
     },
     {
+      "filename" : "watch icon with larger border-10.png",
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

@@ -163,7 +163,8 @@ struct MainSwiftUI: View {
         let df = DateFormatter()
         df.calendar = hijriCal
         df.dateStyle = .medium
-        print("here")
+//        print("here")
+        #warning("this gets called too often on stage changes. change later for performance.")
         
         // if arabic, always use arabic numerals
         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
@@ -306,10 +307,11 @@ struct MainSwiftUI: View {
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
                 
-                StarView(starCount: Int(g.size.width / 800))
-                    .equatable()
-                    .opacity(dayProgressState.nonOptionalPreviewPrayer != .isha ? 0 : 1)
-                    .animation(.linear)
+                if dayProgressState.nonOptionalPreviewPrayer == .isha {
+                    StarView(starCount: Int(g.size.width / 800))
+                        .equatable()
+                        .transition(.opacity)
+                }
                 
                 VStack(alignment: .leading) {
                     switch currentView {
@@ -352,7 +354,7 @@ struct MainSwiftUI: View {
                                         .opacity(1 - 0.8 * dragState.progress)
                                     }
                                     
-                                    HStack(alignment: .bottom) {
+                                    HStack(alignment: .lastTextBaseline) {
                                         VStack(alignment: .leading) {
                                             PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
                                                 .foregroundColor(.white)
@@ -387,7 +389,7 @@ struct MainSwiftUI: View {
                                                     .opacity(dayProgressState.isDragging ? 0.2 : 1)
                                                     .opacity(1 - 0.8 * dragState.progress)
                                                     .onReceive(secondsTimer) { _ in
-                                                        print("fire second timer")
+//                                                        print("fire second timer")
                                                         relativeDateId += 1
                                                         //                                                    relativeTimeStr = relativeTime() // updating this unrelated string was the only way to get this to work
                                                     }
@@ -404,7 +406,7 @@ struct MainSwiftUI: View {
                                                     .opacity(dayProgressState.isDragging ? 0.2 : 1)
                                                     .opacity(1 - 0.8 * dragState.progress)
                                                     .onReceive(secondsTimer) { _ in
-                                                        print("fire second timer")
+//                                                        print("fire second timer")
                                                         relativeTimeStr = relativeTime()
                                                     }
                                                 

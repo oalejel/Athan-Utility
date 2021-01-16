@@ -54,4 +54,8 @@ class PhoneWatchDelegate: NSObject, WCSessionDelegate {
         }
     }
     
+    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+        print("***> FINISHED USER INFO FILE TRANSFER")
+    }
+    
 }

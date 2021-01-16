@@ -9,6 +9,19 @@
 import Foundation
 import Adhan
 
+extension Prayer {
+    func sfSymbolName() -> String {
+        switch self {
+        case .fajr: return "light.max"
+        case .sunrise: return "sunrise"
+        case .dhuhr: return "sun.max"
+        case .asr: return "sun.min"
+        case .maghrib: return "sunset"
+        case .isha: return "moon.stars"
+        }
+    }
+}
+
 extension Prayer: Codable {
     enum PrayerKey: CodingKey {
         case key
@@ -84,7 +97,7 @@ extension Prayer: Codable {
         case .sunrise:
             return "Sunrise"
         case .dhuhr:
-            return "Thuhr"
+            return "Dhuhr"
         case .asr:
             return "Asr"
         case .maghrib:
@@ -105,7 +118,7 @@ extension Prayer: Codable {
     func localizedOrCustomString() -> String {
         let custom = PrayerSettings.shared.customNames[self]
         if let custom = custom, custom != "" { return custom }
-        return NSLocalizedString(self.stringValue(), comment: "")
+        return NSLocalizedString(self.localizedString(), comment: "")
     }
     
     // never returns nil

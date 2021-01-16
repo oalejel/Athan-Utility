@@ -13,20 +13,7 @@ import Adhan
 struct PrayerSymbol: View {
     var prayerType: Prayer
     var body: some View {
-        switch prayerType {
-        case .fajr:
-            Image(systemName: "light.max")
-        case .sunrise:
-            Image(systemName: "sunrise")
-        case .dhuhr:
-            Image(systemName: "sun.max")
-        case .asr:
-            Image(systemName: "sun.min")
-        case .maghrib:
-            Image(systemName: "sunset")
-        case .isha:
-            Image(systemName: "moon.stars")
-        }
+        Image(systemName: prayerType.sfSymbolName())
     }
 }
 

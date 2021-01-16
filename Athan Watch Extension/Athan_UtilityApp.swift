@@ -10,13 +10,18 @@ import SwiftUI
 
 @main
 struct Athan_UtilityApp: App {
+    @WKExtensionDelegateAdaptor(CustomExtensionDelegate.self) var delegate
+    
     @SceneBuilder var body: some Scene {
+        
         WindowGroup {
-            NavigationView {
-                ContentView()
-            }
+//            NavigationView {
+            ContentView()
+//            }
         }
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
+    
+    
 }

@@ -56,7 +56,7 @@ struct GradientView: View, Equatable {
                 .edgesIgnoringSafeArea(.all)
                 .opacity(firstPlane ? 0 : 1)
                 .onValueChanged(currentPrayer) { x in
-                    print("CP CHANGE: ", currentPrayer)
+//                    print("CP CHANGE: ", currentPrayer)
                     // start a 0.1 second timer that updates the view
                     // to avoid state change issues
 //                    print("GRADIENT PRAYER CHANGED")
@@ -80,7 +80,7 @@ struct GradientView: View, Equatable {
                     }
                 }
                 .onValueChanged(appearance) { app in
-                    print("AP CHANGE: ", appearance.id, appearance.isDynamic)
+//                    print("AP CHANGE: ", appearance.id, appearance.isDynamic)
                     if abs(lastTimerDate.timeIntervalSinceNow) > 0.012 {
                         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false, block: { t in
                             

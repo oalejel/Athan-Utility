@@ -109,7 +109,6 @@
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
-		3D9054AF25808DFB00A0F72A /* Old_widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9054AE25808DFB00A0F72A /* Old_widget.swift */; };
 		3D936A191BE3A8320060790D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA821BDC58B60001EFE4 /* Main.storyboard */; };
 		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
 		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
@@ -152,7 +151,6 @@
 		3DBAE5F425B16534008E87E9 /* Athan Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3DEE3A5D25A6A04B00DC7331 /* Athan Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */; };
 		3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */; };
-		3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */; };
 		3DCAB78B25AEC4230075801B /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
 		3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
 		3DCAB7AB25AEC6580075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
@@ -378,7 +376,6 @@
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		3D8CE83A256965F0006D6E46 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
-		3D9054AE25808DFB00A0F72A /* Old_widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Old_widget.swift; sourceTree = "<group>"; };
 		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
 		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
 		3D93E9DF21829D0C002019B7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -412,7 +409,6 @@
 		3DC2FB072464E044005D1EF5 /* Todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Todo.md; sourceTree = "<group>"; };
 		3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackableScrollView.swift; sourceTree = "<group>"; };
 		3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingView.swift; sourceTree = "<group>"; };
-		3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Old_Frequent_Widget_Provider copy.swift"; sourceTree = "<group>"; };
 		3DCAB76F25AEB0E70075801B /* Athan Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan Watch.entitlements"; sourceTree = "<group>"; };
 		3DCAB77025AEB0EE0075801B /* Athan Watch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan Watch Extension.entitlements"; sourceTree = "<group>"; };
 		3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSessionDelegate.swift; sourceTree = "<group>"; };
@@ -644,8 +640,6 @@
 			children = (
 				3D20CB212518DA0900275206 /* Athan_Widget.swift */,
 				3D11D971251C2BD9009F6146 /* Widget_Provider.swift */,
-				3DC7CA88257ADD45007BB825 /* Old_Frequent_Widget_Provider copy.swift */,
-				3D9054AE25808DFB00A0F72A /* Old_widget.swift */,
 				3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */,
 				3D20CB242518DA0B00275206 /* Assets.xcassets */,
 				3D20CB262518DA0B00275206 /* Info.plist */,
@@ -1342,8 +1336,6 @@
 				3D770583251C3849007BCEAA /* Settings.swift in Sources */,
 				3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */,
 				3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */,
-				3DC7CA8F257ADD49007BB825 /* Old_Frequent_Widget_Provider copy.swift in Sources */,
-				3D9054AF25808DFB00A0F72A /* Old_widget.swift in Sources */,
 				3D73EC3B25717ED20010C47D /* PrayerSymbol.swift in Sources */,
 				3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */,
 			);

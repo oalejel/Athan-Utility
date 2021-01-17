@@ -20,9 +20,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Complication Configuration
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
+        var families = CLKComplicationFamily.allCases
+        families.removeAll {$0 == .graphicExtraLarge} // drop graphicExtraLarge since extraLarge covers it
         let descriptors = [
-            
-            CLKComplicationDescriptor(identifier: "complication", displayName: "Athan Utility", supportedFamilies: CLKComplicationFamily.allCases)
+            CLKComplicationDescriptor(identifier: "complication",
+                                     displayName: "Athan Utility",
+                                     supportedFamilies: families)
             // Multiple complication support can be added here with more descriptors
         ]
         
@@ -179,11 +182,16 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             return template
             
         case .utilitarianSmallFlat:
-            // FAJR 4:55PM
-            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@",
-                                           CLKTimeTextProvider(date: nextPrayerDate))
-            
-            return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv)
+            let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
+            let imageProv = CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer.sfSymbolName())!)
+            let prov = CLKComplicationTemplateUtilitarianSmallFlat(textProvider: timeProv, imageProvider: imageProv)
+            return prov
+            // this style gets too large
+        // FAJR 4:55PM
+//            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@",
+//                                           CLKTimeTextProvider(date: nextPrayerDate))
+//
+//            return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv)
         case .utilitarianLarge:
             //            let timeLeftProv = CLKRelativeDateTextProvider(date: nextPrayerDate, relativeTo: nil,
             //                                                           style: .naturalAbbreviated, units: [.hour, .minute])
@@ -223,21 +231,31 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                                                                       gaugeProvider: gaugeProv)
         case .utilitarianSmall:
             let dateProv = CLKTimeTextProvider(date: nextPrayerDate)
-            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", dateProv)
+            let shortableNameProv = CLKSimpleTextProvider(text: nextPrayer.localizedOrCustomString(), shortText:String( nextPrayer.localizedOrCustomString().prefix(3)))
+            
+            let textProv = CLKTextProvider(format: "%@ %@", shortableNameProv, dateProv)
+
+            
+            
             return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv, imageProvider: CLKImageProvider(onePieceImage: UIImage()))
             
         case .extraLarge:
-            let c = AppearanceSettings.shared.colors(for: nextPrayer.previous())
-            let gaugeProv = CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [UIColor(c.0), UIColor(c.1)],
-                                                         gaugeColorLocations: [0, 1], start: currentPrayerDate, end: nextPrayerDate)
-            let textProv = CLKSimpleTextProvider(text: "testtt")
-            return CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(gaugeProvider: gaugeProv,
-                                                                                 centerTextProvider: textProv,
-                                                                                 bottomLabel: Text("bottom label"))
-        case .graphicExtraLarge:
-            return nil
+            return CLKComplicationTemplateExtraLargeStackImage(line1ImageProvider: CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer.previous().sfSymbolName(), withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 70), scale: UIImage.SymbolScale.large))!), line2TextProvider: CLKSimpleTextProvider(text: nextPrayer.previous().localizedOrCustomString(), shortText: String(nextPrayer.previous().localizedOrCustomString().prefix(3))))
+
         case .modularLarge:
-            return nil
+            let timeProv = CLKRelativeDateTextProvider(date: nextPrayerDate, relativeTo: nil,
+                                                       style: .naturalAbbreviated, units: [.hour, .minute])
+            let colors = watchColorsForPrayer(nextPrayer.previous()).map { UIColor($0) }
+            let headerTextProv = CLKTextProvider(format: "\(nextPrayer.previous().localizedOrCustomString()) • %@ left", timeProv)
+            headerTextProv.tintColor = blend(colors: colors) //UIColor(watchColorsForPrayer(nextPrayer.previous()).last!)
+            let nextTimeProvider = CLKTimeTextProvider(date: nextPrayerDate)
+            let bodyProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", nextTimeProvider)
+
+            return CLKComplicationTemplateModularLargeStandardBody(headerTextProvider: headerTextProv, body1TextProvider: bodyProvider)
+        
+        // exclude this type, as extrLarge covers it
+        // case .graphicExtraLarge:
+
         default:
             return nil
         }
@@ -257,6 +275,34 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                        alpha: componentsSum.alpha / numberOfColors)
     }
 }
+
+//struct LargeComplication_Preview: PreviewProvider {
+//    static var previews: some View {
+////        CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: Text("sd"))
+////            .previewContext()
+//
+//
+//        CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(
+//            gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: [0, 1], start: Date().addingTimeInterval(-100), end: Date().addingTimeInterval(40)), centerTextProvider: CLKSimpleTextProvider(text: "Sunrise"), bottomLabel: Text("4h 3m").font(Font.body)
+//        )
+//            .previewContext()
+//
+//        CLKComplicationTemplateExtraLargeStackImage(line1ImageProvider: CLKImageProvider(onePieceImage: UIImage(systemName: "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 70), scale: UIImage.SymbolScale.large))!), line2TextProvider: CLKSimpleTextProvider(text: "Fajr"))
+//            .previewContext()
+//
+//        CLKComplicationTemplateExtraLargeStackText(line1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), line2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
+//            .previewContext()
+//
+//        CLKComplicationTemplateExtraLargeColumnsText(row1Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row1Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
+//            .previewContext()
+//
+//
+//
+//
+//
+//
+//    }
+//}
 
 //
 //struct LargeComplication: View {
@@ -355,30 +401,4 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 //    }
 //}
 //
-struct LargeComplication_Preview: PreviewProvider {
-    static var previews: some View {
-//        CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: Text("sd"))
-//            .previewContext()
-        
-        
-        CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(
-            gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: [0, 1], start: Date().addingTimeInterval(-100), end: Date().addingTimeInterval(40)), centerTextProvider: CLKSimpleTextProvider(text: "Sunrise"), bottomLabel: Text("4h 3m").font(Font.body)
-        )
-            .previewContext()
-        
-        CLKComplicationTemplateExtraLargeStackImage(line1ImageProvider: CLKImageProvider(onePieceImage: UIImage(systemName: "sunset.fill")!), line2TextProvider: CLKSimpleTextProvider(text: "Fajr"))
-            .previewContext()
-        
-        CLKComplicationTemplateExtraLargeStackText(line1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), line2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
-            .previewContext()
-        
-        CLKComplicationTemplateExtraLargeColumnsText(row1Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row1Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
-            .previewContext()
-        
-        
-        
-        
-        
-        
-    }
-}
+

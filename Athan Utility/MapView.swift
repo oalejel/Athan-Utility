@@ -90,7 +90,7 @@ struct MapView: UIViewRepresentable, Equatable {
             // pan gets preferential treatment, not excluding pinch from being ended
             if pan.state == .ended && !(pan.state == .began || pan.state == .changed) {
                 print(pan.state.rawValue, pinch.state.rawValue)
-                print("> PAN ENDED LAST")
+//                print("> PAN ENDED LAST")
                 endedMapGesture()
             }
         }
@@ -99,7 +99,7 @@ struct MapView: UIViewRepresentable, Equatable {
         func pinchGesture(gestureRecognizer: UIPanGestureRecognizer) {
             if pinch.state == .ended && !(pan.state == .began || pan.state == .changed || pan.state == .ended) {
                 print(pan.state.rawValue, pinch.state.rawValue)
-                print("> PINCH ENDED LAST")
+//                print("> PINCH ENDED LAST")
                 endedMapGesture()
             }
         }
@@ -107,7 +107,7 @@ struct MapView: UIViewRepresentable, Equatable {
         @objc
         func tapGesture(gestureRecognizer: UIPanGestureRecognizer) {
             if tap.state == .ended {
-                print("> TAP ENDED")
+//                print("> TAP ENDED")
                 Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { tap in
                     self.endedMapGesture() // call this after 0.2 seconds to let map animate to place
                 }

@@ -314,7 +314,7 @@ struct LocationSettingsView: View, Equatable {
                                 AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation)
                                 
                                 // force athan manager to recalculate
-                                AthanManager.shared.considerRecalculations(force: true)
+                                AthanManager.shared.reloadSettingsAndNotifications()
                                 print("new settings: \(textFieldText), \(unboundCoordinate.latitude), \(unboundCoordinate.longitude)")
                             }
                             

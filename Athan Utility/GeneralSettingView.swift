@@ -580,7 +580,7 @@ struct GeneralSettingView: View {
                         // appearance settings already get saved when we leave the colors view
                         AthanManager.shared.appearanceSettings = tempAppearanceSettings
                         
-                        AthanManager.shared.considerRecalculations(force: true)
+                        AthanManager.shared.reloadSettingsAndNotifications()
                         
                         withAnimation {
                             parentSession = .Main // tell parent to go back

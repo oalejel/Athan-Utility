@@ -177,6 +177,7 @@ struct ContentView: View {
                         }
                     }
                 }
+                Spacer()
             }
         }
     }

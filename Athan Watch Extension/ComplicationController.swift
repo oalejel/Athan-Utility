@@ -12,7 +12,11 @@ import Adhan
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
-    let manager = AthanManager.shared
+//    let manager = AthanManager.shared
+    
+//    override init() {
+//        print("COMPLICATION CONTROLLER INIT")
+//    }
     
     // MARK: - Complication Configuration
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
@@ -35,7 +39,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
         
-        handler(manager.tomorrowTimes.isha)
+        handler(AthanManager.shared.tomorrowTimes.isha)
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -64,8 +68,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }
         
         // get all times we could possibly have entries for
-        var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
-        sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
+        var sortedStoredTimes = Prayer.allCases.map { AthanManager.shared.todayTimes.time(for: $0) }
+        sortedStoredTimes += Prayer.allCases.map { AthanManager.shared.tomorrowTimes.time(for: $0) }
         // filter out times that are in the past, based on passed in `date`
         sortedStoredTimes = sortedStoredTimes.filter { date < $0 }
         // if going beyond limit, cut out latest times we cannot fit
@@ -100,9 +104,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getComplicationTemplate(for complication: CLKComplication, using date: Date) -> CLKComplicationTemplate? {
         // check if queried date takes place after a time we have stored
-        print(">>> COMPLICATION MANAGER USING LOCATION: \(manager.locationSettings.locationName)")
-        var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
-        sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
+        print(">>> COMPLICATION MANAGER USING LOCATION: \(AthanManager.shared.locationSettings.locationName)")
+        var sortedStoredTimes = Prayer.allCases.map { AthanManager.shared.todayTimes.time(for: $0) }
+        sortedStoredTimes += Prayer.allCases.map { AthanManager.shared.tomorrowTimes.time(for: $0) }
         guard let firstGreaterTimeIndex = sortedStoredTimes.firstIndex(where: { (storedDate) -> Bool in
             date < storedDate // first date where queried time takes place before
         }) else {

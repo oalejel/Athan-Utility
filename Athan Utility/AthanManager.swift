@@ -157,7 +157,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         // if we have a signficant change in coordinates, save and update all complications
         print("comparing stored and new lats: \(estimatedLat), \(comparedLat)")
         if estimatedLat != comparedLat || estimatedLon != comparedLon {
-            self.considerRecalculations(force: true) // since nobody will call recalculate if we change settings quietly - maybe change this behavior
+            refreshTimes()
             
             print(">>> NEW LOCATION \(self.locationSettings.locationName) : update complications!")
             UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.latitude), forKey: LAT_KEY)
@@ -176,6 +176,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         if #available(iOS 13.0.0, *) {
 //            DispatchQueue.main.async {
                 ObservableAthanManager.shared.locationName = self.locationSettings.locationName
+            
                 ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
                                                                     Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
                                                                                 longitude: self.locationSettings.locationCoordinate.longitude)).direction
@@ -267,9 +268,18 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         
         // if non-iOS devices, force a refresh since enteredForeground will not be called
         if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
-            considerRecalculations(force: false)
+            reloadSettingsAndNotifications()
         }
     }
+    
+    // safe way to update multiple settings so that all changes propogate to rest of UI
+    // this is to avoid recalculating times for two different settings objects that can both
+    // modify the times that we get. perhaps the solution was to not have them split up in the first place...
+//    func batchUpdateSettings(prayerSettings: PrayerSettings, notificationSettings: NotificationSettings, locationSettings: LocationSettings) {
+//        self.prayerSettings = prayerSettings
+//        self.notificationSettings = notificationSettings
+//        self.locationSettings = locationSettings // didset handles propogation to observable manager
+//    }
         
     // MARK: - Prayer Times
     
@@ -385,7 +395,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     @objc func newDay() {
         // will update dayOfMonth
-        considerRecalculations(force: false)
+        reloadSettingsAndNotifications()
     }
     
     // MARK: - Helpers
@@ -422,64 +432,19 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 
 // Listen for background events
 extension AthanManager {
-    func considerRecalculations(force: Bool) {
-        if !force {
-            // reload settings in case we are running widget and app changed them
-            if let arch = LocationSettings.checkArchive() { locationSettings = arch }
-            if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
-            if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
-            if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
-        }
-        
-        var shouldRecalculate = force // forced for when we have new locations
-        if !force {
-            if firstLaunch { // if app was quit before opening, recalculating for whatever location we have stored
-                shouldRecalculate = true
-//                let _ = LocationSettings.shared // this is already done when the manager launches
-                // ask location settings to lookup user coordinates
-            } else if dayOfMonth != Calendar.current.component(.day, from: Date()) { // if new day of month
-                shouldRecalculate = true
-            } else { // check next athan times to see if we have 15m left or a new prayer
-                assert(todayTimes != nil, "todayTimes should not be nil at this point")
-                var nextPrayer: Prayer! = todayTimes.nextPrayer()
-                var nextPrayerTime: Date! = nil
-                if nextPrayer == nil {
-                    nextPrayer = .fajr
-                    nextPrayerTime = tomorrowTimes.fajr // distinguish from today's fajr time
-                } else {
-                    nextPrayerTime = todayTimes.time(for: nextPrayer)
-                }
+    func reloadSettingsAndNotifications() {
+        // reload settings in case we are running widget and app changed them
+        if let arch = LocationSettings.checkArchive() { locationSettings = arch }
+        if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
+        if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
+        if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
                 
-                // if new prayer,
-                if currentPrayer != (todayTimes.currentPrayer() ?? .isha) {
-                    print("new prayer on launch")
-                    currentPrayer = (todayTimes.currentPrayer() ?? .isha)
-                    // notify to change gradient, update highlighting
-                    
-                } else if nextPrayerTime.timeIntervalSince(Date()) < 15 * 60 { // 15 mins left!
-                    // just update highlighting -- maybe let UI
-                    print("15m left")
-                    currentPrayer = (todayTimes.currentPrayer() ?? .isha)
-                }
-                
-                // otherwise, no new prayer or anything
-                // just proceed to refresh timers
-            }
-        }
-        
         // unconditional update of day of month
         dayOfMonth = Calendar.current.component(.day, from: Date())
-
-        // 1. refresh times
-        // 2. create notifications (if recalculating)
-        // 3. refresh widgets (if recalculating)
-        // 4. reset timers
-        if shouldRecalculate {
-            refreshTimes()
-        }
+        refreshTimes()
         
-        // only make notifications if user has edited from the default location
-        if locationSettings.locationName != "Edit Location" {
+        // always make notifications if user has edited from the default location
+        if locationSettings.locationName != LocationSettings.defaultSetting().locationName {
             #if !os(watchOS) // dont schedule notes in watchos app
             NotificationsManager
                 .createNotifications(coordinate: locationSettings.locationCoordinate,
@@ -487,10 +452,11 @@ extension AthanManager {
                                      madhab: prayerSettings.madhab,
                                      noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
-            resetWidgets()
+            resetWidgets() // should happen when any of our settings change
             #endif
         }
         
+        #warning("may no longer need these timers with swiftui timers")
         // reset timers to keep data updated if app stays on screen
         resetTimers()
     }
@@ -514,7 +480,7 @@ extension AthanManager {
         // 1. refresh times, notifications, widgets, timers,
         // 2. allow location to be updated and repeat step 1
         // first recalculation on existing location settings
-        considerRecalculations(force: false)
+        reloadSettingsAndNotifications() // avoid making new notifications if not needed
         
         if locationSettings.useCurrentLocation {
             attemptSingleLocationUpdate() // if new location is read, we will trigger concsiderRecalculations(isNewLocation: true)
@@ -598,7 +564,7 @@ extension AthanManager {
                         self.captureLocationUpdateClosure = nil
                     } else if self.locationSettings.locationName != potentialNewLocationSettings.locationName { // if not same location, update
                         self.locationSettings = potentialNewLocationSettings
-                        self.considerRecalculations(force: true)
+                        self.reloadSettingsAndNotifications()
                     }
                     
                     return
@@ -616,7 +582,7 @@ extension AthanManager {
                 self.locationSettings = namelessLocationSettings
             }
             
-            self.considerRecalculations(force: true)
+            self.reloadSettingsAndNotifications()
             if let x = error {
                 print("failed to reverse geocode location")
                 print(x) // fallback

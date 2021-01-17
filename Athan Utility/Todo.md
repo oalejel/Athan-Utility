@@ -1,5 +1,7 @@
 #  Todo list 
 Next version priorities 
+- confirm that moving to a new location with iphone closed causes both WIDGET and watch to update when using current loc 
+
 - BIG ISUEE: make sure watch does not show tomorrow times if we are on yesterday's isha. reuse today times 
 - test if using `transferCurrentComplicationUserInfo` from phone when watch is disconnected causes watch to update complications upon reconnection
 - see if only sending updates package to watch when location settings run didset is enough

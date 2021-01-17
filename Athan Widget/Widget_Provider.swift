@@ -46,7 +46,7 @@ class AthanProvider: IntentTimelineProvider {
         if manager.locationSettings.isLoadedFromArchive {
             // WARNING: no foreground updates here --> must manually tell manager to refresh
             // for now, dont call enterForeground since that will request new location
-            manager.considerRecalculations(force: false)
+            manager.reloadSettingsAndNotifications()
             
             let useDynamicColors = manager.appearanceSettings.isDynamic
             let colors = manager.appearanceSettings.colors(for: useDynamicColors ? (manager.currentPrayer ?? Prayer.isha) : nil)
@@ -78,7 +78,7 @@ class AthanProvider: IntentTimelineProvider {
 
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
-        manager.considerRecalculations(force: false)
+        manager.reloadSettingsAndNotifications()
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),
                                    currentPrayer: Prayer.fajr, // dummy data

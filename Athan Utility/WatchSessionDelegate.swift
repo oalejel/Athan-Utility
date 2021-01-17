@@ -78,15 +78,17 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
            let lon = userInfo["latitude"] as? Double, let currentloc = userInfo["currentloc"] as? Bool,
            let timezoneid = userInfo["timezoneid"] as? String {
             
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 AthanManager.shared.locationSettings = LocationSettings(locationName: locName,
                                                                         coord: CLLocationCoordinate2D(latitude: lat, longitude: lon),
                                                                         timeZone: TimeZone(identifier: timezoneid)!,
                                                                         useCurrentLocation: currentloc)
-            }
+//            }
             
             // complications will be autoupdated in athanmanager
-//            // Update complication
+            
+            
+            // Update complication
 //            let complicationServer = CLKComplicationServer.sharedInstance()
 //            guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
 //                return

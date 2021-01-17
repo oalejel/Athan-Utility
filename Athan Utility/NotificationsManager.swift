@@ -60,6 +60,11 @@ class NotificationsManager {
                 
                 center.removeAllPendingNotificationRequests()
                 
+                // only remove delivered if we open the main app
+                if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                    center.removeAllDeliveredNotifications()
+                }
+                
 //                let noteSoundFilename = Settings.
                 let noteSoundFilename = noteSettings.selectedSound.filename()
                 let df = DateFormatter()
@@ -91,6 +96,7 @@ class NotificationsManager {
                         
                         // The object that stores text and sound for a note
                         let noteContent = UNMutableNotificationContent()
+                        noteContent.categoryIdentifier = "athan"
                         
                         //schedule a normal if settings allow
                         if setting.athanAlertEnabled { // note: will always have athan alert enabled if reminder enabled
@@ -147,6 +153,7 @@ class NotificationsManager {
                             }
                            
                             let preNoteContent = UNMutableNotificationContent()
+                            preNoteContent.categoryIdentifier = "reminder"
                             let preDate = Calendar.current.date(byAdding: .minute, value: -1 * minuteOffset, to: prayerDate)!
                             preNoteContent.userInfo = ["intendedFireDate": preDate]
                             let preNoteComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)

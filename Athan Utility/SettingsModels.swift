@@ -271,6 +271,8 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
         if let data = unarchiveData(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(AppearanceSettings.self, from: data) {
             return decoded
+        } else {
+            print("unable to unarchive ")
         }
         return nil
     }
@@ -319,6 +321,7 @@ func archiveData(_ name: String, object: Any) {
             let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
             try data.write(to: url)
         } catch {
+            print(error)
             print("error archiving prayer settings")
         }
     } else {

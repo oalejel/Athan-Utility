@@ -13,11 +13,7 @@ import Adhan
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
     let manager = AthanManager.shared
-    
-    //    override init() {
-    //        print("COMPLICATION CONTROLLER INIT")
-    //    }
-    
+        
     // MARK: - Complication Configuration
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         var families = CLKComplicationFamily.allCases
@@ -41,8 +37,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
+        if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
+            handler(nil) // havent sent location
+        } else {
+            handler(manager.tomorrowTimes.maghrib) // maybe good to update data before penuultimate prayer -- no empirical evidence yet
+        }
         
-        handler(manager.tomorrowTimes.isha)
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -53,12 +53,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-        
-        if let template = getComplicationTemplate(for: complication, using: Date()) {
+        if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
+            handler(nil) // case if we have not set our location
+        } else if let template = getComplicationTemplate(for: complication, using: Date()) {
             let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
             handler(entry)
         } else {
-            handler(nil)
+            handler(nil) // case where we cant produce a template
         }
     }
     

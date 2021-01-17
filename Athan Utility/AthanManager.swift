@@ -274,9 +274,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         refreshTimes()
         
         // if non-iOS devices, force a refresh since enteredForeground will not be called
-        if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
-            reloadSettingsAndNotifications()
-        }
+//        if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
+//            reloadSettingsAndNotifications()
+//        }
     }
     
     // safe way to update multiple settings so that all changes propogate to rest of UI
@@ -569,7 +569,7 @@ extension AthanManager {
                     if let captureClosue = self.captureLocationUpdateClosure  {
                         captureClosue(potentialNewLocationSettings)
                         self.captureLocationUpdateClosure = nil
-                    } else {
+                    } else { // if this request is to be considered for storage (not captured in closure):
                         let oldRoundedLat = Int(self.locationSettings.locationCoordinate.latitude * 100)
                         let oldRoundedLon = Int(self.locationSettings.locationCoordinate.longitude * 100)
                         let newRoundedLat = Int(potentialNewLocationSettings.locationCoordinate.latitude * 100)
@@ -577,18 +577,20 @@ extension AthanManager {
                         
                         // logical subexpressions qualifying for an update:
                         let sameCoordinate = oldRoundedLat == newRoundedLat && oldRoundedLon == newRoundedLon
-                        let isNewName = placemark.name != nil
+                        // MUST check that new placemark is non-nil, otherwise we could be taking in nameless coords
+                        let isNewName = placemark.name != nil && potentialNewLocationSettings.locationName != self.locationSettings.locationName
                         //                        if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
-                        if !sameCoordinate || isNewName {
+                        if !sameCoordinate || (sameCoordinate && isNewName) {
                             // if not same location, OR we now have a placemark name for the location, update location settings
                             self.locationSettings = potentialNewLocationSettings
                             self.reloadSettingsAndNotifications()
                         }
                     }
-                    
                     return
                 }
             }
+            
+            // falls through here if we failed to geocode
             
             // user calendar timezone, trusting user is giving coordinates that make sense for their time zone
             let namelessLocationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
@@ -602,6 +604,8 @@ extension AthanManager {
             }
             
             self.reloadSettingsAndNotifications()
+            
+            // once done dealing with error, print that we encountered an error
             if let x = error {
                 print("failed to reverse geocode location")
                 print(x) // fallback

@@ -56,7 +56,7 @@ struct GeneralSettingView: View {
         GeometryReader { g in
             VStack(spacing: 0) {
                 Divider()
-                    .foregroundColor(Color(.lightText))
+//                    .background(Color.red)
                     .onAppear {
                         print(tempNotificationSettings.selectedSound)
                     }

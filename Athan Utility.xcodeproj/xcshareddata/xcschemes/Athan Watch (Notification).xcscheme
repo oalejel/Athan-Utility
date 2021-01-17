@@ -56,8 +56,10 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "Athan Watch Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Athan Utility">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DEE3A5C25A6A04B00DC7331"
@@ -65,7 +67,7 @@
             BlueprintName = "Athan Watch"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -75,8 +77,10 @@
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "8"
       notificationPayloadFile = "Athan Watch Extension/PushNotificationPayload.apns">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Athan Utility">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DEE3A5C25A6A04B00DC7331"
@@ -84,7 +88,16 @@
             BlueprintName = "Athan Watch"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3DEE3A5C25A6A04B00DC7331"
+            BuildableName = "Athan Watch.app"
+            BlueprintName = "Athan Watch"
+            ReferencedContainer = "container:Athan Utility.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -74,112 +74,118 @@ struct ContentView: View {
     var body: some View {
         // user background gradient is not suitable for text with black background
         
-        VStack {
-            VStack(alignment: .leading, spacing: 3) {
-                //                Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
-                //                VStack {//(alignment: .firstTextBaseline) {
-                ////                        .minimumScaleFactor(0.1)
-                ////                    Spacer()
-                //
-                //                }
-                if manager.currentPrayer.localizedOrCustomString().count > 5 {
-                    Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
-                    Text(manager.currentPrayer.localizedOrCustomString())
-                        .font(Font.largeTitle.bold())
-                        .lineLimit(1)
-                        .fixedSize(horizontal: true, vertical: true)
-                        //                    .border(Color.red)
-                        .padding([.top], -8)
-                } else {
-                    HStack(alignment: .lastTextBaseline) {
+        if manager.locationName == LocationSettings.defaultSetting().locationName {
+            Text("Open Athan Utility on iPhone to set your location.")
+        } else {
+            VStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    //                Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
+                    //                VStack {//(alignment: .firstTextBaseline) {
+                    ////                        .minimumScaleFactor(0.1)
+                    ////                    Spacer()
+                    //
+                    //                }
+                    if manager.currentPrayer.localizedOrCustomString().count > 5 {
+                        Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
                         Text(manager.currentPrayer.localizedOrCustomString())
                             .font(Font.largeTitle.bold())
                             .lineLimit(1)
                             .fixedSize(horizontal: true, vertical: true)
                             //                    .border(Color.red)
                             .padding([.top], -8)
-                        Spacer()
-                        Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.1)
-                    }
-                }
-                
-                ProgressBar(progress: CGFloat(getPercentComplete()), lineWidth: 8,
-                            outlineColor: Color(.sRGB, white: 1, opacity: 0.4),
-                            colors: [.white])
-            }
-            .gradientForeground(colors: watchColorsForPrayer(manager.currentPrayer))
-            //            .navigationTitle(manager.locationName)
-            
-            ScrollView {
-                // show k = 6 - current prayers left over for today
-                if manager.currentPrayer != .isha {
-                    ForEach(manager.currentPrayer.rawValue()..<6, id: \.self) { pIndex in
-                        let prayer = Prayer(index: pIndex)
-                        HStack {
-                            Text(prayer.localizedOrCustomString())
+                    } else {
+                        HStack(alignment: .lastTextBaseline) {
+                            Text(manager.currentPrayer.localizedOrCustomString())
+                                .font(Font.largeTitle.bold())
+                                .lineLimit(1)
+                                .fixedSize(horizontal: true, vertical: true)
+                                //                    .border(Color.red)
+                                .padding([.top], -8)
                             Spacer()
-                            Text(manager.todayTimes.time(for: prayer), style: .time)
+                            Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.1)
                         }
-                        .foregroundColor(manager.currentPrayer.rawValue() == pIndex ? .green : .white)
                     }
+                    
+                    ProgressBar(progress: CGFloat(getPercentComplete()), lineWidth: 8,
+                                outlineColor: Color(.sRGB, white: 1, opacity: 0.4),
+                                colors: [.white])
                 }
+                .gradientForeground(colors: watchColorsForPrayer(manager.currentPrayer))
+                //            .navigationTitle(manager.locationName)
                 
-                // show k prayers for tomorrow
-                //                ForEach(0..<(currentPrayer.rawValue() + 1), id: \.self) { pIndex in
-                // if isha refer's to yesterday's isha, use today times
-                if manager.currentPrayer == .isha && Date() < manager.todayTimes.isha {
-                    ForEach(0..<6, id: \.self) { pIndex in
-                        let prayer = Prayer(index: pIndex)
-                        HStack {
-                            Text(prayer.localizedOrCustomString())
-                            Spacer()
-                            Text(manager.todayTimes.time(for: prayer), style: .time)
+                ScrollView {
+                    // show k = 6 - current prayers left over for today
+                    if manager.currentPrayer != .isha {
+                        ForEach(manager.currentPrayer.rawValue()..<6, id: \.self) { pIndex in
+                            let prayer = Prayer(index: pIndex)
+                            HStack {
+                                Text(prayer.localizedOrCustomString())
+                                Spacer()
+                                Text(manager.todayTimes.time(for: prayer), style: .time)
+                            }
+                            .foregroundColor(manager.currentPrayer.rawValue() == pIndex ? .green : .white)
                         }
-                        .foregroundColor(.gray)
                     }
-                } else { // case where it is same day that isha began
-                    HStack {
-                        VStack {
-                            Divider()
-                        }
-                        Text("Tomorrow")
-                            .fixedSize()
+                    
+                    // show k prayers for tomorrow
+                    //                ForEach(0..<(currentPrayer.rawValue() + 1), id: \.self) { pIndex in
+                    // if isha refer's to yesterday's isha, use today times
+                    if manager.currentPrayer == .isha && Date() < manager.todayTimes.isha {
+                        ForEach(0..<6, id: \.self) { pIndex in
+                            let prayer = Prayer(index: pIndex)
+                            HStack {
+                                Text(prayer.localizedOrCustomString())
+                                Spacer()
+                                Text(manager.todayTimes.time(for: prayer), style: .time)
+                            }
                             .foregroundColor(.gray)
-                        VStack {
-                            Divider()
                         }
-                    }
-                    ForEach(0..<6, id: \.self) { pIndex in
-                        let prayer = Prayer(index: pIndex)
+                    } else { // case where it is same day that isha began
                         HStack {
-                            Text(prayer.localizedOrCustomString())
+                            VStack {
+                                Divider()
+                            }
+                            Text("Tomorrow")
+                                .fixedSize()
+                                .foregroundColor(.gray)
+                            VStack {
+                                Divider()
+                            }
+                        }
+                        ForEach(0..<6, id: \.self) { pIndex in
+                            let prayer = Prayer(index: pIndex)
+                            HStack {
+                                Text(prayer.localizedOrCustomString())
+                                Spacer()
+                                Text(manager.tomorrowTimes.time(for: prayer), style: .time)
+                            }
+                            .foregroundColor(.gray)
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        Text(Strings.locationColon)
+                            .bold()
+                        HStack {
+                            Text(manager.locationName)
                             Spacer()
-                            Text(manager.tomorrowTimes.time(for: prayer), style: .time)
-                        }
-                        .foregroundColor(.gray)
-                    }
-                }
-                
-                Divider()
-                
-                VStack(alignment: .leading) {
-                    Text(Strings.locationColon)
-                        .bold()
-                    HStack {
-                        Text(manager.locationName)
-                        Spacer()
-                        if AthanManager.shared.locationSettings.useCurrentLocation {
-                            Image(systemName: "location.fill")
-                        } else {
-                            Image(systemName: "location.slash")
+                            if AthanManager.shared.locationSettings.useCurrentLocation {
+                                Image(systemName: "location.fill")
+                            } else {
+                                Image(systemName: "location.slash")
+                            }
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
         }
+        
+        
     }
     
     

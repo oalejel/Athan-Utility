@@ -22,12 +22,12 @@ import WatchConnectivity
  Athan manager now uses the batoul apps api to calculate prayer times
  Process flow of this manager can roughly be condensed to this list:
  - Current location calculation
-    - Use corelocation to find a location name and coordinates
-    - Or use manual location input to find coordinates using reversegeocode location
-    - Store coordinates on disk, with a flag of whether we want that location to be manual or not
+ - Use corelocation to find a location name and coordinates
+ - Or use manual location input to find coordinates using reversegeocode location
+ - Store coordinates on disk, with a flag of whether we want that location to be manual or not
  - Provide accessors to today and tomorrow's prayer times, only recalculating when last calculation day ≠ current day
  - Modify settings for prayer calculation, write changes to user defaults
-- No storage of qibla --> user location angle is enough
+ - No storage of qibla --> user location angle is enough
  */
 
 
@@ -39,7 +39,7 @@ class ObservableAthanManager: ObservableObject {
     
     init() {
         // bootstrap process of initializing the athan manager?
-//        let _ = AthanManager.shared
+        //        let _ = AthanManager.shared
     }
     
     @Published var todayTimes: PrayerTimes!
@@ -68,9 +68,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var todayTimes: PrayerTimes! = nil {
         didSet {
             if #available(iOS 13.0.0, *) {
-//                DispatchQueue.main.async {
-                    ObservableAthanManager.shared.todayTimes = self.todayTimes
-//                }
+                //                DispatchQueue.main.async {
+                ObservableAthanManager.shared.todayTimes = self.todayTimes
+                //                }
                 
             }
         }
@@ -79,9 +79,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var tomorrowTimes: PrayerTimes! = nil {
         didSet {
             if #available(iOS 13.0.0, *) {
-//                DispatchQueue.main.async {
-                    ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
-//                }
+                //                DispatchQueue.main.async {
+                ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
+                //                }
             }
         }
     }
@@ -118,16 +118,16 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         PrayerSettings.archive()
         
         // if not running on watchOS, update the watch
-//        #warning("may have unnecessary updates from widget loading up these objects. not sure since i dont think didset is called on widgets unless locations update")
-//        #if !os(watchOS)
-//        if WCSession.default.activationState == .activated {
-//            WCSession.default.sendMessage([PHONE_MSG_KEY : "prayerSettings"]) { replyDict in
-//                print("watchos reply: \(replyDict)")
-//            } errorHandler: { error in
-//                print("> Error with WCSession send")
-//            }
-//        }
-//        #endif
+        //        #warning("may have unnecessary updates from widget loading up these objects. not sure since i dont think didset is called on widgets unless locations update")
+        //        #if !os(watchOS)
+        //        if WCSession.default.activationState == .activated {
+        //            WCSession.default.sendMessage([PHONE_MSG_KEY : "prayerSettings"]) { replyDict in
+        //                print("watchos reply: \(replyDict)")
+        //            } errorHandler: { error in
+        //                print("> Error with WCSession send")
+        //            }
+        //        }
+        //        #endif
     }
     
     func notificationSettingsDidSetHelper() {
@@ -137,50 +137,17 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     func locationSettingsDidSetHelper() {
-//        assert(false, "just checking that this correctly gets called")
+        //        assert(false, "just checking that this correctly gets called")
         
-        // if watchos, we may need to immediately updat ecomplications
-        // but we need to be conservative with complication updsates, so confirm that location has changed
         let newSettings = LocationSettings.shared.copy() as! LocationSettings // used for reference if we need a comparison for watchOS
         LocationSettings.shared = self.locationSettings
         LocationSettings.archive()
-
-        #if os(watchOS)
-        let LAT_KEY = "lastLat"
-        let LON_KEY = "lastLon"
-        let lastLat = UserDefaults.standard.double(forKey: LAT_KEY)
-        let lastLon = UserDefaults.standard.double(forKey: LON_KEY)
-        let estimatedLat = Int(lastLat * 10) // compare doubles with precision within 10 degrees
-        let estimatedLon = Int(lastLon * 10)
-        let comparedLat = Int(newSettings.locationCoordinate.latitude * 10) // must compare against old stored settings
-        let comparedLon = Int(newSettings.locationCoordinate.longitude * 10)
-        // if we have a signficant change in coordinates, save and update all complications
-        print("comparing stored and new lats: \(estimatedLat), \(comparedLat)")
-        if estimatedLat != comparedLat || estimatedLon != comparedLon {
-            refreshTimes()
-            
-            print(">>> NEW LOCATION \(self.locationSettings.locationName) : update complications!")
-            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.latitude), forKey: LAT_KEY)
-            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.longitude), forKey: LON_KEY)
-
-            let complicationServer = CLKComplicationServer.sharedInstance()
-            guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
-                return
-            }
-            for complication in activeComplications {
-                complicationServer.reloadTimeline(for: complication)
-            }
-        }
-        #endif
-        
+                
         if #available(iOS 13.0.0, *) {
-//            DispatchQueue.main.async {
-                ObservableAthanManager.shared.locationName = self.locationSettings.locationName
-            
-                ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
-                                                                    Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
-                                                                                longitude: self.locationSettings.locationCoordinate.longitude)).direction
-//            }
+            ObservableAthanManager.shared.locationName = self.locationSettings.locationName
+            ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
+                                                                Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
+                                                                            longitude: self.locationSettings.locationCoordinate.longitude)).direction
         }
         
         #if !os(watchOS)
@@ -199,26 +166,66 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         } else if WCSession.default.activationState == .activated {
             // also a complication update --- TODO: might need to track state for a pending settings change
             // in case we arent activated yet
-
-            // just send something to tell complications to update
-            for existingTransfers in WCSession.default.outstandingUserInfoTransfers {
-                existingTransfers.cancel()
+            
+            // read last sent coordinate sent via complication info dict -- dont want very frequent complication updates
+            let LAT_KEY = "lastLat"
+            let LON_KEY = "lastLon"
+            let lastLat = UserDefaults.standard.double(forKey: LAT_KEY)
+            let lastLon = UserDefaults.standard.double(forKey: LON_KEY)
+            let estimatedLat = Int(lastLat * 100) // compare doubles with precision within 10 degrees
+            let estimatedLon = Int(lastLon * 100)
+            let comparedLat = Int(newSettings.locationCoordinate.latitude * 100) // must compare against old stored settings
+            let comparedLon = Int(newSettings.locationCoordinate.longitude * 100)
+            if estimatedLat != comparedLat || estimatedLon != comparedLon {
+                // just send something to tell complications to update
+                for existingTransfers in WCSession.default.outstandingUserInfoTransfers {
+                    existingTransfers.cancel()
+                }
+                #warning("ensure we dont go over the limit for user info transfers")
+                print("*** PHONE SENDING INFO DICT ON LOCATION CHANGE FOR UNREACHABLE WATCH")
+                WCSession.default.transferCurrentComplicationUserInfo([
+                    "locname" : self.locationSettings.locationName,
+                    "latitude" : self.locationSettings.locationCoordinate.latitude,
+                    "longitude" : self.locationSettings.locationCoordinate.longitude,
+                    "currentloc" : self.locationSettings.useCurrentLocation,
+                    "timezoneid" : self.locationSettings.timeZone.identifier
+                ])
             }
-            #warning("ensure we dont go over the limit for user info transfers")
-            print("*** PHONE SENDING INFO DICT ON LOCATION CHANGE FOR UNREACHABLE WATCH")
-            WCSession.default.transferCurrentComplicationUserInfo([
-                "locname" : self.locationSettings.locationName,
-                "latitude" : self.locationSettings.locationCoordinate.latitude,
-                "longitude" : self.locationSettings.locationCoordinate.longitude,
-                "currentloc" : self.locationSettings.useCurrentLocation,
-                "timezoneid" : self.locationSettings.timeZone.identifier
-            ])
         } else {
             print(">>>> NOT ACTIVATED")
         }
         #endif
-
-    
+        
+        
+        // if watchos, we may need to immediately updat ecomplications
+        // but we need to be conservative with complication updsates, so confirm that location has changed
+        #if os(watchOS)
+        let LAT_KEY = "lastLat"
+        let LON_KEY = "lastLon"
+        let lastLat = UserDefaults.standard.double(forKey: LAT_KEY)
+        let lastLon = UserDefaults.standard.double(forKey: LON_KEY)
+        let estimatedLat = Int(lastLat * 100) // compare doubles with precision within 10 degrees
+        let estimatedLon = Int(lastLon * 100)
+        let comparedLat = Int(newSettings.locationCoordinate.latitude * 100) // must compare against old stored settings
+        let comparedLon = Int(newSettings.locationCoordinate.longitude * 100)
+        // if we have a signficant change in coordinates, save and update all complications
+        print("comparing stored and new lats: \(estimatedLat), \(comparedLat)")
+        if estimatedLat != comparedLat || estimatedLon != comparedLon {
+            refreshTimes()
+            
+            print(">>> NEW LOCATION \(self.locationSettings.locationName) : update complications!")
+            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.latitude), forKey: LAT_KEY)
+            UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.longitude), forKey: LON_KEY)
+            
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
+                return
+            }
+            for complication in activeComplications {
+                complicationServer.reloadTimeline(for: complication)
+            }
+        }
+        #endif
     }
     
     func appearanceSettingsDidSetHelper() {
@@ -275,12 +282,12 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     // safe way to update multiple settings so that all changes propogate to rest of UI
     // this is to avoid recalculating times for two different settings objects that can both
     // modify the times that we get. perhaps the solution was to not have them split up in the first place...
-//    func batchUpdateSettings(prayerSettings: PrayerSettings, notificationSettings: NotificationSettings, locationSettings: LocationSettings) {
-//        self.prayerSettings = prayerSettings
-//        self.notificationSettings = notificationSettings
-//        self.locationSettings = locationSettings // didset handles propogation to observable manager
-//    }
-        
+    //    func batchUpdateSettings(prayerSettings: PrayerSettings, notificationSettings: NotificationSettings, locationSettings: LocationSettings) {
+    //        self.prayerSettings = prayerSettings
+    //        self.notificationSettings = notificationSettings
+    //        self.locationSettings = locationSettings // didset handles propogation to observable manager
+    //    }
+    
     // MARK: - Prayer Times
     
     func refreshTimes() {
@@ -296,7 +303,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone) // guaranteed fallback
             tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone)
         } // should never fail on cupertino time.
-         // add 24 hours for next day
+        // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer() ?? .isha
         assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
@@ -339,8 +346,8 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         
         let secondsLeft = nextPrayerTime.timeIntervalSince(Date())
         nextPrayerTimer = Timer.scheduledTimer(timeInterval: secondsLeft,
-                             target: self, selector: #selector(newPrayer),
-                             userInfo: nil, repeats: false)
+                                               target: self, selector: #selector(newPrayer),
+                                               userInfo: nil, repeats: false)
         
         // if > 15m and 2 seconds remaining, make a timer
         if secondsLeft > 15 * 60 + 2 {
@@ -380,16 +387,16 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     @objc func newPrayer() {
-//        print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
-//        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
+        //        print("new prayer | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+        //        assert(currentPrayer != (todayTimes.nextPrayer() ?? .fajr))
         watchForImminentPrayerUpdate()
     }
     
     @objc func fifteenMinsLeft() {
         // trigger a didset
-//        print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
-//        assert(currentPrayer != todayTimes.nextPrayer() ?? .fajr)
-//        currentPrayer = todayTimes.currentPrayer() ?? .isha
+        //        print("15 mins left | \(currentPrayer!) -> \(todayTimes.nextPrayer() ?? .fajr)")
+        //        assert(currentPrayer != todayTimes.nextPrayer() ?? .fajr)
+        //        currentPrayer = todayTimes.currentPrayer() ?? .isha
         watchForImminentPrayerUpdate()
     }
     
@@ -404,7 +411,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func guaranteedNextPrayerTime() -> Date {
         let currentPrayer = todayTimes.currentPrayer()
         // do not use api nextPrayeras it does not distinguish tomorrow fajr from today fajr nil
-//        var nextPrayer: Prayer? = todayTimes.nextPrayer()
+        //        var nextPrayer: Prayer? = todayTimes.nextPrayer()
         var nextPrayerTime: Date! = nil
         if currentPrayer == .isha { // case for reading from tomorrow fajr times
             nextPrayerTime = tomorrowTimes.fajr
@@ -438,7 +445,7 @@ extension AthanManager {
         if let arch = NotificationSettings.checkArchive() { notificationSettings = arch }
         if let arch = PrayerSettings.checkArchive() { prayerSettings = arch }
         if let arch = AppearanceSettings.checkArchive() { appearanceSettings = arch }
-                
+        
         // unconditional update of day of month
         dayOfMonth = Calendar.current.component(.day, from: Date())
         refreshTimes()
@@ -467,7 +474,7 @@ extension AthanManager {
             if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
                 DispatchQueue.main.async {
                     #if !os(watchOS)
-                        WidgetCenter.shared.reloadAllTimelines()
+                    WidgetCenter.shared.reloadAllTimelines()
                     #endif
                 }
             }
@@ -562,9 +569,21 @@ extension AthanManager {
                     if let captureClosue = self.captureLocationUpdateClosure  {
                         captureClosue(potentialNewLocationSettings)
                         self.captureLocationUpdateClosure = nil
-                    } else if self.locationSettings.locationName != potentialNewLocationSettings.locationName { // if not same location, update
-                        self.locationSettings = potentialNewLocationSettings
-                        self.reloadSettingsAndNotifications()
+                    } else {
+                        let oldRoundedLat = Int(self.locationSettings.locationCoordinate.latitude * 100)
+                        let oldRoundedLon = Int(self.locationSettings.locationCoordinate.longitude * 100)
+                        let newRoundedLat = Int(potentialNewLocationSettings.locationCoordinate.latitude * 100)
+                        let newRoundedLon = Int(potentialNewLocationSettings.locationCoordinate.longitude * 100)
+                        
+                        // logical subexpressions qualifying for an update:
+                        let sameCoordinate = oldRoundedLat == newRoundedLat && oldRoundedLon == newRoundedLon
+                        let isNewName = placemark.name != nil
+                        //                        if self.locationSettings.locationName != potentialNewLocationSettings.locationName {
+                        if !sameCoordinate || isNewName {
+                            // if not same location, OR we now have a placemark name for the location, update location settings
+                            self.locationSettings = potentialNewLocationSettings
+                            self.reloadSettingsAndNotifications()
+                        }
                     }
                     
                     return

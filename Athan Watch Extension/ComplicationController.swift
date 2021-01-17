@@ -112,7 +112,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         }) else {
             return nil
         }
-        
+        var currentPrayerDate = Date() // set to time before nextPrayerTime
+        if firstGreaterTimeIndex == 0 { // if zero, use today isha - 86400 seconds as estimate for current prayer start
+            currentPrayerDate = manager.todayTimes.isha.addingTimeInterval(-86400)
+        } else {
+            currentPrayerDate = sortedStoredTimes[firstGreaterTimeIndex - 1]
+        }
         let nextPrayerDate = sortedStoredTimes[firstGreaterTimeIndex]
         let nextPrayer = Prayer.allCases[firstGreaterTimeIndex % 6] // % 6 makes index 6 (fajr) go back to 0
         
@@ -203,146 +208,177 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                 //                nameProvider.tintColor = tintColor(prayer: nextPrayer)
                 return CLKComplicationTemplateModularSmallStackText(line1TextProvider: nameProvider, line2TextProvider: CLKTextProvider(format: df.string(from: nextPrayerDate)))
             }
+        case.graphicRectangular:
+            let timeProv = CLKRelativeDateTextProvider(date: nextPrayerDate, relativeTo: nil,
+                                                       style: .naturalAbbreviated, units: [.hour, .minute])
+            
+            let colors = watchColorsForPrayer(nextPrayer.previous()).map { UIColor($0) }
+            let headerTextProv = CLKTextProvider(format: "\(nextPrayer.previous().localizedOrCustomString()) • %@ left", timeProv)
+            headerTextProv.tintColor = blend(colors: colors) //UIColor(watchColorsForPrayer(nextPrayer.previous()).last!)
+            let nextTimeProvider = CLKTimeTextProvider(date: nextPrayerDate)
+            let gaugeProv = CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: colors, gaugeColorLocations: [0, 1], start: currentPrayerDate, end: nextPrayerDate)
+            let bodyProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", nextTimeProvider)
+            return CLKComplicationTemplateGraphicRectangularTextGauge(headerTextProvider: headerTextProv,
+                                                                      body1TextProvider: bodyProvider,
+                                                                      gaugeProvider: gaugeProv)
+        case .utilitarianSmall:
+            let dateProv = CLKTimeTextProvider(date: nextPrayerDate)
+            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", dateProv)
+            return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv, imageProvider: CLKImageProvider(onePieceImage: UIImage()))
+            
+        case .extraLarge:
+            let c = AppearanceSettings.shared.colors(for: nextPrayer.previous())
+            let gaugeProv = CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [UIColor(c.0), UIColor(c.1)],
+                                                         gaugeColorLocations: [0, 1], start: currentPrayerDate, end: nextPrayerDate)
+            let textProv = CLKSimpleTextProvider(text: "testtt")
+            return CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(gaugeProvider: gaugeProv,
+                                                                                 centerTextProvider: textProv,
+                                                                                 bottomLabel: Text("bottom label"))
+        case .graphicExtraLarge:
+            return nil
         case .modularLarge:
             return nil
-        case.graphicRectangular:
-            return CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: LargeComplication2())
-            
-//            return CLKComplicationTemplateGraphicRectangularFullView(LargeComplication2())
-//            return CLKComplicationTemplateGraphicRectangularFullView(LargeComplication(currentPrayer: nextPrayer.previous(), nextDate: nextPrayerDate, text2: "asdf", text3: "asdf"))
-            
-        //            let guageprov = CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: [.white], gaugeColorLocations: nil, start: , end: <#T##Date#>)
-        //            CLKComplicationTemplateGraphicRectangularTextGauge(headerImageProvider: <#T##CLKFullColorImageProvider?#>, headerTextProvider: <#T##CLKTextProvider#>, body1TextProvider: <#T##CLKTextProvider#>, gaugeProvider: <#T##CLKGaugeProvider#>)
         default:
             return nil
         }
     }
     
-    func tintColor(prayer: Prayer) -> UIColor {
-        return .red
+    func blend(colors: [UIColor]) -> UIColor {
+        let numberOfColors = CGFloat(colors.count)
+        var (red, green, blue, alpha) = (CGFloat(0), CGFloat(0), CGFloat(0), CGFloat(0))
+        
+        let componentsSum = colors.reduce((red: CGFloat(0), green: CGFloat(0), blue: CGFloat(0), alpha: CGFloat())) { temp, color in
+            color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            return (temp.red+red, temp.green + green, temp.blue + blue, temp.alpha+alpha)
+        }
+        return UIColor(red: componentsSum.red / numberOfColors,
+                       green: componentsSum.green / numberOfColors,
+                       blue: componentsSum.blue / numberOfColors,
+                       alpha: componentsSum.alpha / numberOfColors)
     }
 }
 
-//struct MV: CLKComplicationTemplateGraphicCircularView {
+//
+//struct LargeComplication: View {
+//    @Environment(\.complicationRenderingMode) var renderingMode
+//    @State var currentPrayer: Prayer
+//    @State var nextDate: Date
+//    @State var text2: String
+//    @State var text3: String
+//
+//    var body: some View {
+//        GeometryReader { g in
+//            HStack {
+//                //                ZStack(alignment: .center) {
+//                //                    ProgressView("")
+//                //                        .labelsHidden()
+//                //                        .progressViewStyle(LinearProgressViewStyle())
+//                //                        .rotationEffect(.degrees(90), anchor: .center)
+//                //                        .complicationForeground()
+//                //                        .frame(width: g.size.height, height: 10, alignment: .leading)
+//                //                }
+//                //                .frame(width: 15, height: g.size.height, alignment: .leading)
+//                //                .offset(x: -15)
+//
+//                //                RoundedRectangle(cornerRadius: 4)
+//                //                    .gradientForeground(colors: watchColorsForPrayer(.fajr))
+//                //                    .frame(width: 8)
+//                //                    .complicationForeground()
+//
+//                VStack(alignment: .leading) {
+//                    HStack(alignment: .firstTextBaseline) {
+//                        Image(systemName: currentPrayer.sfSymbolName())
+//                            .frame(width: 14)
+//                        Text(currentPrayer.localizedOrCustomString())
+//                            .bold()
+//                        Spacer()
+//                        Text(nextDate, style: .relative)
+//                            .bold()
+//                            .multilineTextAlignment(.trailing)
+//                    }
+//                    .foregroundColor(watchColorsForPrayer(currentPrayer).first!)
+//                    .complicationForeground()
+//
+//                    HStack(alignment: .firstTextBaseline) {
+//                        Image(systemName: currentPrayer.next().sfSymbolName())
+//                            .frame(width: 14)
+//                        Text(currentPrayer.next().localizedOrCustomString())
+//                            .bold()
+//                        Spacer()
+//                        Text(text2)
+//                            .bold()
+//                    }
+//                    HStack(alignment: .firstTextBaseline) {
+//                        Image(systemName: currentPrayer.next().next().sfSymbolName())
+//                            .frame(width: 14)
+//                        Text(currentPrayer.next().next().localizedOrCustomString())
+//                            .bold()
+//                        Spacer()
+//                        Text(text3)
+//                            .bold()
+//                    }
+//                }
+//            }
+//
+//        }
+//        //        .border(Color.red)
+//    }
+//}
+//
+//struct LargeComplication2: View {
 //    @Environment(\.complicationRenderingMode) var renderingMode
 //
-//    body
+//    var body: some View {
+//        HStack {
+//            ForEach(0..<4, id: \.self) { pIndex in
+//                let prayer = Prayer(index: pIndex)
+//                Spacer()
+//                if pIndex != 0 {
+//                    Divider()
+//                }
+//                VStack {
+//                    Text(String(prayer.localizedOrCustomString().first ?? " ".first!))
+//                        .font(Font.system(size: 12))
+//                        .fixedSize()
+//                    Spacer()
+//                    Image(systemName: prayer.sfSymbolName())
+//                        .font(Font.caption.bold())
+//
+//                    Spacer()
+//                    Text("12:34")
+//                        .font(Font.system(size: 12))
+//                        .fixedSize()
+//                }
+//            }
+//            Spacer()
+//        }
+//    }
 //}
-
-struct LargeComplication: View {
-    @Environment(\.complicationRenderingMode) var renderingMode
-    @State var currentPrayer: Prayer
-    @State var nextDate: Date
-    @State var text2: String
-    @State var text3: String
-    
-    var body: some View {
-        GeometryReader { g in
-            HStack {
-                //                ZStack(alignment: .center) {
-                //                    ProgressView("")
-                //                        .labelsHidden()
-                //                        .progressViewStyle(LinearProgressViewStyle())
-                //                        .rotationEffect(.degrees(90), anchor: .center)
-                //                        .complicationForeground()
-                //                        .frame(width: g.size.height, height: 10, alignment: .leading)
-                //                }
-                //                .frame(width: 15, height: g.size.height, alignment: .leading)
-                //                .offset(x: -15)
-                
-                //                RoundedRectangle(cornerRadius: 4)
-                //                    .gradientForeground(colors: watchColorsForPrayer(.fajr))
-                //                    .frame(width: 8)
-                //                    .complicationForeground()
-
-                VStack(alignment: .leading) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Image(systemName: currentPrayer.sfSymbolName())
-                            .frame(width: 14)
-                        Text(currentPrayer.localizedOrCustomString())
-                            .bold()
-                        Spacer()
-                        Text(nextDate, style: .relative)
-                            .bold()
-                            .multilineTextAlignment(.trailing)
-                    }
-                    .foregroundColor(watchColorsForPrayer(currentPrayer).first!)
-                    .complicationForeground()
-                    
-                    HStack(alignment: .firstTextBaseline) {
-                        Image(systemName: currentPrayer.next().sfSymbolName())
-                            .frame(width: 14)
-                        Text(currentPrayer.next().localizedOrCustomString())
-                            .bold()
-                        Spacer()
-                        Text(text2)
-                            .bold()
-                    }
-                    HStack(alignment: .firstTextBaseline) {
-                        Image(systemName: currentPrayer.next().next().sfSymbolName())
-                            .frame(width: 14)
-                        Text(currentPrayer.next().next().localizedOrCustomString())
-                            .bold()
-                        Spacer()
-                        Text(text3)
-                            .bold()
-                    }
-                }
-            }
-            
-        }
-        //        .border(Color.red)
-    }
-}
-
-struct LargeComplication2: View {
-    @Environment(\.complicationRenderingMode) var renderingMode
-    
-    var body: some View {
-        HStack {
-            
-            ForEach(0..<4, id: \.self) { pIndex in
-                let prayer = Prayer(index: pIndex)
-                Divider()
-                Spacer()
-                
-                VStack {
-                    Text(String(prayer.localizedOrCustomString().first ?? " ".first!))
-                        .font(Font.system(size: 10))
-                        .fixedSize()
-                    Spacer()
-                    Image(systemName: prayer.sfSymbolName())
-                        .font(Font.caption)
-                        
-                    Spacer()
-                    Text("12:34")
-                        .font(Font.footnote)
-                        .fixedSize()
-                }
-                .foregroundColor(pIndex == 3 ? .orange : .white)
-                .complicationForeground()
-            }
-            Spacer()
-            Divider()
-        }
-        .padding([.leading, .trailing], 1)
-    }
-}
-
+//
 struct LargeComplication_Preview: PreviewProvider {
     static var previews: some View {
-        CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: LargeComplication2())
+//        CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: Text("sd"))
+//            .previewContext()
+        
+        
+        CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(
+            gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: [0, 1], start: Date().addingTimeInterval(-100), end: Date().addingTimeInterval(40)), centerTextProvider: CLKSimpleTextProvider(text: "Sunrise"), bottomLabel: Text("4h 3m").font(Font.body)
+        )
             .previewContext()
         
-//        CLKComplicationTemplateGraphicRectangularFullView(LargeComplication(currentPrayer: .fajr, nextDate: Date().addingTimeInterval(100), text2: "2:12PM", text3: "5:20PM")).previewContext()
-//        GraphicRectangularFullView(LargeComplication2()).previewContext()
-
+        CLKComplicationTemplateExtraLargeStackImage(line1ImageProvider: CLKImageProvider(onePieceImage: UIImage(systemName: "sunset.fill")!), line2TextProvider: CLKSimpleTextProvider(text: "Fajr"))
+            .previewContext()
         
-//                CLKComplicationTemplateGraphicRectangularTextGaugeView(headerLabel: Text("test"), headerTextProvider: CLKSimpleTextProvider(text: "test"), bodyTextProvider: CLKSimpleTextProvider(text: "test"), gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: nil, start: Date().addingTimeInterval(-1000), end: Date().addingTimeInterval(1000)))
-//                    .previewContext(faceColor: .red)
-//
-//                CLKComplicationTemplateGraphicRectangularStandardBodyView(headerLabel: Rectangle().foregroundColor(.blue), headerTextProvider: CLKSimpleTextProvider(text: "test"), body1TextProvider: CLKSimpleTextProvider(text: "tet3")).previewContext()
-//                CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: nil, start: Date().addingTimeInterval(-1000), end: Date().addingTimeInterval(1000)), centerTextProvider: CLKSimpleTextProvider(text: "test"), bottomLabel: nil)
-//
+        CLKComplicationTemplateExtraLargeStackText(line1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), line2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
+            .previewContext()
+        
+        CLKComplicationTemplateExtraLargeColumnsText(row1Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row1Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
+            .previewContext()
+        
+        
+        
+        
+        
+        
     }
 }

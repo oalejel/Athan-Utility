@@ -40,8 +40,7 @@ struct MapView: UIViewRepresentable, Equatable {
 
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
 //        uiView.setCenter(center, animated: true)
-        print("> map updateUIView called")
-        
+//        print("> map updateUIView called")
         if abs(uiView.centerCoordinate.latitude - center.latitude) > 0.00001 &&
             abs(uiView.centerCoordinate.longitude - center.longitude) > 0.00001 {
             uiView.setCenter(center, animated: true)

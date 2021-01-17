@@ -56,6 +56,11 @@ class PhoneWatchDelegate: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
         print("***> FINISHED USER INFO FILE TRANSFER")
+        let LAT_KEY = "lastLat"
+        let LON_KEY = "lastLon"
+        UserDefaults.standard.setValue(Double(LocationSettings.shared.locationCoordinate.latitude), forKey: LAT_KEY)
+        UserDefaults.standard.setValue(Double(LocationSettings.shared.locationCoordinate.longitude), forKey: LON_KEY)
+
     }
     
 }

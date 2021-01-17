@@ -308,7 +308,7 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
 
 // Helper function for storing settings
 func archiveData(_ name: String, object: Any) {
-    print("WARNING: ADD ERROR HANDLER TO THIS")
+//    print("WARNING: ADD ERROR HANDLER TO THIS")
     let fm = FileManager.default
     
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!

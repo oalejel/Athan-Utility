@@ -126,30 +126,33 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         
         switch complication.family {
         case .graphicCircular:
-            let df = DateFormatter()
-            df.dateFormat = "h:mm"
+            
+            let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
+            let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }
+            timeProv.tintColor = blend(colors: colors)
+
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
                 let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")!)
-                //                imageProv.tintColor = tintColor(prayer: nextPrayer)
                 return CLKComplicationTemplateGraphicCircularStackImage(line1ImageProvider: imageProv,
-                                                                        line2TextProvider: CLKTextProvider(format: df.string(from: nextPrayerDate)))
+                                                                        line2TextProvider: timeProv)
             } else {
                 let nameProvider = CLKSimpleTextProvider(text: nextPrayer.localizedOrCustomString())
-                //                nameProvider.tintColor = tintColor(prayer: nextPrayer)
-                return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: nameProvider, line2TextProvider: CLKTextProvider(format: df.string(from: nextPrayerDate)))
+                return CLKComplicationTemplateGraphicCircularStackText(line1TextProvider: nameProvider, line2TextProvider: timeProv)
             }
         case .circularSmall:
-            let df = DateFormatter()
-            df.dateFormat = "h:mm"
+            let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
+            let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }
+            timeProv.tintColor = blend(colors: colors)
+
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
                 let imageProv = CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")!)
-                //                imageProv.tintColor = tintColor(prayer: nextPrayer)
                 return CLKComplicationTemplateCircularSmallStackImage(line1ImageProvider: imageProv,
-                                                                      line2TextProvider: CLKTextProvider(format: df.string(from: nextPrayerDate)))
+                                                                      line2TextProvider: timeProv)
             } else {
                 let nameProvider = CLKSimpleTextProvider(text: nextPrayer.localizedOrCustomString())
                 //                nameProvider.tintColor = tintColor(prayer: nextPrayer)
-                return CLKComplicationTemplateCircularSmallStackText(line1TextProvider: nameProvider, line2TextProvider: CLKTextProvider(format: df.string(from: nextPrayerDate)))
+                return CLKComplicationTemplateCircularSmallStackText(line1TextProvider: nameProvider,
+                                                                     line2TextProvider: timeProv)
             }
         case .graphicBezel:
             let cView = CLKComplicationTemplateGraphicCircularView(
@@ -235,8 +238,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             
             let textProv = CLKTextProvider(format: "%@ %@", shortableNameProv, dateProv)
 
-            
-            
             return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv, imageProvider: CLKImageProvider(onePieceImage: UIImage()))
             
         case .extraLarge:

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Adhan
+import WatchConnectivity
 //import SwiftFX
 
 
@@ -75,16 +76,16 @@ struct ContentView: View {
         // user background gradient is not suitable for text with black background
         
         if manager.locationName == LocationSettings.defaultSetting().locationName {
-            Text("Open Athan Utility on iPhone to set your location.")
+            VStack {
+                Text("Open Athan Utility on iPhone to set your location.")
+//                .onAppear {
+//                    WCSession.default.activate() // in case we failed to acivate before
+//                    WatchSessionDelegate.shared.requestUpdateFromPhone()
+//                }
+            }
         } else {
             VStack {
                 VStack(alignment: .leading, spacing: 3) {
-                    //                Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative) left")
-                    //                VStack {//(alignment: .firstTextBaseline) {
-                    ////                        .minimumScaleFactor(0.1)
-                    ////                    Spacer()
-                    //
-                    //                }
                     if manager.currentPrayer.localizedOrCustomString().count > 5 {
                         Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
                         Text(manager.currentPrayer.localizedOrCustomString())
@@ -184,7 +185,6 @@ struct ContentView: View {
                 }
             }
         }
-        
         
     }
     

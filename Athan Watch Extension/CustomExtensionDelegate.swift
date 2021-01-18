@@ -13,10 +13,13 @@ class CustomExtensionDelegate: NSObject, WKExtensionDelegate {
     func handle(_ userActivity: NSUserActivity) {
         // can tell if user launched from complication
     }
+    
     func applicationWillEnterForeground() {
         AthanManager.shared.movedToForeground()
     }
+    
     func applicationDidBecomeActive() {
-        print(">>:::: watch app became active!!!")
+        print(">>:::: watch app became active 2!!!")
+        WatchSessionDelegate.shared.requestUpdateFromPhone()
     }
 }

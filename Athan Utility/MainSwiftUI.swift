@@ -159,7 +159,7 @@ struct MainSwiftUI: View {
     }
     
     static func hijriDateString(date: Date) -> String {
-        let hijriCal = Calendar(identifier: .islamicCivil)
+        let hijriCal = Calendar(identifier: .islamicUmmAlQura)
         let df = DateFormatter()
         df.calendar = hijriCal
         df.dateStyle = .medium

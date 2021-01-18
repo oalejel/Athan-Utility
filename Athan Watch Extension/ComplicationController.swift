@@ -133,7 +133,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             timeProv.tintColor = blend(colors: colors)
 
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
-                let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")!)
+                let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15), scale: UIImage.SymbolScale.small))!)
                 return CLKComplicationTemplateGraphicCircularStackImage(line1ImageProvider: imageProv,
                                                                         line2TextProvider: timeProv)
             } else {
@@ -146,7 +146,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             timeProv.tintColor = blend(colors: colors)
 
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
-                let imageProv = CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")!)
+                let imageProv = CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15), scale: UIImage.SymbolScale.small))!)
                 return CLKComplicationTemplateCircularSmallStackImage(line1ImageProvider: imageProv,
                                                                       line2TextProvider: timeProv)
             } else {
@@ -163,8 +163,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
                     Image(systemName: nextPrayer.previous().sfSymbolName())
                         .font(Font.headline.bold())
                         .foregroundColor(Color(.sRGB, white: 1, opacity: 0.8))
-                    //                        .offset(y: -2)
-                    
+                        .offset(y: (nextPrayer.previous() == .sunrise || nextPrayer.previous() == .maghrib) ? -2 : 0)
                 }
             )
             // round image of sf symbol for for current salah time
@@ -305,102 +304,3 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 //
 //    }
 //}
-
-//
-//struct LargeComplication: View {
-//    @Environment(\.complicationRenderingMode) var renderingMode
-//    @State var currentPrayer: Prayer
-//    @State var nextDate: Date
-//    @State var text2: String
-//    @State var text3: String
-//
-//    var body: some View {
-//        GeometryReader { g in
-//            HStack {
-//                //                ZStack(alignment: .center) {
-//                //                    ProgressView("")
-//                //                        .labelsHidden()
-//                //                        .progressViewStyle(LinearProgressViewStyle())
-//                //                        .rotationEffect(.degrees(90), anchor: .center)
-//                //                        .complicationForeground()
-//                //                        .frame(width: g.size.height, height: 10, alignment: .leading)
-//                //                }
-//                //                .frame(width: 15, height: g.size.height, alignment: .leading)
-//                //                .offset(x: -15)
-//
-//                //                RoundedRectangle(cornerRadius: 4)
-//                //                    .gradientForeground(colors: watchColorsForPrayer(.fajr))
-//                //                    .frame(width: 8)
-//                //                    .complicationForeground()
-//
-//                VStack(alignment: .leading) {
-//                    HStack(alignment: .firstTextBaseline) {
-//                        Image(systemName: currentPrayer.sfSymbolName())
-//                            .frame(width: 14)
-//                        Text(currentPrayer.localizedOrCustomString())
-//                            .bold()
-//                        Spacer()
-//                        Text(nextDate, style: .relative)
-//                            .bold()
-//                            .multilineTextAlignment(.trailing)
-//                    }
-//                    .foregroundColor(watchColorsForPrayer(currentPrayer).first!)
-//                    .complicationForeground()
-//
-//                    HStack(alignment: .firstTextBaseline) {
-//                        Image(systemName: currentPrayer.next().sfSymbolName())
-//                            .frame(width: 14)
-//                        Text(currentPrayer.next().localizedOrCustomString())
-//                            .bold()
-//                        Spacer()
-//                        Text(text2)
-//                            .bold()
-//                    }
-//                    HStack(alignment: .firstTextBaseline) {
-//                        Image(systemName: currentPrayer.next().next().sfSymbolName())
-//                            .frame(width: 14)
-//                        Text(currentPrayer.next().next().localizedOrCustomString())
-//                            .bold()
-//                        Spacer()
-//                        Text(text3)
-//                            .bold()
-//                    }
-//                }
-//            }
-//
-//        }
-//        //        .border(Color.red)
-//    }
-//}
-//
-//struct LargeComplication2: View {
-//    @Environment(\.complicationRenderingMode) var renderingMode
-//
-//    var body: some View {
-//        HStack {
-//            ForEach(0..<4, id: \.self) { pIndex in
-//                let prayer = Prayer(index: pIndex)
-//                Spacer()
-//                if pIndex != 0 {
-//                    Divider()
-//                }
-//                VStack {
-//                    Text(String(prayer.localizedOrCustomString().first ?? " ".first!))
-//                        .font(Font.system(size: 12))
-//                        .fixedSize()
-//                    Spacer()
-//                    Image(systemName: prayer.sfSymbolName())
-//                        .font(Font.caption.bold())
-//
-//                    Spacer()
-//                    Text("12:34")
-//                        .font(Font.system(size: 12))
-//                        .fixedSize()
-//                }
-//            }
-//            Spacer()
-//        }
-//    }
-//}
-//
-

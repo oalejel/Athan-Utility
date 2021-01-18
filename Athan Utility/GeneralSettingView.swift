@@ -56,7 +56,7 @@ struct GeneralSettingView: View {
         GeometryReader { g in
             VStack(spacing: 0) {
                 Divider()
-//                    .background(Color.red)
+                    .background(Color.white)
                     .onAppear {
                         print(tempNotificationSettings.selectedSound)
                     }
@@ -551,7 +551,7 @@ struct GeneralSettingView: View {
                 
                 // footer divider
                 Divider()
-                    .background(Color(.lightText))
+                    .background(Color.white)
                 
                 HStack(alignment: .center) {
                     Spacer()

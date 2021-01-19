@@ -1665,7 +1665,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1695,7 +1695,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1730,7 +1730,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1769,7 +1769,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1803,7 +1803,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1838,7 +1838,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1864,7 +1864,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1888,7 +1888,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1982,7 +1982,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
@@ -2018,7 +2018,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
@@ -2048,7 +2048,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2085,7 +2085,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;

@@ -37,12 +37,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
+        manager.refreshTimes()
         if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
             handler(nil) // havent sent location
         } else {
+            print("latest scheduled complication: \(manager.tomorrowTimes.maghrib)")
             handler(manager.tomorrowTimes.maghrib) // maybe good to update data before penuultimate prayer -- no empirical evidence yet
         }
-        
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -56,6 +57,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
             handler(nil) // case if we have not set our location
         } else if let template = getComplicationTemplate(for: complication, using: Date()) {
+            print(">>> COMPLICATION MANAGER USING LOCATION (creating current entry): \(manager.locationSettings.locationName)")
             let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
             handler(entry)
         } else {
@@ -66,16 +68,18 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
         
         // first, ensure that we are able to produce the desired complication
-        guard let _ = getComplicationTemplate(for: complication, using: Date()) else {
-            handler(nil)
-            return
-        }
+//        guard let _ = getComplicationTemplate(for: complication, using: Date()) else {
+//            handler(nil)
+//            return
+//        }
         
         // get all times we could possibly have entries for
         var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
         // filter out times that are in the past, based on passed in `date`
         sortedStoredTimes = sortedStoredTimes.filter { date < $0 }
+        #warning("do not forget this detail: we are dropping an entry for tomorrow's isha")
+        sortedStoredTimes.removeLast()
         // if going beyond limit, cut out latest times we cannot fit
         if limit < sortedStoredTimes.count {
             sortedStoredTimes.removeSubrange(limit..<sortedStoredTimes.endIndex)
@@ -83,10 +87,13 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         
         // for each date, create a timeline entry
         var entries: [CLKComplicationTimelineEntry] = []
+        print(">>> COMPLICATION MANAGER USING LOCATION: \(manager.locationSettings.locationName)")
         for entryDate in sortedStoredTimes {
             if let template = getComplicationTemplate(for: complication, using: entryDate) {
+                print("succeeded template: \(complication.family.rawValue)")
                 entries.append(CLKComplicationTimelineEntry(date: entryDate, complicationTemplate: template))
             } else {
+                print("FAILED template: \(complication.family.rawValue)")
                 print("ERROR: should not have errors producing template for provided dates at this point.")
             }
         }
@@ -108,7 +115,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getComplicationTemplate(for complication: CLKComplication, using date: Date) -> CLKComplicationTemplate? {
         // check if queried date takes place after a time we have stored
-        print(">>> COMPLICATION MANAGER USING LOCATION: \(manager.locationSettings.locationName)")
+        
+//        // to account for high precision similarity in dates, move date forward by 1 second
+//        let date = date.addingTimeInterval(1)
         var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
         guard let firstGreaterTimeIndex = sortedStoredTimes.firstIndex(where: { (storedDate) -> Bool in

@@ -92,6 +92,7 @@ struct MainSwiftUI: View {
     @State var locationSettingsToggled = false
     
     @State var currentView = CurrentView.Main
+    @State var qiblaDragAmount = CGSize.zero
     
 //    @State var todayHijriString = hijriDateString(date: Date())
     //    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
@@ -378,6 +379,27 @@ struct MainSwiftUI: View {
                                                 .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                                 .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
                                                 .opacity(1 - 0.8 * dragState.progress)
+//                                                .offset(qiblaDragAmount)
+//                                                .animation(.easeIn)
+                                            
+                                            // future feature for interactive drag to toggle qibla state
+//                                                .gesture(
+//                                                    DragGesture()
+//                                                        .onChanged {
+//                                                            self.qiblaDragAmount = $0.translation
+//                                                            let qiblaSwitchProgress = (qiblaDragAmount.width / (g.size.width / 2)) * (qiblaDragAmount.height / (g.size.height / 2))
+//
+//
+//                                                        }
+//                                                        .onEnded { _ in
+//                                                            self.qiblaDragAmount = .zero
+//                                                            let qiblaSwitchProgress = (qiblaDragAmount.width / (g.size.width / 2)) * (qiblaDragAmount.height / (g.size.height / 2))
+//                                                            if qiblaSwitchProgress > 1 {
+//                                                                assert(false)
+//                                                            }
+//
+//                                                        }
+//                                                )
                                             
                                             
                                             // for now, time remaining will only show seconds on ios >=14

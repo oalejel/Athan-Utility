@@ -36,12 +36,7 @@ import WatchConnectivity
 @available(iOS 13.0.0, *)
 class ObservableAthanManager: ObservableObject {
     static var shared = ObservableAthanManager()
-    
-    init() {
-        // bootstrap process of initializing the athan manager?
-        //        let _ = AthanManager.shared
-    }
-    
+        
     @Published var todayTimes: PrayerTimes!
     @Published var tomorrowTimes: PrayerTimes!
     @Published var currentPrayer: Prayer! = .fajr

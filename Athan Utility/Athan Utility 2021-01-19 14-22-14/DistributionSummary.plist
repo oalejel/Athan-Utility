@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Athan Utility.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>AC7A0C806F6BE9BADD25AA335CC4BCCAA086F85A</string>
+				<key>dateExpires</key>
+				<string>1/29/21</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>AC7A0C806F6BE9BADD25AA335CC4BCCAA086F85A</string>
+						<key>dateExpires</key>
+						<string>1/29/21</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>entitlements</key>
+					<dict>
+						<key>application-identifier</key>
+						<string>DL7989H5XT.com.omaralejel.Athan-Utility.Athan-Widget</string>
+						<key>com.apple.developer.team-identifier</key>
+						<string>DL7989H5XT</string>
+						<key>com.apple.security.application-groups</key>
+						<array>
+							<string>group.athanUtil</string>
+						</array>
+						<key>get-task-allow</key>
+						<true/>
+					</dict>
+					<key>name</key>
+					<string>Athan WidgetExtension.appex</string>
+					<key>profile</key>
+					<dict>
+						<key>UUID</key>
+						<string>cee1b74d-1ed5-4404-bfe0-cc083502a54f</string>
+						<key>name</key>
+						<string>iOS Team Provisioning Profile: com.omaralejel.Athan-Utility.Athan-Widget</string>
+					</dict>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>DL7989H5XT</string>
+						<key>name</key>
+						<string>Omar Al-Ejel</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>AC7A0C806F6BE9BADD25AA335CC4BCCAA086F85A</string>
+						<key>dateExpires</key>
+						<string>1/29/21</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>entitlements</key>
+					<dict>
+						<key>application-identifier</key>
+						<string>DL7989H5XT.com.omaralejel.Athan-Utility.AthanSiriIntents</string>
+						<key>com.apple.developer.team-identifier</key>
+						<string>DL7989H5XT</string>
+						<key>com.apple.security.application-groups</key>
+						<array>
+							<string>group.athanUtil</string>
+						</array>
+						<key>get-task-allow</key>
+						<true/>
+					</dict>
+					<key>name</key>
+					<string>AthanSiriIntents.appex</string>
+					<key>profile</key>
+					<dict>
+						<key>UUID</key>
+						<string>3d591b1b-5ccc-4b4e-b8c1-2cf3db87d59a</string>
+						<key>name</key>
+						<string>iOS Team Provisioning Profile: com.omaralejel.Athan-Utility.AthanSiriIntents</string>
+					</dict>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>DL7989H5XT</string>
+						<key>name</key>
+						<string>Omar Al-Ejel</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64_32</string>
+						<string>armv7k</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>AC7A0C806F6BE9BADD25AA335CC4BCCAA086F85A</string>
+						<key>dateExpires</key>
+						<string>1/29/21</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>embeddedBinaries</key>
+					<array>
+						<dict>
+							<key>architectures</key>
+							<array>
+								<string>armv7k</string>
+								<string>arm64_32</string>
+							</array>
+							<key>certificate</key>
+							<dict>
+								<key>SHA1</key>
+								<string>AC7A0C806F6BE9BADD25AA335CC4BCCAA086F85A</string>
+								<key>dateExpires</key>
+								<string>1/29/21</string>
+								<key>type</key>
+								<string>Apple Development</string>
+							</dict>
+							<key>entitlements</key>
+							<dict>
+								<key>application-identifier</key>
+								<string>DL7989H5XT.com.omaralejel.Athan-Utility.watchkitapp.watchkitextension</string>
+								<key>com.apple.developer.team-identifier</key>
+								<string>DL7989H5XT</string>
+								<key>com.apple.security.application-groups</key>
+								<array>
+									<string>group.athanUtil</string>
+								</array>
+								<key>get-task-allow</key>
+								<true/>
+							</dict>
+							<key>name</key>
+							<string>Athan Watch Extension.appex</string>
+							<key>profile</key>
+							<dict>
+								<key>UUID</key>
+								<string>7bd6c380-ee15-4baa-8a98-4171f8c66f03</string>
+								<key>name</key>
+								<string>iOS Team Provisioning Profile: com.omaralejel.Athan-Utility.watchkitapp.watchkitextension</string>
+							</dict>
+							<key>team</key>
+							<dict>
+								<key>id</key>
+								<string>DL7989H5XT</string>
+								<key>name</key>
+								<string>Omar Al-Ejel</string>
+							</dict>
+						</dict>
+					</array>
+					<key>entitlements</key>
+					<dict>
+						<key>application-identifier</key>
+						<string>DL7989H5XT.com.omaralejel.Athan-Utility.watchkitapp</string>
+						<key>com.apple.developer.team-identifier</key>
+						<string>DL7989H5XT</string>
+						<key>com.apple.security.application-groups</key>
+						<array>
+							<string>group.athanUtil</string>
+						</array>
+						<key>get-task-allow</key>
+						<true/>
+					</dict>
+					<key>name</key>
+					<string>Athan Watch.app</string>
+					<key>profile</key>
+					<dict>
+						<key>UUID</key>
+						<string>694730ba-6d4b-48f7-a5d3-b99b620e5976</string>
+						<key>name</key>
+						<string>iOS Team Provisioning Profile: com.omaralejel.Athan-Utility.watchkitapp</string>
+					</dict>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>DL7989H5XT</string>
+						<key>name</key>
+						<string>Omar Al-Ejel</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>DL7989H5XT.com.omaralejel.Athan-Utility</string>
+				<key>com.apple.developer.siri</key>
+				<true/>
+				<key>com.apple.developer.team-identifier</key>
+				<string>DL7989H5XT</string>
+				<key>com.apple.security.application-groups</key>
+				<array>
+					<string>group.athanUtil</string>
+				</array>
+				<key>get-task-allow</key>
+				<true/>
+			</dict>
+			<key>name</key>
+			<string>Athan Utility.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>340af570-0cc0-4706-b97f-195d4f60af37</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: com.omaralejel.Athan-Utility</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>DL7989H5XT</string>
+				<key>name</key>
+				<string>Omar Al-Ejel</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

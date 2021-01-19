@@ -119,19 +119,8 @@
 		3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9BA0192575446F00F02EFD /* MoonView3D.swift */; };
 		3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
-		3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE451D256089D600156CFF /* WhatsNewViewController.swift */; };
-		3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE451F256089D600156CFF /* WhatsNew.xib */; };
-		3DAE452D256089D600156CFF /* WhatsNewItemImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */; };
-		3DAE452E256089D600156CFF /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4521256089D600156CFF /* .gitkeep */; };
-		3DAE452F256089D600156CFF /* WhatsNewItemTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */; };
-		3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4524256089D600156CFF /* NibLoadable.swift */; };
-		3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4526256089D600156CFF /* PresentationOption.swift */; };
-		3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */; };
-		3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */; };
-		3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE4529256089D600156CFF /* WhatsNewItem.swift */; };
-		3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE452A256089D600156CFF /* WhatsNew.swift */; };
+		3DADF0F025B660CA001FCB0E /* WhatsNewKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3DADF0EF25B660CA001FCB0E /* WhatsNewKit */; };
 		3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE45532560976900156CFF /* SqueezeButton.swift */; };
-		3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAE455A2560984500156CFF /* AnimatedLabel.swift */; };
 		3DB56CE72281FA3800B9F738 /* NextPrayerIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */; };
 		3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */; };
 		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
@@ -386,19 +375,7 @@
 		3D9BA0192575446F00F02EFD /* MoonView3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonView3D.swift; sourceTree = "<group>"; };
 		3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Prayer+Extensions.swift"; sourceTree = "<group>"; };
-		3DAE451D256089D600156CFF /* WhatsNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewViewController.swift; sourceTree = "<group>"; };
-		3DAE451F256089D600156CFF /* WhatsNew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNew.xib; sourceTree = "<group>"; };
-		3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNewItemImageView.xib; sourceTree = "<group>"; };
-		3DAE4521256089D600156CFF /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WhatsNewItemTextView.xib; sourceTree = "<group>"; };
-		3DAE4524256089D600156CFF /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
-		3DAE4526256089D600156CFF /* PresentationOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationOption.swift; sourceTree = "<group>"; };
-		3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItemTextView.swift; sourceTree = "<group>"; };
-		3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItemImageView.swift; sourceTree = "<group>"; };
-		3DAE4529256089D600156CFF /* WhatsNewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNewItem.swift; sourceTree = "<group>"; };
-		3DAE452A256089D600156CFF /* WhatsNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		3DAE45532560976900156CFF /* SqueezeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SqueezeButton.swift; sourceTree = "<group>"; };
-		3DAE455A2560984500156CFF /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DB6AF502576FE06006241D4 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
@@ -474,6 +451,7 @@
 			files = (
 				3D16F1042560851B00C78B12 /* Adhan in Frameworks */,
 				3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */,
+				3DADF0F025B660CA001FCB0E /* WhatsNewKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,7 +577,6 @@
 				3D4416E51C05172400329AA0 /* Settings */,
 				3D4CEDA61BDD597700CA095E /* Table */,
 				3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */,
-				3DAE451C256089D600156CFF /* WhatsNew */,
 				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
 				3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */,
 				3D15F53C242827210010C709 /* Default-568h@2x.png */,
@@ -773,49 +750,6 @@
 			name = Moon;
 			sourceTree = "<group>";
 		};
-		3DAE451C256089D600156CFF /* WhatsNew */ = {
-			isa = PBXGroup;
-			children = (
-				3DAE455A2560984500156CFF /* AnimatedLabel.swift */,
-				3DAE451D256089D600156CFF /* WhatsNewViewController.swift */,
-				3DAE451E256089D600156CFF /* Resources */,
-				3DAE4523256089D600156CFF /* Utils */,
-				3DAE4525256089D600156CFF /* Items */,
-			);
-			path = WhatsNew;
-			sourceTree = "<group>";
-		};
-		3DAE451E256089D600156CFF /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				3DAE451F256089D600156CFF /* WhatsNew.xib */,
-				3DAE4520256089D600156CFF /* WhatsNewItemImageView.xib */,
-				3DAE4521256089D600156CFF /* .gitkeep */,
-				3DAE4522256089D600156CFF /* WhatsNewItemTextView.xib */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		3DAE4523256089D600156CFF /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				3DAE4524256089D600156CFF /* NibLoadable.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		3DAE4525256089D600156CFF /* Items */ = {
-			isa = PBXGroup;
-			children = (
-				3DAE4526256089D600156CFF /* PresentationOption.swift */,
-				3DAE4527256089D600156CFF /* WhatsNewItemTextView.swift */,
-				3DAE4528256089D600156CFF /* WhatsNewItemImageView.swift */,
-				3DAE4529256089D600156CFF /* WhatsNewItem.swift */,
-				3DAE452A256089D600156CFF /* WhatsNew.swift */,
-			);
-			path = Items;
-			sourceTree = "<group>";
-		};
 		3DAE45662560A4F100156CFF /* Helper Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +865,7 @@
 			name = "Athan Utility";
 			packageProductDependencies = (
 				3D16F1032560851B00C78B12 /* Adhan */,
+				3DADF0EF25B660CA001FCB0E /* WhatsNewKit */,
 			);
 			productName = "Athan Utility";
 			productReference = 3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */;
@@ -1126,6 +1061,7 @@
 			mainGroup = 3D07DA721BDC58B50001EFE4;
 			packageReferences = (
 				3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */,
+				3DADF0EE25B660CA001FCB0E /* XCRemoteSwiftPackageReference "WhatsNewKit" */,
 			);
 			productRefGroup = 3D07DA7C1BDC58B50001EFE4 /* Products */;
 			projectDirPath = "";
@@ -1149,15 +1085,12 @@
 			files = (
 				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
 				3D73FC8022875CCA0092A83C /* egypt-preview.caf in Resources */,
-				3DAE452E256089D600156CFF /* .gitkeep in Resources */,
 				3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */,
 				3D936A191BE3A8320060790D /* Main.storyboard in Resources */,
 				3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */,
 				3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */,
-				3DAE452F256089D600156CFF /* WhatsNewItemTextView.xib in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
 				3D73FC7B22875CCA0092A83C /* alaqsa-preview.caf in Resources */,
-				3DAE452D256089D600156CFF /* WhatsNewItemImageView.xib in Resources */,
 				3D73FC7C22875CCA0092A83C /* abdulghaffar-preview.caf in Resources */,
 				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3DEF64F725A245C9004EE51F /* InfoPlist.strings in Resources */,
@@ -1168,7 +1101,6 @@
 				3D73FC7D22875CCA0092A83C /* abdulbaset-preview.caf in Resources */,
 				3D73FC7A22875CCA0092A83C /* makkah-preview.caf in Resources */,
 				3D48F3B3257586CC007FE7FB /* moon_disp.jpg in Resources */,
-				3DAE452C256089D600156CFF /* WhatsNew.xib in Resources */,
 				3D48F3B925758F26007FE7FB /* moon_texture.jpg in Resources */,
 				3D73FC5C2284A2020092A83C /* SiriCell.xib in Resources */,
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
@@ -1243,7 +1175,6 @@
 				3D0789732599B8C50047DD00 /* NameOverridesView.swift in Sources */,
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
 				3DB9EE51259D026E00601E1E /* CalendarView.swift in Sources */,
-				3DAE4530256089D600156CFF /* NibLoadable.swift in Sources */,
 				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
 				3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */,
@@ -1259,7 +1190,6 @@
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
 				3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */,
 				3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */,
-				3DAE452B256089D600156CFF /* WhatsNewViewController.swift in Sources */,
 				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
@@ -1268,8 +1198,6 @@
 				3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
 				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
-				3DAE4533256089D600156CFF /* WhatsNewItemImageView.swift in Sources */,
-				3DAE4531256089D600156CFF /* PresentationOption.swift in Sources */,
 				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
 				3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
@@ -1279,11 +1207,9 @@
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
 				3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */,
-				3DAE455B2560984500156CFF /* AnimatedLabel.swift in Sources */,
 				3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */,
 				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
 				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
-				3DAE4532256089D600156CFF /* WhatsNewItemTextView.swift in Sources */,
 				3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */,
 				3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */,
 				3D59923825930F5E006355CB /* MapView.swift in Sources */,
@@ -1295,9 +1221,7 @@
 				3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */,
 				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
-				3DAE4534256089D600156CFF /* WhatsNewItem.swift in Sources */,
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
-				3DAE4535256089D600156CFF /* WhatsNew.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,
 				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */,
@@ -1665,7 +1589,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1673,7 +1597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1695,7 +1619,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1703,7 +1627,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1730,7 +1654,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1740,7 +1664,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
@@ -1769,7 +1693,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1779,7 +1703,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1803,7 +1727,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1813,7 +1737,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
@@ -1838,7 +1762,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1848,7 +1772,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1864,7 +1788,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1872,7 +1796,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1888,7 +1812,7 @@
 				CODE_SIGN_ENTITLEMENTS = AthanToday/AthanToday.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = AthanToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1896,7 +1820,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanTodayExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1982,12 +1906,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
 				INFOPLIST_FILE = "Athan Watch/Info.plist";
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
@@ -2018,12 +1942,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
 				INFOPLIST_FILE = "Athan Watch/Info.plist";
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2048,7 +1972,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2059,7 +1983,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
@@ -2085,7 +2009,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2096,7 +2020,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 6.1.0;
+				MARKETING_VERSION = 6.1.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -2194,6 +2118,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		3DADF0EE25B660CA001FCB0E /* XCRemoteSwiftPackageReference "WhatsNewKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/WhatsNewKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2211,6 +2143,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
 			productName = Adhan;
+		};
+		3DADF0EF25B660CA001FCB0E /* WhatsNewKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DADF0EE25B660CA001FCB0E /* XCRemoteSwiftPackageReference "WhatsNewKit" */;
+			productName = WhatsNewKit;
 		};
 		3DEE3AAF25A6A33C00DC7331 /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;

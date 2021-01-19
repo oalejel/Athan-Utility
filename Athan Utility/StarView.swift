@@ -54,41 +54,82 @@ struct StarView: View, Equatable {
     }
     
     var body: some View {
-        GeometryReader { g in
-            ZStack {
-                ForEach(0..<starCount) { idx in
-                    let ss = StarView.startStates[idx]
-                    let randomRadius = ss.radius
-                    let randomX = ss.x * g.size.width
-                    let randomY = ss.y * g.size.height
-                    let randomOpacity = ss.opacity
-                    Circle()
-                        .clipped(antialiased: true)
-                        //                        .shadow(color: Color.white, radius: 0.1)
-                        .frame(width: randomRadius, height: randomRadius)
-                        .offset(x: randomX, y: randomY)
-                        .foregroundColor(ss.color)
-                        .opacity((idx < fadingIndices && idx % 3 == 0) ? randomOpacity : 0.5)
-                        .onAppear {
-                            withAnimation {
-                                fadingIndices = starCount
+        if #available(iOS 14.0, *) {
+            GeometryReader { g in
+                ZStack {
+                    ForEach(0..<starCount) { idx in
+                        let ss = StarView.startStates[idx]
+                        let randomRadius = ss.radius
+                        let randomX = ss.x * g.size.width
+                        let randomY = ss.y * g.size.height
+                        let randomOpacity = ss.opacity
+                        Circle()
+                            .clipped(antialiased: true)
+                            //                        .shadow(color: Color.white, radius: 0.1)
+                            .frame(width: randomRadius, height: randomRadius)
+                            .offset(x: randomX, y: randomY)
+                            .foregroundColor(ss.color)
+                            .opacity((idx < fadingIndices && idx % 3 == 0) ? randomOpacity : 0.5)
+                            .onAppear {
+                                withAnimation {
+                                    fadingIndices = starCount
+                                }
                             }
-                        }
-                        .animation(Animation.easeInOut(duration:2).repeatForever(autoreverses:true))
+                            .animation(Animation.easeInOut(duration:2).repeatForever(autoreverses:true))
+                    }
                 }
+                .parallax(amount: 20)
+                
+                .offset(x: g.size.width / -2, y: g.size.height / -2)
+                .mask(
+                    LinearGradient(gradient: Gradient(colors: [.white, .white, .clear]),
+                                   startPoint: .top,
+                                   endPoint: .bottom)
+    //                    .position(x: 0, y: 0)
+                        .frame(width: g.size.width, height: g.size.height)
+    //                    .offset(x: g.size.width / 2, y: g.size.height / 2)
+                )
             }
-
-            .parallax(amount: 20)
-            .offset(x: g.size.width / -2, y: g.size.height / -2)
-            .mask(
-                LinearGradient(gradient: Gradient(colors: [.white, .white, .clear]),
-                               startPoint: .top,
-                               endPoint: .bottom)
-//                    .position(x: 0, y: 0)
-                    .frame(width: g.size.width, height: g.size.height)
-//                    .offset(x: g.size.width / 2, y: g.size.height / 2)
-            )
+            .ignoresSafeArea(.keyboard)
+        } else {
+            GeometryReader { g in
+                ZStack {
+                    ForEach(0..<starCount) { idx in
+                        let ss = StarView.startStates[idx]
+                        let randomRadius = ss.radius
+                        let randomX = ss.x * g.size.width
+                        let randomY = ss.y * g.size.height
+                        let randomOpacity = ss.opacity
+                        Circle()
+                            .clipped(antialiased: true)
+                            //                        .shadow(color: Color.white, radius: 0.1)
+                            .frame(width: randomRadius, height: randomRadius)
+                            .offset(x: randomX, y: randomY)
+                            .foregroundColor(ss.color)
+                            .opacity((idx < fadingIndices && idx % 3 == 0) ? randomOpacity : 0.5)
+                            .onAppear {
+                                withAnimation {
+                                    fadingIndices = starCount
+                                }
+                            }
+                            .animation(Animation.easeInOut(duration:2).repeatForever(autoreverses:true))
+                    }
+                }
+                .parallax(amount: 20)
+                
+                .offset(x: g.size.width / -2, y: g.size.height / -2)
+                .mask(
+                    LinearGradient(gradient: Gradient(colors: [.white, .white, .clear]),
+                                   startPoint: .top,
+                                   endPoint: .bottom)
+    //                    .position(x: 0, y: 0)
+                        .frame(width: g.size.width, height: g.size.height)
+    //                    .offset(x: g.size.width / 2, y: g.size.height / 2)
+                )
+            }
         }
+        
+        
     }
 }
 

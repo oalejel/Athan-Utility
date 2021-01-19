@@ -91,8 +91,7 @@ struct MainSwiftUI: View {
     @State var settingsToggled = false
     @State var locationSettingsToggled = false
     
-    @State var currentView = CurrentView.Main
-    @State var qiblaDragAmount = CGSize.zero
+    @State var currentView: CurrentView
     
 //    @State var todayHijriString = hijriDateString(date: Date())
     //    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
@@ -178,6 +177,8 @@ struct MainSwiftUI: View {
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
+        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) ? CurrentView.Location : CurrentView.Main)
+        
         dragCancellable = dragState.$progress
             .receive(on: RunLoop.main)
             // pass along last value, and whether we had an increase
@@ -186,7 +187,7 @@ struct MainSwiftUI: View {
                 let r2 = Int(new / 0.33)
                 
                 if r1 != r2 {
-                    print(r1, r2)
+//                    print(r1, r2)
                     if r2 > r1 {
                         if r2 == 3 {
                             DispatchQueue.main.async {

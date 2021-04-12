@@ -592,13 +592,13 @@ struct GeneralSettingView: View {
                     }
                 }
                 .padding()
-                .padding([.leading, .trailing, .bottom])
+                //.padding([.leading, .trailing, .bottom]) removing the extra bottom padding
                 //                    .padding([.leading, .trailing, .bottom])
             }
             //                .edgesIgnoringSafeArea(.all)
             //                .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
             .frame(width: g.size.width)
-            .padding([.top])
+            //.padding([.top]).     //removing the top padding
             .transition(.opacity)
         }
     }

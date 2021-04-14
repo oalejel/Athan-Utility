@@ -29,7 +29,7 @@ import SwiftUI
  If you have any doubts about athan utility, please reach out to me on twitter @oalejel or
  email me with the feedback button.
  
- If you enjoy using Athan Utility, pelase share it with friends and give it a review on the app store!
+ If you enjoy using Athan Utility, please share it with friends and give it a review on the app store!
  
  */
 
@@ -86,7 +86,7 @@ my exasperated code commit messages at your leisure.
 If you have any doubts about Athan Utility, please reach out to me on Twitter @oalejel or \
 email me with the feedback button.
 
-If you enjoy using Athan Utility, pelase share it with friends and give it a review on the App Store! \
+If you enjoy using Athan Utility, please share it with friends and give it a review on the App Store! \
 If you *really* like Athan Utility, please donate to people in need. This app will always be free.
 """
                 Text(text)

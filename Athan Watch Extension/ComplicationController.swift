@@ -13,15 +13,15 @@ import Adhan
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
     let manager = AthanManager.shared
-        
+    
     // MARK: - Complication Configuration
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         var families = CLKComplicationFamily.allCases
         families.removeAll {$0 == .graphicExtraLarge} // drop graphicExtraLarge since extraLarge covers it
         let descriptors = [
             CLKComplicationDescriptor(identifier: "complication",
-                                     displayName: "Athan Utility",
-                                     supportedFamilies: families)
+                                      displayName: "Athan Utility",
+                                      supportedFamilies: families)
             // Multiple complication support can be added here with more descriptors
         ]
         
@@ -68,17 +68,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
         
         // first, ensure that we are able to produce the desired complication
-//        guard let _ = getComplicationTemplate(for: complication, using: Date()) else {
-//            handler(nil)
-//            return
-//        }
+        //        guard let _ = getComplicationTemplate(for: complication, using: Date()) else {
+        //            handler(nil)
+        //            return
+        //        }
         
         // get all times we could possibly have entries for
         var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
         // filter out times that are in the past, based on passed in `date`
         sortedStoredTimes = sortedStoredTimes.filter { date < $0 }
-        #warning("do not forget this detail: we are dropping an entry for tomorrow's isha")
+#warning("do not forget this detail: we are dropping an entry for tomorrow's isha")
         sortedStoredTimes.removeLast()
         // if going beyond limit, cut out latest times we cannot fit
         if limit < sortedStoredTimes.count {
@@ -116,8 +116,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getComplicationTemplate(for complication: CLKComplication, using date: Date) -> CLKComplicationTemplate? {
         // check if queried date takes place after a time we have stored
         
-//        // to account for high precision similarity in dates, move date forward by 1 second
-//        let date = date.addingTimeInterval(1)
+        //        // to account for high precision similarity in dates, move date forward by 1 second
+        //        let date = date.addingTimeInterval(1)
         var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
         guard let firstGreaterTimeIndex = sortedStoredTimes.firstIndex(where: { (storedDate) -> Bool in
@@ -136,13 +136,12 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         
         switch complication.family {
         case .graphicCircular:
-            
             let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
             let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }
             timeProv.tintColor = blend(colors: colors)
 
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
-                let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15), scale: UIImage.SymbolScale.small))!)
+                let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15), scale: UIImage.SymbolScale.small))!.withTintColor(.white))
                 return CLKComplicationTemplateGraphicCircularStackImage(line1ImageProvider: imageProv,
                                                                         line2TextProvider: timeProv)
             } else {
@@ -153,7 +152,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
             let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }
             timeProv.tintColor = blend(colors: colors)
-
             if nextPrayer == .sunrise || nextPrayer == .maghrib { // use an image for sunrise or sunset
                 let imageProv = CLKImageProvider(onePieceImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 15), scale: UIImage.SymbolScale.small))!)
                 return CLKComplicationTemplateCircularSmallStackImage(line1ImageProvider: imageProv,
@@ -189,7 +187,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let nameProvider = CLKSimpleTextProvider(text: nextPrayer.previous().localizedOrCustomString())
             let dateProv = CLKTimeTextProvider(date: nextPrayerDate)
             let innerTextProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) at %@", dateProv)
-            innerTextProvider.tintColor = .orange
             let template = CLKComplicationTemplateGraphicCornerStackText(innerTextProvider: innerTextProvider, outerTextProvider: nameProvider)
             return template
             
@@ -199,11 +196,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let prov = CLKComplicationTemplateUtilitarianSmallFlat(textProvider: timeProv, imageProvider: imageProv)
             return prov
             // this style gets too large
-        // FAJR 4:55PM
-//            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@",
-//                                           CLKTimeTextProvider(date: nextPrayerDate))
-//
-//            return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv)
+            // FAJR 4:55PM
+            //            let textProv = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@",
+            //                                           CLKTimeTextProvider(date: nextPrayerDate))
+            //
+            //            return CLKComplicationTemplateUtilitarianSmallFlat(textProvider: textProv)
         case .utilitarianLarge:
             //            let timeLeftProv = CLKRelativeDateTextProvider(date: nextPrayerDate, relativeTo: nil,
             //                                                           style: .naturalAbbreviated, units: [.hour, .minute])
@@ -262,10 +259,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let bodyProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", nextTimeProvider)
 
             return CLKComplicationTemplateModularLargeStandardBody(headerTextProvider: headerTextProv, body1TextProvider: bodyProvider)
-        
-        // exclude this type, as extrLarge covers it
-        // case .graphicExtraLarge:
-
+            
+            // exclude this type, as extrLarge covers it
+            // case .graphicExtraLarge:
+            
         default:
             return nil
         }
@@ -288,28 +285,25 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
 //struct LargeComplication_Preview: PreviewProvider {
 //    static var previews: some View {
-////        CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: Text("sd"))
-////            .previewContext()
 //
 //
-//        CLKComplicationTemplateGraphicExtraLargeCircularOpenGaugeView(
-//            gaugeProvider: CLKTimeIntervalGaugeProvider(style: .fill, gaugeColors: nil, gaugeColorLocations: [0, 1], start: Date().addingTimeInterval(-100), end: Date().addingTimeInterval(40)), centerTextProvider: CLKSimpleTextProvider(text: "Sunrise"), bottomLabel: Text("4h 3m").font(Font.body)
-//        )
-//            .previewContext()
-//
-//        CLKComplicationTemplateExtraLargeStackImage(line1ImageProvider: CLKImageProvider(onePieceImage: UIImage(systemName: "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 70), scale: UIImage.SymbolScale.large))!), line2TextProvider: CLKSimpleTextProvider(text: "Fajr"))
-//            .previewContext()
-//
-//        CLKComplicationTemplateExtraLargeStackText(line1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), line2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
-//            .previewContext()
-//
-//        CLKComplicationTemplateExtraLargeColumnsText(row1Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row1Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column1TextProvider: CLKSimpleTextProvider(text: "Sunrise"), row2Column2TextProvider: CLKSimpleTextProvider(text: "Sunrise"))
-//            .previewContext()
+////        CLKcomplicationtemplateview
+////                CLKComplicationTemplateGraphicRectangularLargeView(headerTextProvider: CLKSimpleTextProvider(text: "Fajr"), content: Text("sd"))
+////                    .previewContext()
 //
 //
-//
-//
-//
-//
+////        { () -> View in
+////            let timeProv = CLKRelativeDateTextProvider(date: nextPrayerDate, relativeTo: nil,
+////                                                                style: .naturalAbbreviated, units: [.hour, .minute])
+////            let colors = watchColorsForPrayer(nextPrayer.previous()).map { UIColor($0) }
+////            let headerTextProv = CLKTextProvider(format: "\(nextPrayer.previous().localizedOrCustomString()) • %@ left", timeProv)
+////            headerTextProv.tintColor = blend(colors: colors) //UIColor(watchColorsForPrayer(nextPrayer.previous()).last!)
+////            let nextTimeProvider = CLKTimeTextProvider(date: nextPrayerDate)
+////            let bodyProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", nextTimeProvider)
+////
+////            return CLKComplicationTemplateModularLargeStandardBody(headerTextProvider: headerTextProv, body1TextProvider: bodyProvider)
+////
+////            clkcomplicationtemplate
+////        }
 //    }
 //}

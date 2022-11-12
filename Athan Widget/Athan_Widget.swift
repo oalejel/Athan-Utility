@@ -30,23 +30,23 @@ struct SmallWidget: View {
                     HStack(spacing: 0) {
                         Text(entry.nextPrayerDate, style: .relative)
                             .foregroundColor(.init(UIColor.lightText))
-        //                    .font(.subheadline)
+                        //                    .font(.subheadline)
                             .fontWeight(.bold)
                             .font(.system(size: 12))
-    //                        .minimumScaleFactor(0.01)
-    //                        .fixedSize(horizontal: false, vertical: true)
-    //                        .lineLimit(1)
+                        //                        .minimumScaleFactor(0.01)
+                        //                        .fixedSize(horizontal: false, vertical: true)
+                        //                        .lineLimit(1)
                             .multilineTextAlignment(.trailing)
-
+                        
                         if Strings.left != "" {
                             Text(" \(Strings.left)")
                                 .foregroundColor(.init(UIColor.lightText))
-            //                    .font(.subheadline)
+                            //                    .font(.subheadline)
                                 .fontWeight(.bold)
                                 .font(.system(size: 12))
-        //                        .minimumScaleFactor(0.01)
-        //                        .fixedSize(horizontal: false, vertical: true)
-        //                        .lineLimit(1)
+                            //                        .minimumScaleFactor(0.01)
+                            //                        .fixedSize(horizontal: false, vertical: true)
+                            //                        .lineLimit(1)
                                 .multilineTextAlignment(.trailing)
                         }
                     }
@@ -56,7 +56,7 @@ struct SmallWidget: View {
                 
                 PrayerSymbol(prayerType: entry.currentPrayer)
                     .foregroundColor(.white)
-                    //                    .opacity(0.8)
+                //                    .opacity(0.8)
                     .font(.headline)
                 //                    .padding([.bottom], 4)
                 HStack {
@@ -65,7 +65,7 @@ struct SmallWidget: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .lineLimit(1)
-                        //                        .fixedSize(horizontal: false, vertical: true)
+                    //                        .fixedSize(horizontal: false, vertical: true)
                         .allowsTightening(true)
                         .minimumScaleFactor(0.01)
                     
@@ -74,7 +74,7 @@ struct SmallWidget: View {
                 
                 HStack(spacing: 0) {
                     Text(entry.currentPrayer.next().localizedOrCustomString())
-                        //                Text("\(entry.nextPrayerDate, style: .relative) left")
+                    //                Text("\(entry.nextPrayerDate, style: .relative) left")
                         .foregroundColor(.init(UIColor.lightText))
                         .fontWeight(.bold)
                         .font(.system(size: 14))
@@ -82,10 +82,10 @@ struct SmallWidget: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(1)
                         .multilineTextAlignment(.trailing)
-
+                    
                     Text(" ")
-//                    Text(Strings.at.count != 0 ? " \(Strings.at)\(" ")" : " ")
-                        //                Text("\(entry.nextPrayerDate, style: .relative) left")
+                    //                    Text(Strings.at.count != 0 ? " \(Strings.at)\(" ")" : " ")
+                    //                Text("\(entry.nextPrayerDate, style: .relative) left")
                         .foregroundColor(.init(UIColor.lightText))
                         .fontWeight(.bold)
                         .font(.system(size: 14))
@@ -186,7 +186,6 @@ struct MediumWidget: View {
                                 .allowsTightening(true)
                                 .minimumScaleFactor(0.5)
                             
-                            
                             if (i < 5) {
                                 Spacer()
                             }
@@ -270,6 +269,136 @@ struct LargeWidget: View {
     }
 }
 
+
+struct AccessoryInlineErrorWidget: View {
+    var body: some View {
+        Text(Strings.widgetOpenApp)
+    }
+}
+
+
+
+struct AccessoryInlineWidget: View {
+    var entry: AthanEntry
+    var df: RelativeDateTimeFormatter = {
+        let d = RelativeDateTimeFormatter()
+        d.dateTimeStyle = .numeric
+        return d
+    }()
+    
+    var body: some View {
+        Text(entry.currentPrayer.next().localizedOrCustomString())
+        + Text(" at ")
+        + Text(entry.nextPrayerDate, style: .time)
+    }
+}
+
+struct AccessoryRectangularWidget: View {
+    var entry: AthanEntry
+    var df: RelativeDateTimeFormatter = {
+        let d = RelativeDateTimeFormatter()
+        d.dateTimeStyle = .numeric
+        return d
+    }()
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                Text(entry.currentPrayer.localizedOrCustomString())
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .allowsTightening(true)
+                    .padding(.trailing, 2)
+                PrayerSymbol(prayerType: entry.currentPrayer)
+                    .foregroundColor(.white)
+                    .font(.headline)
+                Spacer()
+            }
+            
+            HStack(spacing: 0) {
+                Text(entry.currentPrayer.next().localizedOrCustomString())
+                    .foregroundColor(.init(UIColor.lightText))
+                    .fontWeight(.bold)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(1)
+                    .multilineTextAlignment(.trailing)
+                Text(" ")
+                Text(entry.nextPrayerDate, style: .time)
+                    .foregroundColor(.init(UIColor.lightText))
+                    .fontWeight(.bold)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(1)
+                    .multilineTextAlignment(.trailing)
+            }
+            //            Text("I love Roaa").bold()
+            
+            HStack(spacing: 0) {
+                Text(entry.nextPrayerDate, style: .relative)
+                    .foregroundColor(.init(UIColor.lightText))
+                    .bold()
+                + Text(" \(Strings.left)")
+                    .foregroundColor(.init(UIColor.lightText))
+                    .bold()
+                Spacer()
+            }
+        }
+        
+    }
+}
+
+struct AccessoryRectangularErrorWidget: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Image(systemName: "sun.max")
+                .foregroundColor(.white)
+            Text(Strings.widgetOpenApp)
+                .foregroundColor(.white)
+                .font(.body)
+                .fontWeight(.bold)
+        }
+    }
+}
+
+struct AccessoryCircularErrorWidget: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Image(systemName: "sun.max")
+                .foregroundColor(.white)
+                .font(.title)
+        }
+    }
+}
+
+
+
+
+struct AccessoryCircularWidget: View {
+    var entry: AthanEntry
+    var df: RelativeDateTimeFormatter = {
+        let d = RelativeDateTimeFormatter()
+        d.dateTimeStyle = .numeric
+        return d
+    }()
+    
+    var body: some View {
+        VStack(alignment: .center) {
+//            PrayerSymbol(prayerType: entry.currentPrayer)
+//                .foregroundColor(.white)
+//                .font(.headline)
+            Text(entry.currentPrayer.next().localizedOrCustomString())
+                .foregroundColor(.white)
+                .font(.caption)
+                .fontWeight(.bold)
+            Text(entry.nextPrayerDate, style: .time)
+                .foregroundColor(.white)
+                .font(.caption)
+//                .fontWeight(.bold)
+        }
+    }
+}
+
+
 struct Athan_WidgetEntryView : View {
     var entry: AthanEntry
     @Environment(\.widgetFamily) var family: WidgetFamily
@@ -279,26 +408,38 @@ struct Athan_WidgetEntryView : View {
         // none means that we have a placeholder
         // nil means error
         switch (family, entry.tellUserToOpenApp || AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) {
-        
-        case (.systemSmall, true):
-            SmallErrorWidget()
-        case (.systemMedium, true):
-            MediumErrorWidget()
-        case (.systemLarge, true): // ignored since not in supported list
-            LargeWidget(entry: entry)
             
-        //        case (.systemSmall, .some(Prayer.none)):
-        //            SmallPlaceholderWidget()
-        //        case (.systemMedium, .some(Prayer.none)):
-        //            MediumPlaceholderWidget()
-        
+        // supported cases with available data
         case (.systemSmall, false):
             SmallWidget(entry: entry)
         case (.systemMedium, false):
             MediumWidget(entry: entry)
         case (.systemLarge, false): // ignored since not in supported list
             LargeWidget(entry: entry)
+        case (.accessoryRectangular, false):
+            AccessoryRectangularWidget(entry: entry)
+        case (.accessoryInline, false):
+            AccessoryInlineWidget(entry: entry)
+        case (.accessoryCircular, false):
+            AccessoryCircularWidget(entry: entry)
             
+
+        // error cases (no athan data)
+        case (.systemSmall, true):
+            SmallErrorWidget()
+        case (.systemMedium, true):
+            MediumErrorWidget()
+        case (.systemLarge, true): // ignored since not in supported list
+            LargeWidget(entry: entry)
+        case (.accessoryRectangular, true):
+            AccessoryRectangularErrorWidget()
+        case (.accessoryInline, true):
+            AccessoryInlineErrorWidget()
+        case (.accessoryCircular, true):
+            AccessoryCircularErrorWidget()
+            
+            
+        // other...
         @unknown default:
             SmallErrorWidget()
         }
@@ -311,19 +452,32 @@ struct Athan_Widget: Widget {
     
     var body: some WidgetConfiguration {
         
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
-            Athan_WidgetEntryView(entry: entry)
+        if #available(iOSApplicationExtension 16.0, *) {
+            return IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
+                Athan_WidgetEntryView(entry: entry)
+            }
+            .configurationDisplayName("Athan Widget")
+            // lets not support the large widget family for now...
+            .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular, .accessoryInline, .accessoryCircular])//, .systemLarge])
+            .description(Strings.widgetUsefulDescription)
+        } else {
+            // Fallback on earlier versions
+            return IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
+                Athan_WidgetEntryView(entry: entry)
+            }
+            .configurationDisplayName("Athan Widget")
+            // lets not support the large widget family for now...
+            .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
+            .description(Strings.widgetUsefulDescription)
+            
         }
-        .configurationDisplayName("Athan Widget")
-        // lets not support the large widget family for now...
-        .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])
-        .description(Strings.widgetUsefulDescription)
     }
 }
 
 struct Athan_Widget_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(0..<2) { i in
+            
             let nextDate = Calendar.current.date(byAdding: .minute, value: 130, to: Date())!
             //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
             let entry = AthanEntry(date: Date(),
@@ -335,14 +489,23 @@ struct Athan_Widget_Previews: PreviewProvider {
                                     nextDate, nextDate, nextDate
                                    ],
                                    gradient: Gradient(colors: [.black, .blue]))
+            // comment this line to test error widgets
+            let dummy: Int = {
+                AthanManager.shared.locationSettings.locationName = "San Francisco"
+                return 0
+            }()
             
-            Athan_WidgetEntryView(entry: entry)
-                .previewContext(WidgetPreviewContext(family: .systemSmall))
-                .flipsForRightToLeftLayoutDirection(true)
-            //            .environment(\.layoutDirection, .rightToLeft)
-            //            .environment(\.locale, Locale(identifier: "ar"))
+            if #available(iOSApplicationExtension 16.0, *) {
+                Athan_WidgetEntryView(entry: entry)
+                    .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+                    .flipsForRightToLeftLayoutDirection(true)
+            } else {
+                // Fallback on earlier versions
+            }
         }
         
+        
+
         let nextDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
         //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
         let entry = AthanEntry(date: Date(),

@@ -120,7 +120,7 @@ struct SolarView: View, Equatable {
                             let time = dhuhrTime.addingTimeInterval(86400 * (Double(manualDayProgress) - 0.5))
                             Text(df.string(from: time))
 //                                .font(Font.body.weight(.semibold))
-                                .font(.system(size: 26, design: .monospaced))
+                                .font(.system(size: 13, design: .monospaced))
                                 .bold()
                                 .foregroundColor(Color(.lightText))
                                 .padding([.top, .bottom], 6)

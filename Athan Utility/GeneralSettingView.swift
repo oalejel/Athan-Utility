@@ -49,7 +49,7 @@ struct GeneralSettingView: View {
     @State private var result: Result<MFMailComposeResult, Error>? = nil
     @State private var isShowingMailView = false
 
-    @available(iOS 14.0, *)
+//    @available(iOS 14.0, *)
     @State var proxy: Any? = nil
     
     var body: some View {

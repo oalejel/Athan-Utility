@@ -22,7 +22,7 @@
 // MARK: - Notifications
 "Notifications" = "الإشعارات";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "وقت صلاة ال%1$@ {%3$@} الرجاء فتح هذا التطبيق للاستمرار في تلقية الإشعافات";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "وقت صلاة ال%1$@ {%2$@} الرجاء فتح هذا التطبيق للاستمرار في تلقية الإشعافات";
 
 //" وقت صلاة ال%1$@ [%2$@]‏. الرجاء إعادة فتح ‏هذا التطبيق للاستمرار في تلقية الإشعارات.‏";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]

@@ -18,6 +18,13 @@ class DayModel {
     }
 }
 
+@available(iOS 13.0.0, *)
+public extension View {
+    func modify<Content>(@ViewBuilder _ transform: (Self) -> Content) -> Content {
+        transform(self)
+    }
+}
+
 struct SimpleDate: Hashable, Identifiable {
 //    let day: Int
     let month: Int
@@ -135,10 +142,10 @@ struct CalendarView: View, Equatable {
     @Binding var showCalendar: Bool
 //    @Environment(\.presentationMode) var presentationMode
     
-    @State var model: MonthModel!
-        
+    var model: MonthModel!
+    
     @State var allPrayers = Array(Prayer.allCases)
-    @State var timeFormatter: DateFormatter!
+    var timeFormatter: DateFormatter!
     
 //    @State var range: Range<Int> = 0..<12
 //    func loadMore() {
@@ -152,7 +159,15 @@ struct CalendarView: View, Equatable {
     //                        }
     //                    })
     //                    .pickerStyle(SegmentedPickerStyle())
-    
+    init(showCalendar: Binding<Bool>) {
+        self._showCalendar = showCalendar
+        model = MonthModel()
+        timeFormatter = {
+            let df = DateFormatter()
+            df.timeStyle = .short
+            return df
+        }()
+    }
     
     var body: some View {
         GeometryReader { g in
@@ -175,20 +190,6 @@ struct CalendarView: View, Equatable {
                 }
                 .fixedSize(horizontal: false, vertical: true)
                 .padding([.leading, .trailing, .top], 12)
-                .onAppear {
-//                    UITableView.appearance().tableFooterView = UIView()
-//                    // To remove all separators including the actual ones:
-//                    UITableView.appearance().separatorStyle = .none
-//                    UITableView.appearance().separatorColor = .clear
-//                    UITableView.appearance().showsVerticalScrollIndicator = false
-
-                    model = MonthModel()
-                    timeFormatter = {
-                        let df = DateFormatter()
-                        df.timeStyle = .short
-                        return df
-                    }()
-                }
                 
                 HStack {
                     Text(Strings.calendar)
@@ -247,6 +248,7 @@ struct CalendarView: View, Equatable {
                                     Text(monthDF.string(from: d))
                                         .font(Font.system(size: 26).bold())
                                         .foregroundColor(.red)
+                                        .padding(.top, 8)
                                     Spacer()
                                     //                                    .font(Font.system(size: 24).bold)
                                     Text(yearDF.string(from: d))
@@ -380,8 +382,16 @@ struct CalendarView: View, Equatable {
                                     .frame(width: g.size.width, height: 4)
                                     .offset(y: 4)
                             }
-                            .frame(width: g.size.width, height: 0)
+                            .frame(width: g.size.width - 24, height: 0)
                         }
+                        .modify { v in
+                            if #available(iOS 15.0, *) {
+                                v.listRowSeparator(.hidden)
+                            } else {
+                                v
+                            }
+                        }
+//                        .padding([.leading, .trailing], 12)
                         
                         //                    .id(index)
 //                    }
@@ -396,6 +406,10 @@ struct CalendarView: View, Equatable {
                     
                     
                 } // list end
+                .listStyle(PlainListStyle())
+                
+                
+//                }
 //                .id(UUID())
             }
             

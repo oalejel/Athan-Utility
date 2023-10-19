@@ -66,12 +66,7 @@ struct LocationSettingsView: View, Equatable {
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
 
     func updateLocalizedPrayer(coord: CLLocationCoordinate2D) {
-//        var cal = Calendar(identifier: .gregorian)
-//        cal.timeZone = timeZone
-//        var comps = cal.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone], from: Date())
-//        comps.calendar = cal
-//        let componentsDate = cal.date(from: comps)
-        let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate, customTimeZone: timeZone)
+        let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate, customTimeZone: timeZone, adjustments: AthanManager.shared.notificationSettings.adjustments())
         localizedCurrentPrayer = times?.currentPrayer() ?? .isha
     }
     

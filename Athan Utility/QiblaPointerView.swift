@@ -31,7 +31,7 @@ struct QiblaPointerView: View {
             let lineWidth = (g.size.width - pointerLength) / 13
             
             ZStack {
-                Image("kaba_2")
+                Image("kaba")
                     .resizable()
                     .scaledToFit()
                     .frame(width: (g.size.width - pointerLength * 2) / 2.2,

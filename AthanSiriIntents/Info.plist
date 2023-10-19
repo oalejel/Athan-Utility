@@ -30,6 +30,11 @@
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
+				<string>GetAsrIntent</string>
+				<string>GetFajrIntent</string>
+				<string>GetIshaIntent</string>
+				<string>GetMaghribIntent</string>
+				<string>GetThuhrIntent</string>
 				<string>NextPrayerIntent</string>
 			</array>
 		</dict>

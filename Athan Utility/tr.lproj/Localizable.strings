@@ -21,6 +21,11 @@
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 // NOTE: change in conjugation for different locations means that separating the location, %2$@, will fit all cases
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ zamani : %2$@ [%3$@]";
+
+// Temp fix: isha cannot be prayed past late night
+"Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@." = "%1$@ zamani : %2$@ [%3$@]. Isha %4$@'da biter.";
+
+
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%2$@ kadar %1$@ dakika kaldı : %3$@ [%4$@]";
 
@@ -70,12 +75,13 @@
 
 // MARK: - Sounds
 "athan.sound" = "Ezan Ses";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Ezan, iPhone'unuz kilitliyken veya Athan Utility açıldığında 5 saniyeden uzun süre oynayabilir.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Ezan, iPhone'unuz kilitliyken veya Athan Utility açıldığında 5 saniyeden uzun süre oynayabilir.";
 "iOS Default" = "iOS Varsayılanı";
 "Echo" = "Echo";
 "Makkah" = "Mekke";
 "Madina" = "Medine";
 "Al-Aqsa" = "El-Aksa";
+"Al-Aqsa 2" = "El-Aksa 2";
 "Egypt" = "Mısır";
 "Abdulbaset" = "Abdulbaset";
 "Abdulghaffar" = "Abdulghaffar";
@@ -100,10 +106,15 @@
 "Reminder Notification" = "Hatırlatma Bildirimi";
 "Enabled" = "Etkin";
 "Play Sound" = "Ses Çal";
-"minute.offset" = "Dakika Ofseti: %@";
+"Play 30 seconds" = "Play 30 seconds";
+"reminder.minute.offset" = "Dakika Ofseti: %@";
 "offset-description" = "Dakika ofsetleri %1$@ ile %2$@ arasındaki süreden uzun olduğunda, hatırlatıcılar varsayılan olarak 15 dakikaya ayarlanır.";
 "minute-character" = "d";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Bu namazın bildirimlerini varsayılan iOS zilini çalmaya zorlamak için \"Ses Çal\" ı devre dışı bırakın.";
+
+"Play Longer Athan" = "Uzatılmış ezanı çal";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Ses çalma süresini maksimum iOS sınırı olan ~30 saniyeye uzatır. Tam Ezan'ı çalmak için Athan Utility uygulamasını açın.";
+"athan.minute.offset" = "Dakika ayarı:  %@dk";
 
 
 // MARK: - Location Settings
@@ -119,6 +130,7 @@
 // MARK: - Calendar
 "Show Calendar" = "Takvimi Göster";
 "Calendar" = "Takvim";
+"Export" = "Dışa Aktar";
 
 
 // MARK: - Widget

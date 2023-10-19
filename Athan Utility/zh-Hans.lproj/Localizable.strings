@@ -1,0 +1,134 @@
+/*
+  Localizable.strings
+  Athan Utility
+
+  Created by Omar Al-Ejel on 6/10/18.
+  Copyright © 2018 Omar Alejel. All rights reserved.
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "晨礼";
+"Sunrise" = "日出";
+"Dhuhr" = "晌礼";
+"Asr" = "晡礼";
+"Maghrib" = "昏礼";
+"Isha" = "宵礼";
+
+
+// MARK: - Notifications
+"Notifications" = "通知";
+// Example: Time for Fajr [2:45 pm]. Please open...
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ 时间 [%2$@] 的时间。请重新打开 宣礼 实用工具以继续接收通知。";
+// Example: Time for Fajr in Bloomfield Hills [2:45 pm]
+"Time for %1$@ in %2$@ [%3$@]" = "%1$@ 在 %2$@ [%3$@] 的时间";
+
+// Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ 分钟，直到 %3$@ [%4$@] 的 %2$@";
+
+
+// MARK: - Buttons and tags
+
+"left" = "left"; // 仅用于英语
+"Done" = "完成";
+
+// MARK: - Settings
+"Settings" = "设置";
+
+"Appearance" = "外观";
+"Colors" = "颜色";
+"Custom Prayer Names" = "自定义祷告名称";
+"Change Language" = "更改语言";
+
+"Developed by Omar Al-Ejel" = "由Omar Al-Ejel开发";
+"Rate Athan Utility!" = "评价宣礼 应用程序!";
+"Privacy Notes" = "隐私说明";
+"Send Feedback" = "发送反馈";
+
+
+// MARK: - Calculation Method
+"Calculation Method" = "计算方法";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "计算方法主要在 晨礼 和 宵礼 太阳角度上有所不同。";
+"Muslim World League" = "穆斯林世界联盟";
+"Egyptian" = "埃及";
+"Karachi" = "卡拉奇";
+"Umm Al-Qura" = "乌姆·阿尔古拉";
+"Dubai" = "迪拜";
+"Moonsighting Committee" = "月亮观测委员会";
+"North America" = "北美洲";
+"Kuwait" = "科威特";
+"Qatar" = "卡塔尔";
+"Singapore" = "新加坡";
+"Tehran" = "德黑兰";
+"Turkey" = "土耳其";
+"Other"  = "其他";
+
+
+// MARK: - Madhab
+"Madhab" = "教派调整";
+"Hanafi" = "汉尼菲派";
+"Shafi" = "通用";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "汉尼菲派使用更晚的 晡礼 时间，当影子的长度自太阳中午以来增加了物体长度的两倍时发生。";
+
+
+// MARK: - Sounds
+"athan.sound" = "宣礼声音";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "当您的 iPhone 被锁定或 宣礼 应用程序 打开时，可以播放完整的宣礼声音。";
+"iOS Default" = "iOS 默认";
+"Echo" = "回声";
+"Makkah" = "麦加";
+"Madina" = "麦地那";
+"Al-Aqsa" = "阿克萨";
+"Al-Aqsa 2" = "阿克萨 2";
+"Egypt" = "埃及";
+"Abdulbaset" = "阿卜杜勒·巴塞特";
+"Abdulghaffar" = "阿卜杜尔·加法尔";
+
+
+// MARK: - Colors
+"static" = "静态";
+"dynamic" = "动态";
+"All Prayers" = "所有祷告";
+"restore.defaults" = "恢复默认设置";
+"colors.ios.requirement" = "颜色自定义仅适用于 iOS 14+";
+"Select a color picker to customize gradients." = "选择一个颜色选择器以自定义渐变。";
+
+
+// MARK: - Custom Names
+"custom.names" = "自定义名称";
+"custom.names.description" = "替换 宣礼 实用工具小部件、通知和主界面中使用的宣礼拼写。";
+
+
+// MARK: - Notification Settings
+"Athan Notification" = "宣礼通知";
+"Reminder Notification" = "提醒通知";
+"Enabled" = "已启用";
+"Play Sound" = "播放声音";
+"reminder.minute.offset" = "提前 %@ 分钟";
+"minute-character" = "分";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "禁用“播放声音”以强制播放此祷告的通知默认的 iOS 提示音。";
+"offset-description" = "当分钟偏移大于 %1$@ 和 %2$@ 之间的时间时，默认提醒为 15 分钟。";
+
+"Play Longer Athan" = "播放更长时间的宣礼";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "将播放时间延长到 iOS 的最大限制约 30 秒。打开 Athan 实用工具以播放完整的宣礼。";
+"athan.minute.offset" = "分钟调整：%@ 分";
+
+
+// MARK: - Location Settings
+"Set Location" = "设置位置";
+"Set Location Manually" = "手动设置位置";
+"Use Current Location" = "使用当前位置";
+"Athan Utility does not collect user data." = "宣礼 实用工具不会收集用户数据。";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "位置服务已禁用，并可以在设置中进行调整。Athan 实用工具不会收集用户数据。";
+"Location Name" = "位置名称";
+"Location:" = "位置：";
+
+
+// MARK: - Calendar
+"Show Calendar" = "显示日历";
+"Calendar" = "日历";
+"Export" = "出口";
+
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "打开 宣礼 实用工具以设置位置。";
+"Use Athan Widgets to view upcoming salah times at a glance." = "使用 宣礼 小部件一目了然地查看即将到来的祷告时间。";

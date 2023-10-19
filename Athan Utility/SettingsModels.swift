@@ -16,13 +16,14 @@ class AlarmSetting: Codable {
     
     var reminderAlertEnabled = true
     var reminderOffset = 15
+    // New
+    var athanOffset: Int? = 0
+    var playExtendedSound: Bool? = false
+//    var overrideMute = false
 }
 
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable, NSCopying {
-//    static func == (lhs: PrayerSettings, rhs: PrayerSettings) -> Bool {
-//        lhs.calculationMethod == rhs.calculationMethod && lhs.customNames == rhs.customNames && lhs.madhab == rhs.madhab
-//    }
     
     static var shared: PrayerSettings = {
         if let archive = checkArchive() {
@@ -56,7 +57,7 @@ class PrayerSettings: Codable, NSCopying {
     
     static func archive() {
         let encoder = JSONEncoder()
-        if let data = try? encoder.encode(PrayerSettings.shared) as? Data {
+        if let data = try? encoder.encode(PrayerSettings.shared) {
             archiveData(archiveName, object: data)
         }
     }
@@ -83,6 +84,7 @@ class NotificationSettings: Codable, NSCopying {
         case makkah
         case madina
         case alaqsa
+        case alaqsa2
         case egypt
         case abdulbaset
         case abdulghaffar
@@ -94,12 +96,13 @@ class NotificationSettings: Codable, NSCopying {
                 case .makkah: return NSLocalizedString("Makkah", comment: "")
                 case .madina: return NSLocalizedString("Madina", comment: "")
                 case .alaqsa: return NSLocalizedString("Al-Aqsa", comment: "")
+                case .alaqsa2: return NSLocalizedString("Al-Aqsa 2", comment: "")
                 case .egypt: return NSLocalizedString("Egypt", comment: "")
                 case .abdulbaset: return NSLocalizedString("Abdulbaset", comment: "")
                 case .abdulghaffar: return NSLocalizedString("Abdulghaffar", comment: "")
             }
         }
-                
+        
         func filename() -> String? {
             switch self {
             case .ios_default: return nil // no file associated
@@ -107,6 +110,7 @@ class NotificationSettings: Codable, NSCopying {
             case .makkah: return "makkah"
             case .madina: return "madina"
             case .alaqsa: return "alaqsa"
+            case .alaqsa2: return "alaqsa-2"
             case .egypt: return "egypt"
             case .abdulbaset: return "abdulbaset"
             case .abdulghaffar: return "abdulghaffar"
@@ -129,7 +133,6 @@ class NotificationSettings: Codable, NSCopying {
                 .maghrib : AlarmSetting(),
                 .isha : AlarmSetting()
             ]
-            
             
             return defaultSettings
         }
@@ -154,6 +157,15 @@ class NotificationSettings: Codable, NSCopying {
             archiveData(archiveName, object: data)
         }
 
+    }
+    
+    func adjustments() -> PrayerAdjustments {
+        return PrayerAdjustments(fajr: settings[.fajr]?.athanOffset ?? 0,
+                                 sunrise: settings[.sunrise]?.athanOffset ?? 0,
+                                 dhuhr: settings[.dhuhr]?.athanOffset ?? 0,
+                                 asr: settings[.asr]?.athanOffset ?? 0,
+                                 maghrib: settings[.maghrib]?.athanOffset ?? 0,
+                                 isha: settings[.isha]?.athanOffset ?? 0)
     }
     
     var selectedSound: Sounds

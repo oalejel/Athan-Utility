@@ -17,11 +17,10 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling {
     var locationIsSynced: Bool = true
     let manager = AthanManager.shared
     
-    
     func handle(intent: NextPrayerIntent, completion: @escaping (NextPrayerIntentResponse) -> Void) {
         // get prayer data if available
         
-        guard let upcomingPrayer = manager.currentPrayer else {
+        guard let currentSalah = manager.currentPrayer else {
             completion(NextPrayerIntentResponse(code: .failure, userActivity: nil))
             return
         }
@@ -66,7 +65,7 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling {
         response.upcomingDate = upcomingDateString
         response.upcomingTime = timeLeftString
 //        response.upcomingPrayerName = upcomingPrayerName
-        response.upcomingPrayerName = PrayerTime(rawValue: upcomingPrayer.next().rawValue() + 1) ?? PrayerTime.unknown
+        response.upcomingPrayerName = IntentPrayerOption(rawValue: currentSalah.next().rawValue() + 1) ?? IntentPrayerOption.unknown
         response.recentLocation = manager.locationSettings.locationName
         
         // we have put together a correct response
@@ -75,7 +74,7 @@ class NextPrayerIntentHandler: NSObject, NextPrayerIntentHandling {
     
     // uncomment this to test out optionality of a custom request location
 //    func confirm(intent: NextPrayerIntent, completion: @escaping (NextPrayerIntentResponse) -> Void) {
-//        <#code#>
+//
 //    }
     
 }

@@ -26,9 +26,13 @@
 
 
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%2$@ میں %1$@ کا وقت. اطلاعات موصول کرنے کے لئے براہ کرم اس ایپ کو دوبارہ کھولیں";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "میں %1$@ کا وقت %2$@. اطلاعات موصول کرنے کے لئے براہ کرم اس ایپ کو دوبارہ کھولیں";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "%2$@ میں %1$@ کا وقت [%3$@]";
+"Time for %1$@ in %2$@ [%3$@]" = "کا %1$@ وقت %3$@ (%2$@)";
+
+// Temp fix: isha cannot be prayed past late night
+"Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@." = "%1$@ کا وقت %3$@ (%2$@). عشاء کی نماز شام %4$@ بجے ختم ہوگی۔";
+
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "‏@%3$ میں @$2% تک %1$@ منٹ باقی رہ گئے [@$4%]‏";
 
@@ -80,12 +84,13 @@
 
 // MARK: - Sounds
 "athan.sound" = "اذان آواز";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "جب آپ کے فون کو لاک کیا جاتا ہے یا اتھن یوٹیلیٹی کھلی ہوتی ہے تو اتھان 5 سیکنڈ سے زیادہ وقت تک کھیل سکتا ہے";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "جب آپ کے فون کو لاک کیا جاتا ہے یا اتھن یوٹیلیٹی کھلی ہوتی ہے تو اتھان 5 سیکنڈ سے زیادہ وقت تک کھیل سکتا ہے";
 "iOS Default" = "iOS Default";
 "Echo" = "Echo";
 "Makkah" = "مکہ";
 "Madina" = "مدینہ";
 "Al-Aqsa" = "اقصیٰ";
+"Al-Aqsa" = "2 اقصیٰ";
 "Egypt" = "مصر";
 "Abdulbaset" = "عبدالباسط";
 "Abdulghaffar" = "عبد الغفار";
@@ -110,11 +115,15 @@
 "Reminder Notification" = "یاد دہانی کی اطلاع";
 "Enabled" = "قابل بنایا گیا";
 "Play Sound" = "آواز چلائیں";
-"minute.offset" = "منٹ جلدی: %@";
+"Play 30 seconds" = "Play 30 seconds";
+"reminder.minute.offset" = "منٹ جلدی: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "اس دعا کی اطلاعات کو ڈیفالٹ iOS چائیم کھیلنے کیلئے مجبور کرنے کے لئے \"پلے ساؤنڈ\" کو غیر فعال کریں۔";
 "offset-description" = "جب منٹ آفسیٹس %1$@ اور +%2$@کے مابین اس وقت سے زیادہ لمبے ہوں گے ، تو یاد دہانی 15 منٹ میں طے ہوجائے گی۔";
 
+"Play Longer Athan" = "توسیعی آواز چلائیں";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "پلے بیک کو iOS کی زیادہ سے زیادہ حد ~30 سیکنڈ تک بڑھاتا ہے۔ مکمل ایتھن کھیلنے کے لیے ایتھن یوٹیلیٹی کھولیں۔";
+"athan.minute.offset" = "منٹ ایڈجسٹمنٹ: %@ منٹ";
 
 // MARK: - Location Settings
 "Set Location" = "مقام مقرر کریں";
@@ -129,6 +138,7 @@
 // MARK: - Calendar
 "Show Calendar" = "کیلنڈر دکھائیں";
 "Calendar" = "کیلنڈر";
+"Export" = "برآمد کریں";
 
 
 // MARK: - Widget

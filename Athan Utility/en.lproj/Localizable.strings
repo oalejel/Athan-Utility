@@ -21,6 +21,10 @@
 "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "Time for %1$@ in %2$@ [%3$@]";
+
+// Temp fix: isha cannot be prayed past late night
+"Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@." = "Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@.";
+
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@m until %2$@ in %3$@ [%4$@]";
 
@@ -71,12 +75,13 @@
 
 // MARK: - Sounds
 "athan.sound" = "Athan Sound";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is open.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Full Athan can play when your iPhone is locked or Athan Utility is open.";
 "iOS Default" = "iOS Default";
 "Echo" = "Echo";
 "Makkah" = "Makkah";
 "Madina" = "Madina";
 "Al-Aqsa" = "Al-Aqsa";
+"Al-Aqsa 2" = "Al-Aqsa 2";
 "Egypt" = "Egypt";
 "Abdulbaset" = "Abdulbaset";
 "Abdulghaffar" = "Abdulghaffar";
@@ -101,10 +106,14 @@
 "Reminder Notification" = "Reminder Notification";
 "Enabled" = "Enabled";
 "Play Sound" = "Play Sound";
-"minute.offset" = "Minutes Early: %@m";
+"reminder.minute.offset" = "Minutes Early: %@m";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.";
 "offset-description" = "When minute offsets are longer than the time between %1$@ and %2$@, reminders will default to 15 minutes.";
+
+"Play Longer Athan" = "Play Longer Athan";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan.";
+"athan.minute.offset" = "Minutes adjustment:  %@m";
 
 
 // MARK: - Location Settings
@@ -120,6 +129,7 @@
 // MARK: - Calendar
 "Show Calendar" = "Show Calendar";
 "Calendar" = "Calendar";
+"Export" = "Export";
 
 
 // MARK: - Widget
@@ -145,7 +155,6 @@
 "M_letter" = "M";
 "I_letter" = "I";
 
-"Settings" = "Settings";
 "Cancel" = "Cancel";
 "Alarms" = "Alarms";
 "Location Search" = "Location Search";

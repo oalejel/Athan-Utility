@@ -31,13 +31,17 @@ struct PrayerSettingsView: View {
     @State var athanSoundEnabled = false
     @State var reminderAlertEnabled = false
     @State var reminderOffset = 15
+//    @State var overrideMuteSwitch = false
+    @State var play30Seconds = false
+    @State var athanMinutesOffset = 0
+    
     let x: Int = {
         UIStepper.appearance().tintColor = .white
         return 0
     }()
     
     var body: some View {
-        // intermediate bindings taht depend on each other
+        // intermediate bindings that depend on each other
         let athanOn = Binding<Bool>(get: { athanAlertEnabled }, set: {
             athanAlertEnabled = $0
             if !athanAlertEnabled { // power to switch off reminder
@@ -58,7 +62,6 @@ struct PrayerSettingsView: View {
             }
         })
         
-        
         VStack(alignment: .leading) {
             Text("\(prayer.localizedOrCustomString()) \(Strings.settings)")
                 .font(.largeTitle)
@@ -67,10 +70,14 @@ struct PrayerSettingsView: View {
                 .padding([.leading, .top])
                 .padding([.leading, .top])
                 .onAppear {
+                    // Initialize states based on current settings
+                    // TODO: move to dedicated helper
                     athanAlertEnabled = noteSettings.settings[prayer]?.athanAlertEnabled ?? true
                     athanSoundEnabled = noteSettings.settings[prayer]?.athanSoundEnabled ?? true
                     reminderAlertEnabled = noteSettings.settings[prayer]?.reminderAlertEnabled ?? true
                     reminderOffset = noteSettings.settings[prayer]?.reminderOffset ?? 15
+                    athanMinutesOffset = noteSettings.settings[prayer]?.athanOffset ?? 0
+                    play30Seconds = noteSettings.settings[prayer]?.playExtendedSound ?? false
                 }
             
             ScrollView(showsIndicators: true) {
@@ -106,27 +113,66 @@ struct PrayerSettingsView: View {
                                     .lineLimit(nil)
                                     .font(.caption)
                                     .foregroundColor(Color(.lightText))
-                                    .padding(.bottom, 12)
+//                                    .padding(.bottom, 12)
                                 
+                                // Play 30 seconds of audio
+                                Toggle(isOn: $play30Seconds, label: {
+                                    Text(Strings.play30Seconds)
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                })
                                 
-                                //                                ZStack {
-                                //                                    Stepper(
-                                //                                        onIncrement: { },
-                                //                                        onDecrement: {  },
-                                //                                        label: {
-                                //                                            Text("Minute Offset")
-                                //                                                .font(.headline)
-                                //                                                .bold()
-                                //                                                .foregroundColor(.white)
-                                //        //                                        .padding([.bottom])
-                                //                                        })
-                                //                                        .accentColor(.white)
-                                //
-                                //
-                                //                                    Text("1")
-                                //                                        .foregroundColor(Color(.lightText))
-                                //                                }
-                                //                                .padding(.bottom, 12)
+                                Text(Strings.playLimitDescription)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
+                                    .font(.caption)
+                                    .foregroundColor(Color(.lightText))
+                                    .padding(.bottom, 0) // fix for all-caps text bug
+
+
+                                // TODO: enable when we have critical alert entitlement
+//                                Toggle(isOn: $overrideMuteSwitch, label: {
+//                                    Text("Override mute switch")
+//                                        .font(.headline)
+//                                        .bold()
+//                                        .foregroundColor(.white)
+//                                })
+//                                Text(Strings.playSoundDescription)
+//                                    .fixedSize(horizontal: false, vertical: true)
+//                                    .lineLimit(nil)
+//                                    .font(.caption)
+//                                    .foregroundColor(Color(.lightText))
+//                                    .padding(.bottom, 12)
+                                
+//                                UNUserNotificationCenter.current().requestAuthorization(
+//                                    options: [.alert, .sound, .badge, .criticalAlert]
+//                                ) { granted, error in
+//                                ...
+//                                }
+                                // NOTE: should save whether the user has enabled these before requesting
+
+
+                                ZStack {
+                                    HStack {
+                                        Text("\(String(format: Strings.athanMinuteOffset, NumberFormatter.localizedString(from: NSNumber(value: athanMinutesOffset), number: .none)))")
+//                                        Text("Minute offset: \(reminderOffset)m")
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+//                                            .fixedSize(horizontal: true, vertical: false)
+//                                            .lineLimit(1)
+                                        Spacer()
+                                        
+                                        Stepper("", value: $athanMinutesOffset, in: ClosedRange(-190..<190))
+//                                            .accentColor(.white)
+                                            .labelsHidden()
+//                                            .background(Color.white)
+//                                            .cornerRadius(8)
+                                            
+                                    }
+                                }
+                                .padding(.bottom, 12)
                                 
                             }
                             .padding([.leading, .trailing])
@@ -157,21 +203,14 @@ struct PrayerSettingsView: View {
                                 
                                 ZStack {
                                     HStack {
-                                        Text("\(String(format: Strings.minuteOffset, NumberFormatter.localizedString(from: NSNumber(value: reminderOffset), number: .none)))")
-//                                        Text("Minute offset: \(reminderOffset)m")
+                                        Text("\(String(format: Strings.reminderMinuteOffset, NumberFormatter.localizedString(from: NSNumber(value: reminderOffset), number: .none)))")
                                             .font(.headline)
                                             .bold()
                                             .foregroundColor(.white)
-//                                            .fixedSize(horizontal: true, vertical: false)
-//                                            .lineLimit(1)
                                         Spacer()
                                         
                                         Stepper("", value: $reminderOffset, in: ClosedRange(1..<120))
-//                                            .accentColor(.white)
                                             .labelsHidden()
-//                                            .background(Color.white)
-//                                            .cornerRadius(8)
-                                            
                                     }
                                 }
                                 
@@ -197,6 +236,7 @@ struct PrayerSettingsView: View {
             .padding()
             .padding([.leading, .trailing])
             
+            // Done button - save settings upon tap
             HStack(alignment: .center) {
                 Spacer()
                 
@@ -208,6 +248,8 @@ struct PrayerSettingsView: View {
                     setting.athanSoundEnabled = athanSoundEnabled
                     setting.reminderAlertEnabled = reminderAlertEnabled
                     setting.reminderOffset = reminderOffset
+                    setting.athanOffset = athanMinutesOffset
+                    setting.playExtendedSound = play30Seconds
                     noteSettings.settings[prayer] = setting
                     withAnimation {
                         self.activeSection = .General
@@ -226,16 +268,17 @@ struct PrayerSettingsView: View {
     }
 }
 
-@available(iOS 13.0.0, *)
-struct PrayerSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-            PrayerSettingsView(noteSettings: .constant(NotificationSettings(settings: [:], selectedSound: .makkah)), activeSection: .constant(.Prayer(.fajr)))
-            
-        }
-        .environmentObject(ObservableAthanManager.shared)
-        .previewDevice("iPhone 12 mini")
-    }
-}
+//@available(iOS 13.0.0, *)
+//struct PrayerSettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ZStack {
+//            LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+//                .edgesIgnoringSafeArea(.all)
+//            PrayerSettingsView(noteSettings: .constant(NotificationSettings(settings: [:], selectedSound: .makkah)), activeSection: .constant(.Prayer(.fajr)))
+//            
+//        }
+//        .environmentObject(ObservableAthanManager.shared)
+//        .previewDevice("iPhone 12 mini")
+//    }
+//}
+

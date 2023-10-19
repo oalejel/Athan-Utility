@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Adhan
 
 public enum PrayerType: Int {
     case fajr, shurooq, thuhr, asr, maghrib, isha, none
@@ -26,6 +27,48 @@ public enum PrayerType: Int {
             return "Isha"
         case .none:
             return "This should not be visible"
+        }
+    }
+    
+    // Helpful for interoperability in prayer types between the API and this app's internal representation
+    // TODO: consider unifying enums under one
+    init(apiPrayer: Prayer) {
+        switch apiPrayer {
+        case .fajr:
+            self = .fajr
+        case .sunrise:
+            self = .shurooq
+        case .dhuhr:
+            self = .thuhr
+        case .asr:
+            self = .asr
+        case .maghrib:
+            self = .maghrib
+        case .isha:
+            self = .isha
+        default:
+            print("ERROR: UNKNOWN TYPE")
+            self = .fajr
+        }
+    }
+    
+    func apiPrayer() -> Prayer {
+        switch self {
+        case .fajr:
+            return .fajr
+        case .shurooq:
+            return .sunrise
+        case .thuhr:
+            return .dhuhr
+        case .asr:
+            return .asr
+        case .maghrib:
+            return .maghrib
+        case .isha:
+            return .isha
+        case .none:
+            print("ERROR: NONE TYPE INVALID")
+            return .fajr
         }
     }
     

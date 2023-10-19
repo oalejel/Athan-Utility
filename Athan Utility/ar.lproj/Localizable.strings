@@ -1,6 +1,4 @@
-/* 
-  Localizable.strings
-  Athan Utility
+/* دسف
 
   Created by Omar Al-Ejel on 6/10/18.
   Copyright © 2018 Omar Alejel. All rights reserved.
@@ -27,6 +25,9 @@
 //" وقت صلاة ال%1$@ [%2$@]‏. الرجاء إعادة فتح ‏هذا التطبيق للاستمرار في تلقية الإشعارات.‏";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "وقت صلاة ال%1$@ في %2$@ {%3$@}";
+
+// Temp fix: isha cannot be prayed past 
+"Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@." = "وقت صلاة ال%1$@ في %2$@ {%3$@}. تنتهي صلاة العشاء في الساعة %4$@";
 
 //"[%3$@] %2$@ وقت صلاة ال%1$@ في";
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
@@ -80,12 +81,13 @@
 
 // MARK: - Sounds
 "athan.sound" = "صوت الأذان";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "يمكن أن يستمر صوت الأذان لمدة تزيد عن 5 ثوانٍ عندما يكون iPhone مغلقًا أو عند فتح التطبيق.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "يمكن أن يستمر صوت الأذان لمدة تزيد عن 5 ثوانٍ عندما يكون iPhone مغلقًا أو عند فتح التطبيق.";
 "iOS Default" = "النغمة الافتراضي";
 "Echo" = "نغمة ٢";
 "Makkah" = "مكة المكرمة";
 "Madina" = "المدينة المنورة";
 "Al-Aqsa" = "الأقصى";
+"Al-Aqsa 2" = "الأقصى ٢";
 "Egypt" = "مصر";
 "Abdulbaset" = "عبد الباسط";
 "Abdulghaffar" = "عبد الغفار";
@@ -113,11 +115,15 @@
 "Reminder Notification" = "إشعار تذكير";
 "Enabled" = "ممكن";
 "Play Sound" = "صوت";
-"minute.offset" = "%@ :تنبيه مسبق";
+"Play 30 seconds" = "";
+"reminder.minute.offset" = "%@ :تنبيه مسبق";
 "minute-character" = "د";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "قم بتعطيل الصوت لإجبار إعلامات الصلاة هذه على تشغيل رنين iOS الافتراضي.";
 "offset-description" = "عندما يكون التنبيه المسبق أطول من الوقت بين ال%1$@ و ال%2$@، سيتم تعديل التذكيرات افتراضيًا الى ١٥ دقيقة.";
 
+"Play Longer Athan" = "تشغيل الأذان لفترة أطول";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "خطة الأذان لفترة أطول. افتح هذا التطبيق لسماع الأذان كاملا";
+"athan.minute.offset" = "%@ :تعديل الدقائق";
 
 // MARK: - Location Settings
 "Set Location" = "تحديد المكان";
@@ -132,6 +138,7 @@
 // MARK: - Calendar
 "Show Calendar" = "إظهار التقويم";
 "Calendar" = "التقويم";
+"Export" = "تصدير";
 
 
 // MARK: - Widget

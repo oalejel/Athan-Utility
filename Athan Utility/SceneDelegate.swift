@@ -39,58 +39,86 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             
-            let versionStore: WhatsNewVersionStore = KeyValueWhatsNewVersionStore()
-            let whatsNew = WhatsNew(
-                // The Title
-                title: "What's New",
-                // The features you want to showcase
-                items: [
-                    WhatsNew.Item(
+            let versionStore: WhatsNewVersionStore = UserDefaultsWhatsNewVersionStore()
+            print("presented versions")
+            print(versionStore.presentedVersions)
+            var featuresToDisplay: [WhatsNew.Feature] = []
+            // since we changed our version store, need an additional check for if this is a first time user
+            let isFirstTimeUser = versionStore.presentedVersions.count == 0 || UserDefaults.standard.string(forKey: "moonsettings") == nil
+            if isFirstTimeUser {
+                featuresToDisplay = [
+                    .init(
+                        image: .init(systemName: "applewatch.watchface"),
                         title: "Apple Watch App",
-                        subtitle: "Athan times at a glance with a new watchOS app and complications.",
-                        image: UIImage(systemName: "applewatch.watchface")
+                        subtitle: "Athan times at a glance with a new watchOS app and complications."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "location.north"),
                         title: "Always-on Qibla",
-                        subtitle: "Point towards Mecca with the Qibla pointer in the top right of your screen.",
-                        image: UIImage(systemName: "location.north")
+                        subtitle: "Point towards Mecca with the Qibla pointer in the top right of your screen."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "calendar"),
                         title: "Times Calendar",
-                        subtitle: "Drag up inside the athan times table for a full calendar.",
-                        image: UIImage(systemName: "calendar")
+                        subtitle: "Drag up inside the athan times table for a full calendar."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "bell.badge"),
                         title: "Reminder Settings",
-                        subtitle: "Adjust reminder times to avoid missing salah.",
-                        image: UIImage(systemName: "bell.badge")
+                        subtitle: "Adjust reminder times to avoid missing salah."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "rectangle.fill.on.rectangle.fill"),
                         title: "Widgets",
-                        subtitle: "View athan times on your home screen with widgets.",
-                        image: UIImage(systemName: "rectangle.fill.on.rectangle.fill")
+                        subtitle: "View athan times on your home screen with widgets."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "hand.draw"),
                         title: "Interactive Sun and Moon",
-                        subtitle: "Drag the sun and moon for fun!",
-                        image: UIImage(systemName: "hand.draw")
+                        subtitle: "Drag the sun and moon for fun!"
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "paintpalette.fill"),
                         title: "Customizable Colors",
-                        subtitle: "Customize your app and widget background gradients.",
-                        image: UIImage(systemName: "paintpalette.fill")
+                        subtitle: "Customize your app and widget background gradients."
                     ),
-                    WhatsNew.Item(
+                    .init(
+                        image: .init(systemName: "gear"),
                         title: "And much more!",
-                        subtitle: "Browse settings for even more new features.",
-                        image: UIImage(systemName: "gear")
+                        subtitle: "Browse settings for even more new features."
                     ),
                 ]
+            }
+            
+            // LATEST FEATURES - show for existing and new users
+            featuresToDisplay.append(contentsOf: [
+                .init(image: .init(systemName: "platter.2.filled.iphone.landscape"),
+                      title: "StandBy Widgets",
+                      subtitle: "See the latest Athan times in iOS 17's StandBy mode."),
+                .init(image: .init(systemName: "message.badge.filled.fill"),
+                      title: "iMessage Stickers",
+                      subtitle: "Share fun stickers in iMessage with the new Athan Sticker pack."),
+                .init(image: .init(systemName: "stopwatch"),
+                      title: "30 second Athan",
+                      subtitle: "Choose between 5 and 30 second-long Athan notifications."),
+                .init(image: .init(systemName: "plus.forwardslash.minus"),
+                      title: "Time Adjustments",
+                      subtitle: "Set custom time adjustments for each prayer."),
+                .init(image: .init(systemName: "calendar"),
+                      title: "Calendar Button",
+                      subtitle: "The monthly Athan Calendar is now easier to find."),
+                .init(image: .init(systemName: "square.and.arrow.up.on.square.fill"),
+                      title: "Calendar Export",
+                      subtitle: "Export Athan times to .csv to chart in Excel or Numbers."),
+            ])
+            
+            let whatsNew = WhatsNew(
+                title: "What's New",
+                features: featuresToDisplay
             )
             
-            guard let whatsNewViewController = WhatsNewViewController(whatsNew: whatsNew,
-                                                                      configuration: .init(.darkBlue),
-                                                                      versionStore: versionStore) else {
+            // Debug with InMemoryWhatsNewVersionStore()
+            guard let whatsNewViewController = WhatsNewViewController(whatsNew: whatsNew, versionStore:versionStore) else {
                 return
             }
             

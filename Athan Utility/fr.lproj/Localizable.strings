@@ -22,6 +22,10 @@
 "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Temps pour %1$@ [%2$@]. Veuillez rouvrir Adhan Utility pour continuer à recevoir des notifications.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "Temps pour %1$@ à %2$@ [%3$@]";
+
+// Temp fix: isha cannot be prayed past late night
+"Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@." = "Temps pour %1$@ à %2$@ [%3$@]. Isha se termine à %4$@.";
+
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@m restantes jusqu'à %2$@ en %3$@ [%4$@]";
 
@@ -72,12 +76,13 @@
 
 // MARK: - Sounds
 "athan.sound" = "Adhan Son";
-"Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened." = "Adhan peut jouer plus de 5 secondes lorsque votre iPhone est verrouillé ou que l'utilitaire Adhan est ouvert.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Adhan peut jouer plus de 5 secondes lorsque votre iPhone est verrouillé ou que l'utilitaire Adhan est ouvert.";
 "iOS Default" = "iOS Default";
 "Echo" = "Echo";
 "Makkah" = "Makkah";
 "Madina" = "Madina";
 "Al-Aqsa" = "Al-Aqsa";
+"Al-Aqsa" = "Al-Aqsa 2";
 "Egypt" = "Egypte";
 "Abdulbaset" = "Abdulbaset";
 "Abdulghaffar" = "Abdulghaffar";
@@ -102,10 +107,15 @@
 "Reminder Notification" = "Rappel Notification";
 "Enabled" = "Activé";
 "Play Sound" = "Jouer Son";
-"minute.offset" = "Décalage minute: %@";
+"Play 30 seconds" = "Play 30 seconds";
+"reminder.minute.offset" = "Décalage minute: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Désactivez \"Jouer Son\" pour forcer les notifications de cette prière à jouer le carillon iOS par défaut.";
 "offset-description" = "Lorsque les décalages en minutes sont plus longs que le temps entre %1$@ et %2$@, les rappels seront par défaut de 15 minutes.";
+
+"Play Longer Athan" = "Jouer un son étendu";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Étend la lecture jusqu'à la limite iOS maximale d'environ 30 secondes. Ouvrez Athan Utility pour lire l'intégralité d'Athan.";
+"athan.minute.offset" = "Ajustement des minutes:  %@m";
 
 
 // MARK: - Location Settings
@@ -121,6 +131,7 @@
 // MARK: - Calendar
 "Show Calendar" = "Afficher Le Calendrier";
 "Calendar" = "Calendrier";
+"Export" = "Exporter";
 
 
 // MARK: - Widget

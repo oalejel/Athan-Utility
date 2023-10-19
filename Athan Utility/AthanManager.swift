@@ -12,6 +12,7 @@ import CoreLocation
 import UIKit
 #if !os(watchOS)
 import WidgetKit
+import AVFoundation
 #else
 import ClockKit
 #endif
@@ -288,15 +289,16 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func refreshTimes() {
         // swiftui publisher gets updates through didSet
         let tz = locationSettings.timeZone
-        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz) {
+        let adj = notificationSettings.adjustments()
+        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz, adjustments: adj), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz, adjustments: adj) {
             todayTimes = today
             tomorrowTimes = tomorrow
         } else {
-            print("DANGER: unable to calculate times. should handle this accordingly for places on the north pole lol")
+            print("DANGER: unable to calculate times. TODO: handle this accordingly for places on the north pole.")
             // default back to settings defaults
             locationSettings = LocationSettings.defaultSetting()
-            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone) // guaranteed fallback
-            tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone)
+            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone, adjustments: adj) // guaranteed fallback
+            tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone, adjustments: adj)
         } // should never fail on cupertino time.
         // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer() ?? .isha
@@ -304,7 +306,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     // NOTE: this function MUST not have SIDE EFFECTS
-    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil) -> PrayerTimes? {
+    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil, adjustments: PrayerAdjustments?) -> PrayerTimes? {
         let coord = locationSettings.locationCoordinate
         
         var cal = Calendar(identifier: Calendar.Identifier.gregorian)
@@ -314,10 +316,12 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         
         var params = PrayerSettings.shared.calculationMethod.params
         params.madhab = PrayerSettings.shared.madhab
+        // custom minute offsets
+        if let adjustments = adjustments {
+            params.adjustments = adjustments
+        }
         
-        if let prayers = PrayerTimes(coordinates: coordinates,
-                                     date: date,
-                                     calculationParameters: params) {
+        if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
             return prayers
         }
         return nil
@@ -328,14 +332,17 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     var nextPrayerTimer: Timer?
     var reminderTimer: Timer?
     var newDayTimer: Timer?
+    var tenSecondTimer: Timer?
     
     func resetTimers() {
         nextPrayerTimer?.invalidate()
         reminderTimer?.invalidate()
         newDayTimer?.invalidate()
+        tenSecondTimer?.invalidate()
         nextPrayerTimer = nil
         reminderTimer = nil
         newDayTimer = nil
+        tenSecondTimer = nil
         
         let nextPrayerTime = guaranteedNextPrayerTime()
         

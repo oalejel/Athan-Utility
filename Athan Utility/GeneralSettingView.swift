@@ -443,6 +443,8 @@ struct GeneralSettingView: View {
                                         VStack(alignment: .center) {
                                             Text(Strings.developedBy)
                                                 .font(Font.headline.weight(.medium))
+                                            Text("Free Palestine 🇵🇸")
+                                                .font(Font.headline.weight(.medium))
                                         }
                                         .foregroundColor(.white)
                                         Spacer()

@@ -22,7 +22,7 @@ class Strings {
     
     static var done = NSLocalizedString("Done", comment: "")
     static var athanSound = NSLocalizedString("athan.sound", comment: "")
-    static var athanSoundDescription = NSLocalizedString("Athan can play longer than 5 seconds when your iPhone is locked or Athan Utility is opened.", comment: "")
+    static var athanSoundDescription = NSLocalizedString("Full Athan can play when your iPhone is locked or Athan Utility is opened.", comment: "")
     
     static var madhab = NSLocalizedString("Madhab", comment: "")
     static var methodDescription = NSLocalizedString("The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.", comment: "")
@@ -34,10 +34,15 @@ class Strings {
     static var athanNotification = NSLocalizedString("Athan Notification", comment: "")
     static var enabled = NSLocalizedString("Enabled", comment: "")
     static var playSound = NSLocalizedString("Play Sound", comment: "")
+    static var play30Seconds = NSLocalizedString("Play Longer Athan", comment: "")
+    static var playLimitDescription = NSLocalizedString("Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan.", comment: "")
     static var playSoundDescription = NSLocalizedString("Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.", comment: "")
+//    static var muteSwitch = NSLocalizedString("Override mute switch", comment: "")
+//    static var muteSwitchDescription = NSLocalizedString("Override mute switch and \"Do Not Disturb\" to use this Athan as an alarm.", comment: "")
+    static var athanMinuteOffset = NSLocalizedString("athan.minute.offset", comment: "")
     
     static var reminderNotification = NSLocalizedString("Reminder Notification", comment: "")
-    static var minuteOffset = NSLocalizedString("minute.offset", comment: "")
+    static var reminderMinuteOffset = NSLocalizedString("reminder.minute.offset", comment: "")
     static var minuteCharacter = NSLocalizedString("minute-character", comment: "")
     static var offsetDescription = NSLocalizedString("offset-description", comment: "")
 
@@ -57,6 +62,7 @@ class Strings {
     static var developedBy = NSLocalizedString("Developed by Omar Al-Ejel", comment: "")
     // notification messages
     static var standardNotificationMessage = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
+//    static var standardIshaAndQiyamNotificationMessage = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@.", comment: "")
     static var reminderNotificationMessage = NSLocalizedString("%1$@m until %2$@ in %3$@ [%4$@]", comment: "")
     static var reopenNotificationMessage = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications.", comment: "")
     
@@ -70,6 +76,7 @@ class Strings {
     static var locationColon = NSLocalizedString("Location:", comment: "")
     static var showCalendar = NSLocalizedString("Show Calendar", comment: "")
     static var calendar = NSLocalizedString("Calendar", comment: "")
+    static var export = NSLocalizedString("Export", comment: "")
     static var colorDescription = NSLocalizedString("Select a color picker to customize gradients.", comment: "")
     
     static var widgetOpenApp = NSLocalizedString("Open Athan Utility to set location.", comment: "")

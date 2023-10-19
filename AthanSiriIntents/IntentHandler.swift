@@ -16,11 +16,18 @@ class IntentHandler: INExtension {
         
         if intent is NextPrayerIntent {
             return NextPrayerIntentHandler()
+        } else if intent is GetFajrIntent {
+            return GetFajrHandler()
+        } else if intent is GetThuhrIntent {
+            return GetThuhrHandler()
+        } else if intent is GetAsrIntent {
+            return GetAsrHandler()
+        } else if intent is GetMaghribIntent {
+            return GetMaghribHandler()
+        } else if intent is GetIshaIntent {
+            return GetIshaHandler()
         }
         
         return self
     }
-    
-    
-    
 }

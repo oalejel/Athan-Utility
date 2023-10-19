@@ -26,7 +26,7 @@ public extension View {
 }
 
 struct SimpleDate: Hashable, Identifiable {
-//    let day: Int
+    //    let day: Int
     let month: Int
     let year: Int
     let sampleDate: Date
@@ -60,28 +60,22 @@ struct SimpleDate: Hashable, Identifiable {
 //    let year: Int
 //}
 
-@available(iOS 13.0.0, *)
 class MonthModel: ObservableObject {
     @Published var months: [SimpleDate] = []
     var daysForMonth: [Int:[DayModel]] = [:]
     let suncalc = SwiftySuncalc()
-//    var hijriMonthsStored = Set<HijriMonthYear>()
-//    var regionalMonthsStored = Set<RegionalMonthYear>()
     
-    
-//    static var shared = MonthModel()
     
     // date does not need to be at beginning of month
     // init will generate all appropriate prayer times for the month of this date
-    init() {
-        generateStartMonths()
+    init(startDate: Date = Date()) {
+        generateStartMonths(startDate: startDate)
     }
     
-    func generateStartMonths() {
-        //        DispatchQueue.global(qos: .userInitiated).async { [self] in
-        let dayComp = Calendar.current.dateComponents([.day], from: Date())
+    func generateStartMonths(startDate: Date = Date()) {
+        let dayComp = Calendar.current.dateComponents([.day], from: startDate)
         let offsetDay = dayComp.day!
-        let thisMonthsFirstDay = Calendar.current.date(byAdding: .day , value: 1-offsetDay, to: Date())!
+        let thisMonthsFirstDay = Calendar.current.date(byAdding: .day , value: 1-offsetDay, to: startDate)!
         
         // add 24 months for regional at init
         for i in 0..<12 {
@@ -89,18 +83,17 @@ class MonthModel: ObservableObject {
                                                  to: thisMonthsFirstDay, wrappingComponents: false)!
             let _ = self.calculateMonthTimes(for: iterDate)
         }
-        //        }
     }
     
     func generateDayModel(for dayDate: Date) -> DayModel {
-        return DayModel(times: AthanManager.shared.calculateTimes(referenceDate: dayDate, customTimeZone: AthanManager.shared.locationSettings.timeZone),
+        return DayModel(times: AthanManager.shared.calculateTimes(referenceDate: dayDate, customTimeZone: AthanManager.shared.locationSettings.timeZone, adjustments: AthanManager.shared.notificationSettings.adjustments()),
                         moonPhase: suncalc.getMoonIllumination(date: dayDate)["phase"]!)
     }
     
     // monthdate indicates which month we want data for
     func calculateMonthTimes(for monthDate: Date) -> [DayModel] {
-        var selectedCalendar = Calendar.current
-
+        let selectedCalendar = Calendar.current
+        
         // select month of interest and iterate through all days
         let components = selectedCalendar.dateComponents([.day, .month, .year], from: monthDate)
         let offsetDay = components.day!
@@ -113,7 +106,7 @@ class MonthModel: ObservableObject {
             return existing
         }
         
-        print("calculating month: ", requestedMonth, requestedYear)
+//        print("calculating month: ", requestedMonth, requestedYear)
         daysForMonth[requestedSimpleDate.id] = []
         months.append(requestedSimpleDate)
         
@@ -135,23 +128,22 @@ class MonthModel: ObservableObject {
 @available(iOS 13.0.0, *)
 struct CalendarView: View, Equatable {
     static func == (lhs: CalendarView, rhs: CalendarView) -> Bool {
-//        return lhs.showCalendar == rhs.showCalendar
         return lhs.model != nil && rhs.model != nil
     }
     
     @Binding var showCalendar: Bool
-//    @Environment(\.presentationMode) var presentationMode
+    @State var showShareSheet = false
     
     var model: MonthModel!
     
     @State var allPrayers = Array(Prayer.allCases)
     var timeFormatter: DateFormatter!
     
-//    @State var range: Range<Int> = 0..<12
-//    func loadMore() {
-//        print("Load more...")
-//        self.range = 0..<self.range.upperBound + 3
-//    }
+    //    @State var range: Range<Int> = 0..<12
+    //    func loadMore() {
+    //        print("Load more...")
+    //        self.range = 0..<self.range.upperBound + 3
+    //    }
     
     //                    Picker(selection: $showHijri.animation(.linear), label: Text("Picker"), content: {
     //                        ForEach([false, true], id: \.self) { hijri in
@@ -194,24 +186,53 @@ struct CalendarView: View, Equatable {
                 HStack {
                     Text(Strings.calendar)
                         .font(Font.largeTitle.bold()) // let font colors be naturally chosen based on dark / light mode here
-//                        .onAppear {
-//                            model.generateStartMonths()
-//                        }
+                                                      //                        .onAppear {
+                                                      //                            model.generateStartMonths()
+                                                      //                        }
                     Spacer()
+                    
+                    // export button
+                    Button(action: {
+                        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                        lightImpactFeedbackGenerator.impactOccurred()
+                        withAnimation {
+                            let pdf = CalendarExport().makePDF()
+                            showShareSheet = true
+                        }
+                    }) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(Strings.export)
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                        .foregroundColor(.red)
+                        .padding(2)
+                    }
+                    .foregroundColor(Color(.red))
+                    .padding(.trailing, 12)
+                    .font(Font.body.weight(.bold))
+                    .sheet(isPresented: $showShareSheet) {
+                        
+                    } content: {
+                        let calendarFileURL: URL = {
+                            let csvString = calendarCSVString()
+                                    
+                            let tempDirectoryURL = FileManager.default.temporaryDirectory
+                            let fileURL = tempDirectoryURL.appendingPathComponent("athan-calendar").appendingPathExtension("csv")
+                            
+                            // Write the CSV string to the file URL
+                            try! csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+                            return fileURL
+                        }()
+                        
+                        ShareSheet(activityItems: [calendarFileURL])
+                    }
                 }
                 .padding(.leading, 12)
                 
                 
                 let currCal = Calendar.current
-                //                List(0..<(showHijri ? model.hijriMonthsStored.count : model.regionalMonthsStored.count), id: \.self) { index in
-                
-                
-                //                List(0..<18, id: \.self) { index in
-                
                 Divider()
                     .padding([.leading, .trailing])
-//                List {
-//                List(model.months, id: \.self) { date in
                 
                 let dayComp = Calendar.current.dateComponents([.day, .month, .year], from: Date())
                 let offsetDay = Int(dayComp.day!)
@@ -219,262 +240,249 @@ struct CalendarView: View, Equatable {
                 
                 
                 List(0..<13, id: \.self) { monthOffset in
-//                    ForEach(range) { index in
-                        let isCurrentMonth = (monthOffset == 0)
-                        let x = print("index: \(monthOffset)")
-                        let d = currCal.date(byAdding: .month, value: monthOffset, to: thisMonthsFirstDay)!
-                        let monthPrayerTimes = self.model.calculateMonthTimes(for: d)
-                        
-                        let monthDF: DateFormatter = {
-                            let df = DateFormatter()
-                            df.dateFormat = "MMMM"
-                            df.locale = currCal.locale
-                            return df
-                        }()
-                        
-                        let yearDF: DateFormatter = {
-                            let df = DateFormatter()
-                            df.dateFormat = "YYYY"
-                            df.locale = currCal.locale
-                            return df
-                        }()
+                    //                    ForEach(range) { index in
+                    let isCurrentMonth = (monthOffset == 0)
+                    let _ = print("index: \(monthOffset)")
+                    let d = currCal.date(byAdding: .month, value: monthOffset, to: thisMonthsFirstDay)!
+                    let monthPrayerTimes = self.model.calculateMonthTimes(for: d)
                     
-                        // name of months
-                        VStack(alignment: .leading) {
+                    let monthDF: DateFormatter = {
+                        let df = DateFormatter()
+                        df.dateFormat = "MMMM"
+                        df.locale = currCal.locale
+                        return df
+                    }()
+                    
+                    let yearDF: DateFormatter = {
+                        let df = DateFormatter()
+                        df.dateFormat = "YYYY"
+                        df.locale = currCal.locale
+                        return df
+                    }()
+                    
+                    // name of months
+                    VStack(alignment: .leading) {
+                        
+                        VStack(spacing: 2) {
+                            // month header
+                            HStack(alignment: .lastTextBaseline) {
+                                Text(monthDF.string(from: d))
+                                    .font(Font.system(size: 26).bold())
+                                    .foregroundColor(.red)
+                                    .padding(.top, 8)
+                                Spacer()
+                                //                                    .font(Font.system(size: 24).bold)
+                                Text(yearDF.string(from: d))
+                                    .font(Font.system(size: 16).bold())
+                                    .foregroundColor(.gray)
+                                //                                    .font(Font.system(size: 22).bold)
+                            }
                             
-                            VStack(spacing: 2) {
-                                // month header
-                                HStack(alignment: .lastTextBaseline) {
-                                    Text(monthDF.string(from: d))
-                                        .font(Font.system(size: 26).bold())
-                                        .foregroundColor(.red)
-                                        .padding(.top, 8)
-                                    Spacer()
-                                    //                                    .font(Font.system(size: 24).bold)
-                                    Text(yearDF.string(from: d))
-                                        .font(Font.system(size: 16).bold())
-                                        .foregroundColor(.gray)
-                                    //                                    .font(Font.system(size: 22).bold)
+                            
+                            // table content header
+                            HStack(alignment: .center, spacing: 0) {
+                                Spacer()
+                                ZStack {
+                                    Text("Date")
+                                        .font(Font.caption.bold())
+                                        .lineLimit(1)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .foregroundColor(Color(.label))
+                                        .padding([.top, .bottom], 2)
+                                        .frame(width:100)
+                                    
                                 }
+                                .frame(width: 1)
                                 
                                 
-                                // table content header
-                                HStack(alignment: .center, spacing: 0) {
+                                ForEach(allPrayers, id: \.self) { p in
                                     Spacer()
+                                    Spacer()
+                                    
                                     ZStack {
-                                        Text("Date")
-                                            .font(Font.caption.bold())
-                                            .lineLimit(1)
-                                            .fixedSize(horizontal: false, vertical: true)
+                                        PrayerSymbol(prayerType: p)
                                             .foregroundColor(Color(.label))
-                                            .padding([.top, .bottom], 2)
+                                            .padding([.top, .bottom], 4)
                                             .frame(width:100)
                                         
                                     }
                                     .frame(width: 1)
-                                    
-                                    
-                                    ForEach(allPrayers, id: \.self) { p in
-                                        Spacer()
-                                        Spacer()
-                                        
-                                        ZStack {
-                                            PrayerSymbol(prayerType: p)
-                                                .foregroundColor(Color(.label))
-                                                .padding([.top, .bottom], 4)
-                                                .frame(width:100)
-                                            
-                                        }
-                                        .frame(width: 1)
-                                    }
-                                    Spacer()
                                 }
-                                .background(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .fill(Color(.secondarySystemBackground))
-                                )
+                                Spacer()
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .fill(Color(.secondarySystemBackground))
+                            )
+                        }
+                        
+                        // table
+                        ZStack { // stack grid below times below
+                            HStack { // grid column lines
+                                ForEach(0..<6, id: \.self) { i in
+                                    Spacer()
+                                    Divider()
+                                }
+                                Spacer()
                             }
                             
-                            // table
-                            ZStack { // stack grid below times below
-                                HStack { // grid column lines
-                                    ForEach(0..<6, id: \.self) { i in
-                                        Spacer()
-                                        Divider()
-                                    }
-                                    Spacer()
-                                }
+                            VStack(alignment: .center, spacing: 0) { // grid row lines and content
                                 
-                                VStack(alignment: .center, spacing: 0) { // grid row lines and content
+                                ForEach(0..<monthPrayerTimes.count, id: \.self) { dayIndex in
+                                    let isToday = (offsetDay - 1 == dayIndex) && isCurrentMonth
+                                    Divider()
+                                    let lengthGoal = 11
                                     
-                                    ForEach(0..<monthPrayerTimes.count, id: \.self) { dayIndex in
-                                        let isToday = (offsetDay - 1 == dayIndex) && isCurrentMonth
-                                        Divider()
-                                        let lengthGoal = 11
+                                    HStack(spacing: 0) {
+                                        Spacer()
                                         
-                                        HStack(spacing: 0) {
-                                            Spacer()
+                                        ZStack(alignment: .center) {
+                                            let dayText: String = {
+                                                var str = "\(dayIndex + 1)"
+                                                while str.count + 1 < lengthGoal {
+                                                    str = " " + str + " "
+                                                }
+                                                return str
+                                            }()
                                             
+                                            Text(dayText)
+                                                .bold()
+                                                .frame(width: (g.size.width - 12) / 10)
+                                                .fixedSize(horizontal: true, vertical: true)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.01)
+                                                .padding([.top, .bottom], 1)
+                                                .foregroundColor(isToday ? Color.red : Color(.label))
+                                        }
+                                        .frame(width: 3)
+                                        
+                                        // row contents
+                                        ForEach(allPrayers, id: \.self) { p in
+                                            
+                                            let prayerTime = monthPrayerTimes[dayIndex].times?.time(for: p)
+                                            let text: String = {
+                                                var str = prayerTime == nil ? "--" : timeFormatter.string(from: prayerTime!)
+                                                //                                                str = str.replacingOccurrences(of: " ", with: "")
+                                                while str.count + 1 < lengthGoal {
+                                                    str = " " + str + " "
+                                                }
+                                                return str
+                                            }()
+                                            
+                                            Spacer()
+                                            Spacer()
                                             ZStack(alignment: .center) {
-                                                let dayText: String = {
-                                                    var str = "\(dayIndex + 1)"
-                                                    while str.count + 1 < lengthGoal {
-                                                        str = " " + str + " "
-                                                    }
-                                                    return str
-                                                }()
-                                                
-                                                Text(dayText)
+                                                //                                                    Circle()
+                                                //                                                        .frame(width: 10, height: 10)
+                                                Text(text)
                                                     .bold()
-                                                    .frame(width: (g.size.width - 12) / 10)
+                                                //                                                    .font(.system(size: 30, design: .monospaced))
+                                                    .frame(width: (g.size.width - 12) / 8)
                                                     .fixedSize(horizontal: true, vertical: true)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.01)
-                                                    .padding([.top, .bottom], 1)
+                                                    .padding([.top, .bottom], 3)
                                                     .foregroundColor(isToday ? Color.red : Color(.label))
-                                            }
-                                            .frame(width: 3)
-                                            
-                                            // row contents
-                                            ForEach(allPrayers, id: \.self) { p in
                                                 
-                                                let prayerTime = monthPrayerTimes[dayIndex].times?.time(for: p)
-                                                let text: String = {
-                                                    var str = prayerTime == nil ? "--" : timeFormatter.string(from: prayerTime!)
-                                                    //                                                str = str.replacingOccurrences(of: " ", with: "")
-                                                    while str.count + 1 < lengthGoal {
-                                                        str = " " + str + " "
-                                                    }
-                                                    return str
-                                                }()
-                                                
-                                                Spacer()
-                                                Spacer()
-                                                ZStack(alignment: .center) {
-                                                    //                                                    Circle()
-                                                    //                                                        .frame(width: 10, height: 10)
-                                                    Text(text)
-                                                        .bold()
-                                                        //                                                    .font(.system(size: 30, design: .monospaced))
-                                                        .frame(width: (g.size.width - 12) / 8)
-                                                        .fixedSize(horizontal: true, vertical: true)
-                                                        .lineLimit(1)
-                                                        .minimumScaleFactor(0.01)
-                                                        .padding([.top, .bottom], 3)
-                                                        .foregroundColor(isToday ? Color.red : Color(.label))
-                                                    
-                                                }
-                                                .frame(width: 3, height: 1)
                                             }
-                                            
-                                            Spacer()
+                                            .frame(width: 3, height: 1)
                                         }
-                                        .padding([.top, .bottom], 2)
                                         
+                                        Spacer()
                                     }
-                                    Divider()
+                                    .padding([.top, .bottom], 2)
+                                    
                                 }
-                                
+                                Divider()
                             }
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(Color(.systemBackground))
-                                    .frame(width: g.size.width, height: 4)
-                                    .offset(y: 4)
-                            }
-                            .frame(width: g.size.width - 24, height: 0)
+                            
                         }
-                        .modify { v in
-                            if #available(iOS 15.0, *) {
-                                v.listRowSeparator(.hidden)
-                            } else {
-                                v
-                            }
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(Color(.systemBackground))
+                                .frame(width: g.size.width, height: 4)
+                                .offset(y: 4)
                         }
-//                        .padding([.leading, .trailing], 12)
-                        
-                        //                    .id(index)
-//                    }
-                    
-                    
-//                    Text("")
-//                        .onAppear {
-//                            DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 10)) {
-//                                self.loadMore()
-//                            }
-//                        }
-                    
-                    
+                        .frame(width: g.size.width - 24, height: 0)
+                    }
+                    .modify { v in
+                        if #available(iOS 15.0, *) {
+                            v.listRowSeparator(.hidden)
+                        } else {
+                            v
+                        }
+                    }
                 } // list end
                 .listStyle(PlainListStyle())
-                
-                
-//                }
-//                .id(UUID())
             }
-            
         }
     }
-}
-
-
-@available(iOS 13.0.0, *)
-struct CalViewPreview: PreviewProvider {
-    static var previews: some View {
-        CalendarView(showCalendar: .constant(true))
-            .background(Rectangle().foregroundColor(.white), alignment: .center)
+    
+    func calendarCSVString() -> String {
+        var csv = "Athan Calendar\n"
+        
+        let currCal = Calendar.current
+        let dayComp = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let offsetDay = Int(dayComp.day!)
+        let thisMonthsFirstDay = Calendar.current.date(byAdding: .day , value: 1-offsetDay, to: Date())!
+        
+        // for each month in the year...
+        for monthOffset in 0..<13 {
+            let isCurrentMonth = (monthOffset == 0)
+            let _ = print("index: \(monthOffset)")
+            let d = currCal.date(byAdding: .month, value: monthOffset, to: thisMonthsFirstDay)!
+            let monthPrayerTimes = self.model.calculateMonthTimes(for: d)
+            
+            // create date formatters for getting the month and year
+            let monthDF: DateFormatter = {
+                let df = DateFormatter()
+                df.dateFormat = "MMMM"
+                df.locale = currCal.locale
+                return df
+            }()
+            
+            let yearDF: DateFormatter = {
+                let df = DateFormatter()
+                df.dateFormat = "YYYY"
+                df.locale = currCal.locale
+                return df
+            }()
+            
+            
+            // Month header row: E.g. "October, 2023"
+            csv += "\(monthDF.string(from: d)) \(yearDF.string(from: d))\n"
+            csv += "Day, Fajr, Sunrise, Thuhr, Asr, Maghrib, Isha\n"
+            // ----
+            
+            for dayIndex in 0..<monthPrayerTimes.count {
+                let isToday = (offsetDay - 1 == dayIndex) && isCurrentMonth
+                let lengthGoal = 11
+                // Day row: day of the month
+                let dayText = "\(dayIndex + 1)"
+                csv += dayText + ","
+                
+                for p in allPrayers {
+                    let prayerTime = monthPrayerTimes[dayIndex].times?.time(for: p)
+                    let surePrayerTime = prayerTime == nil ? "--" : timeFormatter.string(from: prayerTime!)
+                    // Day row:
+                    csv += surePrayerTime
+                    if p != .isha {
+                        csv += ","
+                    }
+                }
+                csv += "\n"
+            }
+        }
+            return csv
     }
 }
-
-
-
-/*
- 
- private func getNextPageIfNecessary(encounteredIndex: Int) {
- //        guard encounteredIndex == rows.count - 5 else { return }
- //        rows.append(contentsOf: Array(repeating: "Item", count: 20))
- 
- 
- let monthCount = showHijri ? model.hijriMonthsStored.count : model.regionalMonthsStored.count
- 
- guard encounteredIndex == monthCount - 5 else { return }
- // last completed month depends on current date
- let monthsToCalculate = monthsNeeded(hijri: showHijri)
- print("GET MONTHS ", encounteredIndex..<(encounteredIndex + monthsToCalculate.count))
- for d in monthsToCalculate {
- let _ = model.dates(for: d, calendarType: showHijri ? .Hijri : .Regional)
- }
- }
- 
- 
- 
- func monthsNeeded(hijri: Bool) -> [Date] {
- // load 3 months worth
- let monthsToLoad = 3
- var cal = Calendar.current
- if hijri {
- cal = Calendar(identifier: .islamic)
- }
- 
- let firstUnstoredMonthOffset = hijri ? model.hijriMonthsStored.count : model.regionalMonthsStored.count // if count=1, we start by adding one
- 
- let dayComp = cal.dateComponents([.day], from: Date())
- let offsetDay = dayComp.day!
- let thisMonthsFirstDay = cal.date(byAdding: .day , value: 1-offsetDay, to: Date())!
- var out: [Date] = []
- print("-- calc: need months ", firstUnstoredMonthOffset..<(monthsToLoad + firstUnstoredMonthOffset))
- for i in firstUnstoredMonthOffset..<(monthsToLoad + firstUnstoredMonthOffset) {
- let dateInOtherMonth = cal.date(byAdding: .month, value: monthsToLoad, to: thisMonthsFirstDay)!
- out.append(dateInOtherMonth)
- }
- return out
- }
- 
- 
- 
- 
- 
- 
- 
- 
- */
+        
+        
+        @available(iOS 13.0.0, *)
+        struct CalViewPreview: PreviewProvider {
+            static var previews: some View {
+                CalendarView(showCalendar: .constant(true))
+                    .background(Rectangle().foregroundColor(.white), alignment: .center)
+            }
+        }
+        

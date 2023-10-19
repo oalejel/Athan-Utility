@@ -84,8 +84,16 @@ class NotificationsManager {
 //                        return
 //                    }
                     
-                    guard let times = AthanManager.shared.calculateTimes(referenceDate: calcDate, customCoordinate: coordinate, customTimeZone: AthanManager.shared.locationSettings.timeZone) else {
+                    guard let times = AthanManager.shared.calculateTimes(referenceDate: calcDate, customCoordinate: coordinate, customTimeZone: AthanManager.shared.locationSettings.timeZone, adjustments: noteSettings.adjustments()) else {
                         print("encountered nil calculating times for notifications")
+                        return
+                    }
+                    
+                    // times the day after the current iteration of times
+                    // used to calculate qiyam time
+                    let sequentialDate = Calendar.current.date(byAdding: .day, value: dayOffset + 1, to: Date())!
+                    guard let sequentialDayTimes = AthanManager.shared.calculateTimes(referenceDate: sequentialDate, customCoordinate: coordinate, customTimeZone: AthanManager.shared.locationSettings.timeZone, adjustments: noteSettings.adjustments()) else {
+                        print("encountered nil calculating sequential day times for notifications")
                         return
                     }
                     
@@ -98,10 +106,17 @@ class NotificationsManager {
                         let noteContent = UNMutableNotificationContent()
                         noteContent.categoryIdentifier = "athan"
                         
-                        //schedule a normal if settings allow
+                        // schedule a normal if settings allow
                         if setting.athanAlertEnabled { // note: will always have athan alert enabled if reminder enabled
                             if setting.athanSoundEnabled, let noteSoundFilename = noteSoundFilename {
-                                let soundName = UNNotificationSoundName(rawValue: "\(noteSoundFilename)-preview.caf")
+                                var soundFileWithSuffix = noteSoundFilename
+                                if setting.playExtendedSound == true {
+                                    soundFileWithSuffix += "-30.caf"
+                                } else {
+                                    soundFileWithSuffix += "-preview.caf"
+                                }
+                                // TODO: support separate fajr athan
+                                let soundName = UNNotificationSoundName(rawValue: soundFileWithSuffix)
                                 noteContent.sound = UNNotificationSound(named: soundName)
                             } else { // always play default sound. user can use ios deliver quietly if they want to
                                 noteContent.sound = .default
@@ -114,12 +129,16 @@ class NotificationsManager {
                                 let alertAndReopenMessage = Strings.reopenNotificationMessage
                                 alertString = String(format: alertAndReopenMessage, p.localizedOrCustomString(), dateString)
                             } else {
+                                // Reverting decision to tell users to pray isha before a certain time
+                                // This is not a majority position and users should know it themselves.
+                                
                                 // Alternative string stores a shorter version of the location
                                 // in order to show "San Francisco" instead of "San Francisco, CA, USA"
                                 let noteMessage = Strings.standardNotificationMessage
                                 alertString = String(format: noteMessage,
                                                      p.localizedOrCustomString(), shortLocationName, dateString)
                             }
+                            print(alertString)
                             
                             // set the notification body
                             noteContent.body = alertString

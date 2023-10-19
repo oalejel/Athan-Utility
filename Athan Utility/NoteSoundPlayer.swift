@@ -15,14 +15,14 @@ class NoteSoundPlayer: NSObject {
     private static var soundPreviewTimer: Timer?
     
     private static func playAudio(for index: Int, isPreview: Bool, fadeInterval: Int? = nil) -> Float {
-        
         audioPlayer?.stop()
         
         do {
             if var fileName = NotificationSettings.Sounds(rawValue: index)?.filename() {
-                if isPreview { fileName += "-preview" }
-                if let asset = NSDataAsset(name: fileName) {
-                    try audioPlayer = AVAudioPlayer(data: asset.data, fileTypeHint: "mp3")
+                if isPreview { fileName += "-30" }
+                
+                if let audioFile = Bundle.main.url(forResource: fileName, withExtension:"caf"), let asset = try? Data(contentsOf: audioFile) {
+                    try audioPlayer = AVAudioPlayer(data: asset, fileTypeHint: "caf")
                     // allow audio to play with ringer off
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                     audioPlayer?.play()

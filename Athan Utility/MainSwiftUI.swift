@@ -432,7 +432,6 @@ struct MainSwiftUI: View {
 //                                                        print("fire second timer")
                                                         relativeTimeStr = relativeTime()
                                                     }
-                                                
                                             }
                                         }
                                     }
@@ -573,29 +572,29 @@ struct MainSwiftUI: View {
                                         .opacity(max(0, dragState.progress * 1.3 - 0.3))
                                         .animation(.linear(duration: 0.2))
                                     }
-                                    .gesture(
-                                        DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
-                                            .onEnded({ _ in
-                                                if dragState.progress > 0.999 {
-                                                    dragState.showCalendar = true
-                                                    Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
-                                                        // if still on max after half a second, go back to zero
-                                                        // this is necessary because swiftui has a bug where onEnded is
-                                                        // not called if a sheet apepars
-                                                        if dragState.progress > 0.999 {
-                                                            dragState.progress = 0
-                                                        }
-                                                    }
-                                                } else {
-                                                    withAnimation {
-                                                        dragState.progress = 0
-                                                    }
-                                                }
-                                            })
-                                            .updating($dragOffset, body: { (value, state, transaction) in
-                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
-                                            })
-                                    )
+//                                    .gesture(
+//                                        DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
+//                                            .onEnded({ _ in
+//                                                if dragState.progress > 0.999 {
+//                                                    dragState.showCalendar = true
+//                                                    Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
+//                                                        // if still on max after half a second, go back to zero
+//                                                        // this is necessary because swiftui has a bug where onEnded is
+//                                                        // not called if a sheet apepars
+//                                                        if dragState.progress > 0.999 {
+//                                                            dragState.progress = 0
+//                                                        }
+//                                                    }
+//                                                } else {
+//                                                    withAnimation {
+//                                                        dragState.progress = 0
+//                                                    }
+//                                                }
+//                                            })
+//                                            .updating($dragOffset, body: { (value, state, transaction) in
+//                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
+//                                            })
+//                                    )
                                 }
                                 .padding([.leading, .trailing])
                                 .padding([.leading, .trailing])
@@ -662,19 +661,39 @@ struct MainSwiftUI: View {
                                             
                                             Spacer()
                                             
-                                            // Settings button
-                                            Button(action: {
-                                                let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                                                lightImpactFeedbackGenerator.impactOccurred()
-                                                withAnimation {
-                                                    currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                            HStack {
+                                                // calendar button
+                                                Button(action: {
+                                                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                                    lightImpactFeedbackGenerator.impactOccurred()
+                                                    withAnimation {
+                                                        dragState.showCalendar = true
+//                                                        currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                                    }
+                                                }) {
+                                                    Image(systemName: "calendar")
+//                                                        .padding(12)
                                                 }
-                                            }) {
-                                                Image(systemName: "gear")
-                                                    .padding(12)
+                                                .foregroundColor(Color(.lightText))
+                                                .font(Font.body.weight(.bold))
+
+                                                
+                                                // Settings button
+                                                Button(action: {
+                                                    let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                                    lightImpactFeedbackGenerator.impactOccurred()
+                                                    withAnimation {
+                                                        currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                                    }
+                                                }) {
+                                                    Image(systemName: "gear")
+                                                        .padding(12)
+                                                }
+                                                .foregroundColor(Color(.lightText))
+                                                .font(Font.body.weight(.bold))
                                             }
-                                            .foregroundColor(Color(.lightText))
-                                            .font(Font.body.weight(.bold))
+                                            
+                                            
                                             .offset(x: 12, y: 12)
                                         }
                                         .padding([.leading, .trailing, .bottom])

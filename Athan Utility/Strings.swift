@@ -62,7 +62,6 @@ class Strings {
     static var developedBy = NSLocalizedString("Developed by Omar Al-Ejel", comment: "")
     // notification messages
     static var standardNotificationMessage = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
-//    static var standardIshaAndQiyamNotificationMessage = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]. Isha ends at %4$@.", comment: "")
     static var reminderNotificationMessage = NSLocalizedString("%1$@m until %2$@ in %3$@ [%4$@]", comment: "")
     static var reopenNotificationMessage = NSLocalizedString("Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications.", comment: "")
     

@@ -19,7 +19,6 @@ import Adhan
 #warning("make this a public thing on github later")
 @available(iOS 13.0.0, *)
 struct MoonView3D: View {
-    //    @State var currentPrayer: Prayer? = nil // inelegant solution just used to trigger a refresh
     var body: some View {
         GeometryReader { g in
             ZStack {
@@ -37,14 +36,8 @@ struct ScenekitView: UIViewControllerRepresentable {
         return MoonViewController()
     }
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        // do things to trigger this???
-        //        scnView.scene = scene
-        //        // always animate light to correct position when view updated
-        //        rotateLight()
 
     }
-    
-    
 }
 
 @available(iOS 13.0.0, *)
@@ -64,7 +57,6 @@ final class MoonViewController: UIViewController, SCNSceneRendererDelegate, UIGe
 
     override func loadView() {
         sphere.geometry = SCNSphere(radius: 1)
-
         sphere.geometry?.firstMaterial?.diffuse.contents = moonImage
         sphere.geometry?.firstMaterial?.isDoubleSided = true
         // moon displacement map
@@ -85,7 +77,6 @@ final class MoonViewController: UIViewController, SCNSceneRendererDelegate, UIGe
         ambientLightNode.light!.type = .ambient
         ambientLightNode.light!.color = UIColor(white: 0.2, alpha: 1)
         scene.rootNode.addChildNode(ambientLightNode)
-
         centeredLightParent.position = .init(x: 0, y: 0, z: 0)
 
         // create and add a light to the scene

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
-		3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */; };
-		3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */; };
 		3D07894C25998D8E0047DD00 /* CalculationMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07894B25998D8E0047DD00 /* CalculationMethodView.swift */; };
 		3D0789732599B8C50047DD00 /* NameOverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789722599B8C50047DD00 /* NameOverridesView.swift */; };
 		3D07897A259A6E5E0047DD00 /* ColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D078979259A6E5E0047DD00 /* ColorsView.swift */; };
@@ -23,26 +21,19 @@
 		3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789C5259C5DAB0047DD00 /* PrivacyInfoView.swift */; };
 		3D0789CD259C5F0A0047DD00 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789CC259C5F0A0047DD00 /* MailView.swift */; };
 		3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */; };
-		3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA801BDC58B60001EFE4 /* ViewController.swift */; };
 		3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA851BDC58B60001EFE4 /* Assets.xcassets */; };
 		3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */; };
 		3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
-		3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA921BDC58E30001EFE4 /* TableController.swift */; };
-		3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */; };
-		3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */; };
 		3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA961BDC58E30001EFE4 /* ClockView.swift */; };
 		3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */; };
 		3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E89125773BFD0041F1AC /* ButtonStyles.swift */; };
 		3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E898257757100041F1AC /* PrayerSettingsView.swift */; };
 		3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */; };
-		3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D15F53C242827210010C709 /* Default-568h@2x.png */; };
 		3D16F1042560851B00C78B12 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D16F1032560851B00C78B12 /* Adhan */; };
 		3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
-		3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */; };
 		3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */; };
 		3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
-		3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */; };
 		3D20CB1D2518DA0900275206 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1C2518DA0900275206 /* WidgetKit.framework */; };
 		3D20CB1F2518DA0900275206 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D20CB1E2518DA0900275206 /* SwiftUI.framework */; };
 		3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D20CB212518DA0900275206 /* Athan_Widget.swift */; };
@@ -63,13 +54,10 @@
 		3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */; };
 		3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CEDAF1BDDA1D800CA095E /* ElapsedView.swift */; };
 		3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
-		3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */; };
 		3D59923825930F5E006355CB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D59923725930F5E006355CB /* MapView.swift */; };
 		3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6105032572D04E00C1D067 /* SettingsView.swift */; };
 		3D6105102572F21700C1D067 /* CalculationMethod+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */; };
 		3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */; };
-		3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6308321C08F3D700AC32B6 /* LocationInputController.swift */; };
-		3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D6308331C08F3D700AC32B6 /* LocationInputController.xib */; };
 		3D67E05E2ADF3E010020B55B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E05D2ADF3E010020B55B /* ShareSheet.swift */; };
 		3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EBE9256F5DEA0010C47D /* SolarView.swift */; };
 		3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
@@ -84,10 +72,6 @@
 		3D73EC24257155AB0010C47D /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01225617BBE00C2C348 /* NotificationsManager.swift */; };
 		3D73EC3525717EB80010C47D /* PrayerSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EC3425717EB80010C47D /* PrayerSymbol.swift */; };
 		3D73EC3B25717ED20010C47D /* PrayerSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EC3425717EB80010C47D /* PrayerSymbol.swift */; };
-		3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC55228491EA0092A83C /* ToneSettingCell.swift */; };
-		3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC56228491EA0092A83C /* ToneSettingCell.xib */; };
-		3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC592284A2020092A83C /* SiriCell.swift */; };
-		3D73FC5C2284A2020092A83C /* SiriCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC5A2284A2020092A83C /* SiriCell.xib */; };
 		3D73FC632284DC720092A83C /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC672284DC720092A83C /* AppIntentVocabulary.plist */; };
 		3D73FC642284DC720092A83C /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D73FC672284DC720092A83C /* AppIntentVocabulary.plist */; };
 		3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
@@ -99,16 +83,11 @@
 		3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D11D971251C2BD9009F6146 /* Widget_Provider.swift */; };
 		3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */; };
 		3D770571251C3812007BCEAA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
-		3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D770583251C3849007BCEAA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
-		3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7D42C11C00E5380013956C /* SettingsViewController.swift */; };
-		3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D7D42C21C00E5380013956C /* SettingsViewController.xib */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
-		3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */; };
-		3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3D93E9E021829D0C002019B7 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D93E9DF21829D0C002019B7 /* Intents.framework */; };
 		3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93EA092182C447002019B7 /* IntentHandler.swift */; };
 		3D93EA1E2182C447002019B7 /* AthanSiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D93EA072182C447002019B7 /* AthanSiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -122,7 +101,6 @@
 		3DB56CEA228204BA00B9F738 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3DB56CEE228367E000B9F738 /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
-		3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */; };
 		3DB56CF4228369A200B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6AF502576FE06006241D4 /* View+Extensions.swift */; };
 		3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */; };
@@ -144,7 +122,6 @@
 		3DD26B7025B2643100460BC3 /* CustomExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD26B5125B25FAF00460BC3 /* CustomExtensionDelegate.swift */; };
 		3DD26B8025B27C5C00460BC3 /* ParallaxSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD26B7F25B27C5C00460BC3 /* ParallaxSwiftUI.swift */; };
 		3DD26B8825B2883200460BC3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
-		3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */; };
 		3DD3B4921C0D3B5700DC91E6 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */; };
 		3DD3B4951C0D3B5700DC91E6 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */; };
 		3DD3B4981C0D3B5700DC91E6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD3B4961C0D3B5700DC91E6 /* MainInterface.storyboard */; };
@@ -175,7 +152,6 @@
 		3DD7C17C2ADFA8C500A6CDC0 /* echo-30.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3DD7C17B2ADFA8C500A6CDC0 /* echo-30.caf */; };
 		3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */; };
 		3DE704C82ADC98C3000A470D /* GetXIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE704C72ADC98C3000A470D /* GetXIntentHandler.swift */; };
-		3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */; };
 		3DEE3A6025A6A04D00DC7331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A5F25A6A04D00DC7331 /* Assets.xcassets */; };
 		3DEE3A6725A6A04D00DC7331 /* Athan Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3DEE3A6625A6A04D00DC7331 /* Athan Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DEE3A6C25A6A04D00DC7331 /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
@@ -297,8 +273,6 @@
 
 /* Begin PBXFileReference section */
 		3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
-		3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingCell.swift; sourceTree = "<group>"; };
-		3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerSettingCell.xib; sourceTree = "<group>"; };
 		3D07894B25998D8E0047DD00 /* CalculationMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationMethodView.swift; sourceTree = "<group>"; };
 		3D0789722599B8C50047DD00 /* NameOverridesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOverridesView.swift; sourceTree = "<group>"; };
 		3D078979259A6E5E0047DD00 /* ColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsView.swift; sourceTree = "<group>"; };
@@ -307,13 +281,9 @@
 		3D0789CC259C5F0A0047DD00 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		3D07DA7B1BDC58B50001EFE4 /* Athan Utility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Utility.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D07DA801BDC58B60001EFE4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3D07DA851BDC58B60001EFE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D07DA881BDC58B60001EFE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D07DA901BDC58E30001EFE4 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
-		3D07DA921BDC58E30001EFE4 /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
-		3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerCell.swift; sourceTree = "<group>"; };
-		3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PrayerCell.xib; sourceTree = "<group>"; };
 		3D07DA961BDC58E30001EFE4 /* ClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 		3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextView.swift; sourceTree = "<group>"; };
 		3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerManagerDelegate.swift; sourceTree = "<group>"; };
@@ -321,12 +291,9 @@
 		3D13E89125773BFD0041F1AC /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		3D13E898257757100041F1AC /* PrayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSettingsView.swift; sourceTree = "<group>"; };
 		3D13E8A4257759FA0041F1AC /* SoundSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingView.swift; sourceTree = "<group>"; };
-		3D15F53C242827210010C709 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3D16F10A2560859D00C78B12 /* AthanManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanManager.swift; sourceTree = "<group>"; };
-		3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		3D1E50E1256D667D003E2E34 /* QiblaPointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QiblaPointerView.swift; sourceTree = "<group>"; };
 		3D1E50EF256F4620003E2E34 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerSettingController.swift; sourceTree = "<group>"; };
 		3D20CB1B2518DA0900275206 /* Athan WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Athan WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D20CB1C2518DA0900275206 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		3D20CB1E2518DA0900275206 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -350,23 +317,16 @@
 		3D52255020CDCE2400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52255620CDD25800CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52255820CDD42300CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3D52256920CDF50400CF8C3D /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D52256B20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3D52256C20CDF51B00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52256F20CDF51C00CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D52257220CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3D52257320CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3D52257620CDF53800CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3D52257820CDF54800CF8C3D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
-		3D52257920CDF55700CF8C3D /* ur */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ur; path = ur.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
-		3D52257A20CDF5BA00CF8C3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/QiblaViewController.xib; sourceTree = "<group>"; };
-		3D52257B20CDF5D200CF8C3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3D59923725930F5E006355CB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		3D6105032572D04E00C1D067 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalculationMethod+Extensions.swift"; sourceTree = "<group>"; };
 		3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Madhab+Extensions.swift"; sourceTree = "<group>"; };
-		3D6308321C08F3D700AC32B6 /* LocationInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationInputController.swift; sourceTree = "<group>"; };
-		3D6308331C08F3D700AC32B6 /* LocationInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationInputController.xib; sourceTree = "<group>"; };
 		3D67E05D2ADF3E010020B55B /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		3D6F7C452AE0E1E600E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		3D6F7C462AE0E1E600E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/AppIntentVocabulary.plist"; sourceTree = "<group>"; };
@@ -375,24 +335,16 @@
 		3D73EBE9256F5DEA0010C47D /* SolarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarView.swift; sourceTree = "<group>"; };
 		3D73EC3425717EB80010C47D /* PrayerSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSymbol.swift; sourceTree = "<group>"; };
 		3D73FC53228459FE0092A83C /* AthanSiriIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthanSiriIntents.entitlements; sourceTree = "<group>"; };
-		3D73FC55228491EA0092A83C /* ToneSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToneSettingCell.swift; sourceTree = "<group>"; };
-		3D73FC56228491EA0092A83C /* ToneSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToneSettingCell.xib; sourceTree = "<group>"; };
-		3D73FC592284A2020092A83C /* SiriCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriCell.swift; sourceTree = "<group>"; };
-		3D73FC5A2284A2020092A83C /* SiriCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SiriCell.xib; sourceTree = "<group>"; };
 		3D73FC662284DC720092A83C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		3D73FC6A2284EE1C0092A83C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		3D73FC8222887E670092A83C /* NoteSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSoundPlayer.swift; sourceTree = "<group>"; };
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
 		3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Convenience.swift; sourceTree = "<group>"; };
 		3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan WidgetExtension.entitlements"; sourceTree = "<group>"; };
-		3D7D42C11C00E5380013956C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		3D7D42C21C00E5380013956C /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		3D8CE83A256965F0006D6E46 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
-		3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QiblaViewController.swift; path = ../QiblaViewController.swift; sourceTree = "<group>"; };
-		3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingDelegate.swift; sourceTree = "<group>"; };
 		3D93E9DF21829D0C002019B7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		3D93EA072182C447002019B7 /* AthanSiriIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanSiriIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D93EA092182C447002019B7 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -419,7 +371,6 @@
 		3DCB30CA236B109200D47C7C /* UIView+Fading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Fading.swift"; sourceTree = "<group>"; };
 		3DD26B5125B25FAF00460BC3 /* CustomExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExtensionDelegate.swift; sourceTree = "<group>"; };
 		3DD26B7F25B27C5C00460BC3 /* ParallaxSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParallaxSwiftUI.swift; sourceTree = "<group>"; };
-		3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		3DD3B48F1C0D3B5700DC91E6 /* AthanToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AthanToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD3B4911C0D3B5700DC91E6 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		3DD3B4941C0D3B5700DC91E6 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -452,14 +403,12 @@
 		3DD7C1692ADFA5C800A6CDC0 /* makkah.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = makkah.caf; sourceTree = "<group>"; };
 		3DD7C16A2ADFA5C800A6CDC0 /* madina-preview.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "madina-preview.caf"; sourceTree = "<group>"; };
 		3DD7C17B2ADFA8C500A6CDC0 /* echo-30.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "echo-30.caf"; sourceTree = "<group>"; };
-		3DD843B720CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3DD843B820CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3DD843B920CE5D3100D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3DD843BC20CE5D3200D4309E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3DDCC77B258FE1CA004A6019 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
 		3DDE264D1BDD27B1004D3D1D /* Athan Utility Test-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Athan Utility Test-Bridging-Header.h"; sourceTree = "<group>"; };
 		3DE704C72ADC98C3000A470D /* GetXIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetXIntentHandler.swift; sourceTree = "<group>"; };
-		3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationSettingController.swift; sourceTree = "<group>"; };
 		3DEE3A5D25A6A04B00DC7331 /* Athan Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Athan Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DEE3A5F25A6A04D00DC7331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DEE3A6125A6A04D00DC7331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -475,7 +424,6 @@
 		3DEE3A7B25A6A04E00DC7331 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		3DEF645F259EFE42004EE51F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		3DEF6486259FEC73004EE51F /* AthanPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AthanPlayView.swift; sourceTree = "<group>"; };
-		3DEF64C925A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QiblaViewController.strings; sourceTree = "<group>"; };
 		3DEF64CA25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		3DEF64CB25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3DEF64CC25A0D97E004EE51F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -628,16 +576,12 @@
 				3D8CE84125696639006D6E46 /* Settings Managers */,
 				3D599260259403E0006355CB /* Extensions */,
 				3DF0040F1C14D957006AB3D7 /* Athan Utility.entitlements */,
-				3D07DA801BDC58B60001EFE4 /* ViewController.swift */,
 				3DAE45662560A4F100156CFF /* Helper Views */,
 				3D4416E71C05174700329AA0 /* General */,
-				3D4416E61C05173D00329AA0 /* Qibla */,
-				3D4416E51C05172400329AA0 /* Settings */,
-				3D4CEDA61BDD597700CA095E /* Table */,
 				3D4CEDA41BDD594800CA095E /* Clock and Elapsed View */,
 				3D07DA851BDC58B60001EFE4 /* Assets.xcassets */,
+				3D73FC672284DC720092A83C /* AppIntentVocabulary.plist */,
 				3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */,
-				3D15F53C242827210010C709 /* Default-568h@2x.png */,
 				3DEF64D925A23F45004EE51F /* Info.plist */,
 				3DEF64F925A245C9004EE51F /* InfoPlist.strings */,
 				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
@@ -692,38 +636,6 @@
 			path = "Athan Stickers";
 			sourceTree = "<group>";
 		};
-		3D4416E51C05172400329AA0 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				3D73FC672284DC720092A83C /* AppIntentVocabulary.plist */,
-				3DD3B4871C0D1B9400DC91E6 /* AboutViewController.swift */,
-				3D1AD81B1C835DC4009C5865 /* AboutViewController.xib */,
-				3D6308321C08F3D700AC32B6 /* LocationInputController.swift */,
-				3D6308331C08F3D700AC32B6 /* LocationInputController.xib */,
-				3D1F39171C023EB1005C1773 /* PrayerSettingController.swift */,
-				3DE8632F251FF2530003FB06 /* CalculationSettingController.swift */,
-				3D7D42C11C00E5380013956C /* SettingsViewController.swift */,
-				3D7D42C21C00E5380013956C /* SettingsViewController.xib */,
-				3D033BD71C01203F00CCE84A /* PrayerSettingCell.swift */,
-				3D033BD81C01203F00CCE84A /* PrayerSettingCell.xib */,
-				3D73FC55228491EA0092A83C /* ToneSettingCell.swift */,
-				3D73FC56228491EA0092A83C /* ToneSettingCell.xib */,
-				3D73FC592284A2020092A83C /* SiriCell.swift */,
-				3D73FC5A2284A2020092A83C /* SiriCell.xib */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
-		3D4416E61C05173D00329AA0 /* Qibla */ = {
-			isa = PBXGroup;
-			children = (
-				3D936A1E1BE3AF030060790D /* HeadingDelegate.swift */,
-				3D936A1A1BE3A98B0060790D /* QiblaViewController.swift */,
-				3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */,
-			);
-			name = Qibla;
-			sourceTree = "<group>";
-		};
 		3D4416E71C05174700329AA0 /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -747,16 +659,6 @@
 				3D07DA971BDC58E30001EFE4 /* BubbleTextView.swift */,
 			);
 			name = "Clock and Elapsed View";
-			sourceTree = "<group>";
-		};
-		3D4CEDA61BDD597700CA095E /* Table */ = {
-			isa = PBXGroup;
-			children = (
-				3D07DA921BDC58E30001EFE4 /* TableController.swift */,
-				3D07DA931BDC58E30001EFE4 /* PrayerCell.swift */,
-				3D07DA941BDC58E30001EFE4 /* PrayerCell.xib */,
-			);
-			name = Table;
 			sourceTree = "<group>";
 		};
 		3D599260259403E0006355CB /* Extensions */ = {
@@ -1206,21 +1108,15 @@
 				3DD7C16D2ADFA5C900A6CDC0 /* makkah-preview.caf in Resources */,
 				3DD7C1762ADFA5C900A6CDC0 /* alaqsa-2-preview.caf in Resources */,
 				3DD7C17C2ADFA8C500A6CDC0 /* echo-30.caf in Resources */,
-				3D52256520CDF4FA00CF8C3D /* QiblaViewController.xib in Resources */,
-				3D73FC58228491EA0092A83C /* ToneSettingCell.xib in Resources */,
 				3DD7C17A2ADFA5C900A6CDC0 /* madina-preview.caf in Resources */,
 				3DD7C1742ADFA5C900A6CDC0 /* egypt-30.caf in Resources */,
-				3D7D42C41C00E5380013956C /* SettingsViewController.xib in Resources */,
-				3D15F53D242827210010C709 /* Default-568h@2x.png in Resources */,
 				3DD7C16F2ADFA5C900A6CDC0 /* madina.caf in Resources */,
 				3D07DA891BDC58B60001EFE4 /* LaunchScreen.storyboard in Resources */,
 				3DD7C1732ADFA5C900A6CDC0 /* egypt.caf in Resources */,
-				3D6308351C08F3D700AC32B6 /* LocationInputController.xib in Resources */,
 				3DEF64F725A245C9004EE51F /* InfoPlist.strings in Resources */,
 				3DD7C1582ADFA5A900A6CDC0 /* abdulghaffar.caf in Resources */,
 				3D07DA861BDC58B60001EFE4 /* Assets.xcassets in Resources */,
 				3DD7C1792ADFA5C900A6CDC0 /* makkah.caf in Resources */,
-				3D1AD81C1C835DC4009C5865 /* AboutViewController.xib in Resources */,
 				3DD7C1542ADFA59700A6CDC0 /* abdulghaffar-30.caf in Resources */,
 				3DD7C1772ADFA5C900A6CDC0 /* alaqsa-30.caf in Resources */,
 				3DD7C1752ADFA5C900A6CDC0 /* alaqsa.caf in Resources */,
@@ -1231,12 +1127,9 @@
 				3DD7C1522ADFA58A00A6CDC0 /* abdulbaset.caf in Resources */,
 				3DD7C16C2ADFA5C900A6CDC0 /* makkah-30.caf in Resources */,
 				3DD7C16E2ADFA5C900A6CDC0 /* alaqsa-preview.caf in Resources */,
-				3D73FC5C2284A2020092A83C /* SiriCell.xib in Resources */,
 				3D52255520CDD25800CF8C3D /* Localizable.strings in Resources */,
-				3D07DA9E1BDC58E30001EFE4 /* PrayerCell.xib in Resources */,
 				3DD7C14E2ADFA57100A6CDC0 /* abdulbaset-preview.caf in Resources */,
 				3D73FC632284DC720092A83C /* AppIntentVocabulary.plist in Resources */,
-				3D033BDA1C01203F00CCE84A /* PrayerSettingCell.xib in Resources */,
 				3DD7C1782ADFA5C900A6CDC0 /* alaqsa-2.caf in Resources */,
 				3DD7C1562ADFA59E00A6CDC0 /* abdulghaffar-preview.caf in Resources */,
 				3DD7C1502ADFA57D00A6CDC0 /* abdulbaset-30.caf in Resources */,
@@ -1316,7 +1209,6 @@
 				3D0789732599B8C50047DD00 /* NameOverridesView.swift in Sources */,
 				3D76E8A91C0621D60004E3F7 /* OptionsNavigatonController.swift in Sources */,
 				3DB9EE51259D026E00601E1E /* CalendarView.swift in Sources */,
-				3D7D42C31C00E5380013956C /* SettingsViewController.swift in Sources */,
 				3D1E50E2256D667D003E2E34 /* QiblaPointerView.swift in Sources */,
 				3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */,
 				3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */,
@@ -1325,7 +1217,6 @@
 				3D07DAA31BDC58E30001EFE4 /* PrayerManagerDelegate.swift in Sources */,
 				3D9B9FFD2575425F00F02EFD /* SwifySuncalc.swift in Sources */,
 				3D07894C25998D8E0047DD00 /* CalculationMethodView.swift in Sources */,
-				3DD3B4891C0D1B9400DC91E6 /* AboutViewController.swift in Sources */,
 				3D77056B251C37F4007BCEAA /* UIView_Convenience.swift in Sources */,
 				3D4AC195251D94BE00B2D41D /* SceneDelegate.swift in Sources */,
 				3D73FC8322887E670092A83C /* NoteSoundPlayer.swift in Sources */,
@@ -1333,41 +1224,30 @@
 				3D9BA01A2575446F00F02EFD /* MoonView3D.swift in Sources */,
 				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
-				3D033BD91C01203F00CCE84A /* PrayerSettingCell.swift in Sources */,
 				3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */,
 				3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */,
 				3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
-				3D73FC57228491EA0092A83C /* ToneSettingCell.swift in Sources */,
-				3D73FC5B2284A2020092A83C /* SiriCell.swift in Sources */,
 				3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
 				3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */,
 				3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */,
-				3D936A1F1BE3AF030060790D /* HeadingDelegate.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
-				3D07DA811BDC58B60001EFE4 /* ViewController.swift in Sources */,
 				3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */,
 				3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */,
-				3D936A1C1BE3A98B0060790D /* QiblaViewController.swift in Sources */,
-				3DE86330251FF2530003FB06 /* CalculationSettingController.swift in Sources */,
 				3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */,
 				3DA6F01325617BBE00C2C348 /* NotificationsManager.swift in Sources */,
 				3D59923825930F5E006355CB /* MapView.swift in Sources */,
-				3D6308341C08F3D700AC32B6 /* LocationInputController.swift in Sources */,
 				3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */,
 				3D07DAA11BDC58E30001EFE4 /* BubbleTextView.swift in Sources */,
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
-				3D1F39191C023EB2005C1773 /* PrayerSettingController.swift in Sources */,
 				3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */,
 				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,
-				3D07DA9C1BDC58E30001EFE4 /* TableController.swift in Sources */,
 				3D33FB9029C9E2B600F9CDD9 /* CalendarExport.swift in Sources */,
 				3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */,
-				3D07DA9D1BDC58E30001EFE4 /* PrayerCell.swift in Sources */,
 				3D67E05E2ADF3E010020B55B /* ShareSheet.swift in Sources */,
 				3D07897A259A6E5E0047DD00 /* ColorsView.swift in Sources */,
 				3D4AC134251D894600B2D41D /* MainSwiftUI.swift in Sources */,
@@ -1396,7 +1276,6 @@
 				3D73EC182570DAB80010C47D /* AthanManager.swift in Sources */,
 				3DCAB7AB25AEC6580075801B /* PhoneWatchDelegate.swift in Sources */,
 				3D770571251C3812007BCEAA /* Global.swift in Sources */,
-				3D770577251C3824007BCEAA /* HeadingDelegate.swift in Sources */,
 				3D20CB222518DA0900275206 /* Athan_Widget.swift in Sources */,
 				3D770554251C3393007BCEAA /* Widget_Provider.swift in Sources */,
 				3D0789A9259C23760047DD00 /* Strings.swift in Sources */,
@@ -1415,7 +1294,6 @@
 				3DB56CE92281FA4E00B9F738 /* ListPrayersIntentHandler.swift in Sources */,
 				3DE704C82ADC98C3000A470D /* GetXIntentHandler.swift in Sources */,
 				3D93EA0A2182C447002019B7 /* IntentHandler.swift in Sources */,
-				3DB56CF2228368B900B9F738 /* HeadingDelegate.swift in Sources */,
 				3D73EBF7257027290010C47D /* SettingsModels.swift in Sources */,
 				3D73FC6C2285C3380092A83C /* Settings.swift in Sources */,
 				3D73EC122570DAB80010C47D /* AthanManager.swift in Sources */,
@@ -1543,20 +1421,6 @@
 				3D6F7C452AE0E1E600E73490 /* zh-Hans */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		3D52256720CDF4FA00CF8C3D /* QiblaViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3D52256920CDF50400CF8C3D /* ar */,
-				3D52257820CDF54800CF8C3D /* fr */,
-				3D52257920CDF55700CF8C3D /* ur */,
-				3D52257A20CDF5BA00CF8C3D /* Base */,
-				3D52257B20CDF5D200CF8C3D /* en */,
-				3DD843B720CE5D3100D4309E /* tr */,
-				3DEF64C925A0D97E004EE51F /* es */,
-			);
-			name = QiblaViewController.xib;
 			sourceTree = "<group>";
 		};
 		3D73FC672284DC720092A83C /* AppIntentVocabulary.plist */ = {
@@ -1733,6 +1597,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1761,6 +1626,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2091,6 +1957,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
@@ -2125,6 +1992,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
@@ -2153,6 +2021,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2188,6 +2057,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;

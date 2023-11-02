@@ -472,7 +472,7 @@ struct GeneralSettingView: View {
                                             MailView(result: $result) { composer in
                                                 composer.setSubject("Feedback for Athan Utility")
                                                 composer.title = "Email Developer"
-                                                composer.setToRecipients(["omalsecondary@gmail.com"])
+                                                composer.setToRecipients(["athan.utility@gmail.com"])
                                             }
                                         }
                                     }

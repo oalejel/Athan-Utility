@@ -87,7 +87,7 @@ struct SmallWidget: View {
                     .multilineTextAlignment(.trailing)
             }
         }
-        .padding()
+        //        .padding()
         
     }
 }
@@ -188,7 +188,6 @@ struct MediumWidget: View {
             }.padding(.top, 10)
             
         }
-        .padding()
         
     }
 }
@@ -373,63 +372,80 @@ struct Athan_WidgetEntryView : View {
             // supported cases with available data
         case (.systemSmall, false):
             SmallWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.systemMedium, false):
             MediumWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.systemLarge, false): // ignored since not in supported list
             LargeWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.accessoryRectangular, false):
             AccessoryRectangularWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryInline, false):
             AccessoryInlineWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryCircular, false):
             AccessoryCircularWidget(entry: entry)
-                .applyBackground(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
             
             
             // error cases (no athan data)
         case (.systemSmall, true):
             SmallErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.systemMedium, true):
             MediumErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.systemLarge, true): // ignored since not in supported list
             LargeWidget(entry: entry)
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         case (.accessoryRectangular, true):
             AccessoryRectangularErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryInline, true):
             AccessoryInlineErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryCircular, true):
             AccessoryCircularErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
             
             
-            // other...
+            // Error version of other currently unsupported widgets...
         case (.systemExtraLarge, _):
             MediumErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         @unknown default:
             SmallErrorWidget()
+                .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         }
     }
 }
 
-// Support iOS 17+ container backgrounds
+// Support iOS 17+ container backgrounds.
+// Some widgets don't have background or need padding.
 extension View {
     @ViewBuilder
-    func applyBackground(entry: AthanEntry) -> some View {
+    func applyContainerBackground(entry: AthanEntry, useGradientBackground: Bool, usePadding: Bool) -> some View {
         if #available(iOS 17, *) {
-            self.containerBackground(for: .widget) {
-                LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .ignoresSafeArea()
-            }
-            .contentMargins(0)
-            .ignoresSafeArea()
+            self
+                .padding(.all, usePadding ? nil : 0)
+                .containerBackground(for: .widget) {
+                    if useGradientBackground {
+                        LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                            .ignoresSafeArea()
+                        
+                    }
+                }
+                .contentMargins(0)
+                .ignoresSafeArea()
         } else {
             ZStack {
-                LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                if useGradientBackground {
+                    LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                }
                 self
+                    .padding(.all, usePadding ? nil : 0)
             }
         }
     }
@@ -444,7 +460,7 @@ struct Athan_Widget: Widget {
         if #available(iOSApplicationExtension 16.0, *) {
             return IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
                 Athan_WidgetEntryView(entry: entry)
-                    
+                
             }
             .contentMarginsDisabled()
             .configurationDisplayName("Athan Widget")
@@ -493,7 +509,6 @@ struct Athan_Widget_Previews: PreviewProvider {
         }
         
         let nextDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())!
-        //        nextDate = Calendar.current.date(byAdding: .minute, value: 13, to: nextDate)!
         let entry = AthanEntry(date: Date(),
                                currentPrayer: .sunrise,
                                currentPrayerDate: Date(),

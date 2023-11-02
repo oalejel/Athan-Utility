@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
             
             #warning("localize whats new")
-            // if systme language not explicity english, dont show whats new screen
+            // if system language not explicity english, dont show whats new screen
             if !(Locale.preferredLanguages.first?.hasPrefix("en") ?? false) {
                 return
             }
@@ -91,26 +91,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             
             // LATEST FEATURES - show for existing and new users
-            featuresToDisplay.append(contentsOf: [
-                .init(image: .init(systemName: "platter.2.filled.iphone.landscape"),
-                      title: "StandBy Widgets",
-                      subtitle: "See the latest Athan times in iOS 17's StandBy mode."),
-                .init(image: .init(systemName: "message.badge.filled.fill"),
-                      title: "iMessage Stickers",
-                      subtitle: "Share fun stickers in iMessage with the new Athan Sticker pack."),
-                .init(image: .init(systemName: "stopwatch"),
-                      title: "30 second Athan",
-                      subtitle: "Choose between 5 and 30 second-long Athan notifications."),
-                .init(image: .init(systemName: "plus.forwardslash.minus"),
-                      title: "Time Adjustments",
-                      subtitle: "Set custom time adjustments for each prayer."),
-                .init(image: .init(systemName: "calendar"),
-                      title: "Calendar Button",
-                      subtitle: "The monthly Athan Calendar is now easier to find."),
-                .init(image: .init(systemName: "square.and.arrow.up.on.square.fill"),
-                      title: "Calendar Export",
-                      subtitle: "Export Athan times to .csv to chart in Excel or Numbers."),
-            ])
+            // If newly updating to v7.x.x
+            let hasPresentedV7 = versionStore.presentedVersions.contains(where: { $0.major == 7 })
+            if !hasPresentedV7 {
+                // Remove "and more" entry from general list
+                if !featuresToDisplay.isEmpty { featuresToDisplay.removeLast() }
+                
+                featuresToDisplay.append(contentsOf: [
+                    .init(image: .init(systemName: "platter.2.filled.iphone.landscape"),
+                          title: "StandBy Widgets",
+                          subtitle: "See the latest Athan times in iOS 17's StandBy mode."),
+                    .init(image: .init(systemName: "message.badge.filled.fill"),
+                          title: "iMessage Stickers",
+                          subtitle: "Share fun stickers in iMessage with the new Athan Sticker pack."),
+                    .init(image: .init(systemName: "stopwatch"),
+                          title: "30 second Athan",
+                          subtitle: "Choose between 5 and 30 second-long Athan notifications."),
+                    .init(image: .init(systemName: "plus.forwardslash.minus"),
+                          title: "Time Adjustments",
+                          subtitle: "Set custom time adjustments for each prayer."),
+                    .init(image: .init(systemName: "calendar"),
+                          title: "Calendar Button",
+                          subtitle: "The monthly Athan Calendar is now easier to find."),
+                    .init(image: .init(systemName: "square.and.arrow.up.on.square.fill"),
+                          title: "Calendar Export",
+                          subtitle: "Export Athan times to .csv to chart in Excel or Numbers."),
+                ])
+            }
+            
+            // Don't present WhatsNew if no new features exist
+            if featuresToDisplay.isEmpty {
+                return
+            }
             
             let whatsNew = WhatsNew(
                 title: "What's New",

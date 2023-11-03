@@ -22,6 +22,17 @@ A simple, lightweight Athan application.
 - Zero data collection or ads
 
 
+<div align="center">
+
+
+<img src="https://github.com/oalejel/Athan-Utility/assets/6698326/07dfce3f-010e-4e8c-8408-5b0e96832e4e" width="200"> <img src="https://github.com/oalejel/Athan-Utility/assets/6698326/0d6f5352-39dc-4728-aad4-ab5c17131c51" width="200">  <img src="https://github.com/oalejel/Athan-Utility/assets/6698326/feca28bb-f514-4508-b94b-4321382f4b4c" width="200"> 
+
+<img src="https://github.com/oalejel/Athan-Utility/assets/6698326/2858ed07-3184-4deb-a3d6-6db127642854" width="200"> <img src="https://github.com/oalejel/Athan-Utility/assets/6698326/ef807c24-4692-49a8-bfa8-41e41295f9bd" width="200">  <img src="https://github.com/oalejel/Athan-Utility/assets/6698326/2a6752c1-0cf2-4fd5-b62b-bb1aeab2c7a1" width="200"> 
+
+</div>
+
+
+
 # Copyright
 Athan Utility's code is made available to the public for transparency. Anyone may privately use and modify the source code, but cannot use interface related code for sale on the App Store or copy the app's likeness.
 

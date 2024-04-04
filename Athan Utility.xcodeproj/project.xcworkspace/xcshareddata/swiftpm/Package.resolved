@@ -1,12 +1,13 @@
 {
+  "originHash" : "07a2d29d2dddf554ce420b9badec484cff4dd30686eaaed8b06b562440e282f0",
   "pins" : [
     {
       "identity" : "adhan-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/batoulapps/adhan-swift",
       "state" : {
-        "revision" : "3723ee71c900ad3bc93868c32ff039c1322a1fb4",
-        "version" : "1.2.0"
+        "branch" : "main",
+        "revision" : "127280c27c303f7898f59070580f4789a75df628"
       }
     },
     {
@@ -15,7 +16,7 @@
       "location" : "https://github.com/techprimate/TPPDF",
       "state" : {
         "branch" : "main",
-        "revision" : "f54cc9a4919a7c4a021b47a94e7267037fc9943a"
+        "revision" : "572a6c1a863f9ced44b269d0d3718b03017ee691"
       }
     },
     {
@@ -24,9 +25,9 @@
       "location" : "https://github.com/SvenTiigi/WhatsNewKit",
       "state" : {
         "branch" : "main",
-        "revision" : "1366a8b5855ea97fc52439f68ff29b15846d9403"
+        "revision" : "a81f41ea63870205f281b8d051b264f7b303f6d4"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

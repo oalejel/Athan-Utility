@@ -111,6 +111,8 @@ final class MoonViewController: UIViewController, SCNSceneRendererDelegate, UIGe
         // connect to vc
         scnView.delegate = self
         self.view = scnView
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: Notification.Name("AppDidBecomeActive"), object: nil)
     }
 
     @objc func panGesture(g: UIPanGestureRecognizer) {
@@ -191,7 +193,15 @@ final class MoonViewController: UIViewController, SCNSceneRendererDelegate, UIGe
         super.viewWillAppear(animated)
         print("VIEW WILL APPEAR")
         scnView.scene = scene
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         // always animate light to correct position when view updated
+        rotateLight()
+    }
+    
+    // handle updates when app has been backgrounded for a long time
+    @objc func appDidBecomeActive() {
         rotateLight()
     }
 }

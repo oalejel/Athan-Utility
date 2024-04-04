@@ -88,6 +88,8 @@ class NotificationSettings: Codable, NSCopying {
         case egypt
         case abdulbaset
         case abdulghaffar
+        case zakariya
+        case alqatami
         
         func localizedString() -> String { 
             switch self {
@@ -100,6 +102,8 @@ class NotificationSettings: Codable, NSCopying {
                 case .egypt: return NSLocalizedString("Egypt", comment: "")
                 case .abdulbaset: return NSLocalizedString("Abdulbaset", comment: "")
                 case .abdulghaffar: return NSLocalizedString("Abdulghaffar", comment: "")
+                case .zakariya: return NSLocalizedString("Zakariya", comment: "")
+                case .alqatami: return NSLocalizedString("Al-Qatami", comment: "")
             }
         }
         
@@ -114,6 +118,8 @@ class NotificationSettings: Codable, NSCopying {
             case .egypt: return "egypt"
             case .abdulbaset: return "abdulbaset"
             case .abdulghaffar: return "abdulghaffar"
+            case .zakariya: return "zakariya"
+            case .alqatami: return "al-qatami"
             }
         }
     }

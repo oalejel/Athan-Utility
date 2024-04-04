@@ -321,6 +321,13 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             params.adjustments = adjustments
         }
         
+        // handle ummAlQura +30m isha adjustment on ramadan
+        let hijriCal = Calendar(identifier: .islamicUmmAlQura)
+        let islamicComponents = hijriCal.dateComponents([.month], from: referenceDate)
+        if PrayerSettings.shared.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
+            params.adjustments.isha += 30
+        }
+        
         if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
             return prayers
         }

@@ -187,7 +187,6 @@ struct MainSwiftUI: View {
                 let r2 = Int(new / 0.33)
                 
                 if r1 != r2 {
-//                    print(r1, r2)
                     if r2 > r1 {
                         if r2 == 3 {
                             DispatchQueue.main.async {

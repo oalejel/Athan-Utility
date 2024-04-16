@@ -13,7 +13,6 @@ import MessageUI
 
 @available(iOS 13.0.0, *)
 struct GeneralSettingView: View {
-    
     @EnvironmentObject var manager: ObservableAthanManager
     
     @Binding var tempLocationSettings: LocationSettings
@@ -21,19 +20,10 @@ struct GeneralSettingView: View {
     @Binding var tempPrayerSettings: PrayerSettings
     @Binding var tempAppearanceSettings: AppearanceSettings
     
-    //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
-    //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
+    // used to trigger transition back
+    @Binding var parentSession: PresentedSectionType
     
-    //    @Binding var fajrOverride: String
-    //    @Binding var sunriseOverride: String
-    //    @Binding var dhuhrOverride: String
-    //    @Binding var asrOverride: String
-    //    @Binding var maghribOverride: String
-    //    @Binding var ishaOverride: String
-    //
-    @Binding var parentSession: CurrentView // used to trigger transition back
-    
-    @Binding var activeSection: SettingsSectionType
+    @Binding var activeSettingsSection: SettingsSectionType
     @Binding var dismissSounds: Bool
     @State var settingsState: SettingsSectionType
     
@@ -42,14 +32,13 @@ struct GeneralSettingView: View {
     
     @State var contentOffset = CGFloat(0)
     @Binding var savedOffset: CGFloat
-    @State var scrollHeight = CGFloat(300) // wills adjust on appear
+    @State var scrollHeight = CGFloat(300) // to be adjusted on appearance
     @State var showPrivacyView = false
     
-    // contact developer
-    @State private var result: Result<MFMailComposeResult, Error>? = nil
+    // Developer contact properties
+    @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
     @State private var isShowingMailView = false
 
-//    @available(iOS 14.0, *)
     @State var proxy: Any? = nil
     
     var body: some View {
@@ -98,7 +87,7 @@ struct GeneralSettingView: View {
                                         
                                         Button(action: {
                                             withAnimation {
-                                                activeSection = .Colors
+                                                activeSettingsSection = .Colors
                                             }
                                         }, label: {
                                             HStack {
@@ -148,7 +137,7 @@ struct GeneralSettingView: View {
                                         
                                         Button(action: {
                                             withAnimation {
-                                                activeSection = .CustomNames
+                                                activeSettingsSection = .CustomNames
                                             }
                                         }, label: {
                                             HStack {
@@ -203,7 +192,7 @@ struct GeneralSettingView: View {
                                         
                                         Button(action: { // calculation method button
                                             withAnimation {
-                                                activeSection = .CalculationMethod
+                                                activeSettingsSection = .CalculationMethod
                                             }
                                         }, label: {
                                             HStack {
@@ -305,7 +294,7 @@ struct GeneralSettingView: View {
                                         Button(action: {
                                             print("show athan sounds view")
                                             withAnimation {
-                                                activeSection = .Sounds
+                                                activeSettingsSection = .Sounds
                                             }
                                         }, label: {
                                             HStack {
@@ -346,7 +335,7 @@ struct GeneralSettingView: View {
                                         ForEach(prayers, id: \.self) { p in
                                             Button(action: {
                                                 withAnimation {
-                                                    activeSection = .Prayer(p)
+                                                    activeSettingsSection = .Prayer(p)
                                                 }
                                             }, label: {
                                                 HStack {
@@ -469,7 +458,7 @@ struct GeneralSettingView: View {
                                     .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
                                     .sheet(isPresented: $isShowingMailView) {
                                         if MFMailComposeViewController.canSendMail() {
-                                            MailView(result: $result) { composer in
+                                            MailView(result: $mailCompositionResult) { composer in
                                                 composer.setSubject("Feedback for Athan Utility")
                                                 composer.title = "Email Developer"
                                                 composer.setToRecipients(["athan.utility@gmail.com"])

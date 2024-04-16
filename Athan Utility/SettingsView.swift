@@ -62,7 +62,7 @@ struct SettingsView: View {
     //    @State var selectedMadhab: Madhab = PrayerSettings.shared.madhab
     //    @State var selectedMethod: CalculationMethod = PrayerSettings.shared.calculationMethod
     
-    @Binding var parentSession: CurrentView // used to trigger transition back
+    @Binding var parentSession: PresentedSectionType // used to trigger transition back
     
     @State var activeSection = SettingsSectionType.General
     @State var dismissSounds = false

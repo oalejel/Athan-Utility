@@ -24,7 +24,6 @@ struct Triangle: Shape {
 struct QiblaPointerView: View {
     @Binding var angle: Double
     @Binding var qiblaAngle: Double // correct angle, which we should highlight and vibrate for
-    @Binding var hidePointer: Double
     var body: some View {
         GeometryReader { g in
             let pointerLength = g.size.width / 6
@@ -41,19 +40,18 @@ struct QiblaPointerView: View {
                     .strokeBorder(Color.white, lineWidth: lineWidth)
                     .padding(pointerLength)
                 
-                if hidePointer < 0.001 {
-                    Triangle()
-                        .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
-                        .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
-                        .foregroundColor(.white)
-    //                    .rotationEffect(.degrees(angle), anchor: .center)
-                        .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
-                        .animation(Animation.default.speed(1))
-                        .transition(.opacity)
-                }
+                
+                Triangle()
+                    .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
+                    .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
+                    .foregroundColor(.white)
+                    .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
+                    .animation(Animation.default.speed(1))
+                    .transition(.opacity)
+                
             }
         }
-    
+        
     }
 }
 
@@ -93,24 +91,24 @@ struct ShortRotation: ViewModifier {
     var anchor:UnitPoint
     var id:Int
     
-func getAngle() -> Angle {
-    var newAngle = angle
-    
-    if let lastAngle = ShortRotation.storage[id] {
-        let change:Double = (newAngle.degrees - lastAngle.degrees) %% 360.0
-          
-        if change < 180 {
-            newAngle = lastAngle + Angle.init(degrees: change)
+    func getAngle() -> Angle {
+        var newAngle = angle
+        
+        if let lastAngle = ShortRotation.storage[id] {
+            let change:Double = (newAngle.degrees - lastAngle.degrees) %% 360.0
+            
+            if change < 180 {
+                newAngle = lastAngle + Angle.init(degrees: change)
+            }
+            else {
+                newAngle = lastAngle + Angle.init(degrees: change - 360)
+            }
         }
-        else {
-            newAngle = lastAngle + Angle.init(degrees: change - 360)
-        }
+        
+        ShortRotation.storage[id] = newAngle
+        
+        return newAngle
     }
-    
-    ShortRotation.storage[id] = newAngle
-
-    return newAngle
-}
     
     func body(content: Content) -> some View {
         content
@@ -121,7 +119,7 @@ func getAngle() -> Angle {
 @available(iOS 13.0.0, *)
 struct QiblaPointerPreview: PreviewProvider {
     static var previews: some View {
-        QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13), hidePointer: .constant(0))
+        QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13))
             .background(Rectangle(), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }

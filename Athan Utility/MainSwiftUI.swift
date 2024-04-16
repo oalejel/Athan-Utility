@@ -11,25 +11,12 @@ import Adhan
 import Combine
 import StoreKit
 
-enum CurrentView {
+// Top-level section state enum
+enum PresentedSectionType {
     case Main, Settings, Location
 }
 
-@available(iOS 13.0.0, *)
-extension View {
-    func onValueChanged<Value: Equatable>(_ value: Value, completion: (Value) -> Void) -> some View {
-        completion(value)
-        return self
-    }
-}
-
-@available(iOS 13.0.0, *)
-class CalendarDragState: ObservableObject {
-    @Published var progress: Double = 0
-    @Published var dragIncrement: Int = 0
-    @Published var showCalendar: Bool = false
-}
-
+// State of user drag along solar curve
 @available(iOS 13.0.0, *)
 class DayProgressState: ObservableObject {
     // user input based publishers
@@ -39,33 +26,14 @@ class DayProgressState: ObservableObject {
     @Published var manualCurrentPrayerProgress: Double = 0
     @Published var truthCurrentPrayerProgress: Double = 0
     @Published var previewPrayerProgress: Double = 0 // changed by a if dragging
-    //    @Published var previewPrayer: Prayer? = nil
     
     @Published var manualPrayer: Prayer? = nil
     @Published var previewPrayer: Prayer? = nil // agreement between manager and user
     @Published var nonOptionalPreviewPrayer: Prayer = .fajr
-    
-}
-
-@available(iOS 14.0.0, *)
-struct UpdatingTextView: View {
-    @Binding var id: Int
-    var body: some View {
-        Text("\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
-            .fontWeight(.bold)
-            .autocapitalization(.none)
-            .foregroundColor(Color(.lightText))
-            .multilineTextAlignment(.trailing)
-            .minimumScaleFactor(0.01)
-            .fixedSize(horizontal: false, vertical: true)
-            .lineLimit(1)
-            .id(id)
-    }
 }
 
 @available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
-    
     @EnvironmentObject var manager: ObservableAthanManager
     @Environment(\.horizontalSizeClass) var _horizontalSizeClass
     // MARK: - Combine Properties
@@ -83,19 +51,15 @@ struct MainSwiftUI: View {
     var consensusPreviewPrayerCancellable: AnyCancellable? // manual.p + manager.p -> visible
     var nonOptionalPreviewPrayerCancellable: AnyCancellable?
     
-    
-    @ObservedObject var dragState = CalendarDragState()
     @ObservedObject var dayProgressState = DayProgressState()
     @State var minuteTimer: Timer? = nil
     
     @State var settingsToggled = false
     @State var locationSettingsToggled = false
+    @State var showCalendar = false
     
-    @State var currentView: CurrentView
-    
-//    @State var todayHijriString = hijriDateString(date: Date())
-    //    @State var tomorrowHijriString = hijriDateString(date: Date().addingTimeInterval(86400))
-    
+    @State var currentView: PresentedSectionType
+        
     @State var nextRoundMinuteTimer: Timer?
     //    @State var percentComplete: Double = 0.0
     let secondsTimer = Timer.publish(
@@ -107,12 +71,6 @@ struct MainSwiftUI: View {
     @State var relativeTimeStr: String = ""
     @State var relativeDateId: Int = 0
     func relativeTime() -> String { // used for ios 13
-        
-        //            let formatter = RelativeDateTimeFormatter()
-        //
-        //            formatter.unitsStyle = .full
-        //            return formatter.localizedString(for: referenceDate, relativeTo: Date())
-        
         let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
                                                     to: AthanManager.shared.guaranteedNextPrayerTime())
         
@@ -177,35 +135,7 @@ struct MainSwiftUI: View {
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
-        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) ? CurrentView.Location : CurrentView.Main)
-        
-        dragCancellable = dragState.$progress
-            .receive(on: RunLoop.main)
-            // pass along last value, and whether we had an increase
-            .scan((0.0, 0), { [self] (tup, new) -> (Double, Int) in
-                let r1 = Int(tup.0 / 0.33)
-                let r2 = Int(new / 0.33)
-                
-                if r1 != r2 {
-                    if r2 > r1 {
-                        if r2 == 3 {
-                            DispatchQueue.main.async {
-                                self.strongImpactGenerator.impactOccurred()
-                            }
-                        } else {
-                            DispatchQueue.main.async {
-                                self.weakImpactGenerator.impactOccurred()
-                            }
-                        }
-                    }
-                }
-                
-                return (new, r2)
-            })
-            .map { v in
-                return v.1
-            }
-            .assign(to: \.dragIncrement, on: dragState)
+        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) ? PresentedSectionType.Location : PresentedSectionType.Main)
         
         // for calculating progress of CURRENT prayer
         previewManualPrayerProgressCancellable = dayProgressState.$manualDayProgress
@@ -278,33 +208,9 @@ struct MainSwiftUI: View {
             .assign(to: \.nonOptionalPreviewPrayer, on: dayProgressState)
     }
     
-    @GestureState private var dragOffset = CGSize.zero
-    
     var body: some View {
         ZStack {
             GeometryReader { g in
-                //                let timeRemainingString: String = {
-                //                    let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
-                //                                                                to: AthanManager.shared.guaranteedNextPrayerTime())
-                //
-                //                    if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
-                //                        // 1h 2m | 1h | 53m | 10s
-                //                        if comps.hour == 0 && comps.minute == 0 {
-                //                            return "<1m left"
-                //                        } else if comps.minute == 0 { // only
-                //                            return "\(comps.hour!)h left"
-                //                        } else if comps.hour == 0 { // only mins
-                //                            return "\(comps.minute!)m left"
-                //                        }
-                //                        return "\(comps.hour!)h \(comps.minute!)m left"
-                //                    } else {
-                //                        let df = DateFormatter()
-                //                        df.locale = Locale.current
-                //
-                //                        return ""
-                //                    }
-                //                }()
-                
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
                     .equatable()
                 
@@ -336,7 +242,6 @@ struct MainSwiftUI: View {
                                         .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
                                 }
-                                .opacity(1 - 0.8 * dragState.progress)
                             }
                             VStack(alignment: .leading, spacing: 0) {
                                 VStack(alignment: .leading, spacing: 12) {
@@ -350,9 +255,7 @@ struct MainSwiftUI: View {
                                                 .shadow(radius: 3)
                                                 .flipsForRightToLeftLayoutDirection(false)
                                             Spacer()
-                                            //                                    AthanPlayView(currentPrayer: manager.currentPrayer, currentPrayerDate: AthanManager.shared.guaranteedCurrentPrayerTime())
                                         }
-                                        .opacity(1 - 0.8 * dragState.progress)
                                     }
                                     
                                     HStack(alignment: .lastTextBaseline) {
@@ -367,53 +270,23 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(.white)
                                                 .id("title" + dayProgressState.nonOptionalPreviewPrayer.stringValue())
                                         }
-                                        .opacity(1 - 0.8 * dragState.progress)
                                         .animation(.linear)
                                         
                                         Spacer() // space title | qibla
                                         
                                         VStack(alignment: .trailing, spacing: 0) {
                                             QiblaPointerView(angle: $manager.currentHeading,
-                                                             qiblaAngle: $manager.qiblaHeading,
-                                                             hidePointer: $dragState.progress)
+                                                             qiblaAngle: $manager.qiblaHeading)
                                                 .frame(width: g.size.width * 0.2, height: g.size.width * 0.2, alignment: .center)
                                                 .offset(x: g.size.width * 0.03, y: 0) // offset to let pointer go out
-                                                .opacity(1 - 0.8 * dragState.progress)
-//                                                .offset(qiblaDragAmount)
-//                                                .animation(.easeIn)
-                                            
-                                            // future feature for interactive drag to toggle qibla state
-//                                                .gesture(
-//                                                    DragGesture()
-//                                                        .onChanged {
-//                                                            self.qiblaDragAmount = $0.translation
-//                                                            let qiblaSwitchProgress = (qiblaDragAmount.width / (g.size.width / 2)) * (qiblaDragAmount.height / (g.size.height / 2))
-//
-//
-//                                                        }
-//                                                        .onEnded { _ in
-//                                                            self.qiblaDragAmount = .zero
-//                                                            let qiblaSwitchProgress = (qiblaDragAmount.width / (g.size.width / 2)) * (qiblaDragAmount.height / (g.size.height / 2))
-//                                                            if qiblaSwitchProgress > 1 {
-//                                                                assert(false)
-//                                                            }
-//
-//                                                        }
-//                                                )
-                                            
                                             
                                             // for now, time remaining will only show seconds on ios >=14
                                             if #available(iOS 14.0, *) {
                                                 // for now, only allow english to use "x minutes left". others will just have time stated
-                                                //                                            Text("\(relativeTimeStr == "." ? "" : "")\(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)\(Locale.preferredLanguages.first?.hasPrefix("en") == true ? " \(Strings.left)" : "")")
-                                                //                                            Text(AthanManager.shared.guaranteedNextPrayerTime(), style: .relative)
-                                                UpdatingTextView(id: $relativeDateId)
+                                                TimeLeftView(id: $relativeDateId)
                                                     .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                                    .opacity(1 - 0.8 * dragState.progress)
                                                     .onReceive(secondsTimer) { _ in
-//                                                        print("fire second timer")
                                                         relativeDateId += 1
-                                                        //                                                    relativeTimeStr = relativeTime() // updating this unrelated string was the only way to get this to work
                                                     }
                                             } else {
                                                 // Fallback on earlier versions
@@ -426,7 +299,6 @@ struct MainSwiftUI: View {
                                                     .fixedSize(horizontal: false, vertical: true)
                                                     .lineLimit(1)
                                                     .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                                                    .opacity(1 - 0.8 * dragState.progress)
                                                     .onReceive(secondsTimer) { _ in
 //                                                        print("fire second timer")
                                                         relativeTimeStr = relativeTime()
@@ -492,7 +364,6 @@ struct MainSwiftUI: View {
                                                 }
                                             }()
                                         }
-                                        .opacity(1 - 0.8 * dragState.progress)
                                     
                                     let cellFont = Font.system(size: min(50, g.size.width * 0.06))
                                     let timeFormatter: DateFormatter = {
@@ -536,78 +407,15 @@ struct MainSwiftUI: View {
                                                         .font(cellFont)
                                                         .bold()
                                                 }
-                                                .opacity(min(1, 1 - 0.8 * dragState.progress))
-                                                .rotation3DEffect(
-                                                    Angle(degrees: dragState.progress * 90 - 0.001),
-                                                    axis: (x: 1, y: 0, z: 0.0),
-                                                    anchor: .top,
-                                                    anchorZ: 0,
-                                                    perspective: 0.1
-                                                )
                                                 .animation(.linear(duration: 0.2))
-//                                                if pIndex != 5 {
                                                     Spacer()
-//                                                }
                                             }
                                         }
-                                        
-                                        VStack(alignment: .center, spacing: 18) { // hidden drag state views
-                                            ActivityIndicator(isAnimating: $dragState.showCalendar, style: .white)
-                                                .foregroundColor(dragState.showCalendar ? Color(.lightText) : Color.clear)
-                                            
-                                            Text(Strings.showCalendar)
-                                                .font(Font.body.bold())
-                                                .scaleEffect(dragState.progress > 0.999 ? 1.3 : 1)
-                                                .animation(.spring())
-                                            
-                                            Image(systemName: dragState.dragIncrement > 2 ? "arrow.up.circle.fill" : "arrow.up.circle")
-                                                .font(.title)
-                                            Image(systemName: dragState.dragIncrement > 1 ? "circle.fill" : "circle")
-                                                .font(Font.body.bold())
-                                            Image(systemName: dragState.dragIncrement > 0 ? "circle.fill" : "circle")
-                                                .font(Font.body.bold())
-                                        }
-                                        .foregroundColor(Color(.lightText))
-                                        .opacity(max(0, dragState.progress * 1.3 - 0.3))
-                                        .animation(.linear(duration: 0.2))
                                     }
-//                                    .gesture(
-//                                        DragGesture(minimumDistance: 0.1, coordinateSpace: .global)
-//                                            .onEnded({ _ in
-//                                                if dragState.progress > 0.999 {
-//                                                    dragState.showCalendar = true
-//                                                    Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { t in
-//                                                        // if still on max after half a second, go back to zero
-//                                                        // this is necessary because swiftui has a bug where onEnded is
-//                                                        // not called if a sheet apepars
-//                                                        if dragState.progress > 0.999 {
-//                                                            dragState.progress = 0
-//                                                        }
-//                                                    }
-//                                                } else {
-//                                                    withAnimation {
-//                                                        dragState.progress = 0
-//                                                    }
-//                                                }
-//                                            })
-//                                            .updating($dragOffset, body: { (value, state, transaction) in
-//                                                dragState.progress = Double(max(0.0, min(1.0, value.translation.height / -140)))
-//                                            })
-//                                    )
                                 }
                                 .padding([.leading, .trailing])
                                 .padding([.leading, .trailing])
-//                                Spacer()
                                 ZStack() {
-//                                    Text(MainSwiftUI.hijriDateString(date: Date()))
-//                                        .fontWeight(.bold)
-//                                        .lineLimit(1)
-//                                        .fixedSize(horizontal: false, vertical: true)
-//                                        .padding([.trailing, .leading])
-//                                        .foregroundColor(Color(.blue))
-//                                        //                                            .offset(y: 24)
-//                                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
-                                    
                                     // calculate progress of day
                                     let _dayProg: CGFloat = {
                                         var todayDhuhrReference = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
@@ -630,7 +438,6 @@ struct MainSwiftUI: View {
                                         }
                                 }
                                 .frame(height: max(80, g.size.height * 0.1))
-                                .opacity(1 - 0.8 * dragState.progress)
                                 
                                 .padding([.top, .bottom], 12)
                                 ZStack {
@@ -666,16 +473,13 @@ struct MainSwiftUI: View {
                                                     let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                                                     lightImpactFeedbackGenerator.impactOccurred()
                                                     withAnimation {
-                                                        dragState.showCalendar = true
-//                                                        currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
+                                                        showCalendar = true
                                                     }
                                                 }) {
                                                     Image(systemName: "calendar")
-//                                                        .padding(12)
                                                 }
                                                 .foregroundColor(Color(.lightText))
                                                 .font(Font.body.weight(.bold))
-
                                                 
                                                 // Settings button
                                                 Button(action: {
@@ -698,16 +502,14 @@ struct MainSwiftUI: View {
                                         .padding([.leading, .trailing, .bottom])
                                         .padding([.leading, .trailing, .bottom])
                                     }
-                                    .opacity(1 - 0.8 * dragState.progress)
-                                    
                                 }
                             }
                             .padding(_horizontalSizeClass == .regular ? 24 : 0)
                             
                         }
                         .transition(.opacity)
-                        .sheet(isPresented: $dragState.showCalendar) { // set highest progress back to 0 when we know the view disappeared
-                            CalendarView(showCalendar: $dragState.showCalendar)
+                        .sheet(isPresented: $showCalendar) { // set highest progress back to 0 when we know the view disappeared
+                            CalendarView(showCalendar: $showCalendar)
                                 .equatable()
                         }
                     }

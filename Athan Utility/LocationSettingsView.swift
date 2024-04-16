@@ -48,7 +48,7 @@ struct LocationSettingsView: View, Equatable {
     @State var timeZone = AthanManager.shared.locationSettings.timeZone
     
     @State var templocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
-    @Binding var parentSession: CurrentView // used to trigger transition back
+    @Binding var parentSession: PresentedSectionType // used to trigger transition back
     
     @Binding var locationPermissionGranted: Bool
     

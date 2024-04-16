@@ -65,6 +65,7 @@
 		3D65A94F2BBDFE7500490FA5 /* al-qatami-30.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D65A9492BBDFE7500490FA5 /* al-qatami-30.caf */; };
 		3D65A9512BBDFFFA00490FA5 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D65A9502BBDFFFA00490FA5 /* Adhan */; };
 		3D67E05E2ADF3E010020B55B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E05D2ADF3E010020B55B /* ShareSheet.swift */; };
+		3D727FC62BCF0291003D40A2 /* UpdatingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */; };
 		3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EBE9256F5DEA0010C47D /* SolarView.swift */; };
 		3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
 		3D73EBF7257027290010C47D /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
@@ -344,6 +345,7 @@
 		3D6F7C462AE0E1E600E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/AppIntentVocabulary.plist"; sourceTree = "<group>"; };
 		3D6F7C472AE0E1E700E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Info.plist"; sourceTree = "<group>"; };
 		3D6F7C482AE0E1E700E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingTextView.swift; sourceTree = "<group>"; };
 		3D73EBE9256F5DEA0010C47D /* SolarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarView.swift; sourceTree = "<group>"; };
 		3D73EC3425717EB80010C47D /* PrayerSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSymbol.swift; sourceTree = "<group>"; };
 		3D73FC53228459FE0092A83C /* AthanSiriIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthanSiriIntents.entitlements; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */,
 				3DD26B7F25B27C5C00460BC3 /* ParallaxSwiftUI.swift */,
 				3DBAE55625B14A6C008E87E9 /* StarView.swift */,
 				3DEF6486259FEC73004EE51F /* AthanPlayView.swift */,
@@ -1267,6 +1270,7 @@
 				3D07DA7F1BDC58B60001EFE4 /* AppDelegate.swift in Sources */,
 				3DA6F01F256184AA00C2C348 /* Prayer+Extensions.swift in Sources */,
 				3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */,
+				3D727FC62BCF0291003D40A2 /* UpdatingTextView.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,

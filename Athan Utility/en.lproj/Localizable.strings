@@ -64,11 +64,30 @@
 
 
 // MARK: - Madhab
-"Madhab" = "Madhab Adjustment";
+"Madhab" = "Madhab Asr Adjustment";
 "Hanafi" = "Hanafi";
-"Shafi" = "Common";
+"Shafi" = "Non-Hanafi";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "High Latitude Rule";
+"middleOfTheNight" = "Middle of the Night";
+"seventhOfTheNight" = "Seventh of the Night";
+"twilightAngle" = "Twilight Angle";
+
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Calculation Preferences";
+"Consider setting..." = "Consider setting your calculation method based on your local masjid.";
+"highLatitudeExplanation" = "Countries north of a certain latitude often apply a High Latitude Rule. The recommended rule for your region is ";
+"Athan Preview" = "Athan Preview";
+"Edit Location" = "Edit Location";
+
+
+// MARK: - Latitude Rules
+"middleOfTheNight" = "Middle of the Night";
+"seventhOfTheNight" = "Seventh of the Night";
+"twilightAngle" = "Twilight Angle";
 
 // MARK: - Sounds
 "athan.sound" = "Athan Sound";

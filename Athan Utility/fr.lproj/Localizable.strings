@@ -70,6 +70,19 @@
 "Shafi" = "Shafi";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Le madhab Hanafi utilise des temps Asr plus tardifs, se produisant lorsque la longueur d'une ombre augmente de deux fois la longueur d'un objet depuis midi solaire.";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "Règle de haute latitude";
+"middleOfTheNight" = "Milieu de la nuit";
+"seventhOfTheNight" = "Septième de la nuit";
+"twilightAngle" = "Angle du crépuscule";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Préférences de calcul";
+"Consider setting..." = "Considérez définir votre méthode de calcul en fonction de votre mosquée locale.";
+"highLatitudeExplanation" = "Les pays situés au nord d'une certaine latitude appliquent souvent une règle de haute latitude. La règle recommandée pour votre région est ";
+"Athan Preview" = "Aperçu de l'Athan";
+"Edit Location" = "Modifier l'emplacement";
+
 
 // MARK: - Sounds
 "athan.sound" = "Adhan Son";

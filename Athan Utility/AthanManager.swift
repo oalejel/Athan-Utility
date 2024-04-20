@@ -34,7 +34,6 @@ import WatchConnectivity
 
 // In order to preserve backwards compatibility, properties we would have wanted to observe
 // in athan manager are stored in this object, and conditionally updated by AthanManager.s
-@available(iOS 13.0.0, *)
 class ObservableAthanManager: ObservableObject {
     static var shared = ObservableAthanManager()
         
@@ -54,31 +53,20 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var heading: Double = 0.0 {
         didSet {
-            if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.currentHeading = heading
-            }
+            ObservableAthanManager.shared.currentHeading = heading
         }
     }
     
     // will default to cupertino times at start of launch
     lazy var todayTimes: PrayerTimes! = nil {
         didSet {
-            if #available(iOS 13.0.0, *) {
-                //                DispatchQueue.main.async {
-                ObservableAthanManager.shared.todayTimes = self.todayTimes
-                //                }
-                
-            }
+            ObservableAthanManager.shared.todayTimes = self.todayTimes
         }
     }
     
     lazy var tomorrowTimes: PrayerTimes! = nil {
         didSet {
-            if #available(iOS 13.0.0, *) {
-                //                DispatchQueue.main.async {
-                ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
-                //                }
-            }
+            ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
         }
     }
     
@@ -101,9 +89,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     var locationPermissionsGranted = false {
         didSet {
-            if #available(iOS 13.0.0, *) {
-                ObservableAthanManager.shared.locationPermissionsGranted = self.locationPermissionsGranted
-            }
+            ObservableAthanManager.shared.locationPermissionsGranted = self.locationPermissionsGranted
         }
     }
     var captureLocationUpdateClosure: ((LocationSettings?) -> ())?
@@ -138,14 +124,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         let newSettings = LocationSettings.shared.copy() as! LocationSettings // used for reference if we need a comparison for watchOS
         LocationSettings.shared = self.locationSettings
         LocationSettings.archive()
-                
-        if #available(iOS 13.0.0, *) {
-            ObservableAthanManager.shared.locationName = self.locationSettings.locationName
-            ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
-                                                                Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
-                                                                            longitude: self.locationSettings.locationCoordinate.longitude)).direction
-        }
         
+        ObservableAthanManager.shared.locationName = self.locationSettings.locationName
+        ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
+                                                            Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
+                                                                        longitude: self.locationSettings.locationCoordinate.longitude)).direction
         #if !os(watchOS)
         if WCSession.default.activationState == .activated && WCSession.default.isReachable {
             do {
@@ -227,9 +210,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func appearanceSettingsDidSetHelper() {
         AppearanceSettings.shared = appearanceSettings
         AppearanceSettings.archive()
-        if #available(iOS 13.0.0, *) {
-            ObservableAthanManager.shared.appearance = appearanceSettings
-        }
+        ObservableAthanManager.shared.appearance = appearanceSettings
         // no need to send these over to watchos
     }
     
@@ -238,10 +219,8 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     private var firstLaunch = true
     var currentPrayer: Prayer? {
         didSet {
-            if #available(iOS 13.0.0, *) {
-                DispatchQueue.main.async {
-                    ObservableAthanManager.shared.currentPrayer = self.currentPrayer! // should never be nil after didSet
-                }
+            DispatchQueue.main.async {
+                ObservableAthanManager.shared.currentPrayer = self.currentPrayer! // should never be nil after didSet
             }
         }
     }
@@ -306,7 +285,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
     
     // NOTE: this function MUST not have SIDE EFFECTS
-    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil, adjustments: PrayerAdjustments?) -> PrayerTimes? {
+    func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil, adjustments: PrayerAdjustments?, prayerSettingsOverride: PrayerSettings? = nil) -> PrayerTimes? {
         let coord = locationSettings.locationCoordinate
         
         var cal = Calendar(identifier: Calendar.Identifier.gregorian)
@@ -314,17 +293,22 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
         let coordinates = Coordinates(latitude: customCoordinate?.latitude ?? coord.latitude, longitude: customCoordinate?.longitude ?? coord.longitude)
         
-        var params = PrayerSettings.shared.calculationMethod.params
-        params.madhab = PrayerSettings.shared.madhab
+        // Either use override argument or global app settings
+        let prayerSettings = prayerSettingsOverride ?? PrayerSettings.shared
+        var params = prayerSettings.calculationMethod.params
+        params.madhab = prayerSettings.madhab
+        params.highLatitudeRule = prayerSettings.latitudeRule
         // custom minute offsets
         if let adjustments = adjustments {
             params.adjustments = adjustments
         }
         
         // handle ummAlQura +30m isha adjustment on ramadan
+        // note: add +1day to reference date to account for taraweeh
+        //      being on the night before the first day of ramadan
         let hijriCal = Calendar(identifier: .islamicUmmAlQura)
-        let islamicComponents = hijriCal.dateComponents([.month], from: referenceDate)
-        if PrayerSettings.shared.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
+        let islamicComponents = hijriCal.dateComponents([.month], from: referenceDate.addingTimeInterval(24 * 60 * 60))
+        if prayerSettings.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
             params.adjustments.isha += 30
         }
         

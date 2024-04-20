@@ -367,7 +367,7 @@ struct Athan_WidgetEntryView : View {
     var body: some View {
         // none means that we have a placeholder
         // nil means error
-        switch (family, entry.tellUserToOpenApp || AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) {
+        switch (family, entry.tellUserToOpenApp || AthanManager.shared.locationSettings.locationName.isEmpty) {
             
             // supported cases with available data
         case (.systemSmall, false):

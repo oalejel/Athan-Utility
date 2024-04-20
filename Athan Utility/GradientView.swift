@@ -9,7 +9,6 @@
 import SwiftUI
 import Adhan
 
-@available(iOS 13.0.0, *)
 struct GradientView: View, Equatable {
     static func == (lhs: GradientView, rhs: GradientView) -> Bool {
         lhs.currentPrayer == rhs.currentPrayer && lhs.appearance.id == rhs.appearance.id

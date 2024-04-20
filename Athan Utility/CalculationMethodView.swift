@@ -94,7 +94,7 @@ struct MethodSettingView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            CalculationMethodView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:])), activeSection: .constant(.CalculationMethod))
+            CalculationMethodView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:], latitudeRule: nil)), activeSection: .constant(.CalculationMethod))
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

@@ -13,11 +13,10 @@ import StoreKit
 
 // Top-level section state enum
 enum PresentedSectionType {
-    case Main, Settings, Location
+    case Main, Settings, Location, IntroSettings
 }
 
 // State of user drag along solar curve
-@available(iOS 13.0.0, *)
 class DayProgressState: ObservableObject {
     // user input based publishers
     @Published var manualDayProgress: CGFloat = 0.0 // a changes b and c
@@ -32,7 +31,6 @@ class DayProgressState: ObservableObject {
     @Published var nonOptionalPreviewPrayer: Prayer = .fajr
 }
 
-@available(iOS 13.0.0, *)
 struct MainSwiftUI: View {
     @EnvironmentObject var manager: ObservableAthanManager
     @Environment(\.horizontalSizeClass) var _horizontalSizeClass
@@ -43,7 +41,6 @@ struct MainSwiftUI: View {
     // solar manual day progress publishes to our subscriber
     // subscriber combines that stream's data with the current prayer
     // to indicate the visible prayer via a visible prayer state
-    
     var previewManualPrayerProgressCancellable: AnyCancellable?
     var previewConsensusPrayerProgressCancellable: AnyCancellable?
     
@@ -135,7 +132,7 @@ struct MainSwiftUI: View {
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
-        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName == LocationSettings.defaultSetting().locationName) ? PresentedSectionType.Location : PresentedSectionType.Main)
+        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main)
         
         // for calculating progress of CURRENT prayer
         previewManualPrayerProgressCancellable = dayProgressState.$manualDayProgress
@@ -226,6 +223,10 @@ struct MainSwiftUI: View {
                         LocationSettingsView(parentSession: $currentView, locationPermissionGranted: $manager.locationPermissionsGranted)
                             .equatable()
                             .transition(.opacity)
+                        
+                    case .IntroSettings:
+                        // collect basic preferences for calculation method and prayer angle
+                        IntroSettingsView(parentSession: $currentView)
                         
                     case .Settings:
                         SettingsView(parentSession: $currentView)
@@ -323,6 +324,12 @@ struct MainSwiftUI: View {
                                                     })
                                                 }
                                             }()
+                                            
+                                            if !IntroSetupFlags.hasCompletedCalculationSetup {
+                                                withAnimation {
+                                                    currentView = .IntroSettings
+                                                }
+                                            }
                                         })
                                         .onDisappear {
                                             minuteTimer?.invalidate()
@@ -456,7 +463,8 @@ struct MainSwiftUI: View {
                                                         .foregroundColor(Color(.lightText))
                                                         .font(Font.body)
                                                     
-                                                    Text("\(manager.locationName)")
+                                                    // Use "Edit Location" string if location name empty
+                                                    Text("\(manager.locationName.isEmpty ? Strings.editLocationButtonTitle : manager.locationName)")
                                                         .foregroundColor(Color(.lightText))
                                                         .font(Font.body.weight(.bold))
                                                         .lineLimit(1)
@@ -565,12 +573,8 @@ struct ProgressBar: View {
     }
 }
 
-@available(iOS 13.0.0, *)
-struct MainSwiftUI_Previews: PreviewProvider {
-    static var previews: some View {
-        MainSwiftUI()
-            .environmentObject(ObservableAthanManager.shared)
-            .previewDevice("iPhone Xs")
-        
-    }
+#Preview {
+    MainSwiftUI()
+        .environmentObject(ObservableAthanManager.shared)
+        .previewDevice("iPhone Xs")
 }

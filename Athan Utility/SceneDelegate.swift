@@ -9,7 +9,6 @@ import UIKit
 import SwiftUI
 import WhatsNewKit
 
-@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
@@ -82,22 +81,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         title: "Customizable Colors",
                         subtitle: "Customize your app and widget background gradients."
                     ),
-                    .init(
-                        image: .init(systemName: "gear"),
-                        title: "And much more!",
-                        subtitle: "Browse settings for even more new features."
-                    ),
-                ]
-            }
-            
-            // LATEST FEATURES - show for existing and new users
-            // If newly updating to v7.x.x
-            let hasPresentedV7 = versionStore.presentedVersions.contains(where: { $0.major == 7 })
-            if !hasPresentedV7 {
-                // Remove "and more" entry from general list
-                if !featuresToDisplay.isEmpty { featuresToDisplay.removeLast() }
-                
-                featuresToDisplay.append(contentsOf: [
                     .init(image: .init(systemName: "platter.2.filled.iphone.landscape"),
                           title: "StandBy Widgets",
                           subtitle: "See the latest Athan times in iOS 17's StandBy mode."),
@@ -116,6 +99,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     .init(image: .init(systemName: "square.and.arrow.up.on.square.fill"),
                           title: "Calendar Export",
                           subtitle: "Export Athan times to .csv to chart in Excel or Numbers."),
+                ]
+            }
+            
+            // LATEST FEATURES - show for existing and new users (7.2)
+            let hasPresentedLatestUpdates = versionStore.presentedVersions.contains(where: { $0.major == 7 && $0.minor > 1 })
+            if !hasPresentedLatestUpdates {
+                featuresToDisplay.append(contentsOf: [
+                    .init(image: .init(systemName: "globe"),
+                          title: "High Latitude Adjustments",
+                          subtitle: "Northern regions with shorter nights can now use alternative high latitude rules."),
+                    .init(image: .init(systemName: "speaker.wave.2.bubble.fill"),
+                          title: "New Athan Sounds",
+                          subtitle: "Two new athan sounds have been added!"),
                 ])
             }
             

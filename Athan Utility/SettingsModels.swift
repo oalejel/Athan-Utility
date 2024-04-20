@@ -10,49 +10,70 @@ import Foundation
 import Adhan
 import CoreLocation.CLLocation
 
+// Flags for determining if intro view setup has been completed
+class IntroSetupFlags {
+#warning("uncomment on prod")
+    static var hasCompletedCalculationSetup: Bool = {
+        UserDefaults.standard.bool(forKey: keyName)
+    }() {
+        didSet {
+            UserDefaults.standard.setValue(hasCompletedCalculationSetup, forKey: keyName)
+        }
+    }
+    private static let keyName = "calculationSetupComplete"
+}
+
+
 class AlarmSetting: Codable {
     var athanAlertEnabled = true
-    var athanSoundEnabled = true // might make sense to also silence reminder in this case
-    
+    // might make sense to also silence reminder in this case
+    var athanSoundEnabled = true
     var reminderAlertEnabled = true
     var reminderOffset = 15
-    // New
     var athanOffset: Int? = 0
     var playExtendedSound: Bool? = false
-//    var overrideMute = false
 }
 
 // Manages loading and storing of settings for calculations
 class PrayerSettings: Codable, NSCopying {
-    
     static var shared: PrayerSettings = {
         if let archive = checkArchive() {
             return archive
         } else {
-            let defaultSettings = PrayerSettings(method: CalculationMethod.northAmerica, madhab: .shafi, customNames: [
-                .fajr:"",
-                .sunrise: "",
-                .dhuhr: "",
-                .asr: "",
-                .maghrib: "",
-                .isha: ""
-            ])
+            let defaultSettings = PrayerSettings(
+                method: CalculationMethod.northAmerica,
+                madhab: .shafi, 
+                customNames:
+                    [
+                        .fajr: "",
+                        .sunrise: "",
+                        .dhuhr: "",
+                        .asr: "",
+                        .maghrib: "",
+                        .isha: ""
+                     ],
+                latitudeRule: HighLatitudeRule.middleOfTheNight)
             return defaultSettings
         }
     }()
     
     static func checkArchive() -> PrayerSettings? {
         if let data = unarchiveData(archiveName) as? Data,
-           let decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
+           var decoded = try? JSONDecoder().decode(PrayerSettings.self, from: data) {
+            // Handle unset latitude rule: set to middleOfTheNight
+            if decoded.latitudeRule == nil {
+                decoded.latitudeRule = .middleOfTheNight
+            }
             return decoded
         }
         return nil
     }
     
-    init(method: CalculationMethod, madhab: Madhab, customNames: [Prayer:String]) {
+    init(method: CalculationMethod, madhab: Madhab, customNames: [Prayer:String], latitudeRule: HighLatitudeRule?) {
         self.calculationMethod = method
         self.madhab = madhab
         self.customNames = customNames
+        self.latitudeRule = latitudeRule
     }
     
     static func archive() {
@@ -66,11 +87,12 @@ class PrayerSettings: Codable, NSCopying {
     var calculationMethod: CalculationMethod
     var madhab: Madhab
     var customNames: [Prayer:String] // store potential override names for athan times
+    var latitudeRule: HighLatitudeRule?
     
     static let archiveName = "prayersettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = PrayerSettings(method: calculationMethod, madhab: madhab, customNames: customNames)
+        let copy = PrayerSettings(method: calculationMethod, madhab: madhab, customNames: customNames, latitudeRule: latitudeRule)
         return copy
     }
 }
@@ -91,19 +113,19 @@ class NotificationSettings: Codable, NSCopying {
         case zakariya
         case alqatami
         
-        func localizedString() -> String { 
+        func localizedString() -> String {
             switch self {
             case .ios_default: return NSLocalizedString("iOS Default", comment: "")
-                case .echo: return NSLocalizedString("Echo", comment: "")
-                case .makkah: return NSLocalizedString("Makkah", comment: "")
-                case .madina: return NSLocalizedString("Madina", comment: "")
-                case .alaqsa: return NSLocalizedString("Al-Aqsa", comment: "")
-                case .alaqsa2: return NSLocalizedString("Al-Aqsa 2", comment: "")
-                case .egypt: return NSLocalizedString("Egypt", comment: "")
-                case .abdulbaset: return NSLocalizedString("Abdulbaset", comment: "")
-                case .abdulghaffar: return NSLocalizedString("Abdulghaffar", comment: "")
-                case .zakariya: return NSLocalizedString("Zakariya", comment: "")
-                case .alqatami: return NSLocalizedString("Al-Qatami", comment: "")
+            case .echo: return NSLocalizedString("Echo", comment: "")
+            case .makkah: return NSLocalizedString("Makkah", comment: "")
+            case .madina: return NSLocalizedString("Madina", comment: "")
+            case .alaqsa: return NSLocalizedString("Al-Aqsa", comment: "")
+            case .alaqsa2: return NSLocalizedString("Al-Aqsa 2", comment: "")
+            case .egypt: return NSLocalizedString("Egypt", comment: "")
+            case .abdulbaset: return NSLocalizedString("Abdulbaset", comment: "")
+            case .abdulghaffar: return NSLocalizedString("Abdulghaffar", comment: "")
+            case .zakariya: return NSLocalizedString("Zakariya", comment: "")
+            case .alqatami: return NSLocalizedString("Al-Qatami", comment: "")
             }
         }
         
@@ -162,7 +184,7 @@ class NotificationSettings: Codable, NSCopying {
         if let data = try? encoder.encode(NotificationSettings.shared) as? Data {
             archiveData(archiveName, object: data)
         }
-
+        
     }
     
     func adjustments() -> PrayerAdjustments {
@@ -182,7 +204,7 @@ class NotificationSettings: Codable, NSCopying {
         let copy = NotificationSettings(settings: settings, selectedSound: selectedSound)
         return copy
     }
-
+    
 }
 
 // MARK: - Location Settings
@@ -207,9 +229,9 @@ class LocationSettings: Codable, NSCopying {
     }
     
     static func defaultSetting() -> LocationSettings {
-        return LocationSettings(locationName: "Edit Location", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), timeZone: TimeZone(identifier: "America/Los_Angeles")!, useCurrentLocation: false)
+        return LocationSettings(locationName: "", coord: CLLocationCoordinate2D(latitude: 37.3230, longitude: -122.0322), timeZone: TimeZone(identifier: "America/Los_Angeles")!, useCurrentLocation: false)
     }
-
+    
     static func checkArchive() -> LocationSettings? {
         if let data = unarchiveData(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(LocationSettings.self, from: data) {
@@ -282,9 +304,9 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
     init(colorDict: [Prayer?:[[Float]]], isDynamic: Bool = true, id: Int = 0) {
         self.colorDict = colorDict
         self.isDynamic = isDynamic
-        self.id = id 
+        self.id = id
     }
-
+    
     static func checkArchive() -> AppearanceSettings? {
         if let data = unarchiveData(archiveName) as? Data,
            let decoded = try? JSONDecoder().decode(AppearanceSettings.self, from: data) {
@@ -314,7 +336,7 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
     func setRGBPairForContext(optionalPrayer: Prayer?, color1: (Float, Float, Float), color2: (Float, Float, Float)) {
         colorDict[optionalPrayer] = [[color1.0, color1.1, color1.2], [color2.0, color2.1, color2.2]]
     }
-//        nil: ((1, 2, 3), (1, 2, 3))
+    //        nil: ((1, 2, 3), (1, 2, 3))
     
     static let archiveName = "appearancesettings"
     
@@ -328,7 +350,7 @@ class AppearanceSettings: Codable, NSCopying, Equatable {
 
 // Helper function for storing settings
 func archiveData(_ name: String, object: Any) {
-//    print("WARNING: ADD ERROR HANDLER TO THIS")
+    //    print("WARNING: ADD ERROR HANDLER TO THIS")
     let fm = FileManager.default
     
     var url = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.athanUtil")!

@@ -1,6 +1,5 @@
 
 import SwiftUI
-@available(iOS 13.0.0, *)
 extension View {
     public func parallax(amount: CGFloat = 10, direction: ParallaxDirection = .both) -> some View {
         ParallaxView(
@@ -28,7 +27,6 @@ public enum ParallaxDirection {
 }
 
 /// A wrapper view to add a parallax effect to a SwiftUI view.
-@available(iOS 13.0.0, *)
 struct ParallaxView: View {
     
     /// The view to apply the parallax too.
@@ -73,7 +71,6 @@ struct ParallaxView: View {
 }
 
 /// Converts SwiftUI view to UIKit controller.
-@available(iOS 13.0.0, *)
 struct ParallaxRepresentable: UIViewControllerRepresentable {
     
     let view: AnyView

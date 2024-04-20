@@ -66,6 +66,8 @@
 		3D65A9512BBDFFFA00490FA5 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3D65A9502BBDFFFA00490FA5 /* Adhan */; };
 		3D67E05E2ADF3E010020B55B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E05D2ADF3E010020B55B /* ShareSheet.swift */; };
 		3D727FC62BCF0291003D40A2 /* UpdatingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */; };
+		3D727FC82BCF0417003D40A2 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D727FC72BCF0417003D40A2 /* ActivityIndicator.swift */; };
+		3D727FCA2BCF043C003D40A2 /* IntroSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D727FC92BCF043C003D40A2 /* IntroSettingsView.swift */; };
 		3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73EBE9256F5DEA0010C47D /* SolarView.swift */; };
 		3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
 		3D73EBF7257027290010C47D /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
@@ -92,6 +94,8 @@
 		3D770571251C3812007BCEAA /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3D77057D251C383B007BCEAA /* PrayerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA991BDC58E30001EFE4 /* PrayerManagerDelegate.swift */; };
 		3D770583251C3849007BCEAA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D73FC6A2284EE1C0092A83C /* Settings.swift */; };
+		3D78F9352BCF3B6200212D5E /* HighLatitudeRule+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78F9342BCF3B6200212D5E /* HighLatitudeRule+Extensions.swift */; };
+		3D78F9372BD1B3C000212D5E /* OptionalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D78F9362BD1B3BF00212D5E /* OptionalScrollView.swift */; };
 		3D81809320FE565E00AEF72F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D81809220FE565E00AEF72F /* SnapshotHelper.swift */; };
 		3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D89E71520C75E6000E64118 /* Intents.intentdefinition */; };
 		3D8CE83B256965F0006D6E46 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
@@ -110,7 +114,6 @@
 		3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0EE9921038E3400624E98 /* PrayerType.swift */; };
 		3DB56CF4228369A200B9F738 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07DA901BDC58E30001EFE4 /* Global.swift */; };
 		3DB6AF512576FE06006241D4 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB6AF502576FE06006241D4 /* View+Extensions.swift */; };
-		3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */; };
 		3DB9EE51259D026E00601E1E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB9EE50259D026E00601E1E /* CalendarView.swift */; };
 		3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55625B14A6C008E87E9 /* StarView.swift */; };
 		3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
@@ -346,6 +349,8 @@
 		3D6F7C472AE0E1E700E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/Info.plist"; sourceTree = "<group>"; };
 		3D6F7C482AE0E1E700E73490 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingTextView.swift; sourceTree = "<group>"; };
+		3D727FC72BCF0417003D40A2 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		3D727FC92BCF043C003D40A2 /* IntroSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroSettingsView.swift; sourceTree = "<group>"; };
 		3D73EBE9256F5DEA0010C47D /* SolarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarView.swift; sourceTree = "<group>"; };
 		3D73EC3425717EB80010C47D /* PrayerSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSymbol.swift; sourceTree = "<group>"; };
 		3D73FC53228459FE0092A83C /* AthanSiriIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AthanSiriIntents.entitlements; sourceTree = "<group>"; };
@@ -355,6 +360,8 @@
 		3D76E8A81C0621D60004E3F7 /* OptionsNavigatonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsNavigatonController.swift; sourceTree = "<group>"; };
 		3D77056A251C37F4007BCEAA /* UIView_Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView_Convenience.swift; sourceTree = "<group>"; };
 		3D770589251C5FDC007BCEAA /* Athan WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Athan WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		3D78F9342BCF3B6200212D5E /* HighLatitudeRule+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HighLatitudeRule+Extensions.swift"; sourceTree = "<group>"; };
+		3D78F9362BD1B3BF00212D5E /* OptionalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalScrollView.swift; sourceTree = "<group>"; };
 		3D81809220FE565E00AEF72F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		3D89E71520C75E6000E64118 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3D89E73C20C88A0A00E64118 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
@@ -371,7 +378,6 @@
 		3DB56CE62281FA3800B9F738 /* NextPrayerIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPrayerIntentHandler.swift; sourceTree = "<group>"; };
 		3DB56CE82281FA4E00B9F738 /* ListPrayersIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrayersIntentHandler.swift; sourceTree = "<group>"; };
 		3DB6AF502576FE06006241D4 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
-		3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTaskEngine.swift; sourceTree = "<group>"; };
 		3DB9EE50259D026E00601E1E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3DBAE55625B14A6C008E87E9 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
 		3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonWatchCommunication.swift; sourceTree = "<group>"; };
@@ -608,12 +614,13 @@
 			children = (
 				3D9B9FFB2575425400F02EFD /* Moon */,
 				3D4AC133251D894600B2D41D /* MainSwiftUI.swift */,
+				3D727FC92BCF043C003D40A2 /* IntroSettingsView.swift */,
+				3D78F9362BD1B3BF00212D5E /* OptionalScrollView.swift */,
 				3D727FC52BCF0291003D40A2 /* UpdatingTextView.swift */,
 				3DD26B7F25B27C5C00460BC3 /* ParallaxSwiftUI.swift */,
 				3DBAE55625B14A6C008E87E9 /* StarView.swift */,
 				3DEF6486259FEC73004EE51F /* AthanPlayView.swift */,
 				3DEF645F259EFE42004EE51F /* GradientView.swift */,
-				3DB9EE49259CC0A400601E1E /* DragTaskEngine.swift */,
 				3D0789CC259C5F0A0047DD00 /* MailView.swift */,
 				3D6105032572D04E00C1D067 /* SettingsView.swift */,
 				3DB9EE50259D026E00601E1E /* CalendarView.swift */,
@@ -625,6 +632,7 @@
 				3D73EC3425717EB80010C47D /* PrayerSymbol.swift */,
 				3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */,
 				3D0789C5259C5DAB0047DD00 /* PrivacyInfoView.swift */,
+				3D727FC72BCF0417003D40A2 /* ActivityIndicator.swift */,
 				3D0789522599B20D0047DD00 /* Settings Section Views */,
 			);
 			name = "SwiftUI Views";
@@ -684,6 +692,7 @@
 				3DB6AF502576FE06006241D4 /* View+Extensions.swift */,
 				3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */,
 				3D61050F2572F21700C1D067 /* CalculationMethod+Extensions.swift */,
+				3D78F9342BCF3B6200212D5E /* HighLatitudeRule+Extensions.swift */,
 				3D6105162572F2BC00C1D067 /* Madhab+Extensions.swift */,
 			);
 			name = Extensions;
@@ -1252,13 +1261,13 @@
 				3D13E899257757100041F1AC /* PrayerSettingsView.swift in Sources */,
 				3D4CEDB01BDDA1D800CA095E /* ElapsedView.swift in Sources */,
 				3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */,
-				3DB9EE4A259CC0A400601E1E /* DragTaskEngine.swift in Sources */,
 				3D13E89225773BFD0041F1AC /* ButtonStyles.swift in Sources */,
 				3D16F10B2560859D00C78B12 /* AthanManager.swift in Sources */,
 				3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				3DF0EE9A21038E3400624E98 /* PrayerType.swift in Sources */,
 				3D6105172572F2BC00C1D067 /* Madhab+Extensions.swift in Sources */,
 				3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */,
+				3D78F9352BCF3B6200212D5E /* HighLatitudeRule+Extensions.swift in Sources */,
 				3D07DAA01BDC58E30001EFE4 /* ClockView.swift in Sources */,
 				3DAE45542560976900156CFF /* SqueezeButton.swift in Sources */,
 				3D1E50F0256F4620003E2E34 /* Colors.swift in Sources */,
@@ -1273,6 +1282,7 @@
 				3D727FC62BCF0291003D40A2 /* UpdatingTextView.swift in Sources */,
 				3D73FC6B2284EE1C0092A83C /* Settings.swift in Sources */,
 				3D13E8A5257759FA0041F1AC /* SoundSettingView.swift in Sources */,
+				3D727FC82BCF0417003D40A2 /* ActivityIndicator.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,
 				3D33FB9029C9E2B600F9CDD9 /* CalendarExport.swift in Sources */,
 				3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */,
@@ -1286,7 +1296,9 @@
 				3DEF654125A2B0FF004EE51F /* NewSiri.swift in Sources */,
 				3D73EBEA256F5DEA0010C47D /* SolarView.swift in Sources */,
 				3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */,
+				3D727FCA2BCF043C003D40A2 /* IntroSettingsView.swift in Sources */,
 				3D07DA9A1BDC58E30001EFE4 /* Global.swift in Sources */,
+				3D78F9372BD1B3C000212D5E /* OptionalScrollView.swift in Sources */,
 				3D89E71620C75E6000E64118 /* Intents.intentdefinition in Sources */,
 				3DDCC77C258FE1CA004A6019 /* LocationSettingsView.swift in Sources */,
 			);
@@ -1629,12 +1641,12 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1660,12 +1672,12 @@
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.1;
+				MARKETING_VERSION = 7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1994,7 +2006,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
 				INFOPLIST_FILE = "Athan Watch/Info.plist";
-				MARKETING_VERSION = 7.1;
+				MARKETING_VERSION = 7.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
@@ -2030,7 +2042,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = Athan_Watch_Extension;
 				INFOPLIST_FILE = "Athan Watch/Info.plist";
-				MARKETING_VERSION = 7.1;
+				MARKETING_VERSION = 7.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";

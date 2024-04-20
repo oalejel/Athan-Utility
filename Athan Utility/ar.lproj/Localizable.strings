@@ -15,8 +15,6 @@
 "Isha" = "عشاء";
 
 
-
-
 // MARK: - Notifications
 "Notifications" = "الإشعارات";
 // Example: Time for Fajr [2:45 pm]. Please open...
@@ -75,6 +73,19 @@
 "Shafi" = "شافعي";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "يستخدم المذهب الحنفي أوقات العصر المتأخرة، ويحدث هذا عندما يزداد طول الظل بمقدار ضعف طول الجسم من بعد الظهر الشمسي.";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "قاعدة الأذان في المناطق الشمالية";
+"middleOfTheNight" = "منتصف الليل";
+"seventhOfTheNight" = "السابعة من الليل";
+"twilightAngle" = "زاوية الشفق";
+
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "تفضيلات الحساب";
+"Consider setting..." = "ننصح بتحديد طريقة الحساب بناءً على موقع المسجد المحلي.";
+"highLatitudeExplanation" = "في البلدان الواقعة شمال خط العرض المعين، يُطبَّق غالبًا قاعدة خاصة بالأذان. القاعدة المُقتَرَحة لمنطقتك هي ";
+"Athan Preview" = "معاينة الأذان";
+"Edit Location" = "تعديل الموقع";
 
 // MARK: - Sounds
 "athan.sound" = "صوت الأذان";

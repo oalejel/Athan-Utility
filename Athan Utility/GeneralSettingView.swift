@@ -19,6 +19,7 @@ struct GeneralSettingView: View {
     @Binding var tempNotificationSettings: NotificationSettings
     @Binding var tempPrayerSettings: PrayerSettings
     @Binding var tempAppearanceSettings: AppearanceSettings
+    @State var selectedLatitudeRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
     
     // used to trigger transition back
     @Binding var parentSession: PresentedSectionType
@@ -29,6 +30,7 @@ struct GeneralSettingView: View {
     
     let calculationMethods = CalculationMethod.usefulCases()
     let madhabs = Madhab.allCases
+    let latitudeRules = HighLatitudeRule.allCases
     
     @State var contentOffset = CGFloat(0)
     @Binding var savedOffset: CGFloat
@@ -38,7 +40,7 @@ struct GeneralSettingView: View {
     // Developer contact properties
     @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
     @State private var isShowingMailView = false
-
+    
     @State var proxy: Any? = nil
     
     var body: some View {
@@ -281,6 +283,43 @@ struct GeneralSettingView: View {
                                             .padding(.bottom)
                                     } // madhab group
                                     
+                                    Group { // latitude adjustment group
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text(Strings.highLatitudeRuleTitle)
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                            Divider()
+                                                .background(Color.white)
+                                        }
+                                        
+                                        HStack {
+                                            Spacer()
+                                            Picker(selection: $selectedLatitudeRule, label: Text("Latitude Rule Picker"), content: {
+                                                ForEach(latitudeRules, id: \.self.rawValue) { latRule in
+                                                    Text(latRule.localizedString())
+                                                        .tag(latRule)
+                                                        .foregroundColor(.white)
+                                                        .autocapitalization(UITextAutocapitalizationType.words)
+                                                }
+                                            })
+                                            .labelsHidden()
+                                            .accentColor(.white)
+                                            Spacer()
+                                        }
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .foregroundColor(.init(.sRGB, white: 1, opacity: 0.1))
+                                        )
+                                        
+                                        Text(Strings.highLatitudeExplanation + "\"\(HighLatitudeRule.recommended(for: tempLocationSettings.locationCoordinate).localizedString())\"")
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .lineLimit(nil)
+                                            .font(.caption)
+                                            .foregroundColor(Color(.lightText))
+                                            .padding(.bottom, 6)
+                                    } // high lat rule group
+                                    
                                     Group { // athan sounds group
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(Strings.athanSound)
@@ -292,7 +331,6 @@ struct GeneralSettingView: View {
                                         }
                                         
                                         Button(action: {
-                                            print("show athan sounds view")
                                             withAnimation {
                                                 activeSettingsSection = .Sounds
                                             }
@@ -340,15 +378,6 @@ struct GeneralSettingView: View {
                                             }, label: {
                                                 HStack {
                                                     
-//                                                    VStack {
-//                                                        Spacer()
-//                                                        PrayerSymbol(prayerType: p)
-//                                                            .foregroundColor(.white)
-//                                                            .padding([.leading, .top, .bottom])
-//                                                            .frame(width: 26)
-//                                                        Spacer()
-//                                                    }
-                                                    
                                                     PrayerSymbol(prayerType: p)
                                                         .padding([.leading, .top, .bottom])
                                                         .foregroundColor(.white)
@@ -369,10 +398,6 @@ struct GeneralSettingView: View {
                                                                 Image(systemName: setting.athanSoundEnabled ? "speaker.wave.2.circle" : "speaker.slash.circle")
                                                                 if setting.reminderAlertEnabled {
                                                                     Image(systemName: "clock.arrow.circlepath")
-//                                                                    Image(systemName: "arrow.right")
-//                                                                    Text("\(setting.reminderOffset)")
-//                                                                        .fixedSize(horizontal: true, vertical: true)
-//                                                                        .lineLimit(1)
                                                                 }
                                                             }
                                                         }
@@ -393,123 +418,101 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                     
-                                    
-//                                    let intent: NextPrayerIntent = {
-//                                        let _intent = NextPrayerIntent()
-//                                        _intent.suggestedInvocationPhrase = "Next prayer time"
-//                                        return _intent
-//                                    }()
-                                    
                                     VStack(spacing: 8) {
-                                    Divider()
-                                        .background(Color.white)
-
-//                                    HStack(alignment: .center) {
-
-//                                        Text("Siri")
-//                                            .font(.headline)
-//                                            .bold()
-//                                            .foregroundColor(.white)
-////                                            .padding(.leading, 2)
-//                                        Spacer()
-//                                        IntentView()
+                                        Divider()
+                                            .background(Color.white)
+                                        
                                         IntentIntegratedController()
                                             .frame(height: 50)
-//                                            .border(Color.green)
-//                                            .fixedSize(horizontal: true, vertical: false)
-
-//                                    }
-                                    Divider()
-                                        .background(Color.white)
+                                        Divider()
+                                            .background(Color.white)
                                     }
-
-                                                                        
+                                    
+                                    
                                     
                                     Group {
-
-                                    HStack { // about the developer
-                                        Spacer()
-                                        VStack(alignment: .center) {
-                                            Text(Strings.developedBy)
-                                                .font(Font.headline.weight(.medium))
-                                            Text("Free Palestine 🇵🇸")
-                                                .font(Font.headline.weight(.medium))
-                                        }
-                                        .foregroundColor(.white)
-                                        Spacer()
-                                    }
-                                    .padding([.top, .bottom])
-                                                                            
-                                    Button(action: { // send feedback
-                                        self.isShowingMailView.toggle()
-                                    }, label: {
-                                        HStack {
+                                        
+                                        HStack { // about the developer
                                             Spacer()
-                                            Image(systemName: "envelope")
-                                                .font(Font.headline.weight(.medium))
-                                                .foregroundColor(.white)
-                                            Text(Strings.sendFeedback)
-                                                .font(Font.headline.weight(.medium))
-                                                .foregroundColor(.white)
-                                            Spacer()
-                                        }
-                                        .padding()
-                                    })
-                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                    .sheet(isPresented: $isShowingMailView) {
-                                        if MFMailComposeViewController.canSendMail() {
-                                            MailView(result: $mailCompositionResult) { composer in
-                                                composer.setSubject("Feedback for Athan Utility")
-                                                composer.title = "Email Developer"
-                                                composer.setToRecipients(["athan.utility@gmail.com"])
+                                            VStack(alignment: .center) {
+                                                Text(Strings.developedBy)
+                                                    .font(Font.headline.weight(.medium))
+                                                Text("Free Palestine 🇵🇸")
+                                                    .font(Font.headline.weight(.medium))
                                             }
-                                        }
-                                    }
-
-                                    
-                                    
-                                    Button(action: { // send feedback
-                                        showPrivacyView.toggle()
-                                    }, label: {
-                                        HStack {
-                                            Spacer()
-                                            Image(systemName: "hand.raised.fill")
-                                                .font(Font.headline.weight(.medium))
-                                                .foregroundColor(.white)
-                                            Text(Strings.privacyNotes)
-                                                .font(Font.headline.weight(.medium))
-                                                .foregroundColor(.white)
+                                            .foregroundColor(.white)
                                             Spacer()
                                         }
-                                        .padding()
-                                    })
-                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                    .sheet(isPresented: $showPrivacyView) {
-                                        PrivacyInfoView(isVisible: $showPrivacyView)
-                                    }
-                                    
-                                    Button(action: { // rate the app
-                                        SKStoreReviewController.requestReview()
-                                    }, label: {
-                                        VStack(spacing: 0) {
-                                            HStack(spacing: 1) {
-                                                ForEach(0..<5) { i in
-                                                    Image(systemName: "star.fill")
-                                                        .foregroundColor(.orange)
-                                                        .font(Font.headline.weight(.medium))
-                                                }
-                                            }
-                                            HStack() {
+                                        .padding([.top, .bottom])
+                                        
+                                        Button(action: { // send feedback
+                                            self.isShowingMailView.toggle()
+                                        }, label: {
+                                            HStack {
                                                 Spacer()
-                                                Text(Strings.rateAthanUtility)
+                                                Image(systemName: "envelope")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.sendFeedback)
                                                     .font(Font.headline.weight(.medium))
                                                     .foregroundColor(.white)
                                                 Spacer()
                                             }
-                                        }.padding()
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        .sheet(isPresented: $isShowingMailView) {
+                                            if MFMailComposeViewController.canSendMail() {
+                                                MailView(result: $mailCompositionResult) { composer in
+                                                    composer.setSubject("Feedback for Athan Utility")
+                                                    composer.title = "Email Developer"
+                                                    composer.setToRecipients(["athan.utility@gmail.com"])
+                                                }
+                                            }
+                                        }
                                         
-                                    })
-                                    .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        Button(action: { // send feedback
+                                            showPrivacyView.toggle()
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "hand.raised.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.privacyNotes)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        .sheet(isPresented: $showPrivacyView) {
+                                            PrivacyInfoView(isVisible: $showPrivacyView)
+                                        }
+                                        
+                                        Button(action: { // rate the app
+                                            SKStoreReviewController.requestReview()
+                                        }, label: {
+                                            VStack(spacing: 0) {
+                                                HStack(spacing: 1) {
+                                                    ForEach(0..<5) { i in
+                                                        Image(systemName: "star.fill")
+                                                            .foregroundColor(.orange)
+                                                            .font(Font.headline.weight(.medium))
+                                                    }
+                                                }
+                                                HStack() {
+                                                    Spacer()
+                                                    Text(Strings.rateAthanUtility)
+                                                        .font(Font.headline.weight(.medium))
+                                                        .foregroundColor(.white)
+                                                    Spacer()
+                                                }
+                                            }.padding()
+                                            
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
                                     }
                                 }
                             }
@@ -529,7 +532,6 @@ struct GeneralSettingView: View {
                             Spacer()
                             ForEach(0..<100) { i in
                                 Color.clear
-                                    //                                (i % 2 == 0 ? Color.red : Color.green)
                                     .frame(height: 1)
                                     .id(Int(i))
                                 Spacer()
@@ -562,6 +564,7 @@ struct GeneralSettingView: View {
                         
                         // update all settings unconditionally in case we change components of
                         // the settings
+                        tempPrayerSettings.latitudeRule = selectedLatitudeRule
                         AthanManager.shared.prayerSettings = tempPrayerSettings
                         
                         // MUST also save here because multiple views can modify this setting
@@ -584,13 +587,19 @@ struct GeneralSettingView: View {
                 }
                 .padding()
                 .padding([.leading, .trailing, .bottom])
-                //                    .padding([.leading, .trailing, .bottom])
+                .frame(width: g.size.width)
+                .padding([.top])
+                .transition(.opacity)
             }
-            //                .edgesIgnoringSafeArea(.all)
-            //                .transition(.asymmetric(insertion: .move(edge: .leading), removal: .move(edge: .leading)))
-            .frame(width: g.size.width)
-            .padding([.top])
-            .transition(.opacity)
         }
     }
+}
+
+#Preview {
+    ZStack {
+        LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .edgesIgnoringSafeArea(.all)
+        SettingsView(parentSession: .constant(.Settings))
+    }
+    .environmentObject(ObservableAthanManager.shared)
 }

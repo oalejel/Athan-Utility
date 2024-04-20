@@ -132,7 +132,7 @@ struct OverridesSettingView_Previews: PreviewProvider {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.black, Color(.sRGB, red: Double(25)/255 , green: Double(78)/255 , blue: Double(135)/255, opacity: 1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            NameOverridesView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:])), activeSection: .constant(.Prayer(.fajr)))
+            NameOverridesView(tempPrayerSettings: .constant(PrayerSettings(method: .dubai, madhab: .shafi, customNames: [:], latitudeRule: nil)), activeSection: .constant(.Prayer(.fajr)))
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")

@@ -69,6 +69,19 @@
 "Shafi" = "Shafi";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Hanefi mezhebi daha sonraki Asr zamanlarını kullanır, güneş öğleden sonra gölgenin uzunluğunun bir nesnenin uzunluğunun iki katı artmasıyla gerçekleşir.";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "Yüksek Enlem Kuralı";
+"middleOfTheNight" = "Gece Yarısı";
+"seventhOfTheNight" = "Gece Yedincisi";
+"twilightAngle" = "Alacakaranlık Açısı";
+
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Hesaplama Tercihleri";
+"Consider setting..." = "Yerel caminizin bilgilerine dayalı olarak hesaplama yönteminizi belirlemenizi düşünün.";
+"highLatitudeExplanation" = "Belirli bir enlemin kuzeyindeki ülkeler genellikle Yüksek Enlem Kuralını uygularlar. Bölgeniz için önerilen kural ";
+"Athan Preview" = "Ezan Önizlemesi";
+"Edit Location" = "Konumu Düzenle";
 
 // MARK: - Sounds
 "athan.sound" = "Ezan Ses";

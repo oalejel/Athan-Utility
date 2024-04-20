@@ -9,20 +9,15 @@
 import SwiftUI
 import Adhan
 
-@available(iOS 13.0.0, *)
 struct AthanPlayView: View, Equatable {
     static func == (lhs: AthanPlayView, rhs: AthanPlayView) -> Bool {
         return lhs.currentPrayer == rhs.currentPrayer && lhs.playing == rhs.playing
     }
     
-    
     @Binding var currentPrayer: Prayer?
     @State var playing = false
     @State var lastPlayDate = Date().addingTimeInterval(-100)
-    
-    // if currentPrayerDate is <1 min in the past,
-    // set
-    
+        
     var body: some View {
         
         Button(action: {

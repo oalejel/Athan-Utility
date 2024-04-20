@@ -12,20 +12,6 @@ import MapKit
 import Adhan
 
 @available(iOS 13.0.0, *)
-struct ActivityIndicator: UIViewRepresentable {
-    @Binding var isAnimating: Bool
-    let style: UIActivityIndicatorView.Style
-    
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
-    }
-    
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
-    }
-}
-
-@available(iOS 13.0.0, *)
 struct LocationSettingsView: View, Equatable {
     
     static func == (lhs: LocationSettingsView, rhs: LocationSettingsView) -> Bool {
@@ -214,14 +200,12 @@ struct LocationSettingsView: View, Equatable {
                             
                             if usingCurrentLocation {
                                 // if in tracking state, switch to custom state
-                                //                            AthanDefaults.useCurrentLocation = false
                                 #warning("maybe leave all state change savig to later")
                                 withAnimation {
                                     usingCurrentLocation = false
                                 }
                             } else {
                                 timer?.invalidate() // prevent a timer that is still trying to calculate a location from proceeding
-                                //                            AthanDefaults.useCurrentLocation = true
                                 awaitingLocationUpdate = true
                                 // at this point, we already know whether location permissions were granted
                                 // just ask athanmanager to ask for a location update and capture it
@@ -314,7 +298,12 @@ struct LocationSettingsView: View, Equatable {
                             }
                             
                             withAnimation {
-                                self.parentSession = .Main
+                                // go to calculation mode setup if not already completed
+                                if !IntroSetupFlags.hasCompletedCalculationSetup {
+                                    self.parentSession = .IntroSettings
+                                } else {
+                                    self.parentSession = .Main
+                                }
                             }
                         }) {
                             Text(Strings.done)

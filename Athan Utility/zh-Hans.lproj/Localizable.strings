@@ -69,6 +69,19 @@
 "Shafi" = "通用";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "汉尼菲派使用更晚的 晡礼 时间，当影子的长度自太阳中午以来增加了物体长度的两倍时发生。";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "高纬度规则";
+"middleOfTheNight" = "半夜";
+"seventhOfTheNight" = "夜间的第七部分";
+"twilightAngle" = "黄昏角度";
+
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "计算偏好";
+"Consider setting..." = "考虑根据当地清真寺设置计算方法。";
+"highLatitudeExplanation" = "某些纬度较高的国家通常应用高纬度规则。您所在地区的推荐规则是";
+"Athan Preview" = "阿赞预览";
+"Edit Location" = "编辑位置";
 
 // MARK: - Sounds
 "athan.sound" = "宣礼声音";

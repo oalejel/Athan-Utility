@@ -30,6 +30,18 @@ class Strings {
     static var left = NSLocalizedString("left", comment: "")
     static var notifications = NSLocalizedString("Notifications", comment: "")
     
+    // High latitude rule
+    static var highLatitudeRuleTitle = NSLocalizedString("High Latitude Rule", comment: "")
+    static var middleOfTheNight = NSLocalizedString("middleOfTheNight", comment: "")
+    static var seventhOfTheNight = NSLocalizedString("seventhOfTheNight", comment: "")
+    static var twilightAngle = NSLocalizedString("twilightAngle", comment: "")
+    static var highLatitudeExplanation = NSLocalizedString("highLatitudeExplanation", comment: "")
+    // Intro settings view
+    static var calculationPreferences = NSLocalizedString("Calculation Preferences", comment: "")
+    static var calculationPreferencesAdvice = NSLocalizedString("Consider setting...", comment: "")
+    static var athanPreviewTitle = NSLocalizedString("Athan Preview", comment: "")
+    static var editLocationButtonTitle = NSLocalizedString("Edit Location", comment: "")
+    
     // prayer settings
     static var athanNotification = NSLocalizedString("Athan Notification", comment: "")
     static var enabled = NSLocalizedString("Enabled", comment: "")

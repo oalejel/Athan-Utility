@@ -75,9 +75,22 @@
 // MARK: - Madhab
 "Madhab" = "مذهب";
 "Hanafi" = "حنفی";
-"Shafi" = "شافي";
+"Shafi" = "غير حنفي";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "حنفی محدب بعد میں عصر کے اوقات کا استعمال کرتا ہے ، جب اس وقت ہوتا ہے جب شمسی دوپہر کے بعد سے کسی شے کی لمبائی میں کسی چیز کی لمبائی میں اضافہ ہوتا ہے";
 
+// MARK: - Latitude Rules
+"High Latitude Rule" = "بلند عرض خطہ کا قاعدہ";
+"middleOfTheNight" = "رات کے درمیان";
+"seventhOfTheNight" = "رات کا ساتواں حصہ";
+"twilightAngle" = "گھات کا زاویہ";
+
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "حساب کی ترجیحات";
+"Consider setting..." = "اپنے مقامی مسجد کے مطابق حساب کی ترکیب کو ترجیح دیں۔";
+"highLatitudeExplanation" = "کسی مخصوص عرض خطہ کے شمال میں واقع ملکوں میں عموماً بلند عرض خطہ کا قاعدہ لاگو کیا جاتا ہے۔ آپ کے علاقے کے لئے تجویز شدہ قاعدہ ہے ";
+"Athan Preview" = "آذان کی پیش نظارہ";
+"Edit Location" = "مقام میں ترمیم";
 
 // MARK: - Sounds
 "athan.sound" = "اذان آواز";

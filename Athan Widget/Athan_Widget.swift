@@ -186,7 +186,6 @@ struct MediumWidget: View {
                     }
                 }
             }.padding(.top, 10)
-            
         }
         
     }
@@ -206,7 +205,6 @@ struct SmallErrorWidget: View {
             
         }
         .padding()
-        
     }
 }
 
@@ -365,6 +363,7 @@ struct Athan_WidgetEntryView : View {
     
     @ViewBuilder
     var body: some View {
+        
         // none means that we have a placeholder
         // nil means error
         switch (family, entry.tellUserToOpenApp || AthanManager.shared.locationSettings.locationName.isEmpty) {
@@ -388,8 +387,6 @@ struct Athan_WidgetEntryView : View {
         case (.accessoryCircular, false):
             AccessoryCircularWidget(entry: entry)
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
-            
-            
             // error cases (no athan data)
         case (.systemSmall, true):
             SmallErrorWidget()
@@ -409,8 +406,6 @@ struct Athan_WidgetEntryView : View {
         case (.accessoryCircular, true):
             AccessoryCircularErrorWidget()
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
-            
-            
             // Error version of other currently unsupported widgets...
         case (.systemExtraLarge, _):
             MediumErrorWidget()
@@ -422,46 +417,16 @@ struct Athan_WidgetEntryView : View {
     }
 }
 
-// Support iOS 17+ container backgrounds.
-// Some widgets don't have background or need padding.
-extension View {
-    @ViewBuilder
-    func applyContainerBackground(entry: AthanEntry, useGradientBackground: Bool, usePadding: Bool) -> some View {
-        if #available(iOS 17, *) {
-            self
-                .padding(.all, usePadding ? nil : 0)
-                .containerBackground(for: .widget) {
-                    if useGradientBackground {
-                        LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .ignoresSafeArea()
-                        
-                    }
-                }
-                .contentMargins(0)
-                .ignoresSafeArea()
-        } else {
-            ZStack {
-                if useGradientBackground {
-                    LinearGradient(gradient: entry.gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-                }
-                self
-                    .padding(.all, usePadding ? nil : 0)
-            }
-        }
-    }
-}
 
 @main
 struct Athan_Widget: Widget {
     let kind: String = "Athan_Widget"
     
     var body: some WidgetConfiguration {
-        
         if #available(iOSApplicationExtension 16.0, *) {
-            return IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
+            return StaticConfiguration(kind: kind, provider: AthanProvider(), content: { entry in
                 Athan_WidgetEntryView(entry: entry)
-                
-            }
+            })
             .contentMarginsDisabled()
             .configurationDisplayName("Athan Widget")
             // lets not support the .systemLarge family for now...
@@ -470,9 +435,9 @@ struct Athan_Widget: Widget {
             
         } else {
             // Fallback on earlier versions
-            return IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: AthanProvider()) { entry in
+            return StaticConfiguration(kind: kind, provider: AthanProvider(), content: { entry in
                 Athan_WidgetEntryView(entry: entry)
-            }
+            })
             .configurationDisplayName("Athan Widget")
             // lets not support the large widget family for now...
             .supportedFamilies([.systemSmall, .systemMedium])//, .systemLarge])

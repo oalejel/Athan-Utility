@@ -11,38 +11,21 @@ import WidgetKit
 import Intents
 import Adhan
 
-struct AthanEntry: TimelineEntry {
-    let date: Date // just represents time to update the timeline. != always equal start of prayer
-    var currentPrayer: Prayer
-    var currentPrayerDate: Date
-    var nextPrayerDate: Date // will refer to Fajr of next day if prayerType is isha
-    var todayPrayerTimes: [Date]
-
-    var tellUserToOpenApp = false
-    var relevance: TimelineEntryRelevance?
-    var gradient: Gradient
-}
-
-enum EntryRelevance: Float {
-    case Medium = 1
-    case High = 2
-}
-
-class AthanProvider: IntentTimelineProvider {
+class AthanProvider: TimelineProvider {
     var manager = AthanManager.shared
-
+    
     func placeholder(in context: Context) -> AthanEntry {
         // let UI handle case with nil data
         let exampleDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
         let useDynamicColors = manager.appearanceSettings.isDynamic
         let colors = manager.appearanceSettings.colors(for: useDynamicColors ? (manager.currentPrayer ?? Prayer.isha) : nil)
-
+        
         // pass .none for placeholders
         return AthanEntry(date: Date(timeIntervalSinceNow: 100), currentPrayer: Prayer.fajr, currentPrayerDate: Date(),
                           nextPrayerDate: exampleDate, todayPrayerTimes: [Date(), Date(timeIntervalSinceNow: 200), Date(), Date(), Date(), Date()], gradient: Gradient(colors: [colors.0, colors.1]))
     }
-
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (AthanEntry) -> ()) {
+    
+    func getSnapshot(in context: Context, completion: @escaping (AthanEntry) -> Void) {
         if manager.locationSettings.isLoadedFromArchive {
             // WARNING: no foreground updates here --> must manually tell manager to refresh
             // for now, dont call enterForeground since that will request new location
@@ -57,7 +40,7 @@ class AthanProvider: IntentTimelineProvider {
                                    nextPrayerDate: manager.guaranteedNextPrayerTime(),
                                    todayPrayerTimes: timeArray,
                                    gradient: Gradient(colors: [colors.0, colors.1]))
-
+            
             completion(entry)
         } else { // if not loaded from settings, give user an error
             let openAppEntry = AthanEntry(date: Date(),
@@ -70,12 +53,12 @@ class AthanProvider: IntentTimelineProvider {
             completion(openAppEntry)
         }
     }
-
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<AthanEntry>) -> ()) {
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<AthanEntry>) -> Void) {
         var entries: [AthanEntry] = []
         // OLD goal (leaving for later): users should be able to never open athan utility – in this case, we should use the prayer manager to load all of our data!
         // at the very least allow the widget provider to request new data on the last entry if we only have one day left of data!
-
+        
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
         manager.reloadSettingsAndNotifications()
@@ -87,17 +70,16 @@ class AthanProvider: IntentTimelineProvider {
                                    todayPrayerTimes: [],
                                    tellUserToOpenApp: true,
                                    gradient: Gradient(colors: [.black, .blue]))
-
+            
             let timeline = Timeline(entries: [openAppEntry], policy: .atEnd)
             completion(timeline)
             return
         }
         
         let useDynamicColors = manager.appearanceSettings.isDynamic
-
         let todayTimesArray = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         let tomorrowTimesArray = Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
-
+        
         // first, add a snapshot entry for NOW, since we may be on isha time
         // on a new day (at like 1 AM), where there is no entry made above that
         // precedes the current time
@@ -168,5 +150,6 @@ class AthanProvider: IntentTimelineProvider {
         // .atEnd means that the timeline will request new timeline info on the date of the last timeline entry
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
+        
     }
 }

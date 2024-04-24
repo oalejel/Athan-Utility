@@ -195,6 +195,9 @@ struct IntroSettingsView: View {
                         }
                     }
                 }
+                .mask(
+                    LinearGradient(colors: [.white, .white, .white, .white, .white, .white, .clear], startPoint: .top, endPoint: .bottom)
+                )
                 
                 Spacer(minLength: 0)
                 

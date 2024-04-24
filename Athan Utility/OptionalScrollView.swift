@@ -27,6 +27,8 @@ struct OptionalScrollView<Content: View>: View {
     private func shouldUseScrollView() -> Bool {
         let screenHeight = UIScreen.main.bounds.height
         let isAccessibilitySize = sizeCategory.isAccessibilityCategory
+        let smallFonts: Set<ContentSizeCategory> = Set([.small, .extraSmall, .medium])
+        let isLargeFont = !smallFonts.contains(sizeCategory)
 
         let iPhone14ProHeight: CGFloat = 800
 
@@ -36,7 +38,7 @@ struct OptionalScrollView<Content: View>: View {
         }
 
         // Check if accessibility sizes are larger than usual
-        if isAccessibilitySize {
+        if isAccessibilitySize || isLargeFont {
             return true
         }
 

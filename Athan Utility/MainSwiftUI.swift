@@ -379,6 +379,7 @@ struct MainSwiftUI: View {
                                         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
                                             df.locale = Locale(identifier: "ar_SY")
                                         }
+                                        df.timeZone = LocationSettings.shared.timeZone
                                         return df
                                     }()
                                     

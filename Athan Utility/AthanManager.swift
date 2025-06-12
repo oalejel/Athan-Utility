@@ -39,6 +39,7 @@ class ObservableAthanManager: ObservableObject {
         
     @Published var todayTimes: PrayerTimes!
     @Published var tomorrowTimes: PrayerTimes!
+    @Published var yesterdayTimes: PrayerTimes!
     @Published var currentPrayer: Prayer! = .fajr
     @Published var locationName: String = ""
     @Published var qiblaHeading: Double = 0.0
@@ -67,6 +68,12 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     lazy var tomorrowTimes: PrayerTimes! = nil {
         didSet {
             ObservableAthanManager.shared.tomorrowTimes = self.tomorrowTimes
+        }
+    }
+    
+    lazy var yesterdayTimes: PrayerTimes! = nil {
+        didSet {
+            ObservableAthanManager.shared.yesterdayTimes = self.yesterdayTimes
         }
     }
     
@@ -269,18 +276,20 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         // swiftui publisher gets updates through didSet
         let tz = locationSettings.timeZone
         let adj = notificationSettings.adjustments()
-        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz, adjustments: adj), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz, adjustments: adj) {
+        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz, adjustments: adj), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz, adjustments: adj), let yesterday = calculateTimes(referenceDate: Date().addingTimeInterval(-86400), customTimeZone: tz, adjustments: adj) {
             todayTimes = today
             tomorrowTimes = tomorrow
+            yesterdayTimes = yesterday
         } else {
             print("DANGER: unable to calculate times. TODO: handle this accordingly for places on the north pole.")
             // default back to settings defaults
             locationSettings = LocationSettings.defaultSetting()
             todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone, adjustments: adj) // guaranteed fallback
             tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone, adjustments: adj)
+            yesterdayTimes = calculateTimes(referenceDate: Date().addingTimeInterval(-86400), customTimeZone: locationSettings.timeZone, adjustments: adj)
         } // should never fail on cupertino time.
         // add 24 hours for next day
-        currentPrayer = todayTimes.currentPrayer() ?? .isha
+        currentPrayer = todayTimes.currentPrayer() ?? yesterdayTimes.currentPrayer() ?? .isha
         assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
     
@@ -371,11 +380,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
                     // do nothing
                 } // on break, we can update our prayer
                 DispatchQueue.main.async {
-                    self.currentPrayer = self.todayTimes.currentPrayer() ?? .isha
+                    self.currentPrayer = self.todayTimes.currentPrayer() ?? self.yesterdayTimes.currentPrayer() ?? .isha
                 }
             }
         } else {
-            currentPrayer = todayTimes.currentPrayer() ?? .isha
+            currentPrayer = todayTimes.currentPrayer() ?? self.yesterdayTimes.currentPrayer() ?? .isha
         }
     }
     

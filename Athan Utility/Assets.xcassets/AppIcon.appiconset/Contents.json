@@ -1,112 +1,31 @@
 {
   "images" : [
     {
-      "filename" : "Final Palestine Icon-iPad20@2x.png",
+      "filename" : "glassy-kaba-1.png",
       "idiom" : "universal",
       "platform" : "ios",
-      "scale" : "2x",
-      "size" : "20x20"
+      "size" : "1024x1024"
     },
     {
-      "filename" : "Final Palestine Icon-iPhone20@2x.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "glassy-kaba-1 1.png",
       "idiom" : "universal",
       "platform" : "ios",
-      "scale" : "3x",
-      "size" : "20x20"
+      "size" : "1024x1024"
     },
     {
-      "filename" : "Final Palestine Icon-iPad29@2x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "29x29"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPhone29@3x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "3x",
-      "size" : "29x29"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPad76.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "38x38"
-    },
-    {
-      "filename" : "Final Palestine Icon-AppStore.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "3x",
-      "size" : "38x38"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPad40@2x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "40x40"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPhone60@2x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "3x",
-      "size" : "40x40"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPhone60@2x 1.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "60x60"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPhone60@3x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "3x",
-      "size" : "60x60"
-    },
-    {
-      "filename" : "big copy.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "64x64"
-    },
-    {
-      "filename" : "big copy 1.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "3x",
-      "size" : "64x64"
-    },
-    {
-      "filename" : "big copy 2.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "68x68"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPad76@2x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "76x76"
-    },
-    {
-      "filename" : "Final Palestine Icon-iPad83@2x.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "83.5x83.5"
-    },
-    {
-      "filename" : "Icon 2021-AppStore.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "glassy-kaba-1 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

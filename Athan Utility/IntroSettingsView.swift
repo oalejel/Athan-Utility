@@ -42,7 +42,7 @@ struct IntroSettingsView: View {
     let latitudeRules = HighLatitudeRule.allCases
     
     // Gradient background appearance state
-    @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.todayTimes.currentPrayer(at: Date()) ?? .isha
+    @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.todayTimes.currentPrayer(at: Date()) ?? ObservableAthanManager.shared.yesterdayTimes.currentPrayer(at: Date()) ?? .isha
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
     
     var body: some View {

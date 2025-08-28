@@ -14,6 +14,12 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
+// MARK: Accessibility
+"acc_settings" = "Settings";
+"acc_calendar" = "Calendar";
+"acc_location_settings" = "Location Settings";
+
+
 
 // MARK: - Notifications
 "Notifications" = "Notifications";
@@ -208,3 +214,5 @@
 
 "A new way to visualize salah times throughout the day." = "A new way to visualize salah times throughout the day.";
 // MARK: - END OF OLD LOCALIZATIONS
+
+

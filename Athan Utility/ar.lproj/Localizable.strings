@@ -15,6 +15,11 @@
 "Isha" = "عشاء";
 
 
+// MARK: Accessibility
+"acc_settings" = "الإعدادات";
+"acc_calendar" = "التقويم";
+"acc_location_settings" = "إعدادات الموقع";
+
 // MARK: - Notifications
 "Notifications" = "الإشعارات";
 // Example: Time for Fajr [2:45 pm]. Please open...

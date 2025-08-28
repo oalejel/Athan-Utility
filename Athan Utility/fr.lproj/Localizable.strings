@@ -15,6 +15,10 @@
 "Maghrib" = "Maghreb";
 "Isha" = "Icha";
 
+// MARK: Accessibility
+"acc_settings" = "Paramètres";
+"acc_calendar" = "Calendrier";
+"acc_location_settings" = "Paramètres de localisation";
 
 // MARK: - Notifications
 "Notifications" = "Notifications"; // same in french

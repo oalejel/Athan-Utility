@@ -14,6 +14,12 @@
 "Maghrib" = "Maghrib";
 "Isha" = "Isha";
 
+// MARK: Accessibility
+"acc_settings" = "Ayarlar";
+"acc_calendar" = "Takvim";
+"acc_location_settings" = "Konum Ayarları";
+
+
 // MARK: - Notifications
 "Notifications" = "Notifications";
 // Example: Time for Fajr [2:45 pm]. Please open...

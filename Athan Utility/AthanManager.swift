@@ -413,10 +413,15 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     func guaranteedNextPrayerTime() -> Date {
         let currentPrayer = todayTimes.currentPrayer()
         // do not use api nextPrayeras it does not distinguish tomorrow fajr from today fajr nil
+        // New: also account for cases where high latitudes have isha after 12am
         //        var nextPrayer: Prayer? = todayTimes.nextPrayer()
         var nextPrayerTime: Date! = nil
         if currentPrayer == .isha { // case for reading from tomorrow fajr times
             nextPrayerTime = tomorrowTimes.fajr
+        } else if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+            // happens in cases that times extend to next day (isha after 12)
+            // this case is true when isha from yday hasn't technically started yet
+            nextPrayerTime = yesterdayTimes.isha
         } else if currentPrayer == nil { // case for reading from today's fajr times
             nextPrayerTime = todayTimes.fajr
         } else { // otherwise, next prayer time is based on today
@@ -430,8 +435,14 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         var currentPrayer: Prayer? = todayTimes.currentPrayer()
         var currentPrayerTime: Date! = nil
         if currentPrayer == nil { // case of new day before fajr
-            currentPrayer = .isha
-            currentPrayerTime = todayTimes.isha.addingTimeInterval(-86400) // shift back today isha approximation by a day
+            // if yesterday maghrib is still "current", we are in exceptional case where isha is after 12 am
+            if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+                currentPrayer = .maghrib
+                currentPrayerTime = yesterdayTimes.maghrib
+            } else {
+                currentPrayer = .isha
+                currentPrayerTime = yesterdayTimes.isha // use yesterday's isha time
+            }
         } else {
             currentPrayerTime = todayTimes.time(for: currentPrayer!)
         }

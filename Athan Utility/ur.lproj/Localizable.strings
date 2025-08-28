@@ -14,6 +14,12 @@
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";
 
+// MARK: Accessibility
+"acc_settings" = "ترتیبات";
+"acc_calendar" = "کیلنڈر";
+"acc_location_settings" = "مقام کی ترتیبات";
+
+
 
 // MARK: - Notifications
 "Notifications" = "اطلاعات";

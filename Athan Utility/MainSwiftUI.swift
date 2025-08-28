@@ -113,11 +113,11 @@ struct MainSwiftUI: View {
         return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
     }
     
-    static func hijriDateString(date: Date) -> String {
+    static func hijriDateString(date: Date, isAccessibilityLabel: Bool) -> String {
         let hijriCal = Calendar(identifier: .islamicUmmAlQura)
         let df = DateFormatter()
         df.calendar = hijriCal
-        df.dateStyle = .medium
+        df.dateStyle = isAccessibilityLabel ? .full : .medium
 //        print("here")
         #warning("this gets called too often on stage changes. change later for performance.")
         
@@ -416,6 +416,7 @@ struct MainSwiftUI: View {
                                                         .bold()
                                                 }
                                                 .animation(.linear(duration: 0.2))
+                                                .accessibilityElement(children: .combine)
                                                     Spacer()
                                             }
                                         }
@@ -473,6 +474,7 @@ struct MainSwiftUI: View {
                                             }
                                             .padding(12)
                                             .offset(x: -14, y: 12)
+                                            .accessibilityLabel("acc_location_settings")
                                             
                                             Spacer()
                                             
@@ -489,6 +491,7 @@ struct MainSwiftUI: View {
                                                 }
                                                 .foregroundColor(Color(.lightText))
                                                 .font(Font.body.weight(.bold))
+                                                .accessibilityLabel("acc_calendar")
                                                 
                                                 // Settings button
                                                 Button(action: {
@@ -503,6 +506,7 @@ struct MainSwiftUI: View {
                                                 }
                                                 .foregroundColor(Color(.lightText))
                                                 .font(Font.body.weight(.bold))
+                                                .accessibilityLabel("acc_settings")
                                             }
                                             
                                             

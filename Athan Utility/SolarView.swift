@@ -186,13 +186,14 @@ struct SolarView: View, Equatable {
                         .opacity(isDragging ? 1 : 0)
                         .animation(.linear(duration: 0.3))
                     
-                    Text(MainSwiftUI.hijriDateString(date: Date()))
+                    Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
                         .fontWeight(.bold)
                         .lineLimit(1)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding([.trailing, .leading])
                         .foregroundColor(Color(.lightText))
                         .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
+                        .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
                         //                                            .offset(y: 24)
 //                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
 

@@ -19,6 +19,12 @@
 "acc_settings" = "Paramètres";
 "acc_calendar" = "Calendrier";
 "acc_location_settings" = "Paramètres de localisation";
+"acc_qibla_compass_label" = "Boussole de la Qibla";
+"acc_qibla_compass_hint" = "Vibre lorsque vous êtes aligné avec la Qibla à moins de trois degrés.";
+"acc_qibla_aligned_value" = "Aligné avec la Qibla";
+"acc_qibla_turn_right" = "Tournez à droite";
+"acc_qibla_turn_left" = "Tournez à gauche";
+"acc_degrees_abbrev" = "degrés";
 
 // MARK: - Notifications
 "Notifications" = "Notifications"; // same in french

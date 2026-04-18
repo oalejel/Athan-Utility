@@ -20,7 +20,7 @@ struct TertiaryAthanWidgetEntryView : View {
             HalfAccessoryRectangularWidget(entry: entry, isLeftHandside: false)
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryRectangular, true):
-            AccessoryRectangularErrorWidget()
+            SecondaryAccessoryRectangularErrorWidget()
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         default:
             Text(Strings.widgetOpenApp)
@@ -57,7 +57,7 @@ struct TertiaryAthanWidget: Widget {
 }
 
 
-
+@available(iOS 17.0.0, *)
 #Preview(as: .accessoryRectangular) {
     TertiaryAthanWidget()
 } timeline: {

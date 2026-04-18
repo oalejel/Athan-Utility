@@ -10,8 +10,14 @@ import WidgetKit
 import SwiftUI
 
 @main
-struct SecondaryAthanWidgetBundle: WidgetBundle {
+@available(iOS 17.0.0, *)
+struct AthanWidgetBundle: WidgetBundle {
     var body: some Widget {
+        Athan_Widget()
         SecondaryAthanWidget()
+        TertiaryAthanWidget()
+        // Live activities
+        SuhoorLiveActivity()
+        
     }
 }

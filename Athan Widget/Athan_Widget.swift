@@ -418,7 +418,6 @@ struct Athan_WidgetEntryView : View {
 }
 
 
-@main
 struct Athan_Widget: Widget {
     let kind: String = "Athan_Widget"
     

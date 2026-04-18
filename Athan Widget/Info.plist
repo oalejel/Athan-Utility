@@ -25,10 +25,14 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>NSExtensionPrincipalClass</key>
+	<string>$(PRODUCT_MODULE_NAME).AthanWidgetBundle</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Athan Widget uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Widget uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>NSWidgetWantsLocation</key>
 	<true/>
 </dict>

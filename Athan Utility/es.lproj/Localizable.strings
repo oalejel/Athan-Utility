@@ -18,7 +18,12 @@
 "acc_settings" = "Configuración";
 "acc_calendar" = "Calendario";
 "acc_location_settings" = "Configuración de ubicación";
-
+"acc_qibla_compass_label" = "Brújula de la Qibla";
+"acc_qibla_compass_hint" = "Vibra cuando estás alineado con la Qibla a menos de tres grados.";
+"acc_qibla_aligned_value" = "Alineado con la Qibla";
+"acc_qibla_turn_right" = "Gira a la derecha";
+"acc_qibla_turn_left" = "Gira a la izquierda";
+"acc_degrees_abbrev" = "grados";
 
 // MARK: - Notifications
 "Notifications" = "Notificaciones";

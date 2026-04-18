@@ -18,6 +18,12 @@
 "acc_settings" = "ترتیبات";
 "acc_calendar" = "کیلنڈر";
 "acc_location_settings" = "مقام کی ترتیبات";
+"acc_qibla_compass_label" = "قبلہ کمپاس";
+"acc_qibla_compass_hint" = "جب قبلہ کے ساتھ تین ڈگری کے اندر سیدھ ہو جائے تو آلہ کمپن کرے گا۔";
+"acc_qibla_aligned_value" = "قبلہ کے ساتھ سیدھ ہو گئی";
+"acc_qibla_turn_right" = "دائیں مُڑیں";
+"acc_qibla_turn_left" = "بائیں مُڑیں";
+"acc_degrees_abbrev" = "ڈگریاں";
 
 
 

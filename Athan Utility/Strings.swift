@@ -49,8 +49,6 @@ class Strings {
     static var play30Seconds = NSLocalizedString("Play Longer Athan", comment: "")
     static var playLimitDescription = NSLocalizedString("Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan.", comment: "")
     static var playSoundDescription = NSLocalizedString("Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime.", comment: "")
-//    static var muteSwitch = NSLocalizedString("Override mute switch", comment: "")
-//    static var muteSwitchDescription = NSLocalizedString("Override mute switch and \"Do Not Disturb\" to use this Athan as an alarm.", comment: "")
     static var athanMinuteOffset = NSLocalizedString("athan.minute.offset", comment: "")
     
     static var reminderNotification = NSLocalizedString("Reminder Notification", comment: "")
@@ -93,4 +91,12 @@ class Strings {
     static var widgetOpenApp = NSLocalizedString("Open Athan Utility to set location.", comment: "")
     
     static var widgetUsefulDescription = NSLocalizedString("Use Athan Widgets to view upcoming salah times at a glance.", comment: "")
+    
+    // Accessibility strings for Qibla compass
+    static var qiblaCompassLabel = NSLocalizedString("acc_qibla_compass_label", comment: "Accessibility label for the Qibla compass")
+    static var qiblaCompassHint = NSLocalizedString("acc_qibla_compass_hint", comment: "Accessibility hint describing the haptic behavior")
+    static var qiblaAlignedValue = NSLocalizedString("acc_qibla_aligned_value", comment: "Accessibility value when aligned with Qibla")
+    static var qiblaTurnRight = NSLocalizedString("acc_qibla_turn_right", comment: "Accessibility direction to turn right")
+    static var qiblaTurnLeft = NSLocalizedString("acc_qibla_turn_left", comment: "Accessibility direction to turn left")
+    static var degreesAbbrev = NSLocalizedString("acc_degrees_abbrev", comment: "Spoken abbreviation for degrees")
 }

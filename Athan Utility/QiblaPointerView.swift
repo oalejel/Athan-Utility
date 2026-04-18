@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @available(iOS 13.0.0, *)
 struct Triangle: Shape {
@@ -24,6 +25,16 @@ struct Triangle: Shape {
 struct QiblaPointerView: View {
     @Binding var angle: Double
     @Binding var qiblaAngle: Double // correct angle, which we should highlight and vibrate for
+    
+    // Haptic gating state
+    @State private var isWithinHitWindow = false
+    @State private var lastHapticDate: Date? = nil
+    
+    // Tunables
+    private let hitWindowDegrees: Double = 3.0       // tight window to trigger
+    private let exitWindowDegrees: Double = 6.0      // hysteresis exit threshold
+    private let cooldownSeconds: TimeInterval = 1.0  // debounce
+    
     var body: some View {
         GeometryReader { g in
             let pointerLength = g.size.width / 6
@@ -40,30 +51,128 @@ struct QiblaPointerView: View {
                     .strokeBorder(Color.white, lineWidth: lineWidth)
                     .padding(pointerLength)
                 
-                
                 Triangle()
                     .frame(width: pointerLength * 1.2, height: pointerLength, alignment: .center)
                     .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
                     .foregroundColor(.white)
-                    .shortRotationEffect(.degrees(UIApplication.shared.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirection.rightToLeft ? angle - qiblaAngle : qiblaAngle - angle), id: 1)
+                    .shortRotationEffect(.degrees(pointerVisualAngleDegrees), id: 1)
                     .animation(Animation.default.speed(1))
                     .transition(.opacity)
-                
+            }
+            // Accessibility: describe what this is, current alignment, and the haptic behavior
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(Strings.qiblaCompassLabel ?? "Qibla compass"))
+            .accessibilityValue(Text(accessibilityAlignmentString))
+            .accessibilityHint(Text(Strings.qiblaCompassHint ?? "Vibrates when aligned within three degrees"))
+            .accessibilityAddTraits(.updatesFrequently)
+            // Monitor heading/qibla changes to trigger haptics
+            .onChange(of: angle) { _ in
+                evaluateHaptic()
+                announceIfNeededForAccessibility()
+            }
+            .onChange(of: qiblaAngle) { _ in
+                evaluateHaptic()
+                announceIfNeededForAccessibility()
+            }
+            .onAppear {
+                // Initialize state based on current values
+                evaluateHaptic(initial: true)
             }
         }
+    }
+    
+    // Computed: the visual rotation applied to the pointer (triangle), in degrees.
+    // This matches the rotation used in the view so our difference math aligns with what the user sees.
+    private var pointerVisualAngleDegrees: Double {
+        let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        // In your view, you rotate by (RTL ? angle - qiblaAngle : qiblaAngle - angle)
+        return isRTL ? (angle - qiblaAngle) : (qiblaAngle - angle)
+    }
+    
+    // Signed difference in [-180, 180]
+    private var signedDiffToUp: Double {
+        normalizeToSigned180(pointerVisualAngleDegrees)
+    }
+    
+    // Smallest absolute angular difference to "straight up" (0 degrees)
+    private var absoluteDiffToUp: Double {
+        abs(signedDiffToUp)
+    }
+    
+    // Accessibility-friendly textual description of alignment
+    private var accessibilityAlignmentString: String {
+        // Round to nearest whole degree for speech clarity
+        let rounded = Int(abs(absoluteDiffToUp).rounded())
+        if absoluteDiffToUp <= hitWindowDegrees {
+            return Strings.qiblaAlignedValue ?? "Aligned with Qibla"
+        } else {
+            // Indicate left/right to help users rotate the right way.
+            let direction = signedDiffToUp > 0 ? (Strings.qiblaTurnRight ?? "Turn right") : (Strings.qiblaTurnLeft ?? "Turn left")
+            // Example: "5 degrees. Turn right."
+            return "\(rounded) \(Strings.degreesAbbrev ?? "degrees"). \(direction)."
+        }
+    }
+    
+    private func normalizeToSigned180(_ deg: Double) -> Double {
+        var x = fmod(deg + 180.0, 360.0)
+        if x < 0 { x += 360.0 }
+        return x - 180.0
+    }
+    
+    private func evaluateHaptic(initial: Bool = false) {
+        let diff = absoluteDiffToUp
         
+        // Hysteresis logic
+        if isWithinHitWindow {
+            // Wait until user leaves the wider exit window before re-arming
+            if diff > exitWindowDegrees {
+                isWithinHitWindow = false
+            }
+            return
+        } else {
+            // Only trigger when entering the tight hit window
+            if diff <= hitWindowDegrees {
+                // Debounce with cooldown
+                let now = Date()
+                if let last = lastHapticDate, now.timeIntervalSince(last) < cooldownSeconds {
+                    // Still cooling down
+                    isWithinHitWindow = true // mark as within window to avoid spamming while staying in range
+                    return
+                }
+                
+                // Fire haptic
+                triggerHaptic()
+                lastHapticDate = now
+                isWithinHitWindow = true
+            }
+        }
+    }
+    
+    private func triggerHaptic() {
+        // iOS haptic
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.success)
+        
+        // If you decide to support watchOS haptics here in the future:
+        // #if os(watchOS)
+        // WKInterfaceDevice.current().play(.success)
+        // #endif
+    }
+    
+    // Optional: politely announce alignment changes for VoiceOver users when they get aligned,
+    // without being too chatty. This posts a layout change announcement only on "hit".
+    private func announceIfNeededForAccessibility() {
+        guard UIAccessibility.isVoiceOverRunning else { return }
+        if isWithinHitWindow {
+            UIAccessibility.post(notification: .announcement, argument: accessibilityAlignmentString)
+        }
     }
 }
 
 
 infix operator %% : DefaultPrecedence
 extension Double {
-    
-    /// Returns modulus, but forces it to be positive
-    /// - Parameters:
-    ///   - left: number
-    ///   - right: modulus
-    /// - Returns: positive modulus
     static  func %% (_ left: Double, _ right: Double) -> Double {
         let truncatingRemainder = left.truncatingRemainder(dividingBy: right)
         return truncatingRemainder >= 0 ? truncatingRemainder : truncatingRemainder+abs(right)
@@ -72,12 +181,6 @@ extension Double {
 
 @available(iOS 13.0.0, *)
 extension View {
-    
-    /// Like RotationEffect - but when animated, the rotation moves in the shortest direction.
-    /// - Parameters:
-    ///   - angle: new angle
-    ///   - anchor: anchor point
-    ///   - id: unique id for the item being displayed. This is used as a key to maintain the rotation history and figure out the right direction to move
     func shortRotationEffect(_ angle: Angle,anchor: UnitPoint = .center, id:Int) -> some View {
         modifier(ShortRotation(angle: angle,anchor:anchor, id:id))
     }
@@ -120,6 +223,6 @@ struct ShortRotation: ViewModifier {
 struct QiblaPointerPreview: PreviewProvider {
     static var previews: some View {
         QiblaPointerView(angle: .constant(10), qiblaAngle: .constant(13))
-            .background(Rectangle(), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .background(Rectangle(), alignment: .center)
     }
 }

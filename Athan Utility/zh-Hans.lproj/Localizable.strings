@@ -19,7 +19,12 @@
 "acc_settings" = "设置";
 "acc_calendar" = "日历";
 "acc_location_settings" = "位置设置";
-
+"acc_qibla_compass_label" = "朝向指南针";
+"acc_qibla_compass_hint" = "当与朝向对齐且误差小于三度时会震动。";
+"acc_qibla_aligned_value" = "已与朝向对齐";
+"acc_qibla_turn_right" = "向右转";
+"acc_qibla_turn_left" = "向左转";
+"acc_degrees_abbrev" = "度";
 
 
 // MARK: - Notifications

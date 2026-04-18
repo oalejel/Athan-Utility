@@ -106,14 +106,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             
             // LATEST FEATURES - show for existing and new users (7.2)
-//            let hasPresentedLatestUpdates = versionStore.presentedVersions.contains(where: { $0.major == 7 && $0.minor > 1 })
-//            if !hasPresentedLatestUpdates {
-//                featuresToDisplay.append(contentsOf: [
-//                    .init(image: .init(systemName: "speaker.wave.2.bubble.fill"),
-//                          title: "New Athan Sounds",
-//                          subtitle: "Two new athan sounds have been added!"),
-//                ])
-//            }
+            let hasPresentedLatestUpdates = versionStore.presentedVersions.contains(where: { $0.major == 7 && $0.minor >= 5 })
+            if !hasPresentedLatestUpdates {
+                featuresToDisplay.append(contentsOf: [
+                    .init(image: .init(systemName: "rectangle.3.group"),
+                          title: "Ramadan Suhoor Timer",
+                          subtitle: "Track your time remaining to eat suhoor in the last hour before Fajr!"),
+                    .init(image: .init(systemName: "location.circle"),
+                          title: "Accessible Qibla Vibration",
+                          subtitle: "Now easier to feel when you're aligned with the Qibla using haptic feedback."),
+                    .init(image: .init(systemName: "app"),
+                          title: "Ramadan Mubarak!",
+                          subtitle: "A little icon update to celebrate this blessed month."),
+
+                    
+                ])
+            }
             
             // Don't present WhatsNew if no new features exist
             if featuresToDisplay.isEmpty {

@@ -33,10 +33,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSExtensionPointIdentifier</key>
+	<string>com.apple.widgetkit-extension</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>Athan times for requested regions are used by Siri.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigurationIntent</string>

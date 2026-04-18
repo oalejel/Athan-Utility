@@ -1,0 +1,91 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.00923,0.04936,0.10883,1.00000",
+      "display-p3:0.09622,0.27873,0.83696,1.00000"
+    ]
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "Icon 2021 Copy 4.png",
+          "name" : "Icon 2021 Copy 4"
+        },
+        {
+          "blend-mode-specializations" : [
+            {
+              "appearance" : "tinted",
+              "value" : "lighten"
+            }
+          ],
+          "fill-specializations" : [
+            {
+              "value" : "none"
+            },
+            {
+              "appearance" : "tinted",
+              "value" : "none"
+            }
+          ],
+          "glass" : true,
+          "image-name" : "iOS 26 Icon 3.png",
+          "name" : "iOS 26 Icon 3",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:0.84446,0.83272,0.34674,1.00000",
+              "display-p3:0.95357,1.00000,0.66329,1.00000"
+            ]
+          },
+          "glass" : true,
+          "image-name" : "iOS 26 Icon Copy.png",
+          "name" : "iOS 26 Icon Copy",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "blend-mode" : "plus-lighter",
+          "glass" : false,
+          "image-name" : "iOS 26 Icon Copy 5.png",
+          "name" : "iOS 26 Icon Copy 5"
+        },
+        {
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "iOS 26 Icon Copy 4.png",
+          "name" : "background"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

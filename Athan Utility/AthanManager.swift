@@ -473,6 +473,23 @@ extension AthanManager {
                                      noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
             resetWidgets() // should happen when any of our settings change
+            
+            if #available(iOS 16.2, *) {
+//                Task {
+                let now = Date()
+                let fajrDate = todayTimes.fajr
+                let hourBeforeFajr = fajrDate.addingTimeInterval(-1 * 60 * 60)
+                if now < fajrDate && now > hourBeforeFajr {
+                    // start live activity 1 hour before fajr
+                    startSuhoorLiveActivity(activityStart: hourBeforeFajr, fajrTime: fajrDate, locationName: locationSettings.locationName)
+                } else if now > fajrDate.addingTimeInterval(60 * 5) {
+                    cleanupSuhoorActivity() // cleanup once 5 minutes past 
+                }
+
+//                }
+            } else {
+                // Fallback on earlier versions
+            }
             #endif
         }
         

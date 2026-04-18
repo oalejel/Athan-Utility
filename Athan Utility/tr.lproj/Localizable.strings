@@ -18,7 +18,12 @@
 "acc_settings" = "Ayarlar";
 "acc_calendar" = "Takvim";
 "acc_location_settings" = "Konum Ayarları";
-
+"acc_qibla_compass_label" = "Kıble Pusulası";
+"acc_qibla_compass_hint" = "Kıbleye üç dereceden daha az bir açıyla hizalandığınızda titreşir.";
+"acc_qibla_aligned_value" = "Kıble ile hizalı";
+"acc_qibla_turn_right" = "Sağa dönün";
+"acc_qibla_turn_left" = "Sola dönün";
+"acc_degrees_abbrev" = "derece";
 
 // MARK: - Notifications
 "Notifications" = "Notifications";

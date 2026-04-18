@@ -18,6 +18,12 @@
 "acc_settings" = "Settings";
 "acc_calendar" = "Calendar";
 "acc_location_settings" = "Location Settings";
+"acc_qibla_compass_label" = "Qibla compass";
+"acc_qibla_compass_hint" = "Vibrates when aligned within three degrees.";
+"acc_qibla_aligned_value" = "Aligned with Qibla";
+"acc_qibla_turn_right" = "Turn right";
+"acc_qibla_turn_left" = "Turn left";
+"acc_degrees_abbrev" = "degrees";
 
 
 
@@ -214,5 +220,3 @@
 
 "A new way to visualize salah times throughout the day." = "A new way to visualize salah times throughout the day.";
 // MARK: - END OF OLD LOCALIZATIONS
-
-

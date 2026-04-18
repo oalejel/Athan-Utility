@@ -48,7 +48,7 @@ struct HalfAccessoryRectangularWidget: View {
     }
 }
 
-struct AccessoryRectangularErrorWidget: View {
+struct SecondaryAccessoryRectangularErrorWidget: View {
     var body: some View {
         VStack(alignment: .leading) {
             Image(systemName: "sun.max")
@@ -71,7 +71,7 @@ struct SecondaryAthanWidgetEntryView : View {
             HalfAccessoryRectangularWidget(entry: entry, isLeftHandside: true)
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         case (.accessoryRectangular, true):
-            AccessoryRectangularErrorWidget()
+            SecondaryAccessoryRectangularErrorWidget()
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
         default:
             Text(Strings.widgetOpenApp)
@@ -107,8 +107,7 @@ struct SecondaryAthanWidget: Widget {
     }
 }
 
-
-
+@available(iOS 17.0.0, *)
 #Preview(as: .accessoryRectangular) {
     SecondaryAthanWidget()
 } timeline: {

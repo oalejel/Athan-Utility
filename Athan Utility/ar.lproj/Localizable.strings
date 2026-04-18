@@ -19,6 +19,12 @@
 "acc_settings" = "الإعدادات";
 "acc_calendar" = "التقويم";
 "acc_location_settings" = "إعدادات الموقع";
+"acc_qibla_compass_label" = "بوصلة القبلة";
+"acc_qibla_compass_hint" = "يهتز الجهاز عند المحاذاة مع القبلة ضمن ثلاث درجات.";
+"acc_qibla_aligned_value" = "محاذاة مع القبلة";
+"acc_qibla_turn_right" = "اتجه يمينًا";
+"acc_qibla_turn_left" = "اتجه يسارًا";
+"acc_degrees_abbrev" = "درجات";
 
 // MARK: - Notifications
 "Notifications" = "الإشعارات";

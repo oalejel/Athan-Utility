@@ -54,6 +54,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Timeline Population
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
+        manager.refreshTimes()
         if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
             handler(nil) // case if we have not set our location
         } else if let template = getComplicationTemplate(for: complication, using: Date()) {
@@ -66,13 +67,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
-        
+        manager.refreshTimes()
+
         // first, ensure that we are able to produce the desired complication
         //        guard let _ = getComplicationTemplate(for: complication, using: Date()) else {
         //            handler(nil)
         //            return
         //        }
-        
+
         // get all times we could possibly have entries for
         var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
         sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }

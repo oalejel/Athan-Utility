@@ -195,7 +195,17 @@ class FajrAlarmManager {
         let manager = AlarmManager.shared
         let ids = FajrAlarmStore.load()
         var remaining: [UUID] = []
+        var processed = 0
         for id in ids {
+            // Honor cooperative cancellation (e.g. BGTask expired). Persist
+            // the un-processed tail so the next sync pass retries them
+            // instead of leaking orphan alarms.
+            if Task.isCancelled {
+                remaining.append(contentsOf: ids.dropFirst(processed))
+                FajrAlarmStore.save(ids: remaining)
+                return
+            }
+            processed += 1
             do {
                 try manager.cancel(id: id)
             } catch {
@@ -229,7 +239,17 @@ class FajrAlarmManager {
         // next sync can retry them instead of leaking orphans.
         let previous = FajrAlarmStore.load()
         var retained: [UUID] = []
+        var processed = 0
         for id in previous {
+            // Honor cooperative cancellation (e.g. BGTask expired). Persist
+            // the un-processed tail so the next sync pass picks up where
+            // this one left off instead of leaking orphans.
+            if Task.isCancelled {
+                retained.append(contentsOf: previous.dropFirst(processed))
+                FajrAlarmStore.save(ids: retained)
+                return
+            }
+            processed += 1
             do {
                 try manager.cancel(id: id)
             } catch {
@@ -247,6 +267,12 @@ class FajrAlarmManager {
 
         var newIDs: [UUID] = retained
         for date in fireDates {
+            // Honor cooperative cancellation. Persist what we've scheduled
+            // so far; the next sync pass will top up the remaining window.
+            if Task.isCancelled {
+                FajrAlarmStore.save(ids: newIDs)
+                return
+            }
             // Skip past dates defensively.
             guard date > Date() else { continue }
 

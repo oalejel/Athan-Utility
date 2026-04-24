@@ -32,11 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Request another refresh whenever we're backgrounded so the rolling
-        // AlarmKit window can be topped up while the app is suspended.
-        scheduleFajrAlarmRefresh()
-    }
+    // Note: `applicationDidEnterBackground` is not invoked on scene-based
+    // apps (this project has `UIApplicationSceneManifest` in Info.plist),
+    // so the background-refresh top-up is wired from
+    // `SceneDelegate.sceneDidEnterBackground` instead.
 
     // MARK: - AlarmKit background refresh
 
@@ -55,7 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 
-    private func scheduleFajrAlarmRefresh() {
+    // Internal so SceneDelegate can re-submit on backgrounding.
+    func scheduleFajrAlarmRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: AppDelegate.fajrAlarmRefreshTaskID)
         // Refresh at most every ~6 hours. System decides the actual firing.
         request.earliestBeginDate = Date(timeIntervalSinceNow: 6 * 60 * 60)
@@ -71,23 +71,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // doesn't drop the rolling refresh.
         scheduleFajrAlarmRefresh()
 
-        // Reload latest persisted settings from the app group. This kicks off
-        // its own `FajrAlarmManager.syncAlarms()` internally (gated on the
-        // main-app bundle); our explicit `syncAlarms()` below chains after
-        // that one and is the Task we actually await before marking the
-        // BGTask complete, so the rolling AlarmKit window is guaranteed to
-        // be rebuilt before the OS suspends us.
+        // Reload latest persisted settings from the app group. `reloadSettingsAndNotifications`
+        // also calls `syncAlarms()` when the user has a non-default location;
+        // our explicit `syncAlarms()` below is unconditional for the main-app
+        // bundle (and chains onto any prior one), and is the Task we actually
+        // await before marking the BGTask complete so the rolling AlarmKit
+        // window is guaranteed to be rebuilt before the OS suspends us.
         AthanManager.shared.reloadSettingsAndNotifications()
         let syncTask = FajrAlarmManager.shared.syncAlarms()
 
+        // `setTaskCompleted(success:)` must be called exactly once per
+        // BGAppRefreshTask. Both `expirationHandler` and the awaiting Task
+        // below can fire (if the OS expires us while the sync's in-flight
+        // scheduling continues — cooperative cancellation doesn't abort
+        // AlarmKit calls immediately), so funnel both paths through a
+        // guarded completion. NSLock because Apple doesn't contractually
+        // guarantee `expirationHandler` runs on the same queue as the
+        // `using:` queue passed to `register`.
+        let completionLock = NSLock()
+        var hasCompleted = false
+        let complete: (Bool) -> Void = { success in
+            completionLock.lock()
+            defer { completionLock.unlock() }
+            guard !hasCompleted else { return }
+            hasCompleted = true
+            task.setTaskCompleted(success: success)
+        }
+
         task.expirationHandler = {
             syncTask.cancel()
-            task.setTaskCompleted(success: false)
+            complete(false)
         }
 
         Task { @MainActor in
             await syncTask.value
-            task.setTaskCompleted(success: true)
+            complete(true)
         }
     }
     

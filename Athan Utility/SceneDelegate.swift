@@ -171,6 +171,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+
+        // Top up the AlarmKit background-refresh request on backgrounding.
+        // `AppDelegate.applicationDidEnterBackground` is not invoked for
+        // scene-based apps, so this is the reliable hook.
+        (UIApplication.shared.delegate as? AppDelegate)?.scheduleFajrAlarmRefresh()
     }
     
     

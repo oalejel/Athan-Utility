@@ -355,10 +355,14 @@ class FajrAlarmManager {
             countdownDuration = nil
         }
 
+        // Without an explicit sound, AlarmKit schedules a silent alarm.
+        // Pass the system default alarm tone — looping, bypasses silent
+        // switch — which is what a user expects for a wake-up alarm.
         return AlarmManager.AlarmConfiguration(
             countdownDuration: countdownDuration,
             schedule: schedule,
-            attributes: attributes
+            attributes: attributes,
+            sound: .default
         )
     }
     #endif

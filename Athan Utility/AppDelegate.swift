@@ -41,9 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // MARK: - AlarmKit background refresh
 
     private func registerFajrAlarmRefreshTask() {
+        // Run the launch handler on the main queue. `reloadSettingsAndNotifications`
+        // mutates `@Published` state on `ObservableAthanManager` and touches
+        // timers / `WidgetCenter.shared`, both of which require the main thread.
+        // Passing `nil` here would put the handler on a system background
+        // queue, triggering Combine's "Publishing changes from background
+        // threads is not allowed" runtime issue.
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: AppDelegate.fajrAlarmRefreshTaskID,
-            using: nil
+            using: .main
         ) { task in
             self.handleFajrAlarmRefresh(task: task as! BGAppRefreshTask)
         }
@@ -65,16 +71,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // doesn't drop the rolling refresh.
         scheduleFajrAlarmRefresh()
 
+        // Reload latest persisted settings from the app group. This kicks off
+        // its own `FajrAlarmManager.syncAlarms()` internally (gated on the
+        // main-app bundle); our explicit `syncAlarms()` below chains after
+        // that one and is the Task we actually await before marking the
+        // BGTask complete, so the rolling AlarmKit window is guaranteed to
+        // be rebuilt before the OS suspends us.
+        AthanManager.shared.reloadSettingsAndNotifications()
+        let syncTask = FajrAlarmManager.shared.syncAlarms()
+
         task.expirationHandler = {
-            // syncAlarms() is fire-and-forget; best we can do is mark unfinished.
+            syncTask.cancel()
             task.setTaskCompleted(success: false)
         }
 
-        // Reload latest persisted settings from the app group, then sync.
-        AthanManager.shared.reloadSettingsAndNotifications()
-        FajrAlarmManager.shared.syncAlarms()
-
-        task.setTaskCompleted(success: true)
+        Task { @MainActor in
+            await syncTask.value
+            task.setTaskCompleted(success: true)
+        }
     }
     
     // launching from a force-press shortcut item

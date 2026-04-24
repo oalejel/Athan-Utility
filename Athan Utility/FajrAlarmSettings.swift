@@ -80,10 +80,12 @@ class FajrAlarmSettings: Codable, NSCopying {
     // MARK: Shared singleton
 
     static var shared: FajrAlarmSettings = {
-        if let decoded = checkArchive() {
-            return decoded
-        }
-        return FajrAlarmSettings()
+        let instance = checkArchive() ?? FajrAlarmSettings()
+        // Sanitize once at load time. The scheduler no longer sanitizes on
+        // every read (that would mutate the shared singleton off the main
+        // actor); the UI and saveAndExit handle clamping on write.
+        instance.sanitize()
+        return instance
     }()
 
     static func checkArchive() -> FajrAlarmSettings? {

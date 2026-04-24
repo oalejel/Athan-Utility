@@ -25,6 +25,7 @@ struct FajrAlarmSettingsView: View {
     @State private var snoozeMinutes: Int = 5
     @State private var daysAhead: Int = 7
     @State private var authState: FajrAlarmAuthorizationStatus = .notDetermined
+    @Environment(\.scenePhase) private var scenePhase
 
     private let isOSVersionSupported: Bool = {
         if #available(iOS 26.0, *) { return true } else { return false }
@@ -47,6 +48,15 @@ struct FajrAlarmSettingsView: View {
             header
             scrollBody
             doneButton
+        }
+        // Re-read authorization state whenever we become active — this
+        // catches the case where the user tapped "Open Settings",
+        // flipped the AlarmKit toggle in system Settings, and returned
+        // to the app. `onAppear` alone doesn't fire for that flow.
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                authState = FajrAlarmManager.shared.currentAuthorizationState()
+            }
         }
     }
 
@@ -135,6 +145,8 @@ struct FajrAlarmSettingsView: View {
                     Spacer()
                     Stepper("", value: $offsetMinutes, in: -120...120, step: 1)
                         .labelsHidden()
+                        .accessibilityLabel(Text(Strings.fajrAlarmOffset))
+                        .accessibilityValue(Text(offsetDescription))
                 }
 
                 Text(Strings.fajrAlarmOffsetDescription)
@@ -200,6 +212,8 @@ struct FajrAlarmSettingsView: View {
                     Stepper("", value: $snoozeMinutes, in: 1...30, step: 1)
                         .labelsHidden()
                         .disabled(!enabled || !snoozeEnabled || !isOSVersionSupported)
+                        .accessibilityLabel(Text(Strings.fajrAlarmSnooze))
+                        .accessibilityValue(Text(snoozeDescription))
                 }
             }
         }
@@ -217,6 +231,8 @@ struct FajrAlarmSettingsView: View {
                     Stepper("", value: $daysAhead, in: 1...14, step: 1)
                         .labelsHidden()
                         .disabled(!enabled || !isOSVersionSupported)
+                        .accessibilityLabel(Text(Strings.fajrAlarmScheduleWindow))
+                        .accessibilityValue(Text(daysAheadDescription))
                 }
 
                 Text(Strings.fajrAlarmScheduleDescription)
@@ -329,19 +345,24 @@ struct FajrAlarmSettingsView: View {
         s.sanitize()
         FajrAlarmSettings.archive()
 
-        // If enabling the feature, prompt for authorization. syncAlarms()
-        // handles both authorized and denied cases internally.
+        // If enabling the feature, prompt for authorization. `syncAlarms()`
+        // handles both the authorized and denied cases internally (denied
+        // → cancels any stale scheduled alarms). Wait for the auth result
+        // before animating back so that when the user denies we stay on
+        // this screen and render the `deniedBanner`; otherwise a slide-out
+        // transition races the permission sheet and the user never sees
+        // why their alarm isn't firing.
         if enabled && isOSVersionSupported {
             FajrAlarmManager.shared.requestAuthorization { granted in
                 self.authState = granted ? .authorized : .denied
                 FajrAlarmManager.shared.syncAlarms()
+                if granted {
+                    withAnimation { self.activeSection = .General }
+                }
             }
         } else {
             FajrAlarmManager.shared.syncAlarms()
-        }
-
-        withAnimation {
-            activeSection = .General
+            withAnimation { activeSection = .General }
         }
     }
 }

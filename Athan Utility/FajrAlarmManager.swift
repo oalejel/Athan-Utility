@@ -26,7 +26,7 @@ struct FajrAlarmMetadata: AlarmMetadata {
 #endif
 
 // Snapshot of the settings + location state that the async scheduler needs.
-// Captured on the caller's thread so the Task body never reads mutable shared
+// Captured on the main actor so the Task body never reads mutable shared
 // state (AthanManager / FajrAlarmSettings.shared) concurrently.
 private struct FajrSyncSnapshot {
     let enabled: Bool
@@ -75,9 +75,14 @@ class FajrAlarmManager {
     static let shared = FajrAlarmManager()
     private init() {}
 
-    // Serial queue that owns all AlarmKit sync work. Prevents two concurrent
-    // sync passes from racing on FajrAlarmStore and leaving orphaned alarms.
-    private let syncQueue = DispatchQueue(label: "com.omaralejel.Athan-Utility.FajrAlarmManager.sync")
+    // Each call to `syncAlarms()` starts a Task that first awaits the previous
+    // Task's completion, producing a strict serial chain. This replaces an
+    // earlier DispatchQueue + DispatchSemaphore implementation — bridging
+    // `DispatchSemaphore.wait()` with `await` is a Swift-Concurrency
+    // anti-pattern (blocks a cooperative thread waiting for a Task) and can
+    // starve the main actor under load.
+    private var latestSync: Task<Void, Never>?
+    private let chainLock = NSLock()
 
     // Snapshot the current authorization state. No system prompt is shown.
     func currentAuthorizationState() -> FajrAlarmAuthorizationStatus {
@@ -95,39 +100,22 @@ class FajrAlarmManager {
     }
 
     // Public entry point. Safe to call on any iOS version; no-op pre-26.
-    // Captures settings + location on the caller's thread before dispatching
-    // into the serial sync queue.
-    func syncAlarms() {
-        #if canImport(AlarmKit)
-        if #available(iOS 26.0, *) {
-            guard let snapshot = makeSnapshot() else { return }
-            syncQueue.async {
-                let sem = DispatchSemaphore(value: 0)
-                Task {
-                    await self.syncAlarmsAvailable(snapshot: snapshot)
-                    sem.signal()
-                }
-                sem.wait()
-            }
+    // Returns a Task that completes when this sync pass (and any queued before
+    // it) finishes — callers that need to await completion (e.g. the
+    // BGAppRefreshTask handler) can `await task.value`; fire-and-forget
+    // callers can ignore the return value thanks to `@discardableResult`.
+    @discardableResult
+    func syncAlarms() -> Task<Void, Never> {
+        chainLock.lock()
+        let previous = latestSync
+        let task = Task { [weak self] in
+            _ = await previous?.value
+            guard !Task.isCancelled else { return }
+            await self?.performSync()
         }
-        #endif
-    }
-
-    // Cancels every alarm we previously scheduled. Useful when the user
-    // disables the feature or revokes authorization.
-    func cancelAllManagedAlarms() {
-        #if canImport(AlarmKit)
-        if #available(iOS 26.0, *) {
-            syncQueue.async {
-                let sem = DispatchSemaphore(value: 0)
-                Task {
-                    await self.cancelAllAvailable()
-                    sem.signal()
-                }
-                sem.wait()
-            }
-        }
-        #endif
+        latestSync = task
+        chainLock.unlock()
+        return task
     }
 
     // Asks AlarmKit for authorization if we haven't yet. Returns the final
@@ -145,11 +133,22 @@ class FajrAlarmManager {
         completion(false)
     }
 
-    // Build a snapshot of everything the scheduler needs, read synchronously
-    // on the caller's thread.
+    private func performSync() async {
+        #if canImport(AlarmKit)
+        if #available(iOS 26.0, *) {
+            guard let snapshot = await makeSnapshot() else { return }
+            await syncAlarmsAvailable(snapshot: snapshot)
+        }
+        #endif
+    }
+
+    // Build a snapshot of everything the scheduler needs. Runs on the main
+    // actor because it reads `FajrAlarmSettings.shared` and `AthanManager`
+    // singleton state that the UI also writes to. Does NOT mutate those
+    // singletons — `sanitize()` is applied at archive/load time instead.
+    @MainActor
     private func makeSnapshot() -> FajrSyncSnapshot? {
         let settings = FajrAlarmSettings.shared
-        settings.sanitize()
         let athanManager = AthanManager.shared
         return FajrSyncSnapshot(
             enabled: settings.enabled,
@@ -283,9 +282,19 @@ class FajrAlarmManager {
         prayerName: String
     ) throws -> AlarmManager.AlarmConfiguration<FajrAlarmMetadata> {
 
-        // LocalizedStringResource treats its argument as a key that resolves
-        // at display time, so the alarm picks up the user's current system
-        // language even if it changed between scheduling and firing.
+        // `AlarmButton.text` is a `LocalizedStringResource`; the bare string
+        // literals below are implicitly promoted to keys that resolve against
+        // `Localizable.strings` at display time. "Stop" and "Snooze" are both
+        // defined in every shipped locale, so the buttons re-localize if the
+        // user switches system language between scheduling and firing.
+        //
+        // The `title` below is different: it's already rendered into the
+        // scheduling-time locale by `String(format:...)` at the call site, so
+        // the alarm's title stays in that language until the rolling window
+        // next refreshes. Rebuilding the title with a parameterized
+        // `LocalizedStringResource` so it re-localizes at display time is a
+        // possible follow-up but requires threading the prayer-name argument
+        // through without losing the Arabic `ال` handling.
         let stopButton = AlarmButton(
             text: "Stop",
             textColor: .white,
@@ -375,6 +384,9 @@ class FajrAlarmManager {
     // as far as AthanManager's internal state goes, so hop to main before
     // invoking it.
     private func upcomingFireDates(snapshot: FajrSyncSnapshot) async -> [Date] {
+        // Empty mask → nothing to schedule. Avoids a pointless full-window scan.
+        guard snapshot.weekdays.raw != 0 else { return [] }
+
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = snapshot.timeZone
 
@@ -382,11 +394,14 @@ class FajrAlarmManager {
         let startOfToday = cal.startOfDay(for: now)
 
         var results: [Date] = []
-        // Scan enough days to find daysAhead matching weekdays even if the
-        // weekday mask is sparse (minimum 7 days = whole week).
-        let scanWindow = max(snapshot.daysAhead * 2, 7) + 1
-        for offset in 0..<scanWindow {
-            guard results.count < snapshot.daysAhead else { break }
+        // Scan enough days to deliver `daysAhead` alarms even when the
+        // weekday mask is sparse (e.g. Sundays only). Worst case is 1 matching
+        // day per 7 calendar days, plus a small buffer for when today's fire
+        // time has already passed.
+        let maxScan = snapshot.daysAhead * 7 + 7
+        var offset = 0
+        while results.count < snapshot.daysAhead, offset < maxScan {
+            defer { offset += 1 }
 
             guard let day = cal.date(byAdding: .day, value: offset, to: startOfToday) else { continue }
 

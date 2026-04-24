@@ -22,8 +22,13 @@ struct AthanWidgetBundle: WidgetBundle {
 
         // AlarmKit-backed Fajr alarm Live Activity. Required by AlarmKit
         // whenever an alarm uses `secondaryButtonBehavior: .countdown`.
+        // The `#if canImport(AlarmKit)` guard lets the widget target still
+        // compile against older SDKs that don't ship AlarmKit headers; the
+        // runtime `#available` guards usage on the device.
+        #if canImport(AlarmKit)
         if #available(iOS 26.0, *) {
             FajrAlarmLiveActivity()
         }
+        #endif
     }
 }

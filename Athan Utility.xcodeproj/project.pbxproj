@@ -191,6 +191,15 @@
 		3DF79CD82F45663E00E01FD2 /* SuhoorActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */; };
 		3DF79CDA2F45668D00E01FD2 /* SuhoorActivityTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */; };
 		3DF79CDB2F45668D00E01FD2 /* SuhoorActivityTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */; };
+		E4F66D792F9AED0200A81E1C /* FajrAlarmSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D782F9AED0200A81E1C /* FajrAlarmSettingsView.swift */; };
+		E4F66D7A2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */; };
+		E4F66D7B2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */; };
+		E4F66D7C2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */; };
+		E4F66D7D2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */; };
+		E4F66D7E2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */; };
+		E4F66D7F2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */; };
+		E4F66D802F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */; };
+		E4F66D812F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -465,6 +474,9 @@
 		3DF79CD02F45364D00E01FD2 /* SuhoorActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivity.swift; sourceTree = "<group>"; };
 		3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityTrigger.swift; sourceTree = "<group>"; };
 		3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityAttributes.swift; sourceTree = "<group>"; };
+		E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FajrAlarmManager.swift; sourceTree = "<group>"; };
+		E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FajrAlarmSettings.swift; sourceTree = "<group>"; };
+		E4F66D782F9AED0200A81E1C /* FajrAlarmSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FajrAlarmSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -586,6 +598,9 @@
 				3D07DA7E1BDC58B60001EFE4 /* AppDelegate.swift */,
 				3D4AC194251D94BE00B2D41D /* SceneDelegate.swift */,
 				3D16F10A2560859D00C78B12 /* AthanManager.swift */,
+				E4F66D762F9AED0200A81E1C /* FajrAlarmManager.swift */,
+				E4F66D772F9AED0200A81E1C /* FajrAlarmSettings.swift */,
+				E4F66D782F9AED0200A81E1C /* FajrAlarmSettingsView.swift */,
 				3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */,
 				3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */,
 				3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */,
@@ -1252,6 +1267,9 @@
 				3D727FC82BCF0417003D40A2 /* ActivityIndicator.swift in Sources */,
 				3D0789C6259C5DAB0047DD00 /* PrivacyInfoView.swift in Sources */,
 				3D33FB9029C9E2B600F9CDD9 /* CalendarExport.swift in Sources */,
+				E4F66D792F9AED0200A81E1C /* FajrAlarmSettingsView.swift in Sources */,
+				E4F66D7A2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */,
+				E4F66D7B2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */,
 				3D6105042572D04E00C1D067 /* SettingsView.swift in Sources */,
 				3D67E05E2ADF3E010020B55B /* ShareSheet.swift in Sources */,
 				3D07897A259A6E5E0047DD00 /* ColorsView.swift in Sources */,
@@ -1301,6 +1319,8 @@
 				3DDE2E192F4579A10099BBE9 /* TertiaryAthanWidget.swift in Sources */,
 				3D73EC3B25717ED20010C47D /* PrayerSymbol.swift in Sources */,
 				3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */,
+				E4F66D7C2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */,
+				E4F66D7D2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,6 +1346,8 @@
 				3DB56CF12283682800B9F738 /* PrayerType.swift in Sources */,
 				3DB56CF4228369A200B9F738 /* Global.swift in Sources */,
 				3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */,
+				E4F66D7E2F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */,
+				E4F66D7F2F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1355,6 +1377,8 @@
 				3DEE3A9425A6A18400DC7331 /* AthanManager.swift in Sources */,
 				3DEE3A7225A6A04D00DC7331 /* NotificationView.swift in Sources */,
 				3DCAB78B25AEC4230075801B /* WatchSessionDelegate.swift in Sources */,
+				E4F66D802F9AED0200A81E1C /* FajrAlarmSettings.swift in Sources */,
+				E4F66D812F9AED0200A81E1C /* FajrAlarmManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

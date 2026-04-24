@@ -12,7 +12,7 @@ import StoreKit
 
 
 enum SettingsSectionType {
-    case General, Sounds, Prayer(Prayer), CalculationMethod, CustomNames, Colors
+    case General, Sounds, Prayer(Prayer), CalculationMethod, CustomNames, Colors, FajrAlarm
 }
 
 @available(iOS 13.0.0, *)
@@ -57,6 +57,9 @@ struct SettingsView: View {
                     .transition(.move(edge: .trailing))
             case .CalculationMethod:
                 CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
+                    .transition(.move(edge: .trailing))
+            case .FajrAlarm:
+                FajrAlarmSettingsView(activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
             }
         }

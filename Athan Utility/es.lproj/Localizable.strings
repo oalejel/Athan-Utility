@@ -158,3 +158,27 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "Abrir Adhan Utility para establecer la ubicación.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Utilice widgets para ver los próximos momentos de salah de un vistazo.";
+
+
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "Alarma de Fajr";
+"fajr.alarm.description" = "Programa una alarma real de iOS que se mantiene sincronizada con Fajr (o Amanecer) a lo largo del año. Requiere iOS 26.";
+"fajr.alarm.entry.description" = "Mantén automáticamente una alarma de iOS fijada al horario diario de Fajr.";
+"fajr.alarm.offset.description" = "Activa la alarma antes o después de la salah elegida. Útil para tahajjud o suhoor.";
+"fajr.alarm.schedule.description" = "Cantidad de días próximos a mantener programados. Las alarmas se actualizan a diario.";
+"fajr.alarm.ios26.required" = "Las alarmas automáticas de Fajr requieren iOS 26 o posterior.";
+"fajr.alarm.authorization.denied" = "Las alarmas están desactivadas. Activa el acceso a AlarmKit en Ajustes para usar esta función.";
+"fajr.alarm.summary.off" = "Desactivada";
+"Anchor Prayer" = "Salah de referencia";
+"Offset" = "Desplazamiento";
+"Days" = "Días";
+"Snooze" = "Posponer";
+"Schedule Window" = "Ventana de programación";
+"Stop" = "Detener";
+"Open Settings" = "Abrir Ajustes";
+"fajr.alarm.title.format" = "Alarma de %@";
+"fajr.alarm.offset.zero" = "A la hora de %@";
+"fajr.alarm.offset.after" = "%1$d min después de %2$@";
+"fajr.alarm.offset.before" = "%1$d min antes de %2$@";
+"fajr.alarm.snooze.minutes" = "Posponer %d min";
+"fajr.alarm.days.ahead" = "%d días por adelantado";

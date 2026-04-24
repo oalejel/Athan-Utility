@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -6,5 +6,6 @@
   Copyright © 2021 Omar Alejel. All rights reserved.
 */
 
-//NSLocationWhenInUseUsageDescription = "Description of this";
-
+"NSAlarmKitUsageDescription" = "宣礼 实用工具使用 AlarmKit 安排与您每日晨礼时间保持同步的起床闹钟。";
+"NSLocationWhenInUseUsageDescription" = "宣礼 实用工具使用您的位置来计算宣礼时间。您的任何数据都不会被共享或远程存储。";
+"NSSiriUsageDescription" = "Siri 会使用所请求地区的宣礼时间。";

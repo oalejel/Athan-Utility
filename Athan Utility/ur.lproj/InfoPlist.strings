@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -7,3 +7,6 @@
 */
 
 "CFBundleDisplayName" = "اذان";
+"NSAlarmKitUsageDescription" = "ایتھن یوٹیلیٹی آپ کے روزانہ کے فجر وقت کے ساتھ ہم آہنگ الارم شیڈول کرنے کے لیے AlarmKit استعمال کرتا ہے۔";
+"NSLocationWhenInUseUsageDescription" = "ایتھن یوٹیلیٹی اذان کے اوقات کا حساب لگانے کے لیے آپ کے مقام کا استعمال کرتی ہے۔ آپ کا کوئی بھی ڈیٹا شیئر یا ریموٹ طور پر محفوظ نہیں کیا جاتا۔";
+"NSSiriUsageDescription" = "درخواست کردہ علاقوں کے اذان کے اوقات Siri کے ذریعے استعمال کیے جاتے ہیں۔";

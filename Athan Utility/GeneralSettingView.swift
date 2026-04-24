@@ -42,7 +42,24 @@ struct GeneralSettingView: View {
     @State private var isShowingMailView = false
     
     @State var proxy: Any? = nil
-    
+
+    // One-line summary shown on the Fajr Alarm entry row. Reuses the same
+    // localized format strings as the settings screen so Arabic / RTL and
+    // non-Latin minute characters render correctly.
+    private var fajrAlarmSummary: String {
+        let s = FajrAlarmSettings.shared
+        guard s.enabled else { return Strings.fajrAlarmSummaryOff }
+        let offset = s.offsetMinutes
+        let prayer = s.target.displayName
+        if offset == 0 {
+            return String(format: Strings.fajrAlarmOffsetZero, prayer)
+        } else if offset > 0 {
+            return String(format: Strings.fajrAlarmOffsetAfter, offset, prayer)
+        } else {
+            return String(format: Strings.fajrAlarmOffsetBefore, abs(offset), prayer)
+        }
+    }
+
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 0) {
@@ -418,10 +435,58 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                     
+                                    Group { // Fajr alarm (AlarmKit, iOS 26+)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text(Strings.fajrAlarm)
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                                .padding(.top)
+                                            Divider()
+                                                .background(Color.white)
+                                        }
+
+                                        Button(action: {
+                                            withAnimation {
+                                                activeSettingsSection = .FajrAlarm
+                                            }
+                                        }, label: {
+                                            HStack {
+                                                Image(systemName: "alarm")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .frame(width: 26)
+                                                Text(Strings.fajrAlarm)
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .padding(.leading, 2)
+                                                Spacer()
+                                                Text(fajrAlarmSummary)
+                                                    .font(.subheadline)
+                                                    .foregroundColor(Color(.lightText))
+                                                    .lineLimit(1)
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
+                                                    .padding()
+                                            }
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
+
+                                        Text(Strings.fajrAlarmEntryDescription)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .lineLimit(nil)
+                                            .font(.caption)
+                                            .foregroundColor(Color(.lightText))
+                                            .padding(.bottom)
+                                    }
+
                                     VStack(spacing: 8) {
                                         Divider()
                                             .background(Color.white)
-                                        
+
                                         IntentIntegratedController()
                                             .frame(height: 50)
                                         Divider()

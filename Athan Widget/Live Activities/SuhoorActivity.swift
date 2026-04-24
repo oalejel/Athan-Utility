@@ -10,6 +10,9 @@ import ActivityKit
 import Foundation
 import SwiftUI
 import WidgetKit
+#if canImport(AlarmKit)
+import AlarmKit
+#endif
 
 
 @available(iOS 16.1, *)
@@ -236,5 +239,73 @@ struct SuhoorLiveActivity: Widget {
             }
         }
     }
-    
+
 }
+
+// MARK: - Fajr Alarm (AlarmKit) Live Activity
+//
+// AlarmKit requires apps that use `secondaryButtonBehavior: .countdown` to
+// register a Live Activity for `AlarmAttributes<FajrAlarmMetadata>` so the
+// system can render the snooze countdown on the Lock Screen, in the Dynamic
+// Island, and in StandBy. The UI is intentionally minimal — AlarmKit drives
+// the actual countdown timer; we just provide labels and a tint.
+
+#if canImport(AlarmKit)
+@available(iOS 26.0, *)
+struct FajrAlarmLiveActivity: Widget {
+    // Matches the tint passed to AlarmAttributes in FajrAlarmManager.
+    private let tint = Color(red: 4.0/255.0, green: 65.0/255.0, blue: 125.0/255.0)
+
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: AlarmAttributes<FajrAlarmMetadata>.self) { context in
+            // Lock screen / banner
+            HStack(spacing: 12) {
+                Image(systemName: "alarm.fill")
+                    .font(.title2)
+                    .foregroundStyle(tint)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(context.attributes.metadata?.prayerName ?? "")
+                        .font(.headline)
+                    if let locationName = context.attributes.metadata?.locationName,
+                       !locationName.isEmpty {
+                        Text(locationName)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Spacer()
+            }
+            .padding()
+            .activityBackgroundTint(.black.opacity(0.6))
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Image(systemName: "alarm.fill")
+                        .foregroundStyle(tint)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text(context.attributes.metadata?.prayerName ?? "")
+                        .font(.headline)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    if let locationName = context.attributes.metadata?.locationName,
+                       !locationName.isEmpty {
+                        Text(locationName)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } compactLeading: {
+                Image(systemName: "alarm.fill")
+                    .foregroundStyle(tint)
+            } compactTrailing: {
+                Text(context.attributes.metadata?.prayerName ?? "")
+                    .font(.caption)
+            } minimal: {
+                Image(systemName: "alarm.fill")
+                    .foregroundStyle(tint)
+            }
+        }
+    }
+}
+#endif

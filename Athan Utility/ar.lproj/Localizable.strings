@@ -172,10 +172,12 @@
 "fajr.alarm.description" = "يُنشئ منبّهًا حقيقيًا في نظام iOS يتزامن تلقائيًا مع وقت الفجر (أو الشروق) طوال السنة. يتطلّب iOS 26.";
 "fajr.alarm.entry.description" = "اجعل منبّه الآيفون يتتبّع وقت الفجر يوميًا بشكل تلقائي.";
 "fajr.alarm.offset.description" = "اضبط المنبّه ليُنبّهك قبل أو بعد وقت الصلاة المختار. مفيد لقيام الليل أو السحور.";
-"fajr.alarm.schedule.description" = "عدد الأيام القادمة التي يتم جدولة المنبّه لها. يُحدَّث يوميًا.";
+"fajr.alarm.schedule.description" = "عدد المنبّهات القادمة التي تتم جدولتها مسبقًا. تُحدَّث عند كل تحديث للتطبيق.";
 "fajr.alarm.ios26.required" = "يتطلّب منبّه الفجر التلقائي نظام iOS 26 أو أحدث.";
 "fajr.alarm.authorization.denied" = "المنبّهات معطّلة. فعّل صلاحية AlarmKit من إعدادات النظام لاستخدام هذه الميزة.";
 "fajr.alarm.summary.off" = "معطّل";
+"fajr.alarm.permission.needed" = "الإذن مطلوب";
+"fajr.alarm.no.days" = "لم يتم اختيار أي يوم — لن ينطلق المنبّه.";
 "Anchor Prayer" = "الصلاة المرجعية";
 "Offset" = "الإزاحة";
 "Days" = "الأيام";
@@ -193,5 +195,5 @@
 "fajr.alarm.offset.after" = "بعد ال%2$@ بـ %1$d دقيقة";
 "fajr.alarm.offset.before" = "قبل ال%2$@ بـ %1$d دقيقة";
 "fajr.alarm.snooze.minutes" = "غفوة %d دقيقة";
-"fajr.alarm.days.ahead" = "%d أيام مقدّمًا";
+"fajr.alarm.days.ahead" = "المنبّهات القادمة: %d";
 

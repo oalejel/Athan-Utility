@@ -37,6 +37,14 @@ struct FajrAlarmSettingsView: View {
         return formatter.veryShortStandaloneWeekdaySymbols ?? ["S","M","T","W","T","F","S"]
     }()
 
+    // Chip display order honoring the locale's first day of week (e.g.
+    // Monday-first in France, Saturday-first in much of the Middle East).
+    // Values are Sunday==0 mask indices; only the on-screen order changes.
+    private let weekdayDisplayOrder: [Int] = {
+        let first = Calendar.current.firstWeekday // Sunday == 1
+        return (0..<7).map { (first - 1 + $0) % 7 }
+    }()
+
     // Full weekday names (Sunday-first) used for VoiceOver labels.
     private let weekdayFullNames: [String] = {
         let formatter = DateFormatter()
@@ -164,9 +172,16 @@ struct FajrAlarmSettingsView: View {
                 sectionTitle(Strings.fajrAlarmDays)
 
                 HStack(spacing: 6) {
-                    ForEach(0..<7, id: \.self) { idx in
+                    ForEach(weekdayDisplayOrder, id: \.self) { idx in
                         weekdayChip(index: idx)
                     }
+                }
+
+                if enabled && isOSVersionSupported && weekdays == .empty {
+                    Text(Strings.fajrAlarmNoDaysSelected)
+                        .font(.caption)
+                        .foregroundColor(.yellow)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
@@ -183,7 +198,7 @@ struct FajrAlarmSettingsView: View {
             Text(weekdayAbbreviations[safe: index] ?? "?")
                 .font(.subheadline).bold()
                 .frame(maxWidth: .infinity)
-                .frame(height: 36)
+                .frame(minHeight: 36) // min, not fixed: grows with Dynamic Type
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .foregroundColor(isOn
@@ -353,10 +368,15 @@ struct FajrAlarmSettingsView: View {
         // transition races the permission sheet and the user never sees
         // why their alarm isn't firing.
         if enabled && isOSVersionSupported {
+            // If authorization was already denied before this tap, the denied
+            // banner is already on screen — let the user leave. Blocking exit
+            // on every denied result would dead-end this screen permanently
+            // (the only other way out would be disabling the feature).
+            let alreadyDenied = (authState == .denied)
             FajrAlarmManager.shared.requestAuthorization { granted in
                 self.authState = granted ? .authorized : .denied
                 FajrAlarmManager.shared.syncAlarms()
-                if granted {
+                if granted || alreadyDenied {
                     withAnimation { self.activeSection = .General }
                 }
             }

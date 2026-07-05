@@ -71,15 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // doesn't drop the rolling refresh.
         scheduleFajrAlarmRefresh()
 
-        // Reload latest persisted settings from the app group. `reloadSettingsAndNotifications`
-        // also calls `syncAlarms()` when the user has a non-default location;
-        // our explicit `syncAlarms()` below is unconditional for the main-app
-        // bundle (and chains onto any prior one), and is the Task we actually
-        // await before marking the BGTask complete so the rolling AlarmKit
-        // window is guaranteed to be rebuilt before the OS suspends us.
-        AthanManager.shared.reloadSettingsAndNotifications()
-        let syncTask = FajrAlarmManager.shared.syncAlarms()
-
         // `setTaskCompleted(success:)` must be called exactly once per
         // BGAppRefreshTask. Both `expirationHandler` and the awaiting Task
         // below can fire (if the OS expires us while the sync's in-flight
@@ -97,6 +88,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             hasCompleted = true
             task.setTaskCompleted(success: success)
         }
+
+        // Rebuild only the AlarmKit window here — deliberately NOT
+        // `reloadSettingsAndNotifications()`. That call wipes and re-adds all
+        // pending athan notifications on untracked async callbacks; if the OS
+        // suspends us right after this task completes, the wipe can land
+        // without the re-adds, leaving the user with zero prayer
+        // notifications until the next app open. It also spawns an internal
+        // `syncAlarms()` Task that the expiration handler below couldn't
+        // cancel. Settings are already fresh: this process (even when
+        // background-launched) loads every settings archive on first access,
+        // and the sync reads them via its own main-actor snapshot.
+        let syncTask = FajrAlarmManager.shared.syncAlarms()
 
         task.expirationHandler = {
             syncTask.cancel()

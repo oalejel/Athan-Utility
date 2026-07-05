@@ -165,10 +165,12 @@
 "fajr.alarm.description" = "Programa una alarma real de iOS que se mantiene sincronizada con Fajr (o Amanecer) a lo largo del año. Requiere iOS 26.";
 "fajr.alarm.entry.description" = "Mantén automáticamente una alarma de iOS fijada al horario diario de Fajr.";
 "fajr.alarm.offset.description" = "Activa la alarma antes o después de la salah elegida. Útil para tahajjud o suhoor.";
-"fajr.alarm.schedule.description" = "Cantidad de días próximos a mantener programados. Las alarmas se actualizan a diario.";
+"fajr.alarm.schedule.description" = "Cantidad de próximas alarmas a mantener programadas. Se actualizan cada vez que la app se refresca.";
 "fajr.alarm.ios26.required" = "Las alarmas automáticas de Fajr requieren iOS 26 o posterior.";
 "fajr.alarm.authorization.denied" = "Las alarmas están desactivadas. Activa el acceso a AlarmKit en Ajustes para usar esta función.";
 "fajr.alarm.summary.off" = "Desactivada";
+"fajr.alarm.permission.needed" = "Se requiere permiso";
+"fajr.alarm.no.days" = "No hay días seleccionados: la alarma no sonará.";
 "Anchor Prayer" = "Salah de referencia";
 "Offset" = "Desplazamiento";
 "Days" = "Días";
@@ -181,4 +183,4 @@
 "fajr.alarm.offset.after" = "%1$d min después de %2$@";
 "fajr.alarm.offset.before" = "%1$d min antes de %2$@";
 "fajr.alarm.snooze.minutes" = "Posponer %d min";
-"fajr.alarm.days.ahead" = "%d días por adelantado";
+"fajr.alarm.days.ahead" = "Próximas alarmas: %d";

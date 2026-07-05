@@ -190,9 +190,21 @@ class FajrAlarmManager {
         }
     }
 
+    // The system's current view of our alarms, keyed by ID. Returns nil when
+    // the query fails, in which case callers must assume every stored ID is
+    // still live rather than dropping IDs they can no longer verify.
+    @available(iOS 26.0, *)
+    private func knownAlarms(manager: AlarmManager) -> [UUID: Alarm]? {
+        guard let alarms = try? manager.alarms else { return nil }
+        var byID: [UUID: Alarm] = [:]
+        for alarm in alarms { byID[alarm.id] = alarm }
+        return byID
+    }
+
     @available(iOS 26.0, *)
     private func cancelAllAvailable() async {
         let manager = AlarmManager.shared
+        let known = knownAlarms(manager: manager)
         let ids = FajrAlarmStore.load()
         var remaining: [UUID] = []
         var processed = 0
@@ -206,6 +218,10 @@ class FajrAlarmManager {
                 return
             }
             processed += 1
+            // Forget IDs the system no longer knows about (already fired and
+            // dismissed, or removed externally) — retrying cancel on those
+            // would fail forever and grow the store without bound.
+            if let known = known, known[id] == nil { continue }
             do {
                 try manager.cancel(id: id)
             } catch {
@@ -224,38 +240,55 @@ class FajrAlarmManager {
             return
         }
 
-        let authorized = await requestAuthorizationAvailable()
-        guard authorized else {
-            // User hasn't authorized AlarmKit; clean up anything stale.
+        // Never trigger the one-shot system authorization prompt from a sync
+        // pass — syncs run at launch and from background refresh, where a
+        // permission dialog is either impossible or badly out of context.
+        // The prompt is only shown by the explicit user flow in
+        // `requestAuthorization(completion:)` (Fajr Alarm settings screen).
+        let manager = AlarmManager.shared
+        switch manager.authorizationState {
+        case .authorized:
+            break
+        case .denied:
+            // User revoked AlarmKit access; clean up anything stale.
             await cancelAllAvailable()
+            return
+        case .notDetermined:
+            return
+        @unknown default:
             return
         }
 
-        let manager = AlarmManager.shared
-
-        // Always cancel our previously managed alarms before re-scheduling.
-        // AlarmKit does not expose a built-in "replace", so we wipe & rebuild
-        // the rolling window each sync pass. Keep IDs that fail to cancel so
-        // next sync can retry them instead of leaking orphans.
-        let previous = FajrAlarmStore.load()
-        var retained: [UUID] = []
-        var processed = 0
-        for id in previous {
-            // Honor cooperative cancellation (e.g. BGTask expired). Persist
-            // the un-processed tail so the next sync pass picks up where
-            // this one left off instead of leaking orphans.
-            if Task.isCancelled {
-                retained.append(contentsOf: previous.dropFirst(processed))
-                FajrAlarmStore.save(ids: retained)
-                return
-            }
-            processed += 1
-            do {
-                try manager.cancel(id: id)
-            } catch {
-                retained.append(id)
+        // Partition our previously scheduled alarms using the system's view:
+        //  - gone:        the system no longer knows the ID (fired & dismissed)
+        //                 → forget it.
+        //  - in progress: alerting or counting down a snooze → must NOT be
+        //                 cancelled; killing it would silence the user's
+        //                 wake-up mid-ring or swallow the snooze re-alert.
+        //  - scheduled:   part of the old rolling window → replaced below.
+        // If the system query fails, treat every stored ID as "scheduled" so
+        // nothing is forgotten while unverifiable.
+        let known = knownAlarms(manager: manager)
+        var inProgressIDs: [UUID] = []
+        var oldIDs: [UUID] = []
+        for id in FajrAlarmStore.load() {
+            if let known = known {
+                guard let alarm = known[id] else { continue } // gone → forget
+                switch alarm.state {
+                case .scheduled: oldIDs.append(id)
+                default:         inProgressIDs.append(id)     // countdown / paused / alerting
+                }
+            } else {
+                oldIDs.append(id)
             }
         }
+
+        var newIDs: [UUID] = []
+        // Persist the full tracked set after every mutation so that process
+        // death or BGTask expiration mid-sync never orphans an alarm we
+        // scheduled but hadn't recorded (or forgets one we still track).
+        func persist() { FajrAlarmStore.save(ids: inProgressIDs + oldIDs + newIDs) }
+        persist() // drops "gone" IDs immediately
 
         // Compute the next N firing dates.
         let fireDates = await upcomingFireDates(snapshot: snapshot)
@@ -265,14 +298,15 @@ class FajrAlarmManager {
         let title = String(format: Strings.fajrAlarmTitleFormat, snapshot.targetDisplayName)
         let tint = Color(red: 4.0/255.0, green: 65.0/255.0, blue: 125.0/255.0)
 
-        var newIDs: [UUID] = retained
+        // Schedule the new window BEFORE cancelling the old one so a
+        // transient scheduling failure degrades to "yesterday's window is
+        // still set" instead of "no alarms at all". The brief overlap is
+        // bounded at 2× daysAhead alarms.
+        var scheduleFailures = 0
         for date in fireDates {
-            // Honor cooperative cancellation. Persist what we've scheduled
-            // so far; the next sync pass will top up the remaining window.
-            if Task.isCancelled {
-                FajrAlarmStore.save(ids: newIDs)
-                return
-            }
+            // Honor cooperative cancellation. Everything scheduled so far is
+            // already persisted; the next sync pass finishes the rebuild.
+            if Task.isCancelled { return }
             // Skip past dates defensively.
             guard date > Date() else { continue }
 
@@ -289,12 +323,38 @@ class FajrAlarmManager {
                 )
                 _ = try await manager.schedule(id: id, configuration: config)
                 newIDs.append(id)
+                persist()
             } catch {
+                scheduleFailures += 1
                 print("FajrAlarmManager: failed to schedule \(date): \(error)")
             }
         }
 
-        FajrAlarmStore.save(ids: newIDs)
+        // If every schedule attempt failed, keep the old window in place as
+        // a fallback wake-up rather than tearing it down and leaving the
+        // user with nothing; the next sync pass retries the rebuild.
+        if scheduleFailures > 0 && newIDs.isEmpty {
+            return
+        }
+
+        // Cancel the old window. IDs that fail to cancel stay tracked so the
+        // next sync pass retries them instead of leaking orphans.
+        var stillOld: [UUID] = []
+        var processed = 0
+        for id in oldIDs {
+            if Task.isCancelled {
+                stillOld.append(contentsOf: oldIDs.dropFirst(processed))
+                break
+            }
+            processed += 1
+            do {
+                try manager.cancel(id: id)
+            } catch {
+                stillOld.append(id)
+            }
+        }
+        oldIDs = stillOld
+        persist()
     }
 
     @available(iOS 26.0, *)
@@ -343,12 +403,14 @@ class FajrAlarmManager {
             )
             // AlarmKit requires a Countdown presentation (and a Live Activity
             // that renders it) whenever secondaryButtonBehavior is .countdown.
-            // Reuse the stop button so tapping "pause" during a snooze just
-            // ends the alarm — there's no meaningful "pause the snooze" for
-            // a prayer wake-up.
+            // No pause button: AlarmKit gives that control *pause* semantics
+            // (an earlier revision reused the stop button here, which rendered
+            // a "Stop"-labeled control that actually paused the snooze
+            // indefinitely — the re-alert then never fired). Pausing a
+            // wake-up snooze has no meaning, so the countdown is view-only.
             countdown = AlarmPresentation.Countdown(
                 title: LocalizedStringResource(stringLiteral: title),
-                pauseButton: stopButton
+                pauseButton: nil
             )
         } else {
             alert = AlarmPresentation.Alert(
@@ -435,21 +497,25 @@ class FajrAlarmManager {
             let weekday = cal.component(.weekday, from: day) // Sunday == 1
             guard snapshot.weekdays.containsCalendarWeekday(weekday) else { continue }
 
-            let times = await MainActor.run { () -> PrayerTimes? in
-                return AthanManager.shared.calculateTimes(
+            // Extract the target Date inside the main-actor closure rather
+            // than returning the whole PrayerTimes struct — PrayerTimes
+            // (Adhan) is not Sendable, and sending it across the actor
+            // boundary is an error in Swift 6 language mode. Date is Sendable.
+            let target = snapshot.target
+            let base = await MainActor.run { () -> Date? in
+                guard let times = AthanManager.shared.calculateTimes(
                     referenceDate: day,
                     customCoordinate: snapshot.coordinate,
                     customTimeZone: snapshot.timeZone,
                     adjustments: snapshot.adjustments
-                )
+                ) else { return nil }
+                switch target {
+                case .fajr:    return times.fajr
+                case .sunrise: return times.sunrise
+                }
             }
-            guard let times = times else { continue }
+            guard let base = base else { continue }
 
-            let base: Date
-            switch snapshot.target {
-            case .fajr:    base = times.fajr
-            case .sunrise: base = times.sunrise
-            }
             let fireDate = base.addingTimeInterval(TimeInterval(snapshot.offsetMinutes * 60))
 
             // Skip times already in the past.

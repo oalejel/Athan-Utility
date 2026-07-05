@@ -71,11 +71,35 @@ class FajrAlarmSettings: Codable, NSCopying {
     var snoozeEnabled: Bool = true
     // Snooze duration in minutes.
     var snoozeMinutes: Int = 5
-    // Number of days ahead to schedule alarms. AlarmKit supports many, but
-    // keeping this bounded avoids exhausting any system quota.
+    // Number of upcoming alarms to keep scheduled (the rolling window).
+    // With a sparse weekday mask this can span more calendar days than its
+    // value — the scheduler delivers this many alarms, not calendar days.
+    // Bounded to avoid exhausting any AlarmKit quota.
     var daysAhead: Int = 7
 
     init() {}
+
+    // MARK: Codable
+
+    private enum CodingKeys: String, CodingKey {
+        case enabled, target, offsetMinutes, weekdays, snoozeEnabled, snoozeMinutes, daysAhead
+    }
+
+    // Decode each field independently, falling back to its default when a
+    // key is missing or malformed. The synthesized decoder would hard-fail
+    // the whole archive on any single missing key (e.g. after a field is
+    // added or removed in an update), silently resetting the user's alarm
+    // to disabled and cancelling their wake-ups on the next sync.
+    required init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        enabled       = (try? c.decodeIfPresent(Bool.self, forKey: .enabled)) .flatMap { $0 } ?? false
+        target        = (try? c.decodeIfPresent(FajrAlarmTarget.self, forKey: .target)) .flatMap { $0 } ?? .fajr
+        offsetMinutes = (try? c.decodeIfPresent(Int.self, forKey: .offsetMinutes)) .flatMap { $0 } ?? 0
+        weekdays      = (try? c.decodeIfPresent(FajrAlarmWeekdayMask.self, forKey: .weekdays)) .flatMap { $0 } ?? .all
+        snoozeEnabled = (try? c.decodeIfPresent(Bool.self, forKey: .snoozeEnabled)) .flatMap { $0 } ?? true
+        snoozeMinutes = (try? c.decodeIfPresent(Int.self, forKey: .snoozeMinutes)) .flatMap { $0 } ?? 5
+        daysAhead     = (try? c.decodeIfPresent(Int.self, forKey: .daysAhead)) .flatMap { $0 } ?? 7
+    }
 
     // MARK: Shared singleton
 

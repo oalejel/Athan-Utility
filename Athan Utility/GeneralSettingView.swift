@@ -49,6 +49,11 @@ struct GeneralSettingView: View {
     private var fajrAlarmSummary: String {
         let s = FajrAlarmSettings.shared
         guard s.enabled else { return Strings.fajrAlarmSummaryOff }
+        // Enabled in our settings but blocked by the system: no alarm is
+        // actually scheduled, so don't report an active alarm time here.
+        if FajrAlarmManager.shared.currentAuthorizationState() == .denied {
+            return Strings.fajrAlarmPermissionNeeded
+        }
         let offset = s.offsetMinutes
         let prayer = s.target.displayName
         if offset == 0 {

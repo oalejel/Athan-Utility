@@ -217,10 +217,12 @@
 "fajr.alarm.description" = "Schedule a real iOS alarm that stays in sync with Fajr (or Sunrise) as times shift throughout the year. Requires iOS 26.";
 "fajr.alarm.entry.description" = "Automatically keep an iOS alarm locked to Fajr's daily time.";
 "fajr.alarm.offset.description" = "Fire the alarm before or after the chosen prayer. Useful for tahajjud or suhoor.";
-"fajr.alarm.schedule.description" = "Number of upcoming days to keep scheduled. Alarms are refreshed daily.";
+"fajr.alarm.schedule.description" = "Number of upcoming alarms to keep scheduled. Refreshed each time the app updates.";
 "fajr.alarm.ios26.required" = "Automatic Fajr alarms require iOS 26 or later.";
 "fajr.alarm.authorization.denied" = "Alarms are disabled. Enable AlarmKit access in system Settings to use this feature.";
 "fajr.alarm.summary.off" = "Off";
+"fajr.alarm.permission.needed" = "Permission needed";
+"fajr.alarm.no.days" = "No days selected — the alarm won't fire.";
 "Anchor Prayer" = "Anchor Prayer";
 "Offset" = "Offset";
 "Days" = "Days";
@@ -233,7 +235,7 @@
 "fajr.alarm.offset.after" = "%1$d min after %2$@";
 "fajr.alarm.offset.before" = "%1$d min before %2$@";
 "fajr.alarm.snooze.minutes" = "%d minute snooze";
-"fajr.alarm.days.ahead" = "%d days ahead";
+"fajr.alarm.days.ahead" = "Next %d alarm(s)";
 
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility stores months of athan data for offline use.";

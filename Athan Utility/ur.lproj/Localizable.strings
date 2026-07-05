@@ -175,10 +175,12 @@
 "fajr.alarm.description" = "ایک حقیقی iOS الارم شیڈول کریں جو سال بھر فجر (یا شروق) کے اوقات کے ساتھ خود بخود ہم آہنگ رہتا ہے۔ iOS 26 درکار ہے۔";
 "fajr.alarm.entry.description" = "iOS الارم کو خود بخود روزانہ کے فجر وقت کے ساتھ منسلک رکھیں۔";
 "fajr.alarm.offset.description" = "منتخب کردہ نماز سے پہلے یا بعد میں الارم بجائیں۔ تہجد یا سحری کے لئے مفید۔";
-"fajr.alarm.schedule.description" = "آئندہ کتنے دن تک شیڈول رکھنا ہے۔ الارم روزانہ تازہ کیے جاتے ہیں۔";
+"fajr.alarm.schedule.description" = "آئندہ کتنے الارم شیڈول رکھنے ہیں۔ ایپ کی ہر تازہ کاری پر اپڈیٹ ہوتے ہیں۔";
 "fajr.alarm.ios26.required" = "خودکار فجر الارم کے لیے iOS 26 یا بعد کا ورژن درکار ہے۔";
 "fajr.alarm.authorization.denied" = "الارم غیر فعال ہیں۔ اس خصوصیت کو استعمال کرنے کے لیے سسٹم سیٹنگز میں AlarmKit کی اجازت فعال کریں۔";
 "fajr.alarm.summary.off" = "بند";
+"fajr.alarm.permission.needed" = "اجازت درکار ہے";
+"fajr.alarm.no.days" = "کوئی دن منتخب نہیں — الارم نہیں بجے گا۔";
 "Anchor Prayer" = "بنیادی نماز";
 "Offset" = "وقت کا فرق";
 "Days" = "دن";
@@ -191,6 +193,6 @@
 "fajr.alarm.offset.after" = "%2$@ کے %1$d منٹ بعد";
 "fajr.alarm.offset.before" = "%2$@ سے %1$d منٹ پہلے";
 "fajr.alarm.snooze.minutes" = "%d منٹ اسنوز";
-"fajr.alarm.days.ahead" = "%d دن پہلے سے";
+"fajr.alarm.days.ahead" = "اگلے %d الارم";
 
 

@@ -109,6 +109,8 @@ class Strings {
     static var fajrAlarmIOS26Required = NSLocalizedString("fajr.alarm.ios26.required", comment: "Shown when the user's iOS version is below 26")
     static var fajrAlarmAuthDenied = NSLocalizedString("fajr.alarm.authorization.denied", comment: "Shown when the user has denied AlarmKit authorization")
     static var fajrAlarmSummaryOff = NSLocalizedString("fajr.alarm.summary.off", comment: "Status shown on the entry row when the feature is disabled")
+    static var fajrAlarmPermissionNeeded = NSLocalizedString("fajr.alarm.permission.needed", comment: "Short status shown when AlarmKit permission is denied")
+    static var fajrAlarmNoDaysSelected = NSLocalizedString("fajr.alarm.no.days", comment: "Warning shown when the alarm is enabled but no weekdays are selected")
     static var fajrAlarmAnchorPrayer = NSLocalizedString("Anchor Prayer", comment: "Label for selecting which prayer the alarm is anchored to")
     static var fajrAlarmOffset = NSLocalizedString("Offset", comment: "Label for the minute offset stepper")
     static var fajrAlarmDays = NSLocalizedString("Days", comment: "Label for the weekday selector")
@@ -123,5 +125,5 @@ class Strings {
     static var fajrAlarmOffsetAfter = NSLocalizedString("fajr.alarm.offset.after", comment: "%1$d min after %2$@")
     static var fajrAlarmOffsetBefore = NSLocalizedString("fajr.alarm.offset.before", comment: "%1$d min before %2$@")
     static var fajrAlarmSnoozeMinutes = NSLocalizedString("fajr.alarm.snooze.minutes", comment: "%d minute snooze")
-    static var fajrAlarmDaysAhead = NSLocalizedString("fajr.alarm.days.ahead", comment: "%d days ahead")
+    static var fajrAlarmDaysAhead = NSLocalizedString("fajr.alarm.days.ahead", comment: "Next %d alarms — how many upcoming alarms stay scheduled")
 }

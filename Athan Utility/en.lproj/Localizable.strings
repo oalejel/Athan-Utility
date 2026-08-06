@@ -48,7 +48,6 @@
 
 "Appearance" = "Appearance";
 "Colors" = "Colors";
-"Custom Prayer Names" = "Custom Prayer Names";
 "Change Language" = "Change Language";
 
 "Developed by Omar Al-Ejel" = "Developed by Omar Al-Ejel";
@@ -189,34 +188,25 @@
 "Alarms" = "Alarms";
 "Location Search" = "Location Search";
 // "About" used in the context of "About the app"
-"About" = "About";
 // alarm settings
-"Normal & 15m" = "Normal & 15m";
-"Normal Reminder" = "Normal Reminder";
-"No Reminders" = "No Reminders";
-"15 minute reminder" = "15 minute reminder";
-"Sounds" = "Sounds";
 // location settings
-"Try Location" = "Try Location";
 "Location Search" = "Location Search";
-"Locality, State, Country" = "Locality, State, Country";
-"Try again" = "Try again";
-"Loading Prayer Data" = "Loading Prayer Data";
-"Offset: %@˚" = "Offset: %@˚";
 "OK" = "OK";
 "Continue" = "Continue";
 // "What's New" listed feature titles and subtitles
-"Offline Storage" = "Offline Storage";
-"15 minute reminders" = "15 minute reminders";
-"Today Extension" = "Today Extension";
-"Athan clock face" = "Athan clock face";
-"Qibla" = "Qibla";
 
-"Athan Utility stores months of athan data for offline use." = "Athan Utility stores months of athan data for offline use.";
 
-"Get reminded before the next athan takes place. Configurable in app preferences." = "Get reminded before the next athan takes place. Configurable in app preferences.";
 
-"Check current and upcoming salah times with the Notification Center widget." = "Check current and upcoming salah times with the Notification Center widget.";
 
-"A new way to visualize salah times throughout the day." = "A new way to visualize salah times throughout the day.";
 // MARK: - END OF OLD LOCALIZATIONS
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Calculation method set to %@";
+"Adjust Method" = "Adjust Method";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Updated Calculation Method";
+"Undo" = "Undo";

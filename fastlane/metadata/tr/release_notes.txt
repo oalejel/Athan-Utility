@@ -1,1 +1,4 @@
-
+• Konumunuza göre otomatik hesaplama yöntemi önerisi — kurulum gerekmez
+• Canlı ay evresi, geçerli namaz ve tam program içeren yeni Çok Büyük widget
+• Daha ferah ve rafine iPad düzeni
+• İyileştirmeler ve hata düzeltmeleri

@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>9</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSExtensionPointIdentifier</key>
@@ -40,7 +40,7 @@
 	<key>NSSiriUsageDescription</key>
 	<string>Athan times for requested regions are used by Siri.</string>
 	<key>NSSupportsLiveActivities</key>
-	<true/>
+	<false/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigurationIntent</string>

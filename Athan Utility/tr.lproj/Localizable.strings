@@ -47,7 +47,6 @@
 
 "Appearance" = "Görünüş";
 "Colors" = "Renkler";
-"Custom Prayer Names" = "Özel Dua İsimleri";
 "Change Language" = "Dili değiştir";
 
 "Developed by Omar Al-Ejel" = "Omar Al-Ejel tarafından geliştirildi";
@@ -159,3 +158,24 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "Konumu ayarlamak için Ezan Utility'yi açın.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Yaklaşan namaz vakitlerini bir bakışta görmek için Ezan Widget'larını kullanın.";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Hesaplama yöntemi %@ olarak ayarlandı";
+"Adjust Method" = "Yöntemi Ayarla";
+
+// Calculation-method suggestion popup
+"OK" = "Tamam";
+
+// Method update popup
+"Updated Calculation Method" = "Hesaplama Yöntemi Güncellendi";
+"Undo" = "Geri Al";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "F";
+"S_letter" = "S";
+"T_letter" = "T";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Continue" = "Devam Et";

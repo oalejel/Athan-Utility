@@ -57,7 +57,6 @@
 
 "Appearance" = "ظہور";
 "Colors" = "رنگ";
-"Custom Prayer Names" = "حسب ضرورت نماز کے نام";
 "Change Language" = "زبان تبدیل کریں";
 
 "Developed by Omar Al-Ejel" = "عمر العجیل نے تیار کیا";
@@ -170,3 +169,24 @@
 "Use Athan Widgets to view upcoming salah times at a glance." = "آئندہ سلام کے اوقات کو ایک نظر میں دیکھنے کے لئے اتھن ویجٹ کا استعمال کریں۔";
 
 
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "حساب کا طریقہ %@ پر مقرر کر دیا گیا";
+"Adjust Method" = "طریقہ ایڈجسٹ کریں";
+
+// Calculation-method suggestion popup
+"OK" = "ٹھیک ہے";
+
+// Method update popup
+"Updated Calculation Method" = "حساب کا طریقہ اپ ڈیٹ ہو گیا";
+"Undo" = "واپس کریں";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "ف";
+"S_letter" = "ش";
+"T_letter" = "ظ";
+"A_letter" = "ع";
+"M_letter" = "م";
+"I_letter" = "ع";
+"Continue" = "جاری رکھیں";

@@ -32,7 +32,10 @@ struct LocationSettingsView: View, Equatable {
     @State var usingCurrentLocation = AthanManager.shared.locationSettings.useCurrentLocation
     
     @State var timeZone = AthanManager.shared.locationSettings.timeZone
-    
+    // ISO country code resolved by the geocoder for the currently selected location,
+    // used to auto-suggest a calculation method on save.
+    @State var detectedCountryCode: String? = AthanManager.shared.locationSettings.countryCode
+
     @State var templocationSettings: LocationSettings = AthanManager.shared.locationSettings.copy() as! LocationSettings
     @Binding var parentSession: PresentedSectionType // used to trigger transition back
     
@@ -290,10 +293,13 @@ struct LocationSettingsView: View, Equatable {
                             
                             // save settings if we don't have erroneous input
                             if !erroneousLocation {
-                                AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation)
-                                
+                                AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation, countryCode: detectedCountryCode)
+
                                 // force athan manager to recalculate
                                 AthanManager.shared.reloadSettingsAndNotifications()
+
+                                // auto-update the method for the chosen country (applies + shows Undo popup)
+                                AthanManager.shared.autoUpdateMethodIfNeeded(for: detectedCountryCode)
                                 print("new settings: \(textFieldText), \(unboundCoordinate.latitude), \(unboundCoordinate.longitude)")
                             }
                             
@@ -331,6 +337,7 @@ struct LocationSettingsView: View, Equatable {
             print("GEOCODER - found coordinate")
             boundCoordinate = coord // tell map to change
             unboundCoordinate = coord
+            detectedCountryCode = placemark.isoCountryCode
             if placemark.timeZone == nil { print("!!! BAD: time zone for placemark nil")}
             timeZone = placemark.timeZone ?? timeZone //
 
@@ -346,6 +353,7 @@ struct LocationSettingsView: View, Equatable {
                 //                erroneousLocation = true
 //                if !usingCurrentLocation { return } // in case user switches back to not using current location
                 erroneousLocation = false // no need to show error for a coordinate. leave it as is
+                detectedCountryCode = nil // unknown country when geocoding fails
                 textFieldText = String(format: "%.2f°, %.2f°",
                                        coord.latitude,
                                        coord.longitude)
@@ -358,6 +366,7 @@ struct LocationSettingsView: View, Equatable {
             }
             
             print("GEOCODER - found placemark")
+            detectedCountryCode = placemark.isoCountryCode
             //            let city = placemark.locality
             //            let district = placemark.subAdministrativeArea
             //            let state = placemark.administrativeArea

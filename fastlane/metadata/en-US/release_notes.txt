@@ -1,1 +1,4 @@
-
+• Automatic calculation-method suggestion based on your location — no setup required
+• New Extra Large widget with a live moon phase, current prayer and full schedule
+• Refined, spacious iPad layout
+• Polish and bug fixes

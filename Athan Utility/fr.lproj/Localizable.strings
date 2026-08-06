@@ -47,7 +47,6 @@
 
 "Appearance" = "Apparence";
 "Colors" = "Couleurs";
-"Custom Prayer Names" = "Noms de Salah personnalisés";
 "Change Language" = "Changer de Langue";
 
 "Developed by Omar Al-Ejel" = "Développé par Omar Al-Ejel";
@@ -160,3 +159,24 @@
 "Open Athan Utility to set location." = "Ouvrez l'utilitaire Adhan pour définir l'emplacement.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Utilisez les widgets Adhan pour afficher les heures de salah à venir en un coup d'œil.";
 
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Méthode de calcul réglée sur %@";
+"Adjust Method" = "Modifier la méthode";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Méthode de calcul mise à jour";
+"Undo" = "Annuler";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "F";
+"S_letter" = "S";
+"T_letter" = "T";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Continue" = "Continuer";
+"OK" = "OK";

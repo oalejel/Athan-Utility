@@ -1,0 +1,164 @@
+/*
+  Localizable.strings
+  Athan Utility
+
+  German (de)
+  Copyright © 2026 Omar Alejel. All rights reserved.
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "Fadschr";
+"Sunrise" = "Sonnenaufgang";
+"Dhuhr" = "Dhuhr";
+"Asr" = "Asr";
+"Maghrib" = "Maghrib";
+"Isha" = "Ischa";
+
+// MARK: Accessibility
+"acc_settings" = "Einstellungen";
+"acc_calendar" = "Kalender";
+"acc_location_settings" = "Standorteinstellungen";
+"acc_qibla_compass_label" = "Qibla-Kompass";
+"acc_qibla_compass_hint" = "Vibriert bei einer Ausrichtung auf die Qibla innerhalb von drei Grad.";
+"acc_qibla_aligned_value" = "Auf die Qibla ausgerichtet";
+"acc_qibla_turn_right" = "Rechts abbiegen";
+"acc_qibla_turn_left" = "Links abbiegen";
+"acc_degrees_abbrev" = "Grad";
+
+// MARK: - Notifications
+"Notifications" = "Benachrichtigungen";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Zeit fur %1$@ [%2$@]. Bitte offne Athan Utility erneut, um weiterhin Benachrichtigungen zu erhalten.";
+"Time for %1$@ in %2$@ [%3$@]" = "Zeit fur %1$@ in %2$@ [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ Min. bis %2$@ in %3$@ [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "Fertig";
+
+// MARK: - Settings
+"Settings" = "Einstellungen";
+"Appearance" = "Erscheinungsbild";
+"Colors" = "Farben";
+"Change Language" = "Sprache andern";
+"Developed by Omar Al-Ejel" = "Entwickelt von Omar Al-Ejel";
+"Rate Athan Utility!" = "Athan Utility bewerten!";
+"Privacy Notes" = "Datenschutz";
+"Send Feedback" = "Feedback senden";
+
+// MARK: - Calculation Method
+"Calculation Method" = "Berechnungsmethode";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Berechnungsmethoden unterscheiden sich hauptsachlich in den Sonnenwinkeln fur Fadschr und Ischa.";
+"Muslim World League" = "Muslimische Weltliga";
+"Egyptian" = "Agyptische Allgemeine Behorde fur Vermessung";
+"Karachi" = "Karachi";
+"Umm Al-Qura" = "Umm Al-Qura";
+"Dubai" = "Dubai";
+"Moonsighting Committee" = "Mondbeobachtungsausschuss";
+"North America" = "Nordamerika (ISNA)";
+"Kuwait" = "Kuwait";
+"Qatar" = "Katar";
+"Singapore" = "Singapur";
+"Tehran" = "Teheran";
+"Turkey" = "Turkei";
+"Other"  = "Andere";
+
+// MARK: - Madhab
+"Madhab" = "Madhab Asr-Anpassung";
+"Hanafi" = "Hanafi";
+"Shafi" = "Nicht-Hanafi";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Das Hanafi-Madhab verwendet spatere Asr-Zeiten: wenn die Schattenlange eines Gegenstands seit dem Sonnenmittag um das Doppelte seiner eigenen Lange zunimmt.";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "Hohe-Breiten-Regel";
+"middleOfTheNight" = "Mitte der Nacht";
+"seventhOfTheNight" = "Siebtel der Nacht";
+"twilightAngle" = "Dammerungswinkel";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Berechnungseinstellungen";
+"Consider setting..." = "Passe deine Berechnungsmethode an die lokale Moschee an.";
+"highLatitudeExplanation" = "Lander nordlich eines bestimmten Breitengrads wenden oft eine Hohe-Breiten-Regel an. Die empfohlene Regel fur deine Region ist ";
+"Athan Preview" = "Adhan-Vorschau";
+"Edit Location" = "Standort bearbeiten";
+
+// MARK: - Sounds
+"athan.sound" = "Adhan-Ton";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Der vollstandige Adhan kann abgespielt werden, wenn dein iPhone gesperrt ist oder Athan Utility geoffnet ist.";
+"iOS Default" = "iOS Standard";
+"Echo" = "Echo";
+"Makkah" = "Makkah";
+"Madina" = "Madina";
+"Al-Aqsa" = "Al-Aqsa";
+"Al-Aqsa 2" = "Al-Aqsa 2";
+"Egypt" = "Agypten";
+"Abdulbaset" = "Abdulbaset";
+"Abdulghaffar" = "Abdulghaffar";
+"Zakariya" = "Zakariya";
+"Al-Qatami" = "Al-Qatami";
+
+// MARK: - Colors
+"static" = "Statisch";
+"dynamic" = "Dynamisch";
+"All Prayers" = "Alle Gebete";
+"restore.defaults" = "Standard wiederherstellen";
+"colors.ios.requirement" = "Farbanpassung nur auf iOS 14+ verfugbar";
+"Select a color picker to customize gradients." = "Wahle einen Farbwahler, um Verlaufe anzupassen.";
+
+// MARK: - Custom Names
+"custom.names" = "Eigene Namen";
+"custom.names.description" = "Ersetze die Adhan-Schreibweise im Widget, in Benachrichtigungen und in der Hauptoberflache.";
+
+// MARK: - Notification Settings
+"Athan Notification" = "Adhan-Benachrichtigung";
+"Reminder Notification" = "Erinnerungsbenachrichtigung";
+"Enabled" = "Aktiviert";
+"Play Sound" = "Ton abspielen";
+"reminder.minute.offset" = "Minuten fruher: %@m";
+"minute-character" = "m";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Deaktiviere Play Sound, damit Benachrichtigungen fur dieses Gebet den iOS-Standardton verwenden.";
+"offset-description" = "Wenn Minuten-Abstande langer sind als die Zeit zwischen %1$@ und %2$@, werden Erinnerungen standardmassig auf 15 Minuten gesetzt.";
+"Play Longer Athan" = "Langeren Adhan abspielen";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Erweitert die Wiedergabe auf das iOS-Maximum von ca. 30 Sekunden. Offne Athan Utility fur den vollstandigen Adhan.";
+"athan.minute.offset" = "Zeitanpassung: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "Standort festlegen";
+"Set Location Manually" = "Manuell festlegen";
+"Use Current Location" = "Aktuellen Standort verwenden";
+"Athan Utility does not collect user data." = "Athan Utility sammelt keine Nutzerdaten.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Standortdienste sind deaktiviert und konnen in den Einstellungen geandert werden. Athan Utility sammelt keine Nutzerdaten.";
+"Location Name" = "Standortname";
+"Location:" = "Standort:";
+
+// MARK: - Calendar
+"Show Calendar" = "Kalender anzeigen";
+"Calendar" = "Kalender";
+"Export" = "Exportieren";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Offne Athan Utility, um den Standort festzulegen.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Nutze Athan-Widgets, um kommende Gebetszeiten auf einen Blick zu sehen.";
+
+// MARK: - Old athan app
+"F_letter" = "F";
+"S_letter" = "S";
+"T_letter" = "T";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Cancel" = "Abbrechen";
+"Alarms" = "Alarme";
+"Location Search" = "Standortsuche";
+"OK" = "OK";
+"Continue" = "Weiter";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Berechnungsmethode auf %@ gesetzt";
+"Adjust Method" = "Methode anpassen";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Berechnungsmethode aktualisiert";
+"Undo" = "Rückgängig";

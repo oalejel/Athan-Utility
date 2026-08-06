@@ -21,7 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             WCSession.default.delegate = PhoneWatchDelegate.shared
             WCSession.default.activate()
         }
-        
+
+        #if targetEnvironment(macCatalyst)
+        // Load the native-macOS helper bundle, show the menu bar item, and start the
+        // live title driver (next prayer time / countdown).
+        MenuBarBridge.shared.start()
+        MenuBarController.shared.start()
+        #endif
+
         return true
     }
     

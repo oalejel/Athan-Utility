@@ -54,6 +54,10 @@ struct MainSwiftUI: View {
     @State var settingsToggled = false
     @State var locationSettingsToggled = false
     @State var showCalendar = false
+    // section that the Settings view should open to (e.g. deep-linked from the auto-method pill)
+    @State var settingsInitialSection: SettingsSectionType = .General
+    // ensures the launch-time method suggestion is only evaluated once per app session
+    @State private var didEvaluateStartupSuggestion = false
     
     @State var currentView: PresentedSectionType
         
@@ -229,7 +233,7 @@ struct MainSwiftUI: View {
                         IntroSettingsView(parentSession: $currentView)
                         
                     case .Settings:
-                        SettingsView(parentSession: $currentView)
+                        SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
                             .transition(.opacity)
                     case .Main:
                         HStack {
@@ -497,6 +501,7 @@ struct MainSwiftUI: View {
                                                 Button(action: {
                                                     let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                                                     lightImpactFeedbackGenerator.impactOccurred()
+                                                    settingsInitialSection = .General // normal gear tap opens General
                                                     withAnimation {
                                                         currentView = (currentView != .Main) ? .Main : .Settings // if we were in location, go back to main
                                                     }
@@ -517,8 +522,10 @@ struct MainSwiftUI: View {
                                     }
                                 }
                             }
+                            // cap the reading column on iPad so prayer rows don't stretch edge-to-edge
+                            .frame(maxWidth: _horizontalSizeClass == .regular ? 620 : .infinity)
                             .padding(_horizontalSizeClass == .regular ? 24 : 0)
-                            
+
                         }
                         .transition(.opacity)
                         .sheet(isPresented: $showCalendar) { // set highest progress back to 0 when we know the view disappeared
@@ -540,6 +547,42 @@ struct MainSwiftUI: View {
                     Spacer()
                 }
             }
+
+            // "Updated Calculation Method" popup — floats up from the bottom of the main
+            // screen. The method has already changed; the popup lets the user Undo or OK.
+            if currentView == .Main, let notice = manager.methodUpdateNotice {
+                VStack {
+                    Spacer()
+                    MethodUpdatePopup(
+                        notice: notice,
+                        onUndo: {
+                            AthanManager.shared.undoMethodUpdate(notice)
+                            withAnimation { manager.methodUpdateNotice = nil }
+                        },
+                        onOK: {
+                            AthanManager.shared.acknowledgeMethodUpdate()
+                            withAnimation { manager.methodUpdateNotice = nil }
+                        }
+                    )
+                    .id(notice.id)
+                    .padding(.bottom, 24)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .zIndex(2)
+            }
+        }
+        .onAppear {
+            guard !didEvaluateStartupSuggestion else { return }
+            didEvaluateStartupSuggestion = true
+            // Surface any update that already happened in the background (e.g. a widget
+            // refresh auto-updated the method while the app was closed).
+            if manager.methodUpdateNotice == nil,
+               let pending = AthanManager.shared.loadPendingMethodUpdateNotice() {
+                manager.methodUpdateNotice = pending
+            }
+            // Evaluate the best country we can infer — GPS if shared, otherwise device region —
+            // and auto-update the method if it warrants a change.
+            AthanManager.shared.autoUpdateMethodIfNeeded(for: AthanManager.shared.bestAvailableCountryCode())
         }
     }
 }
@@ -575,6 +618,92 @@ struct ProgressBar: View {
         .padding(.zero)
         .frame(height: lineWidth)
 
+    }
+}
+
+// MARK: - Calculation-method update popup
+
+/// Compact rounded-rect popup that floats up from the bottom of the main screen to tell
+/// the user their calculation method was auto-updated for their country. Top line reads
+/// "Updated Calculation Method"; the line under it shows "<old> → <new>" (SF Symbol arrow,
+/// truncated so it never spills). An Undo button reverts the change; OK (to its right)
+/// acknowledges it. Both buttons use the same rounded-rect style.
+@available(iOS 13.0.0, *)
+struct MethodUpdatePopup: View {
+    let notice: MethodUpdateNotice
+    var onUndo: () -> Void
+    var onOK: () -> Void
+
+    private var transitionText: Text {
+        Text(notice.oldMethod.localizedString()).foregroundColor(.white.opacity(0.6))
+        + Text("  ")
+        + Text(Image(systemName: "arrow.right")).foregroundColor(.white.opacity(0.6))
+        + Text("  ")
+        + Text(notice.newMethod.localizedString()).foregroundColor(.white).fontWeight(.semibold)
+    }
+
+    var body: some View {
+        HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text(Strings.updatedCalculationMethod)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                transitionText
+                    .font(.footnote)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
+
+            Spacer(minLength: 6)
+
+            Button(action: {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                onUndo()
+            }) {
+                Text(Strings.undo)
+                    .font(.subheadline.weight(.bold))
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color.white.opacity(0.14))
+                    )
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            Button(action: {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                onOK()
+            }) {
+                Text(Strings.ok)
+                    .font(.subheadline.weight(.bold))
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 18)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color.white.opacity(0.24))
+                    )
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+        .padding(.vertical, 12)
+        .padding(.leading, 18)
+        .padding(.trailing, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(Color.black.opacity(0.6))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .strokeBorder(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
+        .shadow(color: .black.opacity(0.3), radius: 12, x: 0, y: 6)
+        .padding(.horizontal, 16)
+        .accessibilityElement(children: .combine)
     }
 }
 

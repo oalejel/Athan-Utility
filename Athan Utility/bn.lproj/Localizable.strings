@@ -1,0 +1,161 @@
+/*
+  Localizable.strings
+  Athan Utility — Bengali (bn)
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "ফজর";
+"Sunrise" = "সূর্যোদয়";
+"Dhuhr" = "যোহর";
+"Asr" = "আসর";
+"Maghrib" = "মাগরিব";
+"Isha" = "এশা";
+
+// MARK: Accessibility
+"acc_settings" = "সেটিংস";
+"acc_calendar" = "ক্যালেন্ডার";
+"acc_location_settings" = "অবস্থান সেটিংস";
+"acc_qibla_compass_label" = "কিবলা কম্পাস";
+"acc_qibla_compass_hint" = "তিন ডিগ্রির মধ্যে কিবলার সাথে সমান্তরাল হলে কম্পন দেয়।";
+"acc_qibla_aligned_value" = "কিবলার সাথে সমান্তরাল";
+"acc_qibla_turn_right" = "ডানে ঘুরুন";
+"acc_qibla_turn_left" = "বামে ঘুরুন";
+"acc_degrees_abbrev" = "ডিগ্রি";
+
+// MARK: - Notifications
+"Notifications" = "বিজ্ঞপ্তি";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@-এর সময় [%2$@]। বিজ্ঞপ্তি পেতে আবার Athan Utility খুলুন।";
+"Time for %1$@ in %2$@ [%3$@]" = "%2$@-এ %1$@-এর সময় [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%3$@-এ %2$@-এর %1$@ মিনিট বাকি [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "সম্পন্ন";
+
+// MARK: - Settings
+"Settings" = "সেটিংস";
+"Appearance" = "চেহারা";
+"Colors" = "রঙ";
+"Change Language" = "ভাষা পরিবর্তন";
+"Developed by Omar Al-Ejel" = "Omar Al-Ejel কর্তৃক তৈরি";
+"Rate Athan Utility!" = "Athan Utility রেটিং দিন!";
+"Privacy Notes" = "গোপনীয়তা নোট";
+"Send Feedback" = "মতামত পাঠান";
+
+// MARK: - Calculation Method
+"Calculation Method" = "হিসাব পদ্ধতি";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "হিসাব পদ্ধতি মূলত ফজর ও এশার সূর্যের কোণে আলাদা।";
+"Muslim World League" = "রাবেতা আলম ইসলামি";
+"Egyptian" = "মিসরীয় সাধারণ জরিপ কর্তৃপক্ষ";
+"Karachi" = "করাচি";
+"Umm Al-Qura" = "উম্মুল কোরা";
+"Dubai" = "দুবাই";
+"Moonsighting Committee" = "চাঁদ দেখা কমিটি";
+"North America" = "উত্তর আমেরিকা (ISNA)";
+"Kuwait" = "কুয়েত";
+"Qatar" = "কাতার";
+"Singapore" = "সিঙ্গাপুর";
+"Tehran" = "তেহরান";
+"Turkey" = "তুরস্ক";
+"Other"  = "অন্যান্য";
+
+// MARK: - Madhab
+"Madhab" = "মাযহাব আসর সমন্বয়";
+"Hanafi" = "হানাফি";
+"Shafi" = "অ-হানাফি";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "হানাফি মাযহাব পরবর্তী আসর সময় ব্যবহার করে, যা তখন হয় যখন সূর্য মধ্যাহ্নের পর থেকে ছায়ার দৈর্ঘ্য বস্তুর দৈর্ঘ্যের দ্বিগুণ হয়।";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "উচ্চ অক্ষাংশ নিয়ম";
+"middleOfTheNight" = "রাতের মধ্যভাগ";
+"seventhOfTheNight" = "রাতের সপ্তমাংশ";
+"twilightAngle" = "সন্ধ্যার কোণ";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "হিসাব পছন্দসমূহ";
+"Consider setting..." = "আপনার স্থানীয় মসজিদ অনুযায়ী হিসাব পদ্ধতি নির্ধারণ করুন।";
+"highLatitudeExplanation" = "নির্দিষ্ট অক্ষাংশের উত্তরের দেশগুলো প্রায়ই উচ্চ অক্ষাংশ নিয়ম প্রয়োগ করে। আপনার অঞ্চলের জন্য প্রস্তাবিত নিয়ম হলো ";
+"Athan Preview" = "আযানের পূর্বরূপ";
+"Edit Location" = "অবস্থান সম্পাদনা";
+
+// MARK: - Sounds
+"athan.sound" = "আযানের শব্দ";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "iPhone লক থাকলে বা Athan Utility খোলা থাকলে পূর্ণ আযান বাজতে পারে।";
+"iOS Default" = "iOS ডিফল্ট";
+"Echo" = "প্রতিধ্বনি";
+"Makkah" = "মক্কা";
+"Madina" = "মদিনা";
+"Al-Aqsa" = "আল-আকসা";
+"Al-Aqsa 2" = "আল-আকসা ২";
+"Egypt" = "মিসর";
+"Abdulbaset" = "আবদুলবাসেত";
+"Abdulghaffar" = "আবদুলগাফফার";
+"Zakariya" = "যাকারিয়া";
+"Al-Qatami" = "আল-কাতামি";
+
+// MARK: - Colors
+"static" = "স্থির";
+"dynamic" = "গতিশীল";
+"All Prayers" = "সকল নামাজ";
+"restore.defaults" = "ডিফল্ট পুনরুদ্ধার";
+"colors.ios.requirement" = "রঙ কাস্টমাইজেশন শুধুমাত্র iOS 14+-এ পাওয়া যায়";
+"Select a color picker to customize gradients." = "গ্রেডিয়েন্ট কাস্টমাইজ করতে একটি রঙ নির্বাচক বেছে নিন।";
+
+// MARK: - Custom Names
+"custom.names" = "কাস্টম নাম";
+"custom.names.description" = "উইজেট, বিজ্ঞপ্তি এবং মূল ইন্টারফেসে ব্যবহৃত আযানের বানান পরিবর্তন করুন।";
+
+// MARK: - Notification Settings
+"Athan Notification" = "আযান বিজ্ঞপ্তি";
+"Reminder Notification" = "স্মরণিকা বিজ্ঞপ্তি";
+"Enabled" = "সক্ষম";
+"Play Sound" = "শব্দ বাজান";
+"reminder.minute.offset" = "আগাম মিনিট: %@m";
+"minute-character" = "মি";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "এই নামাজের বিজ্ঞপ্তিকে iOS ডিফল্ট শব্দ বাজাতে বাধ্য করতে \"শব্দ বাজান\" নিষ্ক্রিয় করুন।";
+"offset-description" = "যখন মিনিট অফসেট %1$@ এবং %2$@-এর মধ্যবর্তী সময়ের চেয়ে বেশি, স্মরণিকা ডিফল্ট ১৫ মিনিটে থাকবে।";
+"Play Longer Athan" = "দীর্ঘ আযান বাজান";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "প্রায় ৩০ সেকেন্ডের iOS সীমা পর্যন্ত প্লেব্যাক বাড়ায়। পূর্ণ আযানের জন্য Athan Utility খুলুন।";
+"athan.minute.offset" = "সময় সমন্বয়: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "অবস্থান নির্ধারণ";
+"Set Location Manually" = "ম্যানুয়ালি অবস্থান নির্ধারণ";
+"Use Current Location" = "বর্তমান অবস্থান ব্যবহার";
+"Athan Utility does not collect user data." = "Athan Utility ব্যবহারকারীর ডেটা সংগ্রহ করে না।";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "অবস্থান পরিষেবা নিষ্ক্রিয়, সেটিংসে পরিবর্তন করা যাবে। Athan Utility ব্যবহারকারীর ডেটা সংগ্রহ করে না।";
+"Location Name" = "অবস্থানের নাম";
+"Location:" = "অবস্থান:";
+
+// MARK: - Calendar
+"Show Calendar" = "ক্যালেন্ডার দেখান";
+"Calendar" = "ক্যালেন্ডার";
+"Export" = "রপ্তানি";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "অবস্থান নির্ধারণ করতে Athan Utility খুলুন।";
+"Use Athan Widgets to view upcoming salah times at a glance." = "আসন্ন নামাজের সময় একনজরে দেখতে Athan Widget ব্যবহার করুন।";
+
+// MARK: - Old athan app
+"F_letter" = "ফ";
+"S_letter" = "স";
+"T_letter" = "য";
+"A_letter" = "আ";
+"M_letter" = "ম";
+"I_letter" = "এ";
+"Cancel" = "বাতিল";
+"Alarms" = "অ্যালার্ম";
+"Location Search" = "অবস্থান খুঁজুন";
+"OK" = "ঠিক আছে";
+"Continue" = "এগিয়ে যান";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "গণনা পদ্ধতি %@ এ সেট করা হয়েছে";
+"Adjust Method" = "পদ্ধতি সমন্বয় করুন";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "গণনা পদ্ধতি আপডেট হয়েছে";
+"Undo" = "পূর্বাবস্থা";

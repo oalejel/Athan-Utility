@@ -1,1 +1,4 @@
-
+• Suggestion automatique de la méthode de calcul selon votre position — sans configuration
+• Nouveau widget très grand avec phase de lune en direct, prière en cours et horaire complet
+• Mise en page iPad plus aérée et raffinée
+• Améliorations et corrections

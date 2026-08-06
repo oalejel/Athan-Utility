@@ -220,12 +220,13 @@ class LocationSettings: Codable, NSCopying {
         }
     }()
     
-    init(locationName: String, coord: CLLocationCoordinate2D, timeZone: TimeZone, useCurrentLocation: Bool) {
+    init(locationName: String, coord: CLLocationCoordinate2D, timeZone: TimeZone, useCurrentLocation: Bool, countryCode: String? = nil) {
         self.locationName = locationName
         self.lat = coord.latitude
         self.lon = coord.longitude
         self.useCurrentLocation = useCurrentLocation
         self.timeZone = timeZone
+        self.countryCode = countryCode
     }
     
     static func defaultSetting() -> LocationSettings {
@@ -256,6 +257,9 @@ class LocationSettings: Codable, NSCopying {
     var locationName: String
     var timeZone: TimeZone
     var useCurrentLocation = false
+    /// ISO 3166-1 alpha-2 country code for the current location, when known.
+    /// Optional so existing archives (which predate this field) still decode.
+    var countryCode: String? = nil
     private var lat: Double
     private var lon: Double
     var locationCoordinate: CLLocationCoordinate2D {
@@ -270,7 +274,7 @@ class LocationSettings: Codable, NSCopying {
     static let archiveName = "locationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation)
+        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation, countryCode: countryCode)
         return copy
     }
 }

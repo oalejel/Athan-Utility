@@ -1,0 +1,161 @@
+/*
+  Localizable.strings
+  Athan Utility — Persian/Farsi (fa)
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "فجر";
+"Sunrise" = "طلوع آفتاب";
+"Dhuhr" = "ظهر";
+"Asr" = "عصر";
+"Maghrib" = "مغرب";
+"Isha" = "عشاء";
+
+// MARK: Accessibility
+"acc_settings" = "تنظیمات";
+"acc_calendar" = "تقویم";
+"acc_location_settings" = "تنظیمات موقعیت";
+"acc_qibla_compass_label" = "قطب‌نمای قبله";
+"acc_qibla_compass_hint" = "هنگامی که در سه درجه هم‌راستا با قبله قرار می‌گیرد، لرزش می‌کند.";
+"acc_qibla_aligned_value" = "هم‌راستا با قبله";
+"acc_qibla_turn_right" = "به راست بچرخید";
+"acc_qibla_turn_left" = "به چپ بچرخید";
+"acc_degrees_abbrev" = "درجه";
+
+// MARK: - Notifications
+"Notifications" = "اعلان‌ها";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "وقت %1$@ [%2$@]. لطفاً Athan Utility را دوباره باز کنید تا به دریافت اعلان‌ها ادامه دهید.";
+"Time for %1$@ in %2$@ [%3$@]" = "وقت %1$@ در %2$@ [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ دقیقه تا %2$@ در %3$@ [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "تمام";
+
+// MARK: - Settings
+"Settings" = "تنظیمات";
+"Appearance" = "ظاهر";
+"Colors" = "رنگ‌ها";
+"Change Language" = "تغییر زبان";
+"Developed by Omar Al-Ejel" = "توسعه‌یافته توسط عمر الاعجل";
+"Rate Athan Utility!" = "Athan Utility را امتیاز دهید!";
+"Privacy Notes" = "یادداشت‌های حریم خصوصی";
+"Send Feedback" = "ارسال بازخورد";
+
+// MARK: - Calculation Method
+"Calculation Method" = "روش محاسبه";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "روش‌های محاسبه عمدتاً در زوایای خورشید فجر و عشاء تفاوت دارند.";
+"Muslim World League" = "رابطة العالم الإسلامي";
+"Egyptian" = "مرکز عمومی مساحت مصر";
+"Karachi" = "کراچی";
+"Umm Al-Qura" = "ام‌القرا";
+"Dubai" = "دبی";
+"Moonsighting Committee" = "کمیته رؤیت هلال";
+"North America" = "آمریکای شمالی (ISNA)";
+"Kuwait" = "کویت";
+"Qatar" = "قطر";
+"Singapore" = "سنگاپور";
+"Tehran" = "تهران";
+"Turkey" = "ترکیه";
+"Other"  = "سایر";
+
+// MARK: - Madhab
+"Madhab" = "تنظیم عصر مذهب";
+"Hanafi" = "حنفی";
+"Shafi" = "غیر حنفی";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "مذهب حنفی از اوقات دیرتر عصر استفاده می‌کند که زمانی رخ می‌دهد که طول سایه از ظهر شرعی به اندازه دو برابر طول شیء افزایش یابد.";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "قانون عرض جغرافیایی بالا";
+"middleOfTheNight" = "نیمه‌شب";
+"seventhOfTheNight" = "یک‌هفتم شب";
+"twilightAngle" = "زاویه شفق";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "تنظیمات محاسبه";
+"Consider setting..." = "روش محاسبه خود را بر اساس مسجد محلی تنظیم کنید.";
+"highLatitudeExplanation" = "کشورهای شمال عرض جغرافیایی مشخصی اغلب از قانون عرض جغرافیایی بالا استفاده می‌کنند. قانون توصیه‌شده برای منطقه شما ";
+"Athan Preview" = "پیش‌نمایش اذان";
+"Edit Location" = "ویرایش موقعیت";
+
+// MARK: - Sounds
+"athan.sound" = "صدای اذان";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "اذان کامل می‌تواند هنگامی که آیفون قفل است یا Athan Utility باز است پخش شود.";
+"iOS Default" = "پیش‌فرض iOS";
+"Echo" = "اکو";
+"Makkah" = "مکه";
+"Madina" = "مدینه";
+"Al-Aqsa" = "الأقصی";
+"Al-Aqsa 2" = "الأقصی ۲";
+"Egypt" = "مصر";
+"Abdulbaset" = "عبدالباسط";
+"Abdulghaffar" = "عبدالغفار";
+"Zakariya" = "زکریا";
+"Al-Qatami" = "القطامی";
+
+// MARK: - Colors
+"static" = "ثابت";
+"dynamic" = "پویا";
+"All Prayers" = "همه نمازها";
+"restore.defaults" = "بازگردانی پیش‌فرض";
+"colors.ios.requirement" = "سفارشی‌سازی رنگ فقط در iOS 14+ موجود است";
+"Select a color picker to customize gradients." = "یک انتخاب‌گر رنگ را برای سفارشی‌سازی گرادیان انتخاب کنید.";
+
+// MARK: - Custom Names
+"custom.names" = "نام‌های سفارشی";
+"custom.names.description" = "نگارش اذان استفاده‌شده در ویجت، اعلان‌ها و رابط اصلی را جایگزین کنید.";
+
+// MARK: - Notification Settings
+"Athan Notification" = "اعلان اذان";
+"Reminder Notification" = "اعلان یادآوری";
+"Enabled" = "فعال";
+"Play Sound" = "پخش صدا";
+"reminder.minute.offset" = "دقایق زودتر: %@m";
+"minute-character" = "د";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "برای اینکه اعلان‌های این نماز صدای پیش‌فرض iOS را پخش کنند، «پخش صدا» را غیرفعال کنید.";
+"offset-description" = "وقتی آفست دقیقه از زمان بین %1$@ و %2$@ بیشتر است، یادآورها به‌طور پیش‌فرض ۱۵ دقیقه خواهند بود.";
+"Play Longer Athan" = "پخش اذان طولانی‌تر";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "پخش را تا حداکثر محدودیت iOS حدود ۳۰ ثانیه گسترش می‌دهد. Athan Utility را برای پخش اذان کامل باز کنید.";
+"athan.minute.offset" = "تنظیم زمان: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "تنظیم موقعیت";
+"Set Location Manually" = "تنظیم دستی موقعیت";
+"Use Current Location" = "استفاده از موقعیت فعلی";
+"Athan Utility does not collect user data." = "Athan Utility داده‌های کاربر را جمع‌آوری نمی‌کند.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "سرویس‌های موقعیت‌یابی غیرفعال هستند و می‌توانند در تنظیمات تغییر کنند. Athan Utility داده‌های کاربر را جمع‌آوری نمی‌کند.";
+"Location Name" = "نام موقعیت";
+"Location:" = "موقعیت:";
+
+// MARK: - Calendar
+"Show Calendar" = "نمایش تقویم";
+"Calendar" = "تقویم";
+"Export" = "خروجی";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Athan Utility را برای تنظیم موقعیت باز کنید.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "از ویجت‌های Athan برای مشاهده اوقات نماز آینده در یک نگاه استفاده کنید.";
+
+// MARK: - Old athan app
+"F_letter" = "ف";
+"S_letter" = "ط";
+"T_letter" = "ظ";
+"A_letter" = "ع";
+"M_letter" = "م";
+"I_letter" = "ع";
+"Cancel" = "لغو";
+"Alarms" = "زنگ‌ها";
+"Location Search" = "جستجوی موقعیت";
+"OK" = "تأیید";
+"Continue" = "ادامه";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "روش محاسبه روی %@ تنظیم شد";
+"Adjust Method" = "تنظیم روش";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "روش محاسبه به‌روزرسانی شد";
+"Undo" = "واگرد";

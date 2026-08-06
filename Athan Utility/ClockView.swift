@@ -281,7 +281,9 @@ class ClockView: UIView {
         let totalWidth = longWidth
         
         minutesLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
-        minutesLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
+        let minutesOriginX: CGFloat = (width / 2) - (totalWidth / 2)
+        let minutesOriginY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
+        minutesLayer.frame.origin = CGPoint(x: minutesOriginX, y: minutesOriginY)
         
         
         // keep this shadow to differentiate between the minute arm and the hour dots it touches
@@ -351,7 +353,9 @@ class ClockView: UIView {
         let totalWidth = longWidth
         
         hoursLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
-        hoursLayer.frame.origin = CGPoint(x: (width / 2) - (totalWidth / 2), y: (height / 2) - (totaHeight - (shortWidth / 2)))
+        let hoursOriginX: CGFloat = (width / 2) - (totalWidth / 2)
+        let hoursOriginY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
+        hoursLayer.frame.origin = CGPoint(x: hoursOriginX, y: hoursOriginY)
         
         hoursLayer.shadowColor = UIColor.black.cgColor
         hoursLayer.shadowOpacity = 0.5

@@ -16,8 +16,8 @@ struct AthanWidgetBundle: WidgetBundle {
         Athan_Widget()
         SecondaryAthanWidget()
         TertiaryAthanWidget()
-        // Live activities
-        SuhoorLiveActivity()
+        // Live Activities disabled: linger after app closes (pending fix)
+        // SuhoorLiveActivity()
         
     }
 }

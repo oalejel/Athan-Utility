@@ -62,6 +62,14 @@ class AthanProvider: TimelineProvider {
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
         manager.reloadSettingsAndNotifications()
+
+        // Auto-update the calculation method if the stored country now recommends a different
+        // one — so times reflect it without opening the app. Don't reschedule notifications
+        // from the widget (the app does that on next foreground); reload settings once more so
+        // this timeline is built with the new method.
+        if manager.autoUpdateMethodIfNeeded(for: manager.bestAvailableCountryCode(), rescheduleNotifications: false) {
+            manager.reloadSettingsAndNotifications()
+        }
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),
                                    currentPrayer: Prayer.fajr, // dummy data

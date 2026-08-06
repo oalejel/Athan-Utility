@@ -48,7 +48,6 @@
 
 "Appearance" = "外观";
 "Colors" = "颜色";
-"Custom Prayer Names" = "自定义祷告名称";
 "Change Language" = "更改语言";
 
 "Developed by Omar Al-Ejel" = "由Omar Al-Ejel开发";
@@ -160,3 +159,24 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "打开 宣礼 实用工具以设置位置。";
 "Use Athan Widgets to view upcoming salah times at a glance." = "使用 宣礼 小部件一目了然地查看即将到来的祷告时间。";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "计算方法已设置为 %@";
+"Adjust Method" = "调整方法";
+
+// Calculation-method suggestion popup
+"OK" = "确定";
+
+// Method update popup
+"Updated Calculation Method" = "已更新计算方法";
+"Undo" = "撤销";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "晨";
+"S_letter" = "日";
+"T_letter" = "晌";
+"A_letter" = "晡";
+"M_letter" = "昏";
+"I_letter" = "宵";
+"Continue" = "继续";

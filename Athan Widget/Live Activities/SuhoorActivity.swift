@@ -1,3 +1,4 @@
+#if !targetEnvironment(macCatalyst)  // Live Activities aren't available on Mac Catalyst
 //
 //  SuhoorActivity.swift
 //  Athan Utility
@@ -238,3 +239,4 @@ struct SuhoorLiveActivity: Widget {
     }
     
 }
+#endif

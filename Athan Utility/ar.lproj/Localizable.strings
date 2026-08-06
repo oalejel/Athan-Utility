@@ -51,7 +51,6 @@
 
 "Appearance" = "المظهر";
 "Colors" = "الألوان";
-"Custom Prayer Names" = "أسماء الصلاة المخصصة";
 "Change Language" = "اللغة";
 
 "Developed by Omar Al-Ejel" = "تطوير عمر العجل";
@@ -166,3 +165,24 @@
 "Open Athan Utility to set location." = "افتح أداة الأذان لتعيين الموقع";
 "Use Athan Widgets to view upcoming salah times at a glance." = "استخدم أدوات الأذان لعرض أوقات الصلاة القادمة في لمحة.";
 
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "تم ضبط طريقة الحساب على %@";
+"Adjust Method" = "تعديل الطريقة";
+
+// Calculation-method suggestion popup
+"OK" = "موافق";
+
+// Method update popup
+"Updated Calculation Method" = "تم تحديث طريقة الحساب";
+"Undo" = "تراجع";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "ف";
+"S_letter" = "ش";
+"T_letter" = "ظ";
+"A_letter" = "ع";
+"M_letter" = "م";
+"I_letter" = "ع";
+"Continue" = "متابعة";

@@ -1,3 +1,23 @@
-A refocused interpretation of the modern Athan App. Athan Utility is a lightweight application that combines simplicity with precision to help Muslims keep up to date with Athan Times. 
+Athan Utility is a beautifully simple prayer times companion — precise, elegant, and completely private.
 
-Athan Utility features an analog Athan times viewer, a Today Extension, a simple prayer time table, Qibla, 15 minute reminder notifications, custom locations, and alarms.
+Built around a clean analog Athan clock and smooth gradient themes, it shows exactly what you need at a glance: your next prayer, a live countdown, and the full day's schedule. No clutter, no noise — just a calm, refined experience made for daily use.
+
+PRIVACY FIRST
+• No account, no sign-up, no tracking
+• We never collect or sell your data
+• Your location stays on your device and is used only to calculate accurate times
+
+FEATURES
+• Accurate prayer times for any location worldwide
+• Smart calculation method — automatically suggests the right method for your country (Umm al-Qura, ISNA, Muslim World League, Karachi, Egyptian and more)
+• Qibla compass pointing to the Kaaba
+• Hijri (Islamic) calendar date
+• Home Screen and Lock Screen widgets in every size
+• NEW Extra Large widget with a live moon phase, current prayer, timer and full schedule
+• Prayer reminder notifications with adjustable timing
+• Custom prayer names and beautiful Athan sounds
+• Elegant light and dark themes with customizable colors
+• Fully optimized for iPhone and iPad
+• Apple Watch complications and Siri support
+
+Athan Utility is free, ad-free, and crafted with care. Keep your prayers close — elegantly and privately.

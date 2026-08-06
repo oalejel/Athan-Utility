@@ -8,7 +8,7 @@
 
 import WatchKit
 
-class CustomExtensionDelegate: NSObject, WKExtensionDelegate {
+class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
     
     func handle(_ userActivity: NSUserActivity) {
         // can tell if user launched from complication

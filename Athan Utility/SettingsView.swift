@@ -33,7 +33,12 @@ struct SettingsView: View {
     let calculationMethods = CalculationMethod.usefulCases()
     let madhabs = Madhab.allCases
     @State var savedOffset = CGFloat(0)
-        
+
+    init(parentSession: Binding<PresentedSectionType>, initialSection: SettingsSectionType = .General) {
+        self._parentSession = parentSession
+        self._activeSection = State(initialValue: initialSection)
+    }
+
     var body: some View {
         GeometryReader { g in
             switch activeSection {

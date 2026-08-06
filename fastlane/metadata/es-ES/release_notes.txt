@@ -1,0 +1,4 @@
+• Sugerencia automática del método de cálculo según tu ubicación, sin configuración
+• Nuevo widget extragrande con fase lunar en vivo, oración actual y horario completo
+• Diseño de iPad más amplio y refinado
+• Mejoras y corrección de errores

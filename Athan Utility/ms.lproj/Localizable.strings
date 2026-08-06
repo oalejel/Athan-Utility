@@ -1,0 +1,161 @@
+/*
+  Localizable.strings
+  Athan Utility — Malay (ms)
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "Subuh";
+"Sunrise" = "Syuruk";
+"Dhuhr" = "Zohor";
+"Asr" = "Asar";
+"Maghrib" = "Maghrib";
+"Isha" = "Isyak";
+
+// MARK: Accessibility
+"acc_settings" = "Tetapan";
+"acc_calendar" = "Kalendar";
+"acc_location_settings" = "Tetapan Lokasi";
+"acc_qibla_compass_label" = "Kompas Kiblat";
+"acc_qibla_compass_hint" = "Bergetar apabila sejajar dengan kiblat dalam tiga darjah.";
+"acc_qibla_aligned_value" = "Sejajar dengan Kiblat";
+"acc_qibla_turn_right" = "Pusing kanan";
+"acc_qibla_turn_left" = "Pusing kiri";
+"acc_degrees_abbrev" = "darjah";
+
+// MARK: - Notifications
+"Notifications" = "Pemberitahuan";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Masa %1$@ [%2$@]. Sila buka semula Athan Utility untuk terus menerima pemberitahuan.";
+"Time for %1$@ in %2$@ [%3$@]" = "Masa %1$@ di %2$@ [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ minit menuju %2$@ di %3$@ [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "Selesai";
+
+// MARK: - Settings
+"Settings" = "Tetapan";
+"Appearance" = "Rupa Bentuk";
+"Colors" = "Warna";
+"Change Language" = "Tukar Bahasa";
+"Developed by Omar Al-Ejel" = "Dibangunkan oleh Omar Al-Ejel";
+"Rate Athan Utility!" = "Nilai Athan Utility!";
+"Privacy Notes" = "Nota Privasi";
+"Send Feedback" = "Hantar Maklum Balas";
+
+// MARK: - Calculation Method
+"Calculation Method" = "Kaedah Pengiraan";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Kaedah pengiraan terutamanya berbeza dalam sudut matahari Subuh dan Isyak.";
+"Muslim World League" = "Rabithah Alam Islami";
+"Egyptian" = "Pihak Berkuasa Survei Mesir";
+"Karachi" = "Karachi";
+"Umm Al-Qura" = "Umm Al-Qura";
+"Dubai" = "Dubai";
+"Moonsighting Committee" = "Jawatankuasa Rukyah";
+"North America" = "Amerika Utara (ISNA)";
+"Kuwait" = "Kuwait";
+"Qatar" = "Qatar";
+"Singapore" = "Singapura";
+"Tehran" = "Tehran";
+"Turkey" = "Turki";
+"Other"  = "Lain-lain";
+
+// MARK: - Madhab
+"Madhab" = "Penyesuaian Asar Mazhab";
+"Hanafi" = "Hanafi";
+"Shafi" = "Bukan Hanafi";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Mazhab Hanafi menggunakan masa Asar yang lebih lewat, iaitu apabila panjang bayang bertambah dua kali ganda panjang objek sejak tengah hari solar.";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "Peraturan Latitud Tinggi";
+"middleOfTheNight" = "Pertengahan Malam";
+"seventhOfTheNight" = "Satu Pertujuh Malam";
+"twilightAngle" = "Sudut Senja";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Keutamaan Pengiraan";
+"Consider setting..." = "Tetapkan kaedah pengiraan anda berdasarkan masjid tempatan.";
+"highLatitudeExplanation" = "Negara-negara di utara latitud tertentu sering menggunakan Peraturan Latitud Tinggi. Peraturan yang disyorkan untuk kawasan anda ialah ";
+"Athan Preview" = "Pratonton Azan";
+"Edit Location" = "Edit Lokasi";
+
+// MARK: - Sounds
+"athan.sound" = "Bunyi Azan";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Azan penuh boleh dimainkan apabila iPhone dikunci atau Athan Utility dibuka.";
+"iOS Default" = "Lalai iOS";
+"Echo" = "Gema";
+"Makkah" = "Makkah";
+"Madina" = "Madinah";
+"Al-Aqsa" = "Al-Aqsa";
+"Al-Aqsa 2" = "Al-Aqsa 2";
+"Egypt" = "Mesir";
+"Abdulbaset" = "Abdulbaset";
+"Abdulghaffar" = "Abdulghaffar";
+"Zakariya" = "Zakariya";
+"Al-Qatami" = "Al-Qatami";
+
+// MARK: - Colors
+"static" = "Statik";
+"dynamic" = "Dinamik";
+"All Prayers" = "Semua Solat";
+"restore.defaults" = "Pulihkan Lalai";
+"colors.ios.requirement" = "Penyesuaian warna hanya tersedia pada iOS 14+";
+"Select a color picker to customize gradients." = "Pilih pemilih warna untuk menyesuaikan kecerunan.";
+
+// MARK: - Custom Names
+"custom.names" = "Nama Tersuai";
+"custom.names.description" = "Gantikan ejaan Azan yang digunakan dalam widget, pemberitahuan, dan antara muka utama.";
+
+// MARK: - Notification Settings
+"Athan Notification" = "Pemberitahuan Azan";
+"Reminder Notification" = "Pemberitahuan Peringatan";
+"Enabled" = "Diaktifkan";
+"Play Sound" = "Mainkan Bunyi";
+"reminder.minute.offset" = "Minit Lebih Awal: %@m";
+"minute-character" = "m";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Nyahaktifkan \"Mainkan Bunyi\" untuk memaksa pemberitahuan solat ini memainkan loceng lalai iOS.";
+"offset-description" = "Apabila ofset minit lebih lama daripada masa antara %1$@ dan %2$@, peringatan akan ditetapkan kepada 15 minit secara lalai.";
+"Play Longer Athan" = "Mainkan Azan Lebih Lama";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Memanjangkan main balik ke had maksimum iOS ~30 saat. Buka Athan Utility untuk memainkan Azan penuh.";
+"athan.minute.offset" = "Pelarasan masa: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "Tetapkan Lokasi";
+"Set Location Manually" = "Tetapkan Lokasi Secara Manual";
+"Use Current Location" = "Gunakan Lokasi Semasa";
+"Athan Utility does not collect user data." = "Athan Utility tidak mengumpul data pengguna.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Perkhidmatan lokasi dilumpuhkan dan boleh dilaraskan dalam Tetapan. Athan Utility tidak mengumpul data pengguna.";
+"Location Name" = "Nama Lokasi";
+"Location:" = "Lokasi:";
+
+// MARK: - Calendar
+"Show Calendar" = "Tunjukkan Kalendar";
+"Calendar" = "Kalendar";
+"Export" = "Eksport";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Buka Athan Utility untuk menetapkan lokasi.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Gunakan Widget Athan untuk melihat waktu solat yang akan datang sekilas pandang.";
+
+// MARK: - Old athan app
+"F_letter" = "S";
+"S_letter" = "Y";
+"T_letter" = "Z";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Cancel" = "Batal";
+"Alarms" = "Penggera";
+"Location Search" = "Carian Lokasi";
+"OK" = "OK";
+"Continue" = "Teruskan";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Kaedah pengiraan ditetapkan kepada %@";
+"Adjust Method" = "Laraskan Kaedah";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Kaedah Pengiraan Dikemas Kini";
+"Undo" = "Buat asal";

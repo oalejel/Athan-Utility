@@ -1,0 +1,4 @@
+• Automatischer Vorschlag der Berechnungsmethode anhand deines Standorts — ohne Einrichtung
+• Neues sehr großes Widget mit Live-Mondphase, aktuellem Gebet und komplettem Plan
+• Überarbeitetes, großzügiges iPad-Layout
+• Feinschliff und Fehlerbehebungen

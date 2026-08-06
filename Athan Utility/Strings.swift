@@ -19,6 +19,17 @@ class Strings {
     
     static var calculationMethod = NSLocalizedString("Calculation Method", comment: "")
     static var calculationDescription = NSLocalizedString("Calculation methods primarily differ in Fajr and Isha sun angles.", comment: "")
+
+    // Calculation-method suggestion popup
+    static var adjustMethod = NSLocalizedString("Adjust Method", comment: "Button on the auto-method pill that opens the calculation method picker")
+    static func calculationMethodAutoSet(_ methodName: String) -> String {
+        String(format: NSLocalizedString("Calculation method set to %@", comment: "Pill shown when the app auto-selects a calculation method for the user's location. %@ is the localized method name."), methodName)
+    }
+    /// Title line of the bottom-floating popup shown after the method is auto-updated.
+    static var updatedCalculationMethod = NSLocalizedString("Updated Calculation Method", comment: "Title of the popup shown when the app automatically updates the calculation method for the user's country.")
+    /// Undo button on the method-update popup — reverts to the previous method.
+    static var undo = NSLocalizedString("Undo", comment: "Button that reverts the automatic calculation-method change")
+    static var ok = NSLocalizedString("OK", comment: "Confirm button on the calculation-method update popup")
     
     static var done = NSLocalizedString("Done", comment: "")
     static var athanSound = NSLocalizedString("athan.sound", comment: "")

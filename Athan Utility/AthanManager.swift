@@ -46,6 +46,62 @@ class ObservableAthanManager: ObservableObject {
     @Published var currentHeading: Double = 0.0
     @Published var locationPermissionsGranted = false
     @Published var appearance: AppearanceSettings = AppearanceSettings.defaultSetting()
+
+    /// Set when the app has *automatically* updated the calculation method for the user's
+    /// country (GPS- or locale-derived). Drives the bottom-floating "Updated Calculation
+    /// Method" popup in MainSwiftUI, which lets the user Undo or acknowledge (OK). The
+    /// change is already applied when this is set — the popup is a notice, not a prompt.
+    @Published var methodUpdateNotice: MethodUpdateNotice? = nil
+}
+
+/// A record that the calculation method was auto-updated from `oldMethod` to `newMethod`
+/// for a given country. Persisted to the app group so a change applied in the background
+/// (e.g. during a widget refresh) still surfaces the popup the next time the app opens.
+struct MethodUpdateNotice: Equatable, Identifiable, Codable {
+    var id = UUID()
+    let oldMethod: CalculationMethod
+    let newMethod: CalculationMethod
+    /// The ISO country code this update was derived from (GPS- or locale-based).
+    let countryCode: String
+}
+
+// Defined here (rather than CalculationMethod+Extensions.swift) so it is available to
+// every target that compiles AthanManager.swift — the extensions file is only in the app target.
+extension CalculationMethod {
+    /// Best-fit calculation method for a given ISO 3166-1 alpha-2 country code.
+    /// Used to auto-suggest a method when the user's location/country is determined.
+    /// Falls back to the Muslim World League method for any country not explicitly mapped.
+    static func recommended(forISOCountryCode code: String) -> CalculationMethod {
+        switch code.uppercased() {
+        // Gulf states with their own official authorities
+        case "SA": return .ummAlQura          // Umm al-Qura, Saudi Arabia
+        case "AE": return .dubai               // UAE
+        case "KW": return .kuwait              // Kuwait
+        case "QA": return .qatar               // Qatar
+
+        // South / Central Asia (University of Islamic Sciences, Karachi)
+        case "PK", "IN", "BD", "AF": return .karachi
+
+        // Iran
+        case "IR": return .tehran              // Institute of Geophysics, University of Tehran
+
+        // Turkey
+        case "TR": return .turkey              // Diyanet
+
+        // North America (ISNA)
+        case "US", "CA", "MX": return .northAmerica
+
+        // Southeast Asia (MUIS Singapore-style angles)
+        case "SG", "MY", "BN": return .singapore
+
+        // Egyptian General Authority of Survey (widely followed across N. Africa & Levant)
+        case "EG", "SD", "LY", "DZ", "TN", "IQ", "SY", "LB", "JO", "YE":
+            return .egyptian
+
+        // Everyone else: Muslim World League
+        default: return .muslimWorldLeague
+        }
+    }
 }
 
 class AthanManager: NSObject, CLLocationManagerDelegate {
@@ -430,7 +486,19 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         
         return nextPrayerTime
     }
-    
+
+    /// The prayer that `guaranteedNextPrayerTime()` refers to — mirrors its branching so the
+    /// name and time always agree (handles day rollover and late-isha edge cases).
+    func guaranteedNextPrayer() -> Prayer {
+        let currentPrayer = todayTimes.currentPrayer()
+        if currentPrayer == .isha { return .fajr }
+        if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+            return .isha
+        }
+        if currentPrayer == nil { return .fajr }
+        return currentPrayer!.next()
+    }
+
     func guaranteedCurrentPrayerTime() -> Date {
         var currentPrayer: Prayer? = todayTimes.currentPrayer()
         var currentPrayerTime: Date! = nil
@@ -452,6 +520,112 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
 
 // Listen for background events
 extension AthanManager {
+    // MARK: - Calculation-method suggestion
+
+    /// UserDefaults key for the last country we already auto-updated the method for, so we
+    /// only auto-update once per country (until the country changes) and never fight a
+    /// deliberate later choice by the user.
+    private static let handledSuggestionCountryKey = "AthanHandledSuggestionCountry"
+    private var handledSuggestionCountry: String? {
+        get { UserDefaults.standard.string(forKey: Self.handledSuggestionCountryKey) }
+        set { UserDefaults.standard.set(newValue, forKey: Self.handledSuggestionCountryKey) }
+    }
+
+    /// App-group defaults, shared between the app and the widget so a method update applied
+    /// during a background widget refresh can surface the popup the next time the app opens.
+    private var groupDefaults: UserDefaults? { UserDefaults(suiteName: "group.athanUtil") }
+    private static let pendingNoticeKey = "AthanPendingMethodUpdateNotice"
+
+    private func persistPendingNotice(_ notice: MethodUpdateNotice?) {
+        guard let d = groupDefaults else { return }
+        if let notice, let data = try? JSONEncoder().encode(notice) {
+            d.set(data, forKey: Self.pendingNoticeKey)
+        } else {
+            d.removeObject(forKey: Self.pendingNoticeKey)
+        }
+    }
+
+    /// Any auto-update the user hasn't yet acknowledged (Undo/OK). Read on app launch so a
+    /// background change (widget refresh) still shows the popup.
+    func loadPendingMethodUpdateNotice() -> MethodUpdateNotice? {
+        guard let d = groupDefaults, let data = d.data(forKey: Self.pendingNoticeKey) else { return nil }
+        return try? JSONDecoder().decode(MethodUpdateNotice.self, from: data)
+    }
+
+    /// Best ISO 3166-1 alpha-2 country code we can infer from the information the user
+    /// has shared: the GPS-derived country if available, otherwise the device's region
+    /// (locale) so we can still suggest a method when location isn't shared.
+    func bestAvailableCountryCode() -> String? {
+        if let gps = locationSettings.countryCode, !gps.isEmpty { return gps.uppercased() }
+        if #available(iOS 16, watchOS 9, *) {
+            if let region = Locale.current.region?.identifier, !region.isEmpty { return region.uppercased() }
+        }
+        return Locale.current.regionCode?.uppercased()
+    }
+
+    /// Automatically switches the calculation method to the one recommended for `countryCode`
+    /// (if different), archives it so widget/times reflect it even without opening the app,
+    /// and records a notice that drives the "Updated Calculation Method" popup (with Undo).
+    ///
+    /// Only acts once per country: after an auto-update (or after skipping to preserve a
+    /// returning user's deliberate choice) we stay quiet for that country until it changes.
+    ///
+    /// - Parameter rescheduleNotifications: pass `false` from the widget extension, which
+    ///   must not reschedule notifications; the app reschedules on its next foreground.
+    /// - Returns: `true` if the method was actually changed.
+    @discardableResult
+    func autoUpdateMethodIfNeeded(for countryCode: String?, rescheduleNotifications: Bool = true) -> Bool {
+        guard let code = countryCode?.uppercased(), !code.isEmpty else { return false }
+        let recommended = CalculationMethod.recommended(forISOCountryCode: code)
+        let current = prayerSettings.calculationMethod
+        guard recommended != current else { return false }
+        // Only act once per country until it changes.
+        guard handledSuggestionCountry != code else { return false }
+
+        // First time we ever evaluate for a user who already finished setup (e.g. an upgrade):
+        // don't override their deliberate method — just remember the country so future
+        // *changes* (travel) still auto-update.
+        if handledSuggestionCountry == nil && IntroSetupFlags.hasCompletedCalculationSetup {
+            handledSuggestionCountry = code
+            return false
+        }
+        handledSuggestionCountry = code
+
+        // Apply immediately (the didSet helper archives to the app group).
+        let updated = prayerSettings.copy() as! PrayerSettings
+        updated.calculationMethod = recommended
+        prayerSettings = updated
+
+        let notice = MethodUpdateNotice(oldMethod: current, newMethod: recommended, countryCode: code)
+        persistPendingNotice(notice)
+
+        if rescheduleNotifications {
+            reloadSettingsAndNotifications() // reschedules notes + reloads widgets (app context)
+        }
+        DispatchQueue.main.async {
+            ObservableAthanManager.shared.methodUpdateNotice = notice
+        }
+        return true
+    }
+
+    /// Reverts the auto-updated method back to what it was before, and remembers the country
+    /// so we don't immediately re-apply the recommendation.
+    func undoMethodUpdate(_ notice: MethodUpdateNotice) {
+        handledSuggestionCountry = notice.countryCode
+        let updated = prayerSettings.copy() as! PrayerSettings
+        updated.calculationMethod = notice.oldMethod
+        prayerSettings = updated
+        reloadSettingsAndNotifications()
+        persistPendingNotice(nil)
+        DispatchQueue.main.async { ObservableAthanManager.shared.methodUpdateNotice = nil }
+    }
+
+    /// Marks the auto-update as acknowledged (user tapped OK) so it won't resurface.
+    func acknowledgeMethodUpdate() {
+        persistPendingNotice(nil)
+        DispatchQueue.main.async { ObservableAthanManager.shared.methodUpdateNotice = nil }
+    }
+
     func reloadSettingsAndNotifications() {
         // reload settings in case we are running widget and app changed them
         if let arch = LocationSettings.checkArchive() { locationSettings = arch }
@@ -474,22 +648,14 @@ extension AthanManager {
                                      shortLocationName: locationSettings.locationName)
             resetWidgets() // should happen when any of our settings change
             
+            #if !targetEnvironment(macCatalyst)
             if #available(iOS 16.2, *) {
-//                Task {
-                let now = Date()
-                let fajrDate = todayTimes.fajr
-                let hourBeforeFajr = fajrDate.addingTimeInterval(-1 * 60 * 60)
-                if now < fajrDate && now > hourBeforeFajr {
-                    // start live activity 1 hour before fajr
-                    startSuhoorLiveActivity(activityStart: hourBeforeFajr, fajrTime: fajrDate, locationName: locationSettings.locationName)
-                } else if now > fajrDate.addingTimeInterval(60 * 5) {
-                    cleanupSuhoorActivity() // cleanup once 5 minutes past 
-                }
-
-//                }
+                // Live Activities disabled: they linger after app is closed (pending fix)
+                cleanupSuhoorActivity()
             } else {
                 // Fallback on earlier versions
             }
+            #endif
             #endif
         }
         
@@ -594,7 +760,7 @@ extension AthanManager {
                     let timeZone = placemark.timeZone ?? Calendar.current.timeZone
                     // save our location settings
                     let potentialNewLocationSettings = LocationSettings(locationName: shortname,
-                                                                        coord: locations.first!.coordinate, timeZone: timeZone, useCurrentLocation: true)
+                                                                        coord: locations.first!.coordinate, timeZone: timeZone, useCurrentLocation: true, countryCode: country)
                     
                     if let captureClosue = self.captureLocationUpdateClosure  {
                         captureClosue(potentialNewLocationSettings)
@@ -614,6 +780,9 @@ extension AthanManager {
                             // if not same location, OR we now have a placemark name for the location, update location settings
                             self.locationSettings = potentialNewLocationSettings
                             self.reloadSettingsAndNotifications()
+                            // Auto-update the method for the freshly determined country. The
+                            // change is applied + archived; the app surfaces an Undo popup.
+                            self.autoUpdateMethodIfNeeded(for: potentialNewLocationSettings.countryCode)
                         }
                     }
                     return

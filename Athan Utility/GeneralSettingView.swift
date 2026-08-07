@@ -36,6 +36,7 @@ struct GeneralSettingView: View {
     @Binding var savedOffset: CGFloat
     @State var scrollHeight = CGFloat(300) // to be adjusted on appearance
     @State var showPrivacyView = false
+    @State var showDiscovery = false
     
     // Developer contact properties
     @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
@@ -470,6 +471,27 @@ struct GeneralSettingView: View {
                                                 }
                                             }
                                         }
+
+                                        Button(action: { // discover features (always available here)
+                                            showDiscovery.toggle()
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "lightbulb.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.discoverFeatures)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        .sheet(isPresented: $showDiscovery) {
+                                            FeatureDiscoveryView()
+                                                .preferredColorScheme(.dark)
+                                        }
                                         
                                         Button(action: { // send feedback
                                             showPrivacyView.toggle()
@@ -584,6 +606,7 @@ struct GeneralSettingView: View {
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }
+                    .accessibilityIdentifier("settingsDoneButton")
                 }
                 .padding()
                 .padding([.leading, .trailing, .bottom])

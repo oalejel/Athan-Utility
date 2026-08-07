@@ -162,3 +162,7 @@
 // Method update popup
 "Updated Calculation Method" = "Berechnungsmethode aktualisiert";
 "Undo" = "Rückgängig";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Empfohlen für %@";
+"use_recommended_method" = "Empfohlene verwenden: %@";

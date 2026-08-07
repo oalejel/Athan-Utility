@@ -54,6 +54,8 @@ struct MainSwiftUI: View {
     @State var settingsToggled = false
     @State var locationSettingsToggled = false
     @State var showCalendar = false
+    @State var showDiscovery = false
+    @State var discoverySeen = FeatureDiscovery.hasSeen
     // section that the Settings view should open to (e.g. deep-linked from the auto-method pill)
     @State var settingsInitialSection: SettingsSectionType = .General
     // ensures the launch-time method suggestion is only evaluated once per app session
@@ -136,7 +138,7 @@ struct MainSwiftUI: View {
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
-        _currentView = State(initialValue: (AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main)
+        _currentView = State(initialValue: SnapshotSupport.showsIntro ? PresentedSectionType.IntroSettings : ((AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main))
         
         // for calculating progress of CURRENT prayer
         previewManualPrayerProgressCancellable = dayProgressState.$manualDayProgress
@@ -479,6 +481,7 @@ struct MainSwiftUI: View {
                                             .padding(12)
                                             .offset(x: -14, y: 12)
                                             .accessibilityLabel("acc_location_settings")
+                                            .accessibilityIdentifier("locationButton")
                                             
                                             Spacer()
                                             
@@ -496,6 +499,7 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(Color(.lightText))
                                                 .font(Font.body.weight(.bold))
                                                 .accessibilityLabel("acc_calendar")
+                                                .accessibilityIdentifier("calendarButton")
                                                 
                                                 // Settings button
                                                 Button(action: {
@@ -512,6 +516,7 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(Color(.lightText))
                                                 .font(Font.body.weight(.bold))
                                                 .accessibilityLabel("acc_settings")
+                                                .accessibilityIdentifier("settingsButton")
                                             }
                                             
                                             
@@ -531,20 +536,43 @@ struct MainSwiftUI: View {
                         .sheet(isPresented: $showCalendar) { // set highest progress back to 0 when we know the view disappeared
                             CalendarView(showCalendar: $showCalendar)
                                 .equatable()
+                                .background(Color(.systemBackground).ignoresSafeArea())
+                                .preferredColorScheme(.dark) // sheets don't inherit the app's forced dark scheme
                         }
+
                     }
                 }
                 
                 // top right corner gets a sound control button
                 VStack {
-                    HStack {
+                    HStack(spacing: 10) {
                         Spacer()
+                        // Feature-discovery hint — only until the user opens it once.
+                        if currentView == .Main, !discoverySeen {
+                            Button(action: {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                FeatureDiscovery.hasSeen = true
+                                discoverySeen = true // hide the hint from the main UI immediately
+                                showDiscovery = true
+                            }) {
+                                Image(systemName: "lightbulb.fill")
+                                    .font(Font.body.weight(.bold))
+                                    .foregroundColor(Color(.lightText))
+                            }
+                            .accessibilityLabel(Text(Strings.discoverFeatures))
+                            .accessibilityIdentifier("discoverButton")
+                        }
                         AthanPlayView(currentPrayer: $manager.currentPrayer)
                             .equatable()
                     }
                     .padding()
                     .padding()
+                    .offset(x: g.size.width * 0.03) // right-edge align with the Qibla compass
                     Spacer()
+                }
+                .sheet(isPresented: $showDiscovery) {
+                    FeatureDiscoveryView()
+                        .preferredColorScheme(.dark)
                 }
             }
 
@@ -634,26 +662,33 @@ struct MethodUpdatePopup: View {
     var onUndo: () -> Void
     var onOK: () -> Void
 
-    private var transitionText: Text {
-        Text(notice.oldMethod.localizedString()).foregroundColor(.white.opacity(0.6))
-        + Text("  ")
-        + Text(Image(systemName: "arrow.right")).foregroundColor(.white.opacity(0.6))
-        + Text("  ")
-        + Text(notice.newMethod.localizedString()).foregroundColor(.white).fontWeight(.semibold)
+    private var transitionRow: some View {
+        HStack(spacing: 6) {
+            Text(notice.oldMethod.localizedString())
+                .foregroundColor(.white.opacity(0.6))
+            Image(systemName: "arrow.right")
+                .imageScale(.small)
+                .foregroundColor(.white.opacity(0.6))
+                .flipsForRightToLeftLayoutDirection(true) // point in the reading direction (RTL)
+            Text(notice.newMethod.localizedString())
+                .foregroundColor(.white)
+                .fontWeight(.semibold)
+        }
+        .font(.footnote)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 7) {
             VStack(alignment: .leading, spacing: 3) {
                 Text(Strings.updatedCalculationMethod)
                     .font(.subheadline.weight(.semibold))
                     .foregroundColor(.white)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
-                transitionText
-                    .font(.footnote)
+                transitionRow
                     .lineLimit(1)
-                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.8)
             }
 
             Spacer(minLength: 6)
@@ -663,12 +698,12 @@ struct MethodUpdatePopup: View {
                 onUndo()
             }) {
                 Text(Strings.undo)
-                    .font(.subheadline.weight(.bold))
+                    .font(.caption.weight(.bold))
                     .foregroundColor(.white)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 11)
                     .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.white.opacity(0.14))
                     )
             }
@@ -679,12 +714,12 @@ struct MethodUpdatePopup: View {
                 onOK()
             }) {
                 Text(Strings.ok)
-                    .font(.subheadline.weight(.bold))
+                    .font(.caption.weight(.bold))
                     .foregroundColor(.white)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 18)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 13)
                     .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.white.opacity(0.24))
                     )
             }

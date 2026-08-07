@@ -178,3 +178,7 @@
 "M_letter" = "M";
 "I_letter" = "I";
 "Continue" = "Continuar";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Recomendado para %@";
+"use_recommended_method" = "Usar recomendado: %@";

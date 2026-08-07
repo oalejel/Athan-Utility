@@ -159,3 +159,7 @@
 // Method update popup
 "Updated Calculation Method" = "Kaedah Pengiraan Dikemas Kini";
 "Undo" = "Buat asal";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Disyorkan untuk %@";
+"use_recommended_method" = "Guna yang disyorkan: %@";

@@ -119,21 +119,16 @@
 		3DBAE55725B14A6C008E87E9 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55625B14A6C008E87E9 /* StarView.swift */; };
 		3DBAE56025B15E26008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
-		3DBAE57125B15E30008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DBAE57925B15F9E008E87E9 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		3DBAE5F425B16534008E87E9 /* Athan Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3DEE3A5D25A6A04B00DC7331 /* Athan Watch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3DC65DC12597AA6600481FD9 /* TrackableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65DC02597AA6600481FD9 /* TrackableScrollView.swift */; };
 		3DC65E2A2597EDD000481FD9 /* GeneralSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC65E292597EDD000481FD9 /* GeneralSettingView.swift */; };
-		3DCAB78B25AEC4230075801B /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
 		3DCAB79425AEC5080075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
 		3DCAB7AB25AEC6580075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
 		3DCAB7AC25AEC65A0075801B /* PhoneWatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB79325AEC5080075801B /* PhoneWatchDelegate.swift */; };
 		3DCB30CB236B109200D47C7C /* UIView+Fading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCB30CA236B109200D47C7C /* UIView+Fading.swift */; };
-		3DD26B7025B2643100460BC3 /* CustomExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD26B5125B25FAF00460BC3 /* CustomExtensionDelegate.swift */; };
 		3DD26B8025B27C5C00460BC3 /* ParallaxSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD26B7F25B27C5C00460BC3 /* ParallaxSwiftUI.swift */; };
-		3DD26B8825B2883200460BC3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
 		3DD4BAAE2F934C510016090A /* athan-icon-ios26.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3DD4BAAD2F934C510016090A /* athan-icon-ios26.icon */; };
-		3DD4BAAF2F934C510016090A /* athan-icon-ios26.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3DD4BAAD2F934C510016090A /* athan-icon-ios26.icon */; };
 		3DD4BAB02F934C510016090A /* athan-icon-ios26.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3DD4BAAD2F934C510016090A /* athan-icon-ios26.icon */; };
 		3DD4BAB12F934C510016090A /* athan-icon-ios26.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3DD4BAAD2F934C510016090A /* athan-icon-ios26.icon */; };
 		3DD4BAB22F934C510016090A /* athan-icon-ios26.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3DD4BAAD2F934C510016090A /* athan-icon-ios26.icon */; };
@@ -170,18 +165,6 @@
 		3DDE2E1B2F458BC50099BBE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D07DA851BDC58B60001EFE4 /* Assets.xcassets */; };
 		3DE704C82ADC98C3000A470D /* GetXIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE704C72ADC98C3000A470D /* GetXIntentHandler.swift */; };
 		3DEE3A6025A6A04D00DC7331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A5F25A6A04D00DC7331 /* Assets.xcassets */; };
-		3DEE3A6C25A6A04D00DC7331 /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
-		3DEE3A6E25A6A04D00DC7331 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
-		3DEE3A7025A6A04D00DC7331 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6F25A6A04D00DC7331 /* NotificationController.swift */; };
-		3DEE3A7225A6A04D00DC7331 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7125A6A04D00DC7331 /* NotificationView.swift */; };
-		3DEE3A7425A6A04D00DC7331 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
-		3DEE3A7625A6A04E00DC7331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7525A6A04E00DC7331 /* Assets.xcassets */; };
-		3DEE3A7925A6A04E00DC7331 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7825A6A04E00DC7331 /* Preview Assets.xcassets */; };
-		3DEE3A9425A6A18400DC7331 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
-		3DEE3AA525A6A27A00DC7331 /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
-		3DEE3AB025A6A33C00DC7331 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 3DEE3AAF25A6A33C00DC7331 /* Adhan */; };
-		3DEE3AB825A6A37E00DC7331 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
-		3DEE3ACF25A6AB5000DC7331 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
 		3DEF6460259EFE42004EE51F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF645F259EFE42004EE51F /* GradientView.swift */; };
 		3DEF6487259FEC73004EE51F /* AthanPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF6486259FEC73004EE51F /* AthanPlayView.swift */; };
 		3DEF64F725A245C9004EE51F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DEF64F925A245C9004EE51F /* InfoPlist.strings */; };
@@ -196,6 +179,7 @@
 		3DF79CDB2F45668D00E01FD2 /* SuhoorActivityTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */; };
 		4720ACF8A93CE2DB14596D71 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
 		53BC9FDB5CD24F4D6D6E95E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7825A6A04E00DC7331 /* Preview Assets.xcassets */; };
+		639733C717984783246DDCCC /* WidgetPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */; };
 		6B9D9DA0F8F3F2D79E9B691C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E50EF256F4620003E2E34 /* Colors.swift */; };
 		6C96A68592E36C5E664921EE /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6F25A6A04D00DC7331 /* NotificationController.swift */; };
 		6E1DD03E4AE1C1EBED0DA3DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA6F9D45173A1453E89EA52 /* Cocoa.framework */; };
@@ -209,6 +193,8 @@
 		BAF829F0821983AAD61BD25C /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = AC2133E50300F5E25DA14A35 /* Adhan */; };
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
 		C013A1D007944FA2D2B4F38A /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
+		D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */; };
+		D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */; };
 		E4497F14C9BF921045926568 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		EEE9C12DAFB5182B5387B21E /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
 		F19274B59ECB743AA7B8788D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
@@ -299,6 +285,7 @@
 
 /* Begin PBXFileReference section */
 		11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AthanMenuBarHelper.swift; path = AthanMenuBarHelper/AthanMenuBarHelper.swift; sourceTree = "<group>"; };
+		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
 		2D6208A9193A03B2F8D89781 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DA9A325537C956F8CBBB2CE /* fa */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
@@ -479,10 +466,12 @@
 		8CA6F9D45173A1453E89EA52 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		AF10629E04FA05B477D8EC1C /* bn */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; includeInIndex = 0; path = AthanMenuBarHelper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotSupport.swift; sourceTree = "<group>"; };
 		D24DFC1885F2D6D66EB5B55C /* ms */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D974F5773AF306388EB4A303 /* MenuBarBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarBridge.swift; path = AthanMenuBarHelper/MenuBarBridge.swift; sourceTree = "<group>"; };
 		F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarHelperProtocol.swift; path = AthanMenuBarHelper/MenuBarHelperProtocol.swift; sourceTree = "<group>"; };
 		F856690359C72A6815F2180A /* id */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FeatureDiscoveryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -644,6 +633,9 @@
 				3DEF64D925A23F45004EE51F /* Info.plist */,
 				3DEF64F925A245C9004EE51F /* InfoPlist.strings */,
 				3D07DA871BDC58B60001EFE4 /* LaunchScreen.storyboard */,
+				C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */,
+				F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */,
+				2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1315,6 +1307,9 @@
 				3DF79CD32F4564B700E01FD2 /* SuhoorActivityTrigger.swift in Sources */,
 				6EF3C4A4213F51990FCED645 /* MenuBarHelperProtocol.swift in Sources */,
 				121CCC3D6E012EE5F0907A2E /* MenuBarBridge.swift in Sources */,
+				D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */,
+				D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */,
+				639733C717984783246DDCCC /* WidgetPreviews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1552,7 +1547,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1612,7 +1607,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1647,7 +1642,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1683,7 +1678,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1723,7 +1718,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1763,7 +1758,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1798,7 +1793,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1829,7 +1824,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1859,7 +1854,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1894,7 +1889,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1992,7 +1987,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2037,7 +2032,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2054,80 +2049,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
-			};
-			name = Release;
-		};
-		3DEE3A8225A6A04E00DC7331 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				ENABLE_PREVIEWS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Athan Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Athan Utility";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 7.6;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 7.0;
-			};
-			name = Debug;
-		};
-		3DEE3A8325A6A04E00DC7331 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Athan Watch Extension/Athan Watch Extension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
-				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = DL7989H5XT;
-				ENABLE_PREVIEWS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "Athan Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Athan Utility";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 7.6;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp.watchkitextension";
-				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2316,11 +2237,6 @@
 			productName = Adhan;
 		};
 		3D73EBFF257029530010C47D /* Adhan */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
-			productName = Adhan;
-		};
-		3DEE3AAF25A6A33C00DC7331 /* Adhan */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D16F1022560851B00C78B12 /* XCRemoteSwiftPackageReference "adhan-swift" */;
 			productName = Adhan;

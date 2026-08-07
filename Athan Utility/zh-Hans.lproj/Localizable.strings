@@ -180,3 +180,7 @@
 "M_letter" = "昏";
 "I_letter" = "宵";
 "Continue" = "继续";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "推荐用于 %@";
+"use_recommended_method" = "使用推荐：%@";

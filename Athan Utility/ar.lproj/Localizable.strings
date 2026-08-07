@@ -186,3 +186,7 @@
 "M_letter" = "م";
 "I_letter" = "ع";
 "Continue" = "متابعة";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "موصى به لـ %@";
+"use_recommended_method" = "استخدام الموصى به: %@";

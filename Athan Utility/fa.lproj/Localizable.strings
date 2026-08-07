@@ -159,3 +159,7 @@
 // Method update popup
 "Updated Calculation Method" = "روش محاسبه به‌روزرسانی شد";
 "Undo" = "واگرد";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "پیشنهادشده برای %@";
+"use_recommended_method" = "استفاده از پیشنهادی: %@";

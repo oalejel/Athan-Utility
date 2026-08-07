@@ -31,7 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.rootViewController = UIHostingController(rootView: contentView)
             self.window = window
             window.makeKeyAndVisible()
-            
+
+            // What's New is temporarily disabled. (This also keeps it suppressed
+            // during snapshot / UI-test runs.) Delete this early return to re-enable.
+            return
+
             #warning("localize whats new")
             // if system language not explicity english, dont show whats new screen
             if !(Locale.preferredLanguages.first?.hasPrefix("en") ?? false) {

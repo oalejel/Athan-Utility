@@ -8,68 +8,74 @@
 
 import XCTest
 
+@MainActor
 class Athan_Utility_UITests: XCTestCase {
-    var app: XCUIApplication!
-    
-    override func setUp() {
-        super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+
+    /// Walks the main feature screens, capturing a hero shot of each step.
+    func testScreenshotInteraction() {
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        app = XCUIApplication()
+        let app = XCUIApplication()
+        // Seed deterministic demo state (fixed location, no onboarding / What's New).
+        app.launchArguments += ["-UITEST_DEMO"]
         setupSnapshot(app)
         app.launch()
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testScreenshotInteraction() {
-        let translatedContinue = NSLocalizedString("Continue", comment: "")
-        let whatsNewButton = app.buttons[translatedContinue]
-        if whatsNewButton.exists {
-            whatsNewButton.tap()
+        // 01 — main screen: next prayer, all prayer times, Qibla pointer, day arc
+        let settings = app.buttons["settingsButton"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 15), "Main screen did not appear")
+        snapshot("01Main")
+
+        // 05 — feature discovery (light bulb hint → Tips-style list)
+        let discover = app.buttons["discoverButton"]
+        if discover.waitForExistence(timeout: 5) {
+            discover.tap()
+            sleep(1)
+            snapshot("05Discover")
+            // widgets is the 4th feature row (index 3)
+            let widgetsRow = app.cells.element(boundBy: 3)
+            if widgetsRow.waitForExistence(timeout: 4) {
+                widgetsRow.tap()
+                sleep(1)
+                snapshot("06Widgets")
+                let back = app.navigationBars.buttons.element(boundBy: 0)
+                if back.exists { back.tap() }
+            }
+            let done = app.buttons["discoverDone"]
+            if done.waitForExistence(timeout: 4) { done.tap() }
         }
-        
-        app.buttons["qibla"].tap()
-        snapshot("02Qibla")
-        app.buttons["done"].tap()
-        snapshot("01MainScreen")
-        app.buttons["notification settings"].tap()
-        snapshot("03NotificationsSettings")
-        app.buttons["done"].tap()
-        app.buttons["location"].tap()
-        snapshot("04LocationControl")
-        
-        
-    
-//        let locationElement = app.otherElements.containing(.button, identifier:"location").element
-//        locationElement.tap()
-//
-//        snapshot("02LocationControl")
-//
-//        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element(boundBy: 1).children(matching: .other).element
-//        element.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.tap()
-//        element.tap()
-//        app.buttons["qibla"].tap()
-//        app.buttons["done"].tap()
-//        app.buttons["notification settings"].tap()
-//        app.navigationBars["Alarms"].buttons["Done"].tap()
-        
-        
-//        app.navigationBars["Location Search"].buttons["Cancel"].tap()
-//        snapshot("01MainScreen")
-//        app.buttons["qibla"].tap()
-//        snapshot("03Qibla")
-//        app.buttons["notification settings"].tap()
-//        snapshot("04NotificationsSettings")
+
+        // 02 — settings
+        settings.tap()
+        snapshot("02Settings")
+        let settingsDone = app.buttons["settingsDoneButton"]
+        if settingsDone.waitForExistence(timeout: 5) { settingsDone.tap() }
+
+        // 03 — location
+        let location = app.buttons["locationButton"]
+        if location.waitForExistence(timeout: 5) {
+            location.tap()
+            snapshot("03Location")
+            let locationDone = app.buttons["locationDoneButton"]
+            if locationDone.waitForExistence(timeout: 5) { locationDone.tap() }
+        }
+
+        // 04 — calendar (monthly prayer times)
+        let calendar = app.buttons["calendarButton"]
+        if calendar.waitForExistence(timeout: 5) {
+            calendar.tap()
+            snapshot("04Calendar")
+        }
     }
-    
+
+    /// Captures the first-launch intro settings (with the country recommendation).
+    func testIntroScreenshot() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-UITEST_INTRO"]
+        setupSnapshot(app)
+        app.launch()
+        _ = app.staticTexts.firstMatch.waitForExistence(timeout: 15)
+        sleep(2) // let the recommendation resolve + layout settle
+        snapshot("00Intro")
+    }
 }

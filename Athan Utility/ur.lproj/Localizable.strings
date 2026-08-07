@@ -190,3 +190,7 @@
 "M_letter" = "م";
 "I_letter" = "ع";
 "Continue" = "جاری رکھیں";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@ کے لیے تجویز کردہ";
+"use_recommended_method" = "تجویز کردہ استعمال کریں: %@";

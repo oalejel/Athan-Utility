@@ -48,7 +48,12 @@ class NotificationsManager {
                                     madhab: Madhab,
                                     noteSettings: NotificationSettings,
                                     shortLocationName: String) {
-        
+
+        // No notification permission prompt / scheduling during snapshot runs.
+        // (Inline check — this file is shared with the widget/Siri targets that
+        // don't compile SnapshotSupport.)
+        if CommandLine.arguments.contains("-UITEST_DEMO") || CommandLine.arguments.contains("-UITEST_INTRO") { return }
+
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
             if !granted {

@@ -179,3 +179,7 @@
 "M_letter" = "M";
 "I_letter" = "I";
 "Continue" = "Devam Et";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@ için önerilir";
+"use_recommended_method" = "Önerileni kullan: %@";

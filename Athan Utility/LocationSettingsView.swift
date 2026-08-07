@@ -316,6 +316,7 @@ struct LocationSettingsView: View, Equatable {
                                 .foregroundColor(Color(.lightText))
                                 .font(Font.body.weight(.bold))
                         }
+                        .accessibilityIdentifier("locationDoneButton")
                     }
                 }
                 .padding()

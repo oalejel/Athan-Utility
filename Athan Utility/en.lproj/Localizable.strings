@@ -210,3 +210,7 @@
 // Method update popup
 "Updated Calculation Method" = "Updated Calculation Method";
 "Undo" = "Undo";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Recommended for %@";
+"use_recommended_method" = "Use recommended: %@";

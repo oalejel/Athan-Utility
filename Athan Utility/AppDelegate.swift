@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             WCSession.default.activate()
         }
 
+        // Seed deterministic demo state when launched by the snapshot UI test.
+        SnapshotSupport.seedIfNeeded()
+
         #if targetEnvironment(macCatalyst)
         // Load the native-macOS helper bundle, show the menu bar item, and start the
         // live title driver (next prayer time / countdown).

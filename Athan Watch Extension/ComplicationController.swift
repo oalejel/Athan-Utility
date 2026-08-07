@@ -16,8 +16,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Complication Configuration
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
-        var families = CLKComplicationFamily.allCases
-        families.removeAll {$0 == .graphicExtraLarge} // drop graphicExtraLarge since extraLarge covers it
+        let families = CLKComplicationFamily.allCases // includes graphicExtraLarge (large full-color faces / Ultra)
         let descriptors = [
             CLKComplicationDescriptor(identifier: "complication",
                                       displayName: "Athan Utility",
@@ -261,10 +260,19 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
             let bodyProvider = CLKTextProvider(format: "\(nextPrayer.localizedOrCustomString()) %@", nextTimeProvider)
 
             return CLKComplicationTemplateModularLargeStandardBody(headerTextProvider: headerTextProv, body1TextProvider: bodyProvider)
-            
-            // exclude this type, as extrLarge covers it
-            // case .graphicExtraLarge:
-            
+
+        case .graphicExtraLarge:
+            let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
+            let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }
+            timeProv.tintColor = blend(colors: colors)
+            if nextPrayer == .sunrise || nextPrayer == .maghrib {
+                let imageProv = CLKFullColorImageProvider(fullColorImage: UIImage(systemName: nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30), scale: .large))!.withTintColor(.white))
+                return CLKComplicationTemplateGraphicExtraLargeCircularStackImage(line1ImageProvider: imageProv, line2TextProvider: timeProv)
+            } else {
+                let nameProvider = CLKSimpleTextProvider(text: nextPrayer.localizedOrCustomString())
+                return CLKComplicationTemplateGraphicExtraLargeCircularStackText(line1TextProvider: nameProvider, line2TextProvider: timeProv)
+            }
+
         default:
             return nil
         }

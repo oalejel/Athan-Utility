@@ -19,6 +19,9 @@ class Strings {
     
     static var calculationMethod = NSLocalizedString("Calculation Method", comment: "")
     static var calculationDescription = NSLocalizedString("Calculation methods primarily differ in Fajr and Isha sun angles.", comment: "")
+    static var discoverFeatures = NSLocalizedString("discover_features", value: "Discover Features", comment: "Title for the feature-discovery list (light bulb / settings button)")
+    static var recommendedForCountry = NSLocalizedString("recommended_for_country", value: "Recommended for %@", comment: "Intro: the calculation method recommended for the user's country. %@ = country name")
+    static var useRecommendedMethod = NSLocalizedString("use_recommended_method", value: "Use recommended: %@", comment: "Intro: apply the recommended calculation method. %@ = method name")
 
     // Calculation-method suggestion popup
     static var adjustMethod = NSLocalizedString("Adjust Method", comment: "Button on the auto-method pill that opens the calculation method picker")

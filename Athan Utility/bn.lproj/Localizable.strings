@@ -159,3 +159,7 @@
 // Method update popup
 "Updated Calculation Method" = "গণনা পদ্ধতি আপডেট হয়েছে";
 "Undo" = "পূর্বাবস্থা";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@-এর জন্য প্রস্তাবিত";
+"use_recommended_method" = "প্রস্তাবিত ব্যবহার করুন: %@";

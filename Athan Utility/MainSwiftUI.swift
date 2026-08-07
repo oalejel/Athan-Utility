@@ -34,6 +34,17 @@ class DayProgressState: ObservableObject {
 struct MainSwiftUI: View {
     @EnvironmentObject var manager: ObservableAthanManager
     @Environment(\.horizontalSizeClass) var _horizontalSizeClass
+
+    private var isMac: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
+    // Two-column (moon beside the times) only on iPad regular width. Mac keeps the
+    // single-column iPhone layout, centered with growing spacers, per design.
+    private var useTwoColumn: Bool { _horizontalSizeClass == .regular && !isMac }
     // MARK: - Combine Properties
     // necessary to allow ARC to throw out unused values
     var dragCancellable: AnyCancellable?
@@ -138,7 +149,7 @@ struct MainSwiftUI: View {
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
-        _currentView = State(initialValue: SnapshotSupport.showsIntro ? PresentedSectionType.IntroSettings : ((AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main))
+        _currentView = State(initialValue: SnapshotSupport.showsIntro ? PresentedSectionType.Location : ((AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main))
         
         // for calculating progress of CURRENT prayer
         previewManualPrayerProgressCancellable = dayProgressState.$manualDayProgress
@@ -239,25 +250,26 @@ struct MainSwiftUI: View {
                             .transition(.opacity)
                     case .Main:
                         HStack {
-                            if _horizontalSizeClass == .regular {
+                            if useTwoColumn {
                                 HStack(alignment: .center, spacing: 0) {
                                     Spacer()
                                     MoonView3D()
-                                        .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
+                                        .frame(width: min(g.size.width, 430) * 0.26, height: min(g.size.width, 430) * 0.26, alignment: .center)
                                         .offset(y: 12)
                                         .shadow(radius: 3)
                                         .flipsForRightToLeftLayoutDirection(false)
                                     Spacer()
                                 }
                             }
+                            if isMac { Spacer(minLength: 0) }   // center the iPhone-style column on Mac
                             VStack(alignment: .leading, spacing: 0) {
                                 VStack(alignment: .leading, spacing: 12) {
-                                    if _horizontalSizeClass != .regular {
+                                    if !useTwoColumn {
                                         HStack(alignment: .center, spacing: 0) {
-                                            
+
                                             Spacer()
                                             MoonView3D()
-                                                .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
+                                                .frame(width: min(g.size.width, 430) * 0.26, height: min(g.size.width, 430) * 0.26, alignment: .center)
                                                 .offset(y: 18)
                                                 .shadow(radius: 3)
                                                 .flipsForRightToLeftLayoutDirection(false)
@@ -527,9 +539,10 @@ struct MainSwiftUI: View {
                                     }
                                 }
                             }
-                            // cap the reading column on iPad so prayer rows don't stretch edge-to-edge
+                            // cap the reading column on iPad/Mac so prayer rows don't stretch edge-to-edge
                             .frame(maxWidth: _horizontalSizeClass == .regular ? 620 : .infinity)
                             .padding(_horizontalSizeClass == .regular ? 24 : 0)
+                            if isMac { Spacer(minLength: 0) }   // balancing spacer to keep the column centered
 
                         }
                         .transition(.opacity)

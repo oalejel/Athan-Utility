@@ -28,6 +28,11 @@ fileprivate func computePreviewTimes(method: CalculationMethod, madhab: Madhab, 
 struct IntroSettingsView: View {
     // used to trigger transition back
     @Binding var parentSession: PresentedSectionType
+    /// When presented as a sheet (from the location step's "Edit" disclosure),
+    /// Done dismisses the sheet instead of navigating, and the Edit-Location
+    /// button is hidden. Defaults to the original full-screen behavior.
+    var isSheet: Bool = false
+    @Environment(\.presentationMode) private var presentationMode
     
     // Temporary settings copy
     @State var selectedCalcMethod = AthanManager.shared.prayerSettings.calculationMethod
@@ -339,25 +344,31 @@ struct IntroSettingsView: View {
                 Spacer()
                 
                 HStack(alignment: .center) {
-                    Button(action: { // BACK BUTTON
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            self.parentSession = .Location
+                    if !isSheet {
+                        Button(action: { // BACK BUTTON
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                self.parentSession = .Location
+                            }
+                        }) {
+                            Text(Strings.editLocationButtonTitle)
+                                .foregroundColor(Color(.lightText))
+                                .font(Font.body.weight(.bold))
                         }
-                    }) {
-                        Text(Strings.editLocationButtonTitle)
-                            .foregroundColor(Color(.lightText))
-                            .font(Font.body.weight(.bold))
                     }
-                    
+
                     Spacer()
                     Button(action: { // DONE BUTTON
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         writeIntroSettingsToGlobal()
                         // force athan manager to recalculate
                         AthanManager.shared.reloadSettingsAndNotifications()
-                        withAnimation {
-                            self.parentSession = .Main
+                        if isSheet {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            withAnimation {
+                                self.parentSession = .Main
+                            }
                         }
                     }) {
                         Text(Strings.done)

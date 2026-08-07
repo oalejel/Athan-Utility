@@ -31,8 +31,8 @@ class Athan_Utility_UITests: XCTestCase {
             discover.tap()
             sleep(1)
             snapshot("05Discover")
-            // widgets is the 4th feature row (index 3)
-            let widgetsRow = app.cells.element(boundBy: 3)
+            // icon header is cell 0; widgets is the first feature (cell 1)
+            let widgetsRow = app.cells.element(boundBy: 1)
             if widgetsRow.waitForExistence(timeout: 4) {
                 widgetsRow.tap()
                 sleep(1)

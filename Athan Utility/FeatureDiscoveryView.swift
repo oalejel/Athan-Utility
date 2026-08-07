@@ -30,27 +30,7 @@ enum FeatureDiscovery {
     }
 
     static let features: [DiscoveryFeature] = [
-        DiscoveryFeature(
-            icon: "globe.americas.fill",
-            tint: Color(red: 0.30, green: 0.55, blue: 0.95),
-            title: NSLocalizedString("feature_autoMethod_title", value: "Automatic Calculation Method", comment: "Discovery feature title"),
-            subtitle: NSLocalizedString("feature_autoMethod_subtitle", value: "Matches your country's authority", comment: "Discovery feature subtitle"),
-            detail: NSLocalizedString("feature_autoMethod_detail", value: "When you travel, Athan Utility switches to the calculation method used by the local authority — Umm al-Qura in Saudi Arabia, Diyanet in Turkey, ISNA in North America, and more — and lets you undo it with a single tap.", comment: "Discovery feature detail")
-        ),
-        DiscoveryFeature(
-            icon: "circle.righthalf.filled",
-            tint: Color(red: 0.95, green: 0.70, blue: 0.25),
-            title: NSLocalizedString("feature_highLat_title", value: "High-Latitude Rule", comment: "Discovery feature title"),
-            subtitle: NSLocalizedString("feature_highLat_subtitle", value: "Sensible times far from the equator", comment: "Discovery feature subtitle"),
-            detail: NSLocalizedString("feature_highLat_detail", value: "Where the sun barely sets in summer, a high-latitude rule keeps Fajr and Isha reasonable. Athan Utility recommends the right rule for your location automatically.", comment: "Discovery feature detail")
-        ),
-        DiscoveryFeature(
-            icon: "bell.badge.fill",
-            tint: Color(red: 0.95, green: 0.40, blue: 0.45),
-            title: NSLocalizedString("feature_notifications_title", value: "Per-Prayer Notifications", comment: "Discovery feature title"),
-            subtitle: NSLocalizedString("feature_notifications_subtitle", value: "Athan and reminders, tuned per prayer", comment: "Discovery feature subtitle"),
-            detail: NSLocalizedString("feature_notifications_detail", value: "Choose a full athan, a short reminder, or silence for each prayer independently — plus an optional heads-up a few minutes before each one.", comment: "Discovery feature detail")
-        ),
+        // Impressive / most-loved first
         DiscoveryFeature(
             icon: "square.grid.2x2.fill",
             tint: Color(red: 0.60, green: 0.45, blue: 0.95),
@@ -60,6 +40,41 @@ enum FeatureDiscovery {
             showsWidgetPreviews: true
         ),
         DiscoveryFeature(
+            icon: "bell.badge.fill",
+            tint: Color(red: 0.95, green: 0.40, blue: 0.45),
+            title: NSLocalizedString("feature_earlyReminder_title", value: "Early Reminders Before Salah", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_earlyReminder_subtitle", value: "A heads-up so you're never rushed", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_earlyReminder_detail", value: "Get an optional reminder a set number of minutes before each prayer — enough time to make wudu and be ready when the athan sounds. Adjustable for every prayer.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
+            icon: "applewatch",
+            tint: Color(red: 0.35, green: 0.78, blue: 0.85),
+            title: NSLocalizedString("feature_watch_title", value: "Apple Watch App", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_watch_subtitle", value: "Prayer times on your wrist", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_watch_detail", value: "A native watchOS app plus complications for every watch face, so the next prayer and the time remaining are always a glance away.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
+            icon: "globe.americas.fill",
+            tint: Color(red: 0.30, green: 0.55, blue: 0.95),
+            title: NSLocalizedString("feature_autoMethod_title", value: "Automatic Calculation Method", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_autoMethod_subtitle", value: "Matches your country's authority", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_autoMethod_detail", value: "When you travel, Athan Utility switches to the calculation method used by the local authority — Umm al-Qura in Saudi Arabia, Diyanet in Turkey, ISNA in North America, and more — and lets you undo it with a single tap.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
+            icon: "speaker.wave.2.fill",
+            tint: Color(red: 0.96, green: 0.55, blue: 0.22),
+            title: NSLocalizedString("feature_notifications_title", value: "Per-Prayer Athan & Sounds", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_notifications_subtitle", value: "Full athan, a reminder, or silence", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_notifications_detail", value: "Choose a full athan, a short reminder, or silence for each prayer independently — and pick from multiple muezzin voices in 5- or 30-second lengths.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
+            icon: "circle.righthalf.filled",
+            tint: Color(red: 0.95, green: 0.70, blue: 0.25),
+            title: NSLocalizedString("feature_highLat_title", value: "High-Latitude Rule", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_highLat_subtitle", value: "Sensible times far from the equator", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_highLat_detail", value: "Where the sun barely sets in summer, a high-latitude rule keeps Fajr and Isha reasonable. Athan Utility recommends the right rule for your location automatically.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
             icon: "location.north.line.fill",
             tint: Color(red: 0.10, green: 0.62, blue: 0.62),
             title: NSLocalizedString("feature_qibla_title", value: "Qibla Compass", comment: "Discovery feature title"),
@@ -67,11 +82,25 @@ enum FeatureDiscovery {
             detail: NSLocalizedString("feature_qibla_detail", value: "The built-in compass points to the Qibla and gives a gentle haptic tap when you're aligned. If it seems off, move your phone in a figure-eight to recalibrate.", comment: "Discovery feature detail")
         ),
         DiscoveryFeature(
+            icon: "accessibility",
+            tint: Color(red: 0.12, green: 0.52, blue: 0.96),
+            title: NSLocalizedString("feature_accessibility_title", value: "Made for Everyone", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_accessibility_subtitle", value: "VoiceOver labels & haptic Qibla", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_accessibility_detail", value: "Every control is labeled for VoiceOver, and the Qibla compass vibrates as you align with the Kaaba — so you can find the direction of prayer without looking.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
             icon: "paintbrush.pointed.fill",
             tint: Color(red: 0.25, green: 0.75, blue: 0.50),
             title: NSLocalizedString("feature_custom_title", value: "Custom Names, Colors & Sounds", comment: "Discovery feature title"),
             subtitle: NSLocalizedString("feature_custom_subtitle", value: "Make the app yours", comment: "Discovery feature subtitle"),
             detail: NSLocalizedString("feature_custom_detail", value: "Rename prayers, pick your athan sound, and customize the gradient colors for each time of day.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
+            icon: "calendar",
+            tint: Color(red: 0.40, green: 0.45, blue: 0.88),
+            title: NSLocalizedString("feature_calendar_title", value: "Monthly Calendar & Export", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_calendar_subtitle", value: "A full month, exportable", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_calendar_detail", value: "See the whole month's prayer times in a calendar, and export them to CSV to open in Numbers or Excel.", comment: "Discovery feature detail")
         ),
     ]
 }

@@ -40,7 +40,8 @@ struct LocationSettingsView: View, Equatable {
     @Binding var parentSession: PresentedSectionType // used to trigger transition back
     
     @Binding var locationPermissionGranted: Bool
-    
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+
     @State var awaitingLocationUpdate = false
     @State var awaitingUserSearchLookup = false
     // is the currently inputted location string understandable
@@ -53,6 +54,38 @@ struct LocationSettingsView: View, Equatable {
         
     @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.currentPrayer
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
+
+    // Onboarding: compact "recommended settings" card + optional editor sheet,
+    // shown in place of the old forced calculation-preferences step.
+    @State private var showingSettingsEditor = false
+    @State private var userEditedCalcSettings = false
+    @State private var cardMethod: CalculationMethod = AthanManager.shared.prayerSettings.calculationMethod
+    @State private var cardMadhab: Madhab = AthanManager.shared.prayerSettings.madhab
+    @State private var cardLatRule: HighLatitudeRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
+
+    private var recommendedMethodForLocation: CalculationMethod {
+        if let cc = detectedCountryCode, !cc.isEmpty { return CalculationMethod.recommended(forISOCountryCode: cc) }
+        return AthanManager.shared.prayerSettings.calculationMethod
+    }
+    private func syncCardFromRecommendation() {
+        guard !userEditedCalcSettings else { return } // don't clobber the user's edits
+        cardMethod = recommendedMethodForLocation
+        cardLatRule = HighLatitudeRule.recommended(for: unboundCoordinate)
+    }
+    private func syncCardFromManager() {
+        cardMethod = AthanManager.shared.prayerSettings.calculationMethod
+        cardMadhab = AthanManager.shared.prayerSettings.madhab
+        cardLatRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
+    }
+    /// Seed the manager with the card's values so the editor opens on them, then present it.
+    private func openSettingsEditor() {
+        let ps = AthanManager.shared.prayerSettings
+        ps.calculationMethod = cardMethod
+        ps.madhab = cardMadhab
+        ps.latitudeRule = cardLatRule
+        AthanManager.shared.prayerSettings = ps
+        showingSettingsEditor = true
+    }
 
     func updateLocalizedPrayer(coord: CLLocationCoordinate2D) {
         let times = AthanManager.shared.calculateTimes(referenceDate: Date(), customCoordinate: unboundCoordinate, customTimeZone: timeZone, adjustments: AthanManager.shared.notificationSettings.adjustments())
@@ -143,6 +176,35 @@ struct LocationSettingsView: View, Equatable {
                     }
                     
                     
+                    // Compact one-line recommended settings — tap to edit (opens the full editor, incl. High-Latitude).
+                    if !IntroSetupFlags.hasCompletedCalculationSetup {
+                        Button(action: {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            openSettingsEditor()
+                        }) {
+                            HStack(spacing: 6) {
+                                (Text(NSLocalizedString("method_colon", value: "Method: ", comment: "Prefix on the compact settings line"))
+                                    .foregroundColor(Color(.lightText))
+                                 + Text(cardMethod.localizedString()).foregroundColor(.white).fontWeight(.semibold)
+                                 + Text(", ").foregroundColor(Color(.lightText))
+                                 + Text(cardMadhab.stringValue()).foregroundColor(.white).fontWeight(.semibold))
+                                    .font(.subheadline)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                Spacer(minLength: 4)
+                                Image(systemName: "slider.horizontal.3")
+                                    .font(.caption.weight(.bold))
+                                    .foregroundColor(Color(.lightText))
+                            }
+                            .padding(.vertical, 9)
+                            .padding(.horizontal, 12)
+                            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color.white.opacity(0.1)))
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.bottom, 4)
+                        .accessibilityIdentifier("recommendedSettingsLine")
+                    }
+
                     // Input text field for location
                     if !usingCurrentLocation {
                         HStack {
@@ -227,8 +289,12 @@ struct LocationSettingsView: View, Equatable {
                                     }
                                 }
                             }
+                        } else if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
+                            // Never asked yet (common on a fresh Mac launch) — request permission,
+                            // which shows the system prompt instead of leaving a dead button.
+                            AthanManager.shared.requestLocationPermission()
                         } else {
-                            // open settings for locations
+                            // Previously denied/restricted — send the user to Settings.
                             if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
                                 UIApplication.shared.open(settingsURL, completionHandler: { _ in })
                             }
@@ -275,7 +341,7 @@ struct LocationSettingsView: View, Equatable {
                         )
                     })
                     .buttonStyle(ScalingButtonStyle())
-                    .opacity(usingCurrentLocation || locationPermissionGranted ? 1 : 0.2)
+                    .opacity(usingCurrentLocation || locationPermissionGranted ? 1 : 0.85) // still tappable — taps request permission
                     
                     Spacer()
                     
@@ -284,32 +350,34 @@ struct LocationSettingsView: View, Equatable {
                     .font(.subheadline)
                     .foregroundColor(Color(.lightText))
                     .padding([.bottom])
-                    
+
                     Spacer()
                     HStack(alignment: .center) {
                         Spacer()
                         Button(action: { // DONE BUTTON
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            
-                            // save settings if we don't have erroneous input
+
                             if !erroneousLocation {
                                 AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation, countryCode: detectedCountryCode)
-
-                                // force athan manager to recalculate
                                 AthanManager.shared.reloadSettingsAndNotifications()
 
-                                // auto-update the method for the chosen country (applies + shows Undo popup)
-                                AthanManager.shared.autoUpdateMethodIfNeeded(for: detectedCountryCode)
-                                print("new settings: \(textFieldText), \(unboundCoordinate.latitude), \(unboundCoordinate.longitude)")
-                            }
-                            
-                            withAnimation {
-                                // go to calculation mode setup if not already completed
-                                if !IntroSetupFlags.hasCompletedCalculationSetup {
-                                    self.parentSession = .IntroSettings
+                                if IntroSetupFlags.hasCompletedCalculationSetup {
+                                    // returning user editing location — keep the travel auto-suggest popup
+                                    AthanManager.shared.autoUpdateMethodIfNeeded(for: detectedCountryCode)
                                 } else {
-                                    self.parentSession = .Main
+                                    // first-time setup — apply the settings shown in the recommended card
+                                    let ps = AthanManager.shared.prayerSettings
+                                    ps.calculationMethod = cardMethod
+                                    ps.madhab = cardMadhab
+                                    ps.latitudeRule = cardLatRule
+                                    AthanManager.shared.prayerSettings = ps
+                                    IntroSetupFlags.hasCompletedCalculationSetup = true
+                                    AthanManager.shared.reloadSettingsAndNotifications()
                                 }
+                            }
+
+                            withAnimation {
+                                self.parentSession = .Main
                             }
                         }) {
                             Text(Strings.done)
@@ -321,10 +389,23 @@ struct LocationSettingsView: View, Equatable {
                 }
                 .padding()
                 .padding([.leading, .trailing, .bottom])
+                // On wide windows (Mac / regular size class) cap the content width and center it
+                // instead of stretching the map + controls edge-to-edge.
+                .frame(maxWidth: hSizeClass == .regular ? 640 : .infinity)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .onAppear { syncCardFromRecommendation() }
+        .onChange(of: detectedCountryCode) { _ in syncCardFromRecommendation() }
+        .sheet(isPresented: $showingSettingsEditor, onDismiss: {
+            userEditedCalcSettings = true
+            syncCardFromManager()
+        }) {
+            IntroSettingsView(parentSession: .constant(.Location), isSheet: true)
+                .preferredColorScheme(.dark)
+        }
     }
-    
+
     func queryLocation(text: String) {
         // reverse geocode address
         geocoder.geocodeAddressString(text) { (placemarks, error) in
@@ -410,6 +491,71 @@ struct LocationSettingView_Previews: PreviewProvider {
         }
         .environmentObject(ObservableAthanManager.shared)
         .previewDevice("iPhone Xs")
+    }
+}
+
+/// Compact summary of the calculation settings recommended for the chosen
+/// location, with an "Edit" disclosure that opens the full editor as a sheet.
+private struct RecommendedSettingsCard: View {
+    let method: CalculationMethod
+    let madhab: Madhab
+    let latRule: HighLatitudeRule
+    var edited: Bool
+    var onEdit: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                Text(edited
+                     ? NSLocalizedString("your_settings_title", value: "Your settings", comment: "Onboarding card title after editing")
+                     : NSLocalizedString("recommended_settings_title", value: "Recommended for your location", comment: "Onboarding recommended-settings card title"))
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(.white)
+                Spacer()
+                Button(action: {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    onEdit()
+                }) {
+                    HStack(spacing: 2) {
+                        Text(NSLocalizedString("edit", value: "Edit", comment: "Edit button"))
+                        Image(systemName: "chevron.right").font(.caption.weight(.bold))
+                    }
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(Color(.lightText))
+                }
+                .accessibilityIdentifier("editRecommendedSettings")
+            }
+            .padding(.bottom, 10)
+
+            row(Strings.calculationMethod, method.localizedString())
+            divider
+            row(Strings.madhab, madhab.stringValue())
+            divider
+            row(Strings.highLatitudeRuleTitle, latRule.localizedString())
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white.opacity(0.12))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .strokeBorder(Color.white.opacity(0.12), lineWidth: 1)
+                )
+        )
+    }
+
+    private var divider: some View {
+        Rectangle().fill(Color.white.opacity(0.12)).frame(height: 0.5).padding(.vertical, 9)
+    }
+
+    private func row(_ label: String, _ value: String) -> some View {
+        HStack {
+            Text(label).foregroundColor(Color(.lightText))
+            Spacer()
+            Text(value).foregroundColor(.white).fontWeight(.semibold)
+                .lineLimit(1).minimumScaleFactor(0.6).multilineTextAlignment(.trailing)
+        }
+        .font(.subheadline)
     }
 }
 

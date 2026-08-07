@@ -101,6 +101,8 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         let root = MenuBarPopoverView(
             model: model,
             onToggleBell: { [weak self] index in self?.actionDelegate?.menuBarToggleBell(prayerIndex: index) },
+            onSetMethod: { [weak self] index in self?.actionDelegate?.menuBarSetMethod(index: index) },
+            onSetSound: { [weak self] index in self?.actionDelegate?.menuBarSetSound(index: index) },
             onOpen: { [weak self] in self?.openApp() }
         )
         pop.contentViewController = NSHostingController(rootView: root)
@@ -127,6 +129,8 @@ final class PopoverModel: ObservableObject {
 struct MenuBarPopoverView: View {
     @ObservedObject var model: PopoverModel
     var onToggleBell: (Int) -> Void
+    var onSetMethod: (Int) -> Void
+    var onSetSound: (Int) -> Void
     var onOpen: () -> Void
 
     private var topColor: Color { model.snapshot.map { Color(cgColor: $0.topColor) } ?? .black }
@@ -164,6 +168,23 @@ struct MenuBarPopoverView: View {
 
                 Divider().overlay(Color.white.opacity(0.25))
 
+                // Interactive settings — calculation method + athan sound.
+                settingsRow(icon: "slider.horizontal.3",
+                            selection: snap.methodOptions.indices.contains(snap.methodIndex) ? snap.methodOptions[snap.methodIndex] : "—",
+                            options: snap.methodOptions,
+                            onSelect: onSetMethod)
+                    .padding(.top, 9)
+
+                Divider().overlay(Color.white.opacity(0.12)).padding(.leading, 14)
+
+                settingsRow(icon: "speaker.wave.2.fill",
+                            selection: snap.soundOptions.indices.contains(snap.soundIndex) ? snap.soundOptions[snap.soundIndex] : "—",
+                            options: snap.soundOptions,
+                            onSelect: onSetSound)
+                    .padding(.bottom, 3)
+
+                Divider().overlay(Color.white.opacity(0.15)).padding(.leading, 14)
+
                 HStack(spacing: 6) {
                     Image(systemName: "location.fill").font(.system(size: 11))
                     Text(snap.locationText).font(.system(size: 12)).lineLimit(1).truncationMode(.tail)
@@ -186,5 +207,28 @@ struct MenuBarPopoverView: View {
         .background(
             LinearGradient(colors: [topColor, bottomColor], startPoint: .top, endPoint: .bottom)
         )
+    }
+
+    /// A tappable settings row that presents its options in a dropdown menu.
+    private func settingsRow(icon: String, selection: String,
+                             options: [String], onSelect: @escaping (Int) -> Void) -> some View {
+        Menu {
+            ForEach(Array(options.enumerated()), id: \.offset) { pair in
+                Button(pair.element) { onSelect(pair.offset) }
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: icon).font(.system(size: 11))
+                Text(selection).font(.system(size: 12)).lineLimit(1).truncationMode(.tail)
+                Spacer(minLength: 8)
+                Image(systemName: "chevron.up.chevron.down").font(.system(size: 10)).opacity(0.6)
+            }
+            .foregroundColor(.white.opacity(0.9))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 7)
+            .contentShape(Rectangle())
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
     }
 }

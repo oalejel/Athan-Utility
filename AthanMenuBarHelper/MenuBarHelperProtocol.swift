@@ -30,6 +30,10 @@ import CoreGraphics
 @objc public protocol MenuBarActionDelegate: NSObjectProtocol {
     /// The user tapped the bell for the prayer at `prayerIndex` (0…5).
     func menuBarToggleBell(prayerIndex: Int)
+    /// The user chose a calculation method (index into the snapshot's `methodOptions`).
+    func menuBarSetMethod(index: Int)
+    /// The user chose an athan sound (index into the snapshot's `soundOptions`).
+    func menuBarSetSound(index: Int)
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.
@@ -52,11 +56,22 @@ public final class MenuBarPrayerRow: NSObject {
 public final class MenuBarSnapshot: NSObject {
     public let rows: [MenuBarPrayerRow]
     public let locationText: String
+    public let methodOptions: [String]
+    public let methodIndex: Int
+    public let soundOptions: [String]
+    public let soundIndex: Int
     public let topColor: CGColor
     public let bottomColor: CGColor
-    public init(rows: [MenuBarPrayerRow], locationText: String, topColor: CGColor, bottomColor: CGColor) {
+    public init(rows: [MenuBarPrayerRow], locationText: String,
+                methodOptions: [String], methodIndex: Int,
+                soundOptions: [String], soundIndex: Int,
+                topColor: CGColor, bottomColor: CGColor) {
         self.rows = rows
         self.locationText = locationText
+        self.methodOptions = methodOptions
+        self.methodIndex = methodIndex
+        self.soundOptions = soundOptions
+        self.soundIndex = soundIndex
         self.topColor = topColor
         self.bottomColor = bottomColor
     }

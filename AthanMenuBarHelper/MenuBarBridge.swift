@@ -183,8 +183,14 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
                 prayerIndex: i
             ))
         }
+        let methods = CalculationMethod.usefulCases()
+        let sounds = NotificationSettings.Sounds.allCases
         return MenuBarSnapshot(rows: rows,
                                locationText: m.locationSettings.locationName,
+                               methodOptions: methods.map { $0.localizedString() },
+                               methodIndex: methods.firstIndex(of: m.prayerSettings.calculationMethod) ?? 0,
+                               soundOptions: sounds.map { $0.localizedString() },
+                               soundIndex: m.notificationSettings.selectedSound.rawValue,
                                topColor: top,
                                bottomColor: bottom)
     }
@@ -200,6 +206,27 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         m.notificationSettings = updated      // didSet archives
         m.reloadSettingsAndNotifications()     // reschedule with the new bell state
         pushSnapshot()                         // reflect it in the popover immediately
+    }
+
+    func menuBarSetMethod(index: Int) {
+        let m = AthanManager.shared
+        let methods = CalculationMethod.usefulCases()
+        guard methods.indices.contains(index),
+              let updated = m.prayerSettings.copy() as? PrayerSettings else { return }
+        updated.calculationMethod = methods[index]
+        m.prayerSettings = updated             // didSet archives + recalculates
+        m.reloadSettingsAndNotifications()
+        pushSnapshot()
+    }
+
+    func menuBarSetSound(index: Int) {
+        let m = AthanManager.shared
+        guard let sound = NotificationSettings.Sounds(rawValue: index),
+              let updated = m.notificationSettings.copy() as? NotificationSettings else { return }
+        updated.selectedSound = sound
+        m.notificationSettings = updated
+        m.reloadSettingsAndNotifications()
+        pushSnapshot()
     }
 
     /// "1:23:45" (H:MM:SS) when ≥ 1h remains, otherwise "23:45" (MM:SS).

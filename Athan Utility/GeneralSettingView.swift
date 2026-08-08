@@ -43,7 +43,15 @@ struct GeneralSettingView: View {
     @State private var isShowingMailView = false
     
     @State var proxy: Any? = nil
-    
+
+    private var isMac: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
+
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 0) {
@@ -562,8 +570,10 @@ struct GeneralSettingView: View {
                     }
                     .frame(width: g.size.width)
                 }
-                .edgesIgnoringSafeArea(.all)
-                
+                // On Mac this view is a NavigationSplitView detail pane; ignoring the safe area
+                // makes it bleed under the sidebar, so only ignore it on iOS/iPadOS.
+                .edgesIgnoringSafeArea(isMac ? [] : .all)
+
                 // footer divider
                 Divider()
                     .background(Color.white)

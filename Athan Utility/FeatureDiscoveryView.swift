@@ -108,8 +108,37 @@ enum FeatureDiscovery {
 struct FeatureDiscoveryView: View {
     @Environment(\.presentationMode) private var presentationMode
 
+    private var isMac: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
+
+    private let footerText = NSLocalizedString("feature_discovery_footer", value: "Everything here lives in the app — this is just a quick tour.", comment: "Discovery list footer")
+
     var body: some View {
         NavigationView {
+            content
+                .navigationBarTitle(Text(Strings.discoverFeatures), displayMode: .inline)
+                .navigationBarItems(trailing: Group {
+                    if !isMac {   // on Mac this is a sidebar pane, not a sheet — no Done needed
+                        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                            Text(Strings.done).fontWeight(.semibold)
+                        }
+                        .accessibilityIdentifier("discoverDone")
+                    }
+                })
+        }
+        .navigationViewStyle(StackNavigationViewStyle())   // don't become a split view on Catalyst
+        .onAppear { FeatureDiscovery.hasSeen = true }
+    }
+
+    @ViewBuilder private var content: some View {
+        if isMac {
+            macGrid
+        } else {
             List {
                 Section {
                     DiscoveryIconHeader()
@@ -117,7 +146,7 @@ struct FeatureDiscoveryView: View {
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 4, trailing: 0))
                 }
-                Section(footer: Text(NSLocalizedString("feature_discovery_footer", value: "Everything here lives in the app — this is just a quick tour.", comment: "Discovery list footer")).font(.footnote)) {
+                Section(footer: Text(footerText).font(.footnote)) {
                     ForEach(FeatureDiscovery.features) { feature in
                         NavigationLink(destination: FeatureDetailView(feature: feature)) {
                             FeatureRow(feature: feature)
@@ -127,15 +156,70 @@ struct FeatureDiscoveryView: View {
                 }
             }
             .listStyle(InsetGroupedListStyle())
-            .navigationBarTitle(Text(Strings.discoverFeatures), displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                    Text(Strings.done).fontWeight(.semibold)
-                }
-                .accessibilityIdentifier("discoverDone")
-            )
         }
-        .onAppear { FeatureDiscovery.hasSeen = true }
+    }
+
+    // Wide, grid-based layout that fills the Mac detail pane.
+    private var macGrid: some View {
+        ScrollView {
+            VStack(spacing: 18) {
+                DiscoveryIconHeader()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 14)
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 250, maximum: 360), spacing: 16)],
+                          alignment: .leading, spacing: 16) {
+                    ForEach(FeatureDiscovery.features) { feature in
+                        NavigationLink(destination: FeatureDetailView(feature: feature)) {
+                            FeatureCard(feature: feature)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .accessibilityIdentifier(feature.showsWidgetPreviews ? "featureWidgetsRow" : "featureRow")
+                    }
+                }
+                .padding(.horizontal, 24)
+
+                Text(footerText)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 24)
+            }
+        }
+    }
+}
+
+/// A vertical feature card for the Mac grid.
+private struct FeatureCard: View {
+    let feature: DiscoveryFeature
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(feature.tint)
+                .frame(width: 48, height: 48)
+                .overlay(
+                    Image(systemName: feature.icon)
+                        .font(.system(size: 23, weight: .semibold))
+                        .foregroundColor(.white)
+                )
+            VStack(alignment: .leading, spacing: 4) {
+                Text(feature.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(feature.subtitle)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, minHeight: 132, alignment: .topLeading)
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color(.secondarySystemBackground))
+        )
+        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 

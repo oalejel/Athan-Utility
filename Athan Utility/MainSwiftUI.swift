@@ -282,7 +282,12 @@ struct MainSwiftUI: View {
                 .background(Color(.systemBackground).ignoresSafeArea())
                 .preferredColorScheme(.dark)
         case .settings:
-            SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
+            ZStack {
+                GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
+                    .equatable()
+                    .ignoresSafeArea()
+                SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
+            }
         case .discover:
             FeatureDiscoveryView()
                 .preferredColorScheme(.dark)

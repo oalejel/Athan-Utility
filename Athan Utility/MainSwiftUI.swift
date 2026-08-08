@@ -300,49 +300,88 @@ struct MainSwiftUI: View {
     // Clean Mac Times pane: progress bar pinned at top, a large centered moon, and the
     // solar arc at the bottom. Prayer times + Qibla live in the sidebar, so they're omitted here.
     @ViewBuilder private func macTimesLayout(_ g: GeometryProxy) -> some View {
-        VStack(spacing: 16) {
-            ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 12,
-                        outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
-                .padding(.top, 34)
-                .padding(.horizontal, 6)
-                .onAppear { if manager.todayTimes != nil { macProgress = CGFloat(getPercentComplete()) } }
-                .onReceive(secondsTimer) { _ in
-                    if manager.todayTimes != nil, !dayProgressState.isDragging {
-                        macProgress = CGFloat(getPercentComplete())
-                    }
-                }
-
-            VStack(spacing: 2) {
-                PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
-                    .foregroundColor(.white)
-                    .font(Font.system(.title2).weight(.medium))
-                Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
-                    .font(.largeTitle).bold().foregroundColor(.white)
-                    .animation(.linear, value: dayProgressState.nonOptionalPreviewPrayer)
-                if #available(iOS 14.0, *) {
-                    TimeLeftView(id: $relativeDateId)
-                        .opacity(dayProgressState.isDragging ? 0.2 : 1)
-                        .onReceive(secondsTimer) { _ in relativeDateId += 1 }
-                }
-            }
-
+        let nameSize = min(96, g.size.width * 0.1)
+        let moonSize = nameSize * 1.6
+        VStack(spacing: 0) {
             Spacer(minLength: 8)
 
-            MoonView3D()
-                .frame(width: min(g.size.width, 560) * 0.5, height: min(g.size.width, 560) * 0.5)
-                .shadow(radius: 4)
-                .flipsForRightToLeftLayoutDirection(false)
+            HStack(alignment: .center, spacing: 24) {
+                // Big current prayer name, descriptive countdown, then the loader below it.
+                VStack(alignment: .leading, spacing: 14) {
+                    Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
+                        .font(.system(size: nameSize, weight: .bold))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .animation(.linear, value: dayProgressState.nonOptionalPreviewPrayer)
+
+                    macCountdownText()
+                        .font(.system(size: 15))
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .opacity(dayProgressState.isDragging ? 0.25 : 1)
+
+                    ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 10,
+                                outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
+                        .frame(width: g.size.width * 0.5)   // half the pane width
+                        .padding(.top, 2)
+                }
+
+                Spacer(minLength: 12)
+
+                MoonView3D()
+                    .frame(width: moonSize, height: moonSize)
+                    .shadow(radius: 4)
+                    .flipsForRightToLeftLayoutDirection(false)
+            }
 
             Spacer(minLength: 8)
 
             macSolarArc(g)
                 .frame(height: max(96, g.size.height * 0.12))
-                .padding(.bottom, 20)
+                .padding(.bottom, 18)
         }
-        .frame(maxWidth: 560)
+        .frame(maxWidth: 680)
         .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 40)
+        .padding(.top, 24)
+        .onAppear { if manager.todayTimes != nil { macProgress = CGFloat(getPercentComplete()) } }
+        .onReceive(secondsTimer) { _ in
+            relativeDateId += 1   // refresh the countdown subtitle each second
+            if manager.todayTimes != nil, !dayProgressState.isDragging {
+                macProgress = CGFloat(getPercentComplete())
+            }
+        }
     }
+
+    /// "3 hr 12 min until <Asr> · begins 3:38 PM" — next prayer name in gold.
+    private func macCountdownText() -> Text {
+        let gold = Color(red: 0.957, green: 0.835, blue: 0.553)
+        let next = AthanManager.shared.guaranteedNextPrayer()
+        let nextTime = AthanManager.shared.guaranteedNextPrayerTime()
+        let remaining = max(0, nextTime.timeIntervalSinceNow)
+        Self.macClockFormatter.timeZone = LocationSettings.shared.timeZone
+        let clock = Self.macClockFormatter.string(from: nextTime)
+        return Text(Self.durationPhrase(remaining) + " " + NSLocalizedString("until_prayer", value: "until", comment: "before a prayer name") + " ")
+                .foregroundColor(.white.opacity(0.72))
+            + Text(next.localizedOrCustomString())
+                .foregroundColor(gold).fontWeight(.semibold)
+            + Text("  ·  " + NSLocalizedString("begins_at", value: "begins", comment: "before a clock time") + " " + clock)
+                .foregroundColor(.white.opacity(0.45))
+    }
+
+    static func durationPhrase(_ interval: TimeInterval) -> String {
+        let total = Int(interval)
+        let h = total / 3600, m = (total % 3600) / 60
+        if h > 0 && m > 0 { return String(format: NSLocalizedString("dur_hr_min", value: "%d hr %d min", comment: ""), h, m) }
+        if h > 0 { return String(format: NSLocalizedString("dur_hr", value: "%d hr", comment: ""), h) }
+        if m > 0 { return String(format: NSLocalizedString("dur_min", value: "%d min", comment: ""), m) }
+        return NSLocalizedString("dur_lt_min", value: "less than a minute", comment: "")
+    }
+
+    static let macClockFormatter: DateFormatter = {
+        let f = DateFormatter(); f.timeStyle = .short; f.dateStyle = .none; return f
+    }()
 
     @ViewBuilder private func macSolarArc(_ g: GeometryProxy) -> some View {
         if manager.todayTimes != nil {

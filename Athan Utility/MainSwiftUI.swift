@@ -300,14 +300,14 @@ struct MainSwiftUI: View {
     // Clean Mac Times pane: progress bar pinned at top, a large centered moon, and the
     // solar arc at the bottom. Prayer times + Qibla live in the sidebar, so they're omitted here.
     @ViewBuilder private func macTimesLayout(_ g: GeometryProxy) -> some View {
-        let nameSize = min(96, g.size.width * 0.1)
+        let nameSize = min(120, g.size.width * 0.12)
         let moonSize = nameSize * 1.6
         VStack(spacing: 0) {
             Spacer(minLength: 8)
 
-            HStack(alignment: .center, spacing: 24) {
+            HStack(alignment: .center, spacing: 28) {
                 // Big current prayer name, descriptive countdown, then the loader below it.
-                VStack(alignment: .leading, spacing: 14) {
+                VStack(alignment: .leading, spacing: 18) {
                     Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
                         .font(.system(size: nameSize, weight: .bold))
                         .foregroundColor(.white)
@@ -316,15 +316,15 @@ struct MainSwiftUI: View {
                         .animation(.linear, value: dayProgressState.nonOptionalPreviewPrayer)
 
                     macCountdownText()
-                        .font(.system(size: 15))
+                        .font(.system(size: 17.5))
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                         .opacity(dayProgressState.isDragging ? 0.25 : 1)
 
-                    ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 10,
+                    ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 13,
                                 outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
                         .frame(width: g.size.width * 0.5)   // half the pane width
-                        .padding(.top, 2)
+                        .padding(.top, 4)
                 }
 
                 Spacer(minLength: 12)
@@ -339,12 +339,13 @@ struct MainSwiftUI: View {
 
             macSolarArc(g)
                 .frame(height: max(96, g.size.height * 0.12))
-                .padding(.bottom, 18)
+                .padding(.horizontal, 4)
+                .padding(.bottom, 34)
         }
-        .frame(maxWidth: 680)
+        .frame(maxWidth: 720)
         .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.horizontal, 40)
-        .padding(.top, 24)
+        .padding(.horizontal, 44)
+        .padding(.top, 28)
         .onAppear { if manager.todayTimes != nil { macProgress = CGFloat(getPercentComplete()) } }
         .onReceive(secondsTimer) { _ in
             relativeDateId += 1   // refresh the countdown subtitle each second

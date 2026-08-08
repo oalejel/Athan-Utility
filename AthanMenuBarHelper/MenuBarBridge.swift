@@ -68,6 +68,11 @@ final class MenuBarBridge {
         helper?.updateSnapshot(snapshot)
     }
 
+    /// Menu-bar-only mode: hide the Dock icon + windows (accessory) or restore the normal app.
+    func setDockIconHidden(_ hidden: Bool) {
+        helper?.setDockIconHidden(hidden)
+    }
+
     func stop() {
         helper?.removeStatusItem()
         helper = nil
@@ -87,6 +92,7 @@ enum MenuBarSettings {
     private static let suite = UserDefaults(suiteName: "group.athanUtil")
     private static let modeKey = "MenuBarDisplayMode"
     private static let hiddenKey = "MenuBarHidden"
+    private static let menuBarOnlyKey = "MenuBarOnly"
 
     static var mode: MenuBarDisplayMode {
         get { MenuBarDisplayMode(rawValue: suite?.integer(forKey: modeKey) ?? 0) ?? .timeLeft }
@@ -95,6 +101,11 @@ enum MenuBarSettings {
     static var isHidden: Bool {
         get { suite?.bool(forKey: hiddenKey) ?? false }
         set { suite?.set(newValue, forKey: hiddenKey) }
+    }
+    /// Menu-bar-only mode: no Dock icon, window hidden, popover as the primary UI.
+    static var menuBarOnly: Bool {
+        get { suite?.bool(forKey: menuBarOnlyKey) ?? false }
+        set { suite?.set(newValue, forKey: menuBarOnlyKey) }
     }
 }
 

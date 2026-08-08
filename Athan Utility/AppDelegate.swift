@@ -30,6 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // live title driver (next prayer time / countdown).
         MenuBarBridge.shared.start()
         MenuBarController.shared.start()
+        // If the user chose menu-bar-only mode, drop the Dock icon + window once the
+        // window scene has connected.
+        if MenuBarSettings.menuBarOnly {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                MenuBarBridge.shared.setDockIconHidden(true)
+            }
+        }
         #endif
 
         return true

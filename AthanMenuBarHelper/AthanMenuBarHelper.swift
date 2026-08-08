@@ -112,12 +112,39 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
 
     @objc private func openApp() {
         popover?.performClose(nil)
+        // If we're a menu-bar-only accessory, briefly become a regular app so the window
+        // can take focus, then show it.
+        NSApp.setActivationPolicy(.regular)
         NSApp.unhide(nil)
         NSApp.activate(ignoringOtherApps: true)
         NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
+        // Re-hide the Dock icon shortly after if the user chose menu-bar-only.
+        if dockIconHidden {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+                if self?.dockIconHidden == true { NSApp.setActivationPolicy(.accessory) }
+            }
+        }
     }
 
     @objc private func quitApp() { NSApp.terminate(nil) }
+
+    // MARK: - Menu-bar-only mode
+
+    private var dockIconHidden = false
+
+    public func setDockIconHidden(_ hidden: Bool) {
+        dockIconHidden = hidden
+        if hidden {
+            // Become a menu-bar accessory: no Dock icon, no ⌘-Tab entry; hide open windows.
+            NSApp.setActivationPolicy(.accessory)
+            for w in NSApp.windows where w.canBecomeMain { w.orderOut(nil) }
+        } else {
+            NSApp.setActivationPolicy(.regular)
+            NSApp.unhide(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
+        }
+    }
 }
 
 // MARK: - Popover content (SwiftUI, hosted in the bundle)

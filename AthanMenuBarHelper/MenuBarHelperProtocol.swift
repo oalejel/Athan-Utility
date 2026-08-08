@@ -24,6 +24,8 @@ import CoreGraphics
     func setActionDelegate(_ delegate: MenuBarActionDelegate)
     /// Push the latest prayer times / location / gradient for the popover to render.
     func updateSnapshot(_ snapshot: MenuBarSnapshot)
+    /// Menu-bar-only mode: hide the Dock icon + windows (accessory) or restore the normal app.
+    func setDockIconHidden(_ hidden: Bool)
 }
 
 /// Implemented by the app; called from the helper bundle when the user interacts with the popover.

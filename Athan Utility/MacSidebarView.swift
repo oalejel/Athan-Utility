@@ -187,14 +187,21 @@ struct MacSidebarView: View {
                 if dayOffset != 0 { withAnimation(.easeInOut(duration: 0.15)) { dayOffset = 0 } }
             } label: {
                 VStack(spacing: 1) {
-                    Text(MainSwiftUI.hijriDateString(date: selectedDate, isAccessibilityLabel: false))
-                        .font(.system(size: 12.5, weight: .semibold))
-                        .foregroundColor(.white.opacity(0.9))
-                        .lineLimit(1).minimumScaleFactor(0.65)
+                    HStack(spacing: 5) {
+                        if dayOffset != 0 {
+                            Text(dayOffset > 0 ? "(+\(dayOffset))" : "(\(dayOffset))")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(gold)
+                        }
+                        Text(MainSwiftUI.hijriDateString(date: selectedDate, isAccessibilityLabel: false))
+                            .font(.system(size: 12.5, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.9))
+                            .lineLimit(1).minimumScaleFactor(0.65)
+                    }
                     if dayOffset != 0 {
                         Text(Self.gregFormatter.string(from: selectedDate))
                             .font(.system(size: 10.5))
-                            .foregroundColor(gold.opacity(0.9))
+                            .foregroundColor(.white.opacity(0.5))
                             .lineLimit(1).minimumScaleFactor(0.7)
                     }
                 }

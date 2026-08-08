@@ -97,6 +97,8 @@ struct MainSwiftUI: View {
     @State var currentView: PresentedSectionType
     // Mac-only: which sidebar section is showing in the split-view detail pane.
     @State private var macSection: MacSection = .times
+    // Mac Times pane progress (driven off the per-second timer; the iOS layout uses its own).
+    @State private var macProgress: CGFloat = 0
 
     @State var nextRoundMinuteTimer: Timer?
     //    @State var percentComplete: Double = 0.0
@@ -295,6 +297,75 @@ struct MainSwiftUI: View {
     }
     #endif
 
+    // Clean Mac Times pane: progress bar pinned at top, a large centered moon, and the
+    // solar arc at the bottom. Prayer times + Qibla live in the sidebar, so they're omitted here.
+    @ViewBuilder private func macTimesLayout(_ g: GeometryProxy) -> some View {
+        VStack(spacing: 16) {
+            ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 12,
+                        outlineColor: .init(white: 1, opacity: 0.2), colors: [.white, .white])
+                .padding(.top, 34)
+                .padding(.horizontal, 6)
+                .onAppear { if manager.todayTimes != nil { macProgress = CGFloat(getPercentComplete()) } }
+                .onReceive(secondsTimer) { _ in
+                    if manager.todayTimes != nil, !dayProgressState.isDragging {
+                        macProgress = CGFloat(getPercentComplete())
+                    }
+                }
+
+            VStack(spacing: 2) {
+                PrayerSymbol(prayerType: dayProgressState.nonOptionalPreviewPrayer)
+                    .foregroundColor(.white)
+                    .font(Font.system(.title2).weight(.medium))
+                Text(dayProgressState.nonOptionalPreviewPrayer.localizedOrCustomString())
+                    .font(.largeTitle).bold().foregroundColor(.white)
+                    .animation(.linear, value: dayProgressState.nonOptionalPreviewPrayer)
+                if #available(iOS 14.0, *) {
+                    TimeLeftView(id: $relativeDateId)
+                        .opacity(dayProgressState.isDragging ? 0.2 : 1)
+                        .onReceive(secondsTimer) { _ in relativeDateId += 1 }
+                }
+            }
+
+            Spacer(minLength: 8)
+
+            MoonView3D()
+                .frame(width: min(g.size.width, 560) * 0.5, height: min(g.size.width, 560) * 0.5)
+                .shadow(radius: 4)
+                .flipsForRightToLeftLayoutDirection(false)
+
+            Spacer(minLength: 8)
+
+            macSolarArc(g)
+                .frame(height: max(96, g.size.height * 0.12))
+                .padding(.bottom, 20)
+        }
+        .frame(maxWidth: 560)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal, 28)
+    }
+
+    @ViewBuilder private func macSolarArc(_ g: GeometryProxy) -> some View {
+        if manager.todayTimes != nil {
+            let dayProg: CGFloat = {
+                var r = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
+                if r < 0 { r += 1 }
+                return r
+            }()
+            SolarView(dayProgress: .constant(dayProg),
+                      manualDayProgress: $dayProgressState.manualDayProgress,
+                      isDragging: $dayProgressState.isDragging,
+                      sunlightFraction: CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400),
+                      hidingCircle: true,
+                      dhuhrTime: manager.todayTimes.dhuhr,
+                      sunriseTime: manager.todayTimes.sunrise)
+                .equatable()
+                .onDisappear {
+                    dayProgressState.manualDayProgress = 0
+                    dayProgressState.isDragging = false
+                }
+        }
+    }
+
     var coreBody: some View {
         ZStack {
             GeometryReader { g in
@@ -322,6 +393,10 @@ struct MainSwiftUI: View {
                         SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
                             .transition(.opacity)
                     case .Main:
+                        Group {
+                        if isMac {
+                            macTimesLayout(g)
+                        } else {
                         HStack {
                             if useTwoColumn {
                                 HStack(alignment: .center, spacing: 0) {
@@ -618,9 +693,10 @@ struct MainSwiftUI: View {
                             // cap the reading column on iPad/Mac so prayer rows don't stretch edge-to-edge
                             .frame(maxWidth: _horizontalSizeClass == .regular ? 620 : .infinity)
                             .padding(_horizontalSizeClass == .regular ? 24 : 0)
-                            if isMac { Spacer(minLength: 0) }   // balancing spacer to keep the column centered
 
                         }
+                        } // else (iOS/iPad layout)
+                        } // Group
                         .transition(.opacity)
                         .sheet(isPresented: $showCalendar) { // set highest progress back to 0 when we know the view disappeared
                             CalendarView(showCalendar: $showCalendar)

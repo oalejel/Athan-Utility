@@ -3,13 +3,14 @@ devices([
   "iPhone 17 Pro"
 ])
 
-# Languages / locales — each maps to a .lproj in the app
+# Languages / locales — each maps to a .lproj in the app.
+# Aligned with the App Store metadata locales we ship (Tier 1 adds es-ES).
 languages([
   "en-US",
+  "ar-SA",
+  "es-ES",
   "fr-FR",
   "tr",
-  "ar-SA",
-  "ur-PK",
   "zh-Hans"
 ])
 

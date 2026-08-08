@@ -61,7 +61,7 @@ struct MacSidebarView: View {
                       ? "location.fill" : "location.slash")
                     .font(.system(size: 12)).foregroundColor(.white.opacity(0.85))
                 Text(manager.locationName.isEmpty ? "—" : manager.locationName)
-                    .font(.system(size: 13, weight: .semibold)).foregroundColor(.white)
+                    .font(.system(size: 14.5, weight: .semibold)).foregroundColor(.white)
                     .lineLimit(1).truncationMode(.tail)
                 Spacer(minLength: 6)
                 Image(systemName: showLocationEditor ? "chevron.down" : "chevron.right")
@@ -114,7 +114,7 @@ struct MacSidebarView: View {
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
-            .font(.system(size: 10.5, weight: .semibold))
+            .font(.system(size: 11.5, weight: .semibold))
             .tracking(0.6)
             .foregroundColor(.white.opacity(0.45))
             .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 4)
@@ -133,22 +133,22 @@ struct MacSidebarView: View {
         let bellOn = AthanManager.shared.notificationSettings.settings[p]?.athanAlertEnabled ?? false
         return HStack(spacing: 8) {
             Text(p.localizedOrCustomString())
-                .font(.system(size: 13.5, weight: isCurrent ? .bold : .medium))
+                .font(.system(size: 16, weight: isCurrent ? .bold : .medium))
                 .foregroundColor(.white)
             Spacer(minLength: 8)
             Text(timeString(manager.todayTimes?.time(for: p)))
-                .font(.system(size: 13)).monospacedDigit()
-                .foregroundColor(isCurrent ? .white : .white.opacity(0.7))
+                .font(.system(size: 15.5, weight: isCurrent ? .semibold : .regular)).monospacedDigit()
+                .foregroundColor(isCurrent ? .white : .white.opacity(0.75))
             Button { toggleBell(p) } label: {
                 Image(systemName: bellOn ? "bell.fill" : "bell.slash")
-                    .font(.system(size: 13))
+                    .font(.system(size: 15))
                     .foregroundColor(bellOn ? gold : .white.opacity(0.4))
-                    .frame(width: 22, height: 22)
+                    .frame(width: 24, height: 24)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
         }
-        .padding(.horizontal, 10).padding(.vertical, 7)
+        .padding(.horizontal, 10).padding(.vertical, 9)
         .background(
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(isCurrent ? 0.14 : 0))
@@ -178,8 +178,8 @@ struct MacSidebarView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
             HStack(spacing: 9) {
-                Image(systemName: s.symbol).font(.system(size: 14)).frame(width: 18)
-                Text(s.title).font(.system(size: 13, weight: selected ? .semibold : .regular))
+                Image(systemName: s.symbol).font(.system(size: 15)).frame(width: 20)
+                Text(s.title).font(.system(size: 14.5, weight: selected ? .semibold : .regular))
                 Spacer()
             }
             .foregroundColor(selected ? gold : .white.opacity(0.72))

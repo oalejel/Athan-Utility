@@ -189,6 +189,7 @@
 		9241BDE9119B3F6F927C9A2A /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7125A6A04D00DC7331 /* NotificationView.swift */; };
 		9543B22D38BD48FCD63E5D98 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
 		9D2ACAE0892ED1D947DBB069 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BBB3291E869DA697F96A86 /* MacSidebarView.swift */; };
 		B7FB46B8D3206158794AE536 /* AthanMenuBarHelper.bundle in Embed Menu Bar Helper */ = {isa = PBXBuildFile; fileRef = BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */; platformFilters = (maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAF829F0821983AAD61BD25C /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = AC2133E50300F5E25DA14A35 /* Adhan */; };
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
@@ -462,6 +463,7 @@
 		3DF79CD02F45364D00E01FD2 /* SuhoorActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivity.swift; sourceTree = "<group>"; };
 		3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityTrigger.swift; sourceTree = "<group>"; };
 		3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityAttributes.swift; sourceTree = "<group>"; };
+		74BBB3291E869DA697F96A86 /* MacSidebarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacSidebarView.swift; sourceTree = "<group>"; };
 		82E32DECBE62A46E113926F1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = AthanMenuBarHelper/Info.plist; sourceTree = "<group>"; };
 		8CA6F9D45173A1453E89EA52 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		AF10629E04FA05B477D8EC1C /* bn */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 				C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */,
 				F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */,
 				2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */,
+				74BBB3291E869DA697F96A86 /* MacSidebarView.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1310,6 +1313,7 @@
 				D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */,
 				D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */,
 				639733C717984783246DDCCC /* WidgetPreviews.swift in Sources */,
+				A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

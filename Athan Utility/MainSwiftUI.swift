@@ -16,6 +16,28 @@ enum PresentedSectionType {
     case Main, Settings, Location, IntroSettings
 }
 
+// Mac-only sidebar sections (NavigationSplitView). Each swaps the detail pane.
+enum MacSection: Int, CaseIterable, Identifiable {
+    case times, calendar, settings, discover
+    var id: Int { rawValue }
+    var title: String {
+        switch self {
+        case .times:    return NSLocalizedString("mac_section_times", value: "Prayer Times", comment: "Mac sidebar section")
+        case .calendar: return NSLocalizedString("mac_section_calendar", value: "Monthly Calendar", comment: "Mac sidebar section")
+        case .settings: return NSLocalizedString("mac_section_settings", value: "Settings", comment: "Mac sidebar section")
+        case .discover: return NSLocalizedString("mac_section_discover", value: "Discover Features", comment: "Mac sidebar section")
+        }
+    }
+    var symbol: String {
+        switch self {
+        case .times:    return "sun.max.fill"
+        case .calendar: return "calendar"
+        case .settings: return "gearshape.fill"
+        case .discover: return "lightbulb.fill"
+        }
+    }
+}
+
 // State of user drag along solar curve
 class DayProgressState: ObservableObject {
     // user input based publishers
@@ -73,7 +95,9 @@ struct MainSwiftUI: View {
     @State private var didEvaluateStartupSuggestion = false
     
     @State var currentView: PresentedSectionType
-        
+    // Mac-only: which sidebar section is showing in the split-view detail pane.
+    @State private var macSection: MacSection = .times
+
     @State var nextRoundMinuteTimer: Timer?
     //    @State var percentComplete: Double = 0.0
     let secondsTimer = Timer.publish(
@@ -223,6 +247,50 @@ struct MainSwiftUI: View {
     }
     
     var body: some View {
+        #if targetEnvironment(macCatalyst)
+        if #available(macCatalyst 16.0, *), currentView == .Main {
+            NavigationSplitView {
+                MacSidebarView(section: $macSection)
+                    .navigationSplitViewColumnWidth(min: 236, ideal: 260, max: 320)
+            } detail: {
+                macDetail
+            }
+            .navigationSplitViewStyle(.balanced)
+        } else {
+            coreBody   // onboarding (location / intro) + pre-macOS-13 fallback
+        }
+        #else
+        coreBody
+        #endif
+    }
+
+    #if targetEnvironment(macCatalyst)
+    /// Binds the sheet-style CalendarView's `showCalendar` to the sidebar section so its
+    /// close button returns to the Times pane.
+    private var calendarBinding: Binding<Bool> {
+        Binding(get: { macSection == .calendar },
+                set: { if !$0 { macSection = .times } })
+    }
+
+    @ViewBuilder private var macDetail: some View {
+        switch macSection {
+        case .times:
+            coreBody
+        case .calendar:
+            CalendarView(showCalendar: calendarBinding)
+                .equatable()
+                .background(Color(.systemBackground).ignoresSafeArea())
+                .preferredColorScheme(.dark)
+        case .settings:
+            SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
+        case .discover:
+            FeatureDiscoveryView()
+                .preferredColorScheme(.dark)
+        }
+    }
+    #endif
+
+    var coreBody: some View {
         ZStack {
             GeometryReader { g in
                 GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
@@ -470,6 +538,8 @@ struct MainSwiftUI: View {
                                 ZStack {
                                     VStack {
 //                                        Spacer()
+                                        // On Mac these live in the sidebar, so hide the in-content nav row.
+                                        if !isMac {
                                         HStack(alignment: .center) {
                                             // Location button
                                             Button(action: {
@@ -536,6 +606,7 @@ struct MainSwiftUI: View {
                                         }
                                         .padding([.leading, .trailing, .bottom])
                                         .padding([.leading, .trailing, .bottom])
+                                        } // if !isMac
                                     }
                                 }
                             }
@@ -561,7 +632,8 @@ struct MainSwiftUI: View {
                     HStack(spacing: 10) {
                         Spacer()
                         // Feature-discovery hint — only until the user opens it once.
-                        if currentView == .Main, !discoverySeen {
+                        // On Mac, Discover lives in the sidebar, so skip the hint there.
+                        if currentView == .Main, !discoverySeen, !isMac {
                             Button(action: {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 FeatureDiscovery.hasSeen = true

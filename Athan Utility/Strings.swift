@@ -96,6 +96,7 @@ class Strings {
     static var locationDisabledAndDoesNotCollectData = NSLocalizedString("Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data.", comment: "")
     
     static var locationName = NSLocalizedString("Location Name", comment: "")
+    static var searchCity = NSLocalizedString("Search City", comment: "Short location search field placeholder")
     static var locationColon = NSLocalizedString("Location:", comment: "")
     static var showCalendar = NSLocalizedString("Show Calendar", comment: "")
     static var calendar = NSLocalizedString("Calendar", comment: "")

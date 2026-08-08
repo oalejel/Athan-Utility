@@ -184,3 +184,5 @@
 // Intro recommendation strings 2026-08-06
 "recommended_for_country" = "Recommandé pour %@";
 "use_recommended_method" = "Utiliser le recommandé : %@";
+
+"Search City" = "Rechercher une ville";

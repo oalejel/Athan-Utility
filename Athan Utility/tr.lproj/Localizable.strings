@@ -183,3 +183,5 @@
 // Intro recommendation strings 2026-08-06
 "recommended_for_country" = "%@ için önerilir";
 "use_recommended_method" = "Önerileni kullan: %@";
+
+"Search City" = "Şehir ara";

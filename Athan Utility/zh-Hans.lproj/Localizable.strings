@@ -184,3 +184,5 @@
 // Intro recommendation strings 2026-08-06
 "recommended_for_country" = "推荐用于 %@";
 "use_recommended_method" = "使用推荐：%@";
+
+"Search City" = "搜索城市";

@@ -138,6 +138,14 @@ struct CalendarView: View, Equatable {
     
     @State var allPrayers = Array(Prayer.allCases)
     var timeFormatter: DateFormatter!
+
+    private var isMac: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
     
     //    @State var range: Range<Int> = 0..<12
     //    func loadMore() {
@@ -165,23 +173,26 @@ struct CalendarView: View, Equatable {
         GeometryReader { g in
             
             VStack(spacing: 0) {
-                HStack { // main calendar header
-                    Spacer()
-                    VStack {
-                        Button(action: {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            showCalendar = false
-                            print("exit")
-                        }, label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(Color(.tertiaryLabel))
-                                .font(Font.system(size: 25).bold())
-                        })
+                // On Mac the calendar is a sidebar detail pane (not a sheet), so no close X.
+                if !isMac {
+                    HStack { // main calendar header
                         Spacer()
+                        VStack {
+                            Button(action: {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                showCalendar = false
+                                print("exit")
+                            }, label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(Color(.tertiaryLabel))
+                                    .font(Font.system(size: 25).bold())
+                            })
+                            Spacer()
+                        }
                     }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding([.leading, .trailing, .top], 12)
                 }
-                .fixedSize(horizontal: false, vertical: true)
-                .padding([.leading, .trailing, .top], 12)
                 
                 HStack {
                     Text(Strings.calendar)
@@ -300,11 +311,17 @@ struct CalendarView: View, Equatable {
                                     Spacer()
                                     
                                     ZStack {
-                                        PrayerSymbol(prayerType: p)
-                                            .foregroundColor(Color(.label))
-                                            .padding([.top, .bottom], 4)
-                                            .frame(width:100)
-                                        
+                                        VStack(spacing: 1) {
+                                            PrayerSymbol(prayerType: p)
+                                                .foregroundColor(Color(.label))
+                                            Text(p.localizedOrCustomString())
+                                                .font(.system(size: 9, weight: .semibold))
+                                                .foregroundColor(.secondary)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.6)
+                                        }
+                                        .padding([.top, .bottom], 4)
+                                        .frame(width:100)
                                     }
                                     .frame(width: 1)
                                 }

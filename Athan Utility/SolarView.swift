@@ -228,18 +228,36 @@ struct SolarView: View, Equatable {
                         )
 
                     let sunAppearance = colorForProgress()
-                    Circle()
-                        .foregroundColor(sunAppearance.1)
-                        .shadow(color: sunAppearance.0, radius: sunAppearance.2)
-                        // No implicit position animation: drag smoothness comes from the gesture's
-                        // explicit withAnimation, and passive per-second steps are imperceptible.
-                        // An implicit animation here makes the sun lurch while resizing the window.
-//                        .foregroundColor(Color(.lightText))
-//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
-                        .frame(width: g.size.width / 30, height: g.size.width / 30)
-                        .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
-                                y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude) //+ verticalOffset)
-//                        .animation(.linear(duration: 0.3))
+                    let sunSize = g.size.width / 30
+                    // Layered sun: a soft atmospheric halo, a radial bright-to-warm core, and a
+                    // small specular glint for a realistic sense of glare/brightness.
+                    ZStack {
+                        Circle()
+                            .fill(sunAppearance.1)
+                            .frame(width: sunSize * 2.8, height: sunSize * 2.8)
+                            .blur(radius: sunSize * 0.9)
+                            .opacity(0.45)
+                        Circle()
+                            .fill(
+                                RadialGradient(gradient: Gradient(colors: [.white, sunAppearance.1, sunAppearance.1.opacity(0.9)]),
+                                               center: UnitPoint(x: 0.4, y: 0.36),
+                                               startRadius: 0, endRadius: sunSize * 0.75)
+                            )
+                            .frame(width: sunSize, height: sunSize)
+                            .shadow(color: sunAppearance.0, radius: sunAppearance.2)
+                            .overlay(
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: sunSize * 0.3, height: sunSize * 0.3)
+                                    .blur(radius: sunSize * 0.14)
+                                    .offset(x: -sunSize * 0.15, y: -sunSize * 0.18)
+                                    .opacity(0.95)
+                            )
+                    }
+                    // No implicit position animation: drag smoothness comes from the gesture's
+                    // explicit withAnimation; an implicit animation lurches the sun on window resize.
+                    .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
+                            y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude)
                 }
 //                Spacer()
             }

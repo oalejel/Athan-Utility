@@ -81,8 +81,7 @@ struct MacSidebarView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 7) {
                 Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundColor(.white.opacity(0.5))
-                TextField(NSLocalizedString("search_city", value: "Search city or coordinates", comment: ""),
-                          text: $searchText, onCommit: commitSearch)
+                TextField(Strings.searchCity, text: $searchText, onCommit: commitSearch)
                     .textFieldStyle(.plain)
                     .foregroundColor(.white)
                     .autocorrectionDisabled(true)

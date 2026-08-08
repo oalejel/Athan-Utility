@@ -218,7 +218,7 @@ struct LocationSettingsView: View, Equatable {
                                 .bold()
                             }
                                 .padding([.leading])
-                            TextField(Strings.locationName, text: $textFieldText) { isEditing in
+                            TextField(Strings.searchCity, text: $textFieldText) { isEditing in
                                 if isEditing {
                                     erroneousLocation = false // reset potential error
                                 }

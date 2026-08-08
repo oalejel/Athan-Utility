@@ -289,7 +289,7 @@ struct MainSwiftUI: View {
                                                 .foregroundColor(.white)
                                                 .id("title" + dayProgressState.nonOptionalPreviewPrayer.stringValue())
                                         }
-                                        .animation(.linear)
+                                        .animation(.linear, value: dayProgressState.nonOptionalPreviewPrayer)
                                         
                                         Spacer() // space title | qibla
                                         
@@ -433,7 +433,7 @@ struct MainSwiftUI: View {
                                                         .font(cellFont)
                                                         .bold()
                                                 }
-                                                .animation(.linear(duration: 0.2))
+                                                .animation(.linear(duration: 0.2), value: manager.currentPrayer)
                                                 .accessibilityElement(children: .combine)
                                                     Spacer()
                                             }

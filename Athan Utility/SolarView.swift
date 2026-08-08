@@ -143,8 +143,8 @@ struct SolarView: View, Equatable {
                         Spacer()
                     }
                     .opacity(isDragging ? 1 : 0)
-                    .animation(.linear(duration: 0.3))
-                    
+                    .animation(.linear(duration: 0.3), value: isDragging)
+
                     Rectangle()
                         .foregroundColor(.init(.sRGB, white: 1, opacity: 0.00000000001)) // hack to avoid full transparency and allow input
                         .gesture(
@@ -172,6 +172,16 @@ struct SolarView: View, Equatable {
                     Rectangle() // horizontal line
                         .frame(width: g.size.width, height: 1)
                         .foregroundColor(Color(.lightText))
+                        // Fade the ends so the line doesn't hit the window edges hard
+                        // (looks cleaner in the wide macOS window).
+                        .mask(
+                            LinearGradient(stops: [
+                                .init(color: .clear, location: 0.0),
+                                .init(color: .white, location: 0.10),
+                                .init(color: .white, location: 0.90),
+                                .init(color: .clear, location: 1.0)
+                            ], startPoint: .leading, endPoint: .trailing)
+                        )
                         .offset(y: -1 * verticalOffset)
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         
@@ -184,7 +194,7 @@ struct SolarView: View, Equatable {
                         .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .opacity(isDragging ? 1 : 0)
-                        .animation(.linear(duration: 0.3))
+                        .animation(.linear(duration: 0.3), value: isDragging)
                     
                     Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
                         .fontWeight(.bold)
@@ -212,7 +222,7 @@ struct SolarView: View, Equatable {
                     Circle()
                         .foregroundColor(sunAppearance.1)
                         .shadow(color: sunAppearance.0, radius: sunAppearance.2)
-                        .animation(.linear)
+                        .animation(.linear, value: isDragging ? manualDayProgress : dayProgress)
 //                        .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)

@@ -52,7 +52,7 @@ struct StarView: View, Equatable {
     
     var body: some View {
         GeometryReader { g in
-            ZStack {
+            let starField = ZStack {
                 ForEach(0..<starCount) { idx in
                     let ss = StarView.startStates[idx]
                     let randomRadius = ss.radius
@@ -74,8 +74,14 @@ struct StarView: View, Equatable {
                         .animation(Animation.easeInOut(duration:2).repeatForever(autoreverses:true))
                 }
             }
-            .parallax(amount: 20)
-            
+
+            Group {
+                #if targetEnvironment(macCatalyst)
+                starField                       // no gyro on Mac; parallax would just jitter on resize
+                #else
+                starField.parallax(amount: 20)
+                #endif
+            }
             .offset(x: g.size.width / -2, y: g.size.height / -2)
             .mask(
                 LinearGradient(gradient: Gradient(colors: [.white, .white, .clear]),

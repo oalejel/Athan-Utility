@@ -2,124 +2,249 @@
 //  MacSidebarView.swift
 //  Athan Utility (Mac Catalyst only)
 //
-//  The sidebar column of the Mac NavigationSplitView: an inline location editor
-//  (search + "use current location", stays put — no full-screen sheet that closes on
-//  entry) plus the section nav that swaps the detail pane.
+//  The sidebar column of the Mac NavigationSplitView, styled to match the design mockup:
+//  a translucent dark column with a tappable location header (expands to an inline editor),
+//  the day's prayer list (current prayer gold-railed, per-prayer bell toggles), and a pinned
+//  section-nav footer (Calendar / Settings / Discover) that swaps the detail pane.
 //
 
 #if targetEnvironment(macCatalyst)
 import SwiftUI
 import UIKit
 import CoreLocation
+import Adhan
 
 @available(macCatalyst 16.0, *)
 struct MacSidebarView: View {
     @Binding var section: MacSection
     @EnvironmentObject var manager: ObservableAthanManager
 
-    // Inline location-editor state.
+    @State private var showLocationEditor = false
     @State private var searchText = ""
     @State private var awaiting = false
     @State private var errored = false
+    @State private var bellVersion = 0          // forces the (non-published) bell state to refresh
     private let geocoder = CLGeocoder()
 
-    var body: some View {
-        List {
-            // ---- Inline location settings ----
-            Section {
-                locationEditor
-                    .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-            } header: {
-                Text(NSLocalizedString("location_header", value: "Location", comment: "Mac sidebar section header"))
-            }
+    private let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d
+    private let navSections: [MacSection] = [.calendar, .settings, .discover]
 
-            // ---- Section navigation ----
-            Section {
-                ForEach(MacSection.allCases) { s in
-                    Button { section = s } label: {
-                        Label(s.title, systemImage: s.symbol)
-                            .foregroundColor(section == s ? Color.accentColor : Color.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .listRowBackground(section == s ? Color.accentColor.opacity(0.15) : Color.clear)
-                }
+    private static let timeFormatter: DateFormatter = {
+        let f = DateFormatter(); f.timeStyle = .short; f.dateStyle = .none; return f
+    }()
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 2) {
+                locationHeader
+                if showLocationEditor { locationEditor.transition(.opacity.combined(with: .move(edge: .top))) }
+                sectionLabel(NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header"))
+                prayerList
+                    .id(bellVersion)
+                Spacer(minLength: 12)
             }
+            .padding(.top, 10)
+            .padding(.horizontal, 8)
         }
-        .listStyle(.sidebar)
+        .safeAreaInset(edge: .bottom) { navFooter }
+        .background(darkVibrancy)
     }
 
-    // MARK: - Inline location editor
+    // MARK: - Location header + inline editor
+
+    private var locationHeader: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.18)) { showLocationEditor.toggle() }
+        } label: {
+            HStack(spacing: 7) {
+                Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation
+                      ? "location.fill" : "location.slash")
+                    .font(.system(size: 12)).foregroundColor(.white.opacity(0.85))
+                Text(manager.locationName.isEmpty ? "—" : manager.locationName)
+                    .font(.system(size: 13, weight: .semibold)).foregroundColor(.white)
+                    .lineLimit(1).truncationMode(.tail)
+                Spacer(minLength: 6)
+                Image(systemName: showLocationEditor ? "chevron.down" : "chevron.right")
+                    .font(.system(size: 11, weight: .semibold)).foregroundColor(.white.opacity(0.45))
+            }
+            .padding(.horizontal, 10).padding(.vertical, 9)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
 
     private var locationEditor: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 6) {
-                Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation
-                      ? "location.fill" : "location.slash")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(manager.locationName.isEmpty ? "—" : manager.locationName)
-                    .font(.callout.weight(.semibold))
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                if awaiting { Spacer(minLength: 4); ProgressView().controlSize(.small) }
+            HStack(spacing: 7) {
+                Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundColor(.white.opacity(0.5))
+                TextField(NSLocalizedString("search_city", value: "Search city or coordinates", comment: ""),
+                          text: $searchText, onCommit: commitSearch)
+                    .textFieldStyle(.plain)
+                    .foregroundColor(.white)
+                    .autocorrectionDisabled(true)
+                    .onChange(of: searchText) { _ in errored = false }
+                if awaiting { ProgressView().controlSize(.mini) }
             }
-
-            TextField(NSLocalizedString("search_city", value: "Search city or coordinates…", comment: "Mac location search placeholder"),
-                      text: $searchText, onCommit: commitSearch)
-                .textFieldStyle(.roundedBorder)
-                .autocorrectionDisabled(true)
-                .onChange(of: searchText) { _ in errored = false }
+            .padding(.horizontal, 11).padding(.vertical, 10)
+            .background(RoundedRectangle(cornerRadius: 9).fill(Color.white.opacity(0.10)))
+            .overlay(RoundedRectangle(cornerRadius: 9).strokeBorder(Color.white.opacity(errored ? 0.5 : 0.12), lineWidth: 1))
 
             if errored {
-                Text(NSLocalizedString("location_not_found", value: "Couldn't find that place.", comment: "Mac location search error"))
-                    .font(.caption)
-                    .foregroundColor(.red)
+                Text(NSLocalizedString("location_not_found", value: "Couldn't find that place.", comment: ""))
+                    .font(.caption).foregroundColor(.red.opacity(0.9))
             }
 
             Button(action: useCurrentLocation) {
-                Label(NSLocalizedString("use_current_location_short", value: "Use Current Location", comment: "Mac location button"),
-                      systemImage: "location.fill")
-                    .font(.callout)
+                HStack(spacing: 6) {
+                    Image(systemName: "location.fill").font(.system(size: 12))
+                    Text(NSLocalizedString("use_current_location_short", value: "Use Current Location", comment: ""))
+                        .font(.system(size: 12.5, weight: .semibold))
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 9)
+                .background(RoundedRectangle(cornerRadius: 9).fill(Color.accentColor))
             }
-            .buttonStyle(.borderless)
+            .buttonStyle(.plain)
         }
-        .padding(.vertical, 2)
+        .padding(.horizontal, 8).padding(.bottom, 8).padding(.top, 2)
     }
 
-    // MARK: - Actions
+    // MARK: - Prayer list
+
+    private func sectionLabel(_ text: String) -> some View {
+        Text(text.uppercased())
+            .font(.system(size: 10.5, weight: .semibold))
+            .tracking(0.6)
+            .foregroundColor(.white.opacity(0.45))
+            .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 4)
+    }
+
+    private var prayerList: some View {
+        VStack(spacing: 1) {
+            ForEach(0..<6, id: \.self) { i in
+                prayerRow(Prayer(index: i))
+            }
+        }
+    }
+
+    private func prayerRow(_ p: Prayer) -> some View {
+        let isCurrent = manager.currentPrayer == p
+        let bellOn = AthanManager.shared.notificationSettings.settings[p]?.athanAlertEnabled ?? false
+        return HStack(spacing: 8) {
+            Text(p.localizedOrCustomString())
+                .font(.system(size: 13.5, weight: isCurrent ? .bold : .medium))
+                .foregroundColor(.white)
+            Spacer(minLength: 8)
+            Text(timeString(manager.todayTimes?.time(for: p)))
+                .font(.system(size: 13)).monospacedDigit()
+                .foregroundColor(isCurrent ? .white : .white.opacity(0.7))
+            Button { toggleBell(p) } label: {
+                Image(systemName: bellOn ? "bell.fill" : "bell.slash")
+                    .font(.system(size: 13))
+                    .foregroundColor(bellOn ? gold : .white.opacity(0.4))
+                    .frame(width: 22, height: 22)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 10).padding(.vertical, 7)
+        .background(
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(isCurrent ? 0.14 : 0))
+                if isCurrent {
+                    RoundedRectangle(cornerRadius: 2).fill(gold).frame(width: 3).padding(.vertical, 8)
+                }
+            }
+        )
+    }
+
+    // MARK: - Nav footer
+
+    private var navFooter: some View {
+        VStack(spacing: 1) {
+            Divider().overlay(Color.white.opacity(0.10))
+                .padding(.bottom, 4)
+            ForEach(navSections) { s in navItem(s) }
+        }
+        .padding(.horizontal, 8).padding(.top, 4).padding(.bottom, 10)
+        .background(darkVibrancy)
+    }
+
+    private func navItem(_ s: MacSection) -> some View {
+        let selected = section == s
+        return Button {
+            withAnimation(.easeInOut(duration: 0.15)) { section = selected ? .times : s }
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } label: {
+            HStack(spacing: 9) {
+                Image(systemName: s.symbol).font(.system(size: 14)).frame(width: 18)
+                Text(s.title).font(.system(size: 13, weight: selected ? .semibold : .regular))
+                Spacer()
+            }
+            .foregroundColor(selected ? gold : .white.opacity(0.72))
+            .padding(.horizontal, 11).padding(.vertical, 8)
+            .background(RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(selected ? 0.14 : 0)))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: - Style
+
+    private var darkVibrancy: some View {
+        ZStack {
+            Rectangle().fill(.ultraThinMaterial)
+            Color.black.opacity(0.42)
+        }
+        .ignoresSafeArea()
+    }
+
+    // MARK: - Helpers
+
+    private func timeString(_ date: Date?) -> String {
+        guard let date = date else { return "—" }
+        Self.timeFormatter.timeZone = AthanManager.shared.locationSettings.timeZone
+        return Self.timeFormatter.string(from: date)
+    }
+
+    private func toggleBell(_ p: Prayer) {
+        let m = AthanManager.shared
+        guard let updated = m.notificationSettings.copy() as? NotificationSettings,
+              let setting = updated.settings[p] else { return }
+        setting.athanAlertEnabled.toggle()
+        m.notificationSettings = updated
+        m.reloadSettingsAndNotifications()
+        bellVersion += 1
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    // MARK: - Location actions
 
     private func commitSearch() {
         let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
-        awaiting = true
-        errored = false
+        awaiting = true; errored = false
 
-        // "lat, lon" shorthand — save directly without geocoding a name.
         let cleaned = text.replacingOccurrences(of: "°", with: "").replacingOccurrences(of: " ", with: "")
         let parts = cleaned.split(separator: ",")
         if parts.count == 2, let lat = CLLocationDegrees(parts[0]), let lon = CLLocationDegrees(parts[1]) {
             geocoder.reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { placemarks, _ in
                 let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                 let pm = placemarks?.first
-                let tz = pm?.timeZone ?? Calendar.current.timeZone
-                save(name: pm.map { Self.displayName(for: $0, coord: coord) }
-                        ?? String(format: "%.2f°, %.2f°", lat, lon),
-                     coord: coord, timeZone: tz, countryCode: pm?.isoCountryCode)
+                save(name: pm.map { Self.displayName(for: $0, coord: coord) } ?? String(format: "%.2f°, %.2f°", lat, lon),
+                     coord: coord, timeZone: pm?.timeZone ?? Calendar.current.timeZone, countryCode: pm?.isoCountryCode)
             }
             return
         }
 
         geocoder.geocodeAddressString(text) { placemarks, error in
             guard let pm = placemarks?.first, let coord = pm.location?.coordinate, error == nil else {
-                awaiting = false
-                errored = true
-                return
+                awaiting = false; errored = true; return
             }
-            let tz = pm.timeZone ?? AthanManager.shared.locationSettings.timeZone
             save(name: Self.displayName(for: pm, coord: coord),
-                 coord: coord, timeZone: tz, countryCode: pm.isoCountryCode)
+                 coord: coord, timeZone: pm.timeZone ?? AthanManager.shared.locationSettings.timeZone,
+                 countryCode: pm.isoCountryCode)
         }
     }
 
@@ -132,12 +257,13 @@ struct MacSidebarView: View {
         _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: countryCode)
         awaiting = false
         searchText = ""
+        withAnimation { showLocationEditor = false }
     }
 
     private func useCurrentLocation() {
         if manager.locationPermissionsGranted {
-            // No capture closure → the manager auto-saves the fix, reloads, and updates the method.
             AthanManager.shared.attemptSingleLocationUpdate()
+            withAnimation { showLocationEditor = false }
         } else if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
             AthanManager.shared.requestLocationPermission()
         } else if let url = URL(string: UIApplication.openSettingsURLString) {

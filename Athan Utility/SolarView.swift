@@ -222,7 +222,9 @@ struct SolarView: View, Equatable {
                     Circle()
                         .foregroundColor(sunAppearance.1)
                         .shadow(color: sunAppearance.0, radius: sunAppearance.2)
-                        .animation(.linear, value: isDragging ? manualDayProgress : dayProgress)
+                        // No implicit position animation: drag smoothness comes from the gesture's
+                        // explicit withAnimation, and passive per-second steps are imperceptible.
+                        // An implicit animation here makes the sun lurch while resizing the window.
 //                        .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .frame(width: g.size.width / 30, height: g.size.width / 30)

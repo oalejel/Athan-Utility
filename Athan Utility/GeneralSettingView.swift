@@ -81,7 +81,13 @@ struct GeneralSettingView: View {
                                             (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
                                         }
                                     }
-                                
+
+                                // Feature-adoption grid: tiles collapse to checkmark pills as explored.
+                                if #available(iOS 14.0, *) {
+                                    SettingsFeatureGrid()
+                                        .padding(.top, 14)
+                                }
+
                                 VStack(alignment: .leading) { // stack of each settings selector
                                     Group { // Color picker
                                         VStack(alignment: .leading, spacing: 4) {

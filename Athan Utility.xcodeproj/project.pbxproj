@@ -201,6 +201,7 @@
 		E4497F14C9BF921045926568 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		EEE9C12DAFB5182B5387B21E /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
 		F19274B59ECB743AA7B8788D /* Prayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6F01E256184AA00C2C348 /* Prayer+Extensions.swift */; };
+		F5F556DAD920FB08C2A09C5C /* SettingsFeatureGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,6 +289,7 @@
 
 /* Begin PBXFileReference section */
 		11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AthanMenuBarHelper.swift; path = AthanMenuBarHelper/AthanMenuBarHelper.swift; sourceTree = "<group>"; };
+		1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsFeatureGrid.swift; sourceTree = "<group>"; };
 		249FF144570F802EB68430C8 /* CalendarExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportView.swift; sourceTree = "<group>"; };
 		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
 		2D6208A9193A03B2F8D89781 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				74BBB3291E869DA697F96A86 /* MacSidebarView.swift */,
 				CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */,
 				249FF144570F802EB68430C8 /* CalendarExportView.swift */,
+				1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1322,6 +1325,7 @@
 				A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */,
 				8738E0CCC68EED652EE97135 /* CalendarExportManager.swift in Sources */,
 				75622029F47EE8A65B211261 /* CalendarExportView.swift in Sources */,
+				F5F556DAD920FB08C2A09C5C /* SettingsFeatureGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

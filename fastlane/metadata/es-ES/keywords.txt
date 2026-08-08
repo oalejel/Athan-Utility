@@ -1,1 +1,1 @@
-athan,adhan,azan,horarios de oracion,salat,musulman,islam,qibla,hegira,ramadan,mezquita
+athan,adhan,azan,oración,salat,rezo,musulmán,islam,alquibla,hijri,ramadán,mezquita,namaz

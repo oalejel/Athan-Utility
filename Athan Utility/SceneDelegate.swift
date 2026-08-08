@@ -32,6 +32,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
 
+            #if targetEnvironment(macCatalyst)
+            // Hide the "Athan Utility" text in the Mac window's title bar for a cleaner look.
+            if let titlebar = windowScene.titlebar {
+                titlebar.titleVisibility = .hidden
+                titlebar.toolbar = nil
+            }
+            #endif
+
             // What's New is temporarily disabled. (This also keeps it suppressed
             // during snapshot / UI-test runs.) Delete this early return to re-enable.
             return

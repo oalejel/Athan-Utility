@@ -29,6 +29,13 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         guard statusItem == nil else { return }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = item.button {
+            // A recognizable moon glyph makes the item easy to spot among other menu extras.
+            if let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Athan Utility") {
+                img.isTemplate = true
+                button.image = img
+                button.imagePosition = .imageLeading
+                button.imageHugsTitle = true
+            }
             button.title = "Athan"
             button.target = self
             button.action = #selector(statusItemClicked)

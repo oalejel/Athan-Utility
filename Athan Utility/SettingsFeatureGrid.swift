@@ -46,6 +46,23 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
         }
     }
 
+    /// Vibrant 3-color gradient, unique per feature but all keyed off the app's blue-sky palette.
+    var gradientColors: [Color] {
+        switch self {
+        case .widgets:     return [Self.c(0x2E6BFF), Self.c(0x27B6FF), Self.c(0x18D6C6)] // sky → cyan → teal
+        case .lockWidgets: return [Self.c(0x4B5CFF), Self.c(0x7A4BFF), Self.c(0x2E9BFF)] // indigo → violet → blue
+        case .siri:        return [Self.c(0x8A4BFF), Self.c(0xE24BC0), Self.c(0x4B7BFF)] // purple → magenta → blue
+        case .calendar:    return [Self.c(0xFF9A3D), Self.c(0xFFC24D), Self.c(0xFF5D7A)] // amber → gold → coral
+        }
+    }
+
+    private static func c(_ hex: UInt) -> Color {
+        Color(.sRGB,
+              red: Double((hex >> 16) & 0xFF) / 255,
+              green: Double((hex >> 8) & 0xFF) / 255,
+              blue: Double(hex & 0xFF) / 255)
+    }
+
     // Persistence (shared app-group defaults so it survives relaunches).
     private static let defaultsKey = "adoptedFeaturesV1"
     private static var store: UserDefaults? { UserDefaults(suiteName: "group.athanUtil") }
@@ -62,6 +79,7 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
 struct SettingsFeatureGrid: View {
     @State private var done: Set<AdoptedFeature>
     @State private var activeSheet: AdoptedFeature?
+    @State private var gradientPhase = false
     @Namespace private var ns
 
     init() { _done = State(initialValue: AdoptedFeature.loadDone()) }
@@ -79,6 +97,17 @@ struct SettingsFeatureGrid: View {
             }
         }
         .sheet(item: $activeSheet) { sheetContent(for: $0) }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 7).repeatForever(autoreverses: true)) {
+                gradientPhase = true
+            }
+        }
+    }
+
+    private func tileGradient(_ f: AdoptedFeature) -> LinearGradient {
+        LinearGradient(colors: f.gradientColors,
+                       startPoint: gradientPhase ? .topLeading : .top,
+                       endPoint: gradientPhase ? .bottom : .bottomTrailing)
     }
 
     // Done features flow as compact pills, two per row, left-aligned.
@@ -119,7 +148,7 @@ struct SettingsFeatureGrid: View {
             }
             .frame(maxWidth: .infinity, minHeight: 118, alignment: .leading)
             .padding(14)
-            .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(f.tint))
+            .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(tileGradient(f)))
             .overlay(
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 16))
@@ -139,7 +168,7 @@ struct SettingsFeatureGrid: View {
                 Text(f.title).font(.system(size: 13, weight: .semibold)).foregroundColor(.white).lineLimit(1)
             }
             .padding(.horizontal, 12).padding(.vertical, 8)
-            .background(Capsule().fill(f.tint))
+            .background(Capsule().fill(tileGradient(f)))
         }
         .buttonStyle(PlainButtonStyle())
         .matchedGeometryEffect(id: f.id, in: ns)

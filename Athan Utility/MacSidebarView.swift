@@ -23,12 +23,14 @@ struct MacSidebarView: View {
     @State private var searchText = ""
     @State private var awaiting = false
     @State private var errored = false
+    @State private var locating = false
+    @State private var locationStatus: String?
     @State private var bellVersion = 0          // forces the (non-published) bell state to refresh
     @State private var dayOffset = 0            // 0 = today; prev/next-day browsing
     private let geocoder = CLGeocoder()
 
     private let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d
-    private let navSections: [MacSection] = [.calendar, .settings, .discover]
+    private let navSections: [MacSection] = [.settings, .calendar, .discover]
 
     private static let timeFormatter: DateFormatter = {
         let f = DateFormatter(); f.timeStyle = .short; f.dateStyle = .none; return f
@@ -37,8 +39,6 @@ struct MacSidebarView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 2) {
-                locationHeader
-                if showLocationEditor { locationEditor.transition(.opacity.combined(with: .move(edge: .top))) }
                 sectionLabel(dayOffset == 0
                              ? NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header")
                              : NSLocalizedString("prayer_times", value: "Prayer Times", comment: "Sidebar prayer list header, non-today"))
@@ -99,8 +99,11 @@ struct MacSidebarView: View {
 
             Button(action: useCurrentLocation) {
                 HStack(spacing: 6) {
-                    Image(systemName: "location.fill").font(.system(size: 12))
-                    Text(NSLocalizedString("use_current_location_short", value: "Use Current Location", comment: ""))
+                    if locating { ProgressView().controlSize(.small) }
+                    else { Image(systemName: "location.fill").font(.system(size: 12)) }
+                    Text(locating
+                         ? NSLocalizedString("loc_locating", value: "Locating…", comment: "")
+                         : Strings.useCurrentLocation)
                         .font(.system(size: 12.5, weight: .semibold))
                 }
                 .foregroundColor(.white)
@@ -109,6 +112,14 @@ struct MacSidebarView: View {
                 .background(RoundedRectangle(cornerRadius: 9).fill(Color.accentColor))
             }
             .buttonStyle(.plain)
+            .disabled(locating)
+
+            if let status = locationStatus {
+                Text(status)
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.85))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .padding(.horizontal, 8).padding(.bottom, 8).padding(.top, 2)
     }
@@ -231,9 +242,11 @@ struct MacSidebarView: View {
     // MARK: - Nav footer
 
     private var navFooter: some View {
-        VStack(spacing: 1) {
+        VStack(alignment: .leading, spacing: 1) {
             Divider().overlay(Color.white.opacity(0.10))
                 .padding(.bottom, 4)
+            locationHeader
+            if showLocationEditor { locationEditor.transition(.opacity.combined(with: .move(edge: .top))) }
             ForEach(navSections) { s in navItem(s) }
         }
         .padding(.horizontal, 8).padding(.top, 4).padding(.bottom, 10)
@@ -330,13 +343,27 @@ struct MacSidebarView: View {
     }
 
     private func useCurrentLocation() {
+        let status = AthanManager.shared.locationManager.authorizationStatus
         if manager.locationPermissionsGranted {
-            AthanManager.shared.attemptSingleLocationUpdate()
-            withAnimation { showLocationEditor = false }
-        } else if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
+            locating = true
+            locationStatus = nil
+            AthanManager.shared.attemptSingleLocationUpdate { settings in
+                locating = false
+                if let s = settings {
+                    AthanManager.shared.locationSettings = s
+                    AthanManager.shared.reloadSettingsAndNotifications()
+                    _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
+                    locationStatus = nil
+                    withAnimation { showLocationEditor = false }
+                } else {
+                    locationStatus = NSLocalizedString("loc_failed", value: "Couldn't get your location. Please try again.", comment: "")
+                }
+            }
+        } else if status == .notDetermined {
+            locationStatus = NSLocalizedString("loc_requesting", value: "Requesting location access — approve the prompt, then tap again.", comment: "")
             AthanManager.shared.requestLocationPermission()
-        } else if let url = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(url)
+        } else {
+            locationStatus = NSLocalizedString("loc_denied", value: "Location access is off. Turn it on in System Settings › Privacy & Security › Location Services.", comment: "")
         }
     }
 

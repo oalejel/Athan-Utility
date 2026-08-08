@@ -107,6 +107,7 @@ enum FeatureDiscovery {
 
 struct FeatureDiscoveryView: View {
     @Environment(\.presentationMode) private var presentationMode
+    @State private var macSelected: DiscoveryFeature?
 
     private var isMac: Bool {
         #if targetEnvironment(macCatalyst)
@@ -119,58 +120,60 @@ struct FeatureDiscoveryView: View {
     private let footerText = NSLocalizedString("feature_discovery_footer", value: "Everything here lives in the app — this is just a quick tour.", comment: "Discovery list footer")
 
     var body: some View {
-        NavigationView {
-            content
-                .navigationBarTitle(Text(Strings.discoverFeatures), displayMode: .inline)
-                .navigationBarItems(trailing: Group {
-                    if !isMac {   // on Mac this is a sidebar pane, not a sheet — no Done needed
-                        Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                            Text(Strings.done).fontWeight(.semibold)
-                        }
-                        .accessibilityIdentifier("discoverDone")
-                    }
-                })
+        Group {
+            if isMac {
+                macGrid
+            } else {
+                NavigationView {
+                    iosList
+                        .navigationBarTitle(Text(Strings.discoverFeatures), displayMode: .inline)
+                        .navigationBarItems(trailing:
+                            Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                                Text(Strings.done).fontWeight(.semibold)
+                            }
+                            .accessibilityIdentifier("discoverDone")
+                        )
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())   // don't become a split view on Catalyst
         .onAppear { FeatureDiscovery.hasSeen = true }
     }
 
-    @ViewBuilder private var content: some View {
-        if isMac {
-            macGrid
-        } else {
-            List {
-                Section {
-                    DiscoveryIconHeader()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 4, trailing: 0))
-                }
-                Section(footer: Text(footerText).font(.footnote)) {
-                    ForEach(FeatureDiscovery.features) { feature in
-                        NavigationLink(destination: FeatureDetailView(feature: feature)) {
-                            FeatureRow(feature: feature)
-                        }
-                        .accessibilityIdentifier(feature.showsWidgetPreviews ? "featureWidgetsRow" : "featureRow")
-                    }
-                }
-            }
-            .listStyle(InsetGroupedListStyle())
-        }
-    }
-
-    // Wide, grid-based layout that fills the Mac detail pane.
-    private var macGrid: some View {
-        ScrollView {
-            VStack(spacing: 18) {
+    private var iosList: some View {
+        List {
+            Section {
                 DiscoveryIconHeader()
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.top, 14)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 4, trailing: 0))
+            }
+            Section(footer: Text(footerText).font(.footnote)) {
+                ForEach(FeatureDiscovery.features) { feature in
+                    NavigationLink(destination: FeatureDetailView(feature: feature)) {
+                        FeatureRow(feature: feature)
+                    }
+                    .accessibilityIdentifier(feature.showsWidgetPreviews ? "featureWidgetsRow" : "featureRow")
+                }
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
+    }
+
+    // Wide, grid-based layout that fills the Mac detail pane. Title sits top-left; a card
+    // opens its detail as a sheet (with a Done button) so there's always a clear way back.
+    private var macGrid: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text(Strings.discoverFeatures)
+                    .font(.system(size: 30, weight: .bold))
+                    .padding(.horizontal, 24)
+                    .padding(.top, 22)
 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 250, maximum: 360), spacing: 16)],
                           alignment: .leading, spacing: 16) {
                     ForEach(FeatureDiscovery.features) { feature in
-                        NavigationLink(destination: FeatureDetailView(feature: feature)) {
+                        Button { macSelected = feature } label: {
                             FeatureCard(feature: feature)
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -182,8 +185,20 @@ struct FeatureDiscoveryView: View {
                 Text(footerText)
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                    .padding(.horizontal, 24)
                     .padding(.bottom, 24)
             }
+        }
+        .sheet(item: $macSelected) { feature in
+            NavigationView {
+                FeatureDetailView(feature: feature)
+                    .navigationBarTitle(Text(feature.title), displayMode: .inline)
+                    .navigationBarItems(trailing: Button(NSLocalizedString("done", value: "Done", comment: "")) {
+                        macSelected = nil
+                    })
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .frame(minWidth: 460, minHeight: 500)
         }
     }
 }

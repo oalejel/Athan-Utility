@@ -24,6 +24,7 @@ struct MacSidebarView: View {
     @State private var awaiting = false
     @State private var errored = false
     @State private var bellVersion = 0          // forces the (non-published) bell state to refresh
+    @State private var dayOffset = 0            // 0 = today; prev/next-day browsing
     private let geocoder = CLGeocoder()
 
     private let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d
@@ -38,9 +39,12 @@ struct MacSidebarView: View {
             VStack(alignment: .leading, spacing: 2) {
                 locationHeader
                 if showLocationEditor { locationEditor.transition(.opacity.combined(with: .move(edge: .top))) }
-                sectionLabel(NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header"))
+                sectionLabel(dayOffset == 0
+                             ? NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header")
+                             : NSLocalizedString("prayer_times", value: "Prayer Times", comment: "Sidebar prayer list header, non-today"))
                 prayerList
-                    .id(bellVersion)
+                    .id("\(bellVersion)-\(dayOffset)")
+                dayNavigator
                 Spacer(minLength: 12)
             }
             .padding(.top, 10)
@@ -128,15 +132,25 @@ struct MacSidebarView: View {
         }
     }
 
+    /// Times for the browsed day: today's live times when offset == 0, otherwise computed.
+    private var selectedTimes: PrayerTimes? {
+        if dayOffset == 0 { return manager.todayTimes }
+        return AthanManager.shared.calculateTimes(referenceDate: selectedDate,
+                                                  adjustments: AthanManager.shared.notificationSettings.adjustments())
+    }
+    private var selectedDate: Date {
+        Calendar.current.date(byAdding: .day, value: dayOffset, to: Date()) ?? Date()
+    }
+
     private func prayerRow(_ p: Prayer) -> some View {
-        let isCurrent = manager.currentPrayer == p
+        let isCurrent = dayOffset == 0 && manager.currentPrayer == p
         let bellOn = AthanManager.shared.notificationSettings.settings[p]?.athanAlertEnabled ?? false
         return HStack(spacing: 8) {
             Text(p.localizedOrCustomString())
                 .font(.system(size: 16, weight: isCurrent ? .bold : .medium))
                 .foregroundColor(.white)
             Spacer(minLength: 8)
-            Text(timeString(manager.todayTimes?.time(for: p)))
+            Text(timeString(selectedTimes?.time(for: p)))
                 .font(.system(size: 15.5, weight: isCurrent ? .semibold : .regular)).monospacedDigit()
                 .foregroundColor(isCurrent ? .white : .white.opacity(0.75))
             Button { toggleBell(p) } label: {
@@ -157,6 +171,55 @@ struct MacSidebarView: View {
                 }
             }
         )
+    }
+
+    // MARK: - Day navigator (prev / next day around the Hijri date)
+
+    private static let gregFormatter: DateFormatter = {
+        let f = DateFormatter(); f.dateStyle = .medium; f.timeStyle = .none; return f
+    }()
+
+    private var dayNavigator: some View {
+        HStack(spacing: 6) {
+            navArrow("chevron.backward") { withAnimation(.easeInOut(duration: 0.15)) { dayOffset -= 1 } }
+
+            Button {
+                if dayOffset != 0 { withAnimation(.easeInOut(duration: 0.15)) { dayOffset = 0 } }
+            } label: {
+                VStack(spacing: 1) {
+                    Text(MainSwiftUI.hijriDateString(date: selectedDate, isAccessibilityLabel: false))
+                        .font(.system(size: 12.5, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.9))
+                        .lineLimit(1).minimumScaleFactor(0.65)
+                    if dayOffset != 0 {
+                        Text(Self.gregFormatter.string(from: selectedDate))
+                            .font(.system(size: 10.5))
+                            .foregroundColor(gold.opacity(0.9))
+                            .lineLimit(1).minimumScaleFactor(0.7)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(MainSwiftUI.hijriDateString(date: selectedDate, isAccessibilityLabel: true))
+            .accessibilityHint(dayOffset == 0 ? "" : NSLocalizedString("tap_return_today", value: "Return to today", comment: ""))
+
+            navArrow("chevron.forward") { withAnimation(.easeInOut(duration: 0.15)) { dayOffset += 1 } }
+        }
+        .padding(.horizontal, 6).padding(.top, 10).padding(.bottom, 2)
+    }
+
+    private func navArrow(_ symbol: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(.white.opacity(0.85))
+                .frame(width: 30, height: 30)
+                .background(Circle().fill(Color.white.opacity(0.08)))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Nav footer

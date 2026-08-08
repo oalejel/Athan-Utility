@@ -184,7 +184,9 @@
 		6C96A68592E36C5E664921EE /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6F25A6A04D00DC7331 /* NotificationController.swift */; };
 		6E1DD03E4AE1C1EBED0DA3DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA6F9D45173A1453E89EA52 /* Cocoa.framework */; };
 		6EF3C4A4213F51990FCED645 /* MenuBarHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */; };
+		75622029F47EE8A65B211261 /* CalendarExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FF144570F802EB68430C8 /* CalendarExportView.swift */; };
 		8690A5C2BD9C1D57EB568A86 /* CustomExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD26B5125B25FAF00460BC3 /* CustomExtensionDelegate.swift */; };
+		8738E0CCC68EED652EE97135 /* CalendarExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */; };
 		8CB28D8A28F081C9E049873F /* MenuBarHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */; };
 		9241BDE9119B3F6F927C9A2A /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7125A6A04D00DC7331 /* NotificationView.swift */; };
 		9543B22D38BD48FCD63E5D98 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
@@ -286,6 +288,7 @@
 
 /* Begin PBXFileReference section */
 		11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AthanMenuBarHelper.swift; path = AthanMenuBarHelper/AthanMenuBarHelper.swift; sourceTree = "<group>"; };
+		249FF144570F802EB68430C8 /* CalendarExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportView.swift; sourceTree = "<group>"; };
 		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
 		2D6208A9193A03B2F8D89781 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DA9A325537C956F8CBBB2CE /* fa */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -469,6 +472,7 @@
 		AF10629E04FA05B477D8EC1C /* bn */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; includeInIndex = 0; path = AthanMenuBarHelper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotSupport.swift; sourceTree = "<group>"; };
+		CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportManager.swift; sourceTree = "<group>"; };
 		D24DFC1885F2D6D66EB5B55C /* ms */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D974F5773AF306388EB4A303 /* MenuBarBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarBridge.swift; path = AthanMenuBarHelper/MenuBarBridge.swift; sourceTree = "<group>"; };
 		F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarHelperProtocol.swift; path = AthanMenuBarHelper/MenuBarHelperProtocol.swift; sourceTree = "<group>"; };
@@ -639,6 +643,8 @@
 				F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */,
 				2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */,
 				74BBB3291E869DA697F96A86 /* MacSidebarView.swift */,
+				CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */,
+				249FF144570F802EB68430C8 /* CalendarExportView.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1314,6 +1320,8 @@
 				D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */,
 				639733C717984783246DDCCC /* WidgetPreviews.swift in Sources */,
 				A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */,
+				8738E0CCC68EED652EE97135 /* CalendarExportManager.swift in Sources */,
+				75622029F47EE8A65B211261 /* CalendarExportView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

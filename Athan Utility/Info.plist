@@ -39,6 +39,10 @@
 	<string>Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>Athan times for requested regions are used by Siri.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Athan Utility adds prayer times to a dedicated calendar so you can see Salah times in your schedule.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Athan Utility adds prayer times to a dedicated calendar so you can see Salah times in your schedule.</string>
 	<key>NSSupportsLiveActivities</key>
 	<false/>
 	<key>NSUserActivityTypes</key>

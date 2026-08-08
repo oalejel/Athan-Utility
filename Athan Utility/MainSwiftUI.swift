@@ -284,11 +284,15 @@ struct MainSwiftUI: View {
                 .background(Color(.systemBackground).ignoresSafeArea())
                 .preferredColorScheme(.dark)
         case .settings:
-            ZStack {
-                GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
-                    .equatable()
-                    .ignoresSafeArea()
-                SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
+            if #available(iOS 16.0, *) {
+                MacSettingsView()   // native grouped Form on Mac
+            } else {
+                ZStack {
+                    GradientView(currentPrayer: $dayProgressState.nonOptionalPreviewPrayer, appearance: $manager.appearance)
+                        .equatable()
+                        .ignoresSafeArea()
+                    SettingsView(parentSession: $currentView, initialSection: settingsInitialSection)
+                }
             }
         case .discover:
             FeatureDiscoveryView()

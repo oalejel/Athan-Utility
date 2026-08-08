@@ -193,6 +193,7 @@
 		9543B22D38BD48FCD63E5D98 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
 		9D2ACAE0892ED1D947DBB069 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BBB3291E869DA697F96A86 /* MacSidebarView.swift */; };
+		AB793B5ED9D92D6F8C50104D /* MacSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72E85251E4B82AA52547AE /* MacSettingsView.swift */; };
 		B7FB46B8D3206158794AE536 /* AthanMenuBarHelper.bundle in Embed Menu Bar Helper */ = {isa = PBXBuildFile; fileRef = BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */; platformFilters = (maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAF829F0821983AAD61BD25C /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = AC2133E50300F5E25DA14A35 /* Adhan */; };
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
@@ -295,6 +296,7 @@
 		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
 		2D6208A9193A03B2F8D89781 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2DA9A325537C956F8CBBB2CE /* fa */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3A72E85251E4B82AA52547AE /* MacSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacSettingsView.swift; sourceTree = "<group>"; };
 		3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Athan_Widget.intentdefinition; sourceTree = "<group>"; };
 		3D07894B25998D8E0047DD00 /* CalculationMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationMethodView.swift; sourceTree = "<group>"; };
 		3D0789722599B8C50047DD00 /* NameOverridesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameOverridesView.swift; sourceTree = "<group>"; };
@@ -651,6 +653,7 @@
 				249FF144570F802EB68430C8 /* CalendarExportView.swift */,
 				1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */,
 				8734E5FB26339F5FFD354C18 /* AthanAppIntents.swift */,
+				3A72E85251E4B82AA52547AE /* MacSettingsView.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1330,6 +1333,7 @@
 				75622029F47EE8A65B211261 /* CalendarExportView.swift in Sources */,
 				F5F556DAD920FB08C2A09C5C /* SettingsFeatureGrid.swift in Sources */,
 				5904A0622306CD7D4436A97A /* AthanAppIntents.swift in Sources */,
+				AB793B5ED9D92D6F8C50104D /* MacSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

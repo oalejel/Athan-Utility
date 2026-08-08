@@ -317,8 +317,8 @@ struct MainSwiftUI: View {
 
                     macCountdownText()
                         .font(.system(size: 17.5))
-                        .lineLimit(2)
-                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)   // stay on one line; shrink only if truly needed
                         .opacity(dayProgressState.isDragging ? 0.25 : 1)
 
                     ProgressBar(progress: max(0, min(1, macProgress)), lineWidth: 13,

@@ -217,6 +217,15 @@ struct SolarView: View, Equatable {
                                                    dashPhase: 0))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .foregroundColor(Color(.lightText))
+                        // Fade the dashed curve's ends to match the horizon line.
+                        .mask(
+                            LinearGradient(stops: [
+                                .init(color: .clear, location: 0.0),
+                                .init(color: .white, location: 0.10),
+                                .init(color: .white, location: 0.90),
+                                .init(color: .clear, location: 1.0)
+                            ], startPoint: .leading, endPoint: .trailing)
+                        )
 
                     let sunAppearance = colorForProgress()
                     Circle()

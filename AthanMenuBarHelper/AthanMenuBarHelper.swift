@@ -135,6 +135,7 @@ struct MenuBarPopoverView: View {
 
     private var topColor: Color { model.snapshot.map { Color(cgColor: $0.topColor) } ?? .black }
     private var bottomColor: Color { model.snapshot.map { Color(cgColor: $0.bottomColor) } ?? .blue }
+    static let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d — current-prayer accent
 
     var body: some View {
         VStack(spacing: 0) {
@@ -144,15 +145,16 @@ struct MenuBarPopoverView: View {
                     HStack(spacing: 10) {
                         Text(row.name)
                             .fontWeight(row.isCurrent ? .bold : .regular)
+                            .foregroundColor(row.isCurrent ? Self.gold : .white)
                         Spacer(minLength: 8)
                         Text(row.timeText)
                             .monospacedDigit()
-                            .opacity(0.95)
+                            .foregroundColor(row.isCurrent ? .white : .white.opacity(0.9))
                         Button(action: { onToggleBell(row.prayerIndex) }) {
                             Image(systemName: row.isBellOn ? "bell.fill" : "bell.slash")
                                 .frame(width: 22, height: 22)
                                 .contentShape(Rectangle())
-                                .opacity(row.isBellOn ? 1.0 : 0.5)
+                                .foregroundColor(row.isBellOn ? Self.gold : .white.opacity(0.45))
                         }
                         .buttonStyle(.plain)
                     }
@@ -160,6 +162,14 @@ struct MenuBarPopoverView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 8)
+                    .background(
+                        ZStack(alignment: .leading) {
+                            Rectangle().fill(Color.white.opacity(row.isCurrent ? 0.12 : 0))
+                            if row.isCurrent {
+                                Rectangle().fill(Self.gold).frame(width: 3)
+                            }
+                        }
+                    )
 
                     if pair.offset < snap.rows.count - 1 {
                         Divider().overlay(Color.white.opacity(0.18)).padding(.leading, 14)

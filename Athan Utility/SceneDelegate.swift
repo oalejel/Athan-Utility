@@ -38,6 +38,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 titlebar.titleVisibility = .hidden
                 titlebar.toolbar = nil
             }
+            // Default window geometry: a wide ~2:1 window whose height lets the sidebar's
+            // prayer list + Hijri day navigator meet the nav divider with even padding.
+            // Force the opening size once (first launch), then relax the minimum so the
+            // window stays freely resizable and later launches restore the user's size.
+            if let sr = windowScene.sizeRestrictions {
+                sr.minimumSize = CGSize(width: 760, height: 480)
+                sr.maximumSize = CGSize(width: 4200, height: 2800)
+                let key = "didSetDefaultMacWindowSize"
+                if !UserDefaults.standard.bool(forKey: key) {
+                    UserDefaults.standard.set(true, forKey: key)
+                    sr.minimumSize = CGSize(width: 1160, height: 580)   // ~2:1 default
+                    DispatchQueue.main.async {
+                        sr.minimumSize = CGSize(width: 760, height: 480)
+                    }
+                }
+            }
             #endif
 
             // What's New is temporarily disabled. (This also keeps it suppressed

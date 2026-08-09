@@ -79,7 +79,6 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
 struct SettingsFeatureGrid: View {
     @State private var done: Set<AdoptedFeature>
     @State private var activeSheet: AdoptedFeature?
-    @State private var gradientPhase = false
     @Namespace private var ns
 
     init() { _done = State(initialValue: AdoptedFeature.loadDone()) }
@@ -96,28 +95,23 @@ struct SettingsFeatureGrid: View {
                 squareRows
             }
         }
-        .sheet(item: $activeSheet) { sheetContent(for: $0) }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 7).repeatForever(autoreverses: true)) {
-                gradientPhase = true
-            }
-        }
+        // Force dark so the detail sheets stay readable regardless of system light/dark.
+        .sheet(item: $activeSheet) { sheetContent(for: $0).preferredColorScheme(.dark) }
     }
 
-    private func tileGradient(_ f: AdoptedFeature) -> LinearGradient {
-        LinearGradient(colors: f.gradientColors,
-                       startPoint: gradientPhase ? .topLeading : .top,
-                       endPoint: gradientPhase ? .bottom : .bottomTrailing)
+    private func tileBackground(_ f: AdoptedFeature) -> some View {
+        GlowingTileBackground(colors: f.gradientColors)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    // Done features flow as compact pills, two per row, left-aligned.
+    // Done features become half-width tiles (2 per row) with a right disclosure on the far edge.
     private var pillRows: some View {
         let rows = chunk(doneList, by: 2)
-        return VStack(alignment: .leading, spacing: 8) {
+        return VStack(spacing: 10) {
             ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                HStack(spacing: 8) {
+                HStack(spacing: 10) {
                     ForEach(row) { pill($0) }
-                    Spacer(minLength: 0)
+                    if row.count == 1 { Color.clear.frame(maxWidth: .infinity) }
                 }
             }
         }
@@ -148,7 +142,7 @@ struct SettingsFeatureGrid: View {
             }
             .frame(maxWidth: .infinity, minHeight: 118, alignment: .leading)
             .padding(14)
-            .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(tileGradient(f)))
+            .background(tileBackground(f))
             .overlay(
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 16))
@@ -163,12 +157,16 @@ struct SettingsFeatureGrid: View {
 
     private func pill(_ f: AdoptedFeature) -> some View {
         Button { activate(f) } label: {
-            HStack(spacing: 6) {
-                Image(systemName: "checkmark.circle.fill").font(.system(size: 13)).foregroundColor(.white)
-                Text(f.title).font(.system(size: 13, weight: .semibold)).foregroundColor(.white).lineLimit(1)
+            HStack(spacing: 8) {
+                Text(f.title).font(.system(size: 15, weight: .bold)).foregroundColor(.white).lineLimit(1)
+                Spacer(minLength: 6)
+                Image(systemName: "chevron.right.circle.fill")
+                    .font(.system(size: 20))
+                    .foregroundColor(.white.opacity(0.92))
             }
-            .padding(.horizontal, 12).padding(.vertical, 8)
-            .background(Capsule().fill(tileGradient(f)))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14).padding(.vertical, 15)
+            .background(tileBackground(f))
         }
         .buttonStyle(PlainButtonStyle())
         .matchedGeometryEffect(id: f.id, in: ns)
@@ -180,6 +178,7 @@ struct SettingsFeatureGrid: View {
             done.insert(f)
         }
         AdoptedFeature.saveDone(done)
+        ExploreSettingsNudge.cancel() // user explored a feature — no need for the nudge anymore
         activeSheet = f
     }
 
@@ -194,6 +193,44 @@ struct SettingsFeatureGrid: View {
         case .widgets:     WidgetHowToView(kind: .home)
         case .lockWidgets: WidgetHowToView(kind: .lock)
         }
+    }
+}
+
+// MARK: - Glowing tile background
+
+/// Three soft, slowly-moving colored glows over a dark base — a calm "lava lamp" fill that
+/// keeps white text legible (not a flat, over-bright linear gradient).
+@available(iOS 14.0, *)
+private struct GlowingTileBackground: View {
+    let colors: [Color]
+    @State private var animate = false
+
+    var body: some View {
+        GeometryReader { g in
+            let w = g.size.width, h = g.size.height
+            ZStack {
+                Color(.sRGB, red: 0.05, green: 0.08, blue: 0.15, opacity: 1)   // dark base
+                blob(color(0), w: w, h: h, from: CGPoint(x: 0.22, y: 0.28), to: CGPoint(x: 0.68, y: 0.16))
+                blob(color(1), w: w, h: h, from: CGPoint(x: 0.82, y: 0.72), to: CGPoint(x: 0.34, y: 0.86))
+                blob(color(2), w: w, h: h, from: CGPoint(x: 0.5,  y: 0.95), to: CGPoint(x: 0.55, y: 0.42))
+            }
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 5.5).repeatForever(autoreverses: true)) { animate = true }
+        }
+    }
+
+    private func color(_ i: Int) -> Color { colors.indices.contains(i) ? colors[i] : (colors.first ?? .blue) }
+
+    private func blob(_ c: Color, w: CGFloat, h: CGFloat, from: CGPoint, to: CGPoint) -> some View {
+        let d = max(w, h) * 0.95
+        let p = animate ? to : from
+        return Circle()
+            .fill(RadialGradient(gradient: Gradient(colors: [c.opacity(0.55), c.opacity(0)]),
+                                 center: .center, startRadius: 0, endRadius: d * 0.5))
+            .frame(width: d, height: d)
+            .position(x: p.x * w, y: p.y * h)
+            .blur(radius: 16)
     }
 }
 

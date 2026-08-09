@@ -99,8 +99,12 @@ struct CalendarExportView: View {
                     }
                 }
 
-                Section(footer: Text(String(format: NSLocalizedString("cal_estimate_footer",
-                        value: "About %d events will be added to a dedicated \u{201C}Athan Utility\u{201D} calendar.", comment: ""), estimatedEvents))) {
+                Section(footer: VStack(alignment: .leading, spacing: 8) {
+                    Text(String(format: NSLocalizedString("cal_estimate_footer",
+                        value: "About %d events will be added to a dedicated \u{201C}Athan Utility\u{201D} calendar. Events are stamped with your current location.", comment: ""), estimatedEvents))
+                    Label(NSLocalizedString("cal_tip", value: "Tip: when you change location or extend the range, use Remove to clear the old events first — adding again always clears and rebuilds them.", comment: ""), systemImage: "lightbulb.fill")
+                        .font(.footnote)
+                }) {
                     Button(action: startExport) {
                         HStack {
                             if status == .working {

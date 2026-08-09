@@ -171,6 +171,8 @@ final class MenuBarPopoverController: NSViewController {
     override func loadView() {
         let v = NSView(frame: NSRect(x: 0, y: 0, width: contentWidth, height: 320))
         v.wantsLayer = true
+        // Dark-themed controls so the segmented control / buttons stay legible on the gradient.
+        v.appearance = NSAppearance(named: .darkAqua)
         gradient.frame = v.bounds
         gradient.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
         gradient.startPoint = CGPoint(x: 0.5, y: 1)   // top
@@ -224,7 +226,6 @@ final class MenuBarPopoverController: NSViewController {
             trackingMode: .selectOne, target: self, action: #selector(displayModeChanged(_:)))
         seg.selectedSegment = snap.displayMode
         seg.segmentDistribution = .fillEqually
-        seg.selectedSegmentBezelColor = kGold
         seg.translatesAutoresizingMaskIntoConstraints = false
         seg.widthAnchor.constraint(equalToConstant: inset).isActive = true
         stack.addArrangedSubview(seg)

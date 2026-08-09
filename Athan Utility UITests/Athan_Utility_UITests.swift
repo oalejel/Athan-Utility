@@ -67,6 +67,54 @@ class Athan_Utility_UITests: XCTestCase {
         }
     }
 
+    /// Walks every screen with dwell time — meant to be screen-recorded into a demo video.
+    func testDemoWalkthrough() {
+        continueAfterFailure = true
+        let app = XCUIApplication()
+        app.launchArguments += ["-UITEST_DEMO"]
+        app.launch()
+
+        let settings = app.buttons["settingsButton"]
+        _ = settings.waitForExistence(timeout: 15)
+        sleep(3) // linger on the main screen
+
+        // Discover features → a feature detail → back → done
+        let discover = app.buttons["discoverButton"]
+        if discover.waitForExistence(timeout: 5) {
+            discover.tap(); sleep(3)
+            let widgetsRow = app.cells.element(boundBy: 1)
+            if widgetsRow.waitForExistence(timeout: 4) {
+                widgetsRow.tap(); sleep(3)
+                let back = app.navigationBars.buttons.element(boundBy: 0)
+                if back.exists { back.tap(); sleep(1) }
+            }
+            let done = app.buttons["discoverDone"]
+            if done.waitForExistence(timeout: 4) { done.tap(); sleep(1) }
+        }
+
+        // Settings — scroll through, then back
+        settings.tap(); sleep(3)
+        app.swipeUp(); sleep(2)
+        app.swipeDown(); sleep(1)
+        let settingsDone = app.buttons["settingsDoneButton"]
+        if settingsDone.waitForExistence(timeout: 5) { settingsDone.tap(); sleep(1) }
+
+        // Location
+        let location = app.buttons["locationButton"]
+        if location.waitForExistence(timeout: 5) {
+            location.tap(); sleep(3)
+            let locationDone = app.buttons["locationDoneButton"]
+            if locationDone.waitForExistence(timeout: 5) { locationDone.tap(); sleep(1) }
+        }
+
+        // Monthly calendar
+        let calendar = app.buttons["calendarButton"]
+        if calendar.waitForExistence(timeout: 5) {
+            calendar.tap(); sleep(4)
+        }
+        sleep(2)
+    }
+
     /// Captures the first-launch intro settings (with the country recommendation).
     func testIntroScreenshot() {
         continueAfterFailure = false

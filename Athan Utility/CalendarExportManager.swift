@@ -96,9 +96,11 @@ final class CalendarExportManager {
                 let lastDay = greg.startOfDay(for: options.endDate)
                 let dayCount = max(0, greg.dateComponents([.day], from: startDay, to: lastDay).day ?? 0)
 
-                // Clear existing Athan events in the range to avoid duplicates on re-run.
-                let clearEnd = greg.date(byAdding: .day, value: 1, to: lastDay) ?? options.endDate
-                let pred = self.store.predicateForEvents(withStart: startDay, end: clearEnd, calendars: [calendar])
+                // Always clear ALL existing Athan events before a new load — a location or
+                // timing change makes the old ones wrong, so we never want stale events left.
+                let clearStart = greg.date(byAdding: .year, value: -2, to: startDay) ?? startDay
+                let clearEnd = greg.date(byAdding: .year, value: 5, to: lastDay) ?? lastDay
+                let pred = self.store.predicateForEvents(withStart: clearStart, end: clearEnd, calendars: [calendar])
                 for e in self.store.events(matching: pred) {
                     try? self.store.remove(e, span: .thisEvent, commit: false)
                 }
@@ -106,6 +108,7 @@ final class CalendarExportManager {
                 let mgr = AthanManager.shared
                 let adjustments = mgr.notificationSettings.adjustments()
                 let notes = NSLocalizedString("cal_event_notes", value: "Prayer time from Athan Utility.", comment: "")
+                let locationName = mgr.locationSettings.locationName
                 var created = 0
 
                 for dayOffset in 0...dayCount {
@@ -119,6 +122,7 @@ final class CalendarExportManager {
                         ev.startDate = start
                         ev.endDate = start.addingTimeInterval(TimeInterval(options.durationMinutes * 60))
                         ev.notes = notes
+                        if !locationName.isEmpty { ev.location = locationName }
                         if let m = options.alarmMinutesBefore {
                             ev.addAlarm(EKAlarm(relativeOffset: TimeInterval(-m * 60)))
                         }

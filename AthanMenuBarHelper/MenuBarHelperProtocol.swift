@@ -36,6 +36,8 @@ import CoreGraphics
     func menuBarSetMethod(index: Int)
     /// The user chose an athan sound (index into the snapshot's `soundOptions`).
     func menuBarSetSound(index: Int)
+    /// The user picked how the menu-bar title shows time (0 = countdown, 1 = start time).
+    func menuBarSetDisplayMode(_ mode: Int)
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.
@@ -62,11 +64,13 @@ public final class MenuBarSnapshot: NSObject {
     public let methodIndex: Int
     public let soundOptions: [String]
     public let soundIndex: Int
+    public let displayMode: Int          // 0 = countdown, 1 = start time
     public let topColor: CGColor
     public let bottomColor: CGColor
     public init(rows: [MenuBarPrayerRow], locationText: String,
                 methodOptions: [String], methodIndex: Int,
                 soundOptions: [String], soundIndex: Int,
+                displayMode: Int,
                 topColor: CGColor, bottomColor: CGColor) {
         self.rows = rows
         self.locationText = locationText
@@ -74,6 +78,7 @@ public final class MenuBarSnapshot: NSObject {
         self.methodIndex = methodIndex
         self.soundOptions = soundOptions
         self.soundIndex = soundIndex
+        self.displayMode = displayMode
         self.topColor = topColor
         self.bottomColor = bottomColor
     }

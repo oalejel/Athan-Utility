@@ -88,6 +88,8 @@ struct MacSettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .frame(maxWidth: 600)                       // negative space on the sides; tighter rows
+        .frame(maxWidth: .infinity, alignment: .center)
         .navigationTitle(Strings.settings)
     }
 

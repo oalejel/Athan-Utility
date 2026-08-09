@@ -3,23 +3,27 @@
 //  AthanMenuBarHelper (native macOS AppKit bundle)
 //
 //  Principal class of the helper bundle. Runs as native AppKit code inside the Catalyst
-//  process, so it CAN own an NSStatusItem + NSPopover. The Catalyst app loads this bundle at
-//  runtime (see MenuBarBridge) and drives it through the shared `MenuBarHelping` protocol.
+//  process, so it CAN own an NSStatusItem + NSPopover.
 //
-//  Left-click the status item -> gradient popover with today's times, a bell per row, and the
-//  location at the bottom. Right-click -> a small menu (Open / Quit).
+//  IMPORTANT: this bundle must NOT use SwiftUI. It is a native-macOS binary loaded into a
+//  Mac Catalyst (iOSSupport) process; SwiftUI symbols like NSHostingController resolve against
+//  the iOSSupport SwiftUI, which doesn't export them, and the whole bundle fails to dlopen.
+//  The popover is therefore built entirely in AppKit views.
 //
 
 import AppKit
-import SwiftUI
+
+private let kGold = NSColor(red: 0.957, green: 0.835, blue: 0.553, alpha: 1)
 
 @objc(AthanMenuBarHelper)
 public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelegate {
 
     private var statusItem: NSStatusItem?
-    private var popover: NSPopover?
-    private let model = PopoverModel()
     private weak var actionDelegate: MenuBarActionDelegate?
+    private var snapshot: MenuBarSnapshot?
+    private var dockIconHidden = false
+    private var popover: NSPopover?
+    private var popoverVC: MenuBarPopoverController?
 
     public override init() { super.init() }
 
@@ -29,16 +33,14 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         guard statusItem == nil else { return }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         if let button = item.button {
-            // A recognizable moon glyph makes the item easy to spot among other menu extras.
             if let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Athan Utility") {
                 img.isTemplate = true
                 button.image = img
                 button.imagePosition = .imageLeading
-                button.imageHugsTitle = true
             }
             button.title = "Athan"
             button.target = self
-            button.action = #selector(statusItemClicked)
+            button.action = #selector(statusClicked)
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         statusItem = item
@@ -47,10 +49,7 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     public func updateTitle(_ title: String, urgent: Bool) {
         guard let button = statusItem?.button else { return }
         let color: NSColor = urgent ? .systemRed : .labelColor
-        button.attributedTitle = NSAttributedString(
-            string: title,
-            attributes: [.foregroundColor: color]
-        )
+        button.attributedTitle = NSAttributedString(string: title, attributes: [.foregroundColor: color])
     }
 
     public func removeStatusItem() {
@@ -63,86 +62,13 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     }
 
     public func updateSnapshot(_ snapshot: MenuBarSnapshot) {
-        model.snapshot = snapshot
+        self.snapshot = snapshot
+        if popover?.isShown == true { popoverVC?.update(snapshot: snapshot) }
     }
-
-    // MARK: Click handling
-
-    @objc private func statusItemClicked() {
-        if NSApp.currentEvent?.type == .rightMouseUp {
-            showMenu()
-        } else {
-            togglePopover()
-        }
-    }
-
-    private func showMenu() {
-        let menu = NSMenu()
-        let openItem = NSMenuItem(title: "Open Athan Utility", action: #selector(openApp), keyEquivalent: "")
-        openItem.target = self
-        menu.addItem(openItem)
-        menu.addItem(.separator())
-        let quitItem = NSMenuItem(title: "Quit Athan Utility", action: #selector(quitApp), keyEquivalent: "q")
-        quitItem.target = self
-        menu.addItem(quitItem)
-        statusItem?.menu = menu
-        statusItem?.button?.performClick(nil)
-        statusItem?.menu = nil   // detach so left-click keeps opening the popover
-    }
-
-    private func togglePopover() {
-        guard let button = statusItem?.button else { return }
-        let pop = popover ?? makePopover()
-        if pop.isShown {
-            pop.performClose(nil)
-        } else {
-            pop.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-            pop.contentViewController?.view.window?.makeKey()
-        }
-    }
-
-    private func makePopover() -> NSPopover {
-        let pop = NSPopover()
-        pop.behavior = .transient
-        pop.delegate = self
-        let root = MenuBarPopoverView(
-            model: model,
-            onToggleBell: { [weak self] index in self?.actionDelegate?.menuBarToggleBell(prayerIndex: index) },
-            onSetMethod: { [weak self] index in self?.actionDelegate?.menuBarSetMethod(index: index) },
-            onSetSound: { [weak self] index in self?.actionDelegate?.menuBarSetSound(index: index) },
-            onOpen: { [weak self] in self?.openApp() }
-        )
-        pop.contentViewController = NSHostingController(rootView: root)
-        popover = pop
-        return pop
-    }
-
-    @objc private func openApp() {
-        popover?.performClose(nil)
-        // If we're a menu-bar-only accessory, briefly become a regular app so the window
-        // can take focus, then show it.
-        NSApp.setActivationPolicy(.regular)
-        NSApp.unhide(nil)
-        NSApp.activate(ignoringOtherApps: true)
-        NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
-        // Re-hide the Dock icon shortly after if the user chose menu-bar-only.
-        if dockIconHidden {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
-                if self?.dockIconHidden == true { NSApp.setActivationPolicy(.accessory) }
-            }
-        }
-    }
-
-    @objc private func quitApp() { NSApp.terminate(nil) }
-
-    // MARK: - Menu-bar-only mode
-
-    private var dockIconHidden = false
 
     public func setDockIconHidden(_ hidden: Bool) {
         dockIconHidden = hidden
         if hidden {
-            // Become a menu-bar accessory: no Dock icon, no ⌘-Tab entry; hide open windows.
             NSApp.setActivationPolicy(.accessory)
             for w in NSApp.windows where w.canBecomeMain { w.orderOut(nil) }
         } else {
@@ -152,127 +78,251 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
         }
     }
-}
 
-// MARK: - Popover content (SwiftUI, hosted in the bundle)
+    // MARK: - Click handling
 
-final class PopoverModel: ObservableObject {
-    @Published var snapshot: MenuBarSnapshot?
-}
-
-struct MenuBarPopoverView: View {
-    @ObservedObject var model: PopoverModel
-    var onToggleBell: (Int) -> Void
-    var onSetMethod: (Int) -> Void
-    var onSetSound: (Int) -> Void
-    var onOpen: () -> Void
-
-    private var topColor: Color { model.snapshot.map { Color(cgColor: $0.topColor) } ?? .black }
-    private var bottomColor: Color { model.snapshot.map { Color(cgColor: $0.bottomColor) } ?? .blue }
-    static let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d — current-prayer accent
-
-    var body: some View {
-        VStack(spacing: 0) {
-            if let snap = model.snapshot {
-                ForEach(Array(snap.rows.enumerated()), id: \.offset) { pair in
-                    let row = pair.element
-                    HStack(spacing: 10) {
-                        Text(row.name)
-                            .fontWeight(row.isCurrent ? .bold : .regular)
-                            .foregroundColor(row.isCurrent ? Self.gold : .white)
-                        Spacer(minLength: 8)
-                        Text(row.timeText)
-                            .monospacedDigit()
-                            .foregroundColor(row.isCurrent ? .white : .white.opacity(0.9))
-                        Button(action: { onToggleBell(row.prayerIndex) }) {
-                            Image(systemName: row.isBellOn ? "bell.fill" : "bell.slash")
-                                .frame(width: 22, height: 22)
-                                .contentShape(Rectangle())
-                                .foregroundColor(row.isBellOn ? Self.gold : .white.opacity(0.45))
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .font(.system(size: 13))
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 8)
-                    .background(
-                        ZStack(alignment: .leading) {
-                            Rectangle().fill(Color.white.opacity(row.isCurrent ? 0.12 : 0))
-                            if row.isCurrent {
-                                Rectangle().fill(Self.gold).frame(width: 3)
-                            }
-                        }
-                    )
-
-                    if pair.offset < snap.rows.count - 1 {
-                        Divider().overlay(Color.white.opacity(0.18)).padding(.leading, 14)
-                    }
-                }
-
-                Divider().overlay(Color.white.opacity(0.25))
-
-                // Interactive settings — calculation method + athan sound.
-                settingsRow(icon: "slider.horizontal.3",
-                            selection: snap.methodOptions.indices.contains(snap.methodIndex) ? snap.methodOptions[snap.methodIndex] : "—",
-                            options: snap.methodOptions,
-                            onSelect: onSetMethod)
-                    .padding(.top, 9)
-
-                Divider().overlay(Color.white.opacity(0.12)).padding(.leading, 14)
-
-                settingsRow(icon: "speaker.wave.2.fill",
-                            selection: snap.soundOptions.indices.contains(snap.soundIndex) ? snap.soundOptions[snap.soundIndex] : "—",
-                            options: snap.soundOptions,
-                            onSelect: onSetSound)
-                    .padding(.bottom, 3)
-
-                Divider().overlay(Color.white.opacity(0.15)).padding(.leading, 14)
-
-                HStack(spacing: 6) {
-                    Image(systemName: "location.fill").font(.system(size: 11))
-                    Text(snap.locationText).font(.system(size: 12)).lineLimit(1).truncationMode(.tail)
-                    Spacer(minLength: 8)
-                    Button(action: onOpen) {
-                        Text("Open").font(.system(size: 12, weight: .semibold))
-                    }
-                    .buttonStyle(.plain)
-                }
-                .foregroundColor(.white.opacity(0.9))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-            } else {
-                Text("Athan Utility")
-                    .foregroundColor(.white)
-                    .padding()
-            }
+    @objc private func statusClicked() {
+        if NSApp.currentEvent?.type == .rightMouseUp {
+            showMiniMenu()
+        } else {
+            togglePopover()
         }
-        .frame(width: 260)
-        .background(
-            LinearGradient(colors: [topColor, bottomColor], startPoint: .top, endPoint: .bottom)
-        )
     }
 
-    /// A tappable settings row that presents its options in a dropdown menu.
-    private func settingsRow(icon: String, selection: String,
-                             options: [String], onSelect: @escaping (Int) -> Void) -> some View {
-        Menu {
-            ForEach(Array(options.enumerated()), id: \.offset) { pair in
-                Button(pair.element) { onSelect(pair.offset) }
-            }
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: icon).font(.system(size: 11))
-                Text(selection).font(.system(size: 12)).lineLimit(1).truncationMode(.tail)
-                Spacer(minLength: 8)
-                Image(systemName: "chevron.up.chevron.down").font(.system(size: 10)).opacity(0.6)
-            }
-            .foregroundColor(.white.opacity(0.9))
-            .padding(.horizontal, 14)
-            .padding(.vertical, 7)
-            .contentShape(Rectangle())
+    private func togglePopover() {
+        guard let button = statusItem?.button else { return }
+        let pop = popover ?? makePopover()
+        if pop.isShown {
+            pop.performClose(nil)
+        } else {
+            if let snap = snapshot { popoverVC?.update(snapshot: snap) }
+            pop.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+            pop.contentViewController?.view.window?.makeKey()
         }
-        .menuStyle(.borderlessButton)
-        .menuIndicator(.hidden)
     }
+
+    private func makePopover() -> NSPopover {
+        let pop = NSPopover()
+        pop.behavior = .transient
+        pop.delegate = self
+        let vc = MenuBarPopoverController()
+        vc.onToggleBell     = { [weak self] i in self?.actionDelegate?.menuBarToggleBell(prayerIndex: i) }
+        vc.onSetMethod      = { [weak self] i in self?.actionDelegate?.menuBarSetMethod(index: i) }
+        vc.onSetSound       = { [weak self] i in self?.actionDelegate?.menuBarSetSound(index: i) }
+        vc.onSetDisplayMode = { [weak self] m in self?.actionDelegate?.menuBarSetDisplayMode(m) }
+        vc.onOpen           = { [weak self] in self?.openApp() }
+        pop.contentViewController = vc
+        popoverVC = vc
+        popover = pop
+        return pop
+    }
+
+    private func showMiniMenu() {
+        let menu = NSMenu()
+        let open = NSMenuItem(title: NSLocalizedString("open_app", value: "Open Athan Utility", comment: ""),
+                              action: #selector(openApp), keyEquivalent: "")
+        open.target = self
+        menu.addItem(open)
+        menu.addItem(.separator())
+        let quit = NSMenuItem(title: NSLocalizedString("quit_app", value: "Quit Athan Utility", comment: ""),
+                              action: #selector(quitApp), keyEquivalent: "q")
+        quit.target = self
+        menu.addItem(quit)
+        statusItem?.menu = menu
+        statusItem?.button?.performClick(nil)
+        statusItem?.menu = nil   // reset so left-click toggles the popover next time
+    }
+
+    @objc private func openApp() {
+        popover?.performClose(nil)
+        NSApp.setActivationPolicy(.regular)
+        NSApp.unhide(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
+        if dockIconHidden {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+                if self?.dockIconHidden == true { NSApp.setActivationPolicy(.accessory) }
+            }
+        }
+    }
+
+    @objc private func quitApp() { NSApp.terminate(nil) }
+}
+
+// MARK: - Popover content (pure AppKit)
+
+final class MenuBarPopoverController: NSViewController {
+    var onToggleBell: ((Int) -> Void)?
+    var onSetMethod: ((Int) -> Void)?
+    var onSetSound: ((Int) -> Void)?
+    var onSetDisplayMode: ((Int) -> Void)?
+    var onOpen: (() -> Void)?
+
+    private let gradient = CAGradientLayer()
+    private let stack = NSStackView()
+    private var snapshot: MenuBarSnapshot?
+    private let contentWidth: CGFloat = 268
+
+    override func loadView() {
+        let v = NSView(frame: NSRect(x: 0, y: 0, width: contentWidth, height: 320))
+        v.wantsLayer = true
+        gradient.frame = v.bounds
+        gradient.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
+        gradient.startPoint = CGPoint(x: 0.5, y: 1)   // top
+        gradient.endPoint   = CGPoint(x: 0.5, y: 0)   // bottom
+        v.layer?.addSublayer(gradient)
+
+        stack.orientation = .vertical
+        stack.alignment = .leading
+        stack.distribution = .fill
+        stack.spacing = 3
+        stack.edgeInsets = NSEdgeInsets(top: 12, left: 14, bottom: 12, right: 14)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        v.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: v.leadingAnchor),
+            stack.trailingAnchor.constraint(equalTo: v.trailingAnchor),
+            stack.topAnchor.constraint(equalTo: v.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: v.bottomAnchor),
+            v.widthAnchor.constraint(equalToConstant: contentWidth)
+        ])
+        self.view = v
+    }
+
+    func update(snapshot: MenuBarSnapshot) {
+        self.snapshot = snapshot
+        _ = self.view   // ensure the view is loaded
+        gradient.colors = [snapshot.topColor, snapshot.bottomColor]
+        rebuild()
+        view.layoutSubtreeIfNeeded()
+        preferredContentSize = NSSize(width: contentWidth, height: view.fittingSize.height)
+    }
+
+    private func rebuild() {
+        stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        guard let snap = snapshot else { return }
+
+        stack.addArrangedSubview(makeLabel(snap.locationText, size: 12, weight: .semibold,
+                                           color: NSColor.white.withAlphaComponent(0.9)))
+        stack.addArrangedSubview(spacer(4))
+
+        for row in snap.rows { stack.addArrangedSubview(prayerRow(row)) }
+
+        stack.addArrangedSubview(divider())
+
+        let seg = NSSegmentedControl(
+            labels: [NSLocalizedString("mb_countdown", value: "Countdown", comment: ""),
+                     NSLocalizedString("mb_starttime", value: "Start time", comment: "")],
+            trackingMode: .selectOne, target: self, action: #selector(displayModeChanged(_:)))
+        seg.selectedSegment = snap.displayMode
+        seg.segmentDistribution = .fillEqually
+        stack.addArrangedSubview(fieldRow(NSLocalizedString("mb_show", value: "Show", comment: ""), control: seg))
+
+        let methodPopup = NSPopUpButton(frame: .zero, pullsDown: false)
+        methodPopup.addItems(withTitles: snap.methodOptions)
+        if snap.methodOptions.indices.contains(snap.methodIndex) { methodPopup.selectItem(at: snap.methodIndex) }
+        methodPopup.target = self; methodPopup.action = #selector(methodChanged(_:))
+        stack.addArrangedSubview(fieldRow(NSLocalizedString("Calculation Method", value: "Method", comment: ""), control: methodPopup))
+
+        let soundPopup = NSPopUpButton(frame: .zero, pullsDown: false)
+        soundPopup.addItems(withTitles: snap.soundOptions)
+        if snap.soundOptions.indices.contains(snap.soundIndex) { soundPopup.selectItem(at: snap.soundIndex) }
+        soundPopup.target = self; soundPopup.action = #selector(soundChanged(_:))
+        stack.addArrangedSubview(fieldRow(NSLocalizedString("athan_sound", value: "Sound", comment: ""), control: soundPopup))
+
+        stack.addArrangedSubview(divider())
+
+        let open = NSButton(title: NSLocalizedString("open_app", value: "Open Athan Utility", comment: ""),
+                            target: self, action: #selector(openTapped))
+        open.bezelStyle = .rounded
+        open.translatesAutoresizingMaskIntoConstraints = false
+        let openRow = NSStackView(views: [open])
+        openRow.orientation = .horizontal
+        openRow.translatesAutoresizingMaskIntoConstraints = false
+        openRow.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        open.widthAnchor.constraint(equalTo: openRow.widthAnchor).isActive = true
+        stack.addArrangedSubview(openRow)
+    }
+
+    // MARK: - Row builders
+
+    private func prayerRow(_ row: MenuBarPrayerRow) -> NSView {
+        let name = makeLabel(row.name, size: 13, weight: row.isCurrent ? .bold : .regular,
+                             color: row.isCurrent ? kGold : .white)
+        let time = makeLabel(row.timeText, size: 13, weight: .regular,
+                             color: row.isCurrent ? .white : NSColor.white.withAlphaComponent(0.85))
+        time.alignment = .right
+
+        let bell = NSButton(title: "", target: self, action: #selector(bellTapped(_:)))
+        bell.isBordered = false
+        bell.tag = row.prayerIndex
+        bell.imagePosition = .imageOnly
+        if let img = NSImage(systemSymbolName: row.isBellOn ? "bell.fill" : "bell.slash", accessibilityDescription: nil) {
+            img.isTemplate = true
+            bell.image = img
+        }
+        bell.contentTintColor = row.isBellOn ? kGold : NSColor.white.withAlphaComponent(0.4)
+        bell.translatesAutoresizingMaskIntoConstraints = false
+        bell.widthAnchor.constraint(equalToConstant: 22).isActive = true
+
+        let spacerV = NSView()
+        spacerV.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let hs = NSStackView(views: [name, spacerV, time, bell])
+        hs.orientation = .horizontal
+        hs.alignment = .centerY
+        hs.spacing = 8
+        hs.translatesAutoresizingMaskIntoConstraints = false
+        hs.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        return hs
+    }
+
+    private func fieldRow(_ title: String, control: NSView) -> NSView {
+        let label = makeLabel(title, size: 12, weight: .regular, color: NSColor.white.withAlphaComponent(0.85))
+        control.translatesAutoresizingMaskIntoConstraints = false
+        let hs = NSStackView(views: [label, control])
+        hs.orientation = .horizontal
+        hs.alignment = .centerY
+        hs.spacing = 8
+        hs.distribution = .fill
+        control.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        hs.translatesAutoresizingMaskIntoConstraints = false
+        hs.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        return hs
+    }
+
+    private func makeLabel(_ text: String, size: CGFloat, weight: NSFont.Weight, color: NSColor) -> NSTextField {
+        let l = NSTextField(labelWithString: text)
+        l.font = .systemFont(ofSize: size, weight: weight)
+        l.textColor = color
+        l.lineBreakMode = .byTruncatingTail
+        l.maximumNumberOfLines = 1
+        return l
+    }
+
+    private func divider() -> NSView {
+        let v = NSView()
+        v.wantsLayer = true
+        v.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.18).cgColor
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        v.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        return v
+    }
+
+    private func spacer(_ h: CGFloat) -> NSView {
+        let v = NSView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.heightAnchor.constraint(equalToConstant: h).isActive = true
+        return v
+    }
+
+    // MARK: - Actions
+
+    @objc private func bellTapped(_ sender: NSButton) { onToggleBell?(sender.tag) }
+    @objc private func methodChanged(_ sender: NSPopUpButton) { onSetMethod?(sender.indexOfSelectedItem) }
+    @objc private func soundChanged(_ sender: NSPopUpButton) { onSetSound?(sender.indexOfSelectedItem) }
+    @objc private func displayModeChanged(_ sender: NSSegmentedControl) { onSetDisplayMode?(sender.selectedSegment) }
+    @objc private func openTapped() { onOpen?() }
 }

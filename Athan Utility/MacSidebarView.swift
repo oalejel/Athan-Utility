@@ -246,7 +246,7 @@ struct MacSidebarView: View {
             Divider().overlay(Color.white.opacity(0.10))
                 .padding(.bottom, 4)
             locationHeader
-            if showLocationEditor { locationEditor.transition(.opacity.combined(with: .move(edge: .top))) }
+            if showLocationEditor { locationEditor.transition(.opacity) }
             ForEach(navSections) { s in navItem(s) }
         }
         .padding(.horizontal, 8).padding(.top, 4).padding(.bottom, 10)

@@ -11,34 +11,50 @@ import Foundation
 import UIKit
 import Adhan
 
+func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
+
 final class MenuBarBridge {
     static let shared = MenuBarBridge()
     private var helper: MenuBarHelping?
 
     /// Load the helper bundle (if not already) and show the menu bar item.
     func start() {
-        guard helper == nil else { return }
+        mbDebug("start() called")
+        guard helper == nil else { mbDebug("helper already set"); return }
         guard let pluginsURL = Bundle.main.builtInPlugInsURL else {
-            print("MenuBarBridge: no PlugIns URL")
+            mbDebug("no PlugIns URL")
             return
         }
         let bundleURL = pluginsURL.appendingPathComponent("AthanMenuBarHelper.bundle")
+        mbDebug(String(format: "bundle path = %@", bundleURL.path))
         guard let bundle = Bundle(url: bundleURL) else {
-            print("MenuBarBridge: helper bundle not found at \(bundleURL.path)")
+            mbDebug(String(format: "helper bundle NOT FOUND at %@", bundleURL.path))
             return
         }
-        guard bundle.load() else {
-            print("MenuBarBridge: failed to load helper bundle")
+        do {
+            try bundle.loadAndReturnError()
+        } catch {
+            mbDebug("bundle.load ERROR: \(error)")
             return
         }
-        guard let cls = bundle.principalClass as? NSObject.Type,
-              let instance = cls.init() as? MenuBarHelping else {
-            print("MenuBarBridge: principal class is not a MenuBarHelping")
+        guard let cls = bundle.principalClass as? NSObject.Type else {
+            mbDebug(String(format: "principalClass is not NSObject.Type (%@)", String(describing: bundle.principalClass)))
             return
         }
-        helper = instance
-        instance.installStatusItem()
-        instance.updateTitle("Athan", urgent: false)
+        let instance = cls.init()
+        // MenuBarHelperProtocol.swift is compiled into BOTH the app and the loaded bundle, so a
+        // plain `as? MenuBarHelping` (and even objc protocol-object comparison) fails across the
+        // dlopen boundary. Verify the instance implements the @objc methods via the ObjC method
+        // list (reliable), then bridge the single-pointer @objc class-protocol existential.
+        guard instance.responds(to: Selector(("installStatusItem"))) else {
+            mbDebug("instance does not respond to installStatusItem")
+            return
+        }
+        let helper = unsafeBitCast(instance, to: MenuBarHelping.self)
+        self.helper = helper
+        helper.installStatusItem()
+        helper.updateTitle("Athan", urgent: false)
+        mbDebug("installStatusItem + updateTitle done")
     }
 
     /// Update the menu bar title (driven by `MenuBarController`).
@@ -202,6 +218,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
                                methodIndex: methods.firstIndex(of: m.prayerSettings.calculationMethod) ?? 0,
                                soundOptions: sounds.map { $0.localizedString() },
                                soundIndex: m.notificationSettings.selectedSound.rawValue,
+                               displayMode: MenuBarSettings.mode.rawValue,
                                topColor: top,
                                bottomColor: bottom)
     }
@@ -240,12 +257,19 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         pushSnapshot()
     }
 
+    func menuBarSetDisplayMode(_ mode: Int) {
+        MenuBarSettings.mode = MenuBarDisplayMode(rawValue: mode) ?? .timeLeft
+        tick()          // refresh the title immediately
+    }
+
     /// "1:23:45" (H:MM:SS) when ≥ 1h remains, otherwise "23:45" (MM:SS).
+    /// "6h 1m" / "43m" / "<1m" — hours + minutes only, never a ticking seconds counter.
     static func countdownString(_ interval: TimeInterval) -> String {
         let total = max(0, Int(interval.rounded()))
-        let h = total / 3600, m = (total % 3600) / 60, s = total % 60
-        return h > 0 ? String(format: "%d:%02d:%02d", h, m, s)
-                     : String(format: "%02d:%02d", m, s)
+        let h = total / 3600, m = (total % 3600) / 60
+        if total < 60 { return "<1m" }
+        if h > 0 { return "\(h)h \(m)m" }
+        return "\(m)m"
     }
 
     /// Locale-aware short time (respects 12/24-hour).

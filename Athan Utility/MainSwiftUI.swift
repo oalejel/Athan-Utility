@@ -417,7 +417,7 @@ struct MainSwiftUI: View {
                     .equatable()
                 
                 if dayProgressState.nonOptionalPreviewPrayer == .isha {
-                    StarView(starCount: Int(g.size.width / 800))
+                    StarView(starCount: max(45, Int(g.size.width * g.size.height / 6000)))
                         .equatable()
                         .transition(.opacity)
                 }

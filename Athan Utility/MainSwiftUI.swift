@@ -822,6 +822,11 @@ struct MainSwiftUI: View {
             // and auto-update the method if it warrants a change.
             AthanManager.shared.autoUpdateMethodIfNeeded(for: AthanManager.shared.bestAvailableCountryCode())
         }
+        // Menu-bar popover gear → jump to Settings in the Mac split view.
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("AthanShowMacSettings"))) { _ in
+            currentView = .Main
+            macSection = .settings
+        }
     }
 }
 

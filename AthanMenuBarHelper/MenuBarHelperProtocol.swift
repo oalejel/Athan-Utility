@@ -38,6 +38,8 @@ import CoreGraphics
     func menuBarSetSound(index: Int)
     /// The user picked how the menu-bar title shows time (0 = countdown, 1 = start time).
     func menuBarSetDisplayMode(_ mode: Int)
+    /// Open the main app on its Settings screen (gear button in the popover).
+    func menuBarOpenSettings()
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.

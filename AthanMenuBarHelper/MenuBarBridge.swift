@@ -11,6 +11,11 @@ import Foundation
 import UIKit
 import Adhan
 
+extension Notification.Name {
+    /// Posted when the menu-bar popover's gear button is tapped; MainSwiftUI shows Settings.
+    static let athanShowMacSettings = Notification.Name("AthanShowMacSettings")
+}
+
 func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
 
 final class MenuBarBridge {
@@ -260,6 +265,10 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
     func menuBarSetDisplayMode(_ mode: Int) {
         MenuBarSettings.mode = MenuBarDisplayMode(rawValue: mode) ?? .timeLeft
         tick()          // refresh the title immediately
+    }
+
+    func menuBarOpenSettings() {
+        NotificationCenter.default.post(name: .athanShowMacSettings, object: nil)
     }
 
     /// "1:23:45" (H:MM:SS) when ≥ 1h remains, otherwise "23:45" (MM:SS).

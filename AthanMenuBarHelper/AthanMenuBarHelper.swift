@@ -111,6 +111,10 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         vc.onSetSound       = { [weak self] i in self?.actionDelegate?.menuBarSetSound(index: i) }
         vc.onSetDisplayMode = { [weak self] m in self?.actionDelegate?.menuBarSetDisplayMode(m) }
         vc.onOpen           = { [weak self] in self?.openApp() }
+        vc.onOpenSettings   = { [weak self] in
+            self?.openApp()
+            self?.actionDelegate?.menuBarOpenSettings()
+        }
         pop.contentViewController = vc
         popoverVC = vc
         popover = pop
@@ -157,11 +161,12 @@ final class MenuBarPopoverController: NSViewController {
     var onSetSound: ((Int) -> Void)?
     var onSetDisplayMode: ((Int) -> Void)?
     var onOpen: (() -> Void)?
+    var onOpenSettings: (() -> Void)?
 
     private let gradient = CAGradientLayer()
     private let stack = NSStackView()
     private var snapshot: MenuBarSnapshot?
-    private let contentWidth: CGFloat = 268
+    private let contentWidth: CGFloat = 284
 
     override func loadView() {
         let v = NSView(frame: NSRect(x: 0, y: 0, width: contentWidth, height: 320))
@@ -175,8 +180,8 @@ final class MenuBarPopoverController: NSViewController {
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.distribution = .fill
-        stack.spacing = 3
-        stack.edgeInsets = NSEdgeInsets(top: 12, left: 14, bottom: 12, right: 14)
+        stack.spacing = 5
+        stack.edgeInsets = NSEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         stack.translatesAutoresizingMaskIntoConstraints = false
         v.addSubview(stack)
         NSLayoutConstraint.activate([
@@ -201,53 +206,70 @@ final class MenuBarPopoverController: NSViewController {
     private func rebuild() {
         stack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         guard let snap = snapshot else { return }
+        let inset = contentWidth - 32
 
-        stack.addArrangedSubview(makeLabel(snap.locationText, size: 12, weight: .semibold,
-                                           color: NSColor.white.withAlphaComponent(0.9)))
-        stack.addArrangedSubview(spacer(4))
+        stack.addArrangedSubview(locationHeader(snap.locationText, width: inset))
+        stack.addArrangedSubview(spacer(6))
 
         for row in snap.rows { stack.addArrangedSubview(prayerRow(row)) }
 
+        stack.addArrangedSubview(spacer(6))
         stack.addArrangedSubview(divider())
+        stack.addArrangedSubview(spacer(6))
 
+        // Display-mode toggle — no label, full width.
         let seg = NSSegmentedControl(
             labels: [NSLocalizedString("mb_countdown", value: "Countdown", comment: ""),
                      NSLocalizedString("mb_starttime", value: "Start time", comment: "")],
             trackingMode: .selectOne, target: self, action: #selector(displayModeChanged(_:)))
         seg.selectedSegment = snap.displayMode
         seg.segmentDistribution = .fillEqually
-        stack.addArrangedSubview(fieldRow(NSLocalizedString("mb_show", value: "Show", comment: ""), control: seg))
+        seg.selectedSegmentBezelColor = kGold
+        seg.translatesAutoresizingMaskIntoConstraints = false
+        seg.widthAnchor.constraint(equalToConstant: inset).isActive = true
+        stack.addArrangedSubview(seg)
 
-        let methodPopup = NSPopUpButton(frame: .zero, pullsDown: false)
-        methodPopup.addItems(withTitles: snap.methodOptions)
-        if snap.methodOptions.indices.contains(snap.methodIndex) { methodPopup.selectItem(at: snap.methodIndex) }
-        methodPopup.target = self; methodPopup.action = #selector(methodChanged(_:))
-        stack.addArrangedSubview(fieldRow(NSLocalizedString("Calculation Method", value: "Method", comment: ""), control: methodPopup))
+        stack.addArrangedSubview(spacer(8))
 
-        let soundPopup = NSPopUpButton(frame: .zero, pullsDown: false)
-        soundPopup.addItems(withTitles: snap.soundOptions)
-        if snap.soundOptions.indices.contains(snap.soundIndex) { soundPopup.selectItem(at: snap.soundIndex) }
-        soundPopup.target = self; soundPopup.action = #selector(soundChanged(_:))
-        stack.addArrangedSubview(fieldRow(NSLocalizedString("athan_sound", value: "Sound", comment: ""), control: soundPopup))
-
-        stack.addArrangedSubview(divider())
-
-        let open = NSButton(title: NSLocalizedString("open_app", value: "Open Athan Utility", comment: ""),
+        // Bottom: gear → open the app on Settings, and Open the main window.
+        let gear = NSButton(title: " " + NSLocalizedString("settings", value: "Settings", comment: ""),
+                            target: self, action: #selector(settingsTapped))
+        if let g = NSImage(systemSymbolName: "gearshape.fill", accessibilityDescription: nil) {
+            gear.image = g; gear.imagePosition = .imageLeading
+        }
+        gear.bezelStyle = .rounded
+        let open = NSButton(title: NSLocalizedString("open_short", value: "Open", comment: ""),
                             target: self, action: #selector(openTapped))
         open.bezelStyle = .rounded
-        open.translatesAutoresizingMaskIntoConstraints = false
-        let openRow = NSStackView(views: [open])
-        openRow.orientation = .horizontal
-        openRow.translatesAutoresizingMaskIntoConstraints = false
-        openRow.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
-        open.widthAnchor.constraint(equalTo: openRow.widthAnchor).isActive = true
-        stack.addArrangedSubview(openRow)
+        let bottom = NSStackView(views: [gear, open])
+        bottom.orientation = .horizontal
+        bottom.distribution = .fillEqually
+        bottom.spacing = 8
+        bottom.translatesAutoresizingMaskIntoConstraints = false
+        bottom.widthAnchor.constraint(equalToConstant: inset).isActive = true
+        stack.addArrangedSubview(bottom)
     }
 
     // MARK: - Row builders
 
+    private func locationHeader(_ text: String, width: CGFloat) -> NSView {
+        let pin = NSImageView()
+        pin.image = NSImage(systemSymbolName: "location.fill", accessibilityDescription: nil)
+        pin.contentTintColor = NSColor.white.withAlphaComponent(0.8)
+        pin.translatesAutoresizingMaskIntoConstraints = false
+        pin.widthAnchor.constraint(equalToConstant: 13).isActive = true
+        let label = makeLabel(text, size: 12.5, weight: .semibold, color: NSColor.white.withAlphaComponent(0.9))
+        let hs = NSStackView(views: [pin, label])
+        hs.orientation = .horizontal
+        hs.spacing = 6
+        hs.alignment = .centerY
+        hs.translatesAutoresizingMaskIntoConstraints = false
+        hs.widthAnchor.constraint(equalToConstant: width).isActive = true
+        return hs
+    }
+
     private func prayerRow(_ row: MenuBarPrayerRow) -> NSView {
-        let name = makeLabel(row.name, size: 13, weight: row.isCurrent ? .bold : .regular,
+        let name = makeLabel(row.name, size: 13.5, weight: row.isCurrent ? .bold : .regular,
                              color: row.isCurrent ? kGold : .white)
         let time = makeLabel(row.timeText, size: 13, weight: .regular,
                              color: row.isCurrent ? .white : NSColor.white.withAlphaComponent(0.85))
@@ -273,22 +295,7 @@ final class MenuBarPopoverController: NSViewController {
         hs.alignment = .centerY
         hs.spacing = 8
         hs.translatesAutoresizingMaskIntoConstraints = false
-        hs.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
-        return hs
-    }
-
-    private func fieldRow(_ title: String, control: NSView) -> NSView {
-        let label = makeLabel(title, size: 12, weight: .regular, color: NSColor.white.withAlphaComponent(0.85))
-        control.translatesAutoresizingMaskIntoConstraints = false
-        let hs = NSStackView(views: [label, control])
-        hs.orientation = .horizontal
-        hs.alignment = .centerY
-        hs.spacing = 8
-        hs.distribution = .fill
-        control.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        hs.translatesAutoresizingMaskIntoConstraints = false
-        hs.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        hs.widthAnchor.constraint(equalToConstant: contentWidth - 32).isActive = true
         return hs
     }
 
@@ -307,7 +314,7 @@ final class MenuBarPopoverController: NSViewController {
         v.layer?.backgroundColor = NSColor.white.withAlphaComponent(0.18).cgColor
         v.translatesAutoresizingMaskIntoConstraints = false
         v.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        v.widthAnchor.constraint(equalToConstant: contentWidth - 28).isActive = true
+        v.widthAnchor.constraint(equalToConstant: contentWidth - 32).isActive = true
         return v
     }
 
@@ -325,4 +332,5 @@ final class MenuBarPopoverController: NSViewController {
     @objc private func soundChanged(_ sender: NSPopUpButton) { onSetSound?(sender.indexOfSelectedItem) }
     @objc private func displayModeChanged(_ sender: NSSegmentedControl) { onSetDisplayMode?(sender.selectedSegment) }
     @objc private func openTapped() { onOpen?() }
+    @objc private func settingsTapped() { onOpenSettings?() }
 }

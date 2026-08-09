@@ -26,15 +26,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         SnapshotSupport.seedIfNeeded()
 
         #if targetEnvironment(macCatalyst)
-        // Load the native-macOS helper bundle, show the menu bar item, and start the
-        // live title driver (next prayer time / countdown).
-        MenuBarBridge.shared.start()
-        MenuBarController.shared.start()
-        // If the user chose menu-bar-only mode, drop the Dock icon + window once the
-        // window scene has connected.
-        if MenuBarSettings.menuBarOnly {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                MenuBarBridge.shared.setDockIconHidden(true)
+        // Load the native-macOS helper bundle, show the menu bar item, and start the live
+        // title driver — but OFF the launch critical path. The title driver touches
+        // AthanManager/settings (file I/O); doing that synchronously here blocks scene
+        // creation and can trip the launch watchdog if the read is slow.
+        DispatchQueue.main.async {
+            MenuBarBridge.shared.start()
+            MenuBarController.shared.start()
+            if MenuBarSettings.menuBarOnly {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    MenuBarBridge.shared.setDockIconHidden(true)
+                }
             }
         }
         #endif

@@ -13,6 +13,7 @@
 		184EDA08DF96821DF57C2FE1 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
 		21225FEE517C5267F05D86E3 /* AthanMenuBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */; };
 		2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
+		36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */; };
 		3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D02C9E6251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
 		3D07894C25998D8E0047DD00 /* CalculationMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D07894B25998D8E0047DD00 /* CalculationMethodView.swift */; };
@@ -481,6 +482,7 @@
 		3DF79CD02F45364D00E01FD2 /* SuhoorActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivity.swift; sourceTree = "<group>"; };
 		3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityTrigger.swift; sourceTree = "<group>"; };
 		3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityAttributes.swift; sourceTree = "<group>"; };
+		4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSettingsView.swift; sourceTree = "<group>"; };
 		65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FajrAlarmSettings.swift; sourceTree = "<group>"; };
 		74BBB3291E869DA697F96A86 /* MacSidebarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacSidebarView.swift; sourceTree = "<group>"; };
 		82E32DECBE62A46E113926F1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = AthanMenuBarHelper/Info.plist; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */,
 				65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */,
 				B1DE262321F96491AED053A7 /* FajrAlarmSettingsView.swift */,
+				4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1364,6 +1367,7 @@
 				184EDA08DF96821DF57C2FE1 /* FajrAlarmManager.swift in Sources */,
 				0708FF7BE1468CEB6991D34A /* FajrAlarmSettings.swift in Sources */,
 				E523BE75A8B95E4AABBC40A8 /* FajrAlarmSettingsView.swift in Sources */,
+				36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

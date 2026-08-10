@@ -11,6 +11,30 @@ import Adhan
 import StoreKit
 import MessageUI
 
+// Every modal in the settings screen is presented through ONE `.sheet(item:)`.
+// Stacking multiple `.sheet` modifiers in a single view tree made SwiftUI
+// mispresent (e.g. tapping the Widgets feature opened the Calendar sheet), so
+// all of them funnel through this one identifiable selection instead.
+enum GeneralSettingsSheet: Identifiable {
+    case feature(AdoptedFeature)
+    case mail
+    case discover
+    case privacy
+    case acknowledgements
+    case debug
+
+    var id: String {
+        switch self {
+        case .feature(let f):   return "feature.\(f.rawValue)"
+        case .mail:             return "mail"
+        case .discover:         return "discover"
+        case .privacy:          return "privacy"
+        case .acknowledgements: return "acknowledgements"
+        case .debug:            return "debug"
+        }
+    }
+}
+
 @available(iOS 13.0.0, *)
 struct GeneralSettingView: View {
     @EnvironmentObject var manager: ObservableAthanManager
@@ -35,13 +59,11 @@ struct GeneralSettingView: View {
     @State var contentOffset = CGFloat(0)
     @Binding var savedOffset: CGFloat
     @State var scrollHeight = CGFloat(300) // to be adjusted on appearance
-    @State var showPrivacyView = false
-    @State var showDiscovery = false
-    @State private var showAcknowledgements = false
+    // Single source of truth for every settings modal (see GeneralSettingsSheet).
+    @State private var activeSheet: GeneralSettingsSheet?
     
     // Developer contact properties
     @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
-    @State private var isShowingMailView = false
     
     @State var proxy: Any? = nil
 
@@ -105,12 +127,12 @@ struct GeneralSettingView: View {
 
                                 // Feature-adoption grid: tiles collapse to checkmark pills as explored.
                                 if #available(iOS 14.0, *) {
-                                    Text(NSLocalizedString("features_section_title", value: "features", comment: "Header above the feature-adoption grid at the top of Settings"))
+                                    Text(NSLocalizedString("features_section_title", value: "Featured", comment: "Header above the feature-adoption grid at the top of Settings"))
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
                                         .padding(.top, 12)
-                                    SettingsFeatureGrid()
+                                    SettingsFeatureGrid(onSelect: { activeSheet = .feature($0) })
                                         .padding(.top, 8)
                                 }
 
@@ -536,7 +558,7 @@ struct GeneralSettingView: View {
                                         .padding([.top, .bottom])
                                         
                                         Button(action: { // send feedback
-                                            self.isShowingMailView.toggle()
+                                            activeSheet = .mail
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -551,18 +573,9 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $isShowingMailView) {
-                                            if MFMailComposeViewController.canSendMail() {
-                                                MailView(result: $mailCompositionResult) { composer in
-                                                    composer.setSubject("Feedback for Athan Utility")
-                                                    composer.title = "Email Developer"
-                                                    composer.setToRecipients(["athan.utility@gmail.com"])
-                                                }
-                                            }
-                                        }
 
                                         Button(action: { // discover features (always available here)
-                                            showDiscovery.toggle()
+                                            activeSheet = .discover
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -577,13 +590,9 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $showDiscovery) {
-                                            FeatureDiscoveryView()
-                                                .preferredColorScheme(.dark)
-                                        }
-                                        
-                                        Button(action: { // send feedback
-                                            showPrivacyView.toggle()
+
+                                        Button(action: { // privacy notes
+                                            activeSheet = .privacy
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -598,13 +607,9 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $showPrivacyView) {
-                                            PrivacyInfoView(isVisible: $showPrivacyView)
-                                                .preferredColorScheme(.dark)
-                                        }
 
                                         Button(action: { // acknowledgements
-                                            showAcknowledgements.toggle()
+                                            activeSheet = .acknowledgements
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -619,10 +624,25 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $showAcknowledgements) {
-                                            AcknowledgementsView(isVisible: $showAcknowledgements)
-                                                .preferredColorScheme(.dark)
-                                        }
+
+                                        #if DEBUG
+                                        Button(action: { // debug tools (DEBUG builds only)
+                                            activeSheet = .debug
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "ladybug.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(NSLocalizedString("debug_tools", value: "Debug Tools", comment: ""))
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        #endif
 
                                         Button(action: { // rate the app
                                             SKStoreReviewController.requestReview()
@@ -742,6 +762,47 @@ struct GeneralSettingView: View {
                 .padding([.top])
                 .transition(.opacity)
             }
+            // The ONE sheet presenter for the whole settings screen.
+            .sheet(item: $activeSheet) { sheet in
+                sheetView(for: sheet)
+            }
+        }
+    }
+
+    // Binding that a sheet's own close button drives (set false → dismiss).
+    private var sheetDismissBinding: Binding<Bool> {
+        Binding(get: { activeSheet != nil }, set: { if !$0 { activeSheet = nil } })
+    }
+
+    @ViewBuilder private func sheetView(for sheet: GeneralSettingsSheet) -> some View {
+        switch sheet {
+        case .feature(let f):
+            if #available(iOS 14.0, *) {
+                adoptedFeatureSheet(f).preferredColorScheme(.dark)
+            }
+        case .mail:
+            if MFMailComposeViewController.canSendMail() {
+                MailView(result: $mailCompositionResult) { composer in
+                    composer.setSubject("Feedback for Athan Utility")
+                    composer.title = "Email Developer"
+                    composer.setToRecipients(["athan.utility@gmail.com"])
+                }
+            } else {
+                Text(NSLocalizedString("no_mail_configured", value: "No email account is set up on this device.", comment: ""))
+                    .padding()
+            }
+        case .discover:
+            FeatureDiscoveryView().preferredColorScheme(.dark)
+        case .privacy:
+            PrivacyInfoView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+        case .acknowledgements:
+            AcknowledgementsView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+        case .debug:
+            #if DEBUG
+            DebugSettingsView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+            #else
+            EmptyView()
+            #endif
         }
     }
 }

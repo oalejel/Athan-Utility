@@ -78,10 +78,18 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
 @available(iOS 14.0, *)
 struct SettingsFeatureGrid: View {
     @State private var done: Set<AdoptedFeature>
-    @State private var activeSheet: AdoptedFeature?
     @Namespace private var ns
 
-    init() { _done = State(initialValue: AdoptedFeature.loadDone()) }
+    /// Called with the tapped feature. The parent owns the single sheet that
+    /// presents it — the grid does NOT present its own sheet, because stacking
+    /// several `.sheet` modifiers in one view tree made SwiftUI mispresent
+    /// (tapping Widgets could open the Calendar sheet).
+    let onSelect: (AdoptedFeature) -> Void
+
+    init(onSelect: @escaping (AdoptedFeature) -> Void) {
+        self.onSelect = onSelect
+        _done = State(initialValue: AdoptedFeature.loadDone())
+    }
 
     private var undone: [AdoptedFeature] { AdoptedFeature.allCases.filter { !done.contains($0) } }
     private var doneList: [AdoptedFeature] { AdoptedFeature.allCases.filter { done.contains($0) } }
@@ -95,8 +103,6 @@ struct SettingsFeatureGrid: View {
                 squareRows
             }
         }
-        // Force dark so the detail sheets stay readable regardless of system light/dark.
-        .sheet(item: $activeSheet) { sheetContent(for: $0).preferredColorScheme(.dark) }
     }
 
     private func tileBackground(_ f: AdoptedFeature) -> some View {
@@ -178,14 +184,9 @@ struct SettingsFeatureGrid: View {
     private func activate(_ f: AdoptedFeature) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         ExploreSettingsNudge.cancel() // user explored a feature — no need for the nudge anymore
-        // Present the sheet FIRST, against the current (stable) layout. If we
-        // instead reordered the grid (square → collapsed pill via
-        // matchedGeometryEffect) in the same transaction, the structural change
-        // could invalidate the `.sheet(item:)` binding mid-present and pick up a
-        // neighbouring tile's identity — which is how tapping "Widgets" could
-        // surface the "Siri" sheet. Defer the reorder to the next runloop tick
-        // so the sheet is already committed to `f` before the grid restructures.
-        activeSheet = f
+        // Hand the tapped feature to the parent, which presents the single
+        // shared sheet. Then mark it explored (reorder to a pill).
+        onSelect(f)
         DispatchQueue.main.async {
             withAnimation(.spring(response: 0.42, dampingFraction: 0.82)) {
                 done.insert(f)
@@ -197,14 +198,17 @@ struct SettingsFeatureGrid: View {
     private func chunk(_ items: [AdoptedFeature], by n: Int) -> [[AdoptedFeature]] {
         stride(from: 0, to: items.count, by: n).map { Array(items[$0..<min($0 + n, items.count)]) }
     }
+}
 
-    @ViewBuilder private func sheetContent(for f: AdoptedFeature) -> some View {
-        switch f {
-        case .calendar:    CalendarExportView()
-        case .siri:        SiriShortcutSheet()
-        case .widgets:     WidgetHowToView(kind: .home)
-        case .lockWidgets: WidgetHowToView(kind: .lock)
-        }
+/// The detail sheet for an adopted feature. Free function so the single sheet
+/// presenter (GeneralSettingView) can render it without the grid owning a sheet.
+@available(iOS 14.0, *)
+@ViewBuilder func adoptedFeatureSheet(_ f: AdoptedFeature) -> some View {
+    switch f {
+    case .calendar:    CalendarExportView()
+    case .siri:        SiriShortcutSheet()
+    case .widgets:     WidgetHowToView(kind: .home)
+    case .lockWidgets: WidgetHowToView(kind: .lock)
     }
 }
 

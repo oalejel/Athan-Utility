@@ -279,13 +279,17 @@ class ClockView: UIView {
         
         let totaHeight = fittingRect.size.height
         let totalWidth = longWidth
-        
-        minutesLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
-        let minutesOriginX: CGFloat = (width / 2) - (totalWidth / 2)
-        let minutesOriginY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
-        minutesLayer.frame.origin = CGPoint(x: minutesOriginX, y: minutesOriginY)
-        
-        
+
+        // Split these out so the Swift type-checker doesn't time out on the
+        // combined CGFloat expression (error: "unable to type-check in
+        // reasonable time").
+        let anchorY: CGFloat = (totaHeight - (shortWidth / 2)) / totaHeight
+        let originX: CGFloat = (width / 2) - (totalWidth / 2)
+        let originY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
+        minutesLayer.anchorPoint = CGPoint(x: 0.5, y: anchorY)
+        minutesLayer.frame.origin = CGPoint(x: originX, y: originY)
+
+
         // keep this shadow to differentiate between the minute arm and the hour dots it touches
         minutesLayer.shadowColor = UIColor.black.cgColor
         minutesLayer.shadowOpacity = 0.5
@@ -351,12 +355,16 @@ class ClockView: UIView {
         
         let totaHeight = fittingRect.size.height
         let totalWidth = longWidth
-        
-        hoursLayer.anchorPoint = CGPoint(x: 0.5, y: ((totaHeight - (shortWidth / 2)) / totaHeight))
-        let hoursOriginX: CGFloat = (width / 2) - (totalWidth / 2)
-        let hoursOriginY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
-        hoursLayer.frame.origin = CGPoint(x: hoursOriginX, y: hoursOriginY)
-        
+
+        // Split these out so the Swift type-checker doesn't time out on the
+        // combined CGFloat expression (error: "unable to type-check in
+        // reasonable time").
+        let anchorY: CGFloat = (totaHeight - (shortWidth / 2)) / totaHeight
+        let originX: CGFloat = (width / 2) - (totalWidth / 2)
+        let originY: CGFloat = (height / 2) - (totaHeight - (shortWidth / 2))
+        hoursLayer.anchorPoint = CGPoint(x: 0.5, y: anchorY)
+        hoursLayer.frame.origin = CGPoint(x: originX, y: originY)
+
         hoursLayer.shadowColor = UIColor.black.cgColor
         hoursLayer.shadowOpacity = 0.5
         

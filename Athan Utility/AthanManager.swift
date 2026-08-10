@@ -647,6 +647,14 @@ extension AthanManager {
                                      noteSettings: notificationSettings,
                                      shortLocationName: locationSettings.locationName)
             resetWidgets() // should happen when any of our settings change
+
+            // Refresh the rolling AlarmKit window (iOS 26+). Gated on the
+            // main-app bundle so widget / Siri / watch extension contexts
+            // don't each try to schedule their own alarms. No-op pre-26 or
+            // when the user hasn't enabled the feature.
+            if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
+                FajrAlarmManager.shared.syncAlarms()
+            }
             
             #if !targetEnvironment(macCatalyst)
             if #available(iOS 16.2, *) {

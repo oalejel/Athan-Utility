@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -7,3 +7,6 @@
 */
 
 "CFBundleDisplayName" = "أذان";
+"NSAlarmKitUsageDescription" = "يستخدم تطبيق أذان ميزة AlarmKit لجدولة منبّهات الاستيقاظ التي تبقى متزامنة مع وقت صلاة الفجر اليومي.";
+"NSLocationWhenInUseUsageDescription" = "يستخدم تطبيق أذان موقعك لحساب مواقيت الأذان. لا تتم مشاركة أيٍّ من بياناتك أو تخزينها عن بُعد.";
+"NSSiriUsageDescription" = "يستخدم Siri مواقيت الأذان للمناطق المطلوبة.";

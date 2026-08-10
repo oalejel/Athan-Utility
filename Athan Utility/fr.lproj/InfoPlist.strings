@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -7,3 +7,6 @@
 */
 
 "CFBundleDisplayName" = "Adhan Utility";
+"NSAlarmKitUsageDescription" = "Adhan Utility utilise AlarmKit pour programmer des alarmes de réveil qui restent synchronisées avec l'heure quotidienne de votre salah de Fejr.";
+"NSLocationWhenInUseUsageDescription" = "Adhan Utility utilise votre position pour calculer les heures d'adhan. Aucune de vos données n'est partagée ni stockée à distance.";
+"NSSiriUsageDescription" = "Les heures d'adhan pour les régions demandées sont utilisées par Siri.";

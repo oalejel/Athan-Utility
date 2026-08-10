@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -6,5 +6,6 @@
   Copyright © 2021 Omar Alejel. All rights reserved.
 */
 
-//NSLocationWhenInUseUsageDescription = "Description of this";
-
+"NSAlarmKitUsageDescription" = "Athan Utility uses AlarmKit to schedule wake-up alarms that stay in sync with your daily Fajr prayer time.";
+"NSLocationWhenInUseUsageDescription" = "Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.";
+"NSSiriUsageDescription" = "Athan times for requested regions are used by Siri.";

@@ -35,6 +35,12 @@
 	<true/>
 	<key>NSExtensionPointIdentifier</key>
 	<string>com.apple.widgetkit-extension</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.omaralejel.Athan-Utility.fajrAlarmRefresh</string>
+	</array>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Athan Utility uses AlarmKit to schedule wake-up alarms that stay in sync with your daily Fajr prayer time.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSiriUsageDescription</key>
@@ -50,6 +56,10 @@
 		<string>GetMaghribIntent</string>
 		<string>GetThuhrIntent</string>
 		<string>NextPrayerIntent</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

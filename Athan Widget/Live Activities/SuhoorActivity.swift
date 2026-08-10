@@ -10,6 +10,9 @@ import ActivityKit
 import Foundation
 import SwiftUI
 import WidgetKit
+#if canImport(AlarmKit)
+import AlarmKit
+#endif
 
 
 @available(iOS 16.1, *)
@@ -236,5 +239,102 @@ struct SuhoorLiveActivity: Widget {
             }
         }
     }
-    
+
 }
+
+// MARK: - Fajr Alarm (AlarmKit) Live Activity
+//
+// AlarmKit requires apps that use `secondaryButtonBehavior: .countdown` to
+// register a Live Activity for `AlarmAttributes<FajrAlarmMetadata>` so the
+// system can render the snooze countdown on the Lock Screen, in the Dynamic
+// Island, and in StandBy. AlarmKit drives the underlying alarm state; we
+// render labels, a live countdown during snooze, and an accent color.
+
+#if canImport(AlarmKit)
+@available(iOS 26.0, *)
+struct FajrAlarmLiveActivity: Widget {
+    // Icon accent. The card background is near-black, so the deep-navy brand
+    // tint used for AlarmAttributes.tintColor is unreadable here — use a
+    // lightened variant for foreground accents instead.
+    private let accent = Color(red: 120.0/255.0, green: 180.0/255.0, blue: 235.0/255.0)
+
+    // Live snooze countdown, driven by AlarmKit's presentation state. Empty
+    // outside of countdown mode (e.g. while alerting).
+    @ViewBuilder
+    private func countdownText(state: AlarmPresentationState) -> some View {
+        if case .countdown(let countdown) = state.mode {
+            Text(timerInterval: Date()...countdown.fireDate, countsDown: true)
+                .monospacedDigit()
+                .multilineTextAlignment(.trailing)
+        }
+    }
+
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: AlarmAttributes<FajrAlarmMetadata>.self) { context in
+            // Lock screen / banner
+            HStack(spacing: 12) {
+                Image(systemName: "alarm.fill")
+                    .font(.title2)
+                    .foregroundStyle(accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(context.attributes.metadata?.prayerName ?? "")
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                    if let locationName = context.attributes.metadata?.locationName,
+                       !locationName.isEmpty {
+                        Text(locationName)
+                            .font(.caption)
+                            .foregroundStyle(.white.opacity(0.7))
+                    }
+                }
+                Spacer()
+                countdownText(state: context.state)
+                    .font(.title3)
+                    .foregroundStyle(.white)
+            }
+            .padding()
+            .activityBackgroundTint(.black.opacity(0.6))
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    Image(systemName: "alarm.fill")
+                        .foregroundStyle(accent)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    Text(context.attributes.metadata?.prayerName ?? "")
+                        .font(.headline)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    if let locationName = context.attributes.metadata?.locationName,
+                       !locationName.isEmpty {
+                        Text(locationName)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    countdownText(state: context.state)
+                        .font(.title3)
+                }
+            } compactLeading: {
+                Image(systemName: "alarm.fill")
+                    .foregroundStyle(accent)
+            } compactTrailing: {
+                Group {
+                    if case .countdown(let countdown) = context.state.mode {
+                        Text(timerInterval: Date()...countdown.fireDate, countsDown: true)
+                            .monospacedDigit()
+                            .frame(maxWidth: 60)
+                    } else {
+                        Text(context.attributes.metadata?.prayerName ?? "")
+                    }
+                }
+                .font(.caption)
+            } minimal: {
+                Image(systemName: "alarm.fill")
+                    .foregroundStyle(accent)
+            }
+        }
+    }
+}
+#endif

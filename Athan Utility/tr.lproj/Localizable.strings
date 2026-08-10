@@ -159,3 +159,29 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "Konumu ayarlamak için Ezan Utility'yi açın.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Yaklaşan namaz vakitlerini bir bakışta görmek için Ezan Widget'larını kullanın.";
+
+
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "Fajr Alarmı";
+"fajr.alarm.description" = "Fajr (veya Shurooq) ile yıl boyunca senkronize kalan gerçek bir iOS alarmı planlar. iOS 26 gerektirir.";
+"fajr.alarm.entry.description" = "Bir iOS alarmını otomatik olarak günlük Fajr vaktine kilitleyin.";
+"fajr.alarm.offset.description" = "Alarmı seçilen namazdan önce veya sonra tetikleyin. Teheccüd veya sahur için kullanışlıdır.";
+"fajr.alarm.schedule.description" = "Planlı tutulacak alarm sayısı. Uygulama her güncellendiğinde yenilenir.";
+"fajr.alarm.ios26.required" = "Otomatik Fajr alarmları için iOS 26 veya sonraki bir sürüm gereklidir.";
+"fajr.alarm.authorization.denied" = "Alarmlar devre dışı. Bu özelliği kullanmak için sistem Ayarları'ndan AlarmKit erişimini etkinleştirin.";
+"fajr.alarm.summary.off" = "Kapalı";
+"fajr.alarm.permission.needed" = "İzin gerekli";
+"fajr.alarm.no.days" = "Gün seçilmedi — alarm çalmayacak.";
+"Anchor Prayer" = "Referans Namaz";
+"Offset" = "Fark";
+"Days" = "Günler";
+"Snooze" = "Erteleme";
+"Schedule Window" = "Planlama Aralığı";
+"Stop" = "Durdur";
+"Open Settings" = "Ayarları Aç";
+"fajr.alarm.title.format" = "%@ Alarmı";
+"fajr.alarm.offset.zero" = "%@ vaktinde";
+"fajr.alarm.offset.after" = "%2$@ vaktinden %1$d dk sonra";
+"fajr.alarm.offset.before" = "%2$@ vaktinden %1$d dk önce";
+"fajr.alarm.snooze.minutes" = "%d dakika erteleme";
+"fajr.alarm.days.ahead" = "Sonraki %d alarm";

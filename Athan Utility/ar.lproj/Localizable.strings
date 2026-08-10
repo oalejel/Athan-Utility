@@ -166,3 +166,34 @@
 "Open Athan Utility to set location." = "افتح أداة الأذان لتعيين الموقع";
 "Use Athan Widgets to view upcoming salah times at a glance." = "استخدم أدوات الأذان لعرض أوقات الصلاة القادمة في لمحة.";
 
+
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "منبّه الفجر";
+"fajr.alarm.description" = "يُنشئ منبّهًا حقيقيًا في نظام iOS يتزامن تلقائيًا مع وقت الفجر (أو الشروق) طوال السنة. يتطلّب iOS 26.";
+"fajr.alarm.entry.description" = "اجعل منبّه الآيفون يتتبّع وقت الفجر يوميًا بشكل تلقائي.";
+"fajr.alarm.offset.description" = "اضبط المنبّه ليُنبّهك قبل أو بعد وقت الصلاة المختار. مفيد لقيام الليل أو السحور.";
+"fajr.alarm.schedule.description" = "عدد المنبّهات القادمة التي تتم جدولتها مسبقًا. تُحدَّث عند كل تحديث للتطبيق.";
+"fajr.alarm.ios26.required" = "يتطلّب منبّه الفجر التلقائي نظام iOS 26 أو أحدث.";
+"fajr.alarm.authorization.denied" = "المنبّهات معطّلة. فعّل صلاحية AlarmKit من إعدادات النظام لاستخدام هذه الميزة.";
+"fajr.alarm.summary.off" = "معطّل";
+"fajr.alarm.permission.needed" = "الإذن مطلوب";
+"fajr.alarm.no.days" = "لم يتم اختيار أي يوم — لن ينطلق المنبّه.";
+"Anchor Prayer" = "الصلاة المرجعية";
+"Offset" = "الإزاحة";
+"Days" = "الأيام";
+"Snooze" = "غفوة";
+"Schedule Window" = "نطاق الجدولة";
+"Stop" = "إيقاف";
+"Open Settings" = "فتح الإعدادات";
+/* Translator note (applies to all four format strings below): the
+   interpolated prayer name in %@ / %2$@ has no leading definite article
+   ("فجر", "شروق"), so the template prepends "ال" to produce "الفجر" /
+   "الشروق". If "Fajr" / "Sunrise" are ever translated to include "ال"
+   already, remove it from these templates to avoid "الال…". */
+"fajr.alarm.title.format" = "منبّه ال%@";
+"fajr.alarm.offset.zero" = "عند وقت ال%@";
+"fajr.alarm.offset.after" = "بعد ال%2$@ بـ %1$d دقيقة";
+"fajr.alarm.offset.before" = "قبل ال%2$@ بـ %1$d دقيقة";
+"fajr.alarm.snooze.minutes" = "غفوة %d دقيقة";
+"fajr.alarm.days.ahead" = "المنبّهات القادمة: %d";
+

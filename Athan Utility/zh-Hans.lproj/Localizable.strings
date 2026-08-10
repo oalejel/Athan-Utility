@@ -160,3 +160,29 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "打开 宣礼 实用工具以设置位置。";
 "Use Athan Widgets to view upcoming salah times at a glance." = "使用 宣礼 小部件一目了然地查看即将到来的祷告时间。";
+
+
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "晨礼闹钟";
+"fajr.alarm.description" = "安排一个真正的 iOS 闹钟,使其全年与晨礼(或日出)时间保持同步。需要 iOS 26。";
+"fajr.alarm.entry.description" = "让 iOS 闹钟自动跟随每日晨礼时间。";
+"fajr.alarm.offset.description" = "在所选祷告之前或之后触发闹钟。适用于夜祷或封斋前餐。";
+"fajr.alarm.schedule.description" = "要保持排期的闹钟数量。应用每次更新时刷新。";
+"fajr.alarm.ios26.required" = "自动晨礼闹钟需要 iOS 26 或更高版本。";
+"fajr.alarm.authorization.denied" = "闹钟已被禁用。请在系统设置中启用 AlarmKit 权限以使用此功能。";
+"fajr.alarm.summary.off" = "已关闭";
+"fajr.alarm.permission.needed" = "需要权限";
+"fajr.alarm.no.days" = "未选择任何日期——闹钟不会响。";
+"Anchor Prayer" = "参考祷告";
+"Offset" = "偏移";
+"Days" = "天数";
+"Snooze" = "稍后提醒";
+"Schedule Window" = "排期范围";
+"Stop" = "停止";
+"Open Settings" = "打开设置";
+"fajr.alarm.title.format" = "%@闹钟";
+"fajr.alarm.offset.zero" = "%@ 准时";
+"fajr.alarm.offset.after" = "%2$@ 之后 %1$d 分钟";
+"fajr.alarm.offset.before" = "%2$@ 之前 %1$d 分钟";
+"fajr.alarm.snooze.minutes" = "%d 分钟稍后提醒";
+"fajr.alarm.days.ahead" = "接下来 %d 个闹钟";

@@ -24,7 +24,22 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     private var popover: NSPopover?
     private var popoverVC: MenuBarPopoverController?
 
-    public override init() { super.init() }
+    public override init() {
+        super.init()
+        // Bring the status item back when the user re-activates the app (clicks
+        // the Dock icon / switches to it). If they ⌘-dragged it off the menu
+        // bar, this restores it without needing a full relaunch. Note: the
+        // per-second tick deliberately does NOT force it back, so a removal
+        // sticks for the rest of the session until the app is reactivated.
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(appDidActivate),
+            name: NSApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc private func appDidActivate() {
+        if statusItem == nil { installStatusItem() }
+        else { statusItem?.isVisible = true }
+    }
 
     // MARK: MenuBarHelping
 
@@ -66,7 +81,10 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
 
     public func updateSnapshot(_ snapshot: MenuBarSnapshot) {
         self.snapshot = snapshot
-        if popover?.isShown == true { popoverVC?.update(snapshot: snapshot) }
+        if popover?.isShown == true {
+            popoverVC?.update(snapshot: snapshot)
+            applyArrowGradient()   // keep the arrow tint in sync with color changes
+        }
     }
 
     // MARK: - Click handling
@@ -88,7 +106,31 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             if let snap = snapshot { popoverVC?.update(snapshot: snap) }
             pop.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             pop.contentViewController?.view.window?.makeKey()
+            // Tint the popover's frame — including the connector arrow, which
+            // NSPopover otherwise fills with a flat system color — with the same
+            // gradient. Apply now and again next runloop once the frame has its
+            // final size.
+            applyArrowGradient()
+            DispatchQueue.main.async { [weak self] in self?.applyArrowGradient() }
         }
+    }
+
+    /// Inject a gradient-filled view behind the popover's content so the arrow
+    /// (part of the popover's window-frame shape) shows the gradient too.
+    private func applyArrowGradient() {
+        guard let snap = snapshot,
+              let frameView = popover?.contentViewController?.view.window?.contentView?.superview
+        else { return }
+        let gv: PopoverGradientView
+        if let existing = frameView.subviews.compactMap({ $0 as? PopoverGradientView }).first {
+            gv = existing
+        } else {
+            gv = PopoverGradientView(frame: frameView.bounds)
+            gv.autoresizingMask = [.width, .height]
+            frameView.addSubview(gv, positioned: .below, relativeTo: nil)
+        }
+        gv.frame = frameView.bounds
+        gv.setColors(top: snap.topColor, bottom: snap.bottomColor)
     }
 
     private func makePopover() -> NSPopover {
@@ -136,6 +178,24 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     }
 
     @objc private func quitApp() { NSApp.terminate(nil) }
+}
+
+// MARK: - Popover frame gradient
+
+/// A gradient-filled view placed behind the popover content so the popover's
+/// connector arrow (part of its window-frame shape) is tinted with the same
+/// top→bottom gradient instead of NSPopover's flat default background.
+final class PopoverGradientView: NSView {
+    private let grad = CAGradientLayer()
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        wantsLayer = true
+        layer = grad
+        grad.startPoint = CGPoint(x: 0.5, y: 1)   // top
+        grad.endPoint   = CGPoint(x: 0.5, y: 0)   // bottom
+    }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    func setColors(top: CGColor, bottom: CGColor) { grad.colors = [top, bottom] }
 }
 
 // MARK: - Popover content (pure AppKit)

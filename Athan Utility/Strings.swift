@@ -72,6 +72,7 @@ class Strings {
 
     static var allPrayers = NSLocalizedString("All Prayers", comment: "")
     static var privacyNotes = NSLocalizedString("Privacy Notes", comment: "")
+    static var acknowledgements = NSLocalizedString("acknowledgements", value: "Acknowledgements", comment: "Button/title for the credits screen listing contributors and libraries")
     static var sendFeedback = NSLocalizedString("Send Feedback", comment: "")
     
     
@@ -124,6 +125,8 @@ class Strings {
     static var fajrAlarmIOS26Required = NSLocalizedString("fajr.alarm.ios26.required", comment: "Shown when the user's iOS version is below 26")
     static var fajrAlarmAuthDenied = NSLocalizedString("fajr.alarm.authorization.denied", comment: "Shown when the user has denied AlarmKit authorization")
     static var fajrAlarmSummaryOff = NSLocalizedString("fajr.alarm.summary.off", comment: "Status shown on the entry row when the feature is disabled")
+    static var fajrAlarmStateOn = NSLocalizedString("fajr.alarm.state.on", value: "Alarm On", comment: "Fajr alarm entry row title when the alarm is enabled")
+    static var fajrAlarmStateOff = NSLocalizedString("fajr.alarm.state.off", value: "Alarm Off", comment: "Fajr alarm entry row title when the alarm is disabled")
     static var fajrAlarmPermissionNeeded = NSLocalizedString("fajr.alarm.permission.needed", comment: "Short status shown when AlarmKit permission is denied")
     static var fajrAlarmNoDaysSelected = NSLocalizedString("fajr.alarm.no.days", comment: "Warning shown when the alarm is enabled but no weekdays are selected")
     static var fajrAlarmAnchorPrayer = NSLocalizedString("Anchor Prayer", comment: "Label for selecting which prayer the alarm is anchored to")

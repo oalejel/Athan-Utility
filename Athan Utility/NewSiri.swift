@@ -73,8 +73,23 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Add to Siri Button
-        
+        installButton()
+    }
+
+    // Rebuild the button every time the view appears. INUIAddVoiceShortcutButton
+    // only re-evaluates whether its shortcut is already added when it's created
+    // (or when its own add/edit sheet is dismissed) — it doesn't observe the
+    // Shortcuts app. If the user deletes the shortcut there and comes back,
+    // recreating the button here makes it flip back to "Add to Siri".
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        installButton()
+    }
+
+    private func installButton() {
+        // Clear any previous button so state is re-queried from scratch.
+        view.subviews.forEach { $0.removeFromSuperview() }
+
         let button = INUIAddVoiceShortcutButton(style: .automaticOutline)
         let intent = NextPrayerIntent()
         intent.suggestedInvocationPhrase = "Next prayer time"
@@ -82,11 +97,9 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
         button.shortcut = INShortcut(intent: intent)
         button.delegate = self
         self.view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
         view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
         view.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: button.trailingAnchor).isActive = true
-        self.view.addSubview(button)
-                
-        button.translatesAutoresizingMaskIntoConstraints = false
     }
 }

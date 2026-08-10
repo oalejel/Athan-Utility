@@ -197,17 +197,25 @@ struct FajrAlarmSettingsView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             weekdays.toggle(weekdayIndex: index)
         }) {
-            Text(weekdayAbbreviations[safe: index] ?? "?")
-                .font(.subheadline).bold()
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: 36) // min, not fixed: grows with Dynamic Type
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundColor(isOn
-                            ? Color.white.opacity(0.6)
-                            : Color.white.opacity(0.12))
-                )
-                .foregroundColor(isOn ? .black : .white)
+            VStack(spacing: 5) {
+                Text(weekdayAbbreviations[safe: index] ?? "?")
+                    .font(.subheadline).bold()
+                // Clear on/off affordance under the letter: a bold filled
+                // checkmark circle when selected, a hollow circle when not.
+                Image(systemName: isOn ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(isOn ? .black : .white.opacity(0.55))
+            }
+            .frame(maxWidth: .infinity)
+            .frame(minHeight: 48) // min, not fixed: grows with Dynamic Type
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(isOn
+                        ? Color.white.opacity(0.6)
+                        : Color.white.opacity(0.12))
+            )
+            .foregroundColor(isOn ? .black : .white)
         }
         .disabled(!enabled || !isOSVersionSupported)
         .accessibilityLabel(Text(fullName))

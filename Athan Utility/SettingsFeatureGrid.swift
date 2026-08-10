@@ -100,7 +100,10 @@ struct SettingsFeatureGrid: View {
     }
 
     private func tileBackground(_ f: AdoptedFeature) -> some View {
-        GlowingTileBackground(colors: f.gradientColors)
+        // Seed each tile off its position so no two tiles share the same motion
+        // timing or blob path (otherwise all four look like identical setups).
+        let seed = AdoptedFeature.allCases.firstIndex(of: f) ?? 0
+        return GlowingTileBackground(colors: f.gradientColors, seed: seed)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
@@ -214,12 +217,26 @@ struct SettingsFeatureGrid: View {
 @available(iOS 14.0, *)
 private struct GlowingTileBackground: View {
     let colors: [Color]
+    // Per-tile seed: shifts every duration, delay and blob path so no two
+    // tiles animate in lockstep.
+    var seed: Int = 0
     // One continuously-advancing phase per blob. Separate animations with
     // different (prime-ish) periods + start delays keep the three from ever
     // lining up, so the motion reads as organic rather than a synchronized pulse.
     @State private var phase0 = false
     @State private var phase1 = false
     @State private var phase2 = false
+
+    // Small deterministic jitter in [-amt, amt] for a given (seed, salt).
+    private func jitter(_ salt: Int, _ amt: CGFloat) -> CGFloat {
+        let n = ((seed &+ 1) &* 73 &+ salt &* 131) % 100
+        return (CGFloat(n) / 100.0 - 0.5) * 2 * amt
+    }
+    private func pt(_ x: CGFloat, _ y: CGFloat, _ salt: Int) -> CGPoint {
+        CGPoint(x: x + jitter(salt, 0.10), y: y + jitter(salt &+ 7, 0.10))
+    }
+    // Seed also nudges each period so the tiles never share a common cycle.
+    private var s: Double { Double(seed) }
 
     var body: some View {
         GeometryReader { g in
@@ -230,19 +247,19 @@ private struct GlowingTileBackground: View {
                 // as ambient brightness behind the moving glows.
                 Color(.sRGB, red: 0.06, green: 0.10, blue: 0.18, opacity: 1)
                 cornerWash(w: w, h: h)
-                // Each blob sweeps corner-to-corner on its own phase.
+                // Each blob sweeps corner-to-corner on its own (seed-perturbed) phase.
                 blob(color(0), w: w, h: h, on: phase0,
-                     from: CGPoint(x: 0.08, y: 0.14), to: CGPoint(x: 0.92, y: 0.30))
+                     from: pt(0.08, 0.14, 1), to: pt(0.92, 0.30, 2))
                 blob(color(1), w: w, h: h, on: phase1,
-                     from: CGPoint(x: 0.94, y: 0.86), to: CGPoint(x: 0.14, y: 0.94))
+                     from: pt(0.94, 0.86, 3), to: pt(0.14, 0.94, 4))
                 blob(color(2), w: w, h: h, on: phase2,
-                     from: CGPoint(x: 0.50, y: 1.02), to: CGPoint(x: 0.62, y: 0.20))
+                     from: pt(0.50, 1.02, 5), to: pt(0.62, 0.20, 6))
             }
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 5.5).repeatForever(autoreverses: true)) { phase0 = true }
-            withAnimation(.easeInOut(duration: 7.3).delay(0.9).repeatForever(autoreverses: true)) { phase1 = true }
-            withAnimation(.easeInOut(duration: 6.4).delay(1.7).repeatForever(autoreverses: true)) { phase2 = true }
+            withAnimation(.easeInOut(duration: 5.5 + s * 0.7).repeatForever(autoreverses: true)) { phase0 = true }
+            withAnimation(.easeInOut(duration: 7.3 + s * 0.5).delay(0.9 + s * 0.3).repeatForever(autoreverses: true)) { phase1 = true }
+            withAnimation(.easeInOut(duration: 6.4 + s * 0.6).delay(1.7 + s * 0.2).repeatForever(autoreverses: true)) { phase2 = true }
         }
     }
 

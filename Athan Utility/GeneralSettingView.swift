@@ -37,6 +37,7 @@ struct GeneralSettingView: View {
     @State var scrollHeight = CGFloat(300) // to be adjusted on appearance
     @State var showPrivacyView = false
     @State var showDiscovery = false
+    @State private var showAcknowledgements = false
     
     // Developer contact properties
     @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
@@ -74,6 +75,12 @@ struct GeneralSettingView: View {
         }
     }
 
+    // Row title for the Fajr Alarm entry cell — reflects on/off state instead of
+    // repeating the "Fajr Alarm" section header directly above it.
+    private var fajrAlarmStateTitle: String {
+        FajrAlarmSettings.shared.enabled ? Strings.fajrAlarmStateOn : Strings.fajrAlarmStateOff
+    }
+
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 0) {
@@ -98,8 +105,13 @@ struct GeneralSettingView: View {
 
                                 // Feature-adoption grid: tiles collapse to checkmark pills as explored.
                                 if #available(iOS 14.0, *) {
+                                    Text(NSLocalizedString("features_section_title", value: "Features", comment: "Header above the feature-adoption grid at the top of Settings"))
+                                        .font(.headline)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                        .padding(.top, 12)
                                     SettingsFeatureGrid()
-                                        .padding(.top, 14)
+                                        .padding(.top, 8)
                                 }
 
                                 VStack(alignment: .leading) { // stack of each settings selector
@@ -468,7 +480,8 @@ struct GeneralSettingView: View {
                                                     .foregroundColor(.white)
                                                     .font(Font.headline.weight(.bold))
                                                     .frame(width: 26)
-                                                Text(Strings.fajrAlarm)
+                                                    .padding(.leading)
+                                                Text(fajrAlarmStateTitle)
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -587,8 +600,30 @@ struct GeneralSettingView: View {
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
                                         .sheet(isPresented: $showPrivacyView) {
                                             PrivacyInfoView(isVisible: $showPrivacyView)
+                                                .preferredColorScheme(.dark)
                                         }
-                                        
+
+                                        Button(action: { // acknowledgements
+                                            showAcknowledgements.toggle()
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "heart.text.square.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.acknowledgements)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        .sheet(isPresented: $showAcknowledgements) {
+                                            AcknowledgementsView(isVisible: $showAcknowledgements)
+                                                .preferredColorScheme(.dark)
+                                        }
+
                                         Button(action: { // rate the app
                                             SKStoreReviewController.requestReview()
                                         }, label: {
@@ -626,7 +661,12 @@ struct GeneralSettingView: View {
                                         // savedOffset/scrollHeight fraction and scrolling the title
                                         // out of view on load.
                                         scrollHeight = contentG.size.height
-                                        if #available(iOS 14.0, *) {
+                                        // Only restore a previously-saved scroll position. On the
+                                        // first open savedOffset is ~0; scrolling to reference id 0
+                                        // (which sits below a leading Spacer in the marker stack)
+                                        // pushed the "Settings" title up and out of view. Leaving the
+                                        // scroll untouched keeps the title anchored at the top.
+                                        if #available(iOS 14.0, *), savedOffset > 1, scrollHeight > 1 {
                                             let id = Int((savedOffset / scrollHeight) * 100)
                                             (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
                                         }

@@ -90,7 +90,11 @@ class IntentController : UIViewController, INUIAddVoiceShortcutViewControllerDel
         // Clear any previous button so state is re-queried from scratch.
         view.subviews.forEach { $0.removeFromSuperview() }
 
-        let button = INUIAddVoiceShortcutButton(style: .automaticOutline)
+        // Both places this button appears sit on the app's dark background, and
+        // `.automaticOutline` was resolving to a white-filled/white-text button
+        // that was unreadable there. `.whiteOutline` is deterministic: white
+        // label + white border, no fill — always legible on dark.
+        let button = INUIAddVoiceShortcutButton(style: .whiteOutline)
         let intent = NextPrayerIntent()
         intent.suggestedInvocationPhrase = "Next prayer time"
 

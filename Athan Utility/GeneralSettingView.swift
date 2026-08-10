@@ -105,7 +105,7 @@ struct GeneralSettingView: View {
 
                                 // Feature-adoption grid: tiles collapse to checkmark pills as explored.
                                 if #available(iOS 14.0, *) {
-                                    Text(NSLocalizedString("features_section_title", value: "Features", comment: "Header above the feature-adoption grid at the top of Settings"))
+                                    Text(NSLocalizedString("features_section_title", value: "features", comment: "Header above the feature-adoption grid at the top of Settings"))
                                         .font(.headline)
                                         .bold()
                                         .foregroundColor(.white)
@@ -477,10 +477,10 @@ struct GeneralSettingView: View {
                                         }, label: {
                                             HStack {
                                                 Image(systemName: "alarm")
+                                                    .padding([.leading, .top, .bottom])
                                                     .foregroundColor(.white)
                                                     .font(Font.headline.weight(.bold))
                                                     .frame(width: 26)
-                                                    .padding(.leading)
                                                 Text(fajrAlarmStateTitle)
                                                     .font(.headline)
                                                     .bold()

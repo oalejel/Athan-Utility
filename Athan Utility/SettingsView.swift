@@ -50,24 +50,58 @@ struct SettingsView: View {
             case .Sounds:
                 SoundSettingView(tempNotificationSettings: $tempNotificationSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             case .Prayer(let p):
                 #warning("change binding")
                 PrayerSettingsView(noteSettings: $tempNotificationSettings, prayer: p, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             case .Colors:
                 ColorsView(tempAppearanceSettings: $tempAppearanceSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             case .CustomNames:
                 NameOverridesView(tempPrayerSettings: $tempPrayerSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             case .CalculationMethod:
                 CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             case .FajrAlarm:
                 FajrAlarmSettingsView(activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
+                    .edgeSwipeBack(goBack)
             }
         }
+    }
+
+    // Return to the main settings list (the same thing each detail view's
+    // back/Done button does), animated so the pane slides back out to trailing.
+    private func goBack() {
+        withAnimation(.easeInOut(duration: 0.28)) { activeSection = .General }
+    }
+}
+
+// Native-feeling interactive back: a swipe that STARTS at the left screen edge
+// and drags right pops the detail pane back to the main list — without wrapping
+// everything in a UINavigationController (which broke the custom layout).
+@available(iOS 13.0.0, *)
+private extension View {
+    func edgeSwipeBack(_ action: @escaping () -> Void) -> some View {
+        // `.simultaneousGesture` so it never blocks the pane's own vertical
+        // scrolling / sliders — it only acts on an edge-anchored horizontal drag.
+        simultaneousGesture(
+            DragGesture(minimumDistance: 20, coordinateSpace: .global)
+                .onEnded { v in
+                    let startedAtLeftEdge = v.startLocation.x < 32
+                    let draggedRight = v.translation.width > 90
+                    let mostlyHorizontal = abs(v.translation.height) < 70
+                    if startedAtLeftEdge && draggedRight && mostlyHorizontal {
+                        action()
+                    }
+                }
+        )
     }
 }
 

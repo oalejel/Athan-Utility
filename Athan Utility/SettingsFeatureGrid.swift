@@ -257,9 +257,13 @@ private struct GlowingTileBackground: View {
             }
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 5.5 + s * 0.7).repeatForever(autoreverses: true)) { phase0 = true }
-            withAnimation(.easeInOut(duration: 7.3 + s * 0.5).delay(0.9 + s * 0.3).repeatForever(autoreverses: true)) { phase1 = true }
-            withAnimation(.easeInOut(duration: 6.4 + s * 0.6).delay(1.7 + s * 0.2).repeatForever(autoreverses: true)) { phase2 = true }
+            // Wider per-tile spread (prime-ish multipliers + a little jitter) so
+            // each tile drifts at a noticeably different speed — more organic,
+            // never in lockstep.
+            let j0 = Double(jitter(11, 0.8)), j1 = Double(jitter(12, 0.8)), j2 = Double(jitter(13, 0.8))
+            withAnimation(.easeInOut(duration: 5.3 + s * 1.3 + j0).repeatForever(autoreverses: true)) { phase0 = true }
+            withAnimation(.easeInOut(duration: 7.9 + s * 0.9 + j1).delay(0.9 + s * 0.4).repeatForever(autoreverses: true)) { phase1 = true }
+            withAnimation(.easeInOut(duration: 6.7 + s * 1.7 + j2).delay(1.7 + s * 0.3).repeatForever(autoreverses: true)) { phase2 = true }
         }
     }
 

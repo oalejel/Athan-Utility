@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>17</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Athan Utility uses your location to calculate accurate prayer times for where you are.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

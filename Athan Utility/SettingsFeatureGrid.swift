@@ -174,12 +174,21 @@ struct SettingsFeatureGrid: View {
 
     private func activate(_ f: AdoptedFeature) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        withAnimation(.spring(response: 0.42, dampingFraction: 0.82)) {
-            done.insert(f)
-        }
-        AdoptedFeature.saveDone(done)
         ExploreSettingsNudge.cancel() // user explored a feature — no need for the nudge anymore
+        // Present the sheet FIRST, against the current (stable) layout. If we
+        // instead reordered the grid (square → collapsed pill via
+        // matchedGeometryEffect) in the same transaction, the structural change
+        // could invalidate the `.sheet(item:)` binding mid-present and pick up a
+        // neighbouring tile's identity — which is how tapping "Widgets" could
+        // surface the "Siri" sheet. Defer the reorder to the next runloop tick
+        // so the sheet is already committed to `f` before the grid restructures.
         activeSheet = f
+        DispatchQueue.main.async {
+            withAnimation(.spring(response: 0.42, dampingFraction: 0.82)) {
+                done.insert(f)
+            }
+            AdoptedFeature.saveDone(done)
+        }
     }
 
     private func chunk(_ items: [AdoptedFeature], by n: Int) -> [[AdoptedFeature]] {
@@ -198,35 +207,74 @@ struct SettingsFeatureGrid: View {
 
 // MARK: - Glowing tile background
 
-/// Three soft, slowly-moving colored glows over a dark base — a calm "lava lamp" fill that
-/// keeps white text legible (not a flat, over-bright linear gradient).
+/// Three soft, independently-drifting colored glows over a dark base — a calm "lava lamp"
+/// fill that keeps white text legible. Each glow moves on its own timer (desynced periods +
+/// phase offsets) and its path hugs the corners, so the tile never looks dim/small at the
+/// left/right edges the way a centered linear gradient does.
 @available(iOS 14.0, *)
 private struct GlowingTileBackground: View {
     let colors: [Color]
-    @State private var animate = false
+    // One continuously-advancing phase per blob. Separate animations with
+    // different (prime-ish) periods + start delays keep the three from ever
+    // lining up, so the motion reads as organic rather than a synchronized pulse.
+    @State private var phase0 = false
+    @State private var phase1 = false
+    @State private var phase2 = false
 
     var body: some View {
         GeometryReader { g in
             let w = g.size.width, h = g.size.height
             ZStack {
-                Color(.sRGB, red: 0.05, green: 0.08, blue: 0.15, opacity: 1)   // dark base
-                blob(color(0), w: w, h: h, from: CGPoint(x: 0.22, y: 0.28), to: CGPoint(x: 0.68, y: 0.16))
-                blob(color(1), w: w, h: h, from: CGPoint(x: 0.82, y: 0.72), to: CGPoint(x: 0.34, y: 0.86))
-                blob(color(2), w: w, h: h, from: CGPoint(x: 0.5,  y: 0.95), to: CGPoint(x: 0.55, y: 0.42))
+                // Slightly lifted base + a soft corner wash so the whole rect carries
+                // color (no dark, "shrunken" edges). The four faint corner stops read
+                // as ambient brightness behind the moving glows.
+                Color(.sRGB, red: 0.06, green: 0.10, blue: 0.18, opacity: 1)
+                cornerWash(w: w, h: h)
+                // Each blob sweeps corner-to-corner on its own phase.
+                blob(color(0), w: w, h: h, on: phase0,
+                     from: CGPoint(x: 0.08, y: 0.14), to: CGPoint(x: 0.92, y: 0.30))
+                blob(color(1), w: w, h: h, on: phase1,
+                     from: CGPoint(x: 0.94, y: 0.86), to: CGPoint(x: 0.14, y: 0.94))
+                blob(color(2), w: w, h: h, on: phase2,
+                     from: CGPoint(x: 0.50, y: 1.02), to: CGPoint(x: 0.62, y: 0.20))
             }
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 5.5).repeatForever(autoreverses: true)) { animate = true }
+            withAnimation(.easeInOut(duration: 5.5).repeatForever(autoreverses: true)) { phase0 = true }
+            withAnimation(.easeInOut(duration: 7.3).delay(0.9).repeatForever(autoreverses: true)) { phase1 = true }
+            withAnimation(.easeInOut(duration: 6.4).delay(1.7).repeatForever(autoreverses: true)) { phase2 = true }
         }
     }
 
     private func color(_ i: Int) -> Color { colors.indices.contains(i) ? colors[i] : (colors.first ?? .blue) }
 
-    private func blob(_ c: Color, w: CGFloat, h: CGFloat, from: CGPoint, to: CGPoint) -> some View {
-        let d = max(w, h) * 0.95
-        let p = animate ? to : from
+    // Faint, static color parked in each corner so brightness reaches the edges even
+    // between blob passes. Uses the three feature colors, cycled across the corners.
+    private func cornerWash(w: CGFloat, h: CGFloat) -> some View {
+        let corners: [(CGPoint, Color)] = [
+            (CGPoint(x: 0, y: 0),   color(0)),
+            (CGPoint(x: 1, y: 0),   color(1)),
+            (CGPoint(x: 0, y: 1),   color(2)),
+            (CGPoint(x: 1, y: 1),   color(0)),
+        ]
+        let d = max(w, h) * 1.05
+        return ZStack {
+            ForEach(0..<corners.count, id: \.self) { i in
+                Circle()
+                    .fill(RadialGradient(gradient: Gradient(colors: [corners[i].1.opacity(0.30), corners[i].1.opacity(0)]),
+                                         center: .center, startRadius: 0, endRadius: d * 0.5))
+                    .frame(width: d, height: d)
+                    .position(x: corners[i].0.x * w, y: corners[i].0.y * h)
+            }
+        }
+        .blur(radius: 22)
+    }
+
+    private func blob(_ c: Color, w: CGFloat, h: CGFloat, on phase: Bool, from: CGPoint, to: CGPoint) -> some View {
+        let d = max(w, h) * 1.05
+        let p = phase ? to : from
         return Circle()
-            .fill(RadialGradient(gradient: Gradient(colors: [c.opacity(0.55), c.opacity(0)]),
+            .fill(RadialGradient(gradient: Gradient(colors: [c.opacity(0.72), c.opacity(0)]),
                                  center: .center, startRadius: 0, endRadius: d * 0.5))
             .frame(width: d, height: d)
             .position(x: p.x * w, y: p.y * h)

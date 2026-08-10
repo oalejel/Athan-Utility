@@ -133,7 +133,10 @@ struct CalendarView: View, Equatable {
     
     @Binding var showCalendar: Bool
     @State var showShareSheet = false
-    
+    // EventKit "Add to Calendar" integration — the primary calendar feature,
+    // shown before the CSV export.
+    @State private var showCalendarExport = false
+
     var model: MonthModel!
     
     @State var allPrayers = Array(Prayer.allCases)
@@ -201,8 +204,27 @@ struct CalendarView: View, Equatable {
                                                       //                            model.generateStartMonths()
                                                       //                        }
                     Spacer()
-                    
-                    // export button
+
+                    // Add-to-Calendar (EventKit) — the primary calendar feature,
+                    // listed first, before the CSV export button.
+                    Button(action: {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showCalendarExport = true
+                    }) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(NSLocalizedString("cal_add_button", value: "Add to Calendar", comment: ""))
+                            Image(systemName: "calendar.badge.plus")
+                        }
+                        .padding(2)
+                    }
+                    .padding(.trailing, 8)
+                    .font(Font.body.weight(.bold))
+                    .sheet(isPresented: $showCalendarExport) {
+                        CalendarExportView()
+                            .preferredColorScheme(.dark)
+                    }
+
+                    // export button (CSV)
                     Button(action: {
                         let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         lightImpactFeedbackGenerator.impactOccurred()
@@ -222,7 +244,7 @@ struct CalendarView: View, Equatable {
                     .padding(.trailing, 12)
                     .font(Font.body.weight(.bold))
                     .sheet(isPresented: $showShareSheet) {
-                        
+
                     } content: {
                         let calendarFileURL: URL = {
                             let csvString = calendarCSVString()

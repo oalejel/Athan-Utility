@@ -58,13 +58,13 @@ final class MenuBarBridge {
         let helper = unsafeBitCast(instance, to: MenuBarHelping.self)
         self.helper = helper
         helper.installStatusItem()
-        helper.updateTitle("Athan", urgent: false)
+        helper.updateTitle("Athan", urgent: false, glyph: "moon.stars.fill")
         mbDebug("installStatusItem + updateTitle done")
     }
 
-    /// Update the menu bar title (driven by `MenuBarController`).
-    func updateTitle(_ title: String, urgent: Bool) {
-        helper?.updateTitle(title, urgent: urgent)
+    /// Update the menu bar title + leading glyph (driven by `MenuBarController`).
+    func updateTitle(_ title: String, urgent: Bool, glyph: String) {
+        helper?.updateTitle(title, urgent: urgent, glyph: glyph)
     }
 
     /// Make sure the status item is present (re-adds it after it was hidden). Loads the
@@ -152,7 +152,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
         let manager = AthanManager.shared
         guard manager.todayTimes != nil, manager.tomorrowTimes != nil, manager.yesterdayTimes != nil else {
-            MenuBarBridge.shared.updateTitle("Athan", urgent: false)
+            MenuBarBridge.shared.updateTitle("Athan", urgent: false, glyph: "moon.stars.fill")
             return
         }
 
@@ -169,8 +169,24 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         case .nextTime:
             title = "\(name): \(Self.clockFormatter.string(from: date))"
         }
-        MenuBarBridge.shared.updateTitle(title, urgent: urgent)
+        // Glyph reflects the CURRENT time of day (the prayer we're inside now),
+        // not the upcoming one — e.g. during Shuruq it should read as daytime,
+        // not a moon.
+        // currentPrayer is nil pre-Fajr (deep night) → fall back to the night glyph.
+        MenuBarBridge.shared.updateTitle(title, urgent: urgent, glyph: Self.glyph(for: manager.currentPrayer ?? .isha))
         pushSnapshot()
+    }
+
+    /// SF Symbol reflecting the time of day for the current prayer period.
+    static func glyph(for prayer: Prayer) -> String {
+        switch prayer {
+        case .fajr:    return "moon.stars.fill"     // pre-dawn
+        case .sunrise: return "sunrise.fill"        // Shuruq
+        case .dhuhr:   return "sun.max.fill"         // midday
+        case .asr:     return "sun.min.fill"         // afternoon
+        case .maghrib: return "sunset.fill"          // sunset
+        case .isha:    return "moon.stars.fill"     // night
+        }
     }
 
     // MARK: - Popover snapshot

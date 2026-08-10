@@ -360,8 +360,31 @@ struct MacSidebarView: View {
                 }
             }
         } else if status == .notDetermined {
-            locationStatus = NSLocalizedString("loc_requesting", value: "Requesting location access — approve the prompt, then tap again.", comment: "")
+            locating = true
+            locationStatus = NSLocalizedString("loc_requesting", value: "Requesting location access — approve the prompt.", comment: "")
+            // Pre-set "use current location" so AthanManager's authorization-grant
+            // callback auto-fetches once the user approves.
+            if let updated = LocationSettings.shared.copy() as? LocationSettings {
+                updated.useCurrentLocation = true
+                AthanManager.shared.locationSettings = updated
+            }
             AthanManager.shared.requestLocationPermission()
+            // On macOS the system location prompt is triggered by the first
+            // attempt to *use* location, not by requestWhenInUseAuthorization()
+            // alone — so kick off a single update here too. On grant this both
+            // surfaces the prompt and delivers the fix; the capture closure runs
+            // after didUpdateLocations.
+            AthanManager.shared.attemptSingleLocationUpdate { settings in
+                locating = false
+                if let s = settings {
+                    AthanManager.shared.locationSettings = s
+                    AthanManager.shared.reloadSettingsAndNotifications()
+                    _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
+                    locationStatus = nil
+                    withAnimation { showLocationEditor = false }
+                }
+                // If denied, the prompt was declined; leave the status text as a hint.
+            }
         } else {
             locationStatus = NSLocalizedString("loc_denied", value: "Location access is off. Turn it on in System Settings › Privacy & Security › Location Services.", comment: "")
         }

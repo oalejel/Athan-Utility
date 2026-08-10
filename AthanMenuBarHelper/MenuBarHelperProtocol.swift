@@ -16,8 +16,10 @@ import CoreGraphics
 @objc public protocol MenuBarHelping: NSObjectProtocol {
     /// Create and show the status item in the macOS menu bar.
     func installStatusItem()
-    /// Update the menu bar title text. `urgent` renders it red (used when < 30 min remain).
-    func updateTitle(_ title: String, urgent: Bool)
+    /// Update the menu bar title text and its leading glyph (an SF Symbol name
+    /// reflecting the current time of day). `urgent` renders the title red
+    /// (used when < 30 min remain).
+    func updateTitle(_ title: String, urgent: Bool, glyph: String)
     /// Remove the status item from the menu bar.
     func removeStatusItem()
     /// The app registers itself to receive popover interactions (bell taps).

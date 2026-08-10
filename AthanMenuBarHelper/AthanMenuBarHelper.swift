@@ -45,10 +45,14 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         statusItem = item
     }
 
-    public func updateTitle(_ title: String, urgent: Bool) {
+    public func updateTitle(_ title: String, urgent: Bool, glyph: String) {
         guard let button = statusItem?.button else { return }
         let color: NSColor = urgent ? .systemRed : .labelColor
         button.attributedTitle = NSAttributedString(string: title, attributes: [.foregroundColor: color])
+        if let img = NSImage(systemSymbolName: glyph, accessibilityDescription: "Athan Utility") {
+            img.isTemplate = true
+            button.image = img
+        }
     }
 
     public func removeStatusItem() {

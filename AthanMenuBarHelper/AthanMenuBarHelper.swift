@@ -21,7 +21,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     private var statusItem: NSStatusItem?
     private weak var actionDelegate: MenuBarActionDelegate?
     private var snapshot: MenuBarSnapshot?
-    private var dockIconHidden = false
     private var popover: NSPopover?
     private var popoverVC: MenuBarPopoverController?
 
@@ -64,19 +63,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     public func updateSnapshot(_ snapshot: MenuBarSnapshot) {
         self.snapshot = snapshot
         if popover?.isShown == true { popoverVC?.update(snapshot: snapshot) }
-    }
-
-    public func setDockIconHidden(_ hidden: Bool) {
-        dockIconHidden = hidden
-        if hidden {
-            NSApp.setActivationPolicy(.accessory)
-            for w in NSApp.windows where w.canBecomeMain { w.orderOut(nil) }
-        } else {
-            NSApp.setActivationPolicy(.regular)
-            NSApp.unhide(nil)
-            NSApp.activate(ignoringOtherApps: true)
-            NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
-        }
     }
 
     // MARK: - Click handling
@@ -143,11 +129,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         NSApp.unhide(nil)
         NSApp.activate(ignoringOtherApps: true)
         NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
-        if dockIconHidden {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
-                if self?.dockIconHidden == true { NSApp.setActivationPolicy(.accessory) }
-            }
-        }
     }
 
     @objc private func quitApp() { NSApp.terminate(nil) }

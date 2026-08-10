@@ -24,8 +24,6 @@ import CoreGraphics
     func setActionDelegate(_ delegate: MenuBarActionDelegate)
     /// Push the latest prayer times / location / gradient for the popover to render.
     func updateSnapshot(_ snapshot: MenuBarSnapshot)
-    /// Menu-bar-only mode: hide the Dock icon + windows (accessory) or restore the normal app.
-    func setDockIconHidden(_ hidden: Bool)
 }
 
 /// Implemented by the app; called from the helper bundle when the user interacts with the popover.
@@ -40,8 +38,6 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
-    /// The user chose to open the window from the menu — leave menu-bar-only mode.
-    func menuBarLaunchWindow()
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.

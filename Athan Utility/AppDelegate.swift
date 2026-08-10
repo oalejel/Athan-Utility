@@ -42,11 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         DispatchQueue.main.async {
             MenuBarBridge.shared.start()
             MenuBarController.shared.start()
-            if MenuBarSettings.menuBarOnly {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    MenuBarBridge.shared.setDockIconHidden(true)
-                }
-            }
         }
         #endif
 

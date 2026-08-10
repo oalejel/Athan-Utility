@@ -18,7 +18,6 @@ struct MacSettingsView: View {
     @State private var latRule: HighLatitudeRule
     @State private var sound: NotificationSettings.Sounds
     @State private var isDynamic: Bool
-    @State private var menuBarOnly = MenuBarSettings.menuBarOnly
     @State private var bellVersion = 0
 
     private let methods = CalculationMethod.usefulCases()
@@ -68,15 +67,6 @@ struct MacSettingsView: View {
             Section(NSLocalizedString("appearance_section", value: "Appearance", comment: "")) {
                 Toggle(NSLocalizedString("dynamic_colors", value: "Dynamic colors by prayer", comment: ""), isOn: $isDynamic)
                     .onChange(of: isDynamic) { _ in applyAppearance() }
-            }
-
-            Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
-                    footer: Text(NSLocalizedString("menubar_only_footer", value: "Run from the menu bar with no Dock icon. Click the menu-bar item for prayer times; use Open to show the window.", comment: ""))) {
-                Toggle(NSLocalizedString("menubar_only", value: "Menu bar only (hide Dock icon)", comment: ""), isOn: $menuBarOnly)
-                    .onChange(of: menuBarOnly) { newVal in
-                        MenuBarSettings.menuBarOnly = newVal
-                        MenuBarBridge.shared.setDockIconHidden(newVal)
-                    }
             }
 
             Section {

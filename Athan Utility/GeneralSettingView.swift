@@ -73,14 +73,6 @@ struct GeneralSettingView: View {
                                     .onDisappear {
                                         savedOffset = contentOffset
                                     }
-                                    .onAppear {
-                                        print("SAVED OFFSET: \(savedOffset)")
-                                        
-                                        if #available(iOS 14.0, *) {
-                                            let id = Int((savedOffset / scrollHeight) * 100)
-                                            (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
-                                        }
-                                    }
 
                                 // Feature-adoption grid: tiles collapse to checkmark pills as explored.
                                 if #available(iOS 14.0, *) {
@@ -557,7 +549,17 @@ struct GeneralSettingView: View {
                             .overlay(
                                 GeometryReader { contentG in
                                     Color.clear.onAppear {
+                                        // Measure real content height first, then restore scroll
+                                        // position against it — doing this from the title's onAppear
+                                        // instead used the CGFloat(300) placeholder default (this
+                                        // GeometryReader hadn't fired yet), wildly inflating the
+                                        // savedOffset/scrollHeight fraction and scrolling the title
+                                        // out of view on load.
                                         scrollHeight = contentG.size.height
+                                        if #available(iOS 14.0, *) {
+                                            let id = Int((savedOffset / scrollHeight) * 100)
+                                            (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
+                                        }
                                     }
                                 }
                             )

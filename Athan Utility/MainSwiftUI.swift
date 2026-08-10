@@ -446,7 +446,7 @@ struct MainSwiftUI: View {
                                 HStack(alignment: .center, spacing: 0) {
                                     Spacer()
                                     MoonView3D()
-                                        .frame(width: min(g.size.width, 430) * 0.26, height: min(g.size.width, 430) * 0.26, alignment: .center)
+                                        .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                         .offset(y: 12)
                                         .shadow(radius: 3)
                                         .flipsForRightToLeftLayoutDirection(false)
@@ -461,7 +461,7 @@ struct MainSwiftUI: View {
 
                                             Spacer()
                                             MoonView3D()
-                                                .frame(width: min(g.size.width, 430) * 0.26, height: min(g.size.width, 430) * 0.26, alignment: .center)
+                                                .frame(width: g.size.width / 3, height: g.size.width / 3, alignment: .center)
                                                 .offset(y: 18)
                                                 .shadow(radius: 3)
                                                 .flipsForRightToLeftLayoutDirection(false)

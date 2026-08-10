@@ -63,9 +63,16 @@ class NotificationsManager {
             center.getPendingNotificationRequests { (notes) in
                 print("pending notes: ")
                 print(notes.count)
-                
-                center.removeAllPendingNotificationRequests()
-                
+
+                // Only clear our own prayer-time notifications here, not every pending
+                // request — a blanket removeAllPendingNotificationRequests() would also
+                // wipe out unrelated scheduled notifications (e.g. the "explore settings"
+                // nudge) every time prayer times regenerate, which happens often.
+                let prayerNoteIDs = notes
+                    .map { $0.identifier }
+                    .filter { $0.hasPrefix("standard_note_") || $0.hasPrefix("pre_note_") }
+                center.removePendingNotificationRequests(withIdentifiers: prayerNoteIDs)
+
                 // only remove delivered if we open the main app
                 if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
                     center.removeAllDeliveredNotifications()

@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Seed deterministic demo state when launched by the snapshot UI test.
         SnapshotSupport.seedIfNeeded()
 
+        ExploreSettingsNudge.recordLaunchAndScheduleIfNeeded()
+
         #if targetEnvironment(macCatalyst)
         // Load the native-macOS helper bundle, show the menu bar item, and start the live
         // title driver — but OFF the launch critical path. The title driver touches

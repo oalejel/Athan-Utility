@@ -217,6 +217,9 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         }
         let methods = CalculationMethod.usefulCases()
         let sounds = NotificationSettings.Sounds.allCases
+        let nextTime = m.guaranteedNextPrayerTime()
+        let countdownLabel = "-\(Self.countdownString(nextTime.timeIntervalSinceNow))"   // "-6h 1m"
+        let startTimeLabel = Self.clockFormatter.string(from: nextTime)                   // "3:38 PM"
         return MenuBarSnapshot(rows: rows,
                                locationText: m.locationSettings.locationName,
                                methodOptions: methods.map { $0.localizedString() },
@@ -224,6 +227,8 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
                                soundOptions: sounds.map { $0.localizedString() },
                                soundIndex: m.notificationSettings.selectedSound.rawValue,
                                displayMode: MenuBarSettings.mode.rawValue,
+                               countdownLabel: countdownLabel,
+                               startTimeLabel: startTimeLabel,
                                topColor: top,
                                bottomColor: bottom)
     }
@@ -269,6 +274,11 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
     func menuBarOpenSettings() {
         NotificationCenter.default.post(name: .athanShowMacSettings, object: nil)
+    }
+
+    func menuBarLaunchWindow() {
+        // Opening the window is an intentional exit from menu-bar-only mode.
+        MenuBarSettings.menuBarOnly = false
     }
 
     /// "1:23:45" (H:MM:SS) when ≥ 1h remains, otherwise "23:45" (MM:SS).

@@ -40,6 +40,8 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
+    /// The user chose to open the window from the menu — leave menu-bar-only mode.
+    func menuBarLaunchWindow()
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.
@@ -67,12 +69,15 @@ public final class MenuBarSnapshot: NSObject {
     public let soundOptions: [String]
     public let soundIndex: Int
     public let displayMode: Int          // 0 = countdown, 1 = start time
+    public let countdownLabel: String    // e.g. "Fajr -6h 1m"  (the actual timeLeft title)
+    public let startTimeLabel: String    // e.g. "Fajr: 3:38 PM" (the actual startTime title)
     public let topColor: CGColor
     public let bottomColor: CGColor
     public init(rows: [MenuBarPrayerRow], locationText: String,
                 methodOptions: [String], methodIndex: Int,
                 soundOptions: [String], soundIndex: Int,
                 displayMode: Int,
+                countdownLabel: String, startTimeLabel: String,
                 topColor: CGColor, bottomColor: CGColor) {
         self.rows = rows
         self.locationText = locationText
@@ -81,6 +86,8 @@ public final class MenuBarSnapshot: NSObject {
         self.soundOptions = soundOptions
         self.soundIndex = soundIndex
         self.displayMode = displayMode
+        self.countdownLabel = countdownLabel
+        self.startTimeLabel = startTimeLabel
         self.topColor = topColor
         self.bottomColor = bottomColor
     }

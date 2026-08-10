@@ -198,6 +198,7 @@
 		BAF829F0821983AAD61BD25C /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = AC2133E50300F5E25DA14A35 /* Adhan */; };
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
 		C013A1D007944FA2D2B4F38A /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
+		CDD074B9FB3B89E5C7ABA16B /* ExploreSettingsNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */; };
 		D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */; };
 		D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */; };
 		E4497F14C9BF921045926568 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
@@ -476,6 +477,7 @@
 		8734E5FB26339F5FFD354C18 /* AthanAppIntents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AthanAppIntents.swift; sourceTree = "<group>"; };
 		8CA6F9D45173A1453E89EA52 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		AF10629E04FA05B477D8EC1C /* bn */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExploreSettingsNudge.swift; sourceTree = "<group>"; };
 		BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; includeInIndex = 0; path = AthanMenuBarHelper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotSupport.swift; sourceTree = "<group>"; };
 		CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportManager.swift; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 				1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */,
 				8734E5FB26339F5FFD354C18 /* AthanAppIntents.swift */,
 				3A72E85251E4B82AA52547AE /* MacSettingsView.swift */,
+				B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1334,6 +1337,7 @@
 				F5F556DAD920FB08C2A09C5C /* SettingsFeatureGrid.swift in Sources */,
 				5904A0622306CD7D4436A97A /* AthanAppIntents.swift in Sources */,
 				AB793B5ED9D92D6F8C50104D /* MacSettingsView.swift in Sources */,
+				CDD074B9FB3B89E5C7ABA16B /* ExploreSettingsNudge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -112,29 +112,25 @@ struct SettingsFeatureGrid: View {
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
-    // Done features become half-width tiles (2 per row) with a right disclosure on the far edge.
+    // Two flexible columns — LazyVGrid gives each tile a correct, stable cell
+    // frame keyed by the feature's own id, so hit-testing lines up with the
+    // visuals and reordering on completion is clean (no hand-chunked rows with
+    // index-based identity + phantom Color.clear fillers).
+    private var gridColumns: [GridItem] {
+        [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)]
+    }
+
+    // Done features become half-width pills with a right disclosure.
     private var pillRows: some View {
-        let rows = chunk(doneList, by: 2)
-        return VStack(spacing: 10) {
-            ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                HStack(spacing: 10) {
-                    ForEach(row) { pill($0) }
-                    if row.count == 1 { Color.clear.frame(maxWidth: .infinity) }
-                }
-            }
+        LazyVGrid(columns: gridColumns, spacing: 10) {
+            ForEach(doneList) { pill($0) }
         }
     }
 
     // Undone features are square tiles, two per row filling the width.
     private var squareRows: some View {
-        let rows = chunk(undone, by: 2)
-        return VStack(spacing: 10) {
-            ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
-                HStack(spacing: 10) {
-                    ForEach(row) { square($0) }
-                    if row.count == 1 { Color.clear.frame(maxWidth: .infinity) }
-                }
-            }
+        LazyVGrid(columns: gridColumns, spacing: 10) {
+            ForEach(undone) { square($0) }
         }
     }
 
@@ -158,6 +154,10 @@ struct SettingsFeatureGrid: View {
                     .padding(10),
                 alignment: .topTrailing
             )
+            // Make the ENTIRE tile rectangle tappable. Without this the button's
+            // hit area is derived from the label content (icon + texts with a
+            // Spacer gap), leaving dead zones / a vertical offset from the visual.
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -192,9 +192,6 @@ struct SettingsFeatureGrid: View {
         }
     }
 
-    private func chunk(_ items: [AdoptedFeature], by n: Int) -> [[AdoptedFeature]] {
-        stride(from: 0, to: items.count, by: n).map { Array(items[$0..<min($0 + n, items.count)]) }
-    }
 }
 
 /// The detail sheet for an adopted feature. Free function so the single sheet

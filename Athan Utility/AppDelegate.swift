@@ -43,6 +43,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             MenuBarBridge.shared.start()
             MenuBarController.shared.start()
         }
+        // First launch on Mac: proactively surface the system location prompt
+        // instead of waiting for the user to find the "Use Current Location"
+        // button. Only fires once ever, and only if location hasn't already
+        // been decided (avoids re-prompting after a prior grant/deny).
+        let key = "didRequestMacLocationOnFirstLaunch"
+        if !UserDefaults.standard.bool(forKey: key) {
+            UserDefaults.standard.set(true, forKey: key)
+            if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    // Pre-set so didChangeAuthorization auto-fetches on grant
+                    // instead of just unlocking a still-default location.
+                    if let updated = AthanManager.shared.locationSettings.copy() as? LocationSettings {
+                        updated.useCurrentLocation = true
+                        AthanManager.shared.locationSettings = updated
+                    }
+                    AthanManager.shared.requestLocationPermission()
+                }
+            }
+        }
         #endif
 
         return true

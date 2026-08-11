@@ -363,28 +363,29 @@ struct MacSidebarView: View {
             locating = true
             locationStatus = NSLocalizedString("loc_requesting", value: "Requesting location access — approve the prompt.", comment: "")
             // Pre-set "use current location" so AthanManager's authorization-grant
-            // callback auto-fetches once the user approves.
+            // callback (didChangeAuthorization) auto-fetches once the user approves.
             if let updated = LocationSettings.shared.copy() as? LocationSettings {
                 updated.useCurrentLocation = true
                 AthanManager.shared.locationSettings = updated
             }
-            AthanManager.shared.requestLocationPermission()
-            // On macOS the system location prompt is triggered by the first
-            // attempt to *use* location, not by requestWhenInUseAuthorization()
-            // alone — so kick off a single update here too. On grant this both
-            // surfaces the prompt and delivers the fix; the capture closure runs
-            // after didUpdateLocations.
-            AthanManager.shared.attemptSingleLocationUpdate { settings in
-                locating = false
-                if let s = settings {
-                    AthanManager.shared.locationSettings = s
-                    AthanManager.shared.reloadSettingsAndNotifications()
-                    _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
-                    locationStatus = nil
-                    withAnimation { showLocationEditor = false }
+            // Install the capture closure WITHOUT starting location yet. On
+            // macOS, calling startUpdatingLocation() before authorization can
+            // suppress the system prompt; requestWhenInUseAuthorization() alone
+            // shows it. On grant, didChangeAuthorization → attemptSingleLocationUpdate()
+            // starts the fix and this closure delivers it.
+            AthanManager.shared.captureLocationUpdateClosure = { settings in
+                DispatchQueue.main.async {
+                    locating = false
+                    if let s = settings {
+                        AthanManager.shared.locationSettings = s
+                        AthanManager.shared.reloadSettingsAndNotifications()
+                        _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
+                        locationStatus = nil
+                        withAnimation { showLocationEditor = false }
+                    }
                 }
-                // If denied, the prompt was declined; leave the status text as a hint.
             }
+            AthanManager.shared.requestLocationPermission()
         } else {
             locationStatus = NSLocalizedString("loc_denied", value: "Location access is off. Turn it on in System Settings › Privacy & Security › Location Services.", comment: "")
         }

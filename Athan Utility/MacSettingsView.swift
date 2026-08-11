@@ -19,6 +19,7 @@ struct MacSettingsView: View {
     @State private var sound: NotificationSettings.Sounds
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
+    @State private var showMenuBarIcon = !MenuBarSettings.isHidden
 
     private let methods = CalculationMethod.usefulCases()
 
@@ -67,6 +68,16 @@ struct MacSettingsView: View {
             Section(NSLocalizedString("appearance_section", value: "Appearance", comment: "")) {
                 Toggle(NSLocalizedString("dynamic_colors", value: "Dynamic colors by prayer", comment: ""), isOn: $isDynamic)
                     .onChange(of: isDynamic) { _ in applyAppearance() }
+            }
+
+            Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
+                    footer: Text(NSLocalizedString("menubar_icon_footer", value: "Show the Athan Utility icon with the next-prayer countdown in the macOS menu bar. Turn this on to bring it back if it was removed.", comment: ""))) {
+                Toggle(NSLocalizedString("menubar_show_icon", value: "Show menu bar icon", comment: ""), isOn: $showMenuBarIcon)
+                    .onChange(of: showMenuBarIcon) { on in
+                        MenuBarSettings.isHidden = !on
+                        if on { MenuBarBridge.shared.ensureItem() }
+                        else { MenuBarBridge.shared.removeItem() }
+                    }
             }
 
             Section {

@@ -17,7 +17,7 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
         switch self {
         case .widgets:     return NSLocalizedString("adopt_widgets_title", value: "Widgets", comment: "")
         case .lockWidgets: return NSLocalizedString("adopt_lock_title", value: "Lock Screen", comment: "")
-        case .siri:        return NSLocalizedString("adopt_siri_title", value: "Siri Shortcut", comment: "")
+        case .siri:        return NSLocalizedString("adopt_siri_title", value: "Siri", comment: "")
         case .calendar:    return NSLocalizedString("adopt_calendar_title", value: "Calendar", comment: "")
         }
     }
@@ -78,7 +78,6 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
 @available(iOS 14.0, *)
 struct SettingsFeatureGrid: View {
     @State private var done: Set<AdoptedFeature>
-    @Namespace private var ns
 
     /// Called with the tapped feature. The parent owns the single sheet that
     /// presents it — the grid does NOT present its own sheet, because stacking
@@ -161,7 +160,6 @@ struct SettingsFeatureGrid: View {
             )
         }
         .buttonStyle(PlainButtonStyle())
-        .matchedGeometryEffect(id: f.id, in: ns)
     }
 
     private func pill(_ f: AdoptedFeature) -> some View {
@@ -178,7 +176,6 @@ struct SettingsFeatureGrid: View {
             .background(tileBackground(f))
         }
         .buttonStyle(PlainButtonStyle())
-        .matchedGeometryEffect(id: f.id, in: ns)
     }
 
     private func activate(_ f: AdoptedFeature) {

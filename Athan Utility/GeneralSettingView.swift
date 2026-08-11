@@ -127,11 +127,15 @@ struct GeneralSettingView: View {
 
                                 // Feature-adoption grid: tiles collapse to checkmark pills as explored.
                                 if #available(iOS 14.0, *) {
-                                    Text(NSLocalizedString("features_section_title", value: "Featured", comment: "Header above the feature-adoption grid at the top of Settings"))
-                                        .font(.headline)
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .padding(.top, 12)
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(NSLocalizedString("features_section_title", value: "Featured", comment: "Header above the feature-adoption grid at the top of Settings"))
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding(.top)
+                                        Divider()
+                                            .background(Color.white)
+                                    }
                                     SettingsFeatureGrid(onSelect: { activeSheet = .feature($0) })
                                         .padding(.top, 8)
                                 }

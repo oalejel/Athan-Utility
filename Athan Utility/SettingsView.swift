@@ -120,12 +120,18 @@ private struct InteractiveBackModifier: ViewModifier {
                         let past = v.translation.width > width * 0.33
                         let flung = v.predictedEndTranslation.width > width * 0.5
                         if past || flung {
+                            // Slide the pane fully off to the right...
                             withAnimation(.easeOut(duration: 0.2)) { offset = width }
-                            // Swap section without animation (the pane is already
-                            // off-screen right), then reset for the next pane.
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                onComplete()
-                                offset = 0
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.21) {
+                                // ...then swap panes with animations DISABLED so the
+                                // pane's move-transition doesn't re-animate (that was
+                                // the flicker). Clear the drag offset only on the next
+                                // tick, once the pane is already gone, so it never
+                                // snaps back to 0 for a frame.
+                                var tx = Transaction()
+                                tx.disablesAnimations = true
+                                withTransaction(tx) { onComplete() }
+                                DispatchQueue.main.async { offset = 0 }
                             }
                         } else {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) { offset = 0 }

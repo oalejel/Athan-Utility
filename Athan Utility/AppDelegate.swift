@@ -26,10 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             WCSession.default.activate()
         }
 
+        // Required for willPresent/didReceive to fire (foreground alerts and
+        // notification-tap handling — e.g. NewFeaturesAnnouncement's deep link).
+        UNUserNotificationCenter.current().delegate = self
+
         // Seed deterministic demo state when launched by the snapshot UI test.
         SnapshotSupport.seedIfNeeded()
 
         ExploreSettingsNudge.recordLaunchAndScheduleIfNeeded()
+        NewFeaturesAnnouncement.handleAppLaunch()
 
         registerFajrAlarmRefreshTask()
         scheduleFajrAlarmRefresh()
@@ -155,6 +160,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // allow local notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
+    }
+
+    // Handle notification taps — specifically the one-time new-features
+    // announcement, which deep-links to the Discover Features sheet.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.notification.request.identifier == NewFeaturesAnnouncement.notificationIdentifier {
+            NotificationCenter.default.post(name: .athanOpenFeatureDiscovery, object: nil)
+        }
+        completionHandler()
     }
 }
 

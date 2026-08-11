@@ -54,6 +54,13 @@ enum FeatureDiscovery {
             detail: NSLocalizedString("feature_watch_detail", value: "A native watchOS app plus complications for every watch face, so the next prayer and the time remaining are always a glance away.", comment: "Discovery feature detail")
         ),
         DiscoveryFeature(
+            icon: "menubar.rectangle",
+            tint: Color(red: 0.55, green: 0.60, blue: 0.98),
+            title: NSLocalizedString("feature_mac_title", value: "Native Mac App", comment: "Discovery feature title"),
+            subtitle: NSLocalizedString("feature_mac_subtitle", value: "A sidebar and a menu bar item", comment: "Discovery feature subtitle"),
+            detail: NSLocalizedString("feature_mac_detail", value: "Athan Utility on Mac, redesigned with a native sidebar — plus a menu bar item that shows the next prayer countdown at a glance, with its own popover for quick actions.", comment: "Discovery feature detail")
+        ),
+        DiscoveryFeature(
             icon: "globe.americas.fill",
             tint: Color(red: 0.30, green: 0.55, blue: 0.95),
             title: NSLocalizedString("feature_autoMethod_title", value: "Automatic Calculation Method", comment: "Discovery feature title"),

@@ -63,6 +63,11 @@ class AthanProvider: TimelineProvider {
         // for now, dont call enterForeground since that will request new location
         manager.reloadSettingsAndNotifications()
 
+        // A widget timeline executing at all proves this is an existing install
+        // with a widget already configured (a brand-new install can't have one
+        // yet) — one of the two triggers for the one-time new-features announcement.
+        NewFeaturesAnnouncement.announceFromWidgetIfEligible()
+
         // Auto-update the calculation method if the stored country now recommends a different
         // one — so times reflect it without opening the app. Don't reschedule notifications
         // from the widget (the app does that on next foreground); reload settings once more so

@@ -199,8 +199,10 @@
 		9241BDE9119B3F6F927C9A2A /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7125A6A04D00DC7331 /* NotificationView.swift */; };
 		9543B22D38BD48FCD63E5D98 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
 		9D2ACAE0892ED1D947DBB069 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
+		A559F67418B0E31791634C83 /* NewFeaturesAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */; };
 		A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BBB3291E869DA697F96A86 /* MacSidebarView.swift */; };
 		AB793B5ED9D92D6F8C50104D /* MacSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72E85251E4B82AA52547AE /* MacSettingsView.swift */; };
+		AC940FC50E440C6EACD7A1C2 /* NewFeaturesAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */; };
 		B7FB46B8D3206158794AE536 /* AthanMenuBarHelper.bundle in Embed Menu Bar Helper */ = {isa = PBXBuildFile; fileRef = BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */; platformFilters = (maccatalyst, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAF829F0821983AAD61BD25C /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = AC2133E50300F5E25DA14A35 /* Adhan */; };
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
@@ -302,6 +304,7 @@
 
 /* Begin PBXFileReference section */
 		11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AthanMenuBarHelper.swift; path = AthanMenuBarHelper/AthanMenuBarHelper.swift; sourceTree = "<group>"; };
+		1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NewFeaturesAnnouncement.swift; sourceTree = "<group>"; };
 		1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsFeatureGrid.swift; sourceTree = "<group>"; };
 		249FF144570F802EB68430C8 /* CalendarExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportView.swift; sourceTree = "<group>"; };
 		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
@@ -675,6 +678,7 @@
 				65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */,
 				B1DE262321F96491AED053A7 /* FajrAlarmSettingsView.swift */,
 				4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */,
+				1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1368,6 +1372,7 @@
 				0708FF7BE1468CEB6991D34A /* FajrAlarmSettings.swift in Sources */,
 				E523BE75A8B95E4AABBC40A8 /* FajrAlarmSettingsView.swift in Sources */,
 				36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */,
+				A559F67418B0E31791634C83 /* NewFeaturesAnnouncement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1402,6 +1407,7 @@
 				3D73EBF1257027230010C47D /* SettingsModels.swift in Sources */,
 				C5159509157C2F3C4D3977D5 /* FajrAlarmManager.swift in Sources */,
 				82FEE863380B5BFCF07A798B /* FajrAlarmSettings.swift in Sources */,
+				AC940FC50E440C6EACD7A1C2 /* NewFeaturesAnnouncement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

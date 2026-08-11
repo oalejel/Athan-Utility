@@ -144,4 +144,8 @@ class Strings {
     static var fajrAlarmOffsetBefore = NSLocalizedString("fajr.alarm.offset.before", comment: "%1$d min before %2$@")
     static var fajrAlarmSnoozeMinutes = NSLocalizedString("fajr.alarm.snooze.minutes", comment: "%d minute snooze")
     static var fajrAlarmDaysAhead = NSLocalizedString("fajr.alarm.days.ahead", comment: "Next %d alarms — how many upcoming alarms stay scheduled")
+
+    // MARK: - New-features announcement (one-time local notification for existing users)
+    static var newFeaturesAnnouncementTitle = NSLocalizedString("new.features.announcement.title", value: "What's New", comment: "Title of the one-time local notification telling existing users about recent updates")
+    static var newFeaturesAnnouncementBody = NSLocalizedString("new.features.announcement.body", value: "Check out Athan Utility's latest new features.", comment: "Body of the one-time local notification telling existing users about recent updates")
 }

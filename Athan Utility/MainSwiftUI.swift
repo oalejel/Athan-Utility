@@ -827,6 +827,16 @@ struct MainSwiftUI: View {
             currentView = .Main
             macSection = .settings
         }
+        // Tapping the one-time new-features local notification → open Discover
+        // Features directly. Also flips the light-bulb hint's local state (not
+        // just the persisted flag) since it may have been set before this view's
+        // @State was initialized this session.
+        .onReceive(NotificationCenter.default.publisher(for: .athanOpenFeatureDiscovery)) { _ in
+            currentView = .Main
+            FeatureDiscovery.hasSeen = true
+            discoverySeen = true
+            showDiscovery = true
+        }
     }
 }
 

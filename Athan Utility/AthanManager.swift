@@ -328,11 +328,22 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     // MARK: - Prayer Times
     
+    /// A reference `Date` `days` calendar-days from today, in the given time zone.
+    /// Uses calendar arithmetic (NOT `+ 86400`), so a DST-transition night — a
+    /// 23- or 25-hour day — still resolves to the correct calendar day rather
+    /// than skipping or repeating one when `now` is near midnight.
+    private func adjacentDayReference(days: Int, timeZone: TimeZone) -> Date {
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = timeZone
+        return cal.date(byAdding: .day, value: days, to: Date())
+            ?? Date().addingTimeInterval(TimeInterval(days) * 86400)   // fallback only
+    }
+
     func refreshTimes() {
         // swiftui publisher gets updates through didSet
         let tz = locationSettings.timeZone
         let adj = notificationSettings.adjustments()
-        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz, adjustments: adj), let tomorrow = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: tz, adjustments: adj), let yesterday = calculateTimes(referenceDate: Date().addingTimeInterval(-86400), customTimeZone: tz, adjustments: adj) {
+        if let today = calculateTimes(referenceDate: Date(), customTimeZone: tz, adjustments: adj), let tomorrow = calculateTimes(referenceDate: adjacentDayReference(days: 1, timeZone: tz), customTimeZone: tz, adjustments: adj), let yesterday = calculateTimes(referenceDate: adjacentDayReference(days: -1, timeZone: tz), customTimeZone: tz, adjustments: adj) {
             todayTimes = today
             tomorrowTimes = tomorrow
             yesterdayTimes = yesterday
@@ -340,9 +351,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             print("DANGER: unable to calculate times. TODO: handle this accordingly for places on the north pole.")
             // default back to settings defaults
             locationSettings = LocationSettings.defaultSetting()
-            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: locationSettings.timeZone, adjustments: adj) // guaranteed fallback
-            tomorrowTimes = calculateTimes(referenceDate: Date().addingTimeInterval(86400), customTimeZone: locationSettings.timeZone, adjustments: adj)
-            yesterdayTimes = calculateTimes(referenceDate: Date().addingTimeInterval(-86400), customTimeZone: locationSettings.timeZone, adjustments: adj)
+            let dtz = locationSettings.timeZone
+            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: dtz, adjustments: adj) // guaranteed fallback
+            tomorrowTimes = calculateTimes(referenceDate: adjacentDayReference(days: 1, timeZone: dtz), customTimeZone: dtz, adjustments: adj)
+            yesterdayTimes = calculateTimes(referenceDate: adjacentDayReference(days: -1, timeZone: dtz), customTimeZone: dtz, adjustments: adj)
         } // should never fail on cupertino time.
         // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer() ?? yesterdayTimes.currentPrayer() ?? .isha
@@ -372,7 +384,10 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         // note: add +1day to reference date to account for taraweeh
         //      being on the night before the first day of ramadan
         let hijriCal = Calendar(identifier: .islamicUmmAlQura)
-        let islamicComponents = hijriCal.dateComponents([.month], from: referenceDate.addingTimeInterval(24 * 60 * 60))
+        // +1 calendar day (DST-safe) so taraweeh on the night before Ramadan's
+        // first day gets the +30m isha adjustment.
+        let refPlusDay = cal.date(byAdding: .day, value: 1, to: referenceDate) ?? referenceDate.addingTimeInterval(24 * 60 * 60)
+        let islamicComponents = hijriCal.dateComponents([.month], from: refPlusDay)
         if prayerSettings.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
             params.adjustments.isha += 30
         }
@@ -414,12 +429,18 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
                                                  userInfo: nil, repeats: false)
         }
         
-        // time til next day
-        let currentDateComponents = Calendar.current.dateComponents([.hour, .minute, .hour, .second], from: Date())
-        let accumulatedSeconds = currentDateComponents.hour! * 60 * 60 + currentDateComponents.minute! * 60 + currentDateComponents.second!
-        let remainingSecondsInDay = 86400 - accumulatedSeconds
+        // time til next day — computed as the interval to the next local
+        // midnight via calendar math, NOT `86400 - secondsSoFar`. On a DST
+        // day that subtraction is off by ±1h (23-/25-hour day), firing the
+        // new-day refresh an hour early or late. Use the location's time zone
+        // so the day boundary matches the one prayer times are computed for.
+        var dayCal = Calendar(identifier: .gregorian)
+        dayCal.timeZone = locationSettings.timeZone
+        let now = Date()
+        let startOfTomorrow = dayCal.date(byAdding: .day, value: 1, to: dayCal.startOfDay(for: now)) ?? now.addingTimeInterval(86400)
+        let remainingSecondsInDay = startOfTomorrow.timeIntervalSince(now)
         print("\(remainingSecondsInDay / 3600) hours left today")
-        newDayTimer = Timer.scheduledTimer(timeInterval: TimeInterval(remainingSecondsInDay + 1), // +1 to account for slight error
+        newDayTimer = Timer.scheduledTimer(timeInterval: remainingSecondsInDay + 1, // +1 to account for slight error
                                            target: self, selector: #selector(newDay),
                                            userInfo: nil, repeats: false)
     }

@@ -29,6 +29,8 @@ struct SettingsView: View {
     
     @State var activeSection = SettingsSectionType.General
     @State var dismissSounds = false
+    // Live x-offset of the detail pane during an interactive edge-swipe back.
+    @State private var backDrag: CGFloat = 0
     
     let calculationMethods = CalculationMethod.usefulCases()
     let madhabs = Madhab.allCases
@@ -50,58 +52,86 @@ struct SettingsView: View {
             case .Sounds:
                 SoundSettingView(tempNotificationSettings: $tempNotificationSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .Prayer(let p):
                 #warning("change binding")
                 PrayerSettingsView(noteSettings: $tempNotificationSettings, prayer: p, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .Colors:
                 ColorsView(tempAppearanceSettings: $tempAppearanceSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .CustomNames:
                 NameOverridesView(tempPrayerSettings: $tempPrayerSettings, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .CalculationMethod:
                 CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .FajrAlarm:
                 FajrAlarmSettingsView(activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
-                    .edgeSwipeBack(goBack)
+                    .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             }
         }
     }
 
-    // Return to the main settings list (the same thing each detail view's
-    // back/Done button does), animated so the pane slides back out to trailing.
-    private func goBack() {
-        withAnimation(.easeInOut(duration: 0.28)) { activeSection = .General }
+}
+
+// Native-feeling INTERACTIVE back: a swipe that starts at the left screen edge
+// drives the pane's position 1:1 with the finger (like UINavigationController's
+// interactive pop), then either completes the pop or snaps back on release —
+// without wrapping everything in a UINavigationController (which broke the
+// custom layout).
+@available(iOS 13.0.0, *)
+private extension View {
+    func interactiveBack(offset: Binding<CGFloat>, width: CGFloat, onComplete: @escaping () -> Void) -> some View {
+        modifier(InteractiveBackModifier(offset: offset, width: width, onComplete: onComplete))
     }
 }
 
-// Native-feeling interactive back: a swipe that STARTS at the left screen edge
-// and drags right pops the detail pane back to the main list — without wrapping
-// everything in a UINavigationController (which broke the custom layout).
 @available(iOS 13.0.0, *)
-private extension View {
-    func edgeSwipeBack(_ action: @escaping () -> Void) -> some View {
-        // `.simultaneousGesture` so it never blocks the pane's own vertical
-        // scrolling / sliders — it only acts on an edge-anchored horizontal drag.
-        simultaneousGesture(
-            DragGesture(minimumDistance: 20, coordinateSpace: .global)
-                .onEnded { v in
-                    let startedAtLeftEdge = v.startLocation.x < 32
-                    let draggedRight = v.translation.width > 90
-                    let mostlyHorizontal = abs(v.translation.height) < 70
-                    if startedAtLeftEdge && draggedRight && mostlyHorizontal {
-                        action()
+private struct InteractiveBackModifier: ViewModifier {
+    @Binding var offset: CGFloat
+    let width: CGFloat
+    let onComplete: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            // Follows the finger during the drag; animates to rest on release.
+            .offset(x: max(0, offset))
+            // `.simultaneousGesture` so vertical scrolling / sliders inside the
+            // pane keep working — a vertical drag has ~0 horizontal translation
+            // and leaves the offset at 0.
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 12, coordinateSpace: .global)
+                    .onChanged { v in
+                        guard v.startLocation.x < 30 else { return }   // edge-anchored only
+                        offset = max(0, v.translation.width)           // track the finger
                     }
-                }
-        )
+                    .onEnded { v in
+                        guard v.startLocation.x < 30 else {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) { offset = 0 }
+                            return
+                        }
+                        // Complete if dragged past a third of the width, or flung.
+                        let past = v.translation.width > width * 0.33
+                        let flung = v.predictedEndTranslation.width > width * 0.5
+                        if past || flung {
+                            withAnimation(.easeOut(duration: 0.2)) { offset = width }
+                            // Swap section without animation (the pane is already
+                            // off-screen right), then reset for the next pane.
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                onComplete()
+                                offset = 0
+                            }
+                        } else {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.9)) { offset = 0 }
+                        }
+                    }
+            )
     }
 }
 

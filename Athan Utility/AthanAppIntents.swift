@@ -26,10 +26,16 @@ enum AthanSiriSupport {
                 if t > now { return (p.localizedOrCustomString(), t) }
             }
         }
-        if let tomorrow = mgr.calculateTimes(referenceDate: now.addingTimeInterval(86400), adjustments: adj) {
+        if let tomorrow = mgr.calculateTimes(referenceDate: Self.tomorrowReference(), adjustments: adj) {
             return (Prayer.fajr.localizedOrCustomString(), tomorrow.time(for: .fajr))
         }
         return (Prayer.fajr.localizedOrCustomString(), now)
+    }
+
+    /// Tomorrow's reference date via calendar arithmetic (DST-safe), matching
+    /// the device-time-zone day that `calculateTimes` reads by default.
+    private static func tomorrowReference() -> Date {
+        Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date().addingTimeInterval(86400)
     }
 
     /// Today's time for a specific prayer (tomorrow's if today's already passed).
@@ -41,7 +47,7 @@ enum AthanSiriSupport {
             let t = today.time(for: p)
             if t > now { return (p.localizedOrCustomString(), t) }
         }
-        if let tomorrow = mgr.calculateTimes(referenceDate: now.addingTimeInterval(86400), adjustments: adj) {
+        if let tomorrow = mgr.calculateTimes(referenceDate: Self.tomorrowReference(), adjustments: adj) {
             return (p.localizedOrCustomString(), tomorrow.time(for: p))
         }
         return (p.localizedOrCustomString(), now)

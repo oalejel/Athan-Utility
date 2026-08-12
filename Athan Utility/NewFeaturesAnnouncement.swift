@@ -33,6 +33,23 @@ enum NewFeaturesAnnouncement {
     private static let suite = UserDefaults(suiteName: "group.athanUtil")
     private static let hasEverLaunchedKey = "newFeatures_hasEverLaunchedMainApp"
     private static let announcedKey = "newFeatures_announced_v1"
+    private static let pendingOpenKey = "newFeatures_pendingOpen"
+
+    /// Set when the notification is tapped. A live `.athanOpenFeatureDiscovery`
+    /// NotificationCenter post is lost if the app is cold-launched by the tap —
+    /// SwiftUI's `.onReceive` subscriber doesn't exist yet at that instant. This
+    /// flag survives that gap; MainSwiftUI's `.onAppear` consumes it once.
+    static func markPendingOpen() {
+        suite?.set(true, forKey: pendingOpenKey)
+    }
+
+    /// Call once from MainSwiftUI's startup check. Returns true (and clears the
+    /// flag) at most once per tap.
+    static func consumePendingOpen() -> Bool {
+        guard suite?.bool(forKey: pendingOpenKey) == true else { return false }
+        suite?.set(false, forKey: pendingOpenKey)
+        return true
+    }
 
     /// Call once from AppDelegate on every launch, before anything else touches
     /// these flags. Brand-new installs never get the announcement — only the

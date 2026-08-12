@@ -48,25 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             MenuBarBridge.shared.start()
             MenuBarController.shared.start()
         }
-        // First launch on Mac: proactively surface the system location prompt
-        // instead of waiting for the user to find the "Use Current Location"
-        // button. Only fires once ever, and only if location hasn't already
-        // been decided (avoids re-prompting after a prior grant/deny).
-        let key = "didRequestMacLocationOnFirstLaunch"
-        if !UserDefaults.standard.bool(forKey: key) {
-            UserDefaults.standard.set(true, forKey: key)
-            if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    // Pre-set so didChangeAuthorization auto-fetches on grant
-                    // instead of just unlocking a still-default location.
-                    if let updated = AthanManager.shared.locationSettings.copy() as? LocationSettings {
-                        updated.useCurrentLocation = true
-                        AthanManager.shared.locationSettings = updated
-                    }
-                    AthanManager.shared.requestLocationPermission()
-                }
-            }
-        }
+        // First-launch location prompt is triggered from SceneDelegate.sceneDidBecomeActive
+        // instead of here — didFinishLaunching runs before the window is key/frontmost,
+        // and on macOS the CoreLocation system alert needs an active app to attach to.
         #endif
 
         return true
@@ -166,6 +150,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // announcement, which deep-links to the Discover Features sheet.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.notification.request.identifier == NewFeaturesAnnouncement.notificationIdentifier {
+            // Persist first: if this tap cold-launched the app, didFinishLaunching
+            // hasn't built the SwiftUI view tree yet, so a live NotificationCenter
+            // post here would have no subscriber and be silently lost. MainSwiftUI
+            // checks this flag on its own startup pass. Also post live, for the
+            // case where the app was already running in the foreground.
+            NewFeaturesAnnouncement.markPendingOpen()
             NotificationCenter.default.post(name: .athanOpenFeatureDiscovery, object: nil)
         }
         completionHandler()

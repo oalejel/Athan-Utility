@@ -65,12 +65,22 @@ struct SolarView: View, Equatable {
     @State var hidingCircle = false
     @State var dhuhrTime: Date
     @State var sunriseTime: Date
-    
+    // Tapping the Hijri date shows a transient callout with the Gregorian
+    // equivalent (auto-hides after a few seconds).
+    @State private var showGregorianCallout = false
+
     let df: DateFormatter = {
        let d = DateFormatter()
         d.dateFormat = "hh:mm a"
         return d
     }()
+
+    private static func gregorianDateString(_ date: Date) -> String {
+        let df = DateFormatter()
+        df.dateStyle = .long
+        df.calendar = Calendar(identifier: .gregorian)
+        return df.string(from: date)
+    }
     
     func colorForProgress() -> (Color, Color, CGFloat) {
         // 0->sunrise - 0.05
@@ -196,14 +206,37 @@ struct SolarView: View, Equatable {
                         .opacity(isDragging ? 1 : 0)
                         .animation(.linear(duration: 0.3), value: isDragging)
                     
-                    Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
-                        .fontWeight(.bold)
-                        .lineLimit(1)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding([.trailing, .leading])
-                        .foregroundColor(Color(.lightText))
-                        .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
-                        .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
+                    VStack(spacing: 4) {
+                        if showGregorianCallout {
+                            Text(Self.gregorianDateString(Date()))
+                                .font(.caption).fontWeight(.semibold)
+                                .foregroundColor(Color(.lightText).opacity(0.85))
+                                .padding(.horizontal, 10).padding(.vertical, 4)
+                                .background(Capsule().fill(Color.black.opacity(0.35)))
+                                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        }
+                        Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
+                            .fontWeight(.bold)
+                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding([.trailing, .leading])
+                            .foregroundColor(Color(.lightText))
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation(.easeInOut(duration: 0.2)) { showGregorianCallout.toggle() }
+                                if showGregorianCallout {
+                                    // Auto-hide so it reads as a transient callout, not a
+                                    // persistent second date line.
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        withAnimation(.easeInOut(duration: 0.2)) { showGregorianCallout = false }
+                                    }
+                                }
+                            }
+                            .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
+                            .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date", comment: "")))
+                    }
+                    .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
                         //                                            .offset(y: 24)
 //                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
 

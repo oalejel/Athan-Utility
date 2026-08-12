@@ -115,6 +115,9 @@ enum FeatureDiscovery {
 struct FeatureDiscoveryView: View {
     @Environment(\.presentationMode) private var presentationMode
     @State private var macSelected: DiscoveryFeature?
+    /// Mac only: this view is a NavigationSplitView detail pane, not a sheet, so
+    /// there's no default way back. Set to return to the Home section.
+    var macOnDismiss: (() -> Void)? = nil
 
     private var isMac: Bool {
         #if targetEnvironment(macCatalyst)
@@ -172,10 +175,22 @@ struct FeatureDiscoveryView: View {
     private var macGrid: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(Strings.discoverFeatures)
-                    .font(.system(size: 30, weight: .bold))
-                    .padding(.horizontal, 24)
-                    .padding(.top, 22)
+                HStack(alignment: .top) {
+                    Text(Strings.discoverFeatures)
+                        .font(.system(size: 30, weight: .bold))
+                    Spacer()
+                    if let macOnDismiss {
+                        Button(action: macOnDismiss) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text(Strings.done))
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 22)
 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 250, maximum: 360), spacing: 16)],
                           alignment: .leading, spacing: 16) {

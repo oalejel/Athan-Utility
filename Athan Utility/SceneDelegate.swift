@@ -183,6 +183,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Notify parts of app when we resume from background.
         // This is helpful for resetting the moon lighting.
         NotificationCenter.default.post(name: Notification.Name("AppDidBecomeActive"), object: nil)
+
+        #if targetEnvironment(macCatalyst)
+        // First-ever activation on Mac: proactively surface the system location
+        // prompt instead of waiting for the user to find "Use Current Location".
+        // Fired here (not didFinishLaunching) because the window must be key /
+        // frontmost for the CoreLocation system alert to reliably attach — and
+        // sceneDidBecomeActive can fire more than once per run, so gate on a
+        // persisted flag to guarantee it only ever prompts once.
+        let key = "didRequestMacLocationOnFirstLaunch"
+        if !UserDefaults.standard.bool(forKey: key) {
+            UserDefaults.standard.set(true, forKey: key)
+            if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
+                // Pre-set so didChangeAuthorization auto-fetches on grant instead
+                // of just unlocking a still-default location.
+                if let updated = AthanManager.shared.locationSettings.copy() as? LocationSettings {
+                    updated.useCurrentLocation = true
+                    AthanManager.shared.locationSettings = updated
+                }
+                AthanManager.shared.requestLocationPermission()
+            }
+        }
+        #endif
     }
     
     func sceneWillResignActive(_ scene: UIScene) {

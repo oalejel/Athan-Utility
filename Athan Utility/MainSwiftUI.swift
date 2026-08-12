@@ -22,7 +22,7 @@ enum MacSection: Int, CaseIterable, Identifiable {
     var id: Int { rawValue }
     var title: String {
         switch self {
-        case .times:    return NSLocalizedString("mac_section_times", value: "Prayer Times", comment: "Mac sidebar section")
+        case .times:    return NSLocalizedString("mac_section_times", value: "Home", comment: "Mac sidebar section")
         case .calendar: return NSLocalizedString("mac_section_calendar", value: "Monthly Calendar", comment: "Mac sidebar section")
         case .settings: return NSLocalizedString("mac_section_settings", value: "Settings", comment: "Mac sidebar section")
         case .discover: return NSLocalizedString("mac_section_discover", value: "Discover Features", comment: "Mac sidebar section")
@@ -30,7 +30,7 @@ enum MacSection: Int, CaseIterable, Identifiable {
     }
     var symbol: String {
         switch self {
-        case .times:    return "sun.max.fill"
+        case .times:    return "house.fill"
         case .calendar: return "calendar"
         case .settings: return "gearshape.fill"
         case .discover: return "lightbulb.fill"
@@ -295,7 +295,7 @@ struct MainSwiftUI: View {
                 }
             }
         case .discover:
-            FeatureDiscoveryView()
+            FeatureDiscoveryView(macOnDismiss: { macSection = .times })
                 .preferredColorScheme(.dark)
         }
     }
@@ -821,6 +821,16 @@ struct MainSwiftUI: View {
             // Evaluate the best country we can infer — GPS if shared, otherwise device region —
             // and auto-update the method if it warrants a change.
             AthanManager.shared.autoUpdateMethodIfNeeded(for: AthanManager.shared.bestAvailableCountryCode())
+
+            // Cold-launch from tapping the new-features notification: the live
+            // .athanOpenFeatureDiscovery post (below) has no subscriber yet at
+            // launch time, so it's lost. This persisted flag survives that gap.
+            if NewFeaturesAnnouncement.consumePendingOpen() {
+                currentView = .Main
+                FeatureDiscovery.hasSeen = true
+                discoverySeen = true
+                showDiscovery = true
+            }
         }
         // Menu-bar popover gear → jump to Settings in the Mac split view.
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("AthanShowMacSettings"))) { _ in

@@ -30,7 +30,7 @@ struct MacSidebarView: View {
     private let geocoder = CLGeocoder()
 
     private let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d
-    private let navSections: [MacSection] = [.settings, .calendar, .discover]
+    private let navSections: [MacSection] = [.times, .settings, .calendar, .discover]
 
     private static let timeFormatter: DateFormatter = {
         let f = DateFormatter(); f.timeStyle = .short; f.dateStyle = .none; return f
@@ -256,7 +256,9 @@ struct MacSidebarView: View {
     private func navItem(_ s: MacSection) -> some View {
         let selected = section == s
         return Button {
-            withAnimation(.easeInOut(duration: 0.15)) { section = selected ? .times : s }
+            // Every item toggles back to Home on a second tap EXCEPT Home
+            // itself, which has no "away" state to toggle to.
+            withAnimation(.easeInOut(duration: 0.15)) { section = (selected && s != .times) ? .times : s }
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
             HStack(spacing: 9) {

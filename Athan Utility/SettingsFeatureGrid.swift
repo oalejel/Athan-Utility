@@ -10,21 +10,21 @@
 import SwiftUI
 
 enum AdoptedFeature: String, CaseIterable, Identifiable {
-    case widgets, lockWidgets, siri, calendar
+    case widgets, fajrAlarm, siri, calendar
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .widgets:     return NSLocalizedString("adopt_widgets_title", value: "Widgets", comment: "")
-        case .lockWidgets: return NSLocalizedString("adopt_lock_title", value: "Lock Screen", comment: "")
+        case .fajrAlarm:   return Strings.fajrAlarm
         case .siri:        return NSLocalizedString("adopt_siri_title", value: "Siri", comment: "")
         case .calendar:    return NSLocalizedString("adopt_calendar_title", value: "Calendar", comment: "")
         }
     }
     var subtitle: String {
         switch self {
-        case .widgets:     return NSLocalizedString("adopt_widgets_sub", value: "Add to your Home Screen", comment: "")
-        case .lockWidgets: return NSLocalizedString("adopt_lock_sub", value: "Glance without unlocking", comment: "")
+        case .widgets:     return NSLocalizedString("adopt_widgets_sub", value: "Add to your Home or Lock Screen", comment: "")
+        case .fajrAlarm:   return NSLocalizedString("adopt_fajr_sub", value: "A wake-up alarm you can't sleep through", comment: "")
         case .siri:        return NSLocalizedString("adopt_siri_sub", value: "Ask Siri for prayer times", comment: "")
         case .calendar:    return NSLocalizedString("adopt_calendar_sub", value: "Add Salah times to your calendar", comment: "")
         }
@@ -32,7 +32,7 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
     var icon: String {
         switch self {
         case .widgets:     return "square.grid.2x2.fill"
-        case .lockWidgets: return "lock.fill"
+        case .fajrAlarm:   return "alarm.fill"
         case .siri:        return "waveform"
         case .calendar:    return "calendar.badge.plus"
         }
@@ -40,7 +40,7 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
     var tint: Color {
         switch self {
         case .widgets:     return Color(.systemBlue)
-        case .lockWidgets: return Color(.systemIndigo)
+        case .fajrAlarm:   return Color(.systemIndigo)
         case .siri:        return Color(.systemPurple)
         case .calendar:    return Color(.systemOrange)
         }
@@ -50,7 +50,7 @@ enum AdoptedFeature: String, CaseIterable, Identifiable {
     var gradientColors: [Color] {
         switch self {
         case .widgets:     return [Self.c(0x2E6BFF), Self.c(0x27B6FF), Self.c(0x18D6C6)] // sky → cyan → teal
-        case .lockWidgets: return [Self.c(0x4B5CFF), Self.c(0x7A4BFF), Self.c(0x2E9BFF)] // indigo → violet → blue
+        case .fajrAlarm:   return [Self.c(0x4B5CFF), Self.c(0x7A4BFF), Self.c(0x2E9BFF)] // indigo → violet → blue
         case .siri:        return [Self.c(0x8A4BFF), Self.c(0xE24BC0), Self.c(0x4B7BFF)] // purple → magenta → blue
         case .calendar:    return [Self.c(0xFF9A3D), Self.c(0xFFC24D), Self.c(0xFF5D7A)] // amber → gold → coral
         }
@@ -201,8 +201,32 @@ struct SettingsFeatureGrid: View {
     switch f {
     case .calendar:    CalendarExportView()
     case .siri:        SiriShortcutSheet()
-    case .widgets:     WidgetHowToView(kind: .home)
-    case .lockWidgets: WidgetHowToView(kind: .lock)
+    case .widgets:     WidgetHowToView()
+    case .fajrAlarm:   FajrAlarmFeatureSheet()
+    }
+}
+
+/// Wraps FajrAlarmSettingsView (normally a page inside the Settings flow, driven
+/// by SettingsView's `activeSection`) for standalone sheet presentation from the
+/// feature grid. Provides its own throwaway section binding and dismisses the
+/// sheet the moment that flow navigates back to .General (its "done" signal).
+@available(iOS 14.0, *)
+private struct FajrAlarmFeatureSheet: View {
+    @Environment(\.presentationMode) private var presentationMode
+    @State private var section: SettingsSectionType = .FajrAlarm
+
+    var body: some View {
+        FajrAlarmSettingsView(activeSection: $section)
+            .onChange(of: isGeneral) { done in
+                if done { presentationMode.wrappedValue.dismiss() }
+            }
+    }
+
+    // SettingsSectionType isn't Equatable (it wraps Prayer via .Prayer(Prayer)),
+    // so onChange needs a reduced, comparable signal instead of the enum itself.
+    private var isGeneral: Bool {
+        if case .General = section { return true }
+        return false
     }
 }
 
@@ -305,37 +329,24 @@ private struct GlowingTileBackground: View {
 
 @available(iOS 14.0, *)
 struct WidgetHowToView: View {
-    enum Kind { case home, lock }
-    let kind: Kind
     @Environment(\.presentationMode) private var presentationMode
 
-    private var title: String {
-        kind == .home
-        ? NSLocalizedString("widgets_home_title", value: "Home Screen Widgets", comment: "")
-        : NSLocalizedString("widgets_lock_title", value: "Lock Screen Widgets", comment: "")
-    }
-    private var steps: [String] {
-        if kind == .home {
-            return [
-                NSLocalizedString("widgets_home_1", value: "Touch and hold an empty area of your Home Screen until the apps jiggle.", comment: ""),
-                NSLocalizedString("widgets_home_2", value: "Tap the + button in the top corner.", comment: ""),
-                NSLocalizedString("widgets_home_3", value: "Search for “Athan Utility” and pick a widget size.", comment: ""),
-                NSLocalizedString("widgets_home_4", value: "Tap Add Widget, then Done.", comment: "")
-            ]
-        } else {
-            return [
-                NSLocalizedString("widgets_lock_1", value: "Touch and hold the Lock Screen, then tap Customize.", comment: ""),
-                NSLocalizedString("widgets_lock_2", value: "Tap the area below the clock to add widgets.", comment: ""),
-                NSLocalizedString("widgets_lock_3", value: "Choose “Athan Utility” to see the next prayer at a glance.", comment: "")
-            ]
-        }
-    }
+    private let title = NSLocalizedString("widgets_title", value: "Home & Lock Screen Widgets", comment: "")
+    // Combined steps — a slash marks the one spot each surface differs
+    // ("Home Screen / Lock Screen"), everything else about adding a widget
+    // is shared.
+    private let steps: [String] = [
+        NSLocalizedString("widgets_1", value: "Touch and hold an empty area of your Home Screen, or the Lock Screen, until it enters edit mode.", comment: ""),
+        NSLocalizedString("widgets_2", value: "Tap the + button (Home Screen) or the widget area below the clock (Lock Screen).", comment: ""),
+        NSLocalizedString("widgets_3", value: "Search for “Athan Utility” and pick a widget size.", comment: ""),
+        NSLocalizedString("widgets_4", value: "Tap Add Widget, then Done.", comment: "")
+    ]
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Image(systemName: kind == .home ? "square.grid.2x2.fill" : "lock.fill")
+                    Image(systemName: "square.grid.2x2.fill")
                         .font(.system(size: 40, weight: .semibold))
                         .foregroundColor(.accentColor)
                         .frame(maxWidth: .infinity, alignment: .center)

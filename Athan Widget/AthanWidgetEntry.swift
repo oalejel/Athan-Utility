@@ -12,7 +12,7 @@ import Intents
 import Adhan
 
 struct AthanEntry: TimelineEntry {
-    let date: Date // just represents time to update the timeline. != always equal start of prayer
+    var date: Date // just represents time to update the timeline. != always equal start of prayer
     var currentPrayer: Prayer
     var currentPrayerDate: Date
     var nextPrayerDate: Date // will refer to Fajr of next day if prayerType is isha

@@ -48,7 +48,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let key = "didSetDefaultMacWindowSize"
                 if !UserDefaults.standard.bool(forKey: key) {
                     UserDefaults.standard.set(true, forKey: key)
-                    sr.minimumSize = CGSize(width: 1160, height: 580)   // ~2:1 default
+                    // Height nudged +38pt over the original ~2:1 tuning to account for
+                    // the "Home" nav item added to the sidebar footer since (net: the
+                    // location group moved INTO the scrollable group and back OUT of the
+                    // footer is a wash; the extra footer row is the one true addition).
+                    sr.minimumSize = CGSize(width: 1160, height: 618)   // ~2:1 default
                     DispatchQueue.main.async {
                         sr.minimumSize = CGSize(width: 760, height: 480)
                     }

@@ -205,25 +205,6 @@ struct CalendarView: View, Equatable {
                                                       //                        }
                     Spacer()
 
-                    // Add-to-Calendar (EventKit) — the primary calendar feature,
-                    // listed first, before the CSV export button.
-                    Button(action: {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        showCalendarExport = true
-                    }) {
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(NSLocalizedString("cal_add_button", value: "Add to Calendar", comment: ""))
-                            Image(systemName: "calendar.badge.plus")
-                        }
-                        .padding(2)
-                    }
-                    .padding(.trailing, 8)
-                    .font(Font.body.weight(.bold))
-                    .sheet(isPresented: $showCalendarExport) {
-                        CalendarExportView()
-                            .preferredColorScheme(.dark)
-                    }
-
                     // export button (CSV)
                     Button(action: {
                         let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -248,19 +229,44 @@ struct CalendarView: View, Equatable {
                     } content: {
                         let calendarFileURL: URL = {
                             let csvString = calendarCSVString()
-                                    
+
                             let tempDirectoryURL = FileManager.default.temporaryDirectory
                             let fileURL = tempDirectoryURL.appendingPathComponent("athan-calendar").appendingPathExtension("csv")
-                            
+
                             // Write the CSV string to the file URL
                             try! csvString.write(to: fileURL, atomically: true, encoding: .utf8)
                             return fileURL
                         }()
-                        
+
                         ShareSheet(activityItems: [calendarFileURL])
                     }
                 }
                 .padding(.leading, 12)
+
+                // Add-to-Calendar (EventKit) — the primary calendar feature. Given
+                // its own row under the title/export row so its longer label
+                // never has to compete for width and wrap to two lines.
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showCalendarExport = true
+                    }) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(NSLocalizedString("cal_add_button", value: "Add to Calendar", comment: ""))
+                            Image(systemName: "calendar.badge.plus")
+                        }
+                        .padding(2)
+                        .fixedSize()
+                    }
+                    .font(Font.body.weight(.bold))
+                    .sheet(isPresented: $showCalendarExport) {
+                        CalendarExportView()
+                            .preferredColorScheme(.dark)
+                    }
+                }
+                .padding(.trailing, 12)
+                .padding(.top, 2)
                 
                 
                 let currCal = Calendar.current

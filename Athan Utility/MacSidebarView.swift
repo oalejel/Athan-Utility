@@ -45,6 +45,11 @@ struct MacSidebarView: View {
                 prayerList
                     .id("\(bellVersion)-\(dayOffset)")
                 dayNavigator
+                // Location lives in the prayer-times group, right under the
+                // Hijri date, rather than down in the nav footer — it's the
+                // input that determines everything above it.
+                locationHeader
+                if showLocationEditor { locationEditor.transition(.opacity) }
                 Spacer(minLength: 12)
             }
             .padding(.top, 10)
@@ -245,8 +250,6 @@ struct MacSidebarView: View {
         VStack(alignment: .leading, spacing: 1) {
             Divider().overlay(Color.white.opacity(0.10))
                 .padding(.bottom, 4)
-            locationHeader
-            if showLocationEditor { locationEditor.transition(.opacity) }
             ForEach(navSections) { s in navItem(s) }
         }
         .padding(.horizontal, 8).padding(.top, 4).padding(.bottom, 10)

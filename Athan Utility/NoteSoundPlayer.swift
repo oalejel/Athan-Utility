@@ -9,20 +9,36 @@
 import UIKit
 import AVFoundation
 
+/// Notified when a NoteSoundPlayer-managed AVAudioPlayer finishes playing ON ITS OWN
+/// (natural completion — NOT a manual stopAudio() call, which AVAudioPlayer doesn't
+/// report through this delegate at all). Lets UI (e.g. a Preview/Stop button) know to
+/// flip back to its idle state without polling isPlaying().
+private final class SoundPlayerDelegateProxy: NSObject, AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        NoteSoundPlayer.onFinishedPlaying?()
+    }
+}
+
 class NoteSoundPlayer: NSObject {
-    
+
     private static var audioPlayer: AVAudioPlayer?
     private static var soundPreviewTimer: Timer?
-    
+    private static let delegateProxy = SoundPlayerDelegateProxy()
+
+    /// Fires when playback finishes naturally (not via stopAudio()). Set this before
+    /// calling playPreviewAudio/playFullAudio if you need to know when it's done.
+    static var onFinishedPlaying: (() -> Void)?
+
     private static func playAudio(for index: Int, isPreview: Bool, fadeInterval: Int? = nil) -> Float {
         audioPlayer?.stop()
-        
+
         do {
             if var fileName = NotificationSettings.Sounds(rawValue: index)?.filename() {
                 if isPreview { fileName += "-30" }
-                
+
                 if let audioFile = Bundle.main.url(forResource: fileName, withExtension:"caf"), let asset = try? Data(contentsOf: audioFile) {
                     try audioPlayer = AVAudioPlayer(data: asset, fileTypeHint: "caf")
+                    audioPlayer?.delegate = delegateProxy
                     // allow audio to play with ringer off
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                     audioPlayer?.play()

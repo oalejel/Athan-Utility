@@ -155,6 +155,63 @@ struct CalendarView: View, Equatable {
         return false
         #endif
     }
+
+    // MARK: - Header buttons (top: CSV export, bottom: Add to Calendar)
+
+    private var exportButton: some View {
+        Button(action: {
+            let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+            lightImpactFeedbackGenerator.impactOccurred()
+            withAnimation {
+                let pdf = CalendarExport().makePDF()
+                showShareSheet = true
+            }
+        }) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(Strings.export)
+                Image(systemName: "square.and.arrow.up")
+            }
+            .foregroundColor(.red)
+            .padding(2)
+        }
+        .foregroundColor(Color(.red))
+        .font(Font.body.weight(.bold))
+        .sheet(isPresented: $showShareSheet) {
+
+        } content: {
+            let calendarFileURL: URL = {
+                let csvString = calendarCSVString()
+
+                let tempDirectoryURL = FileManager.default.temporaryDirectory
+                let fileURL = tempDirectoryURL.appendingPathComponent("athan-calendar").appendingPathExtension("csv")
+
+                // Write the CSV string to the file URL
+                try! csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+                return fileURL
+            }()
+
+            ShareSheet(activityItems: [calendarFileURL])
+        }
+    }
+
+    private var addToCalendarButton: some View {
+        Button(action: {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            showCalendarExport = true
+        }) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(NSLocalizedString("cal_add_button", value: "Add to Calendar", comment: ""))
+                Image(systemName: "calendar.badge.plus")
+            }
+            .padding(2)
+            .fixedSize()
+        }
+        .font(Font.body.weight(.bold))
+        .sheet(isPresented: $showCalendarExport) {
+            CalendarExportView()
+                .preferredColorScheme(.dark)
+        }
+    }
     
     //    @State var range: Range<Int> = 0..<12
     //    func loadMore() {
@@ -203,78 +260,21 @@ struct CalendarView: View, Equatable {
                     .padding([.leading, .trailing, .top], 12)
                 }
                 
-                HStack {
+                // Title's baseline aligns with the FIRST (top) button in the stack —
+                // Export on top, Add to Calendar below — via VStack's implicit
+                // .firstTextBaseline guide (resolves to its first child's).
+                HStack(alignment: .firstTextBaseline) {
                     Text(Strings.calendar)
                         .font(Font.largeTitle.bold()) // let font colors be naturally chosen based on dark / light mode here
-                                                      //                        .onAppear {
-                                                      //                            model.generateStartMonths()
-                                                      //                        }
                     Spacer()
-
-                    // export button (CSV)
-                    Button(action: {
-                        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                        lightImpactFeedbackGenerator.impactOccurred()
-                        withAnimation {
-                            let pdf = CalendarExport().makePDF()
-                            showShareSheet = true
-                        }
-                    }) {
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(Strings.export)
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                        .foregroundColor(.red)
-                        .padding(2)
-                    }
-                    .foregroundColor(Color(.red))
-                    .padding(.trailing, 12)
-                    .font(Font.body.weight(.bold))
-                    .sheet(isPresented: $showShareSheet) {
-
-                    } content: {
-                        let calendarFileURL: URL = {
-                            let csvString = calendarCSVString()
-
-                            let tempDirectoryURL = FileManager.default.temporaryDirectory
-                            let fileURL = tempDirectoryURL.appendingPathComponent("athan-calendar").appendingPathExtension("csv")
-
-                            // Write the CSV string to the file URL
-                            try! csvString.write(to: fileURL, atomically: true, encoding: .utf8)
-                            return fileURL
-                        }()
-
-                        ShareSheet(activityItems: [calendarFileURL])
+                    VStack(alignment: .trailing, spacing: 6) {
+                        exportButton
+                        addToCalendarButton
                     }
                 }
                 .padding(.leading, 12)
-
-                // Add-to-Calendar (EventKit) — the primary calendar feature. Given
-                // its own row under the title/export row so its longer label
-                // never has to compete for width and wrap to two lines.
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        showCalendarExport = true
-                    }) {
-                        HStack(alignment: .firstTextBaseline) {
-                            Text(NSLocalizedString("cal_add_button", value: "Add to Calendar", comment: ""))
-                            Image(systemName: "calendar.badge.plus")
-                        }
-                        .padding(2)
-                        .fixedSize()
-                    }
-                    .font(Font.body.weight(.bold))
-                    .sheet(isPresented: $showCalendarExport) {
-                        CalendarExportView()
-                            .preferredColorScheme(.dark)
-                    }
-                }
                 .padding(.trailing, 12)
-                .padding(.top, 2)
-                
-                
+
                 let currCal = Calendar.current
                 Divider()
                     .padding([.leading, .trailing])
@@ -334,7 +334,7 @@ struct CalendarView: View, Equatable {
                                         .fixedSize(horizontal: false, vertical: true)
                                         .foregroundColor(Color(.label))
                                         .padding([.top, .bottom], 2)
-                                        .frame(width:100)
+                                        .frame(width: 56)   // narrower than the prayer columns — just a day number
                                     
                                 }
                                 .frame(width: 1)
@@ -398,7 +398,7 @@ struct CalendarView: View, Equatable {
                                             
                                             Text(dayText)
                                                 .bold()
-                                                .frame(width: (g.size.width - 12) / 10)
+                                                .frame(width: (g.size.width - 12) / 16)   // narrower date column
                                                 .fixedSize(horizontal: true, vertical: true)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.01)

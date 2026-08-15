@@ -62,7 +62,7 @@
 // MARK: - Madhab
 "Madhab" = "মাযহাব আসর সমন্বয়";
 "Hanafi" = "হানাফি";
-"Shafi" = "অ-হানাফি";
+"Shafi" = "ডিফল্ট";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "হানাফি মাযহাব পরবর্তী আসর সময় ব্যবহার করে, যা তখন হয় যখন সূর্য মধ্যাহ্নের পর থেকে ছায়ার দৈর্ঘ্য বস্তুর দৈর্ঘ্যের দ্বিগুণ হয়।";
 
 // MARK: - Latitude Rules

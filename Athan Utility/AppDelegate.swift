@@ -140,6 +140,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         print("opening into foreground with shortcut")
     }
+
+    #if targetEnvironment(macCatalyst)
+    // MARK: - Mac: ⌘+ / ⌘- font zoom
+    //
+    // AppDelegate is reachable from anywhere via the standard responder chain
+    // (UIApplication.next returns the delegate), so UIKeyCommands with the
+    // default target:nil route here regardless of what has first responder.
+
+    override func buildMenu(with builder: UIMenuBuilder) {
+        super.buildMenu(with: builder)
+        guard builder.system == .main else { return }
+
+        let zoomIn = UIKeyCommand(
+            title: NSLocalizedString("zoom_in", value: "Zoom In", comment: "View menu: increase app font size"),
+            action: #selector(zoomInFont), input: "=", modifierFlags: .command)
+        let zoomOut = UIKeyCommand(
+            title: NSLocalizedString("zoom_out", value: "Zoom Out", comment: "View menu: decrease app font size"),
+            action: #selector(zoomOutFont), input: "-", modifierFlags: .command)
+        let zoomReset = UIKeyCommand(
+            title: NSLocalizedString("zoom_reset", value: "Actual Size", comment: "View menu: reset app font size to default"),
+            action: #selector(resetFontZoom), input: "0", modifierFlags: .command)
+
+        let zoomMenu = UIMenu(title: "", identifier: UIMenu.Identifier("com.omaralejel.Athan-Utility.zoomMenu"),
+                              options: .displayInline, children: [zoomIn, zoomOut, zoomReset])
+        builder.insertChild(zoomMenu, atEndOfMenu: .view)
+    }
+
+    @objc private func zoomInFont() { MacFontScale.shared.increase() }
+    @objc private func zoomOutFont() { MacFontScale.shared.decrease() }
+    @objc private func resetFontZoom() { MacFontScale.shared.reset() }
+    #endif
     
     // allow local notification in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

@@ -77,7 +77,7 @@
 // MARK: - Madhab
 "Madhab" = "Madhab Asr Adjustment";
 "Hanafi" = "Hanafi";
-"Shafi" = "Non-Hanafi";
+"Shafi" = "Default";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
 
 // MARK: - Latitude Rules

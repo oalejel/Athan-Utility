@@ -74,12 +74,15 @@ final class MenuBarBridge {
     /// Make sure the status item is present (re-adds it after it was hidden). Loads the
     /// helper bundle first if needed.
     func ensureItem() {
+        mbDebug("ensureItem() called, helper is \(helper == nil ? "nil" : "set")")
         if helper == nil { start(); return }
         helper?.installStatusItem()
+        mbDebug("ensureItem() -> installStatusItem() done, isItemVisible now \(isItemVisible)")
     }
 
     /// Hide the status item but keep the helper loaded so it can be re-added.
     func removeItem() {
+        mbDebug("removeItem() called")
         helper?.removeStatusItem()
     }
 

@@ -39,9 +39,12 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         // creating a second item; a fresh statusItem(withLength:) call here would
         // orphan the first one instead of restoring it.
         if let existing = statusItem {
+            NSLog("ATHAN-MB-HELPER: installStatusItem() - existing item found, isVisible was %@, forcing true", existing.isVisible ? "true" : "false")
             existing.isVisible = true
+            NSLog("ATHAN-MB-HELPER: installStatusItem() - existing item isVisible now %@", existing.isVisible ? "true" : "false")
             return
         }
+        NSLog("ATHAN-MB-HELPER: installStatusItem() - creating a brand new NSStatusItem")
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         // Let the user ⌘-drag the item off the menu bar (matches every other
         // menu-bar app); we detect that via the isVisible KVO below instead of
@@ -67,15 +70,21 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         statusItem = item
+        NSLog("ATHAN-MB-HELPER: installStatusItem() - new item created, isVisible=%@, button=%@",
+              item.isVisible ? "true" : "false",
+              item.button == nil ? "nil" : "present")
 
         visibilityObservation = item.observe(\.isVisible, options: [.new]) { [weak self] _, change in
             guard let self, let visible = change.newValue else { return }
+            NSLog("ATHAN-MB-HELPER: KVO isVisible changed -> %@", visible ? "true" : "false")
             self.actionDelegate?.menuBarVisibilityChanged(visible)
         }
     }
 
     public func isStatusItemVisible() -> Bool {
-        statusItem?.isVisible ?? false
+        let v = statusItem?.isVisible ?? false
+        NSLog("ATHAN-MB-HELPER: isStatusItemVisible() -> %@ (statusItem is %@)", v ? "true" : "false", statusItem == nil ? "nil" : "set")
+        return v
     }
 
     public func updateTitle(_ title: String, urgent: Bool, glyph: String) {
@@ -89,6 +98,7 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     }
 
     public func removeStatusItem() {
+        NSLog("ATHAN-MB-HELPER: removeStatusItem() called, statusItem is %@", statusItem == nil ? "nil" : "set")
         visibilityObservation?.invalidate()
         visibilityObservation = nil
         if let item = statusItem { NSStatusBar.system.removeStatusItem(item) }

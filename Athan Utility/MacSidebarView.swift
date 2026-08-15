@@ -28,6 +28,9 @@ struct MacSidebarView: View {
     @State private var bellVersion = 0          // forces the (non-published) bell state to refresh
     @State private var dayOffset = 0            // 0 = today; prev/next-day browsing
     private let geocoder = CLGeocoder()
+    // The sidebar's own fonts run small, so it's the primary consumer of the
+    // user-adjustable ⌘+/⌘- zoom (see MacFontScale / AppDelegate.buildMenu).
+    @ObservedObject private var fontScale = MacFontScale.shared
 
     private let gold = Color(red: 0.957, green: 0.835, blue: 0.553)   // #f4d58d
     private let navSections: [MacSection] = [.times, .settings, .calendar, .discover]
@@ -35,6 +38,12 @@ struct MacSidebarView: View {
     private static let timeFormatter: DateFormatter = {
         let f = DateFormatter(); f.timeStyle = .short; f.dateStyle = .none; return f
     }()
+
+    // Font size helper: a flat +10% baseline bump (these labels ran a bit
+    // small) times the user's ⌘+/⌘- zoom level (1.0 = no adjustment).
+    private func fs(_ base: CGFloat) -> CGFloat {
+        base * 1.1 * fontScale.scale
+    }
 
     var body: some View {
         ScrollView {
@@ -68,13 +77,13 @@ struct MacSidebarView: View {
             HStack(spacing: 7) {
                 Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation
                       ? "location.fill" : "location.slash")
-                    .font(.system(size: 12)).foregroundColor(.white.opacity(0.85))
+                    .font(.system(size: fs(12))).foregroundColor(.white.opacity(0.85))
                 Text(manager.locationName.isEmpty ? "—" : manager.locationName)
-                    .font(.system(size: 14.5, weight: .semibold)).foregroundColor(.white)
+                    .font(.system(size: fs(14.5), weight: .semibold)).foregroundColor(.white)
                     .lineLimit(1).truncationMode(.tail)
                 Spacer(minLength: 6)
                 Image(systemName: showLocationEditor ? "chevron.down" : "chevron.right")
-                    .font(.system(size: 11, weight: .semibold)).foregroundColor(.white.opacity(0.45))
+                    .font(.system(size: fs(11), weight: .semibold)).foregroundColor(.white.opacity(0.45))
             }
             .padding(.horizontal, 10).padding(.vertical, 9)
             .contentShape(Rectangle())
@@ -85,7 +94,7 @@ struct MacSidebarView: View {
     private var locationEditor: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 7) {
-                Image(systemName: "magnifyingglass").font(.system(size: 12)).foregroundColor(.white.opacity(0.5))
+                Image(systemName: "magnifyingglass").font(.system(size: fs(12))).foregroundColor(.white.opacity(0.5))
                 TextField(Strings.searchCity, text: $searchText, onCommit: commitSearch)
                     .textFieldStyle(.plain)
                     .foregroundColor(.white)
@@ -105,11 +114,11 @@ struct MacSidebarView: View {
             Button(action: useCurrentLocation) {
                 HStack(spacing: 6) {
                     if locating { ProgressView().controlSize(.small) }
-                    else { Image(systemName: "location.fill").font(.system(size: 12)) }
+                    else { Image(systemName: "location.fill").font(.system(size: fs(12))) }
                     Text(locating
                          ? NSLocalizedString("loc_locating", value: "Locating…", comment: "")
                          : Strings.useCurrentLocation)
-                        .font(.system(size: 12.5, weight: .semibold))
+                        .font(.system(size: fs(12.5), weight: .semibold))
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
@@ -133,7 +142,7 @@ struct MacSidebarView: View {
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
-            .font(.system(size: 11.5, weight: .semibold))
+            .font(.system(size: fs(11.5), weight: .semibold))
             .tracking(0.6)
             .foregroundColor(.white.opacity(0.45))
             .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 4)
@@ -162,15 +171,15 @@ struct MacSidebarView: View {
         let bellOn = AthanManager.shared.notificationSettings.settings[p]?.athanAlertEnabled ?? false
         return HStack(spacing: 8) {
             Text(p.localizedOrCustomString())
-                .font(.system(size: 16, weight: isCurrent ? .bold : .medium))
+                .font(.system(size: fs(16), weight: isCurrent ? .bold : .medium))
                 .foregroundColor(.white)
             Spacer(minLength: 8)
             Text(timeString(selectedTimes?.time(for: p)))
-                .font(.system(size: 15.5, weight: isCurrent ? .semibold : .regular)).monospacedDigit()
+                .font(.system(size: fs(15.5), weight: isCurrent ? .semibold : .regular)).monospacedDigit()
                 .foregroundColor(isCurrent ? .white : .white.opacity(0.75))
             Button { toggleBell(p) } label: {
                 Image(systemName: bellOn ? "bell.fill" : "bell.slash")
-                    .font(.system(size: 15))
+                    .font(.system(size: fs(15)))
                     .foregroundColor(bellOn ? gold : .white.opacity(0.4))
                     .frame(width: 24, height: 24)
                     .contentShape(Rectangle())
@@ -205,17 +214,17 @@ struct MacSidebarView: View {
                     HStack(spacing: 5) {
                         if dayOffset != 0 {
                             Text(dayOffset > 0 ? "(+\(dayOffset))" : "(\(dayOffset))")
-                                .font(.system(size: 12, weight: .bold))
+                                .font(.system(size: fs(12), weight: .bold))
                                 .foregroundColor(gold)
                         }
                         Text(MainSwiftUI.hijriDateString(date: selectedDate, isAccessibilityLabel: false))
-                            .font(.system(size: 12.5, weight: .semibold))
+                            .font(.system(size: fs(12.5), weight: .semibold))
                             .foregroundColor(.white.opacity(0.9))
                             .lineLimit(1).minimumScaleFactor(0.65)
                     }
                     if dayOffset != 0 {
                         Text(Self.gregFormatter.string(from: selectedDate))
-                            .font(.system(size: 10.5))
+                            .font(.system(size: fs(10.5)))
                             .foregroundColor(.white.opacity(0.5))
                             .lineLimit(1).minimumScaleFactor(0.7)
                     }
@@ -235,7 +244,7 @@ struct MacSidebarView: View {
     private func navArrow(_ symbol: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
-                .font(.system(size: 13, weight: .semibold))
+                .font(.system(size: fs(13), weight: .semibold))
                 .foregroundColor(.white.opacity(0.85))
                 .frame(width: 30, height: 30)
                 .background(Circle().fill(Color.white.opacity(0.08)))
@@ -265,8 +274,8 @@ struct MacSidebarView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
             HStack(spacing: 9) {
-                Image(systemName: s.symbol).font(.system(size: 15)).frame(width: 20)
-                Text(s.title).font(.system(size: 14.5, weight: selected ? .semibold : .regular))
+                Image(systemName: s.symbol).font(.system(size: fs(15))).frame(width: 20)
+                Text(s.title).font(.system(size: fs(14.5), weight: selected ? .semibold : .regular))
                 Spacer()
             }
             .foregroundColor(selected ? gold : .white.opacity(0.72))

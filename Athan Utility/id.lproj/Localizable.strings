@@ -62,7 +62,7 @@
 // MARK: - Madhab
 "Madhab" = "Penyesuaian Asar Mazhab";
 "Hanafi" = "Hanafi";
-"Shafi" = "Non-Hanafi";
+"Shafi" = "Default";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Mazhab Hanafi menggunakan waktu Asar yang lebih sore, yaitu saat panjang bayangan bertambah dua kali panjang benda sejak tengah hari matahari.";
 
 // MARK: - Latitude Rules

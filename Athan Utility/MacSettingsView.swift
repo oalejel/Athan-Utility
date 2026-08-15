@@ -20,6 +20,7 @@ struct MacSettingsView: View {
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
     @State private var showMenuBarIcon = !MenuBarSettings.isHidden
+    @State private var isPreviewingSound = false
 
     private let methods = CalculationMethod.usefulCases()
 
@@ -65,10 +66,13 @@ struct MacSettingsView: View {
                     HStack {
                         Text(NSLocalizedString("athan_sound", value: "Athan Sound", comment: ""))
                         Spacer()
-                        Button(action: { NoteSoundPlayer.playPreviewAudio(for: sound.rawValue) }) {
+                        Button(action: toggleSoundPreview) {
                             HStack(spacing: 4) {
-                                Image(systemName: "play.fill").font(.system(size: 10, weight: .bold))
-                                Text(NSLocalizedString("preview", value: "Preview", comment: "Button that plays a short sample of the selected athan sound"))
+                                Image(systemName: isPreviewingSound ? "stop.fill" : "play.fill")
+                                    .font(.system(size: 10, weight: .bold))
+                                Text(isPreviewingSound
+                                     ? NSLocalizedString("stop", value: "Stop", comment: "Button that stops the athan sound preview currently playing")
+                                     : NSLocalizedString("preview", value: "Preview", comment: "Button that plays a short sample of the selected athan sound"))
                                     .font(.system(size: 12, weight: .semibold))
                             }
                             .foregroundColor(.white)
@@ -81,7 +85,13 @@ struct MacSettingsView: View {
                             ForEach(NotificationSettings.Sounds.allCases, id: \.self) { Text($0.localizedString()).tag($0) }
                         }
                         .labelsHidden()
-                        .onChange(of: sound) { _ in applySound() }
+                        .onChange(of: sound) { _ in
+                            // A different sound was picked — stop any in-flight preview of
+                            // the OLD sound rather than let it keep playing under the new
+                            // selection, which would desync the Preview/Stop button state.
+                            if isPreviewingSound { NoteSoundPlayer.stopAudio(); isPreviewingSound = false }
+                            applySound()
+                        }
                         .fixedSize()
                     }
                 }
@@ -150,6 +160,23 @@ struct MacSettingsView: View {
         ns.selectedSound = sound
         AthanManager.shared.notificationSettings = ns
         AthanManager.shared.reloadSettingsAndNotifications()
+    }
+
+    private func toggleSoundPreview() {
+        if isPreviewingSound {
+            NoteSoundPlayer.stopAudio()
+            isPreviewingSound = false
+        } else {
+            // Flip back to "Preview" automatically once the sample finishes on
+            // its own (stopAudio() below is the manual-stop path and does NOT
+            // trigger this — AVAudioPlayer's delegate only fires on natural
+            // completion).
+            NoteSoundPlayer.onFinishedPlaying = {
+                DispatchQueue.main.async { isPreviewingSound = false }
+            }
+            NoteSoundPlayer.playPreviewAudio(for: sound.rawValue)
+            isPreviewingSound = true
+        }
     }
 
     private func applyAppearance() {

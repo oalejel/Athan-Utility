@@ -46,8 +46,15 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         // Let the user ⌘-drag the item off the menu bar (matches every other
         // menu-bar app); we detect that via the isVisible KVO below instead of
         // relying on AppKit to tell the app to quit or anything like that.
+        //
+        // Deliberately NOT setting an autosaveName: AppKit applies that name's
+        // last-PERSISTED visibility to every newly created item with the same
+        // name, INCLUDING re-hiding a fresh item if it was ever dragged out in
+        // an earlier run — which fought our own explicit isVisible sets below
+        // and was why toggling the Settings switch back on stopped working.
+        // MenuBarSettings.isHidden is our own single source of truth instead.
         item.behavior = [.removalAllowed]
-        item.autosaveName = "AthanMenuBarStatusItem"
+        item.isVisible = true
         if let button = item.button {
             if let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Athan Utility") {
                 img.isTemplate = true

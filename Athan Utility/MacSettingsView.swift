@@ -33,57 +33,68 @@ struct MacSettingsView: View {
     }
 
     var body: some View {
-        // GeometryReader wraps the Form (rather than constraining the Form's own
-        // frame) so the Form's underlying scroll view spans the FULL pane width —
-        // mouse-wheel scrolling works everywhere, not just over the narrow visual
-        // column. The narrow, centered look is achieved with per-row insets
-        // instead of an outer frame(maxWidth:), which used to leave the side
-        // margins outside the scrollable view entirely (dead to scroll input).
-        GeometryReader { geo in
-            let sidePad = max(0, (geo.size.width - 600) / 2)
-            let insets = EdgeInsets(top: 6, leading: 16 + sidePad, bottom: 6, trailing: 16 + sidePad)
-
+        // Per-row .listRowInsets only insets a row's CONTENT, not its grouped-style
+        // background card — so the earlier attempt to fix side-margin scrolling that
+        // way left the rounded card backgrounds stretched full-width while the text
+        // stayed narrow ("expanded cells"). Instead: keep the Form EXACTLY as it
+        // looked originally (narrow, centered, its own default row look), and put
+        // it — with its own scrolling disabled — inside an outer ScrollView that
+        // spans the full pane. The outer ScrollView is what actually scrolls, and
+        // its hit area covers the whole pane including the side margins.
+        ScrollView {
             Form {
                 Section(NSLocalizedString("calc_section", value: "Calculation", comment: "")) {
                     Picker(NSLocalizedString("Calculation Method", value: "Method", comment: ""), selection: $method) {
                         ForEach(methods, id: \.self) { Text($0.localizedString()).tag($0) }
                     }
                     .onChange(of: method) { _ in applyPrayer() }
-                    .listRowInsets(insets)
 
                     Picker(NSLocalizedString("madhab_asr", value: "Asr (Madhab)", comment: ""), selection: $madhab) {
                         ForEach(Madhab.allCases, id: \.self) { Text($0.stringValue()).tag($0) }
                     }
                     .onChange(of: madhab) { _ in applyPrayer() }
-                    .listRowInsets(insets)
 
                     Picker(NSLocalizedString("High Latitude Rule", value: "High Latitude Rule", comment: ""), selection: $latRule) {
                         ForEach(HighLatitudeRule.allCases, id: \.self) { Text($0.localizedString()).tag($0) }
                     }
                     .onChange(of: latRule) { _ in applyPrayer() }
-                    .listRowInsets(insets)
                 }
 
                 Section(NSLocalizedString("notif_section", value: "Notifications", comment: "")) {
-                    Picker(NSLocalizedString("athan_sound", value: "Athan Sound", comment: ""), selection: $sound) {
-                        ForEach(NotificationSettings.Sounds.allCases, id: \.self) { Text($0.localizedString()).tag($0) }
+                    HStack {
+                        Text(NSLocalizedString("athan_sound", value: "Athan Sound", comment: ""))
+                        Spacer()
+                        Button(action: { NoteSoundPlayer.playPreviewAudio(for: sound.rawValue) }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "play.fill").font(.system(size: 10, weight: .bold))
+                                Text(NSLocalizedString("preview", value: "Preview", comment: "Button that plays a short sample of the selected athan sound"))
+                                    .font(.system(size: 12, weight: .semibold))
+                            }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 10).padding(.vertical, 4)
+                            .background(Capsule().fill(Color.accentColor))
+                        }
+                        .buttonStyle(.plain)
+                        Spacer()
+                        Picker("", selection: $sound) {
+                            ForEach(NotificationSettings.Sounds.allCases, id: \.self) { Text($0.localizedString()).tag($0) }
+                        }
+                        .labelsHidden()
+                        .onChange(of: sound) { _ in applySound() }
+                        .fixedSize()
                     }
-                    .onChange(of: sound) { _ in applySound() }
-                    .listRowInsets(insets)
                 }
 
                 Section(NSLocalizedString("alerts_section", value: "Prayer Alerts", comment: "")) {
                     ForEach(0..<6, id: \.self) { i in
                         let p = Prayer(index: i)
                         Toggle(p.localizedOrCustomString(), isOn: bellBinding(p))
-                            .listRowInsets(insets)
                     }
                 }
 
                 Section(NSLocalizedString("appearance_section", value: "Appearance", comment: "")) {
                     Toggle(NSLocalizedString("dynamic_colors", value: "Dynamic colors by prayer", comment: ""), isOn: $isDynamic)
                         .onChange(of: isDynamic) { _ in applyAppearance() }
-                        .listRowInsets(insets)
                 }
 
                 Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
@@ -94,7 +105,6 @@ struct MacSettingsView: View {
                             if on { MenuBarBridge.shared.ensureItem() }
                             else { MenuBarBridge.shared.removeItem() }
                         }
-                        .listRowInsets(insets)
                 }
 
                 Section {
@@ -103,18 +113,21 @@ struct MacSettingsView: View {
                         Spacer()
                         Text(appVersion).foregroundColor(.secondary)
                     }
-                    .listRowInsets(insets)
                 }
             }
             .formStyle(.grouped)
-            .navigationTitle(Strings.settings)
-            // Re-sync the toggle with the status item's ACTUAL presence whenever
-            // this pane appears — it can drift if the user ⌘-drags the icon out
-            // of the menu bar without touching this toggle.
-            .onAppear { showMenuBarIcon = MenuBarBridge.shared.isItemVisible }
-            .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarItemVisibilityChanged)) { note in
-                if let visible = note.object as? Bool { showMenuBarIcon = visible }
-            }
+            .scrollDisabled(true)                       // the outer ScrollView does the scrolling
+            .frame(maxWidth: 600)                        // negative space on the sides; tighter rows — same as original
+            .frame(maxWidth: .infinity, alignment: .center)
+            .fixedSize(horizontal: false, vertical: true) // size to content height so the outer ScrollView can scroll it
+        }
+        .navigationTitle(Strings.settings)
+        // Re-sync the toggle with the status item's ACTUAL presence whenever
+        // this pane appears — it can drift if the user ⌘-drags the icon out
+        // of the menu bar without touching this toggle.
+        .onAppear { showMenuBarIcon = MenuBarBridge.shared.isItemVisible }
+        .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarItemVisibilityChanged)) { note in
+            if let visible = note.object as? Bool { showMenuBarIcon = visible }
         }
     }
 

@@ -23,29 +23,31 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     private var snapshot: MenuBarSnapshot?
     private var popover: NSPopover?
     private var popoverVC: MenuBarPopoverController?
+    // Watches for the user ⌘-dragging the item out of (or back into) the menu
+    // bar — that only flips isVisible, it doesn't tear down the NSStatusItem
+    // object, so installStatusItem()'s "already exists" guard would otherwise
+    // silently no-op and never notice.
+    private var visibilityObservation: NSKeyValueObservation?
 
-    public override init() {
-        super.init()
-        // Bring the status item back when the user re-activates the app (clicks
-        // the Dock icon / switches to it). If they ⌘-dragged it off the menu
-        // bar, this restores it without needing a full relaunch. Note: the
-        // per-second tick deliberately does NOT force it back, so a removal
-        // sticks for the rest of the session until the app is reactivated.
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(appDidActivate),
-            name: NSApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc private func appDidActivate() {
-        if statusItem == nil { installStatusItem() }
-        else { statusItem?.isVisible = true }
-    }
+    public override init() { super.init() }
 
     // MARK: MenuBarHelping
 
     public func installStatusItem() {
-        guard statusItem == nil else { return }
+        // Item object already exists (created earlier this run) — it may just be
+        // hidden (drag-removed, or explicitly hidden by us). Un-hide rather than
+        // creating a second item; a fresh statusItem(withLength:) call here would
+        // orphan the first one instead of restoring it.
+        if let existing = statusItem {
+            existing.isVisible = true
+            return
+        }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        // Let the user ⌘-drag the item off the menu bar (matches every other
+        // menu-bar app); we detect that via the isVisible KVO below instead of
+        // relying on AppKit to tell the app to quit or anything like that.
+        item.behavior = [.removalAllowed]
+        item.autosaveName = "AthanMenuBarStatusItem"
         if let button = item.button {
             if let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Athan Utility") {
                 img.isTemplate = true
@@ -58,6 +60,15 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         statusItem = item
+
+        visibilityObservation = item.observe(\.isVisible, options: [.new]) { [weak self] _, change in
+            guard let self, let visible = change.newValue else { return }
+            self.actionDelegate?.menuBarVisibilityChanged(visible)
+        }
+    }
+
+    public func isStatusItemVisible() -> Bool {
+        statusItem?.isVisible ?? false
     }
 
     public func updateTitle(_ title: String, urgent: Bool, glyph: String) {
@@ -71,6 +82,8 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     }
 
     public func removeStatusItem() {
+        visibilityObservation?.invalidate()
+        visibilityObservation = nil
         if let item = statusItem { NSStatusBar.system.removeStatusItem(item) }
         statusItem = nil
     }

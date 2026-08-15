@@ -26,6 +26,10 @@ import CoreGraphics
     func setActionDelegate(_ delegate: MenuBarActionDelegate)
     /// Push the latest prayer times / location / gradient for the popover to render.
     func updateSnapshot(_ snapshot: MenuBarSnapshot)
+    /// Whether the status item is actually showing in the menu bar right now —
+    /// false if the user ⌘-dragged it out (the NSStatusItem object still exists
+    /// with isVisible=false; it isn't fully torn down until removeStatusItem()).
+    func isStatusItemVisible() -> Bool
 }
 
 /// Implemented by the app; called from the helper bundle when the user interacts with the popover.
@@ -40,6 +44,9 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
+    /// The status item's visibility changed outside of our own show/hide calls —
+    /// concretely, the user ⌘-dragged it out of (or back into) the menu bar.
+    func menuBarVisibilityChanged(_ visible: Bool)
 }
 
 /// One row of the popover: a prayer, its time, and whether its alert (bell) is on.

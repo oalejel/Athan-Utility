@@ -14,6 +14,10 @@ import Adhan
 extension Notification.Name {
     /// Posted when the menu-bar popover's gear button is tapped; MainSwiftUI shows Settings.
     static let athanShowMacSettings = Notification.Name("AthanShowMacSettings")
+    /// Posted whenever the status item's actual visibility changes (e.g. the user
+    /// ⌘-dragged it out of, or back into, the menu bar). object is the new Bool.
+    /// MacSettingsView listens so its "Show menu bar icon" toggle stays truthful.
+    static let athanMenuBarItemVisibilityChanged = Notification.Name("AthanMenuBarItemVisibilityChanged")
 }
 
 func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
@@ -87,6 +91,12 @@ final class MenuBarBridge {
     /// Push the latest prayer/location/gradient snapshot for the popover.
     func updateSnapshot(_ snapshot: MenuBarSnapshot) {
         helper?.updateSnapshot(snapshot)
+    }
+
+    /// Whether the status item is actually showing right now — false if the
+    /// user ⌘-dragged it out, even though the helper/item object still exists.
+    var isItemVisible: Bool {
+        helper?.isStatusItemVisible() ?? false
     }
 
     func stop() {
@@ -279,6 +289,15 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
     func menuBarOpenSettings() {
         NotificationCenter.default.post(name: .athanShowMacSettings, object: nil)
+    }
+
+    func menuBarVisibilityChanged(_ visible: Bool) {
+        // Keep the persisted preference truthful: a drag-out is functionally
+        // the same as the user turning the Settings toggle off, and a drag-back-in
+        // is the same as turning it on — so the next launch (and the Settings
+        // toggle right now) both reflect what's actually showing.
+        MenuBarSettings.isHidden = !visible
+        NotificationCenter.default.post(name: .athanMenuBarItemVisibilityChanged, object: visible)
     }
 
     /// "1:23:45" (H:MM:SS) when ≥ 1h remains, otherwise "23:45" (MM:SS).

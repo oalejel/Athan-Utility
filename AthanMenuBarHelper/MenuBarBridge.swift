@@ -71,13 +71,21 @@ final class MenuBarBridge {
         helper?.updateTitle(title, urgent: urgent, glyph: glyph)
     }
 
-    /// Make sure the status item is present (re-adds it after it was hidden). Loads the
-    /// helper bundle first if needed.
+    /// Make sure the status item exists. Called every tick, so it's deliberately
+    /// passive: it will NOT re-show an item the user drag-removed (see restoreItem).
     func ensureItem() {
-        mbDebug("ensureItem() called, helper is \(helper == nil ? "nil" : "set")")
         if helper == nil { start(); return }
         helper?.installStatusItem()
-        mbDebug("ensureItem() -> installStatusItem() done, isItemVisible now \(isItemVisible)")
+    }
+
+    /// Explicit user request (the Settings toggle) to bring the icon back — recreates
+    /// the status item from scratch, which is the only thing that works after a
+    /// ⌘-drag removal.
+    func restoreItem() {
+        mbDebug("restoreItem() called, helper is \(helper == nil ? "nil" : "set")")
+        if helper == nil { start(); return }   // start() installs a fresh item itself
+        helper?.restoreStatusItem()
+        mbDebug("restoreItem() done, isItemVisible now \(isItemVisible)")
     }
 
     /// Hide the status item but keep the helper loaded so it can be re-added.

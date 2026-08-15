@@ -33,18 +33,46 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
 
     // MARK: MenuBarHelping
 
+    /// Idempotent + cheap: this is what the per-second title tick calls. If the item
+    /// exists and is showing, do nothing. If it exists but is hidden, LEAVE IT hidden —
+    /// that means the user ⌘-dragged it out, and the tick must not fight that choice.
+    /// Restoring after a drag-out is an explicit user action; see `restoreStatusItem()`.
     public func installStatusItem() {
-        // Item object already exists (created earlier this run) — it may just be
-        // hidden (drag-removed, or explicitly hidden by us). Un-hide rather than
-        // creating a second item; a fresh statusItem(withLength:) call here would
-        // orphan the first one instead of restoring it.
         if let existing = statusItem {
-            NSLog("ATHAN-MB-HELPER: installStatusItem() - existing item found, isVisible was %@, forcing true", existing.isVisible ? "true" : "false")
-            existing.isVisible = true
-            NSLog("ATHAN-MB-HELPER: installStatusItem() - existing item isVisible now %@", existing.isVisible ? "true" : "false")
+            if !existing.isVisible {
+                NSLog("ATHAN-MB-HELPER: installStatusItem() - item exists but hidden (drag-removed); leaving it to restoreStatusItem()")
+            }
             return
         }
         NSLog("ATHAN-MB-HELPER: installStatusItem() - creating a brand new NSStatusItem")
+        createStatusItem()
+    }
+
+    /// Explicit "user asked for the icon back" path (the Settings toggle).
+    ///
+    /// Setting `isVisible = true` on a ⌘-drag-removed NSStatusItem does NOT bring it
+    /// back — AppKit detaches that object from the status bar permanently, so the old
+    /// code's un-hide-in-place was a silent no-op. The only reliable restore is to
+    /// destroy the stale item and vend a brand new one, which is what this does.
+    public func restoreStatusItem() {
+        NSLog("ATHAN-MB-HELPER: restoreStatusItem() - tearing down stale item (%@) and recreating",
+              statusItem == nil ? "none" : "present")
+        // Belt-and-braces: AppKit auto-generates an autosave name when `.removalAllowed`
+        // is set even if we never assign one, and that record can re-hide a fresh item.
+        // Drop any such keys so the new item starts with a clean visibility state.
+        let defaults = UserDefaults.standard
+        for key in defaults.dictionaryRepresentation().keys where key.contains("NSStatusItem") {
+            NSLog("ATHAN-MB-HELPER: clearing persisted status-item key '%@'", key)
+            defaults.removeObject(forKey: key)
+        }
+        visibilityObservation?.invalidate()
+        visibilityObservation = nil
+        if let existing = statusItem { NSStatusBar.system.removeStatusItem(existing) }
+        statusItem = nil
+        createStatusItem()
+    }
+
+    private func createStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         // Let the user ⌘-drag the item off the menu bar (matches every other
         // menu-bar app); we detect that via the isVisible KVO below instead of

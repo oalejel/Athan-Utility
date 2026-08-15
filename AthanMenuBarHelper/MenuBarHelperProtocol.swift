@@ -14,8 +14,13 @@ import CoreGraphics
 
 /// Implemented by the native-macOS helper bundle; called from the Catalyst app.
 @objc public protocol MenuBarHelping: NSObjectProtocol {
-    /// Create and show the status item in the macOS menu bar.
+    /// Create the status item if absent. Idempotent and cheap (called on a timer);
+    /// deliberately does NOT un-hide an item the user drag-removed.
     func installStatusItem()
+    /// Explicit user request to bring the icon back: destroys any stale/drag-removed
+    /// item and vends a fresh visible one. (Un-hiding a drag-removed item in place
+    /// does not work — AppKit detaches it from the status bar permanently.)
+    func restoreStatusItem()
     /// Update the menu bar title text and its leading glyph (an SF Symbol name
     /// reflecting the current time of day). `urgent` renders the title red
     /// (used when < 30 min remain).

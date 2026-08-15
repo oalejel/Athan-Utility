@@ -113,7 +113,10 @@ struct MacSettingsView: View {
                     Toggle(NSLocalizedString("menubar_show_icon", value: "Show menu bar icon", comment: ""), isOn: $showMenuBarIcon)
                         .onChange(of: showMenuBarIcon) { on in
                             MenuBarSettings.isHidden = !on
-                            if on { MenuBarBridge.shared.ensureItem() }
+                            // restoreItem() (not ensureItem) — this is the explicit user
+                            // request, and after a ⌘-drag removal only a from-scratch
+                            // recreate actually brings the icon back.
+                            if on { MenuBarBridge.shared.restoreItem() }
                             else { MenuBarBridge.shared.removeItem() }
                         }
                 }

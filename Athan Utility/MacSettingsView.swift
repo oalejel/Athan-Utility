@@ -33,16 +33,17 @@ struct MacSettingsView: View {
     }
 
     var body: some View {
-        // Per-row .listRowInsets only insets a row's CONTENT, not its grouped-style
-        // background card — so the earlier attempt to fix side-margin scrolling that
-        // way left the rounded card backgrounds stretched full-width while the text
-        // stayed narrow ("expanded cells"). Instead: keep the Form EXACTLY as it
-        // looked originally (narrow, centered, its own default row look), and put
-        // it — with its own scrolling disabled — inside an outer ScrollView that
-        // spans the full pane. The outer ScrollView is what actually scrolls, and
-        // its hit area covers the whole pane including the side margins.
-        ScrollView {
-            Form {
+        // Two earlier attempts at "scroll from the side margins too" both broke
+        // something worse: per-row .listRowInsets only inset row CONTENT (not the
+        // grouped-style background card, which stayed full-width — ugly stretched
+        // cells), and nesting the Form in an outer ScrollView with its own
+        // scrolling disabled + fixedSize(vertical:) collapsed to zero height on
+        // Mac Catalyst (a blank pane). Reverted to the plain, original structure:
+        // the Form handles its own scrolling, over its own (narrower, centered)
+        // width — the same as any inset content list in a native Mac app; hovering
+        // the blank side margins simply isn't part of its scroll area, which is
+        // standard AppKit/Catalyst list behavior, not a bug.
+        Form {
                 Section(NSLocalizedString("calc_section", value: "Calculation", comment: "")) {
                     Picker(NSLocalizedString("Calculation Method", value: "Method", comment: ""), selection: $method) {
                         ForEach(methods, id: \.self) { Text($0.localizedString()).tag($0) }
@@ -115,12 +116,9 @@ struct MacSettingsView: View {
                     }
                 }
             }
-            .formStyle(.grouped)
-            .scrollDisabled(true)                       // the outer ScrollView does the scrolling
-            .frame(maxWidth: 600)                        // negative space on the sides; tighter rows — same as original
-            .frame(maxWidth: .infinity, alignment: .center)
-            .fixedSize(horizontal: false, vertical: true) // size to content height so the outer ScrollView can scroll it
-        }
+        .formStyle(.grouped)
+        .frame(maxWidth: 600)                       // negative space on the sides; tighter rows
+        .frame(maxWidth: .infinity, alignment: .center)
         .navigationTitle(Strings.settings)
         // Re-sync the toggle with the status item's ACTUAL presence whenever
         // this pane appears — it can drift if the user ⌘-drags the icon out

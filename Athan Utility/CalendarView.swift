@@ -77,8 +77,14 @@ class MonthModel: ObservableObject {
         let offsetDay = dayComp.day!
         let thisMonthsFirstDay = Calendar.current.date(byAdding: .day , value: 1-offsetDay, to: startDate)!
         
-        // add 24 months for regional at init
-        for i in 0..<12 {
+        // Precompute every month the calendar List (and CSV export) actually
+        // iterate — both use 0..<13. This used to stop at 12, so the 13th
+        // month was never cached at init: its (expensive, ~30-day Adhan +
+        // moon-phase) computation instead ran synchronously the instant that
+        // row scrolled into view, causing a hitch right at the start of
+        // scrolling. Precomputing all 13 up front means every List row is a
+        // cheap cache hit by the time scrolling can happen at all.
+        for i in 0..<13 {
             let iterDate = Calendar.current.date(byAdding: .month, value: i,
                                                  to: thisMonthsFirstDay, wrappingComponents: false)!
             let _ = self.calculateMonthTimes(for: iterDate)

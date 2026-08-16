@@ -281,6 +281,17 @@ struct LocationSettingsView: View, Equatable {
                                     boundCoordinate = settings.locationCoordinate // change map location
                                     unboundCoordinate = settings.locationCoordinate // change stored location
                                     timeZone = settings.timeZone
+                                    // Adopt the new country too. Without this the code stayed on
+                                    // whatever the user had typed before, so switching from a
+                                    // manual Karachi back to Current Location in New York saved
+                                    // countryCode "PK" and left the method on Karachi instead of
+                                    // moving to ISNA.
+                                    if let cc = settings.countryCode, !cc.isEmpty {
+                                        detectedCountryCode = cc
+                                    } else {
+                                        detectedCountryCode = nil
+                                        lookUpCountryCode(for: settings.locationCoordinate)
+                                    }
                                     updateLocalizedPrayer(coord: unboundCoordinate)
                                     
                                     awaitingLocationUpdate = false
@@ -407,6 +418,16 @@ struct LocationSettingsView: View, Equatable {
         }) {
             IntroSettingsView(parentSession: .constant(.Location), isSheet: true)
                 .preferredColorScheme(.dark)
+        }
+    }
+
+    /// Resolve just the country for a coordinate, for the Current Location path where
+    /// CoreLocation handed us a fix without one. Deliberately touches nothing but
+    /// `detectedCountryCode` — the name, coordinate and time zone are already set.
+    func lookUpCountryCode(for coord: CLLocationCoordinate2D) {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { placemarks, _ in
+            guard let code = placemarks?.first?.isoCountryCode, !code.isEmpty else { return }
+            DispatchQueue.main.async { detectedCountryCode = code }
         }
     }
 

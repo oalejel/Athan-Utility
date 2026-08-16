@@ -128,7 +128,6 @@
 "Reminder Notification" = "Rappel Notification";
 "Enabled" = "Activé";
 "Play Sound" = "Jouer Son";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "Décalage minute: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Désactivez \"Jouer Son\" pour forcer les notifications de cette prière à jouer le carillon iOS par défaut.";
@@ -346,3 +345,8 @@
 "zoom_out" = "Réduire";
 "zoom_reset" = "Taille Réelle";
 
+
+"Cancel" = "Annuler";
+"Alarms" = "Alarmes";
+"Location Search" = "Rechercher un lieu";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility conserve plusieurs mois de données d'adhan pour une utilisation hors ligne.";

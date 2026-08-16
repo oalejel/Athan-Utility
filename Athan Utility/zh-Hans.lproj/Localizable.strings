@@ -208,7 +208,6 @@
 "recommended_settings_title" = "为你的位置推荐";
 "your_settings_title" = "你的设置";
 "location_not_found" = "找不到该地点。";
-"use_current_location_short" = "使用当前位置";
 "dur_hr" = "%d 小时";
 "dur_hr_min" = "%d 小时 %d 分钟";
 "dur_min" = "%d 分钟";
@@ -219,8 +218,6 @@
 "mac_section_discover" = "发现功能";
 "adopt_widgets_title" = "小组件";
 "adopt_widgets_sub" = "添加到主屏幕";
-"adopt_lock_title" = "锁定屏幕";
-"adopt_lock_sub" = "无需解锁即可查看";
 "adopt_siri_title" = "Siri 快捷指令";
 "adopt_siri_sub" = "向 Siri 询问礼拜时间";
 "adopt_calendar_title" = "日历";
@@ -249,15 +246,6 @@
 "siri_phrase_1" = "“下一次礼拜时间”";
 "siri_phrase_2" = "“昏礼是什么时候？”";
 "siri_phrase_3" = "“今天的邦克时间”";
-"widgets_home_title" = "主屏幕小组件";
-"widgets_home_1" = "长按主屏幕的空白区域，直到 App 开始晃动。";
-"widgets_home_2" = "轻点左上角的 + 按钮。";
-"widgets_home_3" = "搜索“Athan Utility”并选择小组件尺寸。";
-"widgets_home_4" = "轻点“添加小组件”，然后点“完成”。";
-"widgets_lock_title" = "锁定屏幕小组件";
-"widgets_lock_1" = "长按锁定屏幕，然后轻点“自定义”。";
-"widgets_lock_2" = "轻点时钟下方区域以添加小组件。";
-"widgets_lock_3" = "选择“Athan Utility”即可一眼看到下一次礼拜。";
 "feature_discovery_footer" = "这些功能都在 App 内——这只是快速导览。";
 "feature_widgets_title" = "主屏幕与锁定屏幕小组件";
 "feature_widgets_subtitle" = "一眼看到下一次礼拜";
@@ -359,3 +347,8 @@
 "zoom_in" = "放大";
 "zoom_out" = "缩小";
 "zoom_reset" = "实际大小";
+
+"Cancel" = "取消";
+"Alarms" = "闹钟";
+"Location Search" = "搜索位置";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility 会存储数月的礼拜时间数据，供离线使用。";

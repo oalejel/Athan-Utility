@@ -128,7 +128,6 @@
 "Reminder Notification" = "Hatırlatma Bildirimi";
 "Enabled" = "Etkin";
 "Play Sound" = "Ses Çal";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "Dakika Ofseti: %@";
 "offset-description" = "Dakika ofsetleri %1$@ ile %2$@ arasındaki süreden uzun olduğunda, hatırlatıcılar varsayılan olarak 15 dakikaya ayarlanır.";
 "minute-character" = "d";
@@ -343,3 +342,8 @@
 "zoom_in" = "Yakınlaştır";
 "zoom_out" = "Uzaklaştır";
 "zoom_reset" = "Gerçek Boyut";
+
+"Cancel" = "Vazgeç";
+"Alarms" = "Alarmlar";
+"Location Search" = "Konum Ara";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility, çevrimdışı kullanım için aylarca ezan verisi saklar.";

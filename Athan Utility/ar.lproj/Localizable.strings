@@ -135,7 +135,6 @@
 "Reminder Notification" = "إشعار تذكير";
 "Enabled" = "ممكن";
 "Play Sound" = "صوت";
-"Play 30 seconds" = "";
 "reminder.minute.offset" = "%@ :تنبيه مسبق";
 "minute-character" = "د";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "قم بتعطيل الصوت لإجبار إعلامات الصلاة هذه على تشغيل رنين iOS الافتراضي.";
@@ -214,7 +213,6 @@
 "recommended_settings_title" = "موصى به لموقعك";
 "your_settings_title" = "إعداداتك";
 "location_not_found" = "تعذّر العثور على هذا المكان.";
-"use_current_location_short" = "استخدام الموقع الحالي";
 "dur_hr" = "%d س";
 "dur_hr_min" = "%d س %d د";
 "dur_min" = "%d د";
@@ -225,8 +223,6 @@
 "mac_section_discover" = "اكتشف المزايا";
 "adopt_widgets_title" = "الأدوات";
 "adopt_widgets_sub" = "أضِفها إلى الشاشة الرئيسية";
-"adopt_lock_title" = "شاشة القفل";
-"adopt_lock_sub" = "نظرة سريعة دون فتح القفل";
 "adopt_siri_title" = "اختصار Siri";
 "adopt_siri_sub" = "اسأل Siri عن مواقيت الصلاة";
 "adopt_calendar_title" = "التقويم";
@@ -255,15 +251,6 @@
 "siri_phrase_1" = "«وقت الصلاة القادمة»";
 "siri_phrase_2" = "«متى المغرب؟»";
 "siri_phrase_3" = "«مواقيت الأذان اليوم»";
-"widgets_home_title" = "أدوات الشاشة الرئيسية";
-"widgets_home_1" = "المس مطوّلًا منطقة فارغة من الشاشة الرئيسية حتى تهتز التطبيقات.";
-"widgets_home_2" = "اضغط زر + في الزاوية العلوية.";
-"widgets_home_3" = "ابحث عن «Athan Utility» واختر حجم أداة.";
-"widgets_home_4" = "اضغط إضافة أداة ثم تم.";
-"widgets_lock_title" = "أدوات شاشة القفل";
-"widgets_lock_1" = "المس مطوّلًا شاشة القفل ثم اضغط تخصيص.";
-"widgets_lock_2" = "اضغط المنطقة أسفل الساعة لإضافة الأدوات.";
-"widgets_lock_3" = "اختر «Athan Utility» لرؤية الصلاة القادمة بنظرة.";
 "feature_discovery_footer" = "كل هذا موجود داخل التطبيق — هذه مجرد جولة سريعة.";
 "feature_widgets_title" = "أدوات الشاشة الرئيسية وشاشة القفل";
 "feature_widgets_subtitle" = "الصلاة القادمة بنظرة واحدة";
@@ -370,3 +357,8 @@
 "zoom_in" = "تكبير";
 "zoom_out" = "تصغير";
 "zoom_reset" = "الحجم الفعلي";
+
+"Cancel" = "إلغاء";
+"Alarms" = "المنبهات";
+"Location Search" = "البحث عن موقع";
+"Athan Utility stores months of athan data for offline use." = "يخزّن Athan Utility بيانات الأذان لعدة أشهر لاستخدامها دون اتصال.";

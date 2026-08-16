@@ -43,7 +43,7 @@
 "Time for %1$@ in %2$@ [%3$@]" = "کا %1$@ وقت %3$@ (%2$@)";
 
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m until %2$@ in %3$@ [%4$@]" = "‏@%3$ میں @$2% تک %1$@ منٹ باقی رہ گئے [@$4%]‏";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "‏%3$@ میں %2$@ تک %1$@ منٹ باقی رہ گئے [%4$@]‏";
 
 
 
@@ -138,7 +138,6 @@
 "Reminder Notification" = "یاد دہانی کی اطلاع";
 "Enabled" = "قابل بنایا گیا";
 "Play Sound" = "آواز چلائیں";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "منٹ جلدی: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "اس دعا کی اطلاعات کو ڈیفالٹ iOS چائیم کھیلنے کیلئے مجبور کرنے کے لئے \"پلے ساؤنڈ\" کو غیر فعال کریں۔";
@@ -355,3 +354,8 @@
 "zoom_in" = "زوم ان";
 "zoom_out" = "زوم آؤٹ";
 "zoom_reset" = "اصل سائز";
+
+"Cancel" = "منسوخ کریں";
+"Alarms" = "الارمز";
+"Location Search" = "مقام تلاش کریں";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility آف لائن استعمال کے لیے کئی مہینوں کا اذان ڈیٹا محفوظ رکھتا ہے۔";

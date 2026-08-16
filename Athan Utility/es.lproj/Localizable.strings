@@ -127,7 +127,6 @@
 "Reminder Notification" = "Recordatorio Notificación";
 "Enabled" = "Activado";
 "Play Sound" = "Reproducir Sonido";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "Compensación de minutos: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Desactivar \"Reproducir Sonido\" para forzar las notificaciones de esta oración para reproducir la campana iOS predeterminada.";
@@ -206,7 +205,6 @@
 "recommended_settings_title" = "Recomendado para tu ubicación";
 "your_settings_title" = "Tus ajustes";
 "location_not_found" = "No se encontró ese lugar.";
-"use_current_location_short" = "Usar ubicación actual";
 "dur_hr" = "%d h";
 "dur_hr_min" = "%d h %d min";
 "dur_min" = "%d min";
@@ -217,8 +215,6 @@
 "mac_section_discover" = "Descubrir funciones";
 "adopt_widgets_title" = "Widgets";
 "adopt_widgets_sub" = "Añádelo a tu pantalla de inicio";
-"adopt_lock_title" = "Pantalla bloqueada";
-"adopt_lock_sub" = "Consulta sin desbloquear";
 "adopt_siri_title" = "Atajo de Siri";
 "adopt_siri_sub" = "Pregúntale a Siri por las horarios de oración";
 "adopt_calendar_title" = "Calendario";
@@ -247,15 +243,6 @@
 "siri_phrase_1" = "«Próxima hora de oración»";
 "siri_phrase_2" = "«¿Cuándo es el Magrib?»";
 "siri_phrase_3" = "«Horas del athan de hoy»";
-"widgets_home_title" = "Widgets de pantalla de inicio";
-"widgets_home_1" = "Mantén pulsada una zona vacía de la pantalla de inicio hasta que las apps tiemblen.";
-"widgets_home_2" = "Toca el botón + en la esquina superior.";
-"widgets_home_3" = "Busca «Athan Utility» y elige un tamaño de widget.";
-"widgets_home_4" = "Toca Añadir widget y luego Hecho.";
-"widgets_lock_title" = "Widgets de pantalla bloqueada";
-"widgets_lock_1" = "Mantén pulsada la pantalla bloqueada y luego toca Personalizar.";
-"widgets_lock_2" = "Toca la zona bajo el reloj para añadir widgets.";
-"widgets_lock_3" = "Elige «Athan Utility» para ver la próxima oración de un vistazo.";
 "feature_discovery_footer" = "Todo esto está en la app: es solo un recorrido rápido.";
 "feature_widgets_title" = "Widgets de inicio y bloqueo";
 "feature_widgets_subtitle" = "La próxima oración de un vistazo";
@@ -357,3 +344,8 @@
 "zoom_in" = "Aumentar";
 "zoom_out" = "Reducir";
 "zoom_reset" = "Tamaño Real";
+
+"Cancel" = "Cancelar";
+"Alarms" = "Alarmas";
+"Location Search" = "Buscar ubicación";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility guarda meses de datos de athan para usarlos sin conexión.";

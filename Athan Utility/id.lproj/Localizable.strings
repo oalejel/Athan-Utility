@@ -5,7 +5,7 @@
 
 // MARK: - Prayer Names
 "Fajr" = "Subuh";
-"Sunrise" = "Syuruk";
+"Sunrise" = "Terbit";
 "Dhuhr" = "Zuhur";
 "Asr" = "Asar";
 "Maghrib" = "Magrib";
@@ -298,3 +298,29 @@
 "zoom_in" = "Perbesar";
 "zoom_out" = "Perkecil";
 "zoom_reset" = "Ukuran Sebenarnya";
+
+"Fajr Alarm" = "Alarm Subuh";
+"fajr.alarm.description" = "Jadwalkan alarm iOS sungguhan yang tetap sinkron dengan Subuh (atau Terbit) seiring waktu berubah sepanjang tahun. Membutuhkan iOS 26.";
+"fajr.alarm.entry.description" = "Secara otomatis menjaga alarm iOS tetap terkunci pada waktu Subuh harian.";
+"fajr.alarm.offset.description" = "Bunyikan alarm sebelum atau sesudah salat yang dipilih. Berguna untuk tahajud atau sahur.";
+"fajr.alarm.schedule.description" = "Jumlah alarm mendatang yang tetap dijadwalkan. Diperbarui setiap kali aplikasi diperbarui.";
+"fajr.alarm.ios26.required" = "Alarm Subuh otomatis membutuhkan iOS 26 atau yang lebih baru.";
+"fajr.alarm.authorization.denied" = "Alarm dinonaktifkan. Aktifkan akses AlarmKit di Pengaturan sistem untuk menggunakan fitur ini.";
+"fajr.alarm.summary.off" = "Nonaktif";
+"fajr.alarm.permission.needed" = "Izin diperlukan";
+"fajr.alarm.no.days" = "Tidak ada hari yang dipilih — alarm tidak akan berbunyi.";
+"Anchor Prayer" = "Salat Acuan";
+"Offset" = "Selisih Waktu";
+"Days" = "Hari";
+"Snooze" = "Tunda";
+"Schedule Window" = "Rentang Jadwal";
+"Stop" = "Hentikan";
+"Open Settings" = "Buka Pengaturan";
+"fajr.alarm.title.format" = "Alarm %@";
+"fajr.alarm.offset.zero" = "Pada waktu %@";
+"fajr.alarm.offset.after" = "%1$d menit setelah %2$@";
+"fajr.alarm.offset.before" = "%1$d menit sebelum %2$@";
+"fajr.alarm.snooze.minutes" = "Tunda %d menit";
+"fajr.alarm.days.ahead" = "%d alarm berikutnya";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility menyimpan data azan selama beberapa bulan untuk digunakan secara offline.";
+"Search City" = "Cari Kota";

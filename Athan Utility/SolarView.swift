@@ -65,12 +65,8 @@ struct SolarView: View, Equatable {
     @State var hidingCircle = false
     @State var dhuhrTime: Date
     @State var sunriseTime: Date
-    // Tapping the Hijri date shows a transient callout with the Gregorian
-    // equivalent (auto-hides after a few seconds).
-    @State private var showGregorianCallout = false
-    // The Hijri controls that appear with it. Separate state because the Gregorian
-    // capsule auto-hides after a few seconds (it's just information) while this one
-    // has controls in it and has to stay until the user dismisses it.
+    // Tapping the Hijri date floats a callout over it. The Gregorian date lives
+    // inside that callout now, rather than in a separate capsule of its own.
     @State private var showHijriCallout = false
     // Bumped whenever the calendar or offset changes, to force the date line to
     // re-render with the new setting.
@@ -82,12 +78,6 @@ struct SolarView: View, Equatable {
         return d
     }()
 
-    private static func gregorianDateString(_ date: Date) -> String {
-        let df = DateFormatter()
-        df.dateStyle = .long
-        df.calendar = Calendar(identifier: .gregorian)
-        return df.string(from: date)
-    }
     
     func colorForProgress() -> (Color, Color, CGFloat) {
         // 0->sunrise - 0.05
@@ -214,14 +204,6 @@ struct SolarView: View, Equatable {
                         .animation(.linear(duration: 0.3), value: isDragging)
                     
                     VStack(spacing: 4) {
-                        if showGregorianCallout {
-                            Text(Self.gregorianDateString(Date()))
-                                .font(.caption).fontWeight(.semibold)
-                                .foregroundColor(Color(.lightText).opacity(0.85))
-                                .padding(.horizontal, 10).padding(.vertical, 4)
-                                .background(Capsule().fill(Color.black.opacity(0.35)))
-                                .transition(.opacity.combined(with: .move(edge: .bottom)))
-                        }
                         Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
                             .fontWeight(.bold)
                             .lineLimit(1)
@@ -232,27 +214,29 @@ struct SolarView: View, Equatable {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    showGregorianCallout.toggle()
-                                    showHijriCallout = showGregorianCallout
-                                }
-                                if showGregorianCallout {
-                                    // The date capsule auto-hides so it reads as a transient
-                                    // callout, not a persistent second date line. The controls
-                                    // below it stay put — dismissing something mid-adjustment
-                                    // would be maddening.
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                        withAnimation(.easeInOut(duration: 0.2)) { showGregorianCallout = false }
-                                    }
-                                }
+                                withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout.toggle() }
                             }
                             .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
                             .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
-
-                        if showHijriCallout {
-                            HijriCalloutView(onChange: { hijriRevision += 1 })
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                        }
+                            // An overlay, deliberately: anchoring to .top and moving the
+                            // callout's own bottom edge onto that anchor floats it above the
+                            // date without the date — or anything below it — shifting.
+                            .overlay(
+                                Group {
+                                    if showHijriCallout {
+                                        HijriCalloutView(
+                                            onChange: { hijriRevision += 1 },
+                                            onDone: {
+                                                withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout = false }
+                                            }
+                                        )
+                                        .fixedSize()
+                                        .alignmentGuide(.top) { d in d[.bottom] + 6 }
+                                        .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .bottom)))
+                                    }
+                                },
+                                alignment: .top
+                            )
                     }
                     .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
                         //                                            .offset(y: 24)

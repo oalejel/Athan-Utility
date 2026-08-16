@@ -709,6 +709,12 @@ struct GeneralSettingView: View {
                                 Spacer()
                             }
                         }
+                        // These anchors sit ON TOP of the whole settings stack (later
+                        // ZStack child), and Color.clear is hit-testable in SwiftUI — so
+                        // 100 invisible strips were swallowing taps across the content,
+                        // which read as tiles near the top responding to a tap a row off.
+                        // They exist only as scroll targets; they must never take input.
+                        .allowsHitTesting(false)
                     }
                     .frame(width: g.size.width)
                 }

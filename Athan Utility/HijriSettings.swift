@@ -72,6 +72,21 @@ final class HijriSettings: Codable {
         calendar().component(.month, from: adjusted(date))
     }
 
+    /// The date a given calendar would show right now, used to let the picker present
+    /// the options side by side instead of making the user pick one and check.
+    func previewString(mode option: HijriCalendarMode, dayOffset offset: Int, date: Date = Date()) -> String {
+        let df = DateFormatter()
+        df.calendar = Calendar(identifier: option.calendarIdentifier)
+        df.dateStyle = .medium
+        if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
+            df.locale = Locale(identifier: "ar_SY")
+        }
+        let shifted = offset == 0
+            ? date
+            : (Calendar.current.date(byAdding: .day, value: offset, to: date) ?? date)
+        return df.string(from: shifted)
+    }
+
     /// True in Ramadan, and on the day immediately before it — the only window where
     /// a ±1 correction is something people actually need to make.
     func isRamadanAdjustmentRelevant(on date: Date = Date()) -> Bool {

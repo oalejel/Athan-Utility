@@ -174,6 +174,10 @@ struct SettingsFeatureGrid: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 14).padding(.vertical, 15)
             .background(tileBackground(f))
+            // Same reason as the square tiles: without this the hit area is derived
+            // from the label content, so the Spacer gap between the title and the
+            // chevron is a dead zone right through the middle of the pill.
+            .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }

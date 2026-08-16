@@ -12,6 +12,22 @@ API_KEY_PATH    = "/Users/omaralejel/.appstoreconnect/private_keys/AuthKey_77D7S
 
 default_platform(:ios)
 
+# Homebrew's rsync shadows /usr/bin/rsync, and xcodebuild's export step calls rsync
+# with flags only Apple's build accepts. When the Homebrew one wins the archive
+# exports with a confusing failure. Put the system tools first for every lane so this
+# stops being something you have to remember to do by hand.
+before_all do
+  ENV["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin:#{ENV['PATH']}"
+end
+
+def athan_api_key
+  app_store_connect_api_key(
+    key_id:       API_KEY_ID,
+    issuer_id:    API_ISSUER_ID,
+    key_filepath: API_KEY_PATH
+  )
+end
+
 platform :ios do
 
   desc "Archive and upload to TestFlight (no App Store submission)"
@@ -145,10 +161,110 @@ platform :ios do
     )
   end
 
+  desc "Build, upload the binary and localized metadata — but do NOT submit for review"
+  lane :store do
+    api_key = athan_api_key
+    increment_build_number(
+      build_number: latest_testflight_build_number(
+        api_key:        api_key,
+        app_identifier: "com.omaralejel.Athan-Utility"
+      ) + 1,
+      xcodeproj: "Athan Utility.xcodeproj"
+    )
+    build_app(
+      workspace:      "Athan Utility.xcworkspace",
+      scheme:         "Athan Utility",
+      configuration:  "Release",
+      export_method:  "app-store",
+      clean:          true,
+      xcargs:         "-authenticationKeyPath \"#{API_KEY_PATH}\" -authenticationKeyID #{API_KEY_ID} -authenticationKeyIssuerID #{API_ISSUER_ID} -allowProvisioningUpdates",
+      export_options: {
+        method:            "app-store",
+        teamID:            "DL7989H5XT",
+        signingStyle:      "automatic",
+        stripSwiftSymbols: true
+      }
+    )
+    upload_to_app_store(
+      api_key:                  api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      skip_metadata:            false,
+      skip_screenshots:         true,
+      metadata_path:            "./fastlane/metadata",
+      submit_for_review:        false,
+      automatic_release:        false,
+      force:                    true,
+      run_precheck_before_submit: false,
+      precheck_include_in_app_purchases: false
+    )
+    UI.success("Uploaded. Run `fastlane ios finalize` when you're ready to submit for review.")
+  end
+
   desc "Generate new localized screenshots"
   lane :screenshots do
     capture_screenshots(workspace: "Athan Utility.xcworkspace", scheme: "Athan Utility")
     upload_to_app_store(skip_binary_upload: true, skip_metadata: true)
+  end
+
+end
+
+# The Mac app is Mac Catalyst, which App Store Connect treats as a SEPARATE platform
+# (macOS) under the same app record and the same bundle ID. It needs its own archive,
+# its own .pkg upload, and its own App Store listing — the iOS lanes above do not
+# touch it and never will.
+#
+# Prerequisite, one time, in App Store Connect: the app record must have the macOS
+# platform added. fastlane cannot create it; if the upload 404s on the version, that
+# is what is missing.
+platform :mac do
+
+  desc "Archive the Mac Catalyst app and upload it to App Store Connect (binary only, no review submission)"
+  lane :store do
+    api_key = athan_api_key
+    build_app(
+      workspace:         "Athan Utility.xcworkspace",
+      scheme:            "Athan Utility",
+      configuration:     "Release",
+      catalyst_platform: "macos",
+      export_method:     "app-store",
+      clean:             true,
+      output_name:       "Athan Utility (Mac)",
+      xcargs:            "-authenticationKeyPath \"#{API_KEY_PATH}\" -authenticationKeyID #{API_KEY_ID} -authenticationKeyIssuerID #{API_ISSUER_ID} -allowProvisioningUpdates",
+      export_options: {
+        method:            "app-store",
+        teamID:            "DL7989H5XT",
+        signingStyle:      "automatic",
+        stripSwiftSymbols: true
+      }
+    )
+    upload_to_app_store(
+      api_key:                  api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      platform:                 "osx",
+      pkg:                      lane_context[SharedValues::PKG_OUTPUT_PATH],
+      skip_metadata:            true,
+      skip_screenshots:         true,
+      submit_for_review:        false,
+      automatic_release:        false,
+      force:                    true,
+      run_precheck_before_submit: false
+    )
+  end
+
+  desc "Upload the Mac listing's localized metadata (no binary)"
+  lane :upload_metadata do
+    deliver(
+      api_key:                  athan_api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      platform:                 "osx",
+      skip_binary_upload:       true,
+      skip_screenshots:         true,
+      skip_app_version_update:  false,
+      force:                    true,
+      run_precheck_before_submit: false,
+      submit_for_review:        false,
+      metadata_path:            "./fastlane/metadata"
+    )
   end
 
 end

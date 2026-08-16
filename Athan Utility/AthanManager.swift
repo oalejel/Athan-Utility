@@ -339,6 +339,17 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             ?? Date().addingTimeInterval(TimeInterval(days) * 86400)   // fallback only
     }
 
+    /// Times for a day `days` either side of today, for the main screen's temporary
+    /// day-browsing state. Goes through `adjacentDayReference` so a DST transition
+    /// doesn't skip or repeat a day.
+    func times(daysFromToday days: Int) -> PrayerTimes? {
+        if days == 0 { return todayTimes }
+        let tz = locationSettings.timeZone
+        return calculateTimes(referenceDate: adjacentDayReference(days: days, timeZone: tz),
+                              customTimeZone: tz,
+                              adjustments: notificationSettings.adjustments())
+    }
+
     func refreshTimes() {
         // swiftui publisher gets updates through didSet
         let tz = locationSettings.timeZone

@@ -212,6 +212,7 @@
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
 		C013A1D007944FA2D2B4F38A /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
 		C5159509157C2F3C4D3977D5 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		CA2BF9126AFC892FC517F4AE /* DayBrowseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5075956B6268FBE6A35D494 /* DayBrowseState.swift */; };
 		CCB609AF45FE1C0CEA1C8C00 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B895353DF4EFEA658C8E876A /* NotificationPermission.swift */; };
 		CDD074B9FB3B89E5C7ABA16B /* ExploreSettingsNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */; };
 		D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */; };
@@ -510,6 +511,7 @@
 		CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HijriSettings.swift; path = HijriSettings.swift; sourceTree = "<group>"; };
 		CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportManager.swift; sourceTree = "<group>"; };
 		D24DFC1885F2D6D66EB5B55C /* ms */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5075956B6268FBE6A35D494 /* DayBrowseState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DayBrowseState.swift; sourceTree = "<group>"; };
 		D974F5773AF306388EB4A303 /* MenuBarBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarBridge.swift; path = AthanMenuBarHelper/MenuBarBridge.swift; sourceTree = "<group>"; };
 		F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarHelperProtocol.swift; path = AthanMenuBarHelper/MenuBarHelperProtocol.swift; sourceTree = "<group>"; };
 		F856690359C72A6815F2180A /* id */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				B895353DF4EFEA658C8E876A /* NotificationPermission.swift */,
 				CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */,
 				41B928004751B72510E13FAC /* HijriCalloutView.swift */,
+				D5075956B6268FBE6A35D494 /* DayBrowseState.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1392,6 +1395,7 @@
 				CCB609AF45FE1C0CEA1C8C00 /* NotificationPermission.swift in Sources */,
 				5107BC03784B159309106E36 /* HijriSettings.swift in Sources */,
 				E1FB145A85D934A3AD6144D0 /* HijriCalloutView.swift in Sources */,
+				CA2BF9126AFC892FC517F4AE /* DayBrowseState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

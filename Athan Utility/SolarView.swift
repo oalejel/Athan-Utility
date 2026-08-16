@@ -73,6 +73,54 @@ struct SolarView: View, Equatable {
     @State private var hijriRevision = 0
     // Measured height of the callout, used to lift it clear above the date line.
     @State private var calloutHeight: CGFloat = 0
+    @ObservedObject private var browse = DayBrowseState.shared
+
+    /// The date text itself, plus the yellow day-delta while browsing another day.
+    private var hijriDateLine: some View {
+        HStack(spacing: 6) {
+            Text(MainSwiftUI.hijriDateString(date: browse.displayDate, isAccessibilityLabel: false))
+                .fontWeight(.bold)
+                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
+                .foregroundColor(Color(.lightText))
+                .id(hijriRevision)
+            if !browse.offsetLabel.isEmpty {
+                Text(browse.offsetLabel)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(.yellow)
+                    .transition(.opacity)
+            }
+        }
+        .padding([.leading, .trailing], 8)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout.toggle() }
+        }
+        .accessibilityLabel(MainSwiftUI.hijriDateString(date: browse.displayDate, isAccessibilityLabel: true))
+        .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
+    }
+
+    /// A day-stepping chevron. Occupies its slot at all times so revealing the arrows
+    /// doesn't shove the date sideways — it only fades and slides in.
+    private func dayArrow(systemName: String, delta: Int) -> some View {
+        Button {
+            browse.step(delta)
+        } label: {
+            Image(systemName: systemName)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(Color(.lightText))
+                .frame(width: 30, height: 30)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(browse.isActive ? 1 : 0)
+        .allowsHitTesting(browse.isActive)
+        .accessibilityLabel(Text(delta < 0
+            ? NSLocalizedString("day_previous", value: "Previous day", comment: "")
+            : NSLocalizedString("day_next", value: "Next day", comment: "")))
+        .accessibilityHidden(!browse.isActive)
+    }
 
     let df: DateFormatter = {
        let d = DateFormatter()
@@ -206,20 +254,11 @@ struct SolarView: View, Equatable {
                         .animation(.linear(duration: 0.3), value: isDragging)
                     
                     VStack(spacing: 4) {
-                        Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
-                            .fontWeight(.bold)
-                            .lineLimit(1)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding([.trailing, .leading])
-                            .foregroundColor(Color(.lightText))
-                            .id(hijriRevision)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout.toggle() }
-                            }
-                            .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
-                            .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
+                        HStack(spacing: 0) {
+                            dayArrow(systemName: "chevron.left", delta: -1)
+                            hijriDateLine
+                            dayArrow(systemName: "chevron.right", delta: 1)
+                        }
                             // An overlay, deliberately, so the date and everything below it
                             // stay put. The overlay is pinned to the date's TOP edge and then
                             // lifted by its own measured height, which puts it fully above the

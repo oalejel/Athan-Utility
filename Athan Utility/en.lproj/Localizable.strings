@@ -382,3 +382,5 @@
 "hijri_mode_civil" = "Islamic Civil";
 "hijri_mode_tabular" = "Islamic Tabular";
 "hijri_ramadan_adjust" = "Ramadan day";
+"day_previous" = "Previous day";
+"day_next" = "Next day";

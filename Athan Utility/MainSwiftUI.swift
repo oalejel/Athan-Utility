@@ -82,6 +82,7 @@ struct MainSwiftUI: View {
     var nonOptionalPreviewPrayerCancellable: AnyCancellable?
     
     @ObservedObject var dayProgressState = DayProgressState()
+    @ObservedObject var dayBrowse = DayBrowseState.shared
     @State var minuteTimer: Timer? = nil
     
     @State var settingsToggled = false
@@ -596,7 +597,11 @@ struct MainSwiftUI: View {
                                     ZStack {
                                         Rectangle()
                                             .foregroundColor(.init(.sRGB, white: 1, opacity: 0.000001)) // to allow gestures from middle of box
-                                        
+                                            // Tapping anywhere in the times box reveals the day
+                                            // arrows beside the Hijri date; tapping again puts
+                                            // it back on today.
+                                            .onTapGesture { dayBrowse.toggle() }
+
                                         VStack(alignment: .leading, spacing: 0) { // bottom of prayer names
                                             ForEach(0..<6) { pIndex in
                                                 let p = Prayer(index: pIndex)
@@ -612,16 +617,25 @@ struct MainSwiftUI: View {
                                                     return h
                                                 }()
                                                 
+                                                // While peeking at another day every row reads
+                                                // the same muted gray — the current/past/future
+                                                // highlight is about *now*, and would be a lie
+                                                // on a day that isn't today.
+                                                let browsedTimes: PrayerTimes = dayBrowse.times ?? manager.todayTimes
+                                                let rowColor: Color = dayBrowse.offset != 0
+                                                    ? Color.gray.opacity(0.8)
+                                                    : highlight.color()
+
                                                 HStack {
                                                     Text(p.localizedOrCustomString())
-                                                        .foregroundColor(highlight.color())
+                                                        .foregroundColor(rowColor)
                                                         .font(cellFont)
                                                         .bold()
-                                                    
+
                                                     Spacer()
-                                                    Text(timeFormatter.string(from: manager.todayTimes.time(for: p)))
+                                                    Text(timeFormatter.string(from: browsedTimes.time(for: p)))
                                                         // replace 3 with current prayer index
-                                                        .foregroundColor(highlight.color())
+                                                        .foregroundColor(rowColor)
                                                         .font(cellFont)
                                                         .bold()
                                                 }

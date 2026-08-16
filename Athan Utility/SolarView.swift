@@ -254,6 +254,10 @@ struct SolarView: View, Equatable {
                             .onPreferenceChange(HijriCalloutHeightKey.self) { calloutHeight = $0 }
                     }
                     .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
+                    // The sine curve and the sun are later children of this ZStack, so
+                    // without this the callout renders behind them and the text is
+                    // unreadable where they cross.
+                    .zIndex(showHijriCallout ? 10 : 0)
                         //                                            .offset(y: 24)
 //                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
 

@@ -83,6 +83,7 @@ struct MainSwiftUI: View {
     
     @ObservedObject var dayProgressState = DayProgressState()
     @ObservedObject var dayBrowse = DayBrowseState.shared
+    @ObservedObject var hijriCallout = HijriCalloutState.shared
     @State var minuteTimer: Timer? = nil
     
     @State var settingsToggled = false
@@ -422,6 +423,17 @@ struct MainSwiftUI: View {
                         .equatable()
                         .transition(.opacity)
                 }
+
+                // Tap-anywhere-else dismissal for the Hijri callout. It has to be a
+                // full-bleed layer at the root: a backdrop inside the solar view would
+                // only catch the thin strip around the date itself. It sits UNDER the
+                // content, so taps on the callout still reach the callout.
+                if hijriCallout.isPresented {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture { hijriCallout.dismiss() }
+                        .transition(.identity)
+                }
                 
                 VStack(alignment: .leading) {
                     switch currentView {
@@ -648,6 +660,10 @@ struct MainSwiftUI: View {
                                 }
                                 .padding([.leading, .trailing])
                                 .padding([.leading, .trailing])
+                                // The name -> progress bar gap is the enclosing VStack's
+                                // spacing of 12; below the bar it was 0, so the bar sat
+                                // noticeably closer to Fajr than to the prayer name.
+                                .padding(.top, isMac ? 0 : 10)
                                 ZStack() {
                                     // calculate progress of day
                                     let _dayProg: CGFloat = {

@@ -604,22 +604,35 @@ extension AthanManager {
     ///
     /// - Parameter rescheduleNotifications: pass `false` from the widget extension, which
     ///   must not reschedule notifications; the app reschedules on its next foreground.
+    /// - Parameter userChangedLocation: `true` when the user just set the location by hand
+    ///   (or tapped "use current location"). Both quiet-mode guards are skipped in that
+    ///   case — see below.
     /// - Returns: `true` if the method was actually changed.
     @discardableResult
-    func autoUpdateMethodIfNeeded(for countryCode: String?, rescheduleNotifications: Bool = true) -> Bool {
+    func autoUpdateMethodIfNeeded(for countryCode: String?,
+                                  rescheduleNotifications: Bool = true,
+                                  userChangedLocation: Bool = false) -> Bool {
         guard let code = countryCode?.uppercased(), !code.isEmpty else { return false }
         let recommended = CalculationMethod.recommended(forISOCountryCode: code)
         let current = prayerSettings.calculationMethod
         guard recommended != current else { return false }
-        // Only act once per country until it changes.
-        guard handledSuggestionCountry != code else { return false }
 
-        // First time we ever evaluate for a user who already finished setup (e.g. an upgrade):
-        // don't override their deliberate method — just remember the country so future
-        // *changes* (travel) still auto-update.
-        if handledSuggestionCountry == nil && IntroSetupFlags.hasCompletedCalculationSetup {
-            handledSuggestionCountry = code
-            return false
+        // Both guards below exist to keep *passive* evaluation (every launch, every widget
+        // refresh) from nagging or from stomping a deliberate choice. Neither should apply
+        // when the user has just told us where they are: that is exactly the moment they
+        // expect the method to follow, and the first-evaluation guard in particular used to
+        // swallow the very first manual location change a user ever made.
+        if !userChangedLocation {
+            // Only act once per country until it changes.
+            guard handledSuggestionCountry != code else { return false }
+
+            // First time we ever evaluate for a user who already finished setup (e.g. an
+            // upgrade): don't override their deliberate method — just remember the country
+            // so future *changes* (travel) still auto-update.
+            if handledSuggestionCountry == nil && IntroSetupFlags.hasCompletedCalculationSetup {
+                handledSuggestionCountry = code
+                return false
+            }
         }
         handledSuggestionCountry = code
 

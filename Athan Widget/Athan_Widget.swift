@@ -601,7 +601,7 @@ struct Athan_Widget: Widget {
             .contentMarginsDisabled()
             .configurationDisplayName("Athan Widget")
             // lets not support the .systemLarge family for now...
-            .supportedFamilies([.systemSmall, .systemMedium, .systemExtraLarge, .accessoryRectangular, .accessoryInline, .accessoryCircular])//, .systemLarge])
+            .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular, .accessoryInline, .accessoryCircular])//, .systemLarge])
             .description(Strings.widgetUsefulDescription)
             
         } else {

@@ -67,7 +67,7 @@ struct SolarView: View, Equatable {
     @State var sunriseTime: Date
     // Tapping the Hijri date floats a callout over it. The Gregorian date lives
     // inside that callout now, rather than in a separate capsule of its own.
-    @State private var showHijriCallout = false
+    @ObservedObject private var callout = HijriCalloutState.shared
     // Bumped whenever the calendar or offset changes, to force the date line to
     // re-render with the new setting.
     @State private var hijriRevision = 0
@@ -95,7 +95,7 @@ struct SolarView: View, Equatable {
         .contentShape(Rectangle())
         .onTapGesture {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout.toggle() }
+            withAnimation(.easeInOut(duration: 0.2)) { callout.isPresented.toggle() }
         }
         .accessibilityLabel(MainSwiftUI.hijriDateString(date: browse.displayDate, isAccessibilityLabel: true))
         .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
@@ -270,11 +270,11 @@ struct SolarView: View, Equatable {
                             // top of the date instead of above it.
                             .overlay(
                                 Group {
-                                    if showHijriCallout {
+                                    if callout.isPresented {
                                         HijriCalloutView(
                                             onChange: { hijriRevision += 1 },
                                             onDone: {
-                                                withAnimation(.easeInOut(duration: 0.2)) { showHijriCallout = false }
+                                                withAnimation(.easeInOut(duration: 0.2)) { callout.isPresented = false }
                                             }
                                         )
                                         .fixedSize()
@@ -296,7 +296,7 @@ struct SolarView: View, Equatable {
                     // The sine curve and the sun are later children of this ZStack, so
                     // without this the callout renders behind them and the text is
                     // unreadable where they cross.
-                    .zIndex(showHijriCallout ? 10 : 0)
+                    .zIndex(callout.isPresented ? 10 : 0)
                         //                                            .offset(y: 24)
 //                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
 

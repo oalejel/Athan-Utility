@@ -32,9 +32,17 @@ final class DayBrowseState: ObservableObject {
     private init() {}
 
     /// The date being shown — used for the Hijri line so it moves with the times.
+    ///
+    /// Adds a calendar *day* in the location's own time zone, not 86400 seconds: on a
+    /// DST boundary the day is 23 or 25 hours long, and stepping by a fixed interval
+    /// there either repeats or skips a date. This is the same rule the times themselves
+    /// go through (AthanManager.adjacentDayReference), so the date line and the times
+    /// can't disagree about which day is being shown.
     var displayDate: Date {
         guard offset != 0 else { return Date() }
-        return Calendar.current.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = AthanManager.shared.locationSettings.timeZone
+        return cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
     }
 
     /// "+2" / "−1". Empty at zero so callers can just check isEmpty.

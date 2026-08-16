@@ -12,6 +12,20 @@
 
 import SwiftUI
 
+/// Whether the Hijri callout is open. Shared, because the tap-to-dismiss backdrop has
+/// to live at the root of the main screen — a backdrop confined to the solar view would
+/// only catch taps in the small strip around the date.
+final class HijriCalloutState: ObservableObject {
+    static let shared = HijriCalloutState()
+    @Published var isPresented = false
+    private init() {}
+
+    func dismiss() {
+        guard isPresented else { return }
+        withAnimation(.easeInOut(duration: 0.2)) { isPresented = false }
+    }
+}
+
 // MARK: - Bubble shape
 
 /// A rounded rectangle with a downward tail centred on the bottom edge — the classic

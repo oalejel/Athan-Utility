@@ -363,7 +363,11 @@ struct LocationSettingsView: View, Equatable {
 
                                 if IntroSetupFlags.hasCompletedCalculationSetup {
                                     // returning user editing location — keep the travel auto-suggest popup
-                                    AthanManager.shared.autoUpdateMethodIfNeeded(for: detectedCountryCode)
+                                    // The user just set this location by hand, so the
+                                    // recommendation applies even if we have already
+                                    // evaluated this country passively at launch.
+                                    AthanManager.shared.autoUpdateMethodIfNeeded(for: detectedCountryCode,
+                                                                                 userChangedLocation: true)
                                 } else {
                                     // first-time setup — apply the settings shown in the recommended card
                                     let ps = AthanManager.shared.prayerSettings

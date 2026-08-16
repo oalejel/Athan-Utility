@@ -407,13 +407,14 @@ struct SiriShortcutSheet: View {
                         .frame(height: 60)
                         .padding(.horizontal)
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 16) {
                         ForEach(phrases, id: \.self) { p in
-                            HStack(spacing: 8) {
+                            HStack(spacing: 10) {
                                 Image(systemName: "quote.bubble.fill").foregroundColor(.purple.opacity(0.7))
                                 Text(p).font(.callout)
                                 Spacer()
                             }
+                            .padding(.vertical, 2)
                         }
                     }
                     .padding()

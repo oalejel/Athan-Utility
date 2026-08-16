@@ -350,7 +350,7 @@ struct MacSidebarView: View {
                                                                 useCurrentLocation: false,
                                                                 countryCode: countryCode)
         AthanManager.shared.reloadSettingsAndNotifications()
-        _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: countryCode)
+        _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: countryCode, userChangedLocation: true)
         awaiting = false
         searchText = ""
         withAnimation { showLocationEditor = false }
@@ -366,7 +366,7 @@ struct MacSidebarView: View {
                 if let s = settings {
                     AthanManager.shared.locationSettings = s
                     AthanManager.shared.reloadSettingsAndNotifications()
-                    _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
+                    _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode, userChangedLocation: true)
                     locationStatus = nil
                     withAnimation { showLocationEditor = false }
                 } else {
@@ -393,7 +393,7 @@ struct MacSidebarView: View {
                     if let s = settings {
                         AthanManager.shared.locationSettings = s
                         AthanManager.shared.reloadSettingsAndNotifications()
-                        _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode)
+                        _ = AthanManager.shared.autoUpdateMethodIfNeeded(for: s.countryCode, userChangedLocation: true)
                         locationStatus = nil
                         withAnimation { showLocationEditor = false }
                     }

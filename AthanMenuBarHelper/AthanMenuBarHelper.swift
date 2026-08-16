@@ -28,6 +28,8 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     // object, so installStatusItem()'s "already exists" guard would otherwise
     // silently no-op and never notice.
     private var visibilityObservation: NSKeyValueObservation?
+    /// Throwaway items from runStatusItemDiagnostic, keyed by variant.
+    private var diagnosticItems: [Int: NSStatusItem] = [:]
 
     public override init() { super.init() }
 
@@ -162,6 +164,110 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
                 self.actionDelegate?.menuBarPlacementFailed()
             }
         }
+    }
+
+
+    // MARK: - Diagnostics
+
+    /// Ten different ways to vend a status item. The point is to find out empirically
+    /// which one macOS will actually draw in this process, because `isVisible == true`
+    /// has proven to mean nothing on its own here.
+    ///
+    /// Every variant labels its button "A<n>" so the one that shows can be identified.
+    public func runStatusItemDiagnostic(_ variant: Int) -> String {
+        let bar = NSStatusBar.system
+        let label = "A\(variant)"
+        var notes: [String] = []
+        let item: NSStatusItem
+
+        switch variant {
+        case 1:
+            // The original shipping behaviour: no autosaveName at all. Prime suspect —
+            // a name carries a persisted preferred position, and a stale one can park
+            // the item off-screen.
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            item.behavior = [.removalAllowed]
+            notes.append("no autosave, removalAllowed")
+        case 2:
+            // No autosaveName AND not removable: nothing for AppKit to persist at all.
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            notes.append("no autosave, no behavior")
+        case 3:
+            // Fixed width instead of variable, in case length negotiation is the issue.
+            item = bar.statusItem(withLength: 70)
+            notes.append("fixed length 70")
+        case 4:
+            item = bar.statusItem(withLength: NSStatusItem.squareLength)
+            notes.append("squareLength")
+        case 5:
+            // Stable autosave name, visibility record cleared first (current shipping code).
+            UserDefaults.standard.removeObject(forKey: "NSStatusItem Visible AthanDiag5")
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            item.autosaveName = "AthanDiag5"
+            item.behavior = [.removalAllowed]
+            notes.append("stable autosave, visible key cleared")
+        case 6:
+            // Wipe every persisted status-item key, including preferred positions.
+            let d = UserDefaults.standard
+            var wiped = 0
+            for key in d.dictionaryRepresentation().keys where key.contains("NSStatusItem") {
+                d.removeObject(forKey: key); wiped += 1
+            }
+            d.synchronize()
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            item.behavior = [.removalAllowed]
+            notes.append("wiped \(wiped) NSStatusItem keys first")
+        case 7:
+            // Text only — no SF Symbol. Rules out the image failing to load/render.
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            notes.append("text only, no image")
+        case 8:
+            // Image only, no title.
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            notes.append("image only")
+        case 9:
+            // Explicitly activate the app first: a background/accessory process can be
+            // refused a slot in some macOS versions.
+            NSApplication.shared.activate(ignoringOtherApps: false)
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            item.behavior = [.removalAllowed]
+            notes.append("after NSApp.activate")
+        default:
+            // Nothing but the defaults — the absolute minimum AppKit needs.
+            item = bar.statusItem(withLength: NSStatusItem.variableLength)
+            notes.append("bare minimum")
+        }
+
+        if let button = item.button {
+            if variant != 8 { button.title = label }
+            if variant != 7, let img = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: label) {
+                img.isTemplate = true
+                button.image = img
+                button.imagePosition = .imageLeading
+            }
+        }
+        item.isVisible = true
+        diagnosticItems[variant] = item
+
+        let immediate = "\(label): isVisible=\(item.isVisible) \(notes.joined(separator: ", "))"
+        NSLog("ATHAN-MB-DIAG: %@", immediate)
+
+        // Real verdict once layout settles.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            guard let self, let it = self.diagnosticItems[variant], let w = it.button?.window else {
+                NSLog("ATHAN-MB-DIAG: %@ SETTLED no window", label); return
+            }
+            NSLog("ATHAN-MB-DIAG: %@ SETTLED onScreen=%@ frame=%@ visible=%@",
+                  label, w.screen != nil ? "YES" : "no",
+                  NSStringFromRect(w.frame), it.isVisible ? "yes" : "no")
+        }
+        return immediate
+    }
+
+    public func clearStatusItemDiagnostics() {
+        for (_, item) in diagnosticItems { NSStatusBar.system.removeStatusItem(item) }
+        diagnosticItems.removeAll()
+        NSLog("ATHAN-MB-DIAG: cleared all diagnostic items")
     }
 
     public func isStatusItemVisible() -> Bool {

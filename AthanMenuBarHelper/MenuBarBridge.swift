@@ -95,6 +95,21 @@ final class MenuBarBridge {
         mbDebug("restoreItem() done, isItemVisible now \(isItemVisible)")
     }
 
+    /// Try approach `variant` (1...10) and return what happened. See the helper.
+    func runDiagnostic(_ variant: Int) -> String {
+        if helper == nil { start() }
+        return helper?.runStatusItemDiagnostic(variant) ?? "helper unavailable"
+    }
+
+    /// Run every variant at once, so one pass over the menu bar shows which appear.
+    func runAllDiagnostics() -> String {
+        (1...10).map { runDiagnostic($0) }.joined(separator: "\n")
+    }
+
+    func clearDiagnostics() {
+        helper?.clearStatusItemDiagnostics()
+    }
+
     /// Hide the status item but keep the helper loaded so it can be re-added.
     func removeItem() {
         mbDebug("removeItem() called")

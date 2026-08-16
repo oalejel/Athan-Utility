@@ -22,6 +22,8 @@ struct MacSettingsView: View {
     @State private var isPreviewingSound = false
     /// macOS took the status item but gave it no slot — see menuBarPlacementFailed.
     @State private var menuBarFull = false
+    /// Output of the menu bar diagnostic runs.
+    @State private var diagnosticText = "Run a variant, then look for A1-A10 in the menu bar."
 
     private let methods = CalculationMethod.usefulCases()
 
@@ -144,6 +146,31 @@ struct MacSettingsView: View {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarPlacementFailed)) { _ in
                     menuBarFull = true
+                }
+
+                // TEMPORARY. Ten different ways of vending an NSStatusItem, because
+                // isVisible == true has proven to mean nothing in this process. Whichever
+                // label (A1-A10) actually shows up in the menu bar identifies the approach
+                // that works here; the rest can then be deleted along with this section.
+                Section(header: Text("Menu Bar Diagnostics"),
+                        footer: Text(diagnosticText).font(.caption)) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 54))], spacing: 8) {
+                        ForEach(1...10, id: \.self) { v in
+                            Button("A\(v)") {
+                                diagnosticText = MenuBarBridge.shared.runDiagnostic(v)
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                    }
+                    .padding(.vertical, 4)
+
+                    Button("Run all 10") {
+                        diagnosticText = MenuBarBridge.shared.runAllDiagnostics()
+                    }
+                    Button("Clear test items", role: .destructive) {
+                        MenuBarBridge.shared.clearDiagnostics()
+                        diagnosticText = "Cleared."
+                    }
                 }
 
                 Section {

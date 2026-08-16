@@ -216,7 +216,7 @@
 "tap_return_today" = "Kembali ke hari ini";
 "loc_failed" = "Tidak dapat mendapatkan lokasi Anda. Silakan coba lagi.";
 "loc_requesting" = "Meminta akses lokasi — setujui prompt.";
-"loc_denied" = "Akses lokasi aktif. Hidupkan di Pengaturan Sistem › Privasi & Keamanan › Layanan Lokasi.";
+"loc_denied" = "Akses lokasi dimatikan. Hidupkan di Pengaturan Sistem › Privasi & Keamanan › Layanan Lokasi.";
 "calc_section" = "Perhitungan";
 "madhab_asr" = "Asar (Mazhab)";
 "notif_section" = "Notifikasi";
@@ -252,7 +252,7 @@
 "widget_preview_home_small" = "Layar Utama";
 "widget_preview_home_medium" = "Layar Utama";
 "widget_preview_lock" = "Layar Terkunci";
-"cal_access_denied" = "Akses kalender aktif. Aktifkan di Pengaturan untuk menambahkan waktu salat.";
+"cal_access_denied" = "Akses kalender dimatikan. Aktifkan di Pengaturan untuk menambahkan waktu salat.";
 "cal_no_source" = "Tidak ada akun kalender yang tersedia untuk menambahkan acara.";
 "cal_event_notes" = "Waktu salat dari Athan Utility.";
 "siri_next_sentence" = "Salat berikutnya adalah %@ pada %@, dalam %@.";

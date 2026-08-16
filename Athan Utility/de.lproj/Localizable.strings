@@ -26,9 +26,9 @@
 "acc_degrees_abbrev" = "Grad";
 
 // MARK: - Notifications
-"Notifications" = "Benachrichtigungen";
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Zeit fur %1$@ [%2$@]. Bitte offne Athan Utility erneut, um weiterhin Benachrichtigungen zu erhalten.";
-"Time for %1$@ in %2$@ [%3$@]" = "Zeit fur %1$@ in %2$@ [%3$@]";
+"Notifications" = "Mitteilungen";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Zeit für %1$@ [%2$@]. Bitte öffne Athan Utility erneut, um weiterhin Mitteilungen zu erhalten.";
+"Time for %1$@ in %2$@ [%3$@]" = "Zeit für %1$@ in %2$@ [%3$@]";
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ Min. bis %2$@ in %3$@ [%4$@]";
 
 // MARK: - Buttons and tags
@@ -47,9 +47,9 @@
 
 // MARK: - Calculation Method
 "Calculation Method" = "Berechnungsmethode";
-"Calculation methods primarily differ in Fajr and Isha sun angles." = "Berechnungsmethoden unterscheiden sich hauptsachlich in den Sonnenwinkeln fur Fadschr und Ischa.";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Berechnungsmethoden unterscheiden sich hauptsächlich in den Sonnenwinkeln für Fadschr und Ischa.";
 "Muslim World League" = "Muslimische Weltliga";
-"Egyptian" = "Agyptische Allgemeine Behorde fur Vermessung";
+"Egyptian" = "Ägyptische Allgemeine Behörde für Vermessung";
 "Karachi" = "Karachi";
 "Umm Al-Qura" = "Umm Al-Qura";
 "Dubai" = "Dubai";
@@ -77,13 +77,13 @@
 // MARK: - Intro Settings Labels
 "Calculation Preferences" = "Berechnungseinstellungen";
 "Consider setting..." = "Passe deine Berechnungsmethode an die lokale Moschee an.";
-"highLatitudeExplanation" = "Lander nordlich eines bestimmten Breitengrads wenden oft eine Hohe-Breiten-Regel an. Die empfohlene Regel fur deine Region ist ";
+"highLatitudeExplanation" = "Länder nördlich eines bestimmten Breitengrads wenden oft eine Hohe-Breiten-Regel an. Die empfohlene Regel für deine Region ist ";
 "Athan Preview" = "Adhan-Vorschau";
 "Edit Location" = "Standort bearbeiten";
 
 // MARK: - Sounds
 "athan.sound" = "Adhan-Ton";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Der vollstandige Adhan kann abgespielt werden, wenn dein iPhone gesperrt ist oder Athan Utility geoffnet ist.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Der vollständige Adhan kann abgespielt werden, wenn dein iPhone gesperrt ist oder Athan Utility geöffnet ist.";
 "iOS Default" = "iOS Standard";
 "Echo" = "Echo";
 "Makkah" = "Makkah";
@@ -102,23 +102,23 @@
 "All Prayers" = "Alle Gebete";
 "restore.defaults" = "Standard wiederherstellen";
 "colors.ios.requirement" = "Farbanpassung nur auf iOS 14+ verfugbar";
-"Select a color picker to customize gradients." = "Wahle einen Farbwahler, um Verlaufe anzupassen.";
+"Select a color picker to customize gradients." = "Wähle einen Farbwähler, um Verläufe anzupassen.";
 
 // MARK: - Custom Names
 "custom.names" = "Eigene Namen";
-"custom.names.description" = "Ersetze die Adhan-Schreibweise im Widget, in Benachrichtigungen und in der Hauptoberflache.";
+"custom.names.description" = "Ersetze die Adhan-Schreibweise im Widget, in Mitteilungen und in der Hauptoberfläche.";
 
 // MARK: - Notification Settings
-"Athan Notification" = "Adhan-Benachrichtigung";
+"Athan Notification" = "Adhan-Mitteilung";
 "Reminder Notification" = "Erinnerungsbenachrichtigung";
 "Enabled" = "Aktiviert";
 "Play Sound" = "Ton abspielen";
 "reminder.minute.offset" = "Minuten fruher: %@m";
 "minute-character" = "m";
-"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Deaktiviere Play Sound, damit Benachrichtigungen fur dieses Gebet den iOS-Standardton verwenden.";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Deaktiviere „Ton abspielen“, damit Mitteilungen für dieses Gebet den iOS-Standardton verwenden.";
 "offset-description" = "Wenn Minuten-Abstande langer sind als die Zeit zwischen %1$@ und %2$@, werden Erinnerungen standardmassig auf 15 Minuten gesetzt.";
 "Play Longer Athan" = "Langeren Adhan abspielen";
-"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Erweitert die Wiedergabe auf das iOS-Maximum von ca. 30 Sekunden. Offne Athan Utility fur den vollstandigen Adhan.";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Erweitert die Wiedergabe auf das iOS-Maximum von ca. 30 Sekunden. Öffne Athan Utility für den vollständigen Adhan.";
 "athan.minute.offset" = "Zeitanpassung: %@m";
 
 // MARK: - Location Settings
@@ -126,7 +126,7 @@
 "Set Location Manually" = "Manuell festlegen";
 "Use Current Location" = "Aktuellen Standort verwenden";
 "Athan Utility does not collect user data." = "Athan Utility sammelt keine Nutzerdaten.";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Standortdienste sind deaktiviert und konnen in den Einstellungen geandert werden. Athan Utility sammelt keine Nutzerdaten.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Standortdienste sind deaktiviert und können in den Einstellungen geändert werden. Athan Utility sammelt keine Nutzerdaten.";
 "Location Name" = "Standortname";
 "Location:" = "Standort:";
 
@@ -136,7 +136,7 @@
 "Export" = "Exportieren";
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "Offne Athan Utility, um den Standort festzulegen.";
+"Open Athan Utility to set location." = "Öffne Athan Utility, um den Standort festzulegen.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Nutze Athan-Widgets, um kommende Gebetszeiten auf einen Blick zu sehen.";
 
 // MARK: - Old athan app
@@ -187,7 +187,7 @@
 "cal_range_year" = "1 Jahr";
 "cal_prayers_header" = "Gebete";
 "cal_range_header" = "Wie weit voraus";
-"cal_alert_header" = "Benachrichtigung";
+"cal_alert_header" = "Hinweis";
 "cal_add_alert" = "Kalenderbenachrichtigung hinzufügen";
 "cal_alert_attime" = "Zur Gebetszeit";
 "cal_alert_before" = "%d Min. davor";
@@ -222,7 +222,7 @@
 "loc_denied" = "Standortzugriff ist deaktiviert. Aktiviere ihn in Systemeinstellungen › Datenschutz & Sicherheit › Standortdienste.";
 "calc_section" = "Berechnung";
 "madhab_asr" = "Asr (Madhab)";
-"notif_section" = "Benachrichtigungen";
+"notif_section" = "Mitteilungen";
 "athan_sound" = "Adhan-Ton";
 "stop" = "Stopp";
 "preview" = "Vorschau";
@@ -241,8 +241,8 @@
 "adopt_siri_sub" = "Frag Siri nach Gebetszeiten";
 "adopt_calendar_sub" = "Füge Gebetszeiten zu deinem Kalender hinzu";
 "widgets_title" = "Startseite und Sperrbildschirm-Widgets";
-"widgets_1" = "Halte eine leere Stelle deines Startbildschirms oder des Sperrbildschirms gedrückt, bis der Bearbeitungsmodus aktiviert wird.";
-"widgets_2" = "Tippe die Schaltfläche + (Startbildschirm) oder den Widget-Bereich unter der Uhr (Sperrbildschirm).";
+"widgets_1" = "Halte eine leere Stelle deines Home-Bildschirms oder des Sperrbildschirms gedrückt, bis der Bearbeitungsmodus aktiviert wird.";
+"widgets_2" = "Tippe auf die Taste + (Home-Bildschirm) oder den Widget-Bereich unter der Uhr (Sperrbildschirm).";
 "widgets_3" = "Suche nach \"Athan Utility\" und wähle eine Widget-Größe.";
 "widgets_4" = "Tippe \"Widget hinzufügen\", dann \"Fertig\".";
 "siri_phrase_1" = "\"Nächste Gebetszeit\"";
@@ -252,8 +252,8 @@
 "siri_sheet_body" = "Füge eine Verknüpfung hinzu, dann frag einfach Siri freihandig.";
 "siri_sheet_nav" = "Siri-Verknüpfung";
 "hijri_tap_hint" = "Doppeltippen zum Anzeigen des heutigen gregorianischen Datums";
-"widget_preview_home_small" = "Startbildschirm";
-"widget_preview_home_medium" = "Startbildschirm";
+"widget_preview_home_small" = "Home-Bildschirm";
+"widget_preview_home_medium" = "Home-Bildschirm";
 "widget_preview_lock" = "Sperrbildschirm";
 "cal_access_denied" = "Kalenderzugriff ist deaktiviert. Aktiviere ihn in Einstellungen, um Gebetszeiten hinzuzufügen.";
 "cal_no_source" = "Es ist kein Kalenderkonto verfügbar, um Ereignisse hinzuzufügen.";
@@ -266,7 +266,7 @@
 "edit" = "Bearbeiten";
 "feature_widgets_title" = "Startseite und Sperrbildschirm-Widgets";
 "feature_widgets_subtitle" = "Das nächste Gebet auf einen Blick";
-"feature_widgets_detail" = "Füge Widgets auf deinem Startbildschirm und Sperrbildschirm hinzu, um das nächste Gebet und die verbleibende Zeit zu sehen, ohne die App zu öffnen.";
+"feature_widgets_detail" = "Füge Widgets auf deinem Home-Bildschirm und Sperrbildschirm hinzu, um das nächste Gebet und die verbleibende Zeit zu sehen, ohne die App zu öffnen.";
 "feature_earlyReminder_title" = "Frühe Erinnerungen vor Salah";
 "feature_earlyReminder_subtitle" = "Eine Ankündigung, damit du dich nie beeilst";
 "feature_earlyReminder_detail" = "Erhalte eine optionale Erinnerung eine bestimmte Anzahl von Minuten vor jedem Gebet – genug Zeit zum Wudu und zum Bereitschaft, wenn der Adhan erklingt. Für jedes Gebet anpassbar.";

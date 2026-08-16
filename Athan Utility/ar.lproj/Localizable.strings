@@ -150,7 +150,7 @@
 "Set Location Manually" = "تعيين الموقع يدويا";
 "Use Current Location" = "استخدام الموقع الحالي";
 "Athan Utility does not collect user data." = "ملاحظة: هذا التطبيق لا يجمع بيانات المستخدم";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "خدمات الموقع معطلة ويمكن تعديلها في الإعدادات. لا تقوم أداة الأذان بجمع بيانات المستخدم.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "خدمات الموقع معطلة ويمكن تعديلها في الإعدادات. لا تقوم Athan Utility بجمع بيانات المستخدم.";
 "Location Name" = "اسم الموقع";
 "Location:" = "موقع:";
 
@@ -162,7 +162,7 @@
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "افتح أداة الأذان لتعيين الموقع";
+"Open Athan Utility to set location." = "افتح Athan Utility لتعيين الموقع";
 "Use Athan Widgets to view upcoming salah times at a glance." = "استخدم أدوات الأذان لعرض أوقات الصلاة القادمة في لمحة.";
 
 
@@ -203,8 +203,6 @@
 "until_prayer" = "حتى";
 "begins_at" = "تبدأ";
 "version" = "الإصدار";
-"Calculation Method" = "الطريقة";
-"High Latitude Rule" = "قاعدة خطوط العرض العالية";
 "madhab_asr" = "العصر (المذهب)";
 "athan_sound" = "صوت الأذان";
 "dynamic_colors" = "ألوان متغيّرة حسب الصلاة";
@@ -213,8 +211,6 @@
 "alerts_section" = "تنبيهات الصلاة";
 "appearance_section" = "المظهر";
 "method_colon" = "الطريقة: ";
-"recommended_for_country" = "موصى به لـ %@";
-"use_recommended_method" = "استخدم الموصى به: %@";
 "recommended_settings_title" = "موصى به لموقعك";
 "your_settings_title" = "إعداداتك";
 "location_not_found" = "تعذّر العثور على هذا المكان.";

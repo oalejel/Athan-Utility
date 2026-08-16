@@ -16,9 +16,9 @@
 "Isha" = "Icha";
 
 // MARK: Accessibility
-"acc_settings" = "Paramètres";
+"acc_settings" = "Réglages";
 "acc_calendar" = "Calendrier";
-"acc_location_settings" = "Paramètres de localisation";
+"acc_location_settings" = "Réglages de localisation";
 "acc_qibla_compass_label" = "Boussole de la Qibla";
 "acc_qibla_compass_hint" = "Vibre lorsque vous êtes aligné avec la Qibla à moins de trois degrés.";
 "acc_qibla_aligned_value" = "Aligné avec la Qibla";
@@ -29,9 +29,9 @@
 // MARK: - Notifications
 "Notifications" = "Notifications"; // same in french
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Temps pour %1$@ [%2$@]. Veuillez rouvrir Adhan Utility pour continuer à recevoir des notifications.";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "C'est l'heure de %1$@ [%2$@]. Veuillez rouvrir Athan Utility pour continuer à recevoir des notifications.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "Temps pour %1$@ à %2$@ [%3$@]";
+"Time for %1$@ in %2$@ [%3$@]" = "C'est l'heure de %1$@ à %2$@ [%3$@]";
 
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@m restantes jusqu'à %2$@ en %3$@ [%4$@]";
@@ -50,7 +50,7 @@
 "Change Language" = "Changer de Langue";
 
 "Developed by Omar Al-Ejel" = "Développé par Omar Al-Ejel";
-"Rate Athan Utility!" = "Évaluez Adhan Utility!";
+"Rate Athan Utility!" = "Évaluez Athan Utility !";
 "Privacy Notes" = "Confidentialité";
 "Send Feedback" = "Commentaires";
 
@@ -95,7 +95,7 @@
 
 // MARK: - Sounds
 "athan.sound" = "Adhan Son";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Adhan peut jouer plus de 5 secondes lorsque votre iPhone est verrouillé ou que l'utilitaire Adhan est ouvert.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "L'adhan complet peut être joué lorsque votre iPhone est verrouillé ou que Athan Utility est ouvert.";
 "iOS Default" = "iOS Default";
 "Echo" = "Echo";
 "Makkah" = "Makkah";
@@ -120,7 +120,7 @@
 
 // MARK: - Custom Names
 "custom.names" = "Noms Personnalisés";
-"custom.names.description" = "Remplacer l'orthographe Adhan utilisée dans le widget, les notifications et l'interface principale de l'utilitaire Athan.";
+"custom.names.description" = "Remplacer l'orthographe Adhan utilisée dans le widget, les notifications et l'interface principale de Athan Utility.";
 
 
 // MARK: - Notification Settings
@@ -143,8 +143,8 @@
 "Set Location" = "Définir L'emplacement";
 "Set Location Manually" = "Manuellement";
 "Use Current Location" = "Utiliser L'emplacement Actuel";
-"Athan Utility does not collect user data." = "Adhan Utility ne collecte pas de données utilisateur.";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Les services de localisation sont désactivés et peuvent être modifiés dans les paramètres. Adhan Utility ne collecte pas de données utilisateur.";
+"Athan Utility does not collect user data." = "Athan Utility ne collecte pas de données utilisateur.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Les services de localisation sont désactivés et peuvent être modifiés dans Réglages. Athan Utility ne collecte pas de données utilisateur.";
 "Location Name" = "Nom de La Localisation";
 "Location:" = "Emplacement:";
 
@@ -156,8 +156,8 @@
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "Ouvrez l'utilitaire Adhan pour définir l'emplacement.";
-"Use Athan Widgets to view upcoming salah times at a glance." = "Utilisez les widgets Adhan pour afficher les heures de salah à venir en un coup d'œil.";
+"Open Athan Utility to set location." = "Ouvrez Athan Utility pour définir l'emplacement.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Utilisez les widgets Athan Utility pour afficher les heures de salah à venir en un coup d'œil.";
 
 
 
@@ -263,7 +263,7 @@
 "tap_return_today" = "Retour à aujourd'hui";
 "loc_failed" = "Impossible de déterminer votre localisation. Veuillez réessayer.";
 "loc_requesting" = "Demande d'accès à la localisation — approuvez l'invite.";
-"loc_denied" = "L'accès à la localisation est désactivé. Activez-le dans Réglages › Confidentialité et Sécurité › Services de Localisation.";
+"loc_denied" = "L'accès à la localisation est désactivé. Activez-le dans Réglages › Confidentialité et sécurité › Service de localisation.";
 "calc_section" = "Calcul";
 "madhab_asr" = "Asr (Madhab)";
 "notif_section" = "Notifications";
@@ -273,22 +273,22 @@
 "alerts_section" = "Alertes de Prière";
 "appearance_section" = "Apparence";
 "dynamic_colors" = "Couleurs Dynamiques par Prière";
-"menubar_section" = "Barre de Menu";
+"menubar_section" = "Barre des menus";
 "menubar_icon_footer" = "Afficher l'icône Athan Utility avec le décompte de la prochaine prière dans la barre de menu macOS. Activez ceci pour la restaurer si elle a été supprimée.";
 "menubar_show_icon" = "Afficher l'icône de la barre de menu";
 "version" = "Version";
 "adopt_widgets_title" = "Widgets";
 "adopt_siri_title" = "Siri";
 "adopt_calendar_title" = "Calendrier";
-"adopt_widgets_sub" = "Ajouter à l'Écran d'Accueil ou l'Écran de Verrouillage";
+"adopt_widgets_sub" = "À ajouter à l'écran d'accueil ou verrouillé";
 "adopt_fajr_sub" = "Une alarme de réveil dont vous ne pouvez pas dormir";
 "adopt_siri_sub" = "Demandez à Siri les heures de prière";
 "adopt_calendar_sub" = "Ajouter les heures de Salah à votre calendrier";
-"widgets_title" = "Widgets de l'Écran d'Accueil et d'Écran de Verrouillage";
-"widgets_1" = "Appuyez longuement sur une zone vide de votre Écran d'Accueil, ou l'Écran de Verrouillage, jusqu'à ce qu'il passe en mode édition.";
-"widgets_2" = "Appuyez sur le bouton + (Écran d'Accueil) ou sur la zone de widget sous l'horloge (Écran de Verrouillage).";
+"widgets_title" = "Widgets de l'écran d'accueil et d'écran verrouillé";
+"widgets_1" = "Touchez de manière prolongée une zone vide de votre écran d'accueil, ou l'écran verrouillé, jusqu'à ce qu'il passe en mode édition.";
+"widgets_2" = "Touchez le bouton + (écran d'accueil) ou la zone de widget sous l'horloge (écran verrouillé).";
 "widgets_3" = "Recherchez « Athan Utility » et choisissez une taille de widget.";
-"widgets_4" = "Appuyez sur Ajouter le Widget, puis OK.";
+"widgets_4" = "Touchez « Ajouter le widget », puis OK.";
 "siri_phrase_1" = "« Prochaine heure de prière »";
 "siri_phrase_2" = "« Quand est Maghreb? »";
 "siri_phrase_3" = "« Horaires Athan d'aujourd'hui »";
@@ -296,9 +296,9 @@
 "siri_sheet_body" = "Ajoutez un raccourci, puis demandez simplement à Siri en mains-libres.";
 "siri_sheet_nav" = "Raccourci Siri";
 "hijri_tap_hint" = "Double-appuyez pour afficher la date grégorienne d'aujourd'hui";
-"widget_preview_home_small" = "Écran d'Accueil";
-"widget_preview_home_medium" = "Écran d'Accueil";
-"widget_preview_lock" = "Écran de Verrouillage";
+"widget_preview_home_small" = "Écran d'accueil";
+"widget_preview_home_medium" = "Écran d'accueil";
+"widget_preview_lock" = "Écran verrouillé";
 "cal_access_denied" = "L'accès au calendrier est désactivé. Activez-le dans Réglages pour ajouter les heures de prière.";
 "cal_no_source" = "Aucun compte calendrier disponible pour ajouter des événements.";
 "cal_event_notes" = "Heure de prière d'Athan Utility.";
@@ -308,9 +308,9 @@
 "your_settings_title" = "Vos réglages";
 "recommended_settings_title" = "Recommandé pour votre localisation";
 "edit" = "Modifier";
-"feature_widgets_title" = "Widgets de l'Écran d'Accueil et d'Écran de Verrouillage";
+"feature_widgets_title" = "Widgets de l'écran d'accueil et d'écran verrouillé";
 "feature_widgets_subtitle" = "La prochaine prière en un coup d'œil";
-"feature_widgets_detail" = "Ajoutez des widgets à votre Écran d'Accueil et Écran de Verrouillage pour voir la prochaine prière et le temps restant sans ouvrir l'app.";
+"feature_widgets_detail" = "Ajoutez des widgets à votre écran d'accueil et écran verrouillé pour voir la prochaine prière et le temps restant sans ouvrir l'app.";
 "feature_earlyReminder_title" = "Rappels Préalables avant Salah";
 "feature_earlyReminder_subtitle" = "Un préavis pour ne jamais être pressé";
 "feature_earlyReminder_detail" = "Recevez un rappel optionnel un certain nombre de minutes avant chaque prière — assez de temps pour faire les ablutions et être prêt quand le athan retentit. Ajustable pour chaque prière.";

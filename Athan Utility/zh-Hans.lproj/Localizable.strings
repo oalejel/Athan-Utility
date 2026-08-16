@@ -30,7 +30,7 @@
 // MARK: - Notifications
 "Notifications" = "通知";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ 时间 [%2$@] 的时间。请重新打开 宣礼 实用工具以继续接收通知。";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ 时间到了 [%2$@]。请重新打开 Athan Utility 以继续接收通知。";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ 在 %2$@ [%3$@] 的时间";
 
@@ -51,7 +51,7 @@
 "Change Language" = "更改语言";
 
 "Developed by Omar Al-Ejel" = "由Omar Al-Ejel开发";
-"Rate Athan Utility!" = "评价宣礼 应用程序!";
+"Rate Athan Utility!" = "评价 Athan Utility！";
 "Privacy Notes" = "隐私说明";
 "Send Feedback" = "发送反馈";
 
@@ -90,13 +90,13 @@
 // MARK: - Intro Settings Labels
 "Calculation Preferences" = "计算偏好";
 "Consider setting..." = "考虑根据当地清真寺设置计算方法。";
-"highLatitudeExplanation" = "某些纬度较高的国家通常应用高纬度规则。您所在地区的推荐规则是";
+"highLatitudeExplanation" = "某些纬度较高的国家通常应用高纬度规则。你所在地区的推荐规则是";
 "Athan Preview" = "阿赞预览";
 "Edit Location" = "编辑位置";
 
 // MARK: - Sounds
 "athan.sound" = "宣礼声音";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "当您的 iPhone 被锁定或 宣礼 应用程序 打开时，可以播放完整的宣礼声音。";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "当你的 iPhone 被锁定或 Athan Utility 打开时，可以播放完整的宣礼声音。";
 "iOS Default" = "iOS 默认";
 "Echo" = "回声";
 "Makkah" = "麦加";
@@ -114,7 +114,7 @@
 // MARK: - Colors
 "static" = "静态";
 "dynamic" = "动态";
-"All Prayers" = "所有祷告";
+"All Prayers" = "所有礼拜";
 "restore.defaults" = "恢复默认设置";
 "colors.ios.requirement" = "颜色自定义仅适用于 iOS 14+";
 "Select a color picker to customize gradients." = "选择一个颜色选择器以自定义渐变。";
@@ -122,7 +122,7 @@
 
 // MARK: - Custom Names
 "custom.names" = "自定义名称";
-"custom.names.description" = "替换 宣礼 实用工具小部件、通知和主界面中使用的宣礼拼写。";
+"custom.names.description" = "替换 Athan Utility 小组件、通知和主界面中显示的礼拜名称。";
 
 
 // MARK: - Notification Settings
@@ -132,11 +132,11 @@
 "Play Sound" = "播放声音";
 "reminder.minute.offset" = "提前 %@ 分钟";
 "minute-character" = "分";
-"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "禁用“播放声音”以强制播放此祷告的通知默认的 iOS 提示音。";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "禁用“播放声音”以强制播放此礼拜的通知默认的 iOS 提示音。";
 "offset-description" = "当分钟偏移大于 %1$@ 和 %2$@ 之间的时间时，默认提醒为 15 分钟。";
 
 "Play Longer Athan" = "播放更长时间的宣礼";
-"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "将播放时间延长到 iOS 的最大限制约 30 秒。打开 Athan 实用工具以播放完整的宣礼。";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "将播放时间延长到 iOS 的最大限制约 30 秒。打开 Athan Utility 以播放完整的宣礼。";
 "athan.minute.offset" = "分钟调整：%@ 分";
 
 
@@ -144,8 +144,8 @@
 "Set Location" = "设置位置";
 "Set Location Manually" = "手动设置位置";
 "Use Current Location" = "使用当前位置";
-"Athan Utility does not collect user data." = "宣礼 实用工具不会收集用户数据。";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "位置服务已禁用，并可以在设置中进行调整。Athan 实用工具不会收集用户数据。";
+"Athan Utility does not collect user data." = "Athan Utility 不会收集用户数据。";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "位置服务已禁用，并可以在设置中进行调整。Athan Utility 不会收集用户数据。";
 "Location Name" = "位置名称";
 "Location:" = "位置：";
 
@@ -157,8 +157,8 @@
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "打开 宣礼 实用工具以设置位置。";
-"Use Athan Widgets to view upcoming salah times at a glance." = "使用 宣礼 小部件一目了然地查看即将到来的祷告时间。";
+"Open Athan Utility to set location." = "打开 Athan Utility 以设置位置。";
+"Use Athan Widgets to view upcoming salah times at a glance." = "使用 Athan Utility 小组件一目了然地查看即将到来的礼拜时间。";
 
 
 // MARK: - Auto-selected calculation method pill
@@ -197,8 +197,6 @@
 "until_prayer" = "后到";
 "begins_at" = "开始于";
 "version" = "版本";
-"Calculation Method" = "方法";
-"High Latitude Rule" = "高纬度规则";
 "madhab_asr" = "晡礼（教法学派）";
 "athan_sound" = "邦克声音";
 "dynamic_colors" = "随礼拜变化的动态颜色";
@@ -207,8 +205,6 @@
 "alerts_section" = "礼拜提醒";
 "appearance_section" = "外观";
 "method_colon" = "方法：";
-"recommended_for_country" = "为 %@ 推荐";
-"use_recommended_method" = "使用推荐：%@";
 "recommended_settings_title" = "为你的位置推荐";
 "your_settings_title" = "你的设置";
 "location_not_found" = "找不到该地点。";
@@ -255,15 +251,15 @@
 "siri_phrase_3" = "“今天的邦克时间”";
 "widgets_home_title" = "主屏幕小组件";
 "widgets_home_1" = "长按主屏幕的空白区域，直到 App 开始晃动。";
-"widgets_home_2" = "点按左上角的 + 按钮。";
+"widgets_home_2" = "轻点左上角的 + 按钮。";
 "widgets_home_3" = "搜索“Athan Utility”并选择小组件尺寸。";
-"widgets_home_4" = "点按“添加小组件”，然后点“完成”。";
+"widgets_home_4" = "轻点“添加小组件”，然后点“完成”。";
 "widgets_lock_title" = "锁定屏幕小组件";
-"widgets_lock_1" = "长按锁定屏幕，然后点按“自定义”。";
-"widgets_lock_2" = "点按时钟下方区域以添加小组件。";
+"widgets_lock_1" = "长按锁定屏幕，然后轻点“自定义”。";
+"widgets_lock_2" = "轻点时钟下方区域以添加小组件。";
 "widgets_lock_3" = "选择“Athan Utility”即可一眼看到下一次礼拜。";
 "feature_discovery_footer" = "这些功能都在 App 内——这只是快速导览。";
-"feature_widgets_title" = "主屏幕与锁屏小组件";
+"feature_widgets_title" = "主屏幕与锁定屏幕小组件";
 "feature_widgets_subtitle" = "一眼看到下一次礼拜";
 "feature_widgets_detail" = "把小组件添加到主屏幕和锁定屏幕，无需打开 App 即可查看下一次礼拜和剩余时间。";
 "feature_earlyReminder_title" = "礼拜前的提前提醒";
@@ -297,14 +293,14 @@
 "Fajr Alarm" = "晨礼闹钟";
 "fajr.alarm.description" = "安排一个真正的 iOS 闹钟,使其全年与晨礼(或日出)时间保持同步。需要 iOS 26。";
 "fajr.alarm.entry.description" = "让 iOS 闹钟自动跟随每日晨礼时间。";
-"fajr.alarm.offset.description" = "在所选祷告之前或之后触发闹钟。适用于夜祷或封斋前餐。";
+"fajr.alarm.offset.description" = "在所选礼拜之前或之后触发闹钟。适用于夜祷或封斋饭。";
 "fajr.alarm.schedule.description" = "要保持排期的闹钟数量。应用每次更新时刷新。";
 "fajr.alarm.ios26.required" = "自动晨礼闹钟需要 iOS 26 或更高版本。";
 "fajr.alarm.authorization.denied" = "闹钟已被禁用。请在系统设置中启用 AlarmKit 权限以使用此功能。";
 "fajr.alarm.summary.off" = "已关闭";
 "fajr.alarm.permission.needed" = "需要权限";
 "fajr.alarm.no.days" = "未选择任何日期——闹钟不会响。";
-"Anchor Prayer" = "参考祷告";
+"Anchor Prayer" = "参考礼拜";
 "Offset" = "偏移";
 "Days" = "天数";
 "Snooze" = "稍后提醒";
@@ -331,35 +327,35 @@
 "ack_intro" = "感谢这些人员和开源项目，Athan Utility 因此而改进。";
 "ack_contributors" = "贡献者";
 "ack_open_source" = "开源库";
-"cal_estimate_footer" = "大约 %d 个事件将被添加到专用的“Athan Utility”日历中。事件会记录您当前的位置。";
+"cal_estimate_footer" = "大约 %d 个事件将被添加到专用的“Athan Utility”日历中。事件会记录你当前的位置。";
 "cal_tip" = "提示：更改位置或扩展范围时，先使用“移除”清除旧事件——重新添加时总是会清除并重建。";
 "features_section_title" = "特色功能";
 "debug_tools" = "调试工具";
-"no_mail_configured" = "此设备上未设置电子邮件账户。";
+"no_mail_configured" = "本设备上未设置“邮件”账户。";
 "loc_locating" = "正在定位…";
-"loc_failed" = "无法获取您的位置。请重试。";
-"loc_requesting" = "请求位置访问权限——批准提示。";
-"loc_denied" = "位置访问已关闭。在“系统设置”>“隐私与安全”>“位置服务”中开启。";
+"loc_failed" = "无法获取你的位置。请重试。";
+"loc_requesting" = "正在请求定位权限——请在提示中轻点“允许”。";
+"loc_denied" = "定位权限已关闭。在“系统设置”>“隐私与安全性”>“位置服务”中开启。";
 "stop" = "停止";
 "preview" = "预览";
 "menubar_section" = "菜单栏";
-"menubar_icon_footer" = "在 macOS 菜单栏中显示 Athan Utility 图标和下一次礼拜倒计时。如果被删除，可以通过开启来恢复。";
+"menubar_icon_footer" = "在 macOS 菜单栏中显示 Athan Utility 图标和下一次礼拜倒计时。如果图标被移出菜单栏，打开此开关即可恢复。";
 "menubar_show_icon" = "显示菜单栏图标";
-"adopt_fajr_sub" = "无法睡过的起床闹钟";
-"widgets_title" = "主屏幕和锁屏小部件";
-"widgets_1" = "长按主屏幕或锁屏的空白区域直到进入编辑模式。";
-"widgets_2" = "点按 + 按钮（主屏幕）或时钟下方的小部件区域（锁屏）。";
-"widgets_3" = "搜索“Athan Utility”并选择小部件尺寸。";
-"widgets_4" = "点按“添加小部件”，然后点“完成”。";
-"hijri_tap_hint" = "双击显示今天的公历日期";
+"adopt_fajr_sub" = "睡不过头的起床闹钟";
+"widgets_title" = "主屏幕和锁定屏幕小组件";
+"widgets_1" = "长按主屏幕或锁定屏幕的空白处，直到进入编辑模式。";
+"widgets_2" = "轻点 + 按钮（主屏幕）或时钟下方的小组件区域（锁定屏幕）。";
+"widgets_3" = "搜索“Athan Utility”并选择小组件尺寸。";
+"widgets_4" = "轻点“添加小组件”，然后点“完成”。";
+"hijri_tap_hint" = "轻点两下显示今天的公历日期";
 "widget_preview_home_small" = "主屏幕";
 "widget_preview_home_medium" = "主屏幕";
-"widget_preview_lock" = "锁屏";
-"siri_next_sentence" = "下一次礼拜是 %@ 在 %@，还有 %@。";
-"siri_prayer_sentence" = "%@ 在 %@。";
+"widget_preview_lock" = "锁定屏幕";
+"siri_next_sentence" = "下一次礼拜是 %@，时间为 %@，还有 %@。";
+"siri_prayer_sentence" = "%@ 的时间是 %@。";
 "feature_mac_title" = "原生 Mac 应用";
 "feature_mac_subtitle" = "侧边栏和菜单栏项";
-"feature_mac_detail" = "Athan Utility Mac 版本，采用原生侧边栏重新设计——加上菜单栏项目显示下一次礼拜倒计时，并配有快速操作弹窗。";
+"feature_mac_detail" = "Athan Utility Mac 版本，采用原生侧边栏重新设计——还可在菜单栏中显示下一次礼拜倒计时，并配有快速操作弹窗。";
 "zoom_in" = "放大";
 "zoom_out" = "缩小";
 "zoom_reset" = "实际大小";

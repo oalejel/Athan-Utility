@@ -96,9 +96,6 @@
 
 
 // MARK: - Latitude Rules
-"middleOfTheNight" = "Middle of the Night";
-"seventhOfTheNight" = "Seventh of the Night";
-"twilightAngle" = "Twilight Angle";
 
 // MARK: - Sounds
 "athan.sound" = "Athan Sound";
@@ -190,7 +187,6 @@
 // "About" used in the context of "About the app"
 // alarm settings
 // location settings
-"Location Search" = "Location Search";
 "OK" = "OK";
 "Continue" = "Continue";
 // "What's New" listed feature titles and subtitles

@@ -15,9 +15,9 @@
 "Isha" = "Isha";
 
 // MARK: Accessibility
-"acc_settings" = "Configuración";
+"acc_settings" = "Ajustes";
 "acc_calendar" = "Calendario";
-"acc_location_settings" = "Configuración de ubicación";
+"acc_location_settings" = "Ajustes de ubicación";
 "acc_qibla_compass_label" = "Brújula de la Qibla";
 "acc_qibla_compass_hint" = "Vibra cuando estás alineado con la Qibla a menos de tres grados.";
 "acc_qibla_aligned_value" = "Alineado con la Qibla";
@@ -28,9 +28,9 @@
 // MARK: - Notifications
 "Notifications" = "Notificaciones";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Tiempo para %1$@ [%2$@]. Vuelva a abrir Adhan Utility para seguir recibiendo notificaciones.";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Hora de %1$@ [%2$@]. Vuelva a abrir Athan Utility para seguir recibiendo notificaciones.";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
-"Time for %1$@ in %2$@ [%3$@]" = "Tiempo para %1$@ en %2$@ [%3$@]";
+"Time for %1$@ in %2$@ [%3$@]" = "Hora de %1$@ en %2$@ [%3$@]";
 
 
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
@@ -43,14 +43,14 @@
 "Done" = "Listo";
 
 // MARK: - Settings
-"Settings" = "Configuración";
+"Settings" = "Ajustes";
 
-"Appearance" = "Pantalla";
+"Appearance" = "Aspecto";
 "Colors" = "Colores";
 "Change Language" = "Cambiar Idioma";
 
 "Developed by Omar Al-Ejel" = "Desarrollado por Omar Al-Ejel";
-"Rate Athan Utility!" = "Calificar Adhan Utility!";
+"Rate Athan Utility!" = "¡Valorar Athan Utility!";
 "Privacy Notes" = "Privacidad";
 "Send Feedback" = "Enviar Comentarios";
 
@@ -95,7 +95,7 @@
 
 // MARK: - Sounds
 "athan.sound" = "Sonido de Adhan";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Adhan puede reproducir más de 5 segundos cuando tu iPhone está bloqueado o Adhan Utility está abierto.";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Adhan puede reproducir más de 5 segundos cuando tu iPhone está bloqueado o Athan Utility está abierto.";
 "iOS Default" = "iOS Defecto";
 "Echo" = "Eco";
 "Makkah" = "Meca";
@@ -119,7 +119,7 @@
 
 // MARK: - Custom Names
 "custom.names" = "Nombres Personalizados";
-"custom.names.description" = "Reemplace la ortografía de Adhan Utility en el widget de Adhan Utility, las notificaciones y la interfaz principal.";
+"custom.names.description" = "Reemplace la ortografía de Athan Utility en el widget de Athan Utility, las notificaciones y la interfaz principal.";
 
 
 // MARK: - Notification Settings
@@ -142,8 +142,8 @@
 "Set Location" = "Establecer Ubicación";
 "Set Location Manually" = "Establecer Manualmente";
 "Use Current Location" = "Usar Ubicación Actual";
-"Athan Utility does not collect user data." = "Adhan Utility no recopila datos de usuario.";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Los servicios de ubicación están deshabilitados y se pueden ajustar en Configuración. Adhan Utility no recopila datos de usuario.";
+"Athan Utility does not collect user data." = "Athan Utility no recopila datos de usuario.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Los servicios de ubicación están deshabilitados y se pueden ajustar en Ajustes. Athan Utility no recopila datos de usuario.";
 "Location Name" = "Nombre de la Ubicación";
 "Location:" = "Ubicación:";
 
@@ -155,7 +155,7 @@
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "Abrir Adhan Utility para establecer la ubicación.";
+"Open Athan Utility to set location." = "Abrir Athan Utility para establecer la ubicación.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Utilice widgets para ver los próximos momentos de salah de un vistazo.";
 
 
@@ -195,8 +195,6 @@
 "until_prayer" = "hasta";
 "begins_at" = "empieza a las";
 "version" = "Versión";
-"Calculation Method" = "Método";
-"High Latitude Rule" = "Regla de latitud alta";
 "madhab_asr" = "Asr (escuela)";
 "athan_sound" = "Sonido del Athan";
 "dynamic_colors" = "Colores dinámicos por oración";
@@ -205,8 +203,6 @@
 "alerts_section" = "Avisos de oración";
 "appearance_section" = "Apariencia";
 "method_colon" = "Método: ";
-"recommended_for_country" = "Recomendado para %@";
-"use_recommended_method" = "Usar recomendado: %@";
 "recommended_settings_title" = "Recomendado para tu ubicación";
 "your_settings_title" = "Tus ajustes";
 "location_not_found" = "No se encontró ese lugar.";
@@ -221,13 +217,13 @@
 "mac_section_discover" = "Descubrir funciones";
 "adopt_widgets_title" = "Widgets";
 "adopt_widgets_sub" = "Añádelo a tu pantalla de inicio";
-"adopt_lock_title" = "Pantalla de bloqueo";
+"adopt_lock_title" = "Pantalla bloqueada";
 "adopt_lock_sub" = "Consulta sin desbloquear";
 "adopt_siri_title" = "Atajo de Siri";
-"adopt_siri_sub" = "Pregúntale a Siri por las horas de oración";
+"adopt_siri_sub" = "Pregúntale a Siri por las horarios de oración";
 "adopt_calendar_title" = "Calendario";
 "adopt_calendar_sub" = "Añade horarios de oración a tu calendario";
-"cal_access_denied" = "El acceso al calendario está desactivado. Actívalo en Ajustes para añadir horas de oración.";
+"cal_access_denied" = "El acceso al calendario está desactivado. Actívalo en Ajustes para añadir horarios de oración.";
 "cal_no_source" = "No hay ninguna cuenta de calendario disponible para añadir eventos.";
 "cal_add_alert" = "Añadir un aviso de calendario";
 "cal_add_button" = "Añadir al calendario";
@@ -235,7 +231,7 @@
 "cal_alert_attime" = "A la hora de la oración";
 "cal_alert_before" = "%d min antes";
 "cal_alert_header" = "Aviso";
-"cal_done" = "Se añadieron %d horas de oración.";
+"cal_done" = "Se añadieron %d horarios de oración.";
 "cal_event_notes" = "Hora de oración de Athan Utility.";
 "cal_export_title" = "Integración con el calendario";
 "cal_prayers_header" = "Oraciones";
@@ -245,7 +241,7 @@
 "cal_range_6month" = "6 meses";
 "cal_range_year" = "1 año";
 "cal_remove_button" = "Eliminar eventos de Athan";
-"siri_sheet_title" = "Pregúntale a Siri por las horas de oración";
+"siri_sheet_title" = "Pregúntale a Siri por las horarios de oración";
 "siri_sheet_body" = "Añade un atajo y luego pregúntale a Siri sin usar las manos.";
 "siri_sheet_nav" = "Atajo de Siri";
 "siri_phrase_1" = "«Próxima hora de oración»";
@@ -256,8 +252,8 @@
 "widgets_home_2" = "Toca el botón + en la esquina superior.";
 "widgets_home_3" = "Busca «Athan Utility» y elige un tamaño de widget.";
 "widgets_home_4" = "Toca Añadir widget y luego Hecho.";
-"widgets_lock_title" = "Widgets de pantalla de bloqueo";
-"widgets_lock_1" = "Mantén pulsada la pantalla de bloqueo y luego toca Personalizar.";
+"widgets_lock_title" = "Widgets de pantalla bloqueada";
+"widgets_lock_1" = "Mantén pulsada la pantalla bloqueada y luego toca Personalizar.";
 "widgets_lock_2" = "Toca la zona bajo el reloj para añadir widgets.";
 "widgets_lock_3" = "Elige «Athan Utility» para ver la próxima oración de un vistazo.";
 "feature_discovery_footer" = "Todo esto está en la app: es solo un recorrido rápido.";
@@ -290,7 +286,7 @@
 "feature_custom_detail" = "Renombra las oraciones, elige tu sonido del athan y personaliza los colores del degradado para cada momento del día.";
 "feature_calendar_title" = "Calendario mensual y exportación";
 "feature_calendar_subtitle" = "Un mes completo, exportable";
-"feature_calendar_detail" = "Consulta las horas de oración de todo el mes en un calendario y expórtalas a CSV para abrirlas en Numbers o Excel.";
+"feature_calendar_detail" = "Consulta las horarios de oración de todo el mes en un calendario y expórtalas a CSV para abrirlas en Numbers o Excel.";
 // MARK: - Fajr Alarm (AlarmKit, iOS 26+)
 "Fajr Alarm" = "Alarma de Fajr";
 "fajr.alarm.description" = "Programa una alarma real de iOS que se mantiene sincronizada con Fajr (o Amanecer) a lo largo del año. Requiere iOS 26.";
@@ -344,15 +340,15 @@
 "menubar_icon_footer" = "Muestra el icono de Athan Utility con la cuenta regresiva de la próxima oración en la barra de menús de macOS. Actívalo para devolverlo si fue eliminado.";
 "menubar_show_icon" = "Mostrar icono en la barra de menús";
 "adopt_fajr_sub" = "Una alarma que no puedes dormir";
-"widgets_title" = "Widgets de Pantalla de Inicio y Bloqueo";
-"widgets_1" = "Toca y mantén presionado un área vacía de tu Pantalla de Inicio o Pantalla de Bloqueo hasta que entre en modo de edición.";
-"widgets_2" = "Toca el botón + (Pantalla de Inicio) o el área de widgets debajo del reloj (Pantalla de Bloqueo).";
+"widgets_title" = "Widgets de pantalla de inicio y bloqueada";
+"widgets_1" = "Toca y mantén presionado un área vacía de tu pantalla de inicio o pantalla bloqueada hasta que entre en modo de edición.";
+"widgets_2" = "Toca el botón + (pantalla de inicio) o el área de widgets debajo del reloj (pantalla bloqueada).";
 "widgets_3" = "Busca \"Athan Utility\" y elige un tamaño de widget.";
-"widgets_4" = "Toca Añadir widget y luego Listo.";
+"widgets_4" = "Toca «Añadir widget» y luego «Listo».";
 "hijri_tap_hint" = "Toca dos veces para mostrar la fecha gregoriana de hoy";
-"widget_preview_home_small" = "Pantalla de Inicio";
-"widget_preview_home_medium" = "Pantalla de Inicio";
-"widget_preview_lock" = "Pantalla de Bloqueo";
+"widget_preview_home_small" = "Pantalla de inicio";
+"widget_preview_home_medium" = "Pantalla de inicio";
+"widget_preview_lock" = "Pantalla bloqueada";
 "siri_next_sentence" = "La próxima oración es %@ a las %@, en %@.";
 "siri_prayer_sentence" = "%@ es a las %@.";
 "feature_mac_title" = "App Nativa para Mac";

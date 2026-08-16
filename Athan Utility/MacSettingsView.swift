@@ -19,7 +19,6 @@ struct MacSettingsView: View {
     @State private var sound: NotificationSettings.Sounds
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
-    @State private var showMenuBarIcon = !MenuBarSettings.isHidden
     @State private var isPreviewingSound = false
 
     private let methods = CalculationMethod.usefulCases()
@@ -113,23 +112,21 @@ struct MacSettingsView: View {
                 // two in sync is what kept breaking. Removing is the drag, the way it is
                 // for every other menu bar app; this is only the way back.
                 Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
-                        footer: Text(showMenuBarIcon
-                                     ? NSLocalizedString("menubar_remove_hint", value: "Hold ⌘ and drag the icon out of the menu bar to remove it.", comment: "")
-                                     : NSLocalizedString("menubar_add_footer", value: "Shows the Athan Utility icon with a countdown to the next prayer in the macOS menu bar.", comment: ""))) {
-                    if showMenuBarIcon {
-                        HStack {
-                            Image(systemName: "checkmark.circle.fill").foregroundColor(.green)
-                            Text(NSLocalizedString("menubar_in_menu_bar", value: "Showing in the menu bar", comment: ""))
-                            Spacer()
-                        }
-                    } else {
+                        footer: Text(NSLocalizedString("menubar_add_footer", value: "Shows the Athan Utility icon with a countdown to the next prayer. Hold ⌘ and drag it out of the menu bar to remove it.", comment: ""))) {
+                    HStack {
                         Button(action: addToMenuBar) {
-                            HStack {
+                            HStack(spacing: 6) {
                                 Image(systemName: "menubar.arrow.up.rectangle")
+                                    .font(.system(size: 12, weight: .semibold))
                                 Text(NSLocalizedString("menubar_add_button", value: "Add to Menu Bar", comment: ""))
-                                Spacer()
+                                    .font(.system(size: 13, weight: .semibold))
                             }
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12).padding(.vertical, 6)
+                            .background(Capsule().fill(Color.accentColor))
                         }
+                        .buttonStyle(.plain)
+                        Spacer()
                     }
                 }
 
@@ -145,13 +142,6 @@ struct MacSettingsView: View {
         .frame(maxWidth: 600)                       // negative space on the sides; tighter rows
         .frame(maxWidth: .infinity, alignment: .center)
         .navigationTitle(Strings.settings)
-        // Re-sync the toggle with the status item's ACTUAL presence whenever
-        // this pane appears — it can drift if the user ⌘-drags the icon out
-        // of the menu bar without touching this toggle.
-        .onAppear { showMenuBarIcon = MenuBarBridge.shared.isItemVisible }
-        .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarItemVisibilityChanged)) { note in
-            if let visible = note.object as? Bool { showMenuBarIcon = visible }
-        }
     }
 
     private var appVersion: String {
@@ -182,7 +172,6 @@ struct MacSettingsView: View {
         // restoreItem(), not ensureItem(): after a ⌘-drag removal AppKit has detached
         // that NSStatusItem for good, so only a from-scratch recreate brings it back.
         MenuBarBridge.shared.restoreItem()
-        showMenuBarIcon = MenuBarBridge.shared.isItemVisible
     }
 
     private func toggleSoundPreview() {

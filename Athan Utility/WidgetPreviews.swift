@@ -47,27 +47,34 @@ struct WidgetPreviewGallery: View {
         VStack(alignment: .leading, spacing: 14) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {
-                    labeled(NSLocalizedString("widget_preview_home_small", value: "Home Screen", comment: "")) {
-                        SmallWidgetPreview(data: data)
-                            .frame(width: 148, height: 148)
-                    }
-                    labeled(NSLocalizedString("widget_preview_home_medium", value: "Home Screen", comment: "")) {
-                        MediumWidgetPreview(data: data)
-                            .frame(width: 322, height: 148)
-                    }
-                    labeled(NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: "")) {
-                        LockRectangularPreview(data: data)
-                            .frame(width: 170, height: 74)
-                            .padding(14)
-                            .frame(width: 198, height: 148)
-                            .background(
-                                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                    .fill(Color.black.opacity(0.35))
-                            )
-                    }
+                    shot("widget_home_small_shot",
+                         NSLocalizedString("widget_preview_home_small", value: "Home Screen", comment: ""))
+                    shot("widget_home_medium_shot",
+                         NSLocalizedString("widget_preview_home_medium", value: "Home Screen", comment: ""))
+                    shot("widget_lock_wide_shot",
+                         NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""))
+                    shot("widget_lock_small_shot",
+                         NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""))
                 }
                 .padding(.horizontal, 2)
             }
+        }
+    }
+
+    /// Real screenshots rather than reconstructions — the point of this gallery is to
+    /// show the user what will actually appear on their Home and Lock Screens.
+    private func shot(_ asset: String, _ label: String) -> some View {
+        labeled(label) {
+            Image(asset)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 148)
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                )
+                .accessibilityLabel(Text(label))
         }
     }
 

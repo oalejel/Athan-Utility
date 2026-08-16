@@ -18,6 +18,9 @@ struct DiscoveryFeature: Identifiable {
     let subtitle: String
     let detail: String
     var showsWidgetPreviews: Bool = false
+    /// Asset name of a screenshot to show under the description, for features that are
+    /// easier to recognise than to describe.
+    var screenshotAsset: String? = nil
 }
 
 enum FeatureDiscovery {
@@ -58,7 +61,8 @@ enum FeatureDiscovery {
             tint: Color(red: 0.55, green: 0.60, blue: 0.98),
             title: NSLocalizedString("feature_mac_title", value: "Native Mac App", comment: "Discovery feature title"),
             subtitle: NSLocalizedString("feature_mac_subtitle", value: "A sidebar and a menu bar item", comment: "Discovery feature subtitle"),
-            detail: NSLocalizedString("feature_mac_detail", value: "Athan Utility on Mac, redesigned with a native sidebar — plus a menu bar item that shows the next prayer countdown at a glance, with its own popover for quick actions.", comment: "Discovery feature detail")
+            detail: NSLocalizedString("feature_mac_detail", value: "Athan Utility on Mac, redesigned with a native sidebar — plus a menu bar item that shows the next prayer countdown at a glance, with its own popover for quick actions.", comment: "Discovery feature detail"),
+            screenshotAsset: "mac_app_shot"
         ),
         DiscoveryFeature(
             icon: "globe.americas.fill",
@@ -312,6 +316,19 @@ private struct FeatureDetailView: View {
                 if feature.showsWidgetPreviews {
                     WidgetPreviewGallery()
                         .padding(.top, 8)
+                }
+                if let asset = feature.screenshotAsset {
+                    Image(asset)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                        )
+                        .shadow(color: .black.opacity(0.18), radius: 10, y: 5)
+                        .padding(.top, 12)
+                        .accessibilityLabel(Text(feature.title))
                 }
                 Spacer(minLength: 0)
             }

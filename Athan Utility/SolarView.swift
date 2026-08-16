@@ -71,6 +71,8 @@ struct SolarView: View, Equatable {
     // Bumped whenever the calendar or offset changes, to force the date line to
     // re-render with the new setting.
     @State private var hijriRevision = 0
+    // Measured height of the callout, used to lift it clear above the date line.
+    @State private var calloutHeight: CGFloat = 0
 
     let df: DateFormatter = {
        let d = DateFormatter()
@@ -218,9 +220,15 @@ struct SolarView: View, Equatable {
                             }
                             .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
                             .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
-                            // An overlay, deliberately: anchoring to .top and moving the
-                            // callout's own bottom edge onto that anchor floats it above the
-                            // date without the date — or anything below it — shifting.
+                            // An overlay, deliberately, so the date and everything below it
+                            // stay put. The overlay is pinned to the date's TOP edge and then
+                            // lifted by its own measured height, which puts it fully above the
+                            // date with its tail pointing back down at it.
+                            //
+                            // Measuring is not optional here: an .alignmentGuide on the callout
+                            // is swallowed by the enclosing Group (the overlay aligns the Group,
+                            // whose own guide stays at its default), so the callout landed on
+                            // top of the date instead of above it.
                             .overlay(
                                 Group {
                                     if showHijriCallout {
@@ -231,12 +239,19 @@ struct SolarView: View, Equatable {
                                             }
                                         )
                                         .fixedSize()
-                                        .alignmentGuide(.top) { d in d[.bottom] + 6 }
+                                        .background(
+                                            GeometryReader { cg in
+                                                Color.clear.preference(key: HijriCalloutHeightKey.self,
+                                                                       value: cg.size.height)
+                                            }
+                                        )
+                                        .offset(y: -(calloutHeight + 6))
                                         .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .bottom)))
                                     }
                                 },
                                 alignment: .top
                             )
+                            .onPreferenceChange(HijriCalloutHeightKey.self) { calloutHeight = $0 }
                     }
                     .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
                         //                                            .offset(y: 24)

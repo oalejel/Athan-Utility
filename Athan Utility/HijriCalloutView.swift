@@ -38,6 +38,14 @@ struct HijriCalloutBubble: Shape {
     }
 }
 
+/// Reports the callout's measured height so the caller can lift it clear of the date.
+struct HijriCalloutHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 // MARK: - Callout
 
 @available(iOS 14.0, *)

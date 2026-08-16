@@ -75,12 +75,12 @@
 "Calculation Preferences" = "হিসাব পছন্দসমূহ";
 "Consider setting..." = "আপনার স্থানীয় মসজিদ অনুযায়ী হিসাব পদ্ধতি নির্ধারণ করুন।";
 "highLatitudeExplanation" = "নির্দিষ্ট অক্ষাংশের উত্তরের দেশগুলো প্রায়ই উচ্চ অক্ষাংশ নিয়ম প্রয়োগ করে। আপনার অঞ্চলের জন্য প্রস্তাবিত নিয়ম হলো ";
-"Athan Preview" = "আযানের পূর্বরূপ";
+"Athan Preview" = "আজানের পূর্বরূপ";
 "Edit Location" = "অবস্থান সম্পাদনা";
 
 // MARK: - Sounds
-"athan.sound" = "আযানের শব্দ";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "iPhone লক থাকলে বা Athan Utility খোলা থাকলে পূর্ণ আযান বাজতে পারে।";
+"athan.sound" = "আজানের শব্দ";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "iPhone লক থাকলে বা Athan Utility খোলা থাকলে পূর্ণ আজান বাজতে পারে।";
 "iOS Default" = "iOS ডিফল্ট";
 "Echo" = "প্রতিধ্বনি";
 "Makkah" = "মক্কা";
@@ -103,10 +103,10 @@
 
 // MARK: - Custom Names
 "custom.names" = "কাস্টম নাম";
-"custom.names.description" = "উইজেট, বিজ্ঞপ্তি এবং মূল ইন্টারফেসে ব্যবহৃত আযানের বানান পরিবর্তন করুন।";
+"custom.names.description" = "উইজেট, বিজ্ঞপ্তি এবং মূল ইন্টারফেসে ব্যবহৃত আজানের বানান পরিবর্তন করুন।";
 
 // MARK: - Notification Settings
-"Athan Notification" = "আযান বিজ্ঞপ্তি";
+"Athan Notification" = "আজান বিজ্ঞপ্তি";
 "Reminder Notification" = "স্মরণিকা বিজ্ঞপ্তি";
 "Enabled" = "সক্ষম";
 "Play Sound" = "শব্দ বাজান";
@@ -114,8 +114,8 @@
 "minute-character" = "মি";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "এই নামাজের বিজ্ঞপ্তিকে iOS ডিফল্ট শব্দ বাজাতে বাধ্য করতে \"শব্দ বাজান\" নিষ্ক্রিয় করুন।";
 "offset-description" = "যখন মিনিট অফসেট %1$@ এবং %2$@-এর মধ্যবর্তী সময়ের চেয়ে বেশি, স্মরণিকা ডিফল্ট ১৫ মিনিটে থাকবে।";
-"Play Longer Athan" = "দীর্ঘ আযান বাজান";
-"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "প্রায় ৩০ সেকেন্ডের iOS সীমা পর্যন্ত প্লেব্যাক বাড়ায়। পূর্ণ আযানের জন্য Athan Utility খুলুন।";
+"Play Longer Athan" = "দীর্ঘ আজান বাজান";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "প্রায় ৩০ সেকেন্ডের iOS সীমা পর্যন্ত প্লেব্যাক বাড়ায়। পূর্ণ আজানের জন্য Athan Utility খুলুন।";
 "athan.minute.offset" = "সময় সমন্বয়: %@m";
 
 // MARK: - Location Settings
@@ -206,7 +206,7 @@
 "dur_hr" = "%d ঘণ্টা";
 "dur_min" = "%d মিনিট";
 "dur_lt_min" = "এক মিনিটেরও কম";
-"features_section_title" = "ফিচার্ড";
+"features_section_title" = "বিশেষ ফিচার";
 "debug_tools" = "ডিবাগ টুলস";
 "no_mail_configured" = "এই ডিভাইসে কোনো ইমেইল অ্যাকাউন্ট সেট আপ করা নেই।";
 "today" = "আজ";
@@ -224,7 +224,7 @@
 "stop" = "থামান";
 "preview" = "প্রিভিউ";
 "alerts_section" = "নামাজের সতর্কতা";
-"appearance_section" = "উপস্থিতি";
+"appearance_section" = "চেহারা";
 "dynamic_colors" = "নামাজ অনুযায়ী পরিবর্তনশীল রঙ";
 "menubar_section" = "মেনু বার";
 "menubar_icon_footer" = "macOS মেনু বারে পরবর্তী নামাজের কাউন্টডাউনসহ Athan Utility আইকন দেখান। এটি সরিয়ে ফেলা হয়ে থাকলে আবার ফিরিয়ে আনতে এটি চালু করুন।";

@@ -45,7 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // AthanManager/settings (file I/O); doing that synchronously here blocks scene
         // creation and can trip the launch watchdog if the read is slow.
         DispatchQueue.main.async {
-            MenuBarBridge.shared.start()
+            // Respect a previous run's drag-out: don't put the icon back uninvited.
+            // MenuBarController.start() still runs so the title driver is live for
+            // when the user adds it again from Settings.
+            if !MenuBarSettings.isHidden {
+                MenuBarBridge.shared.start()
+            }
             MenuBarController.shared.start()
         }
         // First-launch location prompt is triggered from SceneDelegate.sceneDidBecomeActive

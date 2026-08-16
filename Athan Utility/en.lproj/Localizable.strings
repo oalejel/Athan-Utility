@@ -339,9 +339,7 @@
 "mac_section_settings" = "Settings";
 "mac_section_times" = "Home";
 "madhab_asr" = "Asr (Madhab)";
-"menubar_icon_footer" = "Show the Athan Utility icon with the next-prayer countdown in the macOS menu bar. Turn this on to bring it back if it was removed.";
 "menubar_section" = "Menu Bar";
-"menubar_show_icon" = "Show menu bar icon";
 "method_colon" = "Method: ";
 "new.features.announcement.body" = "Check out Athan Utility's latest new features.";
 "new.features.announcement.title" = "What's New";
@@ -384,3 +382,7 @@
 "hijri_ramadan_adjust" = "Ramadan day";
 "day_previous" = "Previous day";
 "day_next" = "Next day";
+"menubar_add_button" = "Add to Menu Bar";
+"menubar_add_footer" = "Shows the Athan Utility icon with a countdown to the next prayer in the macOS menu bar.";
+"menubar_in_menu_bar" = "Showing in the menu bar";
+"menubar_remove_hint" = "Hold \u2318 and drag the icon out of the menu bar to remove it.";

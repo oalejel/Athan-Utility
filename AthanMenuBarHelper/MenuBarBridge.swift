@@ -164,11 +164,14 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
     func refreshNow() { tick() }
 
     private func tick() {
-        if MenuBarSettings.isHidden {
-            MenuBarBridge.shared.removeItem()
-            return
-        }
-        // Ensure the item exists (it may have been removed while hidden).
+        // The user removed the icon by dragging it out. Do nothing at all — in
+        // particular do NOT call removeItem() here. This tick runs every second, and
+        // having it tear the item down meant it was racing the one thing that puts the
+        // icon back; a freshly created item could be destroyed within the second.
+        // Removal is the drag itself; restoring is the explicit Add button.
+        if MenuBarSettings.isHidden { return }
+
+        // Ensure the item exists (e.g. first tick after launch).
         MenuBarBridge.shared.ensureItem()
 
         let manager = AthanManager.shared

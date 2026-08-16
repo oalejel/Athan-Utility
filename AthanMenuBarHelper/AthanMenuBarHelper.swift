@@ -133,8 +133,33 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
                   NSStringFromRect(frame), screen.width, current.length,
                   current.button?.title ?? "nil",
                   current.button?.image == nil ? "nil" : "set")
-            if frame.width < 1 || frame.origin.x < 0 || frame.maxX > screen.width {
-                NSLog("ATHAN-MB-HELPER: WARNING item is not on screen — menu bar is probably full")
+            if frame.width < 1 {
+                NSLog("ATHAN-MB-HELPER: WARNING item has no width — nothing to draw")
+            }
+        }
+
+        // The 0.35s sample above is often taken before AppKit has positioned the status
+        // window, so it reports a placeholder origin either way and can't tell a placed
+        // item from an unplaced one. Sample again once layout has settled: a healthy item
+        // sits at the top of a screen (y near the screen height); one that never got a
+        // slot — because the menu bar is full, which is easy to hit on a notched display —
+        // stays unplaced or has no screen at all.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            guard let self, let current = self.statusItem, current === item,
+                  let window = current.button?.window else {
+                NSLog("ATHAN-MB-HELPER: settled check - no status window")
+                return
+            }
+            let f = window.frame
+            let onScreen = window.screen != nil
+            NSLog("ATHAN-MB-HELPER: settled check frame=%@ onScreen=%@ windowVisible=%@ screen=%@",
+                  NSStringFromRect(f),
+                  onScreen ? "yes" : "NO",
+                  window.isVisible ? "yes" : "NO",
+                  NSStringFromRect(NSScreen.main?.frame ?? .zero))
+            if !onScreen || !window.isVisible || f.origin.y < 0 {
+                NSLog("ATHAN-MB-HELPER: WARNING item never got a menu bar slot — the menu bar is full")
+                self.actionDelegate?.menuBarPlacementFailed()
             }
         }
     }

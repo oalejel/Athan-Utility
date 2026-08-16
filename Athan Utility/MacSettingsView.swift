@@ -20,6 +20,8 @@ struct MacSettingsView: View {
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
     @State private var isPreviewingSound = false
+    /// macOS took the status item but gave it no slot — see menuBarPlacementFailed.
+    @State private var menuBarFull = false
 
     private let methods = CalculationMethod.usefulCases()
 
@@ -128,6 +130,20 @@ struct MacSettingsView: View {
                         .buttonStyle(.plain)
                         Spacer()
                     }
+
+                    // Without this the button looks broken: macOS reports the item as
+                    // visible, so we have nothing to correct — there is simply no room
+                    // for it. Say so rather than letting the user press Add repeatedly.
+                    if menuBarFull {
+                        Label(NSLocalizedString("menubar_full", value: "macOS couldn't fit the icon — your menu bar is full. Quit a menu bar app and try again.", comment: ""),
+                              systemImage: "exclamationmark.triangle.fill")
+                            .font(.footnote)
+                            .foregroundColor(.orange)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarPlacementFailed)) { _ in
+                    menuBarFull = true
                 }
 
                 Section {

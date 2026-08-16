@@ -18,6 +18,8 @@ extension Notification.Name {
     /// ⌘-dragged it out of, or back into, the menu bar). object is the new Bool.
     /// MacSettingsView listens so its "Show menu bar icon" toggle stays truthful.
     static let athanMenuBarItemVisibilityChanged = Notification.Name("AthanMenuBarItemVisibilityChanged")
+    /// Posted when macOS accepted the status item but gave it no slot — a full menu bar.
+    static let athanMenuBarPlacementFailed = Notification.Name("AthanMenuBarPlacementFailed")
 }
 
 func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
@@ -308,6 +310,10 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
     func menuBarOpenSettings() {
         NotificationCenter.default.post(name: .athanShowMacSettings, object: nil)
+    }
+
+    func menuBarPlacementFailed() {
+        NotificationCenter.default.post(name: .athanMenuBarPlacementFailed, object: nil)
     }
 
     func menuBarVisibilityChanged(_ visible: Bool) {

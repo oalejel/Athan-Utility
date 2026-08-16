@@ -49,6 +49,10 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
+    /// macOS accepted the status item but never gave it a slot in the menu bar — the
+    /// bar is full (easy to hit on a notched display). The app surfaces this rather
+    /// than letting the Add button look broken.
+    func menuBarPlacementFailed()
     /// The status item's visibility changed outside of our own show/hide calls —
     /// concretely, the user ⌘-dragged it out of (or back into) the menu bar.
     func menuBarVisibilityChanged(_ visible: Bool)

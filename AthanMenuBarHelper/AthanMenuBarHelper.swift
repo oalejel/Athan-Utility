@@ -57,33 +57,31 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     public func restoreStatusItem() {
         NSLog("ATHAN-MB-HELPER: restoreStatusItem() - tearing down stale item (%@) and recreating",
               statusItem == nil ? "none" : "present")
-        // Belt-and-braces: AppKit auto-generates an autosave name when `.removalAllowed`
-        // is set even if we never assign one, and that record can re-hide a fresh item.
-        // Drop any such keys so the new item starts with a clean visibility state.
+        // Clear ONLY the visibility record for our own name — that is the thing that
+        // re-hides a freshly created item. The *preferred position* for the same name is
+        // deliberately kept: a status item with no remembered position is appended at the
+        // leftmost slot, which on a notched display is exactly where it cannot be seen.
         let defaults = UserDefaults.standard
-        for key in defaults.dictionaryRepresentation().keys where key.contains("NSStatusItem") {
-            NSLog("ATHAN-MB-HELPER: clearing persisted status-item key '%@'", key)
+        for key in defaults.dictionaryRepresentation().keys
+        where key.hasPrefix("NSStatusItem Visible") {
+            NSLog("ATHAN-MB-HELPER: clearing persisted visibility key '%@'", key)
             defaults.removeObject(forKey: key)
         }
         visibilityObservation?.invalidate()
         visibilityObservation = nil
         if let existing = statusItem { NSStatusBar.system.removeStatusItem(existing) }
         statusItem = nil
-        createStatusItem(freshIdentity: true)
+        createStatusItem()
     }
 
-    /// - Parameter freshIdentity: give the item an autosave name never used before.
-    ///   `.removalAllowed` makes AppKit auto-generate one and persist "the user removed
-    ///   this" against it, and that record is applied to any later item bearing the same
-    ///   name — including a brand new one — which silently re-hides it moments after we
-    ///   set isVisible = true. Clearing the defaults keys isn't enough because AppKit
-    ///   already holds the value in memory. A name it has never seen has no record to
-    ///   apply, so the restored item actually shows.
-    private func createStatusItem(freshIdentity: Bool = false) {
+    /// One stable autosave name, always. A per-restore unique name does dodge AppKit's
+    /// persisted "the user removed this" record, but it also throws away the remembered
+    /// position, so the item is appended at the leftmost slot — under the notch on the
+    /// laptops where this matters. Keeping the name and deleting just the visibility
+    /// record (see restoreStatusItem) gets the un-hide without losing the position.
+    private func createStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item.autosaveName = freshIdentity
-            ? "AthanUtilityStatusItem-\(UInt64(Date().timeIntervalSince1970 * 1000))"
-            : "AthanUtilityStatusItem"
+        item.autosaveName = "AthanUtilityStatusItem"
         // Let the user ⌘-drag the item off the menu bar (matches every other
         // menu-bar app); we detect that via the isVisible KVO below instead of
         // relying on AppKit to tell the app to quit or anything like that.
@@ -124,6 +122,19 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             if !current.isVisible {
                 NSLog("ATHAN-MB-HELPER: AppKit re-hid the fresh item — forcing visible again")
                 current.isVisible = true
+            }
+            // isVisible == true only means AppKit accepted the item; it does not mean the
+            // user can see it. A crowded menu bar (very easy to hit on a notched display)
+            // places new items where there is no room to draw them, so log where this one
+            // actually landed relative to the screen.
+            let frame = current.button?.window?.frame ?? .zero
+            let screen = NSScreen.main?.frame ?? .zero
+            NSLog("ATHAN-MB-HELPER: item frame=%@ screenWidth=%.0f length=%.1f title='%@' image=%@",
+                  NSStringFromRect(frame), screen.width, current.length,
+                  current.button?.title ?? "nil",
+                  current.button?.image == nil ? "nil" : "set")
+            if frame.width < 1 || frame.origin.x < 0 || frame.maxX > screen.width {
+                NSLog("ATHAN-MB-HELPER: WARNING item is not on screen — menu bar is probably full")
             }
         }
     }

@@ -176,6 +176,15 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
     func start() {
         MenuBarBridge.shared.setActionDelegate(self)
+        // Headless diagnostic run: `ATHAN_MB_DIAG=1` in the environment fires every
+        // variant a few seconds after launch and logs the verdicts, so the harness can
+        // be exercised without anyone clicking a button. Never runs for real users.
+        if ProcessInfo.processInfo.environment["ATHAN_MB_DIAG"] == "1" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                NSLog("ATHAN-MB-DIAG: === auto-run of all variants ===")
+                _ = MenuBarBridge.shared.runAllDiagnostics()
+            }
+        }
         timer?.invalidate()
         let t = Timer(timeInterval: 1.0, repeats: true) { [weak self] _ in self?.tick() }
         RunLoop.main.add(t, forMode: .common)

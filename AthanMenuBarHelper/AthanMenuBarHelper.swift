@@ -69,21 +69,27 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         visibilityObservation = nil
         if let existing = statusItem { NSStatusBar.system.removeStatusItem(existing) }
         statusItem = nil
-        createStatusItem()
+        createStatusItem(freshIdentity: true)
     }
 
-    private func createStatusItem() {
+    /// - Parameter freshIdentity: give the item an autosave name never used before.
+    ///   `.removalAllowed` makes AppKit auto-generate one and persist "the user removed
+    ///   this" against it, and that record is applied to any later item bearing the same
+    ///   name — including a brand new one — which silently re-hides it moments after we
+    ///   set isVisible = true. Clearing the defaults keys isn't enough because AppKit
+    ///   already holds the value in memory. A name it has never seen has no record to
+    ///   apply, so the restored item actually shows.
+    private func createStatusItem(freshIdentity: Bool = false) {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        item.autosaveName = freshIdentity
+            ? "AthanUtilityStatusItem-\(UInt64(Date().timeIntervalSince1970 * 1000))"
+            : "AthanUtilityStatusItem"
         // Let the user ⌘-drag the item off the menu bar (matches every other
         // menu-bar app); we detect that via the isVisible KVO below instead of
         // relying on AppKit to tell the app to quit or anything like that.
         //
-        // Deliberately NOT setting an autosaveName: AppKit applies that name's
-        // last-PERSISTED visibility to every newly created item with the same
-        // name, INCLUDING re-hiding a fresh item if it was ever dragged out in
-        // an earlier run — which fought our own explicit isVisible sets below
-        // and was why toggling the Settings switch back on stopped working.
-        // MenuBarSettings.isHidden is our own single source of truth instead.
+        // Order matters: assigning autosaveName (above) can apply that name's stored
+        // visibility, so isVisible is set AFTER it, never before.
         item.behavior = [.removalAllowed]
         item.isVisible = true
         if let button = item.button {
@@ -106,6 +112,19 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             guard let self, let visible = change.newValue else { return }
             NSLog("ATHAN-MB-HELPER: KVO isVisible changed -> %@", visible ? "true" : "false")
             self.actionDelegate?.menuBarVisibilityChanged(visible)
+        }
+
+        // AppKit can flip isVisible back a runloop turn later off its own persisted
+        // state. Check, log it, and insist once — so a silent re-hide is both visible
+        // in the log and corrected instead of just losing.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            guard let self, let current = self.statusItem, current === item else { return }
+            NSLog("ATHAN-MB-HELPER: post-create check, isVisible=%@, autosave=%@",
+                  current.isVisible ? "true" : "false", current.autosaveName ?? "nil")
+            if !current.isVisible {
+                NSLog("ATHAN-MB-HELPER: AppKit re-hid the fresh item — forcing visible again")
+                current.isVisible = true
+            }
         }
     }
 

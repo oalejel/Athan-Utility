@@ -83,7 +83,12 @@ final class MenuBarBridge {
     /// ⌘-drag removal.
     func restoreItem() {
         mbDebug("restoreItem() called, helper is \(helper == nil ? "nil" : "set")")
-        if helper == nil { start(); return }   // start() installs a fresh item itself
+        // Always finish through restoreStatusItem(), even on the path where we had to
+        // load the bundle first. start()'s plain install reuses the stable autosave
+        // name, and after a drag-out in an EARLIER run that name still carries AppKit's
+        // "user removed this" record — so the item would be created and then quietly
+        // hidden. restoreStatusItem() vends one with an identity AppKit has never seen.
+        if helper == nil { start() }
         helper?.restoreStatusItem()
         mbDebug("restoreItem() done, isItemVisible now \(isItemVisible)")
     }

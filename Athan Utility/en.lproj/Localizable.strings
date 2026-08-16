@@ -328,7 +328,7 @@
 "feature_widgets_subtitle" = "The next prayer at a glance";
 "feature_widgets_title" = "Home & Lock Screen Widgets";
 "features_section_title" = "Featured";
-"hijri_tap_hint" = "Double-tap to show today's Gregorian date";
+"hijri_tap_hint" = "Double-tap to show today's Gregorian date and calendar options";
 "loc_denied" = "Location access is off. Turn it on in System Settings › Privacy & Security › Location Services.";
 "loc_failed" = "Couldn't get your location. Please try again.";
 "loc_locating" = "Locating…";
@@ -375,3 +375,10 @@
 "zoom_in" = "Zoom In";
 "zoom_out" = "Zoom Out";
 "zoom_reset" = "Actual Size";
+
+// MARK: - Hijri calendar callout
+"hijri_mode_subtitle" = "Hijri calendar";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Islamic Civil";
+"hijri_mode_tabular" = "Islamic Tabular";
+"hijri_ramadan_adjust" = "Ramadan day";

@@ -11,6 +11,7 @@
 		0708FF7BE1468CEB6991D34A /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
 		121CCC3D6E012EE5F0907A2E /* MenuBarBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D974F5773AF306388EB4A303 /* MenuBarBridge.swift */; };
 		184EDA08DF96821DF57C2FE1 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		20E8564DF6B911EE89ED155E /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		21225FEE517C5267F05D86E3 /* AthanMenuBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */; };
 		2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
 		36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */; };
@@ -183,6 +184,7 @@
 		3DF79CDB2F45668D00E01FD2 /* SuhoorActivityTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */; };
 		4720ACF8A93CE2DB14596D71 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8CE83A256965F0006D6E46 /* SettingsModels.swift */; };
 		48F3B912200D0F485B3380B6 /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
+		5107BC03784B159309106E36 /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		53BC9FDB5CD24F4D6D6E95E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7825A6A04E00DC7331 /* Preview Assets.xcassets */; };
 		5904A0622306CD7D4436A97A /* AthanAppIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8734E5FB26339F5FFD354C18 /* AthanAppIntents.swift */; };
 		639733C717984783246DDCCC /* WidgetPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */; };
@@ -198,6 +200,7 @@
 		8CB28D8A28F081C9E049873F /* MenuBarHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */; };
 		9241BDE9119B3F6F927C9A2A /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7125A6A04D00DC7331 /* NotificationView.swift */; };
 		9543B22D38BD48FCD63E5D98 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A7325A6A04D00DC7331 /* ComplicationController.swift */; };
+		95E0FF8422CCAA301841E05A /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		9D2ACAE0892ED1D947DBB069 /* CommonWatchCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBAE55F25B15E26008E87E9 /* CommonWatchCommunication.swift */; };
 		A559F67418B0E31791634C83 /* NewFeaturesAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */; };
 		A58627DE52885DEF35D97BC4 /* MacSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BBB3291E869DA697F96A86 /* MacSidebarView.swift */; };
@@ -209,10 +212,13 @@
 		BF21F022AE25EB77F4982F4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6D25A6A04D00DC7331 /* ContentView.swift */; };
 		C013A1D007944FA2D2B4F38A /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
 		C5159509157C2F3C4D3977D5 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		CCB609AF45FE1C0CEA1C8C00 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B895353DF4EFEA658C8E876A /* NotificationPermission.swift */; };
 		CDD074B9FB3B89E5C7ABA16B /* ExploreSettingsNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */; };
 		D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */; };
 		D3990A296AA4399CB1833477 /* FeatureDiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F978D469268292A3AFA564C4 /* FeatureDiscoveryView.swift */; };
+		D44E2F95745F6C1DEF8525B4 /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		D51FB317E79101FFA9433D8F /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		E1FB145A85D934A3AD6144D0 /* HijriCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B928004751B72510E13FAC /* HijriCalloutView.swift */; };
 		E4497F14C9BF921045926568 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		E523BE75A8B95E4AABBC40A8 /* FajrAlarmSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DE262321F96491AED053A7 /* FajrAlarmSettingsView.swift */; };
 		EEE9C12DAFB5182B5387B21E /* WatchSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCAB77B25AEC40D0075801B /* WatchSessionDelegate.swift */; };
@@ -486,6 +492,7 @@
 		3DF79CD02F45364D00E01FD2 /* SuhoorActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivity.swift; sourceTree = "<group>"; };
 		3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityTrigger.swift; sourceTree = "<group>"; };
 		3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityAttributes.swift; sourceTree = "<group>"; };
+		41B928004751B72510E13FAC /* HijriCalloutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HijriCalloutView.swift; path = HijriCalloutView.swift; sourceTree = "<group>"; };
 		4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DebugSettingsView.swift; sourceTree = "<group>"; };
 		5656F607D43DD96FFFFFE4D4 /* MacFontScale.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacFontScale.swift; sourceTree = "<group>"; };
 		65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FajrAlarmSettings.swift; sourceTree = "<group>"; };
@@ -496,9 +503,11 @@
 		AF10629E04FA05B477D8EC1C /* bn */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1DE262321F96491AED053A7 /* FajrAlarmSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FajrAlarmSettingsView.swift; sourceTree = "<group>"; };
 		B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExploreSettingsNudge.swift; sourceTree = "<group>"; };
+		B895353DF4EFEA658C8E876A /* NotificationPermission.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationPermission.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
 		BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FajrAlarmManager.swift; sourceTree = "<group>"; };
 		BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; includeInIndex = 0; path = AthanMenuBarHelper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotSupport.swift; sourceTree = "<group>"; };
+		CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HijriSettings.swift; path = HijriSettings.swift; sourceTree = "<group>"; };
 		CBBE5A40CF47EE4A41E4B533 /* CalendarExportManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportManager.swift; sourceTree = "<group>"; };
 		D24DFC1885F2D6D66EB5B55C /* ms */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ms; path = ms.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D974F5773AF306388EB4A303 /* MenuBarBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MenuBarBridge.swift; path = AthanMenuBarHelper/MenuBarBridge.swift; sourceTree = "<group>"; };
@@ -682,6 +691,9 @@
 				4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */,
 				1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */,
 				5656F607D43DD96FFFFFE4D4 /* MacFontScale.swift */,
+				B895353DF4EFEA658C8E876A /* NotificationPermission.swift */,
+				CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */,
+				41B928004751B72510E13FAC /* HijriCalloutView.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1377,6 +1389,9 @@
 				36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */,
 				A559F67418B0E31791634C83 /* NewFeaturesAnnouncement.swift in Sources */,
 				B9606875F2DBF208E3330302 /* MacFontScale.swift in Sources */,
+				CCB609AF45FE1C0CEA1C8C00 /* NotificationPermission.swift in Sources */,
+				5107BC03784B159309106E36 /* HijriSettings.swift in Sources */,
+				E1FB145A85D934A3AD6144D0 /* HijriCalloutView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1412,6 +1427,7 @@
 				C5159509157C2F3C4D3977D5 /* FajrAlarmManager.swift in Sources */,
 				82FEE863380B5BFCF07A798B /* FajrAlarmSettings.swift in Sources */,
 				AC940FC50E440C6EACD7A1C2 /* NewFeaturesAnnouncement.swift in Sources */,
+				20E8564DF6B911EE89ED155E /* HijriSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1439,6 +1455,7 @@
 				3DBAE57025B15E2F008E87E9 /* CommonWatchCommunication.swift in Sources */,
 				7C3F5E73A177372A79C4FD42 /* FajrAlarmManager.swift in Sources */,
 				2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */,
+				D44E2F95745F6C1DEF8525B4 /* HijriSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,6 +1487,7 @@
 				EEE9C12DAFB5182B5387B21E /* WatchSessionDelegate.swift in Sources */,
 				D51FB317E79101FFA9433D8F /* FajrAlarmManager.swift in Sources */,
 				48F3B912200D0F485B3380B6 /* FajrAlarmSettings.swift in Sources */,
+				95E0FF8422CCAA301841E05A /* HijriSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

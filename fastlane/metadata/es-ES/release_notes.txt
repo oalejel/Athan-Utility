@@ -1,4 +1,13 @@
-• Sugerencia automática del método de cálculo según tu ubicación, sin configuración
-• Nuevo widget Extra Grande con fase lunar en directo, oración actual y horario completo
-• Diseño para iPad más amplio y refinado
-• Mejoras y corrección de errores
+La versión 8.0 es la actualización más grande que ha tenido Athan Utility.
+
+• App nativa para Mac — una auténtica ventana de macOS con barra lateral, además de un elemento en la barra de menús que muestra la cuenta atrás hasta la próxima oración y abre una ventana emergente para cambios rápidos
+• Alarma de Fajr — programa una auténtica alarma de iOS vinculada al Fajr (o a la salida del sol) que se ajusta automáticamente a los horarios según cambian a lo largo del año, con un desfase para el tahayyud o el suhur (requiere iOS 26)
+• Integración con el calendario — añade meses de horarios de oración a tu calendario con un solo toque, y exporta la vista mensual como PDF u hoja de cálculo
+• App de Apple Watch reconstruida, con complicaciones para tu esfera
+• Los widgets aparecen ahora en el Smart Stack en torno a los horarios de oración
+• Pregúntale a Siri por la próxima oración, o por el horario de cualquier oración de hoy
+• Una nueva pantalla Descubrir que te muestra todo lo que la app puede hacer
+
+Ahora completamente disponible en 12 idiomas, con los nombres de las oraciones y el texto revisados para cada región.
+
+Además de una larga lista de correcciones y mejoras en toda la app.

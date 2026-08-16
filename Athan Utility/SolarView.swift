@@ -68,6 +68,13 @@ struct SolarView: View, Equatable {
     // Tapping the Hijri date shows a transient callout with the Gregorian
     // equivalent (auto-hides after a few seconds).
     @State private var showGregorianCallout = false
+    // The Hijri controls that appear with it. Separate state because the Gregorian
+    // capsule auto-hides after a few seconds (it's just information) while this one
+    // has controls in it and has to stay until the user dismisses it.
+    @State private var showHijriCallout = false
+    // Bumped whenever the calendar or offset changes, to force the date line to
+    // re-render with the new setting.
+    @State private var hijriRevision = 0
 
     let df: DateFormatter = {
        let d = DateFormatter()
@@ -221,20 +228,31 @@ struct SolarView: View, Equatable {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding([.trailing, .leading])
                             .foregroundColor(Color(.lightText))
+                            .id(hijriRevision)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation(.easeInOut(duration: 0.2)) { showGregorianCallout.toggle() }
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    showGregorianCallout.toggle()
+                                    showHijriCallout = showGregorianCallout
+                                }
                                 if showGregorianCallout {
-                                    // Auto-hide so it reads as a transient callout, not a
-                                    // persistent second date line.
+                                    // The date capsule auto-hides so it reads as a transient
+                                    // callout, not a persistent second date line. The controls
+                                    // below it stay put — dismissing something mid-adjustment
+                                    // would be maddening.
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                         withAnimation(.easeInOut(duration: 0.2)) { showGregorianCallout = false }
                                     }
                                 }
                             }
                             .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
-                            .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date", comment: "")))
+                            .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
+
+                        if showHijriCallout {
+                            HijriCalloutView(onChange: { hijriRevision += 1 })
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                        }
                     }
                     .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
                         //                                            .offset(y: 24)

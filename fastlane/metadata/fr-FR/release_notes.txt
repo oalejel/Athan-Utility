@@ -1,4 +1,13 @@
-• Suggestion automatique de la méthode de calcul selon votre position — sans configuration
-• Nouveau widget très grand avec phase de lune en direct, prière en cours et horaire complet
-• Mise en page iPad plus aérée et raffinée
-• Améliorations et corrections
+La version 8.0 est la plus grande mise à jour qu'Athan Utility ait jamais connue.
+
+• Application Mac native – une vraie fenêtre macOS avec une barre latérale, ainsi qu'un élément dans la barre des menus qui affiche le compte à rebours jusqu'à la prochaine prière et ouvre une fenêtre contextuelle pour des réglages rapides
+• Alarme Fejr – programmez une véritable alarme iOS calée sur le Fejr (ou le lever du soleil), qui suit les horaires tout au long de l'année, avec un décalage pour le tahajjud ou le souhour (nécessite iOS 26)
+• Intégration au calendrier – ajoutez plusieurs mois d'horaires de prière à votre calendrier en un geste, et exportez la vue mensuelle en PDF ou en tableur
+• Application Apple Watch reconstruite, avec des complications pour votre cadran
+• Les widgets apparaissent désormais dans le Smart Stack autour des horaires de prière
+• Demandez à Siri la prochaine prière, ou l'horaire du jour pour n'importe quelle prière
+• Un nouvel écran Découvrir qui vous présente tout ce que l'application peut faire
+
+Désormais entièrement localisée en 12 langues, avec les noms de prières et les formulations revus pour chaque région.
+
+Plus une longue liste de corrections et d'améliorations dans toute l'application.

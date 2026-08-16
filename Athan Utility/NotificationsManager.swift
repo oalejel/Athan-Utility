@@ -55,9 +55,16 @@ class NotificationsManager {
         if CommandLine.arguments.contains("-UITEST_DEMO") || CommandLine.arguments.contains("-UITEST_INTRO") { return }
 
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
-            if !granted {
-                print("user denied notifications")
+        // Deliberately NOT requestAuthorization() here. Scheduling reruns on every
+        // location/settings change, so prompting inline meant the system alert fired
+        // the instant the user finished picking their city — before they had seen a
+        // single prayer time. NotificationPermission owns the prompt now (5s after the
+        // main UI first appears); this path only schedules when permission already exists.
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral: break
+            default:
+                print("notification permission not granted yet — skipping scheduling")
                 return
             }
             center.getPendingNotificationRequests { (notes) in

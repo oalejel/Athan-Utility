@@ -157,9 +157,9 @@ struct MainSwiftUI: View {
     }
     
     static func hijriDateString(date: Date, isAccessibilityLabel: Bool) -> String {
-        let hijriCal = Calendar(identifier: .islamicUmmAlQura)
+        let hijri = HijriSettings.shared
         let df = DateFormatter()
-        df.calendar = hijriCal
+        df.calendar = hijri.calendar()
         df.dateStyle = isAccessibilityLabel ? .full : .medium
 //        print("here")
         #warning("this gets called too often on stage changes. change later for performance.")
@@ -168,7 +168,7 @@ struct MainSwiftUI: View {
         if Locale.preferredLanguages.first?.hasPrefix("ar") ?? false {
             df.locale = Locale(identifier: "ar_SY")
         }
-        return df.string(from: date)
+        return df.string(from: hijri.adjusted(date))
     }
     
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -810,6 +810,11 @@ struct MainSwiftUI: View {
             }
         }
         .onAppear {
+            // Ask for notifications a few seconds from now, once the user has actually
+            // seen their prayer times — not during the location flow. See
+            // NotificationPermission for why this moved.
+            NotificationPermission.promptAfterMainUIAppears()
+
             guard !didEvaluateStartupSuggestion else { return }
             didEvaluateStartupSuggestion = true
             // Surface any update that already happened in the background (e.g. a widget

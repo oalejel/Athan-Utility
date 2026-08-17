@@ -31,12 +31,6 @@ import CoreGraphics
     func setActionDelegate(_ delegate: MenuBarActionDelegate)
     /// Push the latest prayer times / location / gradient for the popover to render.
     func updateSnapshot(_ snapshot: MenuBarSnapshot)
-    /// Create one throwaway status item using approach `variant` (1...10) and return a
-    /// one-line description of what happened. Each variant shows a distinct text label so
-    /// whichever one actually appears can be identified on sight.
-    func runStatusItemDiagnostic(_ variant: Int) -> String
-    /// Tear down every item created by runStatusItemDiagnostic.
-    func clearStatusItemDiagnostics()
     /// Whether the status item is actually showing in the menu bar right now —
     /// false if the user ⌘-dragged it out (the NSStatusItem object still exists
     /// with isVisible=false; it isn't fully torn down until removeStatusItem()).

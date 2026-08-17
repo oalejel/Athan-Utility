@@ -2159,6 +2159,7 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AthanMenuBarHelper/Info.plist;
@@ -2170,6 +2171,7 @@
 				);
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 8.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.MenuBarHelper";
 				PRODUCT_NAME = AthanMenuBarHelper;
 				SDKROOT = macosx;
@@ -2186,6 +2188,7 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AthanMenuBarHelper/Info.plist;
@@ -2197,6 +2200,7 @@
 				);
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 8.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.MenuBarHelper";
 				PRODUCT_NAME = AthanMenuBarHelper;
 				SDKROOT = macosx;

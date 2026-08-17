@@ -20,8 +20,6 @@ struct MacSettingsView: View {
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
     @State private var isPreviewingSound = false
-    /// Output of the menu bar diagnostic runs.
-    @State private var diagnosticText = "Run a variant, then look for A1-A10 in the menu bar."
 
     private let methods = CalculationMethod.usefulCases()
 

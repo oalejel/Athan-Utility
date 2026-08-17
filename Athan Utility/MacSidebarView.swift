@@ -66,6 +66,22 @@ struct MacSidebarView: View {
         }
         .safeAreaInset(edge: .bottom) { navFooter }
         .background(darkVibrancy)
+        // The footer is pinned with safeAreaInset so it cannot literally overlap, but a
+        // short window collapses the scroll area until the prayer list is a sliver under
+        // it. Claim a minimum height instead — and derive it from fs(), because ⌘+ makes
+        // every row taller and a fixed number would be wrong at any other zoom level.
+        .frame(minHeight: minimumSidebarHeight)
+    }
+
+    /// Enough room for the six prayer rows, the day navigator, the location row and the
+    /// nav footer, at the CURRENT font scale.
+    private var minimumSidebarHeight: CGFloat {
+        let prayerRows = 6 * fs(26)
+        let sectionHeader = fs(24)
+        let navigator = fs(34)
+        let location = fs(30)
+        let footer = CGFloat(navSections.count) * fs(30) + 28   // + divider and padding
+        return prayerRows + sectionHeader + navigator + location + footer + 36
     }
 
     // MARK: - Location header + inline editor

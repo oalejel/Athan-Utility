@@ -156,6 +156,7 @@ struct MacSidebarView: View {
         m.notificationSettings = updated
         m.reloadSettingsAndNotifications()
         silentVersion += 1
+        MacToast.shared.show(Strings.silentModeToastMessage(silenced: updated.silentMode))
         NotificationCenter.default.post(name: .athanSilentModeChanged, object: updated.silentMode)
     }
 
@@ -395,6 +396,7 @@ struct MacSidebarView: View {
         m.notificationSettings = updated
         m.reloadSettingsAndNotifications()
         bellVersion += 1
+        MacToast.shared.show(Strings.bellToastMessage(prayerName: p.localizedOrCustomString(), enabled: setting.athanAlertEnabled))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 

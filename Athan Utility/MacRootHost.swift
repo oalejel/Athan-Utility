@@ -44,6 +44,60 @@ final class MacRootState: ObservableObject {
     }
 }
 
+/// A single transient toast in the corner of the detail pane, for settings that are
+/// changed from the sidebar or the menu bar popover and would otherwise give no feedback.
+///
+/// Deliberately one instance with one message rather than a queue or a stack: bells and
+/// silent mode are easy to click repeatedly, and stacked toasts would both crowd the
+/// corner and animate over each other. Repeat shows replace the text in place and restart
+/// the timer, so the toast never accumulates and never re-animates in.
+final class MacToast: ObservableObject {
+    static let shared = MacToast()
+
+    @Published private(set) var message: String?
+
+    private var dismissal: DispatchWorkItem?
+
+    private init() {}
+
+    func show(_ text: String) {
+        dismissal?.cancel()
+        message = text
+        let work = DispatchWorkItem { [weak self] in self?.message = nil }
+        dismissal = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8, execute: work)
+    }
+}
+
+@available(macCatalyst 16.0, *)
+struct MacToastView: View {
+    @ObservedObject private var toast = MacToast.shared
+
+    var body: some View {
+        ZStack {
+            if let message = toast.message {
+                Text(message)
+                    .font(.system(size: 12.5, weight: .semibold))
+                    .foregroundColor(.black.opacity(0.85))
+                    .lineLimit(1)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 9)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.white)
+                            .shadow(color: .black.opacity(0.28), radius: 8, y: 2)
+                    )
+                    // Opacity only. A move/scale transition on a view whose text changes
+                    // mid-flight is what produces the smearing on rapid clicks.
+                    .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.18), value: toast.message)
+        .padding(20)
+        .allowsHitTesting(false)
+    }
+}
+
 /// Bridges the sidebar's `Binding<MacSection>` to the shared state, since the sidebar is
 /// now hosted on its own rather than being handed a binding by MainSwiftUI.
 @available(macCatalyst 16.0, *)

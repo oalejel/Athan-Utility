@@ -286,6 +286,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         m.notificationSettings = updated      // didSet archives
         m.reloadSettingsAndNotifications()     // reschedule with the new bell state
         pushSnapshot()                         // reflect it in the popover immediately
+        MacToast.shared.show(Strings.bellToastMessage(prayerName: p.localizedOrCustomString(), enabled: setting.athanAlertEnabled))
     }
 
     func menuBarSetMethod(index: Int) {
@@ -316,6 +317,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         m.notificationSettings = updated       // didSet archives
         m.reloadSettingsAndNotifications()      // reschedule with the new sound
         pushSnapshot()
+        MacToast.shared.show(Strings.silentModeToastMessage(silenced: silent))
         // The sidebar reads the same setting and has no way to know it changed.
         NotificationCenter.default.post(name: .athanSilentModeChanged, object: silent)
     }

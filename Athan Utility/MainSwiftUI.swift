@@ -291,6 +291,17 @@ struct MainSwiftUI: View {
     }
 
     @ViewBuilder private var macDetail: some View {
+        if #available(macCatalyst 16.0, *) {
+            ZStack(alignment: .bottomTrailing) {
+                macDetailContent
+                MacToastView()
+            }
+        } else {
+            macDetailContent
+        }
+    }
+
+    @ViewBuilder private var macDetailContent: some View {
         switch macSection {
         case .times:
             coreBody

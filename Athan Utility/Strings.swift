@@ -85,6 +85,27 @@ class Strings {
     
     static var restoreDefaults = NSLocalizedString("restore.defaults", comment: "")
     static var developedBy = NSLocalizedString("Developed by Omar Al-Ejel", comment: "")
+    // Mac toast confirmations, shown briefly in the corner of the detail pane when a
+    // setting is flipped from the sidebar or the menu bar popover.
+    /// Takes the already-localized prayer name rather than a `Prayer`: this file has no
+    /// Adhan import, and the caller has the name in hand anyway.
+    static func bellToastMessage(prayerName: String, enabled: Bool) -> String {
+        let format = enabled
+            ? NSLocalizedString("toast_notifications_enabled", value: "%@ notifications enabled",
+                                comment: "Brief confirmation; %@ is a prayer name")
+            : NSLocalizedString("toast_notifications_disabled", value: "%@ notifications disabled",
+                                comment: "Brief confirmation; %@ is a prayer name")
+        return String(format: format, prayerName)
+    }
+
+    static func silentModeToastMessage(silenced: Bool) -> String {
+        silenced
+            ? NSLocalizedString("toast_athan_silenced", value: "Athan sounds silenced",
+                                comment: "Brief confirmation: notifications will use the system sound")
+            : NSLocalizedString("toast_athan_restored", value: "Athan sounds on",
+                                comment: "Brief confirmation: notifications will play the athan again")
+    }
+
     // notification messages
     static var standardNotificationMessage = NSLocalizedString("Time for %1$@ in %2$@ [%3$@]", comment: "")
     static var reminderNotificationMessage = NSLocalizedString("%1$@m until %2$@ in %3$@ [%4$@]", comment: "")

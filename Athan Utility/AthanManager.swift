@@ -458,21 +458,21 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     private func watchForImminentPrayerUpdate() {
         // enter a background thread loop to wait on a change in case this timer is triggered too early
-        let samplePrayer = todayTimes.currentPrayer()
+        let samplePrayer = todayTimes.currentPrayer(at: athanNow())
         let nextTime = guaranteedNextPrayerTime()
         let timeUntilChange = nextTime.timeIntervalSince(Date())
         if timeUntilChange < 5 && timeUntilChange > 0 {
             DispatchQueue.global().async {
                 // wait on a change
-                while (samplePrayer == self.todayTimes.currentPrayer()) {
+                while (samplePrayer == self.todayTimes.currentPrayer(at: athanNow())) {
                     // do nothing
                 } // on break, we can update our prayer
                 DispatchQueue.main.async {
-                    self.currentPrayer = self.todayTimes.currentPrayer() ?? self.yesterdayTimes.currentPrayer() ?? .isha
+                    self.currentPrayer = self.todayTimes.currentPrayer(at: athanNow()) ?? self.yesterdayTimes.currentPrayer(at: athanNow()) ?? .isha
                 }
             }
         } else {
-            currentPrayer = todayTimes.currentPrayer() ?? self.yesterdayTimes.currentPrayer() ?? .isha
+            currentPrayer = todayTimes.currentPrayer(at: athanNow()) ?? self.yesterdayTimes.currentPrayer(at: athanNow()) ?? .isha
         }
     }
     
@@ -506,7 +506,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         var nextPrayerTime: Date! = nil
         if currentPrayer == .isha { // case for reading from tomorrow fajr times
             nextPrayerTime = tomorrowTimes.fajr
-        } else if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+        } else if self.yesterdayTimes.currentPrayer(at: athanNow()) != nil && self.yesterdayTimes.currentPrayer(at: athanNow()) == .maghrib {
             // happens in cases that times extend to next day (isha after 12)
             // this case is true when isha from yday hasn't technically started yet
             nextPrayerTime = yesterdayTimes.isha
@@ -522,9 +522,9 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     /// The prayer that `guaranteedNextPrayerTime()` refers to — mirrors its branching so the
     /// name and time always agree (handles day rollover and late-isha edge cases).
     func guaranteedNextPrayer() -> Prayer {
-        let currentPrayer = todayTimes.currentPrayer()
+        let currentPrayer = todayTimes.currentPrayer(at: athanNow())
         if currentPrayer == .isha { return .fajr }
-        if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+        if self.yesterdayTimes.currentPrayer(at: athanNow()) != nil && self.yesterdayTimes.currentPrayer(at: athanNow()) == .maghrib {
             return .isha
         }
         if currentPrayer == nil { return .fajr }
@@ -536,7 +536,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         var currentPrayerTime: Date! = nil
         if currentPrayer == nil { // case of new day before fajr
             // if yesterday maghrib is still "current", we are in exceptional case where isha is after 12 am
-            if self.yesterdayTimes.currentPrayer() != nil && self.yesterdayTimes.currentPrayer() == .maghrib {
+            if self.yesterdayTimes.currentPrayer(at: athanNow()) != nil && self.yesterdayTimes.currentPrayer(at: athanNow()) == .maghrib {
                 currentPrayer = .maghrib
                 currentPrayerTime = yesterdayTimes.maghrib
             } else {

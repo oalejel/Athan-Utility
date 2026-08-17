@@ -141,16 +141,16 @@ struct MainSwiftUI: View {
     
     func getPercentComplete() -> Double {
         var currentTime: Date?
-        if let currentPrayer = ObservableAthanManager.shared.todayTimes.currentPrayer() {
+        if let currentPrayer = ObservableAthanManager.shared.todayTimes.currentPrayer(at: athanNow()) {
             currentTime = ObservableAthanManager.shared.todayTimes.time(for: currentPrayer)
         } else { // if current prayer nil (post midnight, before fajr), set current time to approximately today's isha, subtracting by a day
             currentTime = ObservableAthanManager.shared.todayTimes.time(for: .isha).addingTimeInterval(-86400)
         }
         
         var nextTime: Date?
-        if ObservableAthanManager.shared.todayTimes.currentPrayer() == .isha { // if currently isha, use TOMORROW fajr
+        if ObservableAthanManager.shared.todayTimes.currentPrayer(at: athanNow()) == .isha { // if currently isha, use TOMORROW fajr
             nextTime = ObservableAthanManager.shared.tomorrowTimes.time(for: .fajr)
-        } else if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer() { // if prayer is non-nil (known not isha), calculate next prayer naturally
+        } else if let nextPrayer = ObservableAthanManager.shared.todayTimes.nextPrayer(at: athanNow()) { // if prayer is non-nil (known not isha), calculate next prayer naturally
             nextTime = ObservableAthanManager.shared.todayTimes.time(for: nextPrayer)
         } else { // if next prayer is nil (i.e. we are on yesterday isha) use today fajr
             nextTime = ObservableAthanManager.shared.todayTimes.time(for: .fajr)

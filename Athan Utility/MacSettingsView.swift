@@ -114,20 +114,12 @@ struct MacSettingsView: View {
                 // control is one that creates the item and takes the user to the switch.
                 Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
                         footer: Text(NSLocalizedString("menubar_enable_subtitle", value: "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.", comment: ""))) {
-                    HStack {
-                        Button(action: enableInMenuBar) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "menubar.arrow.up.rectangle")
-                                    .font(.system(size: 12, weight: .semibold))
-                                Text(NSLocalizedString("menubar_enable_button", value: "Enable in Menu Bar", comment: ""))
-                                    .font(.system(size: 13, weight: .semibold))
-                            }
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12).padding(.vertical, 6)
-                            .background(Capsule().fill(Color.accentColor))
-                        }
-                        .buttonStyle(.plain)
-                        Spacer()
+                    // Plain accent-coloured row text, not a filled pill — the grouped
+                    // Form row is already the button's container, and a capsule inside it
+                    // reads as a button within a button.
+                    Button(action: enableInMenuBar) {
+                        Label(NSLocalizedString("menubar_enable_button", value: "Enable in Menu Bar", comment: ""),
+                              systemImage: "menubar.arrow.up.rectangle")
                     }
                 }
 

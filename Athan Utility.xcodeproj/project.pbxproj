@@ -313,6 +313,7 @@
 /* Begin PBXFileReference section */
 		11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AthanMenuBarHelper.swift; path = AthanMenuBarHelper/AthanMenuBarHelper.swift; sourceTree = "<group>"; };
 		1B8E8EE7D72060AA88056FB3 /* NewFeaturesAnnouncement.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NewFeaturesAnnouncement.swift; sourceTree = "<group>"; };
+		1C546286B14A3DA60BDA6E5B /* Athan Utility (Mac).entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = "Athan Utility (Mac).entitlements"; sourceTree = "<group>"; };
 		1E9E016F681A671616108A07 /* SettingsFeatureGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsFeatureGrid.swift; sourceTree = "<group>"; };
 		249FF144570F802EB68430C8 /* CalendarExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalendarExportView.swift; sourceTree = "<group>"; };
 		2A4790F9D00300F2474AC5A4 /* WidgetPreviews.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WidgetPreviews.swift; sourceTree = "<group>"; };
@@ -697,6 +698,7 @@
 				CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */,
 				41B928004751B72510E13FAC /* HijriCalloutView.swift */,
 				D5075956B6268FBE6A35D494 /* DayBrowseState.swift */,
+				1C546286B14A3DA60BDA6E5B /* Athan Utility (Mac).entitlements */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1735,6 +1737,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Athan Utility/Athan Utility (Mac).entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1771,6 +1774,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Athan Utility/Athan Utility.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Athan Utility/Athan Utility (Mac).entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

@@ -267,6 +267,23 @@ platform :mac do
     )
   end
 
+  desc "Submit the already-uploaded Mac build for review (no rebuild) — clears export compliance"
+  lane :finalize do
+    deliver(
+      api_key:                  athan_api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      platform:                 "osx",
+      skip_binary_upload:       true,
+      skip_metadata:            true,
+      skip_screenshots:         true,
+      submit_for_review:        true,
+      automatic_release:        false,
+      force:                    true,
+      run_precheck_before_submit: false,
+      submission_information:   { export_compliance_uses_encryption: false }
+    )
+  end
+
   desc "Upload the Mac listing's localized metadata (no binary)"
   lane :upload_metadata do
     deliver(

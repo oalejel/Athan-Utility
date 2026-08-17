@@ -132,6 +132,10 @@ struct MacSettingsView: View {
                 }
             }
         .formStyle(.grouped)
+        // The grouped Form lays out at a narrower, centred width, so whatever is behind
+        // the pane shows in the side margins. Claim them with the Form's own grouped
+        // background, otherwise they read as pale pillars either side of the settings.
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
         .frame(maxWidth: 600)                       // negative space on the sides; tighter rows
         .frame(maxWidth: .infinity, alignment: .center)
         .navigationTitle(Strings.settings)

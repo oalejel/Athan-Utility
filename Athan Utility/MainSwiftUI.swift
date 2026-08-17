@@ -362,12 +362,12 @@ struct MainSwiftUI: View {
             macSolarArc(g)
                 .frame(height: max(96, g.size.height * 0.12))
                 .padding(.horizontal, 4)
-                .padding(.bottom, 34)
+                .padding(.bottom, 54)   // arc sits 20pt further off the bottom
         }
         .frame(maxWidth: 720)
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.horizontal, 44)
-        .padding(.top, 28)
+        .padding(.top, 8)               // whole group rides 20pt higher with it
         .onAppear { if manager.todayTimes != nil { macProgress = CGFloat(getPercentComplete()) } }
         .onReceive(secondsTimer) { _ in
             relativeDateId += 1   // refresh the countdown subtitle each second

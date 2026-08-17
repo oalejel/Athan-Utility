@@ -93,10 +93,6 @@ enum MacRootBuilder {
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
-        // The detail pane is now full-bleed under the floating sidebar, and the Settings
-        // Form doesn't fill it edge to edge — without this the hosting controller's own
-        // default background showed as pale pillars either side of the form.
-        detailVC.view.backgroundColor = UIColor(MacSidebarView.fill)
 
         split.setViewController(sidebarVC, for: .primary)
         split.setViewController(detailVC, for: .secondary)

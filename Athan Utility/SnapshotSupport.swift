@@ -63,10 +63,21 @@ enum SnapshotSupport {
             locationName: city.name,
             coord: city.coord,
             timeZone: TimeZone(identifier: city.tz) ?? .current,
-            useCurrentLocation: false,
+            // Reads as "using my location" rather than the crossed-out location.slash
+            // icon, which looks like something is switched off. Nothing actually asks
+            // CoreLocation for a fix in snapshot mode — the coordinate above is fixed.
+            useCurrentLocation: true,
             countryCode: city.country
         )
         AthanManager.shared.locationSettings = demo // didSet archives + recalculates
+        // The location glyph needs BOTH of these to render as location.fill.
+        AthanManager.shared.locationPermissionsGranted = true
+
+        // Every Featured tile at full size. The grid collapses a tile to a compact pill
+        // once its feature has been opened, and that state persists in the app group —
+        // so a machine that had explored some features produced a half-shrunken grid in
+        // the Settings screenshot. Reset it so the set is identical everywhere.
+        AdoptedFeature.saveDone([])
         IntroSetupFlags.hasCompletedCalculationSetup = !showsIntro
         // Hidden by default: the light bulb sat on top of the main screenshot.
         FeatureDiscovery.hasSeen = !showsDiscoveryHint

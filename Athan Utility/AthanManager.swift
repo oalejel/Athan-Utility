@@ -843,7 +843,27 @@ extension AthanManager {
             }
             
             // falls through here if we failed to geocode
-            
+
+            // Losing the network is the common reason to land here, not standing somewhere
+            // genuinely unnameable. If this fix is the same place we already have a name
+            // for, keep everything we know: overwriting "Bloomfield Hills, MI" with
+            // "42.58°, -83.24°" — and discarding the placemark's time zone and country code
+            // along with it — is strictly worse than leaving the saved location alone. The
+            // country code especially, since the auto-method logic reads it.
+            let newCoord = locations.first!.coordinate
+            let sameAsSaved = Int(self.locationSettings.locationCoordinate.latitude * 100) == Int(newCoord.latitude * 100)
+                && Int(self.locationSettings.locationCoordinate.longitude * 100) == Int(newCoord.longitude * 100)
+            if sameAsSaved {
+                print("reverse geocode failed, but the coordinate is unchanged — keeping the saved location name")
+                if let captureClosure = self.captureLocationUpdateClosure,
+                   let kept = self.locationSettings.copy() as? LocationSettings {
+                    captureClosure(kept)
+                    self.captureLocationUpdateClosure = nil
+                }
+                self.reloadSettingsAndNotifications()
+                return
+            }
+
             // user calendar timezone, trusting user is giving coordinates that make sense for their time zone
             let namelessLocationSettings = LocationSettings(locationName: String(format: "%.2f°, %.2f°", locations.first!.coordinate.latitude, locations.first!.coordinate.longitude),
                                                             coord: locations.first!.coordinate, timeZone: Calendar.current.timeZone, useCurrentLocation: true)

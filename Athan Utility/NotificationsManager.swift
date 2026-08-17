@@ -120,6 +120,15 @@ class NotificationsManager {
                     for p in Prayer.allCases {
                         let setting = noteSettings.settings[p]!
                         let prayerDate = times.time(for: p)
+
+                        // Today's already-passed prayers must not be scheduled. A
+                        // UNCalendarNotificationTrigger whose date is in the past fires
+                        // IMMEDIATELY, so rescheduling — which happens on every settings
+                        // change, including toggling a single bell — delivered an athan
+                        // for a prayer that was hours ago. Skips the pre-prayer reminder
+                        // below too, since that fires even earlier.
+                        guard prayerDate > Date() else { continue }
+
                         let dateString = df.string(from: prayerDate)
                         
                         // The object that stores text and sound for a note

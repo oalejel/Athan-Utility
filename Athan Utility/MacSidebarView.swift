@@ -61,7 +61,10 @@ struct MacSidebarView: View {
                 if showLocationEditor { locationEditor.transition(.opacity) }
                 Spacer(minLength: 12)
             }
-            .padding(.top, 10)
+            // Sits just under the sidebar toggle rather than 20pt below it: the
+            // toolbar area above already provides the separation, and the extra
+            // padding read as a gap with nothing in it.
+            .padding(.top, 2)
             .padding(.horizontal, 8)
         }
         .safeAreaInset(edge: .bottom) { navFooter }
@@ -161,7 +164,7 @@ struct MacSidebarView: View {
             .font(.system(size: fs(11.5), weight: .semibold))
             .tracking(0.6)
             .foregroundColor(.white.opacity(0.45))
-            .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 4)
+            .padding(.horizontal, 12).padding(.top, 2).padding(.bottom, 4)
     }
 
     private var prayerList: some View {

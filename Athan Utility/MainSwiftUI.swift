@@ -853,6 +853,9 @@ struct MainSwiftUI: View {
                let pending = AthanManager.shared.loadPendingMethodUpdateNotice() {
                 manager.methodUpdateNotice = pending
             }
+            // Carry the pre-8.0 per-process record into the shared one before evaluating,
+            // so an upgrade doesn't read as "no country ever handled" and pop immediately.
+            AthanManager.shared.migrateHandledSuggestionCountryIfNeeded()
             // Evaluate the best country we can infer — GPS if shared, otherwise device region —
             // and auto-update the method if it warrants a change.
             AthanManager.shared.autoUpdateMethodIfNeeded(for: AthanManager.shared.bestAvailableCountryCode())

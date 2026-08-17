@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Combine
 
 /// Notified when a NoteSoundPlayer-managed AVAudioPlayer finishes playing ON ITS OWN
 /// (natural completion — NOT a manual stopAudio() call, which AVAudioPlayer doesn't
@@ -15,8 +16,19 @@ import AVFoundation
 /// flip back to its idle state without polling isPlaying().
 private final class SoundPlayerDelegateProxy: NSObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        AthanPlaybackState.shared.isPlayingFullAthan = false
         NoteSoundPlayer.onFinishedPlaying?()
     }
+}
+
+/// Whether a full athan is playing right now. Shared and observable because the mute
+/// control has to survive the main view being swapped for Settings — it used to keep this
+/// in local @State, so switching screens gave the view a new identity, reset the flag, and
+/// faded the only stop button out while the athan kept playing.
+final class AthanPlaybackState: ObservableObject {
+    static let shared = AthanPlaybackState()
+    @Published var isPlayingFullAthan = false
+    private init() {}
 }
 
 class NoteSoundPlayer: NSObject {
@@ -71,10 +83,13 @@ class NoteSoundPlayer: NSObject {
     
     // returns duration of audio
     static func playFullAudio(for index: Int, fadeInterval: Int? = nil) -> Float {
-        playAudio(for: index, isPreview: false, fadeInterval: fadeInterval)
+        let duration = playAudio(for: index, isPreview: false, fadeInterval: fadeInterval)
+        DispatchQueue.main.async { AthanPlaybackState.shared.isPlayingFullAthan = duration >= 3 }
+        return duration
     }
     
     static func fadeAndStopAudio() {
+        DispatchQueue.main.async { AthanPlaybackState.shared.isPlayingFullAthan = false }
         if audioPlayer?.isPlaying != false {
             audioPlayer?.setVolume(0, fadeDuration: 0.5)
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
@@ -85,6 +100,7 @@ class NoteSoundPlayer: NSObject {
     }
     
     static func stopAudio() {
+        DispatchQueue.main.async { AthanPlaybackState.shared.isPlayingFullAthan = false }
         audioPlayer?.stop()
     }
     

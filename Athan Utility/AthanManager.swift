@@ -557,15 +557,22 @@ extension AthanManager {
     /// UserDefaults key for the last country we already auto-updated the method for, so we
     /// only auto-update once per country (until the country changes) and never fight a
     /// deliberate later choice by the user.
-    private static let handledSuggestionCountryKey = "AthanHandledSuggestionCountry"
-    private var handledSuggestionCountry: String? {
-        get { UserDefaults.standard.string(forKey: Self.handledSuggestionCountryKey) }
-        set { UserDefaults.standard.set(newValue, forKey: Self.handledSuggestionCountryKey) }
-    }
-
     /// App-group defaults, shared between the app and the widget so a method update applied
     /// during a background widget refresh can surface the popup the next time the app opens.
     private var groupDefaults: UserDefaults? { UserDefaults(suiteName: "group.athanUtil") }
+
+    private static let handledSuggestionCountryKey = "AthanHandledSuggestionCountry"
+    /// App-group backed, NOT UserDefaults.standard. The widget extension has its own
+    /// standard defaults, so a per-process record meant the widget never saw what the app
+    /// had already handled: it would re-apply the recommendation and persist a fresh
+    /// notice, and the popup then appeared on next launch with the user having changed
+    /// nothing. One shared record keeps "we already decided about this country" true for
+    /// both processes.
+    private var handledSuggestionCountry: String? {
+        get { groupDefaults?.string(forKey: Self.handledSuggestionCountryKey) }
+        set { groupDefaults?.set(newValue, forKey: Self.handledSuggestionCountryKey) }
+    }
+
     private static let pendingNoticeKey = "AthanPendingMethodUpdateNotice"
 
     private func persistPendingNotice(_ notice: MethodUpdateNotice?) {
@@ -608,6 +615,14 @@ extension AthanManager {
     ///   (or tapped "use current location"). Both quiet-mode guards are skipped in that
     ///   case — see below.
     /// - Returns: `true` if the method was actually changed.
+    /// Carry the old per-process record into the shared one, once, so upgrading doesn't
+    /// look like "we've never handled any country" and fire a popup immediately.
+    func migrateHandledSuggestionCountryIfNeeded() {
+        guard groupDefaults?.string(forKey: Self.handledSuggestionCountryKey) == nil,
+              let legacy = UserDefaults.standard.string(forKey: Self.handledSuggestionCountryKey) else { return }
+        groupDefaults?.set(legacy, forKey: Self.handledSuggestionCountryKey)
+    }
+
     @discardableResult
     func autoUpdateMethodIfNeeded(for countryCode: String?,
                                   rescheduleNotifications: Bool = true,

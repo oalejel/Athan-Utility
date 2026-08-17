@@ -382,7 +382,5 @@
 "hijri_ramadan_adjust" = "Ramadan day";
 "day_previous" = "Previous day";
 "day_next" = "Next day";
-"menubar_add_button" = "Add to Menu Bar";
-"menubar_add_footer" = "Shows the Athan Utility icon with a countdown to the next prayer. Hold ⌘ and drag it out of the menu bar to remove it.";
-"menubar_blocked" = "macOS is blocking the icon. Dragging it out of the menu bar turned Athan Utility off under Control Center settings — turn it back on there, then tap Add again.";
-"menubar_open_settings" = "Open Control Center Settings";
+"menubar_enable_button" = "Enable in Menu Bar";
+"menubar_enable_subtitle" = "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.";

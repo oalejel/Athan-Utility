@@ -20,9 +20,6 @@ struct MacSettingsView: View {
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
     @State private var isPreviewingSound = false
-    /// macOS took the status item but never placed it — on macOS 26 that means the
-    /// app has been switched off under Control Center's "Allow in the Menu Bar".
-    @State private var menuBarBlocked = false
     /// Output of the menu bar diagnostic runs.
     @State private var diagnosticText = "Run a variant, then look for A1-A10 in the menu bar."
 
@@ -112,18 +109,19 @@ struct MacSettingsView: View {
                         .onChange(of: isDynamic) { _ in applyAppearance() }
                 }
 
-                // One-way on purpose. A two-way switch had to agree with something macOS
-                // owns — the user can ⌘-drag the icon out at any time — and keeping the
-                // two in sync is what kept breaking. Removing is the drag, the way it is
-                // for every other menu bar app; this is only the way back.
+                // macOS 26 owns whether this app may appear in the menu bar: dragging the
+                // icon out turns Athan Utility off under System Settings > Control Center >
+                // "Allow in the Menu Bar", and from then on the system refuses to place any
+                // status item we create. Nothing in here can undo that, so the only honest
+                // control is one that creates the item and takes the user to the switch.
                 Section(header: Text(NSLocalizedString("menubar_section", value: "Menu Bar", comment: "")),
-                        footer: Text(NSLocalizedString("menubar_add_footer", value: "Shows the Athan Utility icon with a countdown to the next prayer. Hold ⌘ and drag it out of the menu bar to remove it.", comment: ""))) {
+                        footer: Text(NSLocalizedString("menubar_enable_subtitle", value: "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.", comment: ""))) {
                     HStack {
-                        Button(action: addToMenuBar) {
+                        Button(action: enableInMenuBar) {
                             HStack(spacing: 6) {
                                 Image(systemName: "menubar.arrow.up.rectangle")
                                     .font(.system(size: 12, weight: .semibold))
-                                Text(NSLocalizedString("menubar_add_button", value: "Add to Menu Bar", comment: ""))
+                                Text(NSLocalizedString("menubar_enable_button", value: "Enable in Menu Bar", comment: ""))
                                     .font(.system(size: 13, weight: .semibold))
                             }
                             .foregroundColor(.white)
@@ -132,57 +130,6 @@ struct MacSettingsView: View {
                         }
                         .buttonStyle(.plain)
                         Spacer()
-                    }
-
-                    // macOS 26 owns this decision, not us. Dragging the icon out of the
-                    // menu bar turns the app's switch off under Control Center's "Allow in
-                    // the Menu Bar", and after that the system refuses to place any status
-                    // item we create — which is why the icon is created, reports itself
-                    // visible, and is still nowhere to be seen. No amount of retrying from
-                    // in here can undo it, so point at the switch that can.
-                    if menuBarBlocked {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Label(NSLocalizedString("menubar_blocked", value: "macOS is blocking the icon. Dragging it out of the menu bar turned Athan Utility off under Control Center settings — turn it back on there, then tap Add again.", comment: ""),
-                                  systemImage: "exclamationmark.triangle.fill")
-                                .font(.footnote)
-                                .foregroundColor(.orange)
-                                .fixedSize(horizontal: false, vertical: true)
-
-                            Button(NSLocalizedString("menubar_open_settings", value: "Open Control Center Settings", comment: "")) {
-                                if let url = URL(string: "x-apple.systempreferences:com.apple.ControlCenter-Settings.extension") {
-                                    UIApplication.shared.open(url)
-                                }
-                            }
-                            .font(.footnote)
-                        }
-                    }
-                }
-                .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarPlacementFailed)) { _ in
-                    menuBarBlocked = true
-                }
-
-                // TEMPORARY. Ten different ways of vending an NSStatusItem, because
-                // isVisible == true has proven to mean nothing in this process. Whichever
-                // label (A1-A10) actually shows up in the menu bar identifies the approach
-                // that works here; the rest can then be deleted along with this section.
-                Section(header: Text("Menu Bar Diagnostics"),
-                        footer: Text(diagnosticText).font(.caption)) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 54))], spacing: 8) {
-                        ForEach(1...10, id: \.self) { v in
-                            Button("A\(v)") {
-                                diagnosticText = MenuBarBridge.shared.runDiagnostic(v)
-                            }
-                            .buttonStyle(.bordered)
-                        }
-                    }
-                    .padding(.vertical, 4)
-
-                    Button("Run all 10") {
-                        diagnosticText = MenuBarBridge.shared.runAllDiagnostics()
-                    }
-                    Button("Clear test items", role: .destructive) {
-                        MenuBarBridge.shared.clearDiagnostics()
-                        diagnosticText = "Cleared."
                     }
                 }
 
@@ -223,12 +170,17 @@ struct MacSettingsView: View {
         AthanManager.shared.reloadSettingsAndNotifications()
     }
 
-    private func addToMenuBar() {
-        menuBarBlocked = false      // re-evaluate; the user may have just flipped the switch
+    /// Create the status item and open the macOS switch that decides whether it may be
+    /// shown. Both halves are needed: flipping the switch does nothing if the app never
+    /// vends an item, and vending one does nothing while the switch is off.
+    private func enableInMenuBar() {
         MenuBarSettings.isHidden = false
-        // restoreItem(), not ensureItem(): after a ⌘-drag removal AppKit has detached
-        // that NSStatusItem for good, so only a from-scratch recreate brings it back.
+        // restoreItem(), not ensureItem(): after a drag removal AppKit has detached that
+        // NSStatusItem for good, so only a from-scratch recreate can work.
         MenuBarBridge.shared.restoreItem()
+        if let url = URL(string: "x-apple.systempreferences:com.apple.ControlCenter-Settings.extension") {
+            UIApplication.shared.open(url)
+        }
     }
 
     private func toggleSoundPreview() {

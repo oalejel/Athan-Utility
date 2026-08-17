@@ -69,6 +69,12 @@ struct MacSidebarView: View {
         // it. Claim a minimum height instead — and derive it from fs(), because ⌘+ makes
         // every row taller and a fixed number would be wrong at any other zoom level.
         .frame(minHeight: minimumSidebarHeight)
+        // The menu bar popover's location row opens the editor here, so the click lands
+        // somewhere useful rather than just raising the window.
+        .onReceive(NotificationCenter.default.publisher(for: .athanShowMacLocationSettings)) { _ in
+            section = .times
+            withAnimation { showLocationEditor = true }
+        }
     }
 
     /// Enough room for the six prayer rows, the day navigator, the location row and the

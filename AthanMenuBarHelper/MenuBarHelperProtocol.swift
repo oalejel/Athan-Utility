@@ -49,6 +49,8 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
+    /// Open the app on its location settings (the location row in the popover).
+    func menuBarOpenLocationSettings()
     /// Bring the main window back. Once the last window closes the scene is gone, and
     /// only UIKit can vend a new one — the AppKit helper has no way to do it.
     func menuBarOpenWindow()

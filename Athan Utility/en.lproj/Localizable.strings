@@ -384,3 +384,4 @@
 "day_next" = "Next day";
 "menubar_enable_button" = "Enable in Menu Bar";
 "menubar_enable_subtitle" = "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.";
+"open_location_settings" = "Open location settings";

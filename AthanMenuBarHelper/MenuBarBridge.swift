@@ -20,6 +20,8 @@ extension Notification.Name {
     static let athanMenuBarItemVisibilityChanged = Notification.Name("AthanMenuBarItemVisibilityChanged")
     /// Posted when macOS accepted the status item but gave it no slot — a full menu bar.
     static let athanMenuBarPlacementFailed = Notification.Name("AthanMenuBarPlacementFailed")
+    /// Posted when the popover's location row is clicked; the sidebar opens its editor.
+    static let athanShowMacLocationSettings = Notification.Name("AthanShowMacLocationSettings")
 }
 
 func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
@@ -314,6 +316,10 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
             UIApplication.shared.requestSceneSessionActivation(nil, userActivity: nil,
                                                                options: options, errorHandler: nil)
         }
+    }
+
+    func menuBarOpenLocationSettings() {
+        NotificationCenter.default.post(name: .athanShowMacLocationSettings, object: nil)
     }
 
     func menuBarOpenSettings() {

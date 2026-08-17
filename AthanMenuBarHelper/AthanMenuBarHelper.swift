@@ -333,6 +333,10 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             self?.openApp()
             self?.actionDelegate?.menuBarOpenSettings()
         }
+        vc.onOpenLocationSettings = { [weak self] in
+            self?.openApp()
+            self?.actionDelegate?.menuBarOpenLocationSettings()
+        }
         pop.contentViewController = vc
         popoverVC = vc
         popover = pop
@@ -400,6 +404,7 @@ final class MenuBarPopoverController: NSViewController {
     var onSetSound: ((Int) -> Void)?
     var onSetDisplayMode: ((Int) -> Void)?
     var onOpenSettings: (() -> Void)?
+    var onOpenLocationSettings: (() -> Void)?
 
     private let gradient = CAGradientLayer()
     private let stack = NSStackView()
@@ -468,20 +473,6 @@ final class MenuBarPopoverController: NSViewController {
         seg.widthAnchor.constraint(equalToConstant: inset).isActive = true
         stack.addArrangedSubview(seg)
 
-        stack.addArrangedSubview(spacer(8))
-
-        // Bottom: one full-width Settings button. There used to be a separate "Open"
-        // beside it, but Settings already brings the app forward on its way to the
-        // Settings screen — the two buttons differed only in where you landed.
-        let gear = NSButton(title: " " + NSLocalizedString("settings", value: "Settings", comment: ""),
-                            target: self, action: #selector(settingsTapped))
-        if let g = NSImage(systemSymbolName: "gearshape.fill", accessibilityDescription: nil) {
-            gear.image = g; gear.imagePosition = .imageLeading
-        }
-        gear.bezelStyle = .rounded
-        gear.translatesAutoresizingMaskIntoConstraints = false
-        gear.widthAnchor.constraint(equalToConstant: inset).isActive = true
-        stack.addArrangedSubview(gear)
     }
 
     // MARK: - Row builders
@@ -492,8 +483,33 @@ final class MenuBarPopoverController: NSViewController {
         pin.contentTintColor = NSColor.white.withAlphaComponent(0.8)
         pin.translatesAutoresizingMaskIntoConstraints = false
         pin.widthAnchor.constraint(equalToConstant: 13).isActive = true
-        let label = makeLabel(text, size: 12.5, weight: .semibold, color: NSColor.white.withAlphaComponent(0.9))
-        let hs = NSStackView(views: [pin, label])
+        // A button that still looks exactly like the label it replaces: borderless, no
+        // bezel, no key-equivalent chrome. Clicking it opens the app's location settings.
+        let label = NSButton(title: text, target: self, action: #selector(locationTapped))
+        label.isBordered = false
+        label.bezelStyle = .inline
+        label.setButtonType(.momentaryChange)
+        label.contentTintColor = NSColor.white.withAlphaComponent(0.9)
+        label.font = .systemFont(ofSize: 12.5, weight: .semibold)
+        label.alignment = .left
+        label.toolTip = NSLocalizedString("open_location_settings", value: "Open location settings", comment: "")
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        // Gear in the top-right, on the same line as the location.
+        let gear = NSButton(title: "", target: self, action: #selector(settingsTapped))
+        gear.isBordered = false
+        gear.bezelStyle = .inline
+        gear.setButtonType(.momentaryChange)
+        gear.imagePosition = .imageOnly
+        if let g = NSImage(systemSymbolName: "gearshape.fill", accessibilityDescription:
+                            NSLocalizedString("settings", value: "Settings", comment: "")) {
+            gear.image = g
+        }
+        gear.contentTintColor = NSColor.white.withAlphaComponent(0.75)
+        gear.translatesAutoresizingMaskIntoConstraints = false
+        gear.widthAnchor.constraint(equalToConstant: 15).isActive = true
+
+        let hs = NSStackView(views: [pin, label, gear])
         hs.orientation = .horizontal
         hs.spacing = 6
         hs.alignment = .centerY
@@ -566,4 +582,5 @@ final class MenuBarPopoverController: NSViewController {
     @objc private func soundChanged(_ sender: NSPopUpButton) { onSetSound?(sender.indexOfSelectedItem) }
     @objc private func displayModeChanged(_ sender: NSSegmentedControl) { onSetDisplayMode?(sender.selectedSegment) }
     @objc private func settingsTapped() { onOpenSettings?() }
+    @objc private func locationTapped() { onOpenLocationSettings?() }
 }

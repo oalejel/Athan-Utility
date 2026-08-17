@@ -8,11 +8,15 @@
 import UIKit
 import SwiftUI
 import WhatsNewKit
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
-    
+    #if targetEnvironment(macCatalyst)
+    private var macRootCancellable: AnyCancellable?
+    #endif
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -21,18 +25,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let _ = AthanManager.shared
         let man = ObservableAthanManager.shared
+        #if !targetEnvironment(macCatalyst)
         let contentView = MainSwiftUI()
             .environmentObject(man)
             .colorScheme(.dark)
-        
+        #else
+        _ = man
+        #endif
+
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+            #if targetEnvironment(macCatalyst)
+            // The split view controller has to BE the root for the traffic lights to sit
+            // inside the sidebar, so it can't be wrapped in a hosting controller. During
+            // onboarding there's no sidebar to speak of, so the root swaps instead.
+            MacRootState.shared.isOnboarding = MacRootBuilder.needsOnboarding
+            window.rootViewController = MacRootBuilder.makeRoot(
+                onboarding: MacRootState.shared.isOnboarding)
+            #else
             window.rootViewController = UIHostingController(rootView: contentView)
+            #endif
             self.window = window
             window.makeKeyAndVisible()
 
             #if targetEnvironment(macCatalyst)
+            macRootCancellable = MacRootState.shared.$isOnboarding
+                .removeDuplicates()
+                .dropFirst()            // the root above already matches the current value
+                .receive(on: RunLoop.main)
+                .sink { [weak window] onboarding in
+                    guard let window else { return }
+                    window.rootViewController = MacRootBuilder.makeRoot(onboarding: onboarding)
+                }
+
             // Hide the "Athan Utility" text in the Mac window's title bar for a cleaner look.
             if let titlebar = windowScene.titlebar {
                 titlebar.titleVisibility = .hidden

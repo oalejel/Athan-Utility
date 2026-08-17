@@ -97,8 +97,20 @@ struct MainSwiftUI: View {
     @State private var didEvaluateStartupSuggestion = false
     
     @State var currentView: PresentedSectionType
-    // Mac-only: which sidebar section is showing in the split-view detail pane.
-    @State private var macSection: MacSection = .times
+    /// Mac-only: true when this instance is the split view's detail pane rather than the
+    /// whole window, in which case the body renders `macDetail` and the sidebar is hosted
+    /// separately by MacRootBuilder. Always false elsewhere.
+    let macDetailOnly: Bool
+    #if targetEnvironment(macCatalyst)
+    // Which sidebar section is showing. Window-level rather than `@State`, because the
+    // sidebar and the detail pane are separate hosting controllers under the root split
+    // view controller and can't share view state. See MacRootHost.swift.
+    @ObservedObject private var macRoot = MacRootState.shared
+    private var macSection: MacSection {
+        get { macRoot.section }
+        nonmutating set { macRoot.section = newValue }
+    }
+    #endif
     // Mac Times pane progress (driven off the per-second timer; the iOS layout uses its own).
     @State private var macProgress: CGFloat = 0
 
@@ -176,7 +188,8 @@ struct MainSwiftUI: View {
     let weakImpactGenerator = UIImpactFeedbackGenerator(style: .light)
     let strongImpactGenerator = UIImpactFeedbackGenerator(style: .heavy)
     
-    init() {
+    init(macDetailOnly: Bool = false) {
+        self.macDetailOnly = macDetailOnly
         _currentView = State(initialValue: SnapshotSupport.showsIntro ? PresentedSectionType.Location : ((AthanManager.shared.locationSettings.locationName.isEmpty) ? PresentedSectionType.Location : PresentedSectionType.Main))
         
         // for calculating progress of CURRENT prayer
@@ -252,12 +265,17 @@ struct MainSwiftUI: View {
     
     var body: some View {
         #if targetEnvironment(macCatalyst)
-        if #available(macCatalyst 16.0, *), currentView == .Main {
-            MacSplitHost(sidebar: MacSidebarView(section: $macSection),
-                         detail: macDetail)
-                .ignoresSafeArea()
+        if macDetailOnly {
+            // Detail pane of the root split view controller.
+            macDetail
         } else {
-            coreBody   // onboarding (location / intro) + pre-macOS-13 fallback
+            // Whole window: the location / intro flow. Report when it finishes so the
+            // scene can swap the root over to the split view controller.
+            coreBody
+                .onAppear { MacRootState.shared.isOnboarding = (currentView != .Main) }
+                .onChange(of: currentView) { newValue in
+                    MacRootState.shared.isOnboarding = (newValue != .Main)
+                }
         }
         #else
         coreBody
@@ -874,11 +892,9 @@ struct MainSwiftUI: View {
                 showDiscovery = true
             }
         }
-        // Menu-bar popover gear → jump to Settings in the Mac split view.
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("AthanShowMacSettings"))) { _ in
-            currentView = .Main
-            macSection = .settings
-        }
+        // The menu-bar popover's gear (AthanShowMacSettings) is handled by MacRootState,
+        // not here: this body only exists while the Times pane is on screen, so a handler
+        // here did nothing whenever the user was already in Calendar or Discover.
         // Tapping the one-time new-features local notification → open Discover
         // Features directly. Also flips the light-bulb hint's local state (not
         // just the persisted flag) since it may have been set before this view's

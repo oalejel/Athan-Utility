@@ -324,15 +324,13 @@
 "stop" = "Detener";
 "preview" = "Vista previa";
 "menubar_section" = "Barra de menús";
-"menubar_icon_footer" = "Muestra el icono de Athan Utility con la cuenta regresiva de la próxima oración en la barra de menús de macOS. Actívalo para devolverlo si fue eliminado.";
-"menubar_show_icon" = "Mostrar icono en la barra de menús";
 "adopt_fajr_sub" = "Una alarma que no puedes dormir";
 "widgets_title" = "Widgets de pantalla de inicio y bloqueada";
 "widgets_1" = "Toca y mantén presionado un área vacía de tu pantalla de inicio o pantalla bloqueada hasta que entre en modo de edición.";
 "widgets_2" = "Toca el botón + (pantalla de inicio) o el área de widgets debajo del reloj (pantalla bloqueada).";
 "widgets_3" = "Busca \"Athan Utility\" y elige un tamaño de widget.";
 "widgets_4" = "Toca «Añadir widget» y luego «Listo».";
-"hijri_tap_hint" = "Toca dos veces para mostrar la fecha gregoriana de hoy";
+"hijri_tap_hint" = "Toca dos veces para mostrar la fecha gregoriana de hoy y las opciones de calendario";
 "widget_preview_home_small" = "Pantalla de inicio";
 "widget_preview_home_medium" = "Pantalla de inicio";
 "widget_preview_lock" = "Pantalla bloqueada";
@@ -349,3 +347,13 @@
 "Alarms" = "Alarmas";
 "Location Search" = "Buscar ubicación";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility guarda meses de datos de athan para usarlos sin conexión.";
+
+"hijri_mode_subtitle" = "Calendario hijri";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Civil islámico";
+"hijri_mode_tabular" = "Tabular islámico";
+"hijri_ramadan_adjust" = "Día de Ramadán";
+"day_previous" = "Día anterior";
+"day_next" = "Día siguiente";
+"menubar_enable_button" = "Activar en la barra de menús";
+"menubar_enable_subtitle" = "Para volver a añadir Athan Utility a tu barra de menús, actívalo en los Ajustes de macOS.";

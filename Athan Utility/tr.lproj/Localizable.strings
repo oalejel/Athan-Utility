@@ -271,8 +271,6 @@
 "appearance_section" = "Görünüm";
 "dynamic_colors" = "Namaza göre dinamik renkler";
 "menubar_section" = "Menü Çubuğu";
-"menubar_icon_footer" = "macOS menü çubuğunda, sıradaki namaza kalan süreyle birlikte Athan Utility simgesini gösterin. Kaldırılmışsa geri getirmek için bunu açın.";
-"menubar_show_icon" = "Menü çubuğu simgesini göster";
 "version" = "Sürüm";
 "adopt_widgets_title" = "Widget'lar";
 "adopt_siri_title" = "Siri";
@@ -292,7 +290,7 @@
 "siri_sheet_title" = "Namaz vakitlerini Siri'ye sorun";
 "siri_sheet_body" = "Bir kısayol ekleyin, ardından ellerinizi kullanmadan Siri'ye sorun.";
 "siri_sheet_nav" = "Siri Kısayolu";
-"hijri_tap_hint" = "Bugünün miladi tarihini görmek için iki kez dokunun";
+"hijri_tap_hint" = "Bugünün miladi tarihini ve takvim seçeneklerini görmek için iki kez dokunun";
 "widget_preview_home_small" = "Ana Ekran";
 "widget_preview_home_medium" = "Ana Ekran";
 "widget_preview_lock" = "Kilit Ekranı";
@@ -347,3 +345,13 @@
 "Alarms" = "Alarmlar";
 "Location Search" = "Konum Ara";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility, çevrimdışı kullanım için aylarca ezan verisi saklar.";
+
+"hijri_mode_subtitle" = "Hicri takvim";
+"hijri_mode_ummalqura" = "Ümmülkura";
+"hijri_mode_civil" = "İslami Takvim (Sivil)";
+"hijri_mode_tabular" = "İslami Takvim (Tablo)";
+"hijri_ramadan_adjust" = "Ramazan günü";
+"day_previous" = "Önceki gün";
+"day_next" = "Sonraki gün";
+"menubar_enable_button" = "Menü Çubuğunda Etkinleştir";
+"menubar_enable_subtitle" = "Athan Utility'yi menü çubuğunuza yeniden eklemek için Athan Utility'yi macOS ayarlarınızdan etkinleştirin.";

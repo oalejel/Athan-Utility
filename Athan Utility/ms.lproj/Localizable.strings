@@ -224,8 +224,6 @@
 "alerts_section" = "Amaran Solat";
 "dynamic_colors" = "Warna dinamik mengikut solat";
 "menubar_section" = "Bar Menu";
-"menubar_icon_footer" = "Tunjukkan ikon Athan Utility dengan kiraan undur solat seterusnya dalam bar menu macOS. Nyalakan ini untuk membawanya kembali jika ia telah dialih keluar.";
-"menubar_show_icon" = "Tunjukkan ikon bar menu";
 "version" = "Versi";
 "adopt_widgets_title" = "Widget";
 "adopt_siri_title" = "Siri";
@@ -245,7 +243,7 @@
 "siri_sheet_title" = "Tanya Siri untuk waktu solat";
 "siri_sheet_body" = "Tambah pintasan, kemudian hanya tanya Siri bebas tangan.";
 "siri_sheet_nav" = "Pintasan Siri";
-"hijri_tap_hint" = "Ketik dua kali untuk menunjukkan tarikh Gregorian hari ini";
+"hijri_tap_hint" = "Ketik dua kali untuk menunjukkan tarikh Gregorian hari ini dan pilihan kalendar";
 "widget_preview_home_small" = "Skrin Utama";
 "widget_preview_home_medium" = "Skrin Utama";
 "widget_preview_lock" = "Skrin Kunci";
@@ -325,3 +323,13 @@
 "fajr.alarm.days.ahead" = "%d penggera seterusnya";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility menyimpan data azan selama beberapa bulan untuk kegunaan luar talian.";
 "Search City" = "Cari Bandar";
+
+"hijri_mode_subtitle" = "Kalendar Hijrah";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Islam Sivil";
+"hijri_mode_tabular" = "Islam Tabular";
+"hijri_ramadan_adjust" = "Hari Ramadan";
+"day_previous" = "Hari sebelumnya";
+"day_next" = "Hari seterusnya";
+"menubar_enable_button" = "Dayakan dalam Bar Menu";
+"menubar_enable_subtitle" = "Untuk menambahkan Athan Utility semula ke bar menu anda, dayakan Athan Utility dalam tetapan macOS anda.";

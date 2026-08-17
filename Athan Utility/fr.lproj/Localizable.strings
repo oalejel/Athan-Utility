@@ -273,8 +273,6 @@
 "appearance_section" = "Apparence";
 "dynamic_colors" = "Couleurs Dynamiques par Prière";
 "menubar_section" = "Barre des menus";
-"menubar_icon_footer" = "Afficher l'icône Athan Utility avec le décompte de la prochaine prière dans la barre de menu macOS. Activez ceci pour la restaurer si elle a été supprimée.";
-"menubar_show_icon" = "Afficher l'icône de la barre de menu";
 "version" = "Version";
 "adopt_widgets_title" = "Widgets";
 "adopt_siri_title" = "Siri";
@@ -294,7 +292,7 @@
 "siri_sheet_title" = "Demandez à Siri les heures de prière";
 "siri_sheet_body" = "Ajoutez un raccourci, puis demandez simplement à Siri en mains-libres.";
 "siri_sheet_nav" = "Raccourci Siri";
-"hijri_tap_hint" = "Double-appuyez pour afficher la date grégorienne d'aujourd'hui";
+"hijri_tap_hint" = "Double-appuyez pour afficher la date grégorienne d'aujourd'hui et les options de calendrier";
 "widget_preview_home_small" = "Écran d'accueil";
 "widget_preview_home_medium" = "Écran d'accueil";
 "widget_preview_lock" = "Écran verrouillé";
@@ -350,3 +348,13 @@
 "Alarms" = "Alarmes";
 "Location Search" = "Rechercher un lieu";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility conserve plusieurs mois de données d'adhan pour une utilisation hors ligne.";
+
+"hijri_mode_subtitle" = "Calendrier hégirien";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Civil islamique";
+"hijri_mode_tabular" = "Tabulaire islamique";
+"hijri_ramadan_adjust" = "Jour du Ramadan";
+"day_previous" = "Jour précédent";
+"day_next" = "Jour suivant";
+"menubar_enable_button" = "Activer dans la barre des menus";
+"menubar_enable_subtitle" = "Pour ajouter à nouveau Athan Utility à votre barre des menus, activez Athan Utility dans les Réglages macOS.";

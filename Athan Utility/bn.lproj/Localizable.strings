@@ -227,8 +227,6 @@
 "appearance_section" = "চেহারা";
 "dynamic_colors" = "নামাজ অনুযায়ী পরিবর্তনশীল রঙ";
 "menubar_section" = "মেনু বার";
-"menubar_icon_footer" = "macOS মেনু বারে পরবর্তী নামাজের কাউন্টডাউনসহ Athan Utility আইকন দেখান। এটি সরিয়ে ফেলা হয়ে থাকলে আবার ফিরিয়ে আনতে এটি চালু করুন।";
-"menubar_show_icon" = "মেনু বার আইকন দেখান";
 "version" = "ভার্সন";
 "adopt_widgets_title" = "উইজেট";
 "adopt_siri_title" = "Siri";
@@ -248,7 +246,7 @@
 "siri_sheet_title" = "নামাজের সময় জানতে Siri-কে জিজ্ঞাসা করুন";
 "siri_sheet_body" = "একটি শর্টকাট যোগ করুন, তারপর হাত ছাড়াই Siri-কে জিজ্ঞাসা করুন।";
 "siri_sheet_nav" = "Siri শর্টকাট";
-"hijri_tap_hint" = "আজকের গ্রেগরিয়ান তারিখ দেখতে ডাবল-ট্যাপ করুন";
+"hijri_tap_hint" = "আজকের গ্রেগরিয়ান তারিখ ও ক্যালেন্ডার অপশন দেখতে ডাবল-ট্যাপ করুন";
 "widget_preview_home_small" = "হোম স্ক্রিন";
 "widget_preview_home_medium" = "হোম স্ক্রিন";
 "widget_preview_lock" = "লক স্ক্রিন";
@@ -324,3 +322,13 @@
 "fajr.alarm.days.ahead" = "পরবর্তী %d অ্যালার্ম";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility অফলাইন ব্যবহারের জন্য কয়েক মাসের আজানের তথ্য সংরক্ষণ করে।";
 "Search City" = "শহর খুঁজুন";
+
+"hijri_mode_subtitle" = "হিজরি ক্যালেন্ডার";
+"hijri_mode_ummalqura" = "উম্মুল কুরা";
+"hijri_mode_civil" = "ইসলামি সিভিল";
+"hijri_mode_tabular" = "ইসলামি তাবুলার";
+"hijri_ramadan_adjust" = "রমজানের দিন";
+"day_previous" = "আগের দিন";
+"day_next" = "পরবর্তী দিন";
+"menubar_enable_button" = "মেনু বারে চালু করুন";
+"menubar_enable_subtitle" = "Athan Utility-কে আবার আপনার মেনু বারে যোগ করতে, আপনার macOS সেটিংসে গিয়ে Athan Utility চালু করুন।";

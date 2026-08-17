@@ -337,15 +337,13 @@
 "stop" = "إيقاف";
 "preview" = "معاينة";
 "menubar_section" = "شريط القوائم";
-"menubar_icon_footer" = "إظهار أيقونة Athan Utility مع العدّ التنازلي للصلاة القادمة في شريط قوائم macOS. فعّل هذا الخيار لإعادتها إذا أُزيلت.";
-"menubar_show_icon" = "إظهار أيقونة شريط القوائم";
 "adopt_fajr_sub" = "منبّه إيقاظ لن يدعك نائمًا";
 "widgets_title" = "أدوات الشاشة الرئيسية وشاشة القفل";
 "widgets_1" = "المس مطوّلًا منطقة فارغة من الشاشة الرئيسية أو شاشة القفل حتى يدخل وضع التحرير.";
 "widgets_2" = "اضغط زر + (الشاشة الرئيسية) أو منطقة الأدوات أسفل الساعة (شاشة القفل).";
 "widgets_3" = "ابحث عن «Athan Utility» واختر حجم أداة.";
 "widgets_4" = "اضغط إضافة أداة ثم تم.";
-"hijri_tap_hint" = "اضغط مرتين لعرض التاريخ الميلادي لليوم";
+"hijri_tap_hint" = "اضغط مرتين لعرض التاريخ الميلادي لليوم وخيارات التقويم";
 "widget_preview_home_small" = "الشاشة الرئيسية";
 "widget_preview_home_medium" = "الشاشة الرئيسية";
 "widget_preview_lock" = "شاشة القفل";
@@ -362,3 +360,13 @@
 "Alarms" = "المنبهات";
 "Location Search" = "البحث عن موقع";
 "Athan Utility stores months of athan data for offline use." = "يخزّن Athan Utility بيانات الأذان لعدة أشهر لاستخدامها دون اتصال.";
+
+"hijri_mode_subtitle" = "التقويم الهجري";
+"hijri_mode_ummalqura" = "أم القرى";
+"hijri_mode_civil" = "الهجري المدني";
+"hijri_mode_tabular" = "الهجري الحسابي";
+"hijri_ramadan_adjust" = "يوم رمضان";
+"day_previous" = "اليوم السابق";
+"day_next" = "اليوم التالي";
+"menubar_enable_button" = "التفعيل في شريط القوائم";
+"menubar_enable_subtitle" = "لإعادة إضافة Athan Utility إلى شريط القوائم، فعّل Athan Utility من إعدادات macOS.";

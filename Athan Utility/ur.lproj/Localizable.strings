@@ -283,8 +283,6 @@
 "appearance_section" = "ظاہری شکل";
 "dynamic_colors" = "نماز کے مطابق متحرک رنگ";
 "menubar_section" = "مینو بار";
-"menubar_icon_footer" = "macOS مینو بار میں اگلی نماز کی الٹی گنتی کے ساتھ Athan Utility آئیکن دکھائیں۔ اگر یہ ہٹا دیا گیا تھا تو اسے واپس لانے کے لیے یہ آن کریں۔";
-"menubar_show_icon" = "مینو بار آئیکن دکھائیں";
 "version" = "ورژن";
 "adopt_widgets_title" = "ویجٹس";
 "adopt_siri_title" = "سیری";
@@ -304,7 +302,7 @@
 "siri_sheet_title" = "نماز کے اوقات کے لیے سیری سے پوچھیں";
 "siri_sheet_body" = "ایک شارٹ کٹ شامل کریں، پھر بس سیری سے ہاتھ استعمال کیے بغیر پوچھیں۔";
 "siri_sheet_nav" = "سیری شارٹ کٹ";
-"hijri_tap_hint" = "آج کی عیسوی تاریخ دیکھنے کے لیے ڈبل ٹیپ کریں";
+"hijri_tap_hint" = "آج کی عیسوی تاریخ اور کیلنڈر کے اختیارات دیکھنے کے لیے ڈبل ٹیپ کریں";
 "widget_preview_home_small" = "ہوم اسکرین";
 "widget_preview_home_medium" = "ہوم اسکرین";
 "widget_preview_lock" = "لاک اسکرین";
@@ -359,3 +357,13 @@
 "Alarms" = "الارمز";
 "Location Search" = "مقام تلاش کریں";
 "Athan Utility stores months of athan data for offline use." = "Athan Utility آف لائن استعمال کے لیے کئی مہینوں کا اذان ڈیٹا محفوظ رکھتا ہے۔";
+
+"hijri_mode_subtitle" = "ہجری کیلنڈر";
+"hijri_mode_ummalqura" = "ام القریٰ";
+"hijri_mode_civil" = "اسلامی مدنی کیلنڈر";
+"hijri_mode_tabular" = "اسلامی جدولی کیلنڈر";
+"hijri_ramadan_adjust" = "رمضان کا دن";
+"day_previous" = "پچھلا دن";
+"day_next" = "اگلا دن";
+"menubar_enable_button" = "مینیو بار میں فعال کریں";
+"menubar_enable_subtitle" = "Athan Utility کو دوبارہ اپنے مینیو بار میں شامل کرنے کے لیے، macOS کی ترتیبات میں Athan Utility کو فعال کریں۔";

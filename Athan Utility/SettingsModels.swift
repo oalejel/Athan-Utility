@@ -11,6 +11,12 @@ import Adhan
 import CoreLocation.CLLocation
 
 // Flags for determining if intro view setup has been completed
+/// The clock the UI reads. Real time everywhere, except during a screenshot capture,
+/// where SnapshotSupport pins it so every localized set shows the same moment of day
+/// instead of whatever time the machine happened to run at.
+var snapshotFixedNow: Date? = nil
+func athanNow() -> Date { snapshotFixedNow ?? Date() }
+
 class IntroSetupFlags {
 #warning("uncomment on prod")
     static var hasCompletedCalculationSetup: Bool = {

@@ -113,7 +113,7 @@ struct MainSwiftUI: View {
     @State var relativeTimeStr: String = ""
     @State var relativeDateId: Int = 0
     func relativeTime() -> String { // used for ios 13
-        let comps = Calendar.current.dateComponents([.hour, .minute], from: Date(),
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: athanNow(),
                                                     to: AthanManager.shared.guaranteedNextPrayerTime())
         
         if let prefLang = Locale.preferredLanguages.first, prefLang.hasPrefix("en") {
@@ -155,7 +155,7 @@ struct MainSwiftUI: View {
         } else { // if next prayer is nil (i.e. we are on yesterday isha) use today fajr
             nextTime = ObservableAthanManager.shared.todayTimes.time(for: .fajr)
         }
-        return Date().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
+        return athanNow().timeIntervalSince(currentTime!) / nextTime!.timeIntervalSince(currentTime!)
     }
     
     static func hijriDateString(date: Date, isAccessibilityLabel: Bool) -> String {
@@ -393,7 +393,7 @@ struct MainSwiftUI: View {
     @ViewBuilder private func macSolarArc(_ g: GeometryProxy) -> some View {
         if manager.todayTimes != nil {
             let dayProg: CGFloat = {
-                var r = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
+                var r = CGFloat(0.5 + athanNow().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
                 if r < 0 { r += 1 }
                 return r
             }()
@@ -667,7 +667,7 @@ struct MainSwiftUI: View {
                                 ZStack() {
                                     // calculate progress of day
                                     let _dayProg: CGFloat = {
-                                        var todayDhuhrReference = CGFloat(0.5 + Date().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
+                                        var todayDhuhrReference = CGFloat(0.5 + athanNow().timeIntervalSince(manager.todayTimes.dhuhr) / 86400)
                                         if todayDhuhrReference < 0 {
                                             todayDhuhrReference += 1
                                         }

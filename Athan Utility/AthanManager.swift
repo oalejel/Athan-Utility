@@ -368,7 +368,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             yesterdayTimes = calculateTimes(referenceDate: adjacentDayReference(days: -1, timeZone: dtz), customTimeZone: dtz, adjustments: adj)
         } // should never fail on cupertino time.
         // add 24 hours for next day
-        currentPrayer = todayTimes.currentPrayer() ?? yesterdayTimes.currentPrayer() ?? .isha
+        currentPrayer = todayTimes.currentPrayer(at: athanNow()) ?? yesterdayTimes.currentPrayer(at: athanNow()) ?? .isha
         assert(todayTimes.currentPrayer(at: todayTimes.fajr.addingTimeInterval(-100)) == nil, "failed test on assumption about API nil values")
     }
     
@@ -499,7 +499,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     // calculate next prayer, considering next day's .fajr time in case we are on isha time
     func guaranteedNextPrayerTime() -> Date {
-        let currentPrayer = todayTimes.currentPrayer()
+        let currentPrayer = todayTimes.currentPrayer(at: athanNow())
         // do not use api nextPrayeras it does not distinguish tomorrow fajr from today fajr nil
         // New: also account for cases where high latitudes have isha after 12am
         //        var nextPrayer: Prayer? = todayTimes.nextPrayer()
@@ -532,7 +532,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     }
 
     func guaranteedCurrentPrayerTime() -> Date {
-        var currentPrayer: Prayer? = todayTimes.currentPrayer()
+        var currentPrayer: Prayer? = todayTimes.currentPrayer(at: athanNow())
         var currentPrayerTime: Date! = nil
         if currentPrayer == nil { // case of new day before fajr
             // if yesterday maghrib is still "current", we are in exceptional case where isha is after 12 am

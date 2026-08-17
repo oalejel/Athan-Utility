@@ -114,6 +114,13 @@ enum SnapshotSupport {
             useCurrentLocation: true,
             countryCode: city.country
         )
+        // Pin the clock to 19:00 in the captured city, BEFORE times are computed. Every
+        // localized set then shows the same evening state — Maghrib/Isha, dusk gradient —
+        // instead of whatever time the capture machine happened to run at.
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone(identifier: city.tz) ?? .current
+        snapshotFixedNow = cal.date(bySettingHour: 19, minute: 0, second: 0, of: Date())
+
         AthanManager.shared.locationSettings = demo // didSet archives + recalculates
         // The location glyph needs BOTH of these to render as location.fill.
         AthanManager.shared.locationPermissionsGranted = true

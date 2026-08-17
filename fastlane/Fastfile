@@ -112,7 +112,7 @@ platform :ios do
       skip_screenshots:         true,
       metadata_path:            "./fastlane/metadata",
       submit_for_review:        true,
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false,
       submission_information:   { export_compliance_uses_encryption: false }
@@ -133,7 +133,7 @@ platform :ios do
       skip_metadata:            true,
       skip_screenshots:         true,
       submit_for_review:        true,
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false,
       submission_information:   { export_compliance_uses_encryption: false }
@@ -157,7 +157,7 @@ platform :ios do
       # Default to NOT submitting: uploading and submitting are separate decisions,
       # and only one of them is reversible.
       submit_for_review:        options[:submit].to_s == "true",
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false
     )
@@ -194,7 +194,7 @@ platform :ios do
       skip_screenshots:         true,
       metadata_path:            "./fastlane/metadata",
       submit_for_review:        false,
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false,
       precheck_include_in_app_purchases: false
@@ -261,7 +261,7 @@ platform :mac do
       skip_metadata:            true,
       skip_screenshots:         true,
       submit_for_review:        false,
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false
     )
@@ -277,7 +277,7 @@ platform :mac do
       skip_metadata:            true,
       skip_screenshots:         true,
       submit_for_review:        true,
-      automatic_release:        false,
+      automatic_release:        true,
       force:                    true,
       run_precheck_before_submit: false,
       submission_information:   { export_compliance_uses_encryption: false }

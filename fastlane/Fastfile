@@ -202,10 +202,24 @@ platform :ios do
     UI.success("Uploaded. Run `fastlane ios finalize` when you're ready to submit for review.")
   end
 
-  desc "Generate new localized screenshots"
+  desc "Generate localized screenshots (no upload). Validate them before shipping."
   lane :screenshots do
     capture_screenshots(workspace: "Athan Utility.xcworkspace", scheme: "Athan Utility")
-    upload_to_app_store(skip_binary_upload: true, skip_metadata: true)
+  end
+
+  desc "Upload the screenshot sets only — no binary, no metadata"
+  lane :upload_screenshots do
+    deliver(
+      api_key:                  athan_api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      skip_binary_upload:       true,
+      skip_metadata:            true,
+      skip_screenshots:         false,
+      overwrite_screenshots:    true,
+      submit_for_review:        false,
+      force:                    true,
+      run_precheck_before_submit: false
+    )
   end
 
 end

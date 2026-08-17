@@ -4,16 +4,20 @@ devices([
 ])
 
 # Languages / locales — each maps to a .lproj in the app.
-# Aligned with the App Store metadata locales we ship (Tier 1 adds es-ES).
+# One entry per App Store metadata locale, so no listing falls back to English
+# screenshots. es-MX and de-DE resolve to the app's es/de .lproj.
 languages([
   "en-US",
   "ar-SA",
+  "de-DE",
   "es-ES",
+  "es-MX",
   "fr-FR",
+  "id",
+  "ms",
   "tr",
   "zh-Hans"
 ])
-
 # Scheme that runs the UI tests
 scheme("Athan Utility")
 

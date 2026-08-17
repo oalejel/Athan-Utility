@@ -355,6 +355,14 @@ struct WidgetHowToView: View {
                         .foregroundColor(.accentColor)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 8)
+
+                    // Show what they're being asked to add before telling them how.
+                    // Negative insets cancel this VStack's padding so the gallery can
+                    // scroll edge to edge while the steps stay inset.
+                    WidgetPreviewGallery()
+                        .padding(.horizontal, -16)
+                        .padding(.bottom, 4)
+
                     ForEach(Array(steps.enumerated()), id: \.offset) { i, step in
                         HStack(alignment: .top, spacing: 12) {
                             Text("\(i + 1)")

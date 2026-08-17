@@ -44,47 +44,56 @@ struct WidgetPreviewGallery: View {
     private let data = WidgetPreviewData.live
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 16) {
-                    shot("widget_home_small_shot",
-                         NSLocalizedString("widget_preview_home_small", value: "Home Screen", comment: ""))
-                    shot("widget_home_medium_shot",
-                         NSLocalizedString("widget_preview_home_medium", value: "Home Screen", comment: ""))
-                    shot("widget_lock_wide_shot",
-                         NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""))
-                    shot("widget_lock_small_shot",
-                         NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""))
-                }
-                .padding(.horizontal, 2)
+        // Each screenshot is a different aspect ratio, so a shared height would leave the
+        // wide Lock Screen strip tiny beside the square Home Screen tile. Cap the WIDTH
+        // per size class instead and let height follow, which keeps every widget at a
+        // believable relative scale — the way they'd sit next to each other on a device.
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(alignment: .bottom, spacing: 18) {
+                shot("widget_home_small_shot",
+                     NSLocalizedString("widget_preview_home_small", value: "Home Screen", comment: ""),
+                     width: 132)
+                shot("widget_home_medium_shot",
+                     NSLocalizedString("widget_preview_home_medium", value: "Home Screen", comment: ""),
+                     width: 268)
+                shot("widget_lock_wide_shot",
+                     NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""),
+                     width: 236)
+                shot("widget_lock_small_shot",
+                     NSLocalizedString("widget_preview_lock", value: "Lock Screen", comment: ""),
+                     width: 180)
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
         }
     }
 
     /// Real screenshots rather than reconstructions — the point of this gallery is to
     /// show the user what will actually appear on their Home and Lock Screens.
-    private func shot(_ asset: String, _ label: String) -> some View {
+    private func shot(_ asset: String, _ label: String, width: CGFloat) -> some View {
         labeled(label) {
             Image(asset)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 148)
+                .frame(width: width)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Color.primary.opacity(0.08), lineWidth: 1)
+                        .stroke(Color.primary.opacity(0.10), lineWidth: 1)
                 )
+                .shadow(color: .black.opacity(0.16), radius: 8, y: 4)
                 .accessibilityLabel(Text(label))
         }
     }
 
     @ViewBuilder
     private func labeled<Content: View>(_ title: String, @ViewBuilder _ content: () -> Content) -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 10) {
             content()
             Text(title)
                 .font(.caption2.weight(.semibold))
                 .foregroundColor(.secondary)
+                .lineLimit(1)
         }
     }
 }

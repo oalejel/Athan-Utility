@@ -316,16 +316,15 @@ struct MacSidebarView: View {
 
     // MARK: - Style
 
-    /// Opaque rather than a material, deliberately. macOS 26 lays the Catalyst sidebar out
-    /// as a floating inset card, so the strip the traffic lights sit in has to be painted
-    /// separately (MacSplitViewController's backdrop) — and a translucent sidebar could
-    /// never match it, because the card also picks up the system's own sidebar material
-    /// underneath while the backdrop can't. A flat fill makes the two seamless under every
-    /// gradient and appearance.
-    static let fill = Color(red: 12 / 255, green: 27 / 255, blue: 56 / 255)
-
+    /// Deliberately translucent: it sits on top of the system's own sidebar material
+    /// (primaryBackgroundStyle = .sidebar), which is what gives the floating rounded card
+    /// its depth over the detail pane.
     private var darkVibrancy: some View {
-        Self.fill.ignoresSafeArea()
+        ZStack {
+            Rectangle().fill(.ultraThinMaterial)
+            Color.black.opacity(0.42)
+        }
+        .ignoresSafeArea()
     }
 
     // MARK: - Helpers

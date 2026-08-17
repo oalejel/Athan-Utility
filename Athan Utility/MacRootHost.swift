@@ -67,14 +67,11 @@ enum MacRootBuilder {
     static func makeSplitViewController() -> UISplitViewController {
         let split = UISplitViewController(style: .doubleColumn)
 
-        // `.none`, not `.sidebar`. On macOS 26 the `.sidebar` style renders the Catalyst
-        // primary column as a floating, inset, rounded card with the secondary running
-        // full-bleed underneath it, which leaves the window's traffic lights sitting on
-        // the detail pane's gradient above the card. `.none` tiles the column instead, so
-        // it fills the window's top-left corner and the lights sit in it — the way Finder
-        // and Photos look. The sidebar paints its own fill (MacSidebarView.fill), so
-        // nothing is lost by giving up the system material.
-        split.primaryBackgroundStyle = .none
+        // The floating, inset, rounded sidebar Maps and Photos use on macOS 26: the
+        // system's own sidebar material, with the secondary running full-bleed
+        // underneath it. This only takes effect because the split view is the window's
+        // root — nested in a hosting controller the system ignores it entirely.
+        split.primaryBackgroundStyle = .sidebar
 
         split.preferredDisplayMode = .oneBesideSecondary
         split.preferredSplitBehavior = .tile
@@ -87,8 +84,9 @@ enum MacRootBuilder {
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
-        // The sidebar view paints its own fill edge to edge.
-        sidebarVC.view.backgroundColor = UIColor(MacSidebarView.fill)
+        // Clear, so the system's sidebar material shows through rather than being
+        // covered by the hosting controller's own opaque background.
+        sidebarVC.view.backgroundColor = .clear
 
         let detailVC = UIHostingController(
             rootView: MainSwiftUI(macDetailOnly: true)

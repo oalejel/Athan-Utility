@@ -30,6 +30,8 @@ enum NotificationPermission {
 
     /// Call when the main prayer-times UI appears. No-op after the first time.
     static func promptAfterMainUIAppears() {
+        // A system alert three screens into a capture ruins the shot.
+        guard !SnapshotSupport.isActive else { return }
         guard !scheduledThisLaunch else { return }
         scheduledThisLaunch = true
         guard !UserDefaults.standard.bool(forKey: promptedKey) else { return }

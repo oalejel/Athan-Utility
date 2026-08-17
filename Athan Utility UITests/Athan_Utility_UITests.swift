@@ -25,25 +25,6 @@ class Athan_Utility_UITests: XCTestCase {
         XCTAssertTrue(settings.waitForExistence(timeout: 15), "Main screen did not appear")
         snapshot("01Main")
 
-        // 05 — feature discovery (light bulb hint → Tips-style list)
-        let discover = app.buttons["discoverButton"]
-        if discover.waitForExistence(timeout: 5) {
-            discover.tap()
-            sleep(1)
-            snapshot("05Discover")
-            // icon header is cell 0; widgets is the first feature (cell 1)
-            let widgetsRow = app.cells.element(boundBy: 1)
-            if widgetsRow.waitForExistence(timeout: 4) {
-                widgetsRow.tap()
-                sleep(1)
-                snapshot("06Widgets")
-                let back = app.navigationBars.buttons.element(boundBy: 0)
-                if back.exists { back.tap() }
-            }
-            let done = app.buttons["discoverDone"]
-            if done.waitForExistence(timeout: 4) { done.tap() }
-        }
-
         // 02 — settings
         settings.tap()
         snapshot("02Settings")
@@ -115,15 +96,30 @@ class Athan_Utility_UITests: XCTestCase {
         sleep(2)
     }
 
-    /// Captures the first-launch intro settings (with the country recommendation).
-    func testIntroScreenshot() {
+    /// Discover screens, captured in their own launch: the light-bulb hint has to be
+    /// visible to reach them, and it would otherwise sit on top of the main screenshot.
+    func testDiscoverScreenshots() {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments += ["-UITEST_INTRO"]
+        app.launchArguments += ["-UITEST_DEMO", "-UITEST_DISCOVER"]
         setupSnapshot(app)
         app.launch()
-        _ = app.staticTexts.firstMatch.waitForExistence(timeout: 15)
-        sleep(2) // let the recommendation resolve + layout settle
-        snapshot("00Intro")
+
+        let discover = app.buttons["discoverButton"]
+        guard discover.waitForExistence(timeout: 15) else {
+            XCTFail("Discover hint never appeared")
+            return
+        }
+        discover.tap()
+        sleep(1)
+        snapshot("05Discover")
+
+        // icon header is cell 0; widgets is the first feature (cell 1)
+        let widgetsRow = app.cells.element(boundBy: 1)
+        if widgetsRow.waitForExistence(timeout: 4) {
+            widgetsRow.tap()
+            sleep(1)
+            snapshot("06Widgets")
+        }
     }
 }

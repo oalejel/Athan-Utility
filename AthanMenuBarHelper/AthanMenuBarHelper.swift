@@ -192,6 +192,13 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             // the old menu-bar-only mode quit itself.
             NSApp.setActivationPolicy(.accessory)
             NSLog("ATHAN-MB-HELPER: last window closed — staying resident as an accessory app")
+
+            // Changing activation policy can take the status item down with it: AppKit
+            // rebuilds the app's UI presence around the new policy, and the item created
+            // under the old one does not always survive. Check once the switch has settled
+            // and vend a fresh one if it didn't — closing a window must never cost the
+            // user their menu bar icon.
+            self?.verifyStatusItemSurvivedPolicyChange(attempt: 1)
             return false
         }
         let imp = imp_implementationWithBlock(block)
@@ -201,6 +208,28 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         }
         NSLog("ATHAN-MB-HELPER: patched %@ to stay resident while in the menu bar",
               NSStringFromClass(cls))
+    }
+
+    /// The status item does not reliably survive an activation-policy change: AppKit
+    /// rebuilds the app's UI presence around the new policy, and an item vended under the
+    /// old one can be dropped. Poll a few times before concluding it's gone — placement is
+    /// asynchronous, so a single early check reports false negatives — then vend a fresh
+    /// one. Closing a window must never cost the user their menu bar icon.
+    private func verifyStatusItemSurvivedPolicyChange(attempt: Int) {
+        let maxAttempts = 4
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+            guard let self else { return }
+            if self.statusItem?.button?.window?.screen != nil {
+                NSLog("ATHAN-MB-HELPER: item survived the policy change (attempt %d)", attempt)
+                return
+            }
+            if attempt < maxAttempts {
+                self.verifyStatusItemSurvivedPolicyChange(attempt: attempt + 1)
+            } else {
+                NSLog("ATHAN-MB-HELPER: item lost to the policy change — recreating")
+                self.restoreStatusItem()
+            }
+        }
     }
 
     public func isStatusItemVisible() -> Bool {

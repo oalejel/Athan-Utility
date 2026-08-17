@@ -114,14 +114,22 @@ enum SnapshotSupport {
             useCurrentLocation: true,
             countryCode: city.country
         )
-        // Pin the clock to 19:00 in the captured city, BEFORE times are computed. Every
-        // localized set then shows the same evening state — Maghrib/Isha, dusk gradient —
-        // instead of whatever time the capture machine happened to run at.
+        // Provisional clock so the first times calculation has something sane to work
+        // against; replaced below once the day's Maghrib for this city is known.
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = TimeZone(identifier: city.tz) ?? .current
-        snapshotFixedNow = cal.date(bySettingHour: 19, minute: 0, second: 0, of: Date())
+        snapshotFixedNow = cal.date(bySettingHour: 19, minute: 45, second: 0, of: Date())
 
         AthanManager.shared.locationSettings = demo // didSet archives + recalculates
+
+        // Anchor to the city's OWN Maghrib rather than a fixed wall-clock hour, so every
+        // localized set actually lands in Maghrib. A fixed time can't: Maghrib is 19:58 in
+        // New York and 20:07 in İstanbul on the captured day, so 19:45 would still be Asr
+        // in both — and it drifts by an hour or more across the year anyway.
+        if let maghrib = AthanManager.shared.todayTimes?.maghrib {
+            snapshotFixedNow = maghrib.addingTimeInterval(12 * 60)   // just into Maghrib
+            AthanManager.shared.refreshTimes()                        // re-derive against it
+        }
         // The location glyph needs BOTH of these to render as location.fill.
         AthanManager.shared.locationPermissionsGranted = true
 

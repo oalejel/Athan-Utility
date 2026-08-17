@@ -52,6 +52,73 @@ private struct MacSidebarHost: View {
     var body: some View { MacSidebarView(section: $root.section) }
 }
 
+/// Publishes where the sidebar card actually is, so the AppKit side can drop the window's
+/// traffic lights into its corner.
+///
+/// macOS 26 lays the Catalyst sidebar out as a rounded card inset from the window, but the
+/// lights keep their usual position relative to the WINDOW, so they end up above the card
+/// on the detail pane. Maps and Photos put them in the card's own corner. There is no API
+/// for the lights on the UIKit side and no way to see the card from the AppKit side, so the
+/// two halves talk: this reports the card's origin and the helper re-frames the buttons by
+/// it (see AthanMenuBarHelper.insetTrafficLightsIntoSidebar).
+///
+/// Reporting `visible: false` when the sidebar is collapsed puts the lights back in the
+/// window's corner, which keeps them off the sidebar-toggle button that takes their place.
+@available(macCatalyst 16.0, *)
+final class MacSplitViewController: UISplitViewController {
+
+    static let cardGeometryDidChange = Notification.Name("AthanSidebarCardGeometryDidChange")
+    /// The helper installs its observer only once the window exists, by which time the
+    /// layout has usually settled and the change-only post has already gone out. It asks
+    /// with this; we answer by forgetting what we last sent and laying out again.
+    static let cardGeometryRequested = Notification.Name("AthanSidebarCardGeometryRequested")
+
+    private var lastPayload: [String: CGFloat] = [:]
+    private var lastVisible: Bool?
+    private var requestObservation: NSObjectProtocol?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        requestObservation = NotificationCenter.default.addObserver(
+            forName: Self.cardGeometryRequested, object: nil, queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.lastVisible = nil
+            self.lastPayload = [:]
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        var payload: [String: CGFloat] = [:]
+        var visible = false
+
+        if displayMode != .secondaryOnly,
+           let primary = viewController(for: .primary)?.view,
+           let uiWindow = primary.window, !primary.isHidden, primary.alpha > 0 {
+            // Climb to the column view — the ancestor whose superview is the split's own
+            // column container, which is itself a direct child of our view.
+            var column: UIView = primary
+            while let parent = column.superview, parent.superview !== view { column = parent }
+            if let container = column.superview, container.superview === view, !column.isHidden {
+                let origin = column.convert(CGPoint.zero, to: nil)
+                payload = ["x": origin.x, "y": origin.y, "windowHeight": uiWindow.bounds.height]
+                visible = true
+            }
+        }
+
+        guard visible != lastVisible || payload != lastPayload else { return }
+        lastVisible = visible
+        lastPayload = payload
+        var info: [String: Any] = payload
+        info["visible"] = visible
+        NotificationCenter.default.post(name: Self.cardGeometryDidChange, object: nil, userInfo: info)
+    }
+}
+
 enum MacRootBuilder {
 
     /// The window's root: the split view on macOS 13+, otherwise the plain full-window
@@ -65,7 +132,7 @@ enum MacRootBuilder {
 
     @available(macCatalyst 16.0, *)
     static func makeSplitViewController() -> UISplitViewController {
-        let split = UISplitViewController(style: .doubleColumn)
+        let split = MacSplitViewController(style: .doubleColumn)
 
         // The floating, inset, rounded sidebar Maps and Photos use on macOS 26: the
         // system's own sidebar material, with the secondary running full-bleed
@@ -93,6 +160,10 @@ enum MacRootBuilder {
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
+        // The detail pane is now full-bleed under the floating sidebar, and the Settings
+        // Form doesn't fill it edge to edge — without this the hosting controller's own
+        // default background showed as pale pillars either side of the form.
+        detailVC.view.backgroundColor = UIColor(MacSidebarView.fill)
 
         split.setViewController(sidebarVC, for: .primary)
         split.setViewController(detailVC, for: .secondary)

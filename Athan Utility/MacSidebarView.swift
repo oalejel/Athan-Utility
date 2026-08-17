@@ -316,6 +316,10 @@ struct MacSidebarView: View {
 
     // MARK: - Style
 
+    /// The app's dark ground tone, used wherever a Mac surface needs to read as part of
+    /// the app rather than as an unstyled system background.
+    static let fill = Color(red: 12 / 255, green: 27 / 255, blue: 56 / 255)
+
     /// Deliberately translucent: it sits on top of the system's own sidebar material
     /// (primaryBackgroundStyle = .sidebar), which is what gives the floating rounded card
     /// its depth over the detail pane.

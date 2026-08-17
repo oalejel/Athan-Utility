@@ -140,7 +140,7 @@ platform :ios do
     )
   end
 
-  desc "Upload an already-built IPA + localized metadata and submit for review"
+  desc "Upload an already-built IPA + localized metadata. Pass submit:true to also send it for review."
   lane :submit_ipa do |options|
     api_key = app_store_connect_api_key(
       key_id:       API_KEY_ID,
@@ -154,7 +154,9 @@ platform :ios do
       skip_metadata:            false,
       skip_screenshots:         true,
       metadata_path:            "./fastlane/metadata",
-      submit_for_review:        true,
+      # Default to NOT submitting: uploading and submitting are separate decisions,
+      # and only one of them is reversible.
+      submit_for_review:        options[:submit].to_s == "true",
       automatic_release:        false,
       force:                    true,
       run_precheck_before_submit: false

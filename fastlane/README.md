@@ -53,7 +53,15 @@ Submit the already-uploaded build for review (no rebuild) — clears export comp
 [bundle exec] fastlane ios submit_ipa
 ```
 
-Upload an already-built IPA + localized metadata and submit for review
+Upload an already-built IPA + localized metadata. Pass submit:true to also send it for review.
+
+### ios store
+
+```sh
+[bundle exec] fastlane ios store
+```
+
+Build, upload the binary and localized metadata — but do NOT submit for review
 
 ### ios screenshots
 
@@ -62,6 +70,27 @@ Upload an already-built IPA + localized metadata and submit for review
 ```
 
 Generate new localized screenshots
+
+----
+
+
+## Mac
+
+### mac store
+
+```sh
+[bundle exec] fastlane mac store
+```
+
+Archive the Mac Catalyst app and upload it to App Store Connect (binary only, no review submission)
+
+### mac upload_metadata
+
+```sh
+[bundle exec] fastlane mac upload_metadata
+```
+
+Upload the Mac listing's localized metadata (no binary)
 
 ----
 

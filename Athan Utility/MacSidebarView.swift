@@ -48,9 +48,6 @@ struct MacSidebarView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 2) {
-                sectionLabel(dayOffset == 0
-                             ? NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header")
-                             : NSLocalizedString("prayer_times", value: "Prayer Times", comment: "Sidebar prayer list header, non-today"))
                 prayerList
                     .id("\(bellVersion)-\(dayOffset)")
                 dayNavigator
@@ -69,6 +66,14 @@ struct MacSidebarView: View {
         // it. Claim a minimum height instead — and derive it from fs(), because ⌘+ makes
         // every row taller and a fixed number would be wrong at any other zoom level.
         .frame(minHeight: minimumSidebarHeight)
+        // The title goes in the sidebar's own toolbar row — the same row the collapse
+        // toggle lives in — so the two sit on one line. As inline content it could never
+        // reach that row no matter how much top padding came off, because the toolbar is
+        // above the scroll view rather than part of it.
+        .navigationTitle(dayOffset == 0
+                         ? NSLocalizedString("today", value: "Today", comment: "Sidebar prayer list header")
+                         : NSLocalizedString("prayer_times", value: "Prayer Times", comment: "Sidebar prayer list header, non-today"))
+        .navigationBarTitleDisplayMode(.inline)
         // The menu bar popover's location row opens the editor here, so the click lands
         // somewhere useful rather than just raising the window.
         .onReceive(NotificationCenter.default.publisher(for: .athanShowMacLocationSettings)) { _ in
@@ -80,12 +85,14 @@ struct MacSidebarView: View {
     /// Enough room for the six prayer rows, the day navigator, the location row and the
     /// nav footer, at the CURRENT font scale.
     private var minimumSidebarHeight: CGFloat {
-        let prayerRows = 6 * fs(26)
-        let sectionHeader = fs(24)
-        let navigator = fs(34)
+        // Row heights were underestimated, so shrinking the window clipped the scroll
+        // area until Isha ran into the Hijri date in the day navigator below it. These
+        // track the real laid-out heights, with headroom for the taller scripts.
+        let prayerRows = 6 * fs(32)
+        let navigator = fs(44)          // arrows + Hijri date
         // Location moved into the footer, so it counts against the pinned chrome.
-        let footer = fs(30) + CGFloat(navSections.count) * fs(30) + 34
-        return prayerRows + sectionHeader + navigator + footer + 36
+        let footer = fs(34) + CGFloat(navSections.count) * fs(32) + 34
+        return prayerRows + navigator + footer + 52
     }
 
     // MARK: - Location header + inline editor
@@ -159,14 +166,6 @@ struct MacSidebarView: View {
     }
 
     // MARK: - Prayer list
-
-    private func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
-            .font(.system(size: fs(11.5), weight: .semibold))
-            .tracking(0.6)
-            .foregroundColor(.white.opacity(0.45))
-            .padding(.horizontal, 12).padding(.top, 2).padding(.bottom, 4)
-    }
 
     private var prayerList: some View {
         VStack(spacing: 1) {

@@ -29,3 +29,16 @@ clear_previous_screenshots(true)
 
 # Take screenshots one simulator at a time (more reliable)
 concurrent_simulators(false)
+
+# The app's prayer times are rendered in the captured city's own time zone, but the iOS
+# status bar shows the HOST machine's clock — so a Turkish set read 10:53 (Eastern) above
+# İstanbul evening times, which looks like the app is wrong. Override the status bar so it
+# agrees with the 19:00 the app is pinned to, and give every set the same clean signal
+# strength and full battery instead of whatever the simulator happened to have.
+override_status_bar(true)
+override_status_bar_arguments("--time 19:00 --dataNetwork wifi --wifiMode active --wifiBars 3 --cellularMode notSupported --batteryState charged --batteryLevel 100")
+
+# Put the simulator itself into the captured language/region, so system-drawn UI
+# (permission alerts, share sheets, date pickers) matches the app rather than staying
+# English underneath a localized app.
+localize_simulator(true)

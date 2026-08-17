@@ -332,6 +332,14 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         tick()          // refresh the title immediately
     }
 
+    func menuBarOpenWindow() {
+        DispatchQueue.main.async {
+            let options = UIScene.ActivationRequestOptions()
+            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: nil,
+                                                               options: options, errorHandler: nil)
+        }
+    }
+
     func menuBarOpenSettings() {
         NotificationCenter.default.post(name: .athanShowMacSettings, object: nil)
     }

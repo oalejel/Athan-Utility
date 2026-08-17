@@ -287,9 +287,17 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         }
         let sel = NSSelectorFromString("applicationShouldTerminateAfterLastWindowClosed:")
         let block: @convention(block) (AnyObject, AnyObject) -> Bool = { [weak self] _, _ in
-            let stayResident = self?.statusItem != nil
-            NSLog("ATHAN-MB-HELPER: last window closed, terminate=%@", stayResident ? "NO" : "YES")
-            return !stayResident
+            guard self?.statusItem != nil else {
+                NSLog("ATHAN-MB-HELPER: last window closed, no menu bar item — terminating")
+                return true
+            }
+            // Become an accessory app: out of the Dock and the app switcher, alive in the
+            // menu bar. Done HERE rather than at launch on purpose — setting .accessory
+            // up front, with no window and nothing else holding the process, is what made
+            // the old menu-bar-only mode quit itself.
+            NSApp.setActivationPolicy(.accessory)
+            NSLog("ATHAN-MB-HELPER: last window closed — staying resident as an accessory app")
+            return false
         }
         let imp = imp_implementationWithBlock(block)
         let cls: AnyClass = type(of: delegate)
@@ -419,10 +427,18 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
 
     @objc private func openApp() {
         popover?.performClose(nil)
+        // Back into the Dock first, then find a window. If the user closed the last one
+        // the scene is gone with it, and AppKit can't create a Catalyst scene — so ask
+        // the app side, which has UIKit, to vend one.
         NSApp.setActivationPolicy(.regular)
         NSApp.unhide(nil)
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
+        if let window = NSApp.windows.first(where: { $0.canBecomeMain }) {
+            window.makeKeyAndOrderFront(nil)
+        } else {
+            NSLog("ATHAN-MB-HELPER: no window to show — asking the app for a new scene")
+            actionDelegate?.menuBarOpenWindow()
+        }
     }
 
     @objc private func quitApp() { NSApp.terminate(nil) }

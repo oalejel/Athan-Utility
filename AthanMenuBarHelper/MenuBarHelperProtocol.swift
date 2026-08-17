@@ -55,6 +55,9 @@ import CoreGraphics
     func menuBarSetDisplayMode(_ mode: Int)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
+    /// Bring the main window back. Once the last window closes the scene is gone, and
+    /// only UIKit can vend a new one — the AppKit helper has no way to do it.
+    func menuBarOpenWindow()
     /// macOS accepted the status item but never gave it a slot in the menu bar — the
     /// bar is full (easy to hit on a notched display). The app surfaces this rather
     /// than letting the Add button look broken.

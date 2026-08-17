@@ -121,6 +121,9 @@ struct FeatureDiscoveryView: View {
     @State private var macSelected: DiscoveryFeature?
     /// Mac only: this view is a NavigationSplitView detail pane, not a sheet, so
     /// there's no default way back. Set to return to the Home section.
+    /// Non-nil only when presented modally on Mac (light bulb / notification), where the
+    /// grid has no navigation bar to close from. Left nil for the sidebar section, which
+    /// is navigated away from rather than dismissed.
     var macOnDismiss: (() -> Void)? = nil
 
     private var isMac: Bool {

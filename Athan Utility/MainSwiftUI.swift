@@ -297,7 +297,9 @@ struct MainSwiftUI: View {
                 }
             }
         case .discover:
-            FeatureDiscoveryView(macOnDismiss: { macSection = .times })
+            // Sidebar section, not a modal — the sidebar itself is how you leave, so a
+            // close button here would be a second, redundant exit.
+            FeatureDiscoveryView()
                 .preferredColorScheme(.dark)
         }
     }
@@ -811,7 +813,10 @@ struct MainSwiftUI: View {
                     Spacer()
                 }
                 .sheet(isPresented: $showDiscovery) {
-                    FeatureDiscoveryView()
+                    // Presented modally (light bulb, or the new-features notification),
+                    // so it needs its own way out. On iOS that's the nav bar's Done; on
+                    // Mac the grid has no nav bar, hence the explicit close.
+                    FeatureDiscoveryView(macOnDismiss: { showDiscovery = false })
                         .preferredColorScheme(.dark)
                 }
             }

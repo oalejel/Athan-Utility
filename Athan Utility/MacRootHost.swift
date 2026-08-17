@@ -84,6 +84,10 @@ enum MacRootBuilder {
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
+        // `.colorScheme(.dark)` only dresses the SwiftUI content. The hosting controller's
+        // own view resolves system colours against its trait collection, which on Catalyst
+        // is light by default — so anything the content didn't cover came out pale.
+        sidebarVC.overrideUserInterfaceStyle = .dark
         // Clear, so the system's sidebar material shows through rather than being
         // covered by the hosting controller's own opaque background.
         sidebarVC.view.backgroundColor = .clear
@@ -93,6 +97,13 @@ enum MacRootBuilder {
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
+        // Same trait-collection problem, and this is where it showed: the Settings Form and
+        // the Discover grid both lay out at a narrower, centred width, so the pane's own
+        // background fills the side margins — and resolved light, it drew white pillars
+        // either side of them. Fixed once here rather than per-view, and painted the
+        // grouped background so the margins match the content sitting on them.
+        detailVC.overrideUserInterfaceStyle = .dark
+        detailVC.view.backgroundColor = .systemGroupedBackground
 
         split.setViewController(sidebarVC, for: .primary)
         split.setViewController(detailVC, for: .secondary)

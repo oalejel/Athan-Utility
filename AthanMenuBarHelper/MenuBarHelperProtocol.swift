@@ -47,6 +47,9 @@ import CoreGraphics
     func menuBarSetSound(index: Int)
     /// The user picked how the menu-bar title shows time (0 = countdown, 1 = start time).
     func menuBarSetDisplayMode(_ mode: Int)
+    /// The user flipped silent mode: notifications still arrive, they just use the system
+    /// sound instead of the athan recording.
+    func menuBarSetSilentMode(_ silent: Bool)
     /// Open the main app on its Settings screen (gear button in the popover).
     func menuBarOpenSettings()
     /// Open the app on its location settings (the location row in the popover).
@@ -88,6 +91,7 @@ public final class MenuBarSnapshot: NSObject {
     public let soundOptions: [String]
     public let soundIndex: Int
     public let displayMode: Int          // 0 = countdown, 1 = start time
+    public let silentMode: Bool          // true = system sound instead of the athan
     public let countdownLabel: String    // e.g. "Fajr -6h 1m"  (the actual timeLeft title)
     public let startTimeLabel: String    // e.g. "Fajr: 3:38 PM" (the actual startTime title)
     public let topColor: CGColor
@@ -95,7 +99,7 @@ public final class MenuBarSnapshot: NSObject {
     public init(rows: [MenuBarPrayerRow], locationText: String,
                 methodOptions: [String], methodIndex: Int,
                 soundOptions: [String], soundIndex: Int,
-                displayMode: Int,
+                displayMode: Int, silentMode: Bool,
                 countdownLabel: String, startTimeLabel: String,
                 topColor: CGColor, bottomColor: CGColor) {
         self.rows = rows
@@ -105,6 +109,7 @@ public final class MenuBarSnapshot: NSObject {
         self.soundOptions = soundOptions
         self.soundIndex = soundIndex
         self.displayMode = displayMode
+        self.silentMode = silentMode
         self.countdownLabel = countdownLabel
         self.startTimeLabel = startTimeLabel
         self.topColor = topColor

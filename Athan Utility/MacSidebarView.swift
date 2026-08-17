@@ -320,15 +320,14 @@ struct MacSidebarView: View {
     /// the app rather than as an unstyled system background.
     static let fill = Color(red: 12 / 255, green: 27 / 255, blue: 56 / 255)
 
-    /// Deliberately translucent: it sits on top of the system's own sidebar material
-    /// (primaryBackgroundStyle = .sidebar), which is what gives the floating rounded card
-    /// its depth over the detail pane.
+    /// Opaque, one flat tone. This used to be a translucent material, which was fine while
+    /// the system ignored `primaryBackgroundStyle` — the sidebar simply read as dark navy.
+    /// Now that the split view is the window's root the style applies for real, and the
+    /// system's own sidebar material sits UNDERNEATH this: a translucent fill let that pale,
+    /// desaturated material through, so the scrolling upper portion came out noticeably
+    /// lighter than the pinned footer. A flat fill keeps the whole column one colour.
     private var darkVibrancy: some View {
-        ZStack {
-            Rectangle().fill(.ultraThinMaterial)
-            Color.black.opacity(0.42)
-        }
-        .ignoresSafeArea()
+        Self.fill.ignoresSafeArea()
     }
 
     // MARK: - Helpers

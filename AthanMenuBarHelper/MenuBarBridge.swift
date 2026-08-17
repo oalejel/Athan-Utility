@@ -22,6 +22,9 @@ extension Notification.Name {
     static let athanMenuBarPlacementFailed = Notification.Name("AthanMenuBarPlacementFailed")
     /// Posted when the popover's location row is clicked; the sidebar opens its editor.
     static let athanShowMacLocationSettings = Notification.Name("AthanShowMacLocationSettings")
+    /// Posted when silent mode is toggled anywhere, so the sidebar and the popover — which
+    /// both show it and neither of which observes NotificationSettings — stay in step.
+    static let athanSilentModeChanged = Notification.Name("AthanSilentModeChanged")
 }
 
 func mbDebug(_ s: String) { NSLog("ATHAN-MB: %@", s) }
@@ -265,6 +268,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
                                soundOptions: sounds.map { $0.localizedString() },
                                soundIndex: m.notificationSettings.selectedSound.rawValue,
                                displayMode: MenuBarSettings.mode.rawValue,
+                               silentMode: m.notificationSettings.silentMode,
                                countdownLabel: countdownLabel,
                                startTimeLabel: startTimeLabel,
                                topColor: top,
@@ -303,6 +307,17 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         m.notificationSettings = updated
         m.reloadSettingsAndNotifications()
         pushSnapshot()
+    }
+
+    func menuBarSetSilentMode(_ silent: Bool) {
+        let m = AthanManager.shared
+        guard let updated = m.notificationSettings.copy() as? NotificationSettings else { return }
+        updated.silentMode = silent
+        m.notificationSettings = updated       // didSet archives
+        m.reloadSettingsAndNotifications()      // reschedule with the new sound
+        pushSnapshot()
+        // The sidebar reads the same setting and has no way to know it changed.
+        NotificationCenter.default.post(name: .athanSilentModeChanged, object: silent)
     }
 
     func menuBarSetDisplayMode(_ mode: Int) {

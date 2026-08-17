@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
 
         // Seed deterministic demo state when launched by the snapshot UI test.
+        // Ordinary launch after a screenshot capture: put back whatever the capture
+        // overwrote, before anything reads it. No-op unless a backup exists.
+        SnapshotSupport.restoreIfNeeded()
         SnapshotSupport.seedIfNeeded()
 
         ExploreSettingsNudge.recordLaunchAndScheduleIfNeeded()

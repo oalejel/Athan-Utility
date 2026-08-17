@@ -50,12 +50,57 @@ enum SnapshotSupport {
         }
     }
 
+    // MARK: - Backup / restore
+    //
+    // Seeding writes to the SAME defaults the real app uses, so running a capture
+    // against a container that has real settings in it would quietly overwrite them.
+    // Rather than hope nobody does that, back the affected keys up before the first
+    // write and put them back on the next ordinary launch. Restore is deferred rather
+    // than done on exit because UI tests kill the app — there is no reliable teardown.
+
+    private static let backupKey = "snapshotStateBackup"
+    private static let group = UserDefaults(suiteName: "group.athanUtil")
+
+    /// Keys seeding overwrites. Standard defaults unless noted.
+    private static let standardKeys = ["calculationSetupComplete", "seenFeatureDiscovery_v1"]
+    private static let groupKeys = ["adoptedFeaturesV1"]
+
+    private static func backupIfNeeded() {
+        let d = UserDefaults.standard
+        guard d.dictionary(forKey: backupKey) == nil else { return }   // already backed up
+        var box: [String: Any] = [:]
+        for k in standardKeys where d.object(forKey: k) != nil { box["std." + k] = d.object(forKey: k)! }
+        for k in groupKeys { if let v = group?.object(forKey: k) { box["grp." + k] = v } }
+        if let loc = unarchiveData(LocationSettings.archiveName) { box["loc"] = loc }
+        d.set(box, forKey: backupKey)
+    }
+
+    /// Called on every ordinary launch. Puts back whatever a previous capture replaced.
+    static func restoreIfNeeded() {
+        guard !isActive else { return }
+        let d = UserDefaults.standard
+        guard let box = d.dictionary(forKey: backupKey) else { return }
+        for k in standardKeys {
+            if let v = box["std." + k] { d.set(v, forKey: k) } else { d.removeObject(forKey: k) }
+        }
+        for k in groupKeys {
+            if let v = box["grp." + k] { group?.set(v, forKey: k) } else { group?.removeObject(forKey: k) }
+        }
+        if let loc = box["loc"] { archiveData(LocationSettings.archiveName, object: loc) }
+        d.removeObject(forKey: backupKey)
+        // Re-read the restored values into the live singletons.
+        IntroSetupFlags.hasCompletedCalculationSetup = d.bool(forKey: "calculationSetupComplete")
+        if let arch = LocationSettings.checkArchive() { AthanManager.shared.locationSettings = arch }
+        print("SNAPSHOT: restored pre-capture settings")
+    }
+
     /// Seeds a fixed location so times/recommendations are deterministic. In the
     /// default mode it also marks onboarding complete (opens on the main screen);
     /// in intro mode it leaves onboarding incomplete so the intro screen shows with
     /// a live country recommendation. Safe no-op outside snapshot runs.
     static func seedIfNeeded() {
         guard isActive else { return }
+        backupIfNeeded()
 
         // Fixed location → no location-permission prompt, deterministic times.
         let city = demoLocation()

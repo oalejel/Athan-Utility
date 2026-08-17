@@ -205,7 +205,24 @@ class NotificationSettings: Codable, NSCopying {
     var selectedSound: Sounds
     var settings: [Prayer:AlarmSetting]
     static let archiveName = "notificationsettings"
-    
+
+    /// One switch for "notify me, but don't play the athan" — the notification still
+    /// arrives, it just uses the system sound instead of the recording.
+    ///
+    /// Derived from the per-prayer `athanSoundEnabled` flags rather than stored, so it can
+    /// never disagree with them. Sunrise is excluded on both sides: it has no athan to
+    /// play, so counting it would report silent mode even when every other prayer is set
+    /// to the recording, and turning silent mode off must not give it one.
+    var silentMode: Bool {
+        get { !settings.contains { $0.key != .sunrise && $0.value.athanSoundEnabled } }
+        set {
+            for (prayer, setting) in settings where prayer != .sunrise {
+                setting.athanSoundEnabled = !newValue
+            }
+        }
+    }
+
+
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = NotificationSettings(settings: settings, selectedSound: selectedSound)
         return copy

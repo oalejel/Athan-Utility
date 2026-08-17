@@ -29,7 +29,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     // object, so installStatusItem()'s "already exists" guard would otherwise
     // silently no-op and never notice.
     private var visibilityObservation: NSKeyValueObservation?
-    private var cardObservation: NSObjectProtocol?
 
     public override init() { super.init() }
 
@@ -105,7 +104,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         }
         statusItem = item
         keepRunningWhileInMenuBar()
-        insetTrafficLightsIntoSidebar(attempt: 1)
         NSLog("ATHAN-MB-HELPER: installStatusItem() - new item created, isVisible=%@, button=%@",
               item.isVisible ? "true" : "false",
               item.button == nil ? "nil" : "present")
@@ -183,105 +181,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     private func keepRunningWhileInMenuBar() {
         installWindowCloseInterceptor(attempt: 1)
     }
-
-    /// Move the traffic lights inside the sidebar card.
-    ///
-    /// macOS 26 lays the Catalyst sidebar out as a rounded card inset ~10pt on every side
-    /// of the window, and the lights keep their usual position relative to the WINDOW, so
-    /// they land above the card on the detail pane instead of inside it. Maps and Photos
-    /// put them in the card's own top-left corner. UIKit has no API for the lights, and
-    /// AppKit's only lever is the buttons' frames — which the titlebar re-lays out on
-    /// every resize, so a one-shot offset drifts back.
-    ///
-    /// Hence the graft: run the titlebar's own layout first, then shift the three buttons
-    /// by the card's inset. Because it re-applies after each layout pass rather than
-    /// accumulating, resizing and full-screen transitions stay correct.
-    private func insetTrafficLightsIntoSidebar(attempt: Int) {
-        guard let window = NSApp.windows.first(where: {
-            NSStringFromClass(type(of: $0)) != "NSStatusBarWindow" && $0.delegate != nil
-        }), let close = window.standardWindowButton(.closeButton),
-              let titlebar = close.superview else {
-            if attempt < 20 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                    self?.insetTrafficLightsIntoSidebar(attempt: attempt + 1)
-                }
-            } else {
-                NSLog("ATHAN-MB-HELPER: no titlebar found to inset the traffic lights into")
-            }
-            return
-        }
-
-        // Catalyst lays its content out BELOW the title bar, so the card started a titlebar
-        // height further down than its own inset. Running the content full size puts the
-        // card's inset on the window's true top edge, and the transparent title bar keeps
-        // the strip from painting over the sidebar.
-        window.styleMask.insert(.fullSizeContentView)
-        window.titlebarAppearsTransparent = true
-
-        let cls: AnyClass = type(of: titlebar)
-        let sel = NSSelectorFromString("layout")
-        guard let method = class_getInstanceMethod(cls, sel) else { return }
-        typealias LayoutIMP = @convention(c) (AnyObject, Selector) -> Void
-        let original = unsafeBitCast(method_getImplementation(method), to: LayoutIMP.self)
-
-        let block: @convention(block) (AnyObject) -> Void = { object in
-            original(object, sel)
-            guard let container = object as? NSView, let win = container.window,
-                  // Full screen has no card inset to match, and the lights live in a
-                  // different container there anyway.
-                  !win.styleMask.contains(.fullScreen),
-                  let card = AthanMenuBarHelper.sidebarCard else { return }
-
-            // Shift by the card's own origin, so the buttons keep exactly the inset they
-            // normally have from the window's corner — measured from the card's corner
-            // instead. The UIKit content may not start at the window's top, so the card's
-            // y is taken relative to the UIKit window and re-based here.
-            let uiTop = max(0, win.frame.height - card.windowHeight)
-            let dx = card.origin.x
-            let dy = uiTop + card.origin.y
-            guard dx > 0 || dy > 0 else { return }
-            for type in [NSWindow.ButtonType.closeButton, .miniaturizeButton, .zoomButton] {
-                guard let button = win.standardWindowButton(type) else { continue }
-                button.setFrameOrigin(NSPoint(x: button.frame.origin.x + dx,
-                                              y: button.frame.origin.y - dy))
-            }
-        }
-        if !class_addMethod(cls, sel, imp_implementationWithBlock(block), "v@:") {
-            class_replaceMethod(cls, sel, imp_implementationWithBlock(block), "v@:")
-        }
-
-        // The UIKit side owns the card's real geometry and tells us when it moves — which
-        // includes collapsing the sidebar, where `nil` puts the lights back in the window's
-        // corner so they don't land on the sidebar-toggle button that replaces them.
-        cardObservation = NotificationCenter.default.addObserver(
-            forName: Notification.Name("AthanSidebarCardGeometryDidChange"),
-            object: nil, queue: .main
-        ) { [weak titlebar] note in
-            let info = note.userInfo ?? [:]
-            if info["visible"] as? Bool == true,
-               let x = info["x"] as? CGFloat, let y = info["y"] as? CGFloat,
-               let h = info["windowHeight"] as? CGFloat {
-                AthanMenuBarHelper.sidebarCard = (CGPoint(x: x, y: y), h)
-            } else {
-                AthanMenuBarHelper.sidebarCard = nil
-            }
-            titlebar?.needsLayout = true
-            titlebar?.layoutSubtreeIfNeeded()
-        }
-
-        // Ask for the current geometry: by now the split view has usually finished laying
-        // out, so its change-only post has already gone out and would never repeat.
-        NotificationCenter.default.post(
-            name: Notification.Name("AthanSidebarCardGeometryRequested"), object: nil)
-
-        titlebar.needsLayout = true
-        NSLog("ATHAN-MB-HELPER: insetting traffic lights into the sidebar card (%@)",
-              NSStringFromClass(cls))
-    }
-
-    /// Where the sidebar card is, as last reported by the UIKit side. Static because the
-    /// grafted `layout` runs on AppKit's titlebar view, not on this helper.
-    fileprivate static var sidebarCard: (origin: CGPoint, windowHeight: CGFloat)?
 
     private func installWindowCloseInterceptor(attempt: Int) {
         // The app's window may not exist yet when the status item is created.

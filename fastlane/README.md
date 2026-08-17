@@ -69,7 +69,15 @@ Build, upload the binary and localized metadata — but do NOT submit for review
 [bundle exec] fastlane ios screenshots
 ```
 
-Generate new localized screenshots
+Generate localized screenshots (no upload). Validate them before shipping.
+
+### ios upload_screenshots
+
+```sh
+[bundle exec] fastlane ios upload_screenshots
+```
+
+Upload the screenshot sets only — no binary, no metadata
 
 ----
 

@@ -493,7 +493,11 @@ final class MenuBarPopoverController: NSViewController {
         label.font = .systemFont(ofSize: 12.5, weight: .semibold)
         label.alignment = .left
         label.toolTip = NSLocalizedString("open_location_settings", value: "Open location settings", comment: "")
-        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        // Hug the text so the gap sits between the label and the gear rather than inside
+        // the button's own tracking area, and truncate instead of shoving the gear off-row.
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        (label.cell as? NSButtonCell)?.lineBreakMode = .byTruncatingTail
 
         // Gear in the top-right, on the same line as the location.
         let gear = NSButton(title: "", target: self, action: #selector(settingsTapped))
@@ -509,7 +513,15 @@ final class MenuBarPopoverController: NSViewController {
         gear.translatesAutoresizingMaskIntoConstraints = false
         gear.widthAnchor.constraint(equalToConstant: 15).isActive = true
 
-        let hs = NSStackView(views: [pin, label, gear])
+        // Flexible gap so the gear stays pinned to the trailing edge with breathing room
+        // after the location text instead of butting up against it.
+        let gap = NSView()
+        gap.translatesAutoresizingMaskIntoConstraints = false
+        gap.setContentHuggingPriority(.init(1), for: .horizontal)
+        gap.setContentCompressionResistancePriority(.init(1), for: .horizontal)
+        gap.widthAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
+
+        let hs = NSStackView(views: [pin, label, gap, gear])
         hs.orientation = .horizontal
         hs.spacing = 6
         hs.alignment = .centerY

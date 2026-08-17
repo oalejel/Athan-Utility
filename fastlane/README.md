@@ -92,6 +92,22 @@ Upload the screenshot sets only — no binary, no metadata
 
 Archive the Mac Catalyst app and upload it to App Store Connect (binary only, no review submission)
 
+### mac finalize
+
+```sh
+[bundle exec] fastlane mac finalize
+```
+
+Submit the already-uploaded Mac build for review (no rebuild) — clears export compliance
+
+### mac upload_screenshots
+
+```sh
+[bundle exec] fastlane mac upload_screenshots
+```
+
+Upload the Mac listing's screenshots (no binary, no metadata)
+
 ### mac upload_metadata
 
 ```sh

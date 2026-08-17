@@ -284,6 +284,23 @@ platform :mac do
     )
   end
 
+  desc "Upload the Mac listing's screenshots (no binary, no metadata)"
+  lane :upload_screenshots do
+    deliver(
+      api_key:                  athan_api_key,
+      app_identifier:           "com.omaralejel.Athan-Utility",
+      platform:                 "osx",
+      skip_binary_upload:       true,
+      skip_metadata:            true,
+      skip_screenshots:         false,
+      screenshots_path:         "./fastlane/screenshots_mac",
+      overwrite_screenshots:    true,
+      submit_for_review:        false,
+      force:                    true,
+      run_precheck_before_submit: false
+    )
+  end
+
   desc "Upload the Mac listing's localized metadata (no binary)"
   lane :upload_metadata do
     deliver(

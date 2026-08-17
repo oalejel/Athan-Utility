@@ -13,6 +13,7 @@
 		184EDA08DF96821DF57C2FE1 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
 		20E8564DF6B911EE89ED155E /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		21225FEE517C5267F05D86E3 /* AthanMenuBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */; };
+		2174B5CC8A9839B3D8923D3C /* MacSplitHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EED5BD4A6A05ED2AB6253 /* MacSplitHost.swift */; };
 		2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
 		36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */; };
 		3D02C9E5251EC134003FFA92 /* Athan_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3D02C9E4251EC134003FFA92 /* Athan_Widget.intentdefinition */; };
@@ -507,6 +508,7 @@
 		B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExploreSettingsNudge.swift; sourceTree = "<group>"; };
 		B895353DF4EFEA658C8E876A /* NotificationPermission.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NotificationPermission.swift; path = NotificationPermission.swift; sourceTree = "<group>"; };
 		BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FajrAlarmManager.swift; sourceTree = "<group>"; };
+		BB3EED5BD4A6A05ED2AB6253 /* MacSplitHost.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MacSplitHost.swift; sourceTree = "<group>"; };
 		BD50BCDA86EBF53C0013B60F /* AthanMenuBarHelper.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.plug-in"; includeInIndex = 0; path = AthanMenuBarHelper.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnapshotSupport.swift; sourceTree = "<group>"; };
 		CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HijriSettings.swift; path = HijriSettings.swift; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 				41B928004751B72510E13FAC /* HijriCalloutView.swift */,
 				D5075956B6268FBE6A35D494 /* DayBrowseState.swift */,
 				1C546286B14A3DA60BDA6E5B /* Athan Utility (Mac).entitlements */,
+				BB3EED5BD4A6A05ED2AB6253 /* MacSplitHost.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1398,6 +1401,7 @@
 				5107BC03784B159309106E36 /* HijriSettings.swift in Sources */,
 				E1FB145A85D934A3AD6144D0 /* HijriCalloutView.swift in Sources */,
 				CA2BF9126AFC892FC517F4AE /* DayBrowseState.swift in Sources */,
+				2174B5CC8A9839B3D8923D3C /* MacSplitHost.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

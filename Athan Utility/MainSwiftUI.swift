@@ -253,13 +253,9 @@ struct MainSwiftUI: View {
     var body: some View {
         #if targetEnvironment(macCatalyst)
         if #available(macCatalyst 16.0, *), currentView == .Main {
-            NavigationSplitView {
-                MacSidebarView(section: $macSection)
-                    .navigationSplitViewColumnWidth(min: 236, ideal: 260, max: 320)
-            } detail: {
-                macDetail
-            }
-            .navigationSplitViewStyle(.balanced)
+            MacSplitHost(sidebar: MacSidebarView(section: $macSection),
+                         detail: macDetail)
+                .ignoresSafeArea()
         } else {
             coreBody   // onboarding (location / intro) + pre-macOS-13 fallback
         }

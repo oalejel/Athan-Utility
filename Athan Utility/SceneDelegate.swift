@@ -46,6 +46,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             #else
             window.rootViewController = UIHostingController(rootView: contentView)
             #endif
+            #if targetEnvironment(macCatalyst)
+            // The app is dark-only. Setting it on the window means every controller,
+            // popover and alert under it resolves system colours dark, rather than each
+            // view having to dress itself.
+            window.overrideUserInterfaceStyle = .dark
+            #endif
             self.window = window
             window.makeKeyAndVisible()
 

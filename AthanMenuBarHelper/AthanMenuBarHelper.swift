@@ -329,6 +329,7 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         vc.onSetMethod      = { [weak self] i in self?.actionDelegate?.menuBarSetMethod(index: i) }
         vc.onSetSound       = { [weak self] i in self?.actionDelegate?.menuBarSetSound(index: i) }
         vc.onSetDisplayMode = { [weak self] m in self?.actionDelegate?.menuBarSetDisplayMode(m) }
+        vc.onSetSilentMode  = { [weak self] s in self?.actionDelegate?.menuBarSetSilentMode(s) }
         vc.onOpenSettings   = { [weak self] in
             self?.openApp()
             self?.actionDelegate?.menuBarOpenSettings()
@@ -403,6 +404,7 @@ final class MenuBarPopoverController: NSViewController {
     var onSetMethod: ((Int) -> Void)?
     var onSetSound: ((Int) -> Void)?
     var onSetDisplayMode: ((Int) -> Void)?
+    var onSetSilentMode: ((Bool) -> Void)?
     var onOpenSettings: (() -> Void)?
     var onOpenLocationSettings: (() -> Void)?
 
@@ -460,6 +462,9 @@ final class MenuBarPopoverController: NSViewController {
 
         stack.addArrangedSubview(spacer(6))
         stack.addArrangedSubview(divider())
+        stack.addArrangedSubview(spacer(6))
+
+        stack.addArrangedSubview(silentModeRow(isOn: snap.silentMode, width: inset))
         stack.addArrangedSubview(spacer(6))
 
         // Display-mode toggle — no label, full width.
@@ -559,6 +564,44 @@ final class MenuBarPopoverController: NSViewController {
         hs.translatesAutoresizingMaskIntoConstraints = false
         hs.widthAnchor.constraint(equalToConstant: contentWidth - 32).isActive = true
         return hs
+    }
+
+    /// Athan recording vs. the system notification sound. Sits below the divider, above the
+    /// display-mode control, at the same inset width as everything else in the popover.
+    private func silentModeRow(isOn: Bool, width: CGFloat) -> NSView {
+        let label = makeLabel(NSLocalizedString("silent_mode", value: "Silent mode", comment:
+                                "Popover toggle: notify with the system sound instead of playing the athan"),
+                              size: 13, weight: .regular, color: .white)
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        let box = NSButton(checkboxWithTitle: "", target: self, action: #selector(silentModeToggled(_:)))
+        box.state = isOn ? .on : .off
+        box.controlSize = .large
+        box.translatesAutoresizingMaskIntoConstraints = false
+        box.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        // Flexible gap so the box stays on the trailing edge and the label truncates
+        // rather than pushing it off the row.
+        let gap = NSView()
+        gap.translatesAutoresizingMaskIntoConstraints = false
+        gap.setContentHuggingPriority(.init(1), for: .horizontal)
+        gap.setContentCompressionResistancePriority(.init(1), for: .horizontal)
+        gap.widthAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
+
+        let hs = NSStackView(views: [label, gap, box])
+        hs.orientation = .horizontal
+        hs.spacing = 6
+        hs.alignment = .centerY
+        hs.translatesAutoresizingMaskIntoConstraints = false
+        hs.widthAnchor.constraint(equalToConstant: width).isActive = true
+        hs.toolTip = NSLocalizedString("silent_mode_help",
+                                       value: "Notify with the system sound instead of playing the athan.",
+                                       comment: "")
+        return hs
+    }
+
+    @objc private func silentModeToggled(_ sender: NSButton) {
+        onSetSilentMode?(sender.state == .on)
     }
 
     private func makeLabel(_ text: String, size: CGFloat, weight: NSFont.Weight, color: NSColor) -> NSTextField {

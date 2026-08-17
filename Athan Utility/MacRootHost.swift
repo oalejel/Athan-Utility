@@ -112,11 +112,13 @@ enum MacRootBuilder {
 
     /// Full-window onboarding (location picker / intro), with no sidebar.
     static func makeOnboardingController() -> UIViewController {
-        UIHostingController(
+        let vc = UIHostingController(
             rootView: MainSwiftUI()
                 .environmentObject(ObservableAthanManager.shared)
                 .colorScheme(.dark)
         )
+        vc.overrideUserInterfaceStyle = .dark
+        return vc
     }
 
     /// Matches MainSwiftUI's own launch decision, so SceneDelegate can pick the right

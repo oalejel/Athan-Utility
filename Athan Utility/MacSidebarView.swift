@@ -27,6 +27,7 @@ struct MacSidebarView: View {
     @State private var locationStatus: String?
     @State private var bellVersion = 0          // forces the (non-published) bell state to refresh
     @State private var dayOffset = 0            // 0 = today; prev/next-day browsing
+    @State private var silentVersion = 0        // same trick as bellVersion, for silent mode
     private let geocoder = CLGeocoder()
     // The sidebar's own fonts run small, so it's the primary consumer of the
     // user-adjustable ⌘+/⌘- zoom (see MacFontScale / AppDelegate.buildMenu).
@@ -72,6 +73,10 @@ struct MacSidebarView: View {
             section = .times
             withAnimation { showLocationEditor = true }
         }
+        // The menu bar popover toggles the same setting; re-read it when it does.
+        .onReceive(NotificationCenter.default.publisher(for: .athanSilentModeChanged)) { _ in
+            silentVersion += 1
+        }
     }
 
     /// Enough room for the six prayer rows, the day navigator, the location row and the
@@ -84,7 +89,7 @@ struct MacSidebarView: View {
         let prayerRows = 6 * fs(32)
         let navigator = fs(44)          // arrows + Hijri date
         // Location moved into the footer, so it counts against the pinned chrome.
-        let footer = fs(34) + CGFloat(navSections.count) * fs(32) + 34
+        let footer = fs(34) + fs(32) + CGFloat(navSections.count) * fs(32) + 34   // location + silent mode + nav
         return sectionHeader + prayerRows + navigator + footer + 52
     }
 
@@ -109,6 +114,49 @@ struct MacSidebarView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+
+    /// Athan recording vs. the system notification sound. Distinct from the per-prayer
+    /// bells above, which decide whether a notification arrives at all — this only decides
+    /// what it sounds like, so it reads as a checkbox rather than another bell.
+    private var silentModeRow: some View {
+        Button {
+            toggleSilentMode()
+        } label: {
+            HStack(spacing: 8) {
+                Text(NSLocalizedString("silent_mode", value: "Silent mode", comment: "Sidebar toggle: notify with the system sound instead of playing the athan"))
+                    .font(.system(size: fs(13.5), weight: .medium))
+                    .foregroundColor(.white.opacity(0.9))
+                    .lineLimit(1).truncationMode(.tail)
+                Spacer(minLength: 6)
+                Image(systemName: silentMode ? "checkmark.square.fill" : "square")
+                    .font(.system(size: fs(18), weight: .regular))
+                    .foregroundColor(silentMode ? gold : .white.opacity(0.5))
+            }
+            .padding(.horizontal, 10).padding(.vertical, 7)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .help(NSLocalizedString("silent_mode_help",
+                                value: "Notify with the system sound instead of playing the athan.",
+                                comment: ""))
+    }
+
+    /// `silentVersion` is only there to re-read it: NotificationSettings isn't observable,
+    /// so the same trick the bells use applies here.
+    private var silentMode: Bool {
+        _ = silentVersion
+        return AthanManager.shared.notificationSettings.silentMode
+    }
+
+    private func toggleSilentMode() {
+        let m = AthanManager.shared
+        guard let updated = m.notificationSettings.copy() as? NotificationSettings else { return }
+        updated.silentMode.toggle()
+        m.notificationSettings = updated
+        m.reloadSettingsAndNotifications()
+        silentVersion += 1
+        NotificationCenter.default.post(name: .athanSilentModeChanged, object: updated.silentMode)
     }
 
     private var locationEditor: some View {
@@ -283,6 +331,7 @@ struct MacSidebarView: View {
             // of the day's list, and it stays reachable however far the times scroll.
             locationHeader
             if showLocationEditor { locationEditor.transition(.opacity) }
+            silentModeRow
 
             Divider().overlay(Color.white.opacity(0.10))
                 .padding(.top, 6)

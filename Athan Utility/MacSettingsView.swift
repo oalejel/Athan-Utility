@@ -134,7 +134,9 @@ struct MacSettingsView: View {
         .formStyle(.grouped)
         .frame(maxWidth: 600)                       // negative space on the sides; tighter rows
         .frame(maxWidth: .infinity, alignment: .center)
-        .navigationTitle(Strings.settings)
+        // No navigationTitle: this is the split view's secondary controller now, so
+        // Catalyst renders one as a title above the pane. The sidebar already says which
+        // section you're in.
     }
 
     private var appVersion: String {

@@ -56,10 +56,11 @@ struct MacSidebarView: View {
                 dayNavigator
                 Spacer(minLength: 12)
             }
-            // Sits just under the sidebar toggle rather than 20pt below it: the
-            // toolbar area above already provides the separation, and the extra
-            // padding read as a gap with nothing in it.
-            .padding(.top, 2)
+            // Original spacing, deliberately. Pulling the title up toward the collapse
+            // toggle put it where the sidebar's gradient fades and the label washed out —
+            // and the gap it was closing isn't a layout mistake: macOS integrates the
+            // window's traffic lights into the sidebar, so that row belongs to them.
+            .padding(.top, 10)
             .padding(.horizontal, 8)
         }
         .safeAreaInset(edge: .bottom) { navFooter }
@@ -163,14 +164,13 @@ struct MacSidebarView: View {
 
     // MARK: - Prayer list
 
-    /// Left-aligned, small uppercase and tracked — sits directly over the list rather
-    /// than in the toolbar, where Catalyst centres it and holds it far from the times.
+    /// Left-aligned, small uppercase and tracked, sitting directly over the list.
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
             .font(.system(size: fs(11.5), weight: .semibold))
             .tracking(0.6)
             .foregroundColor(.white.opacity(0.45))
-            .padding(.horizontal, 12).padding(.top, 2).padding(.bottom, 4)
+            .padding(.horizontal, 12).padding(.top, 10).padding(.bottom, 4)
     }
 
     private var prayerList: some View {

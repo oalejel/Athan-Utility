@@ -361,7 +361,6 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         vc.onSetMethod      = { [weak self] i in self?.actionDelegate?.menuBarSetMethod(index: i) }
         vc.onSetSound       = { [weak self] i in self?.actionDelegate?.menuBarSetSound(index: i) }
         vc.onSetDisplayMode = { [weak self] m in self?.actionDelegate?.menuBarSetDisplayMode(m) }
-        vc.onOpen           = { [weak self] in self?.openApp() }
         vc.onOpenSettings   = { [weak self] in
             self?.openApp()
             self?.actionDelegate?.menuBarOpenSettings()
@@ -424,7 +423,6 @@ final class MenuBarPopoverController: NSViewController {
     var onSetMethod: ((Int) -> Void)?
     var onSetSound: ((Int) -> Void)?
     var onSetDisplayMode: ((Int) -> Void)?
-    var onOpen: (() -> Void)?
     var onOpenSettings: (() -> Void)?
 
     private let gradient = CAGradientLayer()
@@ -496,23 +494,18 @@ final class MenuBarPopoverController: NSViewController {
 
         stack.addArrangedSubview(spacer(8))
 
-        // Bottom: gear → open the app on Settings, and Open the main window.
+        // Bottom: one full-width Settings button. There used to be a separate "Open"
+        // beside it, but Settings already brings the app forward on its way to the
+        // Settings screen — the two buttons differed only in where you landed.
         let gear = NSButton(title: " " + NSLocalizedString("settings", value: "Settings", comment: ""),
                             target: self, action: #selector(settingsTapped))
         if let g = NSImage(systemSymbolName: "gearshape.fill", accessibilityDescription: nil) {
             gear.image = g; gear.imagePosition = .imageLeading
         }
         gear.bezelStyle = .rounded
-        let open = NSButton(title: NSLocalizedString("open_short", value: "Open", comment: ""),
-                            target: self, action: #selector(openTapped))
-        open.bezelStyle = .rounded
-        let bottom = NSStackView(views: [gear, open])
-        bottom.orientation = .horizontal
-        bottom.distribution = .fillEqually
-        bottom.spacing = 8
-        bottom.translatesAutoresizingMaskIntoConstraints = false
-        bottom.widthAnchor.constraint(equalToConstant: inset).isActive = true
-        stack.addArrangedSubview(bottom)
+        gear.translatesAutoresizingMaskIntoConstraints = false
+        gear.widthAnchor.constraint(equalToConstant: inset).isActive = true
+        stack.addArrangedSubview(gear)
     }
 
     // MARK: - Row builders
@@ -596,6 +589,5 @@ final class MenuBarPopoverController: NSViewController {
     @objc private func methodChanged(_ sender: NSPopUpButton) { onSetMethod?(sender.indexOfSelectedItem) }
     @objc private func soundChanged(_ sender: NSPopUpButton) { onSetSound?(sender.indexOfSelectedItem) }
     @objc private func displayModeChanged(_ sender: NSSegmentedControl) { onSetDisplayMode?(sender.selectedSegment) }
-    @objc private func openTapped() { onOpen?() }
     @objc private func settingsTapped() { onOpenSettings?() }
 }

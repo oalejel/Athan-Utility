@@ -123,6 +123,9 @@ enum SnapshotSupport {
         // so a machine that had explored some features produced a half-shrunken grid in
         // the Settings screenshot. Reset it so the set is identical everywhere.
         AdoptedFeature.saveDone([])
+
+        // A notice persisted by an earlier ordinary run would still surface on launch.
+        AthanManager.shared.acknowledgeMethodUpdate()
         IntroSetupFlags.hasCompletedCalculationSetup = !showsIntro
         // Hidden by default: the light bulb sat on top of the main screenshot.
         FeatureDiscovery.hasSeen = !showsDiscoveryHint

@@ -167,47 +167,53 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     }
 
 
-    /// Keep the process alive when the last window closes, the way every menu bar app
-    /// behaves — otherwise the icon vanishes the moment the user closes the window,
-    /// which is what happens by default on Catalyst.
+    /// Keep the process alive when the user closes the window.
     ///
-    /// UIKit owns the NSApplication delegate here and there is no Catalyst-visible hook
-    /// for this, so the AppKit callback is grafted onto whatever class that delegate is.
-    /// The implementation is conditional: with a menu bar item we stay resident; without
-    /// one, closing the last window still quits, so the app can't become unquittable.
+    /// The obvious hook — applicationShouldTerminateAfterLastWindowClosed: — is never
+    /// called in a Catalyst app: termination comes from UIKit tearing down the scene when
+    /// its window closes, not from AppKit's last-window logic. Measured, not assumed:
+    /// closing only the UINSWindow killed the process without that selector ever firing.
+    ///
+    /// So don't let the window close. Graft windowShouldClose: onto the window delegate's
+    /// class, order the window out instead of closing it, and the scene is never destroyed
+    /// — which is exactly what a menu bar app does. The window comes back with
+    /// makeKeyAndOrderFront from the popover, no scene recreation needed.
     private func keepRunningWhileInMenuBar() {
-        guard let delegate = NSApp.delegate else {
-            NSLog("ATHAN-MB-HELPER: no NSApp delegate to patch for last-window behaviour")
+        installWindowCloseInterceptor(attempt: 1)
+    }
+
+    private func installWindowCloseInterceptor(attempt: Int) {
+        // The app's window may not exist yet when the status item is created.
+        guard let window = NSApp.windows.first(where: {
+            NSStringFromClass(type(of: $0)) != "NSStatusBarWindow" && $0.delegate != nil
+        }), let delegate = window.delegate else {
+            if attempt < 20 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                    self?.installWindowCloseInterceptor(attempt: attempt + 1)
+                }
+            } else {
+                NSLog("ATHAN-MB-HELPER: no app window found to intercept closing")
+            }
             return
         }
-        let sel = NSSelectorFromString("applicationShouldTerminateAfterLastWindowClosed:")
-        let block: @convention(block) (AnyObject, AnyObject) -> Bool = { [weak self] _, _ in
-            guard self?.statusItem != nil else {
-                NSLog("ATHAN-MB-HELPER: last window closed, no menu bar item — terminating")
-                return true
-            }
-            // Become an accessory app: out of the Dock and the app switcher, alive in the
-            // menu bar. Done HERE rather than at launch on purpose — setting .accessory
-            // up front, with no window and nothing else holding the process, is what made
-            // the old menu-bar-only mode quit itself.
-            NSApp.setActivationPolicy(.accessory)
-            NSLog("ATHAN-MB-HELPER: last window closed — staying resident as an accessory app")
 
-            // Changing activation policy can take the status item down with it: AppKit
-            // rebuilds the app's UI presence around the new policy, and the item created
-            // under the old one does not always survive. Check once the switch has settled
-            // and vend a fresh one if it didn't — closing a window must never cost the
-            // user their menu bar icon.
-            self?.verifyStatusItemSurvivedPolicyChange(attempt: 1)
+        let cls: AnyClass = type(of: delegate)
+        let sel = NSSelectorFromString("windowShouldClose:")
+        let block: @convention(block) (AnyObject, AnyObject) -> Bool = { [weak self] _, win in
+            guard let self, self.statusItem != nil else { return true }
+            NSLog("ATHAN-MB-HELPER: window close intercepted — hiding instead of closing")
+            (win as? NSWindow)?.orderOut(nil)
+            // Out of the Dock too, now that nothing is on screen.
+            NSApp.setActivationPolicy(.accessory)
+            self.verifyStatusItemSurvivedPolicyChange(attempt: 1)
             return false
         }
         let imp = imp_implementationWithBlock(block)
-        let cls: AnyClass = type(of: delegate)
         if !class_addMethod(cls, sel, imp, "B@:@") {
             class_replaceMethod(cls, sel, imp, "B@:@")
         }
-        NSLog("ATHAN-MB-HELPER: patched %@ to stay resident while in the menu bar",
-              NSStringFromClass(cls))
+        NSLog("ATHAN-MB-HELPER: intercepting close on %@ (delegate %@)",
+              NSStringFromClass(type(of: window)), NSStringFromClass(cls))
     }
 
     /// The status item does not reliably survive an activation-policy change: AppKit

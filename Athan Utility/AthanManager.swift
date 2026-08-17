@@ -627,6 +627,12 @@ extension AthanManager {
     func autoUpdateMethodIfNeeded(for countryCode: String?,
                                   rescheduleNotifications: Bool = true,
                                   userChangedLocation: Bool = false) -> Bool {
+        // Never during a screenshot run: the notice floats over whatever is being
+        // captured. Checked inline rather than via SnapshotSupport because this file also
+        // compiles into the widget/Siri/watch targets, which don't include that type.
+        if CommandLine.arguments.contains("-UITEST_DEMO")
+            || CommandLine.arguments.contains("-UITEST_INTRO")
+            || CommandLine.arguments.contains("-UITEST_DISCOVER") { return false }
         guard let code = countryCode?.uppercased(), !code.isEmpty else { return false }
         let recommended = CalculationMethod.recommended(forISOCountryCode: code)
         let current = prayerSettings.calculationMethod

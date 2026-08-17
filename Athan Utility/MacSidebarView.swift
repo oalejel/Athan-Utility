@@ -56,11 +56,10 @@ struct MacSidebarView: View {
                 dayNavigator
                 Spacer(minLength: 12)
             }
-            // Original spacing, deliberately. Pulling the title up toward the collapse
-            // toggle put it where the sidebar's gradient fades and the label washed out —
-            // and the gap it was closing isn't a layout mistake: macOS integrates the
-            // window's traffic lights into the sidebar, so that row belongs to them.
-            .padding(.top, 10)
+            // The sidebar now runs under the window chrome, so this padding is what keeps
+            // the list clear of the traffic lights sitting in its top-left. It is their
+            // row, which is exactly the macOS sidebar convention.
+            .padding(.top, 30)
             .padding(.horizontal, 8)
         }
         .safeAreaInset(edge: .bottom) { navFooter }

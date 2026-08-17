@@ -55,7 +55,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         manager.refreshTimes()
         if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
-            handler(nil) // case if we have not set our location
+            handler(nil) // case if we have not set our locdeation
         } else if let template = getComplicationTemplate(for: complication, using: Date()) {
             print(">>> COMPLICATION MANAGER USING LOCATION (creating current entry): \(manager.locationSettings.locationName)")
             let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)

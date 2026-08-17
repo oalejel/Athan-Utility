@@ -384,4 +384,5 @@
 "day_next" = "Next day";
 "menubar_add_button" = "Add to Menu Bar";
 "menubar_add_footer" = "Shows the Athan Utility icon with a countdown to the next prayer. Hold ⌘ and drag it out of the menu bar to remove it.";
-"menubar_full" = "macOS couldn't fit the icon — your menu bar is full. Quit a menu bar app and try again.";
+"menubar_blocked" = "macOS is blocking the icon. Dragging it out of the menu bar turned Athan Utility off under Control Center settings — turn it back on there, then tap Add again.";
+"menubar_open_settings" = "Open Control Center Settings";

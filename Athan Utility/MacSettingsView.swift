@@ -20,8 +20,9 @@ struct MacSettingsView: View {
     @State private var isDynamic: Bool
     @State private var bellVersion = 0
     @State private var isPreviewingSound = false
-    /// macOS took the status item but gave it no slot — see menuBarPlacementFailed.
-    @State private var menuBarFull = false
+    /// macOS took the status item but never placed it — on macOS 26 that means the
+    /// app has been switched off under Control Center's "Allow in the Menu Bar".
+    @State private var menuBarBlocked = false
     /// Output of the menu bar diagnostic runs.
     @State private var diagnosticText = "Run a variant, then look for A1-A10 in the menu bar."
 
@@ -133,19 +134,31 @@ struct MacSettingsView: View {
                         Spacer()
                     }
 
-                    // Without this the button looks broken: macOS reports the item as
-                    // visible, so we have nothing to correct — there is simply no room
-                    // for it. Say so rather than letting the user press Add repeatedly.
-                    if menuBarFull {
-                        Label(NSLocalizedString("menubar_full", value: "macOS couldn't fit the icon — your menu bar is full. Quit a menu bar app and try again.", comment: ""),
-                              systemImage: "exclamationmark.triangle.fill")
+                    // macOS 26 owns this decision, not us. Dragging the icon out of the
+                    // menu bar turns the app's switch off under Control Center's "Allow in
+                    // the Menu Bar", and after that the system refuses to place any status
+                    // item we create — which is why the icon is created, reports itself
+                    // visible, and is still nowhere to be seen. No amount of retrying from
+                    // in here can undo it, so point at the switch that can.
+                    if menuBarBlocked {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Label(NSLocalizedString("menubar_blocked", value: "macOS is blocking the icon. Dragging it out of the menu bar turned Athan Utility off under Control Center settings — turn it back on there, then tap Add again.", comment: ""),
+                                  systemImage: "exclamationmark.triangle.fill")
+                                .font(.footnote)
+                                .foregroundColor(.orange)
+                                .fixedSize(horizontal: false, vertical: true)
+
+                            Button(NSLocalizedString("menubar_open_settings", value: "Open Control Center Settings", comment: "")) {
+                                if let url = URL(string: "x-apple.systempreferences:com.apple.ControlCenter-Settings.extension") {
+                                    UIApplication.shared.open(url)
+                                }
+                            }
                             .font(.footnote)
-                            .foregroundColor(.orange)
-                            .fixedSize(horizontal: false, vertical: true)
+                        }
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .athanMenuBarPlacementFailed)) { _ in
-                    menuBarFull = true
+                    menuBarBlocked = true
                 }
 
                 // TEMPORARY. Ten different ways of vending an NSStatusItem, because
@@ -211,6 +224,7 @@ struct MacSettingsView: View {
     }
 
     private func addToMenuBar() {
+        menuBarBlocked = false      // re-evaluate; the user may have just flipped the switch
         MenuBarSettings.isHidden = false
         // restoreItem(), not ensureItem(): after a ⌘-drag removal AppKit has detached
         // that NSStatusItem for good, so only a from-scratch recreate brings it back.

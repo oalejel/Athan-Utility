@@ -12,6 +12,7 @@
 //
 
 import AppKit
+import ObjectiveC
 
 private let kGold = NSColor(red: 0.957, green: 0.835, blue: 0.553, alpha: 1)
 
@@ -104,6 +105,7 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
             button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         statusItem = item
+        keepRunningWhileInMenuBar()
         NSLog("ATHAN-MB-HELPER: installStatusItem() - new item created, isVisible=%@, button=%@",
               item.isVisible ? "true" : "false",
               item.button == nil ? "nil" : "present")
@@ -268,6 +270,34 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         for (_, item) in diagnosticItems { NSStatusBar.system.removeStatusItem(item) }
         diagnosticItems.removeAll()
         NSLog("ATHAN-MB-DIAG: cleared all diagnostic items")
+    }
+
+    /// Keep the process alive when the last window closes, the way every menu bar app
+    /// behaves — otherwise the icon vanishes the moment the user closes the window,
+    /// which is what happens by default on Catalyst.
+    ///
+    /// UIKit owns the NSApplication delegate here and there is no Catalyst-visible hook
+    /// for this, so the AppKit callback is grafted onto whatever class that delegate is.
+    /// The implementation is conditional: with a menu bar item we stay resident; without
+    /// one, closing the last window still quits, so the app can't become unquittable.
+    private func keepRunningWhileInMenuBar() {
+        guard let delegate = NSApp.delegate else {
+            NSLog("ATHAN-MB-HELPER: no NSApp delegate to patch for last-window behaviour")
+            return
+        }
+        let sel = NSSelectorFromString("applicationShouldTerminateAfterLastWindowClosed:")
+        let block: @convention(block) (AnyObject, AnyObject) -> Bool = { [weak self] _, _ in
+            let stayResident = self?.statusItem != nil
+            NSLog("ATHAN-MB-HELPER: last window closed, terminate=%@", stayResident ? "NO" : "YES")
+            return !stayResident
+        }
+        let imp = imp_implementationWithBlock(block)
+        let cls: AnyClass = type(of: delegate)
+        if !class_addMethod(cls, sel, imp, "B@:@") {
+            class_replaceMethod(cls, sel, imp, "B@:@")
+        }
+        NSLog("ATHAN-MB-HELPER: patched %@ to stay resident while in the menu bar",
+              NSStringFromClass(cls))
     }
 
     public func isStatusItemVisible() -> Bool {

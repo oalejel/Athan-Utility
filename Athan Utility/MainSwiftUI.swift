@@ -260,11 +260,6 @@ struct MainSwiftUI: View {
                 macDetail
             }
             .navigationSplitViewStyle(.balanced)
-            // Let the split view — and so the sidebar's material — run under the window
-            // chrome. Without this the sidebar column starts BELOW the title bar, so the
-            // traffic lights can never sit inside it however the window is painted. This
-            // is what puts them on the sidebar the way Photos and Mail do.
-            .ignoresSafeArea(.container, edges: .top)
         } else {
             coreBody   // onboarding (location / intro) + pre-macOS-13 fallback
         }
@@ -694,8 +689,11 @@ struct MainSwiftUI: View {
                                         }
                                 }
                                 .frame(height: max(80, g.size.height * 0.1))
-                                
-                                .padding([.top, .bottom], 12)
+
+                                // 20pt more clearance below the arc than above it, so the
+                                // graph sits off the bottom of the stack rather than on it.
+                                .padding(.top, 12)
+                                .padding(.bottom, 32)
                                 ZStack {
                                     VStack {
 //                                        Spacer()

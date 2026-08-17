@@ -13,6 +13,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
+    #if targetEnvironment(macCatalyst)
+    /// Depth-first search for the split view controller backing NavigationSplitView.
+    private static func firstSplitViewController(in vc: UIViewController) -> UISplitViewController? {
+        if let split = vc as? UISplitViewController { return split }
+        for child in vc.children {
+            if let found = firstSplitViewController(in: child) { return found }
+        }
+        if let presented = vc.presentedViewController {
+            return firstSplitViewController(in: presented)
+        }
+        return nil
+    }
+    #endif
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -38,12 +52,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 titlebar.titleVisibility = .hidden
                 titlebar.toolbar = nil
             }
-            // The traffic lights sit in the window's chrome, above the sidebar column.
-            // With a light window background they float on a pale strip instead of
-            // reading as part of the sidebar; painting the window the sidebar's own dark
-            // tone puts them on it, the way a native sidebar app looks.
-            window.backgroundColor = UIColor(white: 0.055, alpha: 1)
-            window.rootViewController?.view.backgroundColor = UIColor(white: 0.055, alpha: 1)
+            // Native macOS sidebar behaviour comes from ONE system property:
+            // UISplitViewController.primaryBackgroundStyle = .sidebar. It applies the
+            // real vibrancy and runs the sidebar the full height of the window, which is
+            // what puts the traffic lights inside it — Photos and Mail get it the same way.
+            // SwiftUI's NavigationSplitView is backed by a UISplitViewController on
+            // Catalyst but doesn't expose this, so reach the controller once the hierarchy
+            // exists and set it. Approximating it by hand (painting the window, ignoring
+            // the top safe area) could never work: the sidebar column simply doesn't own
+            // that region until the system extends it.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak window] in
+                guard let root = window?.rootViewController,
+                      let split = Self.firstSplitViewController(in: root) else {
+                    print("MAC: no UISplitViewController found for sidebar styling")
+                    return
+                }
+                split.primaryBackgroundStyle = .sidebar
+                print("MAC: primaryBackgroundStyle = .sidebar applied")
+            }
             // Default window geometry: a wide ~2:1 window whose height lets the sidebar's
             // prayer list + Hijri day navigator meet the nav divider with even padding.
             // Force the opening size once (first launch), then relax the minimum so the

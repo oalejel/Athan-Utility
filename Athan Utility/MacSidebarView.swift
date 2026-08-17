@@ -56,10 +56,7 @@ struct MacSidebarView: View {
                 dayNavigator
                 Spacer(minLength: 12)
             }
-            // The sidebar now runs under the window chrome, so this padding is what keeps
-            // the list clear of the traffic lights sitting in its top-left. It is their
-            // row, which is exactly the macOS sidebar convention.
-            .padding(.top, 30)
+            .padding(.top, 10)
             .padding(.horizontal, 8)
         }
         .safeAreaInset(edge: .bottom) { navFooter }

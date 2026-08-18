@@ -57,7 +57,9 @@ struct MacSidebarView: View {
                 dayNavigator
                 Spacer(minLength: 12)
             }
-            .padding(.top, 10)
+            // No top padding: the sidebar's own inset already clears the window edge, and
+            // the extra 10pt pushed TODAY well below the collapse button sitting in the
+            // top-right corner. They read as one row now.
             .padding(.horizontal, 8)
         }
         .safeAreaInset(edge: .bottom) { navFooter }

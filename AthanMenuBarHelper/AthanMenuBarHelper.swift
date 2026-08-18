@@ -104,6 +104,7 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         }
         statusItem = item
         keepRunningWhileInMenuBar()
+        keepRunningThroughCommandQ()
         NSLog("ATHAN-MB-HELPER: installStatusItem() - new item created, isVisible=%@, button=%@",
               item.isVisible ? "true" : "false",
               item.button == nil ? "nil" : "present")
@@ -180,6 +181,41 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
     /// makeKeyAndOrderFront from the popover, no scene recreation needed.
     private func keepRunningWhileInMenuBar() {
         installWindowCloseInterceptor(attempt: 1)
+    }
+
+    /// Keep the menu bar item alive through ⌘Q.
+    ///
+    /// Closing the window with the red X goes through windowShouldClose: (see below), which
+    /// we already intercept. ⌘Q does not touch the window at all — it is
+    /// NSApplication.terminate:, which tears the process down and takes the status item
+    /// with it. So intercept the termination too: hide the windows, drop to .accessory, and
+    /// answer .terminateCancel, exactly as the close path does.
+    ///
+    /// The status menu's own Quit item stays a real quit — it sets `userAskedToQuit` first,
+    /// which is the only way out of the app now.
+    private func keepRunningThroughCommandQ() {
+        guard let delegate = NSApp.delegate else { return }
+        let cls: AnyClass = type(of: delegate)
+        let sel = NSSelectorFromString("applicationShouldTerminate:")
+        let block: @convention(block) (AnyObject, AnyObject) -> UInt = { [weak self] _, _ in
+            let terminateNow: UInt = 1   // NSApplication.TerminateReply.terminateNow
+            let cancel: UInt = 0         // .terminateCancel
+            guard let self, self.statusItem != nil, !AthanMenuBarHelper.userAskedToQuit else {
+                return terminateNow
+            }
+            NSLog("ATHAN-MB-HELPER: ⌘Q intercepted — hiding to the menu bar instead of quitting")
+            for window in NSApp.windows where NSStringFromClass(type(of: window)) != "NSStatusBarWindow" {
+                window.orderOut(nil)
+            }
+            NSApp.setActivationPolicy(.accessory)
+            self.verifyStatusItemSurvivedPolicyChange(attempt: 1)
+            return cancel
+        }
+        let imp = imp_implementationWithBlock(block)
+        if !class_addMethod(cls, sel, imp, "Q@:@") {
+            class_replaceMethod(cls, sel, imp, "Q@:@")
+        }
+        NSLog("ATHAN-MB-HELPER: intercepting ⌘Q on %@", NSStringFromClass(cls))
     }
 
     private func installWindowCloseInterceptor(attempt: Int) {
@@ -376,7 +412,15 @@ public final class AthanMenuBarHelper: NSObject, MenuBarHelping, NSPopoverDelega
         }
     }
 
-    @objc private func quitApp() { NSApp.terminate(nil) }
+    @objc private func quitApp() {
+        // The one path that is allowed to actually end the process.
+        AthanMenuBarHelper.userAskedToQuit = true
+        NSApp.terminate(nil)
+    }
+
+    /// Set only by the status menu's Quit item, so applicationShouldTerminate: can tell a
+    /// deliberate quit from ⌘Q.
+    fileprivate static var userAskedToQuit = false
 }
 
 // MARK: - Popover frame gradient

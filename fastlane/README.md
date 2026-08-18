@@ -98,7 +98,7 @@ Archive the Mac Catalyst app and upload it to App Store Connect (binary only, no
 [bundle exec] fastlane mac finalize
 ```
 
-Submit the already-uploaded Mac build for review (no rebuild) — clears export compliance
+Submit the already-uploaded Mac build for review. Pass build:N to pin which one.
 
 ### mac upload_screenshots
 

@@ -40,8 +40,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
             handler(nil) // havent sent location
         } else {
-            print("latest scheduled complication: \(manager.tomorrowTimes.maghrib)")
-            handler(manager.tomorrowTimes.maghrib) // maybe good to update data before penuultimate prayer -- no empirical evidence yet
+            // Reach several days out, not tomorrow's Maghrib. When the timeline runs dry
+            // ClockKit keeps showing the LAST entry it was given, so a watch that misses
+            // its background refreshes sits on a stale prayer indefinitely — which is
+            // exactly the "stuck on Isha in the morning" report. Entries are cheap and
+            // each one computes its own times, so there is no reason to stop early.
+            let end = futurePrayerTimes(after: Date(), days: 4).last
+            print("latest scheduled complication: \(String(describing: end))")
+            handler(end)
         }
     }
     
@@ -74,13 +80,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         //            return
         //        }
 
-        // get all times we could possibly have entries for
-        var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
-        sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
-        // filter out times that are in the past, based on passed in `date`
-        sortedStoredTimes = sortedStoredTimes.filter { date < $0 }
-#warning("do not forget this detail: we are dropping an entry for tomorrow's isha")
-        sortedStoredTimes.removeLast()
+        // Every prayer time in the window the end date promises. Each entry recomputes
+        // its own times, so these stay correct however long the watch sleeps.
+        var sortedStoredTimes = futurePrayerTimes(after: date, days: 4)
         // if going beyond limit, cut out latest times we cannot fit
         if limit < sortedStoredTimes.count {
             sortedStoredTimes.removeSubrange(limit..<sortedStoredTimes.endIndex)
@@ -114,26 +116,62 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     // MARK: - Helpers
     
+    /// Prayer times strictly after `date`, covering `days` days forward.
+    private func futurePrayerTimes(after date: Date, days: Int) -> [Date] {
+        let calendar = Calendar.current
+        let adjustments = manager.notificationSettings.adjustments()
+        var times: [Date] = []
+        for offset in 0...days {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: date),
+                  let dayTimes = manager.calculateTimes(referenceDate: day, adjustments: adjustments) else {
+                continue
+            }
+            times += Prayer.allCases.map { dayTimes.time(for: $0) }
+        }
+        return times.filter { date < $0 }.sorted()
+    }
+
+    /// Every prayer time from the day before `date` through the day after, in order.
+    ///
+    /// Computed from `date` itself so a timeline entry is correct whenever it happens to
+    /// be rendered, however stale the manager's cached times are. The day either side is
+    /// what makes the boundaries work: before today's Fajr the current prayer is
+    /// yesterday's Isha, and after today's Isha the next one is tomorrow's Fajr.
+    private func surroundingPrayerTimes(for date: Date) -> [Date]? {
+        let calendar = Calendar.current
+        guard let previousDay = calendar.date(byAdding: .day, value: -1, to: date),
+              let nextDay = calendar.date(byAdding: .day, value: 1, to: date) else { return nil }
+        let adjustments = manager.notificationSettings.adjustments()
+        var times: [Date] = []
+        for day in [previousDay, date, nextDay] {
+            guard let dayTimes = manager.calculateTimes(referenceDate: day, adjustments: adjustments) else {
+                return nil
+            }
+            times += Prayer.allCases.map { dayTimes.time(for: $0) }
+        }
+        return times
+    }
+
     func getComplicationTemplate(for complication: CLKComplication, using date: Date) -> CLKComplicationTemplate? {
         // check if queried date takes place after a time we have stored
         
         //        // to account for high precision similarity in dates, move date forward by 1 second
         //        let date = date.addingTimeInterval(1)
-        var sortedStoredTimes = Prayer.allCases.map { manager.todayTimes.time(for: $0) }
-        sortedStoredTimes += Prayer.allCases.map { manager.tomorrowTimes.time(for: $0) }
-        guard let firstGreaterTimeIndex = sortedStoredTimes.firstIndex(where: { (storedDate) -> Bool in
-            date < storedDate // first date where queried time takes place before
-        }) else {
+        // Times are recomputed around the ENTRY's own date rather than read from the
+        // manager's cached today/tomorrow. Those two are whatever the last refresh
+        // happened to compute, and a watch that has been asleep can render an entry
+        // against a stale pair — which is how the rectangular complication ended up
+        // showing Isha in the morning. Yesterday is included so the period before
+        // today's Fajr resolves to yesterday's Isha for real, instead of the old
+        // "today's isha minus 86400" estimate.
+        guard let sortedStoredTimes = surroundingPrayerTimes(for: date),
+              let firstGreaterTimeIndex = sortedStoredTimes.firstIndex(where: { date < $0 }),
+              firstGreaterTimeIndex > 0 else {
             return nil
         }
-        var currentPrayerDate = Date() // set to time before nextPrayerTime
-        if firstGreaterTimeIndex == 0 { // if zero, use today isha - 86400 seconds as estimate for current prayer start
-            currentPrayerDate = manager.todayTimes.isha.addingTimeInterval(-86400)
-        } else {
-            currentPrayerDate = sortedStoredTimes[firstGreaterTimeIndex - 1]
-        }
+        let currentPrayerDate = sortedStoredTimes[firstGreaterTimeIndex - 1]
         let nextPrayerDate = sortedStoredTimes[firstGreaterTimeIndex]
-        let nextPrayer = Prayer.allCases[firstGreaterTimeIndex % 6] // % 6 makes index 6 (fajr) go back to 0
+        let nextPrayer = Prayer.allCases[firstGreaterTimeIndex % 6] // 6 per day, so % 6 maps back onto the cases
         
         switch complication.family {
         case .graphicCircular:

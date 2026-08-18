@@ -267,12 +267,15 @@ platform :mac do
     )
   end
 
-  desc "Submit the already-uploaded Mac build for review (no rebuild) — clears export compliance"
-  lane :finalize do
+  desc "Submit the already-uploaded Mac build for review. Pass build:N to pin which one."
+  lane :finalize do |options|
     deliver(
       api_key:                  athan_api_key,
       app_identifier:           "com.omaralejel.Athan-Utility",
       platform:                 "osx",
+      # deliver's own "select the latest build" picked the OLDER build on this app —
+      # it submitted 19 while 20 sat processed and valid — so the build is pinned here.
+      build_number:             options[:build],
       skip_binary_upload:       true,
       skip_metadata:            true,
       skip_screenshots:         true,

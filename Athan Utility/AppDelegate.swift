@@ -12,7 +12,7 @@ import UIKit
 import UserNotifications
 import WatchConnectivity
 import BackgroundTasks
- 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window: UIWindow?

@@ -221,6 +221,12 @@ private struct FajrAlarmFeatureSheet: View {
 
     var body: some View {
         FajrAlarmSettingsView(activeSection: $section)
+            // The view is normally a page inside the Settings flow, which paints the
+            // gradient behind it. Presented on its own as a sheet it painted nothing, so
+            // the sheet's default light background showed through — most visibly as a
+            // white band across the safe area at the top.
+            .background(Color(red: 12 / 255, green: 27 / 255, blue: 56 / 255).ignoresSafeArea())
+            .preferredColorScheme(.dark)
             .onChange(of: isGeneral) { done in
                 if done { presentationMode.wrappedValue.dismiss() }
             }

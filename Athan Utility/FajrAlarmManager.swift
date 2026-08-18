@@ -195,9 +195,16 @@ class FajrAlarmManager {
     // still live rather than dropping IDs they can no longer verify.
     @available(iOS 26.0, *)
     private func knownAlarms(manager: AlarmManager) -> [UUID: Alarm]? {
-        guard let alarms = try? manager.alarms else { return nil }
+        guard let alarms = try? manager.alarms else {
+            NSLog("ATHAN-ALARM: AlarmManager.alarms query FAILED — assuming stored IDs are still live")
+            return nil
+        }
         var byID: [UUID: Alarm] = [:]
         for alarm in alarms { byID[alarm.id] = alarm }
+        // Logged so a run from Xcode can confirm the alarms really landed with the
+        // system, rather than inferring it from our own stored IDs.
+        NSLog("ATHAN-ALARM: system reports %d alarm(s): %@", byID.count,
+              byID.keys.map { $0.uuidString.prefix(8) }.joined(separator: ", "))
         return byID
     }
 

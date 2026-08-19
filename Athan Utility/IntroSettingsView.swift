@@ -28,6 +28,11 @@ fileprivate func computePreviewTimes(method: CalculationMethod, madhab: Madhab, 
 struct IntroSettingsView: View {
     // used to trigger transition back
     @Binding var parentSession: PresentedSectionType
+    /// When presented as a sheet (from the location step's "Edit" disclosure),
+    /// Done dismisses the sheet instead of navigating, and the Edit-Location
+    /// button is hidden. Defaults to the original full-screen behavior.
+    var isSheet: Bool = false
+    @Environment(\.presentationMode) private var presentationMode
     
     // Temporary settings copy
     @State var selectedCalcMethod = AthanManager.shared.prayerSettings.calculationMethod
@@ -44,7 +49,29 @@ struct IntroSettingsView: View {
     // Gradient background appearance state
     @State var localizedCurrentPrayer: Prayer = ObservableAthanManager.shared.todayTimes.currentPrayer(at: Date()) ?? ObservableAthanManager.shared.yesterdayTimes.currentPrayer(at: Date()) ?? .isha
     @State var appearanceCopy = ObservableAthanManager.shared.appearance
-    
+
+    // Recommended calculation method for the detected country — drives the intro suggestion.
+    private var suggestionCountryCode: String? {
+        let cc = AthanManager.shared.locationSettings.countryCode
+        return (cc?.isEmpty == false) ? cc : nil
+    }
+    private var recommendedMethod: CalculationMethod? {
+        guard let cc = suggestionCountryCode else { return nil }
+        return CalculationMethod.recommended(forISOCountryCode: cc)
+    }
+    private var suggestionCountryName: String? {
+        guard let cc = suggestionCountryCode else { return nil }
+        return Locale.current.localizedString(forRegionCode: cc)
+    }
+
+    /// Formats preview times in the *location's* timezone, not the device's.
+    private var previewTimeFormatter: DateFormatter {
+        let df = DateFormatter()
+        df.timeStyle = .short
+        df.timeZone = AthanManager.shared.locationSettings.timeZone
+        return df
+    }
+
     var body: some View {
         ZStack {
             GradientView(currentPrayer: $localizedCurrentPrayer, appearance: $appearanceCopy)
@@ -102,7 +129,35 @@ struct IntroSettingsView: View {
                                 RoundedRectangle(cornerRadius: 12)
                                     .foregroundColor(.init(.sRGB, white: 1, opacity: 0.1))
                             )
-                            
+
+                            // Suggestion: shows/confirms the method recommended for the user's country.
+                            if let rec = recommendedMethod {
+                                Button(action: {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation { selectedCalcMethod = rec }
+                                }) {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: selectedCalcMethod == rec ? "checkmark.circle.fill" : "sparkles")
+                                        if selectedCalcMethod == rec, let country = suggestionCountryName {
+                                            Text(String(format: Strings.recommendedForCountry, country))
+                                        } else {
+                                            Text(String(format: Strings.useRecommendedMethod, rec.localizedString()))
+                                        }
+                                        Spacer(minLength: 0)
+                                    }
+                                    .font(.footnote.weight(.semibold))
+                                    .foregroundColor(selectedCalcMethod == rec ? Color(red: 0.20, green: 0.82, blue: 0.50) : .white)
+                                    .padding(.vertical, 7)
+                                    .padding(.horizontal, 10)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(.init(.sRGB, white: 1, opacity: 0.08))
+                                    )
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .padding(.top, 3)
+                            }
+
                             Text(Strings.calculationDescription)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .lineLimit(nil)
@@ -193,6 +248,13 @@ struct IntroSettingsView: View {
                         .onChange(of: selectedLatitudeRule) { rule in
                             previewPrayerTimes = computePreviewTimes(method: selectedCalcMethod, madhab: selectedMadhab, latitudeRule: selectedLatitudeRule)
                         }
+                        .onAppear {
+                            // First-time setup: pre-select the method recommended for the user's country.
+                            if !IntroSetupFlags.hasCompletedCalculationSetup, let rec = recommendedMethod {
+                                selectedCalcMethod = rec
+                                previewPrayerTimes = computePreviewTimes(method: rec, madhab: selectedMadhab, latitudeRule: selectedLatitudeRule)
+                            }
+                        }
                     }
                 }
                 .mask(
@@ -237,7 +299,7 @@ struct IntroSettingsView: View {
                             
                             VStack(alignment: .trailing) {
                                 ForEach(0..<3) { i in
-                                    Text(times[i], style: .time)
+                                    Text(previewTimeFormatter.string(from: times[i]))
                                 }
                             }
                             .fixedSize()
@@ -261,39 +323,52 @@ struct IntroSettingsView: View {
                             
                             VStack(alignment: .trailing) {
                                 ForEach(3..<6) { i in
-                                    Text(times[i], style: .time)
+                                    Text(previewTimeFormatter.string(from: times[i]))
                                 }
                             }
                             .fixedSize()
                         }
                     }
-                    .padding(12)
-                    .foregroundColor(Color(.gray))
-                    .background(RoundedRectangle(cornerRadius: 18 ).fill(.white))
+                    .padding(14)
+                    .foregroundColor(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(Color.black.opacity(0.28))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18)
+                                    .strokeBorder(Color.white.opacity(0.14), lineWidth: 1)
+                            )
+                    )
                 }
                 
                 Spacer()
                 
                 HStack(alignment: .center) {
-                    Button(action: { // BACK BUTTON
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            self.parentSession = .Location
+                    if !isSheet {
+                        Button(action: { // BACK BUTTON
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                self.parentSession = .Location
+                            }
+                        }) {
+                            Text(Strings.editLocationButtonTitle)
+                                .foregroundColor(Color(.lightText))
+                                .font(Font.body.weight(.bold))
                         }
-                    }) {
-                        Text(Strings.editLocationButtonTitle)
-                            .foregroundColor(Color(.lightText))
-                            .font(Font.body.weight(.bold))
                     }
-                    
+
                     Spacer()
                     Button(action: { // DONE BUTTON
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         writeIntroSettingsToGlobal()
                         // force athan manager to recalculate
                         AthanManager.shared.reloadSettingsAndNotifications()
-                        withAnimation {
-                            self.parentSession = .Main
+                        if isSheet {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            withAnimation {
+                                self.parentSession = .Main
+                            }
                         }
                     }) {
                         Text(Strings.done)

@@ -11,6 +11,12 @@ import Adhan
 import CoreLocation.CLLocation
 
 // Flags for determining if intro view setup has been completed
+/// The clock the UI reads. Real time everywhere, except during a screenshot capture,
+/// where SnapshotSupport pins it so every localized set shows the same moment of day
+/// instead of whatever time the machine happened to run at.
+var snapshotFixedNow: Date? = nil
+func athanNow() -> Date { snapshotFixedNow ?? Date() }
+
 class IntroSetupFlags {
 #warning("uncomment on prod")
     static var hasCompletedCalculationSetup: Bool = {
@@ -199,7 +205,24 @@ class NotificationSettings: Codable, NSCopying {
     var selectedSound: Sounds
     var settings: [Prayer:AlarmSetting]
     static let archiveName = "notificationsettings"
-    
+
+    /// One switch for "notify me, but don't play the athan" — the notification still
+    /// arrives, it just uses the system sound instead of the recording.
+    ///
+    /// Derived from the per-prayer `athanSoundEnabled` flags rather than stored, so it can
+    /// never disagree with them. Sunrise is excluded on both sides: it has no athan to
+    /// play, so counting it would report silent mode even when every other prayer is set
+    /// to the recording, and turning silent mode off must not give it one.
+    var silentMode: Bool {
+        get { !settings.contains { $0.key != .sunrise && $0.value.athanSoundEnabled } }
+        set {
+            for (prayer, setting) in settings where prayer != .sunrise {
+                setting.athanSoundEnabled = !newValue
+            }
+        }
+    }
+
+
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = NotificationSettings(settings: settings, selectedSound: selectedSound)
         return copy
@@ -220,12 +243,13 @@ class LocationSettings: Codable, NSCopying {
         }
     }()
     
-    init(locationName: String, coord: CLLocationCoordinate2D, timeZone: TimeZone, useCurrentLocation: Bool) {
+    init(locationName: String, coord: CLLocationCoordinate2D, timeZone: TimeZone, useCurrentLocation: Bool, countryCode: String? = nil) {
         self.locationName = locationName
         self.lat = coord.latitude
         self.lon = coord.longitude
         self.useCurrentLocation = useCurrentLocation
         self.timeZone = timeZone
+        self.countryCode = countryCode
     }
     
     static func defaultSetting() -> LocationSettings {
@@ -256,6 +280,9 @@ class LocationSettings: Codable, NSCopying {
     var locationName: String
     var timeZone: TimeZone
     var useCurrentLocation = false
+    /// ISO 3166-1 alpha-2 country code for the current location, when known.
+    /// Optional so existing archives (which predate this field) still decode.
+    var countryCode: String? = nil
     private var lat: Double
     private var lon: Double
     var locationCoordinate: CLLocationCoordinate2D {
@@ -270,7 +297,7 @@ class LocationSettings: Codable, NSCopying {
     static let archiveName = "locationsettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation)
+        let copy = LocationSettings(locationName: locationName, coord: locationCoordinate, timeZone: timeZone, useCurrentLocation: useCurrentLocation, countryCode: countryCode)
         return copy
     }
 }

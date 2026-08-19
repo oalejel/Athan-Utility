@@ -8,11 +8,15 @@
 import UIKit
 import SwiftUI
 import WhatsNewKit
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
-    
+    #if targetEnvironment(macCatalyst)
+    private var macRootCancellable: AnyCancellable?
+    #endif
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -21,17 +25,78 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let _ = AthanManager.shared
         let man = ObservableAthanManager.shared
+        #if !targetEnvironment(macCatalyst)
         let contentView = MainSwiftUI()
             .environmentObject(man)
             .colorScheme(.dark)
-        
+        #else
+        _ = man
+        #endif
+
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+            #if targetEnvironment(macCatalyst)
+            // The split view controller has to BE the root for the traffic lights to sit
+            // inside the sidebar, so it can't be wrapped in a hosting controller. During
+            // onboarding there's no sidebar to speak of, so the root swaps instead.
+            MacRootState.shared.isOnboarding = MacRootBuilder.needsOnboarding
+            window.rootViewController = MacRootBuilder.makeRoot(
+                onboarding: MacRootState.shared.isOnboarding)
+            #else
             window.rootViewController = UIHostingController(rootView: contentView)
+            #endif
+            // The app is dark-only. Setting it on the WINDOW means every controller,
+            // popover and alert under it resolves system colours dark, rather than each
+            // view dressing only its own SwiftUI content — the gradient sits inside a
+            // GeometryReader and so stops at the safe area, leaving the strip above it to
+            // the window, which resolved systemBackground as white in a light trait.
+            window.overrideUserInterfaceStyle = .dark
+            window.backgroundColor = .black
             self.window = window
             window.makeKeyAndVisible()
-            
+
+            #if targetEnvironment(macCatalyst)
+            macRootCancellable = MacRootState.shared.$isOnboarding
+                .removeDuplicates()
+                .dropFirst()            // the root above already matches the current value
+                .receive(on: RunLoop.main)
+                .sink { [weak window] onboarding in
+                    guard let window else { return }
+                    window.rootViewController = MacRootBuilder.makeRoot(onboarding: onboarding)
+                }
+
+            // Hide the "Athan Utility" text in the Mac window's title bar for a cleaner look.
+            if let titlebar = windowScene.titlebar {
+                titlebar.titleVisibility = .hidden
+                titlebar.toolbar = nil
+            }
+            // Default window geometry: a wide ~2:1 window whose height lets the sidebar's
+            // prayer list + Hijri day navigator meet the nav divider with even padding.
+            // Force the opening size once (first launch), then relax the minimum so the
+            // window stays freely resizable and later launches restore the user's size.
+            if let sr = windowScene.sizeRestrictions {
+                sr.minimumSize = CGSize(width: 760, height: 480)
+                sr.maximumSize = CGSize(width: 4200, height: 2800)
+                let key = "didSetDefaultMacWindowSize"
+                if !UserDefaults.standard.bool(forKey: key) {
+                    UserDefaults.standard.set(true, forKey: key)
+                    // Height nudged +38pt over the original ~2:1 tuning to account for
+                    // the "Home" nav item added to the sidebar footer since (net: the
+                    // location group moved INTO the scrollable group and back OUT of the
+                    // footer is a wash; the extra footer row is the one true addition).
+                    sr.minimumSize = CGSize(width: 1160, height: 618)   // ~2:1 default
+                    DispatchQueue.main.async {
+                        sr.minimumSize = CGSize(width: 760, height: 480)
+                    }
+                }
+            }
+            #endif
+
+            // What's New is temporarily disabled. (This also keeps it suppressed
+            // during snapshot / UI-test runs.) Delete this early return to re-enable.
+            return
+
             #warning("localize whats new")
             // if system language not explicity english, dont show whats new screen
             if !(Locale.preferredLanguages.first?.hasPrefix("en") ?? false) {
@@ -155,6 +220,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Notify parts of app when we resume from background.
         // This is helpful for resetting the moon lighting.
         NotificationCenter.default.post(name: Notification.Name("AppDidBecomeActive"), object: nil)
+
+        #if targetEnvironment(macCatalyst)
+        // First-ever activation on Mac: proactively surface the system location
+        // prompt instead of waiting for the user to find "Use Current Location".
+        // Fired here (not didFinishLaunching) because the window must be key /
+        // frontmost for the CoreLocation system alert to reliably attach — and
+        // sceneDidBecomeActive can fire more than once per run, so gate on a
+        // persisted flag to guarantee it only ever prompts once.
+        let key = "didRequestMacLocationOnFirstLaunch"
+        if !UserDefaults.standard.bool(forKey: key) {
+            UserDefaults.standard.set(true, forKey: key)
+            if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {
+                // Pre-set so didChangeAuthorization auto-fetches on grant instead
+                // of just unlocking a still-default location.
+                if let updated = AthanManager.shared.locationSettings.copy() as? LocationSettings {
+                    updated.useCurrentLocation = true
+                    AthanManager.shared.locationSettings = updated
+                }
+                AthanManager.shared.requestLocationPermission()
+            }
+        }
+        #endif
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
@@ -171,6 +258,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+
+        // Top up the AlarmKit background-refresh request on backgrounding.
+        // `AppDelegate.applicationDidEnterBackground` is not invoked for
+        // scene-based apps, so this is the reliable hook.
+        (UIApplication.shared.delegate as? AppDelegate)?.scheduleFajrAlarmRefresh()
     }
     
     

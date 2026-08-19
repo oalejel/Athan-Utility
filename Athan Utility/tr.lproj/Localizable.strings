@@ -7,12 +7,12 @@
 */
 
 // MARK: - Prayer Names
-"Fajr" = "Fajr";
-"Sunrise" = "Shurooq";
-"Dhuhr" = "Dhuhr";
-"Asr" = "Asr";
-"Maghrib" = "Maghrib";
-"Isha" = "Isha";
+"Fajr" = "İmsak";
+"Sunrise" = "Güneş";
+"Dhuhr" = "Öğle";
+"Asr" = "İkindi";
+"Maghrib" = "Akşam";
+"Isha" = "Yatsı";
 
 // MARK: Accessibility
 "acc_settings" = "Ayarlar";
@@ -27,14 +27,14 @@
 
 // MARK: - Notifications
 "Notifications" = "Notifications";
-// Example: Time for Fajr [2:45 pm]. Please open...
+// Example: Time for İmsak [2:45 pm]. Please open...
 "Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ zamanı [%2$@]. Bildirimleri almaya devam etmek için lütfen Ezan Utility'yi tekrar açın.";
-// Example: Time for Fajr in Bloomfield Hills [2:45 pm]
+// Example: Time for İmsak in Bloomfield Hills [2:45 pm]
 // NOTE: change in conjugation for different locations means that separating the location, %2$@, will fit all cases
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ zamani : %2$@ [%3$@]";
 
 
-// Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
+// Example: 15m left til İmsak in Bloomfield Hills! [2:45 pm]
 "%1$@m until %2$@ in %3$@ [%4$@]" = "%2$@ kadar %1$@ dakika kaldı : %3$@ [%4$@]";
 
 // MARK: - Buttons and tags
@@ -47,7 +47,6 @@
 
 "Appearance" = "Görünüş";
 "Colors" = "Renkler";
-"Custom Prayer Names" = "Özel Dua İsimleri";
 "Change Language" = "Dili değiştir";
 
 "Developed by Omar Al-Ejel" = "Omar Al-Ejel tarafından geliştirildi";
@@ -58,7 +57,7 @@
 
 // MARK: - Calculation Method
 "Calculation Method" = "Hesaplama Yöntemi";
-"Calculation methods primarily differ in Fajr and Isha sun angles." = "Hesaplama yöntemleri öncelikle Fajr ve Isha güneş açılarında farklılık gösterir.";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Hesaplama yöntemleri öncelikle İmsak ve Yatsı güneş açılarında farklılık gösterir.";
 "Muslim World League" = "Müslüman Dünya Ligi";
 "Egyptian" = "Mısır Genel Araştırma Kurumu";
 "Karachi" = "Karaçi";
@@ -77,8 +76,8 @@
 // MARK: - Madhab
 "Madhab" = "Mezhebi";
 "Hanafi" = "Hanafi";
-"Shafi" = "Shafi";
-"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Hanefi mezhebi daha sonraki Asr zamanlarını kullanır, güneş öğleden sonra gölgenin uzunluğunun bir nesnenin uzunluğunun iki katı artmasıyla gerçekleşir.";
+"Shafi" = "Varsayılan";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Hanefi mezhebi daha sonraki İkindi zamanlarını kullanır, güneş öğleden sonra gölgenin uzunluğunun bir nesnenin uzunluğunun iki katı artmasıyla gerçekleşir.";
 
 // MARK: - Latitude Rules
 "High Latitude Rule" = "Yüksek Enlem Kuralı";
@@ -129,7 +128,6 @@
 "Reminder Notification" = "Hatırlatma Bildirimi";
 "Enabled" = "Etkin";
 "Play Sound" = "Ses Çal";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "Dakika Ofseti: %@";
 "offset-description" = "Dakika ofsetleri %1$@ ile %2$@ arasındaki süreden uzun olduğunda, hatırlatıcılar varsayılan olarak 15 dakikaya ayarlanır.";
 "minute-character" = "d";
@@ -159,3 +157,201 @@
 // MARK: - Widget
 "Open Athan Utility to set location." = "Konumu ayarlamak için Ezan Utility'yi açın.";
 "Use Athan Widgets to view upcoming salah times at a glance." = "Yaklaşan namaz vakitlerini bir bakışta görmek için Ezan Widget'larını kullanın.";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Hesaplama yöntemi %@ olarak ayarlandı";
+"Adjust Method" = "Yöntemi Ayarla";
+
+// Calculation-method suggestion popup
+"OK" = "Tamam";
+
+// Method update popup
+"Updated Calculation Method" = "Hesaplama Yöntemi Güncellendi";
+"Undo" = "Geri Al";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "F";
+"S_letter" = "S";
+"T_letter" = "T";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Continue" = "Devam Et";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@ için önerilir";
+"use_recommended_method" = "Önerileni kullan: %@";
+
+"Search City" = "Şehir ara";
+// MARK: - İmsak Alarmı (AlarmKit, iOS 26+)
+"Fajr Alarm" = "İmsak Alarmı";
+"fajr.alarm.description" = "İmsak (veya Güneş) ile yıl boyunca senkronize kalan gerçek bir iOS alarmı planlar. iOS 26 gerektirir.";
+"fajr.alarm.entry.description" = "Bir iOS alarmını otomatik olarak günlük İmsak vaktine kilitleyin.";
+"fajr.alarm.offset.description" = "Alarmı seçilen namazdan önce veya sonra tetikleyin. Teheccüd veya sahur için kullanışlıdır.";
+"fajr.alarm.schedule.description" = "Planlı tutulacak alarm sayısı. Uygulama her güncellendiğinde yenilenir.";
+"fajr.alarm.ios26.required" = "Otomatik İmsak alarmları için iOS 26 veya sonraki bir sürüm gereklidir.";
+"fajr.alarm.authorization.denied" = "Alarmlar devre dışı. Bu özelliği kullanmak için sistem Ayarları'ndan AlarmKit erişimini etkinleştirin.";
+"fajr.alarm.summary.off" = "Kapalı";
+"fajr.alarm.permission.needed" = "İzin gerekli";
+"fajr.alarm.no.days" = "Gün seçilmedi — alarm çalmayacak.";
+"Anchor Prayer" = "Referans Namaz";
+"Offset" = "Fark";
+"Days" = "Günler";
+"Snooze" = "Erteleme";
+"Schedule Window" = "Planlama Aralığı";
+"Stop" = "Durdur";
+"Open Settings" = "Ayarları Aç";
+"fajr.alarm.title.format" = "%@ Alarmı";
+"fajr.alarm.offset.zero" = "%@ vaktinde";
+"fajr.alarm.offset.after" = "%2$@ vaktinden %1$d dk sonra";
+"fajr.alarm.offset.before" = "%2$@ vaktinden %1$d dk önce";
+"fajr.alarm.snooze.minutes" = "%d dakika erteleme";
+"fajr.alarm.days.ahead" = "Sonraki %d alarm";
+
+"discover_features" = "Özellikleri Keşfet";
+"acknowledgements" = "Teşekkürler";
+"fajr.alarm.state.on" = "Alarm Açık";
+"fajr.alarm.state.off" = "Alarm Kapalı";
+"new.features.announcement.title" = "Yenilikler";
+"new.features.announcement.body" = "Athan Utility'nin en son yeniliklerine göz atın.";
+"ack_cuzeth_detail" = "iOS 26 AlarmKit İmsak alarmı özelliğine katkıda bulundu.";
+"ack_adhan_detail" = "Namaz vakti hesaplamaları. Batoul Apps tarafından.";
+"ack_whatsnew_detail" = "“Yenilikler” ekranı. Sven Tiigi tarafından.";
+"ack_tppdf_detail" = "Takvim dışa aktarımı için PDF oluşturma. techprimate tarafından.";
+"ack_intro" = "Athan Utility, bu kişiler ve açık kaynak projeler sayesinde daha iyi bir uygulama.";
+"ack_contributors" = "Katkıda Bulunanlar";
+"ack_open_source" = "Açık Kaynak Kitaplıklar";
+"cal_range_month" = "1 ay";
+"cal_range_3month" = "3 ay";
+"cal_range_6month" = "6 ay";
+"cal_range_year" = "1 yıl";
+"cal_prayers_header" = "Namazlar";
+"cal_range_header" = "Ne kadar ileriye";
+"cal_alert_header" = "Uyarı";
+"cal_add_alert" = "Takvim uyarısı ekle";
+"cal_alert_attime" = "Namaz vaktinde";
+"cal_alert_before" = "%d dakika önce";
+"cal_estimate_footer" = "Yaklaşık %d etkinlik, özel bir “Athan Utility” takvimine eklenecek. Etkinlikler geçerli konumunuzla damgalanır.";
+"cal_tip" = "İpucu: konumunuzu değiştirdiğinizde veya aralığı uzattığınızda, önce eski etkinlikleri temizlemek için Kaldır'ı kullanın — yeniden eklemek her zaman önce temizler, sonra yeniden oluşturur.";
+"cal_adding" = "Ekleniyor… %d%%";
+"cal_add_button" = "Takvime Ekle";
+"cal_remove_button" = "Athan Etkinliklerini Kaldır";
+"cal_done" = "%d namaz vakti eklendi.";
+"cal_export_title" = "Takvim Entegrasyonu";
+"done" = "Bitti";
+"mac_section_times" = "Ana Sayfa";
+"mac_section_calendar" = "Aylık Takvim";
+"mac_section_settings" = "Ayarlar";
+"mac_section_discover" = "Özellikleri Keşfet";
+"until_prayer" = "kalan";
+"begins_at" = "başlıyor";
+"dur_hr_min" = "%d sa %d dk";
+"dur_hr" = "%d sa";
+"dur_min" = "%d dk";
+"dur_lt_min" = "bir dakikadan az";
+"features_section_title" = "Öne Çıkanlar";
+"debug_tools" = "Hata Ayıklama Araçları";
+"no_mail_configured" = "Bu cihazda kurulu bir e-posta hesabı yok.";
+"today" = "Bugün";
+"prayer_times" = "Namaz Vakitleri";
+"location_not_found" = "Bu yer bulunamadı.";
+"loc_locating" = "Konum belirleniyor…";
+"tap_return_today" = "Bugüne dön";
+"loc_failed" = "Konumunuz alınamadı. Lütfen tekrar deneyin.";
+"loc_requesting" = "Konum erişimi isteniyor — istemi onaylayın.";
+"loc_denied" = "Konum erişimi kapalı. Sistem Ayarları › Gizlilik ve Güvenlik › Konum Servisleri'nden açın.";
+"calc_section" = "Hesaplama";
+"madhab_asr" = "İkindi (Mezhep)";
+"notif_section" = "Bildirimler";
+"athan_sound" = "Ezan Sesi";
+"stop" = "Durdur";
+"preview" = "Önizleme";
+"alerts_section" = "Namaz Uyarıları";
+"appearance_section" = "Görünüm";
+"dynamic_colors" = "Namaza göre dinamik renkler";
+"menubar_section" = "Menü Çubuğu";
+"version" = "Sürüm";
+"adopt_widgets_title" = "Widget'lar";
+"adopt_siri_title" = "Siri";
+"adopt_calendar_title" = "Takvim";
+"adopt_widgets_sub" = "Ana Ekranınıza veya Kilit Ekranınıza ekleyin";
+"adopt_fajr_sub" = "Uyuyakalmanızı önleyen bir uyandırma alarmı";
+"adopt_siri_sub" = "Namaz vakitlerini Siri'ye sorun";
+"adopt_calendar_sub" = "Namaz vakitlerini takviminize ekleyin";
+"widgets_title" = "Ana Ekran ve Kilit Ekranı Widget'ları";
+"widgets_1" = "Düzenleme moduna girene kadar Ana Ekranınızda veya Kilit Ekranınızda boş bir alana dokunup basılı tutun.";
+"widgets_2" = "+ düğmesine (Ana Ekran) veya saatin altındaki widget alanına (Kilit Ekranı) dokunun.";
+"widgets_3" = "“Athan Utility”yi arayın ve bir widget boyutu seçin.";
+"widgets_4" = "Widget Ekle'ye, ardından Bitti'ye dokunun.";
+"siri_phrase_1" = "“Sıradaki namaz vakti”";
+"siri_phrase_2" = "“Akşam ezanı ne zaman?”";
+"siri_phrase_3" = "“Bugünün ezan vakitleri”";
+"siri_sheet_title" = "Namaz vakitlerini Siri'ye sorun";
+"siri_sheet_body" = "Bir kısayol ekleyin, ardından ellerinizi kullanmadan Siri'ye sorun.";
+"siri_sheet_nav" = "Siri Kısayolu";
+"hijri_tap_hint" = "Bugünün miladi tarihini ve takvim seçeneklerini görmek için iki kez dokunun";
+"widget_preview_home_small" = "Ana Ekran";
+"widget_preview_home_medium" = "Ana Ekran";
+"widget_preview_lock" = "Kilit Ekranı";
+"cal_access_denied" = "Takvim erişimi kapalı. Namaz vakitlerini eklemek için Ayarlar'dan etkinleştirin.";
+"cal_no_source" = "Etkinlik eklemek için kullanılabilir bir takvim hesabı yok.";
+"cal_event_notes" = "Athan Utility'den namaz vakti.";
+"siri_next_sentence" = "Sıradaki namaz %@, saat %@'te, %@ sonra.";
+"siri_prayer_sentence" = "%@ vakti saat %@'te.";
+"method_colon" = "Yöntem: ";
+"your_settings_title" = "Ayarlarınız";
+"recommended_settings_title" = "Konumunuz için önerilen";
+"edit" = "Düzenle";
+"feature_widgets_title" = "Ana Ekran ve Kilit Ekranı Widget'ları";
+"feature_widgets_subtitle" = "Sıradaki namaz bir bakışta";
+"feature_widgets_detail" = "Uygulamayı açmadan sıradaki namazı ve kalan süreyi görmek için Ana Ekranınıza ve Kilit Ekranınıza widget ekleyin.";
+"feature_earlyReminder_title" = "Namazdan Önce Erken Hatırlatmalar";
+"feature_earlyReminder_subtitle" = "Acele etmemeniz için bir uyarı";
+"feature_earlyReminder_detail" = "Her namazdan belirli bir süre önce isteğe bağlı bir hatırlatma alın — abdest almaya ve ezan okunduğunda hazır olmaya yetecek kadar süre. Her namaz için ayarlanabilir.";
+"feature_watch_title" = "Apple Watch Uygulaması";
+"feature_watch_subtitle" = "Namaz vakitleri bileğinizde";
+"feature_watch_detail" = "Her kadran için komplikasyonlar sunan yerel bir watchOS uygulaması sayesinde sıradaki namaz ve kalan süre her zaman bir bakış uzağınızda.";
+"feature_mac_title" = "Yerel Mac Uygulaması";
+"feature_mac_subtitle" = "Bir kenar çubuğu ve bir menü çubuğu öğesi";
+"feature_mac_detail" = "Mac'te Athan Utility, yerel bir kenar çubuğuyla yeniden tasarlandı — ayrıca sıradaki namaza kalan süreyi bir bakışta gösteren, hızlı işlemler için kendi popover'ına sahip bir menü çubuğu öğesiyle.";
+"feature_autoMethod_title" = "Otomatik Hesaplama Yöntemi";
+"feature_autoMethod_subtitle" = "Ülkenizin yetkili kurumuyla eşleşir";
+"feature_autoMethod_detail" = "Seyahat ettiğinizde Athan Utility, yerel yetkili kurumun kullandığı hesaplama yöntemine geçer — Suudi Arabistan'da Umm al-Qura, Türkiye'de Diyanet, Kuzey Amerika'da ISNA ve daha fazlası — ve tek dokunuşla eski yönteme dönmenizi sağlar.";
+"feature_notifications_title" = "Namaz Başına Ezan ve Sesler";
+"feature_notifications_subtitle" = "Tam ezan, bir hatırlatma veya sessizlik";
+"feature_notifications_detail" = "Her namaz için bağımsız olarak tam ezan, kısa bir hatırlatma veya sessizlik seçin — 5 veya 30 saniyelik uzunluklarda birden çok müezzin sesi arasından seçim yapın.";
+"feature_highLat_title" = "Yüksek Enlem Kuralı";
+"feature_highLat_subtitle" = "Ekvatordan uzakta makul vakitler";
+"feature_highLat_detail" = "Güneşin yazın neredeyse hiç batmadığı yerlerde, yüksek enlem kuralı İmsak ve Yatsı vakitlerini makul tutar. Athan Utility, konumunuz için doğru kuralı otomatik olarak önerir.";
+"feature_qibla_title" = "Kıble Pusulası";
+"feature_qibla_subtitle" = "Kâbe'yi gösterir";
+"feature_qibla_detail" = "Yerleşik pusula Kıble'yi gösterir ve hizalandığınızda hafif bir dokunsal titreşim verir. Yanlış görünüyorsa, yeniden kalibre etmek için telefonunuzu sekiz çizer gibi hareket ettirin.";
+"feature_accessibility_title" = "Herkes İçin Tasarlandı";
+"feature_accessibility_subtitle" = "VoiceOver etiketleri ve dokunsal Kıble";
+"feature_accessibility_detail" = "Her kontrol VoiceOver için etiketlenmiştir ve Kıble pusulası Kâbe ile hizalandıkça titreşir — böylece bakmadan namaz kılma yönünü bulabilirsiniz.";
+"feature_custom_title" = "Özel Adlar, Renkler ve Sesler";
+"feature_custom_subtitle" = "Uygulamayı kendinize göre yapın";
+"feature_custom_detail" = "Namazları yeniden adlandırın, ezan sesinizi seçin ve günün her saati için geçiş renklerini özelleştirin.";
+"feature_calendar_title" = "Aylık Takvim ve Dışa Aktarma";
+"feature_calendar_subtitle" = "Dışa aktarılabilir, tam bir ay";
+"feature_calendar_detail" = "Ayın tüm namaz vakitlerini bir takvimde görün ve Numbers veya Excel'de açmak için CSV olarak dışa aktarın.";
+"feature_discovery_footer" = "Buradaki her şey uygulamanın içinde bulunur — bu sadece hızlı bir tanıtım turu.";
+"zoom_in" = "Yakınlaştır";
+"zoom_out" = "Uzaklaştır";
+"zoom_reset" = "Gerçek Boyut";
+
+"Cancel" = "Vazgeç";
+"Alarms" = "Alarmlar";
+"Location Search" = "Konum Ara";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility, çevrimdışı kullanım için aylarca ezan verisi saklar.";
+
+"hijri_mode_subtitle" = "Hicri takvim";
+"hijri_mode_ummalqura" = "Ümmülkura";
+"hijri_mode_civil" = "İslami Takvim (Sivil)";
+"hijri_mode_tabular" = "İslami Takvim (Tablo)";
+"hijri_ramadan_adjust" = "Ramazan günü";
+"day_previous" = "Önceki gün";
+"day_next" = "Sonraki gün";
+"menubar_enable_button" = "Menü Çubuğunda Etkinleştir";
+"menubar_enable_subtitle" = "Athan Utility'yi menü çubuğunuza yeniden eklemek için Athan Utility'yi macOS ayarlarınızdan etkinleştirin.";

@@ -52,6 +52,31 @@ struct ProgressBar: View {
 struct ContentView: View {
     @ObservedObject var manager = ObservableAthanManager.shared
     @State var progress: Float = 30
+    // Standalone (no-iPhone) location acquisition on the watch.
+    @State private var locating = false
+
+    // Request permission + a single location fix directly on the watch, then
+    // persist it. No iPhone required. The shared AthanManager already owns the
+    // CLLocationManager, geocoding and persistence — we just drive it here.
+    private func useCurrentLocationOnWatch() {
+        locating = true
+        // Mark "use current location" so the auth-grant callback auto-fetches
+        // (didChangeAuthorization only fetches when this flag is set).
+        let updated = (AthanManager.shared.locationSettings.copy() as? LocationSettings)
+            ?? AthanManager.shared.locationSettings
+        updated.useCurrentLocation = true
+        AthanManager.shared.locationSettings = updated   // didSet persists
+
+        AthanManager.shared.attemptSingleLocationUpdate { newSettings in
+            DispatchQueue.main.async {
+                if let s = newSettings {
+                    AthanManager.shared.locationSettings = s   // didSet persists + recalculates
+                }
+                locating = false
+            }
+        }
+        AthanManager.shared.requestLocationPermission()
+    }
     
     func getPercentComplete() -> Double {
         var currentTime: Date?
@@ -76,12 +101,39 @@ struct ContentView: View {
         // user background gradient is not suitable for text with black background
         
         if manager.locationName == LocationSettings.defaultSetting().locationName {
-            VStack {
-                Text("Open Athan Utility on iPhone to set your location.")
-//                .onAppear {
-//                    WCSession.default.activate() // in case we failed to acivate before
-//                    WatchSessionDelegate.shared.requestUpdateFromPhone()
-//                }
+            ScrollView {
+                VStack(spacing: 10) {
+                    Image(systemName: "location.circle.fill")
+                        .font(.system(size: 34))
+                        .foregroundColor(.blue)
+                    Text(NSLocalizedString("watch_set_location_prompt",
+                                           value: "Set your location to see prayer times.",
+                                           comment: "Watch onboarding when no location is set"))
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                    Button(action: useCurrentLocationOnWatch) {
+                        HStack(spacing: 6) {
+                            if locating {
+                                ProgressView()
+                            } else {
+                                Image(systemName: "location.fill")
+                            }
+                            Text(locating
+                                 ? NSLocalizedString("watch_locating", value: "Locating…", comment: "Watch location in progress")
+                                 : Strings.useCurrentLocation)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                        }
+                    }
+                    .disabled(locating)
+                    Text(NSLocalizedString("watch_location_hint",
+                                           value: "You can also set it from Athan Utility on your iPhone.",
+                                           comment: "Watch secondary hint"))
+                        .font(.system(size: 11))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.vertical, 8)
             }
         } else {
             VStack {

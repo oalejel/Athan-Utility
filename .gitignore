@@ -53,3 +53,35 @@ playground.xcworkspace
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
+
+# macOS Finder metadata
+.DS_Store
+**/.DS_Store
+
+# Signing material and anything else that must never leave this machine.
+*.p12
+*.mobileprovision
+Athan Utility/signing certificate.p12
+
+# App Store Connect contact details: personal address, phone, email and the
+# review demo account. fastlane still reads these locally; they are just not
+# tracked.
+fastlane/metadata/review_information/
+fastlane/metadata/trade_representative_contact_information/
+fastlane/.env
+
+# Stray Xcode export logs.
+Athan Utility/Athan Utility 2021-01-19 14-22-14/
+
+# fastlane/gym writes its export here; regenerated on every release run.
+Athan Utility.app/
+Athan Utility (Mac).pkg
+*.dSYM.zip
+
+# Local editor/tool config.
+.claude/
+
+# fastlane setup stays private; only the screenshots are published.
+fastlane/*
+!fastlane/screenshots/
+!fastlane/screenshots_mac/

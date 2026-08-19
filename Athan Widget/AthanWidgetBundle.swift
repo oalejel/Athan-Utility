@@ -12,12 +12,17 @@ import SwiftUI
 @main
 @available(iOS 17.0.0, *)
 struct AthanWidgetBundle: WidgetBundle {
+    @WidgetBundleBuilder
     var body: some Widget {
         Athan_Widget()
         SecondaryAthanWidget()
         TertiaryAthanWidget()
-        // Live activities
-        SuhoorLiveActivity()
-        
+        // Live Activities intentionally disabled app-wide (product decision):
+        //  - SuhoorLiveActivity(): lingers after app closes (pending fix)
+        //  - FajrAlarmLiveActivity(): AlarmKit only needs it when the alarm uses
+        //    `secondaryButtonBehavior: .countdown`. The Fajr alarm is configured
+        //    alert-only (no countdown), so no Live Activity is required.
+        // SuhoorLiveActivity()
+        // FajrAlarmLiveActivity()
     }
 }

@@ -11,6 +11,30 @@ import Adhan
 import StoreKit
 import MessageUI
 
+// Every modal in the settings screen is presented through ONE `.sheet(item:)`.
+// Stacking multiple `.sheet` modifiers in a single view tree made SwiftUI
+// mispresent (e.g. tapping the Widgets feature opened the Calendar sheet), so
+// all of them funnel through this one identifiable selection instead.
+enum GeneralSettingsSheet: Identifiable {
+    case feature(AdoptedFeature)
+    case mail
+    case discover
+    case privacy
+    case acknowledgements
+    case debug
+
+    var id: String {
+        switch self {
+        case .feature(let f):   return "feature.\(f.rawValue)"
+        case .mail:             return "mail"
+        case .discover:         return "discover"
+        case .privacy:          return "privacy"
+        case .acknowledgements: return "acknowledgements"
+        case .debug:            return "debug"
+        }
+    }
+}
+
 @available(iOS 13.0.0, *)
 struct GeneralSettingView: View {
     @EnvironmentObject var manager: ObservableAthanManager
@@ -35,14 +59,50 @@ struct GeneralSettingView: View {
     @State var contentOffset = CGFloat(0)
     @Binding var savedOffset: CGFloat
     @State var scrollHeight = CGFloat(300) // to be adjusted on appearance
-    @State var showPrivacyView = false
+    // Single source of truth for every settings modal (see GeneralSettingsSheet).
+    @State private var activeSheet: GeneralSettingsSheet?
     
     // Developer contact properties
     @State private var mailCompositionResult: Result<MFMailComposeResult, Error>? = nil
-    @State private var isShowingMailView = false
     
     @State var proxy: Any? = nil
-    
+
+    private var isMac: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        #else
+        return false
+        #endif
+    }
+
+    // One-line summary shown on the Fajr Alarm entry row. Reuses the same
+    // localized format strings as the settings screen so Arabic / RTL and
+    // non-Latin minute characters render correctly.
+    private var fajrAlarmSummary: String {
+        let s = FajrAlarmSettings.shared
+        guard s.enabled else { return Strings.fajrAlarmSummaryOff }
+        // Enabled in our settings but blocked by the system: no alarm is
+        // actually scheduled, so don't report an active alarm time here.
+        if FajrAlarmManager.shared.currentAuthorizationState() == .denied {
+            return Strings.fajrAlarmPermissionNeeded
+        }
+        let offset = s.offsetMinutes
+        let prayer = s.target.displayName
+        if offset == 0 {
+            return String(format: Strings.fajrAlarmOffsetZero, prayer)
+        } else if offset > 0 {
+            return String(format: Strings.fajrAlarmOffsetAfter, offset, prayer)
+        } else {
+            return String(format: Strings.fajrAlarmOffsetBefore, abs(offset), prayer)
+        }
+    }
+
+    // Row title for the Fajr Alarm entry cell — reflects on/off state instead of
+    // repeating the "Fajr Alarm" section header directly above it.
+    private var fajrAlarmStateTitle: String {
+        FajrAlarmSettings.shared.enabled ? Strings.fajrAlarmStateOn : Strings.fajrAlarmStateOff
+    }
+
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 0) {
@@ -64,15 +124,22 @@ struct GeneralSettingView: View {
                                     .onDisappear {
                                         savedOffset = contentOffset
                                     }
-                                    .onAppear {
-                                        print("SAVED OFFSET: \(savedOffset)")
-                                        
-                                        if #available(iOS 14.0, *) {
-                                            let id = Int((savedOffset / scrollHeight) * 100)
-                                            (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
-                                        }
+
+                                // Feature-adoption grid: tiles collapse to checkmark pills as explored.
+                                if #available(iOS 14.0, *) {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(NSLocalizedString("features_section_title", value: "Featured", comment: "Header above the feature-adoption grid at the top of Settings"))
+                                            .font(.headline)
+                                            .bold()
+                                            .foregroundColor(.white)
+                                            .padding(.top)
+                                        Divider()
+                                            .background(Color.white)
                                     }
-                                
+                                    SettingsFeatureGrid(onSelect: { activeSheet = .feature($0) })
+                                        .padding(.top, 8)
+                                }
+
                                 VStack(alignment: .leading) { // stack of each settings selector
                                     Group { // Color picker
                                         VStack(alignment: .leading, spacing: 4) {
@@ -418,10 +485,59 @@ struct GeneralSettingView: View {
                                         }
                                     }
                                     
+                                    Group { // Fajr alarm (AlarmKit, iOS 26+)
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text(Strings.fajrAlarm)
+                                                .font(.headline)
+                                                .bold()
+                                                .foregroundColor(.white)
+                                                .padding(.top)
+                                            Divider()
+                                                .background(Color.white)
+                                        }
+
+                                        Button(action: {
+                                            withAnimation {
+                                                activeSettingsSection = .FajrAlarm
+                                            }
+                                        }, label: {
+                                            HStack {
+                                                Image(systemName: "alarm")
+                                                    .padding([.leading, .top, .bottom])
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .frame(width: 26)
+                                                Text(fajrAlarmStateTitle)
+                                                    .font(.headline)
+                                                    .bold()
+                                                    .foregroundColor(.white)
+                                                    .padding(.leading, 2)
+                                                Spacer()
+                                                Text(fajrAlarmSummary)
+                                                    .font(.subheadline)
+                                                    .foregroundColor(Color(.lightText))
+                                                    .lineLimit(1)
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.headline.weight(.bold))
+                                                    .flipsForRightToLeftLayoutDirection(true)
+                                                    .padding()
+                                            }
+                                        })
+                                        .buttonStyle(ScalingButtonStyle())
+
+                                        Text(Strings.fajrAlarmEntryDescription)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .lineLimit(nil)
+                                            .font(.caption)
+                                            .foregroundColor(Color(.lightText))
+                                            .padding(.bottom)
+                                    }
+
                                     VStack(spacing: 8) {
                                         Divider()
                                             .background(Color.white)
-                                        
+
                                         IntentIntegratedController()
                                             .frame(height: 50)
                                         Divider()
@@ -446,7 +562,7 @@ struct GeneralSettingView: View {
                                         .padding([.top, .bottom])
                                         
                                         Button(action: { // send feedback
-                                            self.isShowingMailView.toggle()
+                                            activeSheet = .mail
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -461,18 +577,26 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $isShowingMailView) {
-                                            if MFMailComposeViewController.canSendMail() {
-                                                MailView(result: $mailCompositionResult) { composer in
-                                                    composer.setSubject("Feedback for Athan Utility")
-                                                    composer.title = "Email Developer"
-                                                    composer.setToRecipients(["athan.utility@gmail.com"])
-                                                }
+
+                                        Button(action: { // discover features (always available here)
+                                            activeSheet = .discover
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "lightbulb.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.discoverFeatures)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
                                             }
-                                        }
-                                        
-                                        Button(action: { // send feedback
-                                            showPrivacyView.toggle()
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+
+                                        Button(action: { // privacy notes
+                                            activeSheet = .privacy
                                         }, label: {
                                             HStack {
                                                 Spacer()
@@ -487,10 +611,43 @@ struct GeneralSettingView: View {
                                             .padding()
                                         })
                                         .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
-                                        .sheet(isPresented: $showPrivacyView) {
-                                            PrivacyInfoView(isVisible: $showPrivacyView)
-                                        }
-                                        
+
+                                        Button(action: { // acknowledgements
+                                            activeSheet = .acknowledgements
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "heart.text.square.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(Strings.acknowledgements)
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+
+                                        #if DEBUG
+                                        Button(action: { // debug tools (DEBUG builds only)
+                                            activeSheet = .debug
+                                        }, label: {
+                                            HStack {
+                                                Spacer()
+                                                Image(systemName: "ladybug.fill")
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Text(NSLocalizedString("debug_tools", value: "Debug Tools", comment: ""))
+                                                    .font(Font.headline.weight(.medium))
+                                                    .foregroundColor(.white)
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        })
+                                        .buttonStyle(ScalingButtonStyle(color: Color(.sRGB, white: 1, opacity: 0.2)))
+                                        #endif
+
                                         Button(action: { // rate the app
                                             SKStoreReviewController.requestReview()
                                         }, label: {
@@ -521,7 +678,22 @@ struct GeneralSettingView: View {
                             .overlay(
                                 GeometryReader { contentG in
                                     Color.clear.onAppear {
+                                        // Measure real content height first, then restore scroll
+                                        // position against it — doing this from the title's onAppear
+                                        // instead used the CGFloat(300) placeholder default (this
+                                        // GeometryReader hadn't fired yet), wildly inflating the
+                                        // savedOffset/scrollHeight fraction and scrolling the title
+                                        // out of view on load.
                                         scrollHeight = contentG.size.height
+                                        // Only restore a previously-saved scroll position. On the
+                                        // first open savedOffset is ~0; scrolling to reference id 0
+                                        // (which sits below a leading Spacer in the marker stack)
+                                        // pushed the "Settings" title up and out of view. Leaving the
+                                        // scroll untouched keeps the title anchored at the top.
+                                        if #available(iOS 14.0, *), savedOffset > 1, scrollHeight > 1 {
+                                            let id = Int((savedOffset / scrollHeight) * 100)
+                                            (proxy as? ScrollViewProxy)?.scrollTo(id, anchor: .top)
+                                        }
                                     }
                                 }
                             )
@@ -537,11 +709,19 @@ struct GeneralSettingView: View {
                                 Spacer()
                             }
                         }
+                        // These anchors sit ON TOP of the whole settings stack (later
+                        // ZStack child), and Color.clear is hit-testable in SwiftUI — so
+                        // 100 invisible strips were swallowing taps across the content,
+                        // which read as tiles near the top responding to a tap a row off.
+                        // They exist only as scroll targets; they must never take input.
+                        .allowsHitTesting(false)
                     }
                     .frame(width: g.size.width)
                 }
-                .edgesIgnoringSafeArea(.all)
-                
+                // On Mac this view is a NavigationSplitView detail pane; ignoring the safe area
+                // makes it bleed under the sidebar, so only ignore it on iOS/iPadOS.
+                .edgesIgnoringSafeArea(isMac ? [] : .all)
+
                 // footer divider
                 Divider()
                     .background(Color.white)
@@ -584,6 +764,7 @@ struct GeneralSettingView: View {
                             .foregroundColor(Color(.lightText))
                             .font(Font.body.weight(.bold))
                     }
+                    .accessibilityIdentifier("settingsDoneButton")
                 }
                 .padding()
                 .padding([.leading, .trailing, .bottom])
@@ -591,6 +772,47 @@ struct GeneralSettingView: View {
                 .padding([.top])
                 .transition(.opacity)
             }
+            // The ONE sheet presenter for the whole settings screen.
+            .sheet(item: $activeSheet) { sheet in
+                sheetView(for: sheet)
+            }
+        }
+    }
+
+    // Binding that a sheet's own close button drives (set false → dismiss).
+    private var sheetDismissBinding: Binding<Bool> {
+        Binding(get: { activeSheet != nil }, set: { if !$0 { activeSheet = nil } })
+    }
+
+    @ViewBuilder private func sheetView(for sheet: GeneralSettingsSheet) -> some View {
+        switch sheet {
+        case .feature(let f):
+            if #available(iOS 14.0, *) {
+                adoptedFeatureSheet(f).preferredColorScheme(.dark)
+            }
+        case .mail:
+            if MFMailComposeViewController.canSendMail() {
+                MailView(result: $mailCompositionResult) { composer in
+                    composer.setSubject("Feedback for Athan Utility")
+                    composer.title = "Email Developer"
+                    composer.setToRecipients(["athan.utility@gmail.com"])
+                }
+            } else {
+                Text(NSLocalizedString("no_mail_configured", value: "No email account is set up on this device.", comment: ""))
+                    .padding()
+            }
+        case .discover:
+            FeatureDiscoveryView().preferredColorScheme(.dark)
+        case .privacy:
+            PrivacyInfoView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+        case .acknowledgements:
+            AcknowledgementsView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+        case .debug:
+            #if DEBUG
+            DebugSettingsView(isVisible: sheetDismissBinding).preferredColorScheme(.dark)
+            #else
+            EmptyView()
+            #endif
         }
     }
 }

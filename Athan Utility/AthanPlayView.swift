@@ -13,15 +13,22 @@ struct AthanPlayView: View, Equatable {
     static func == (lhs: AthanPlayView, rhs: AthanPlayView) -> Bool {
         return lhs.currentPrayer == rhs.currentPrayer && lhs.playing == rhs.playing
     }
+
+    /// Drive visibility off the shared flag so the control is present wherever the view is.
+    private var isAudible: Bool { playback.isPlayingFullAthan }
     
     @Binding var currentPrayer: Prayer?
+    // Playback state is shared, not local: switching to Settings gives this view a new
+    // identity, and local @State reset to false — fading out the only stop button while
+    // the athan carried on playing.
+    @ObservedObject private var playback = AthanPlaybackState.shared
     @State var playing = false
     @State var lastPlayDate = Date().addingTimeInterval(-100)
         
     var body: some View {
         
         Button(action: {
-            if playing {
+            if isAudible {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { t1 in
                     playing = false
@@ -32,7 +39,8 @@ struct AthanPlayView: View, Equatable {
             Image(systemName: "speaker.wave.2.fill")
                 .foregroundColor(Color(.lightText))
         })
-        .opacity(playing ? 1 : 0)
+        .opacity(isAudible ? 1 : 0)
+        .allowsHitTesting(isAudible)
         .animation(.easeInOut)
         .onValueChanged(currentPrayer) { x in
             // if fajr happened 30 seconds ago, time interval since now will be -30

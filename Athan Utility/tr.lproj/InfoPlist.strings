@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   Athan Utility
 
@@ -7,3 +7,6 @@
 */
 
 "CFBundleDisplayName" = "Ezan Utility";
+"NSAlarmKitUsageDescription" = "Ezan Utility, günlük Fajr namaz vaktinizle senkronize kalacak uyandırma alarmlarını planlamak için AlarmKit kullanır.";
+"NSLocationWhenInUseUsageDescription" = "Ezan Utility, ezan vakitlerini hesaplamak için konumunuzu kullanır. Verileriniz paylaşılmaz veya uzaktan saklanmaz.";
+"NSSiriUsageDescription" = "İstenen bölgeler için ezan vakitleri Siri tarafından kullanılır.";

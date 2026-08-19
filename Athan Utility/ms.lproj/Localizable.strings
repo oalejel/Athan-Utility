@@ -1,0 +1,335 @@
+/*
+  Localizable.strings
+  Athan Utility — Malay (ms)
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "Subuh";
+"Sunrise" = "Syuruk";
+"Dhuhr" = "Zohor";
+"Asr" = "Asar";
+"Maghrib" = "Maghrib";
+"Isha" = "Isyak";
+
+// MARK: Accessibility
+"acc_settings" = "Tetapan";
+"acc_calendar" = "Kalendar";
+"acc_location_settings" = "Tetapan Lokasi";
+"acc_qibla_compass_label" = "Kompas Kiblat";
+"acc_qibla_compass_hint" = "Bergetar apabila sejajar dengan kiblat dalam tiga darjah.";
+"acc_qibla_aligned_value" = "Sejajar dengan Kiblat";
+"acc_qibla_turn_right" = "Pusing kanan";
+"acc_qibla_turn_left" = "Pusing kiri";
+"acc_degrees_abbrev" = "darjah";
+
+// MARK: - Notifications
+"Notifications" = "Pemberitahuan";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "Masa %1$@ [%2$@]. Sila buka semula Athan Utility untuk terus menerima pemberitahuan.";
+"Time for %1$@ in %2$@ [%3$@]" = "Masa %1$@ di %2$@ [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%1$@ minit menuju %2$@ di %3$@ [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "Selesai";
+
+// MARK: - Settings
+"Settings" = "Tetapan";
+"Appearance" = "Rupa Bentuk";
+"Colors" = "Warna";
+"Change Language" = "Tukar Bahasa";
+"Developed by Omar Al-Ejel" = "Dibangunkan oleh Omar Al-Ejel";
+"Rate Athan Utility!" = "Nilai Athan Utility!";
+"Privacy Notes" = "Nota Privasi";
+"Send Feedback" = "Hantar Maklum Balas";
+
+// MARK: - Calculation Method
+"Calculation Method" = "Kaedah Pengiraan";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "Kaedah pengiraan terutamanya berbeza dalam sudut matahari Subuh dan Isyak.";
+"Muslim World League" = "Rabithah Alam Islami";
+"Egyptian" = "Pihak Berkuasa Survei Mesir";
+"Karachi" = "Karachi";
+"Umm Al-Qura" = "Umm Al-Qura";
+"Dubai" = "Dubai";
+"Moonsighting Committee" = "Jawatankuasa Rukyah";
+"North America" = "Amerika Utara (ISNA)";
+"Kuwait" = "Kuwait";
+"Qatar" = "Qatar";
+"Singapore" = "Singapura";
+"Tehran" = "Tehran";
+"Turkey" = "Turki";
+"Other"  = "Lain-lain";
+
+// MARK: - Madhab
+"Madhab" = "Penyesuaian Asar Mazhab";
+"Hanafi" = "Hanafi";
+"Shafi" = "Lalai";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "Mazhab Hanafi menggunakan masa Asar yang lebih lewat, iaitu apabila panjang bayang bertambah dua kali ganda panjang objek sejak tengah hari solar.";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "Peraturan Latitud Tinggi";
+"middleOfTheNight" = "Pertengahan Malam";
+"seventhOfTheNight" = "Satu Pertujuh Malam";
+"twilightAngle" = "Sudut Senja";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "Keutamaan Pengiraan";
+"Consider setting..." = "Tetapkan kaedah pengiraan anda berdasarkan masjid tempatan.";
+"highLatitudeExplanation" = "Negara-negara di utara latitud tertentu sering menggunakan Peraturan Latitud Tinggi. Peraturan yang disyorkan untuk kawasan anda ialah ";
+"Athan Preview" = "Pratonton Azan";
+"Edit Location" = "Edit Lokasi";
+
+// MARK: - Sounds
+"athan.sound" = "Bunyi Azan";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "Azan penuh boleh dimainkan apabila iPhone dikunci atau Athan Utility dibuka.";
+"iOS Default" = "Lalai iOS";
+"Echo" = "Gema";
+"Makkah" = "Makkah";
+"Madina" = "Madinah";
+"Al-Aqsa" = "Al-Aqsa";
+"Al-Aqsa 2" = "Al-Aqsa 2";
+"Egypt" = "Mesir";
+"Abdulbaset" = "Abdulbaset";
+"Abdulghaffar" = "Abdulghaffar";
+"Zakariya" = "Zakariya";
+"Al-Qatami" = "Al-Qatami";
+
+// MARK: - Colors
+"static" = "Statik";
+"dynamic" = "Dinamik";
+"All Prayers" = "Semua Solat";
+"restore.defaults" = "Pulihkan Lalai";
+"colors.ios.requirement" = "Penyesuaian warna hanya tersedia pada iOS 14+";
+"Select a color picker to customize gradients." = "Pilih pemilih warna untuk menyesuaikan kecerunan.";
+
+// MARK: - Custom Names
+"custom.names" = "Nama Tersuai";
+"custom.names.description" = "Gantikan ejaan Azan yang digunakan dalam widget, pemberitahuan, dan antara muka utama.";
+
+// MARK: - Notification Settings
+"Athan Notification" = "Pemberitahuan Azan";
+"Reminder Notification" = "Pemberitahuan Peringatan";
+"Enabled" = "Diaktifkan";
+"Play Sound" = "Mainkan Bunyi";
+"reminder.minute.offset" = "Minit Lebih Awal: %@m";
+"minute-character" = "m";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "Nyahaktifkan \"Mainkan Bunyi\" untuk memaksa pemberitahuan solat ini memainkan loceng lalai iOS.";
+"offset-description" = "Apabila ofset minit lebih lama daripada masa antara %1$@ dan %2$@, peringatan akan ditetapkan kepada 15 minit secara lalai.";
+"Play Longer Athan" = "Mainkan Azan Lebih Lama";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "Memanjangkan main balik ke had maksimum iOS ~30 saat. Buka Athan Utility untuk memainkan Azan penuh.";
+"athan.minute.offset" = "Pelarasan masa: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "Tetapkan Lokasi";
+"Set Location Manually" = "Tetapkan Lokasi Secara Manual";
+"Use Current Location" = "Gunakan Lokasi Semasa";
+"Athan Utility does not collect user data." = "Athan Utility tidak mengumpul data pengguna.";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "Perkhidmatan lokasi dilumpuhkan dan boleh dilaraskan dalam Tetapan. Athan Utility tidak mengumpul data pengguna.";
+"Location Name" = "Nama Lokasi";
+"Location:" = "Lokasi:";
+
+// MARK: - Calendar
+"Show Calendar" = "Tunjukkan Kalendar";
+"Calendar" = "Kalendar";
+"Export" = "Eksport";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "Buka Athan Utility untuk menetapkan lokasi.";
+"Use Athan Widgets to view upcoming salah times at a glance." = "Gunakan Widget Athan untuk melihat waktu solat yang akan datang sekilas pandang.";
+
+// MARK: - Old athan app
+"F_letter" = "S";
+"S_letter" = "Y";
+"T_letter" = "Z";
+"A_letter" = "A";
+"M_letter" = "M";
+"I_letter" = "I";
+"Cancel" = "Batal";
+"Alarms" = "Penggera";
+"Location Search" = "Carian Lokasi";
+"OK" = "OK";
+"Continue" = "Teruskan";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Kaedah pengiraan ditetapkan kepada %@";
+"Adjust Method" = "Laraskan Kaedah";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Kaedah Pengiraan Dikemas Kini";
+"Undo" = "Buat asal";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Disyorkan untuk %@";
+"use_recommended_method" = "Guna yang disyorkan: %@";
+
+/* ---- Added in 8.0 ---- */
+"discover_features" = "Cari Tahu Ciri-ciri";
+"acknowledgements" = "Penghargaan";
+"fajr.alarm.state.on" = "Penggera Hidup";
+"fajr.alarm.state.off" = "Penggera Mati";
+"new.features.announcement.title" = "Apa Yang Baru";
+"new.features.announcement.body" = "Tonton ciri-ciri terbaru Athan Utility.";
+"ack_cuzeth_detail" = "Menyumbang ciri penggera Subuh AlarmKit iOS 26.";
+"ack_adhan_detail" = "Pengiraan waktu solat. Oleh Batoul Apps.";
+"ack_whatsnew_detail" = "Skrin \"Apa Yang Baru\". Oleh Sven Tiigi.";
+"ack_tppdf_detail" = "Penjanaan PDF untuk eksport kalendar. Oleh techprimate.";
+"ack_intro" = "Athan Utility lebih baik berkat orang-orang dan projek sumber terbuka ini.";
+"ack_contributors" = "Penyumbang";
+"ack_open_source" = "Perpustakaan Sumber Terbuka";
+"cal_range_month" = "1 bulan";
+"cal_range_3month" = "3 bulan";
+"cal_range_6month" = "6 bulan";
+"cal_range_year" = "1 tahun";
+"cal_prayers_header" = "Solat";
+"cal_range_header" = "Berapa jauh ke hadapan";
+"cal_alert_header" = "Amaran";
+"cal_add_alert" = "Tambah amaran kalendar";
+"cal_alert_attime" = "Pada waktu solat";
+"cal_alert_before" = "%d min sebelum";
+"cal_estimate_footer" = "Kira-kira %d acara akan ditambahkan ke kalendar \"Athan Utility\" yang khusus. Acara dicap dengan lokasi semasa anda.";
+"cal_tip" = "Petua: apabila anda mengubah lokasi atau melanjutkan julat, gunakan Buang untuk membersihkan acara lama terlebih dahulu — menambah semula akan selalu membersihkan dan membina semula.";
+"cal_adding" = "Menambah... %d%%";
+"cal_add_button" = "Tambah ke Kalendar";
+"cal_remove_button" = "Buang acara Athan";
+"cal_done" = "Ditambahkan %d waktu solat.";
+"cal_export_title" = "Integrasi Kalendar";
+"mac_section_times" = "Laman";
+"mac_section_calendar" = "Kalendar Bulanan";
+"mac_section_discover" = "Cari Tahu Ciri-ciri";
+"until_prayer" = "sehingga";
+"begins_at" = "bermula";
+"dur_hr_min" = "%d jam %d min";
+"dur_hr" = "%d jam";
+"dur_min" = "%d min";
+"dur_lt_min" = "kurang dari seminit";
+"features_section_title" = "Diketengahkan";
+"debug_tools" = "Alat Nyahpepijat";
+"no_mail_configured" = "Tiada akaun e-mel yang disediakan pada peranti ini.";
+"today" = "Hari Ini";
+"prayer_times" = "Waktu Solat";
+"location_not_found" = "Tidak dapat menemui tempat itu.";
+"loc_locating" = "Mencari lokasi...";
+"tap_return_today" = "Kembali ke hari ini";
+"loc_failed" = "Tidak dapat mendapatkan lokasi anda. Sila cuba lagi.";
+"loc_requesting" = "Meminta akses lokasi — luluskan gesaran.";
+"loc_denied" = "Akses lokasi telah dimatikan. Nyalakan dalam Tetapan Sistem › Privasi & Keselamatan › Perkhidmatan Lokasi.";
+"calc_section" = "Pengiraan";
+"madhab_asr" = "Asar (Mazhab)";
+"notif_section" = "Pemberitahuan";
+"athan_sound" = "Bunyi Azan";
+"stop" = "Henti";
+"preview" = "Pratonton";
+"alerts_section" = "Amaran Solat";
+"dynamic_colors" = "Warna dinamik mengikut solat";
+"menubar_section" = "Bar Menu";
+"version" = "Versi";
+"adopt_widgets_title" = "Widget";
+"adopt_siri_title" = "Siri";
+"adopt_calendar_title" = "Kalendar";
+"adopt_widgets_sub" = "Tambah ke Skrin Utama atau Skrin Kunci anda";
+"adopt_fajr_sub" = "Penggera terjaga yang tidak dapat anda tidur";
+"adopt_siri_sub" = "Tanya Siri untuk waktu solat";
+"adopt_calendar_sub" = "Tambah waktu Solat ke kalendar anda";
+"widgets_title" = "Widget Skrin Utama & Skrin Kunci";
+"widgets_1" = "Sentuh dan tahan kawasan kosong pada Skrin Utama anda, atau Skrin Kunci, sehingga ia memasuki mod edit.";
+"widgets_2" = "Ketik butang + (Skrin Utama) atau kawasan widget di bawah jam (Skrin Kunci).";
+"widgets_3" = "Cari \"Athan Utility\" dan pilih saiz widget.";
+"widgets_4" = "Ketik Tambah Widget, kemudian Selesai.";
+"siri_phrase_1" = "\"Waktu solat seterusnya\"";
+"siri_phrase_2" = "\"Bilakah Maghrib?\"";
+"siri_phrase_3" = "\"Waktu Azan hari ini\"";
+"siri_sheet_title" = "Tanya Siri untuk waktu solat";
+"siri_sheet_body" = "Tambah pintasan, kemudian hanya tanya Siri bebas tangan.";
+"siri_sheet_nav" = "Pintasan Siri";
+"hijri_tap_hint" = "Ketik dua kali untuk menunjukkan tarikh Gregorian hari ini dan pilihan kalendar";
+"widget_preview_home_small" = "Skrin Utama";
+"widget_preview_home_medium" = "Skrin Utama";
+"widget_preview_lock" = "Skrin Kunci";
+"cal_access_denied" = "Akses kalendar telah dimatikan. Dayakan dalam Tetapan untuk menambah waktu solat.";
+"cal_no_source" = "Tiada akaun kalendar tersedia untuk menambah acara.";
+"cal_event_notes" = "Waktu solat dari Athan Utility.";
+"siri_next_sentence" = "Solat seterusnya ialah %@ pada %@, dalam %@.";
+"siri_prayer_sentence" = "%@ ialah pada %@.";
+"method_colon" = "Kaedah: ";
+"your_settings_title" = "Tetapan anda";
+"recommended_settings_title" = "Disyorkan untuk lokasi anda";
+"edit" = "Edit";
+"feature_widgets_title" = "Widget Skrin Utama & Skrin Kunci";
+"feature_widgets_subtitle" = "Solat seterusnya sekilas pandang";
+"feature_widgets_detail" = "Tambah widget ke Skrin Utama dan Skrin Kunci anda untuk melihat solat seterusnya dan masa baki tanpa membuka aplikasi.";
+"feature_earlyReminder_title" = "Peringatan Awal Sebelum Solat";
+"feature_earlyReminder_subtitle" = "Pemberitahuan awal supaya anda tidak pernah terburu-buru";
+"feature_earlyReminder_detail" = "Dapatkan peringatan pilihan sejumlah minit yang ditetapkan sebelum setiap solat — cukup masa untuk membuat wudhu dan bersedia apabila azan berkumandang. Boleh disesuaikan untuk setiap solat.";
+"feature_watch_title" = "Aplikasi Apple Watch";
+"feature_watch_subtitle" = "Waktu solat di pergelangan tangan anda";
+"feature_watch_detail" = "Aplikasi watchOS asli ditambah komplikasi untuk setiap muka jam, jadi solat seterusnya dan masa baki sentiasa dalam pandangan.";
+"feature_mac_title" = "Aplikasi Mac Asli";
+"feature_mac_subtitle" = "Batang sisi dan item bar menu";
+"feature_mac_detail" = "Athan Utility di Mac, direka bentuk semula dengan batang sisi asli — ditambah item bar menu yang menunjukkan kiraan undur solat seterusnya sekilas pandang, dengan popover sendiri untuk tindakan cepat.";
+"feature_autoMethod_title" = "Kaedah Pengiraan Automatik";
+"feature_autoMethod_subtitle" = "Sepadan dengan pihak berkuasa negara anda";
+"feature_autoMethod_detail" = "Apabila anda melancong, Athan Utility bertukar ke kaedah pengiraan yang digunakan oleh pihak berkuasa tempatan — Umm al-Qura di Arab Saudi, Diyanet di Turki, ISNA di Amerika Utara, dan banyak lagi — dan membolehkan anda membatalkannya dengan satu ketukan.";
+"feature_notifications_title" = "Azan & Bunyi Setiap Solat";
+"feature_notifications_subtitle" = "Azan penuh, peringatan, atau senyap";
+"feature_notifications_detail" = "Pilih azan penuh, peringatan ringkas, atau senyap untuk setiap solat secara bebas — dan pilih dari berbagai suara muezzin dalam panjang 5 atau 30 saat.";
+"feature_highLat_title" = "Peraturan Latitud Tinggi";
+"feature_highLat_subtitle" = "Masa yang munasabah jauh dari khatulistiwa";
+"feature_highLat_detail" = "Di mana matahari hampir tidak tenggelam pada musim panas, peraturan latitud tinggi menjaga Subuh dan Isyak munasabah. Athan Utility mengesyorkan peraturan yang tepat untuk lokasi anda secara automatik.";
+"feature_qibla_title" = "Kompas Kiblat";
+"feature_qibla_subtitle" = "Arah ke Kaabah";
+"feature_qibla_detail" = "Kompas terbina dalam menunjukkan ke Kiblat dan memberikan ketukan haptic yang lembut apabila anda sejajar. Jika ia kelihatan tidak betul, gerakkan telefon anda dalam bentuk angka lapan untuk kalibrasi semula.";
+"feature_accessibility_title" = "Dibuat untuk Semua Orang";
+"feature_accessibility_subtitle" = "Label VoiceOver & Kiblat haptic";
+"feature_accessibility_detail" = "Setiap kawalan dilabelkan untuk VoiceOver, dan kompas Kiblat bergetar semasa anda sejajar dengan Kaabah — jadi anda dapat mencari arah solat tanpa melihat.";
+"feature_custom_title" = "Nama, Warna & Bunyi Tersuai";
+"feature_custom_subtitle" = "Buat aplikasi anda sendiri";
+"feature_custom_detail" = "Dinamakan semula solat, pilih bunyi azan anda, dan sesuaikan warna kecerunan untuk setiap waktu hari.";
+"feature_calendar_title" = "Kalendar Bulanan & Eksport";
+"feature_calendar_subtitle" = "Sebulan penuh, boleh dieksport";
+"feature_calendar_detail" = "Lihat waktu solat sebulan penuh dalam kalendar, dan eksport mereka ke CSV untuk dibuka dalam Numbers atau Excel.";
+"feature_discovery_footer" = "Semuanya di sini hidup dalam aplikasi — ini hanyalah lawatan cepat.";
+"zoom_in" = "Zum Masuk";
+"zoom_out" = "Zum Keluar";
+"zoom_reset" = "Saiz Sebenar";
+
+"done" = "Selesai";
+"mac_section_settings" = "Tetapan";
+"appearance_section" = "Penampilan";
+
+"Fajr Alarm" = "Penggera Subuh";
+"fajr.alarm.description" = "Jadualkan penggera iOS sebenar yang kekal segerak dengan Subuh (atau Syuruk) apabila waktu berubah sepanjang tahun. Memerlukan iOS 26.";
+"fajr.alarm.entry.description" = "Secara automatik kekalkan penggera iOS terkunci pada waktu Subuh harian.";
+"fajr.alarm.offset.description" = "Bunyikan penggera sebelum atau selepas solat yang dipilih. Berguna untuk tahajud atau sahur.";
+"fajr.alarm.schedule.description" = "Bilangan penggera akan datang yang kekal dijadualkan. Dikemas kini setiap kali aplikasi dikemas kini.";
+"fajr.alarm.ios26.required" = "Penggera Subuh automatik memerlukan iOS 26 atau lebih baharu.";
+"fajr.alarm.authorization.denied" = "Penggera dilumpuhkan. Dayakan akses AlarmKit dalam Tetapan sistem untuk menggunakan ciri ini.";
+"fajr.alarm.summary.off" = "Mati";
+"fajr.alarm.permission.needed" = "Kebenaran diperlukan";
+"fajr.alarm.no.days" = "Tiada hari dipilih — penggera tidak akan berbunyi.";
+"Anchor Prayer" = "Solat Rujukan";
+"Offset" = "Selisih Masa";
+"Days" = "Hari";
+"Snooze" = "Tunda";
+"Schedule Window" = "Julat Jadual";
+"Stop" = "Henti";
+"Open Settings" = "Buka Tetapan";
+"fajr.alarm.title.format" = "Penggera %@";
+"fajr.alarm.offset.zero" = "Pada waktu %@";
+"fajr.alarm.offset.after" = "%1$d minit selepas %2$@";
+"fajr.alarm.offset.before" = "%1$d minit sebelum %2$@";
+"fajr.alarm.snooze.minutes" = "Tunda %d minit";
+"fajr.alarm.days.ahead" = "%d penggera seterusnya";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility menyimpan data azan selama beberapa bulan untuk kegunaan luar talian.";
+"Search City" = "Cari Bandar";
+
+"hijri_mode_subtitle" = "Kalendar Hijrah";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Islam Sivil";
+"hijri_mode_tabular" = "Islam Tabular";
+"hijri_ramadan_adjust" = "Hari Ramadan";
+"day_previous" = "Hari sebelumnya";
+"day_next" = "Hari seterusnya";
+"menubar_enable_button" = "Dayakan dalam Bar Menu";
+"menubar_enable_subtitle" = "Untuk menambahkan Athan Utility semula ke bar menu anda, dayakan Athan Utility dalam tetapan macOS anda.";

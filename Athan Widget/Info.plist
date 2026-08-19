@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>20</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>
@@ -32,7 +32,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Widget uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSupportsLiveActivities</key>
-	<true/>
+	<false/>
 	<key>NSWidgetWantsLocation</key>
 	<true/>
 </dict>

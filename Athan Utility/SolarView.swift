@@ -65,12 +65,69 @@ struct SolarView: View, Equatable {
     @State var hidingCircle = false
     @State var dhuhrTime: Date
     @State var sunriseTime: Date
-    
+    // Tapping the Hijri date floats a callout over it. The Gregorian date lives
+    // inside that callout now, rather than in a separate capsule of its own.
+    @ObservedObject private var callout = HijriCalloutState.shared
+    // Bumped whenever the calendar or offset changes, to force the date line to
+    // re-render with the new setting.
+    @State private var hijriRevision = 0
+    // Measured height of the callout, used to lift it clear above the date line.
+    @State private var calloutHeight: CGFloat = 0
+    @ObservedObject private var browse = DayBrowseState.shared
+
+    /// The date text itself, plus the yellow day-delta while browsing another day.
+    private var hijriDateLine: some View {
+        HStack(spacing: 6) {
+            Text(MainSwiftUI.hijriDateString(date: browse.displayDate, isAccessibilityLabel: false))
+                .fontWeight(.bold)
+                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
+                .foregroundColor(Color(.lightText))
+                .id(hijriRevision)
+            if !browse.offsetLabel.isEmpty {
+                Text(browse.offsetLabel)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundColor(.yellow)
+                    .transition(.opacity)
+            }
+        }
+        .padding([.leading, .trailing], 8)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation(.easeInOut(duration: 0.2)) { callout.isPresented.toggle() }
+        }
+        .accessibilityLabel(MainSwiftUI.hijriDateString(date: browse.displayDate, isAccessibilityLabel: true))
+        .accessibilityHint(Text(NSLocalizedString("hijri_tap_hint", value: "Double-tap to show today's Gregorian date and calendar options", comment: "")))
+    }
+
+    /// A day-stepping chevron. Occupies its slot at all times so revealing the arrows
+    /// doesn't shove the date sideways — it only fades and slides in.
+    private func dayArrow(systemName: String, delta: Int) -> some View {
+        Button {
+            browse.step(delta)
+        } label: {
+            Image(systemName: systemName)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundColor(Color(.lightText))
+                .frame(width: 30, height: 30)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(browse.isActive ? 1 : 0)
+        .allowsHitTesting(browse.isActive)
+        .accessibilityLabel(Text(delta < 0
+            ? NSLocalizedString("day_previous", value: "Previous day", comment: "")
+            : NSLocalizedString("day_next", value: "Next day", comment: "")))
+        .accessibilityHidden(!browse.isActive)
+    }
+
     let df: DateFormatter = {
        let d = DateFormatter()
         d.dateFormat = "hh:mm a"
         return d
     }()
+
     
     func colorForProgress() -> (Color, Color, CGFloat) {
         // 0->sunrise - 0.05
@@ -143,8 +200,8 @@ struct SolarView: View, Equatable {
                         Spacer()
                     }
                     .opacity(isDragging ? 1 : 0)
-                    .animation(.linear(duration: 0.3))
-                    
+                    .animation(.linear(duration: 0.3), value: isDragging)
+
                     Rectangle()
                         .foregroundColor(.init(.sRGB, white: 1, opacity: 0.00000000001)) // hack to avoid full transparency and allow input
                         .gesture(
@@ -172,6 +229,16 @@ struct SolarView: View, Equatable {
                     Rectangle() // horizontal line
                         .frame(width: g.size.width, height: 1)
                         .foregroundColor(Color(.lightText))
+                        // Fade the ends so the line doesn't hit the window edges hard
+                        // (looks cleaner in the wide macOS window).
+                        .mask(
+                            LinearGradient(stops: [
+                                .init(color: .clear, location: 0.0),
+                                .init(color: .white, location: 0.10),
+                                .init(color: .white, location: 0.90),
+                                .init(color: .clear, location: 1.0)
+                            ], startPoint: .leading, endPoint: .trailing)
+                        )
                         .offset(y: -1 * verticalOffset)
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         
@@ -184,16 +251,52 @@ struct SolarView: View, Equatable {
                         .foregroundColor(Color(.lightText))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .opacity(isDragging ? 1 : 0)
-                        .animation(.linear(duration: 0.3))
+                        .animation(.linear(duration: 0.3), value: isDragging)
                     
-                    Text(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: false))
-                        .fontWeight(.bold)
-                        .lineLimit(1)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding([.trailing, .leading])
-                        .foregroundColor(Color(.lightText))
-                        .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
-                        .accessibilityLabel(MainSwiftUI.hijriDateString(date: Date(), isAccessibilityLabel: true))
+                    VStack(spacing: 4) {
+                        HStack(spacing: 0) {
+                            dayArrow(systemName: "chevron.left", delta: -1)
+                            hijriDateLine
+                            dayArrow(systemName: "chevron.right", delta: 1)
+                        }
+                            // An overlay, deliberately, so the date and everything below it
+                            // stay put. The overlay is pinned to the date's TOP edge and then
+                            // lifted by its own measured height, which puts it fully above the
+                            // date with its tail pointing back down at it.
+                            //
+                            // Measuring is not optional here: an .alignmentGuide on the callout
+                            // is swallowed by the enclosing Group (the overlay aligns the Group,
+                            // whose own guide stays at its default), so the callout landed on
+                            // top of the date instead of above it.
+                            .overlay(
+                                Group {
+                                    if callout.isPresented {
+                                        HijriCalloutView(
+                                            onChange: { hijriRevision += 1 },
+                                            onDone: {
+                                                withAnimation(.easeInOut(duration: 0.2)) { callout.isPresented = false }
+                                            }
+                                        )
+                                        .fixedSize()
+                                        .background(
+                                            GeometryReader { cg in
+                                                Color.clear.preference(key: HijriCalloutHeightKey.self,
+                                                                       value: cg.size.height)
+                                            }
+                                        )
+                                        .offset(y: -(calloutHeight + 6))
+                                        .transition(.opacity.combined(with: .scale(scale: 0.96, anchor: .bottom)))
+                                    }
+                                },
+                                alignment: .top
+                            )
+                            .onPreferenceChange(HijriCalloutHeightKey.self) { calloutHeight = $0 }
+                    }
+                    .offset(y: sunlightFraction < 0.6 ? -1 * verticalOffset + 24 : -1 * verticalOffset - 12)
+                    // The sine curve and the sun are later children of this ZStack, so
+                    // without this the callout renders behind them and the text is
+                    // unreadable where they cross.
+                    .zIndex(callout.isPresented ? 10 : 0)
                         //                                            .offset(y: 24)
 //                        .offset(y: max(24, 45 * (1 - CGFloat(manager.todayTimes.maghrib.timeIntervalSince(manager.todayTimes.sunrise) / 86400))))
 
@@ -207,18 +310,47 @@ struct SolarView: View, Equatable {
                                                    dashPhase: 0))
 //                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
                         .foregroundColor(Color(.lightText))
+                        // Fade the dashed curve's ends to match the horizon line.
+                        .mask(
+                            LinearGradient(stops: [
+                                .init(color: .clear, location: 0.0),
+                                .init(color: .white, location: 0.10),
+                                .init(color: .white, location: 0.90),
+                                .init(color: .clear, location: 1.0)
+                            ], startPoint: .leading, endPoint: .trailing)
+                        )
 
                     let sunAppearance = colorForProgress()
-                    Circle()
-                        .foregroundColor(sunAppearance.1)
-                        .shadow(color: sunAppearance.0, radius: sunAppearance.2)
-                        .animation(.linear)
-//                        .foregroundColor(Color(.lightText))
-//                        .foregroundColor(Color(.sRGB, red: 0.517, green: 0.603, blue: 0.702, opacity: 1))
-                        .frame(width: g.size.width / 30, height: g.size.width / 30)
-                        .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
-                                y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude) //+ verticalOffset)
-//                        .animation(.linear(duration: 0.3))
+                    let sunSize = g.size.width / 30
+                    // Layered sun: a soft atmospheric halo, a radial bright-to-warm core, and a
+                    // small specular glint for a realistic sense of glare/brightness.
+                    ZStack {
+                        Circle()
+                            .fill(sunAppearance.1)
+                            .frame(width: sunSize * 2.8, height: sunSize * 2.8)
+                            .blur(radius: sunSize * 0.9)
+                            .opacity(0.45)
+                        Circle()
+                            .fill(
+                                RadialGradient(gradient: Gradient(colors: [.white, sunAppearance.1, sunAppearance.1.opacity(0.9)]),
+                                               center: UnitPoint(x: 0.4, y: 0.36),
+                                               startRadius: 0, endRadius: sunSize * 0.75)
+                            )
+                            .frame(width: sunSize, height: sunSize)
+                            .shadow(color: sunAppearance.0, radius: sunAppearance.2)
+                            .overlay(
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: sunSize * 0.3, height: sunSize * 0.3)
+                                    .blur(radius: sunSize * 0.14)
+                                    .offset(x: -sunSize * 0.15, y: -sunSize * 0.18)
+                                    .opacity(0.95)
+                            )
+                    }
+                    // No implicit position animation: drag smoothness comes from the gesture's
+                    // explicit withAnimation; an implicit animation lurches the sun on window resize.
+                    .offset(x: (isDragging ? manualDayProgress : dayProgress) * g.size.width - 0.5 * g.size.width,
+                            y: cos((isDragging ? manualDayProgress : dayProgress) * 2 * CGFloat.pi) * amplitude)
                 }
 //                Spacer()
             }

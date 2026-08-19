@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Mac Catalyst only (CODE_SIGN_ENTITLEMENTS[sdk=macosx*]). The Mac App Store rejects
+  any build whose executable lacks com.apple.security.app-sandbox, but iOS neither
+  needs nor wants these keys — hence a separate file rather than adding them to the
+  shared one.
+
+  Everything below the sandbox flag is a capability the app actually exercises;
+  under the sandbox each one is denied unless it is declared here:
+    location            — prayer times are computed from the user's coordinates
+    calendars           — the "Add to Calendar" export writes EKEvents
+    network.client      — CLGeocoder reverse-geocodes the location name
+    files.user-selected — saving the monthly calendar as PDF or CSV
+    application-groups  — shared defaults with the widget, watch and Siri targets
+-->
+<plist version="1.0">
+<dict>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<key>com.apple.security.personal-information.location</key>
+	<true/>
+	<key>com.apple.security.personal-information.calendars</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+	<key>com.apple.developer.siri</key>
+	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.athanUtil</string>
+	</array>
+</dict>
+</plist>

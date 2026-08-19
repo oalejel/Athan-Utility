@@ -30,7 +30,7 @@
 // MARK: - Notifications
 "Notifications" = "通知";
 // Example: Time for Fajr [2:45 pm]. Please open...
-"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ 时间 [%2$@] 的时间。请重新打开 宣礼 实用工具以继续接收通知。";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@ 时间到了 [%2$@]。请重新打开 Athan Utility 以继续接收通知。";
 // Example: Time for Fajr in Bloomfield Hills [2:45 pm]
 "Time for %1$@ in %2$@ [%3$@]" = "%1$@ 在 %2$@ [%3$@] 的时间";
 
@@ -48,11 +48,10 @@
 
 "Appearance" = "外观";
 "Colors" = "颜色";
-"Custom Prayer Names" = "自定义祷告名称";
 "Change Language" = "更改语言";
 
 "Developed by Omar Al-Ejel" = "由Omar Al-Ejel开发";
-"Rate Athan Utility!" = "评价宣礼 应用程序!";
+"Rate Athan Utility!" = "评价 Athan Utility！";
 "Privacy Notes" = "隐私说明";
 "Send Feedback" = "发送反馈";
 
@@ -78,7 +77,7 @@
 // MARK: - Madhab
 "Madhab" = "教派调整";
 "Hanafi" = "汉尼菲派";
-"Shafi" = "通用";
+"Shafi" = "默认";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "汉尼菲派使用更晚的 晡礼 时间，当影子的长度自太阳中午以来增加了物体长度的两倍时发生。";
 
 // MARK: - Latitude Rules
@@ -91,13 +90,13 @@
 // MARK: - Intro Settings Labels
 "Calculation Preferences" = "计算偏好";
 "Consider setting..." = "考虑根据当地清真寺设置计算方法。";
-"highLatitudeExplanation" = "某些纬度较高的国家通常应用高纬度规则。您所在地区的推荐规则是";
+"highLatitudeExplanation" = "某些纬度较高的国家通常应用高纬度规则。你所在地区的推荐规则是";
 "Athan Preview" = "阿赞预览";
 "Edit Location" = "编辑位置";
 
 // MARK: - Sounds
 "athan.sound" = "宣礼声音";
-"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "当您的 iPhone 被锁定或 宣礼 应用程序 打开时，可以播放完整的宣礼声音。";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "当你的 iPhone 被锁定或 Athan Utility 打开时，可以播放完整的宣礼声音。";
 "iOS Default" = "iOS 默认";
 "Echo" = "回声";
 "Makkah" = "麦加";
@@ -115,7 +114,7 @@
 // MARK: - Colors
 "static" = "静态";
 "dynamic" = "动态";
-"All Prayers" = "所有祷告";
+"All Prayers" = "所有礼拜";
 "restore.defaults" = "恢复默认设置";
 "colors.ios.requirement" = "颜色自定义仅适用于 iOS 14+";
 "Select a color picker to customize gradients." = "选择一个颜色选择器以自定义渐变。";
@@ -123,7 +122,7 @@
 
 // MARK: - Custom Names
 "custom.names" = "自定义名称";
-"custom.names.description" = "替换 宣礼 实用工具小部件、通知和主界面中使用的宣礼拼写。";
+"custom.names.description" = "替换 Athan Utility 小组件、通知和主界面中显示的礼拜名称。";
 
 
 // MARK: - Notification Settings
@@ -133,11 +132,11 @@
 "Play Sound" = "播放声音";
 "reminder.minute.offset" = "提前 %@ 分钟";
 "minute-character" = "分";
-"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "禁用“播放声音”以强制播放此祷告的通知默认的 iOS 提示音。";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "禁用“播放声音”以强制播放此礼拜的通知默认的 iOS 提示音。";
 "offset-description" = "当分钟偏移大于 %1$@ 和 %2$@ 之间的时间时，默认提醒为 15 分钟。";
 
 "Play Longer Athan" = "播放更长时间的宣礼";
-"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "将播放时间延长到 iOS 的最大限制约 30 秒。打开 Athan 实用工具以播放完整的宣礼。";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "将播放时间延长到 iOS 的最大限制约 30 秒。打开 Athan Utility 以播放完整的宣礼。";
 "athan.minute.offset" = "分钟调整：%@ 分";
 
 
@@ -145,8 +144,8 @@
 "Set Location" = "设置位置";
 "Set Location Manually" = "手动设置位置";
 "Use Current Location" = "使用当前位置";
-"Athan Utility does not collect user data." = "宣礼 实用工具不会收集用户数据。";
-"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "位置服务已禁用，并可以在设置中进行调整。Athan 实用工具不会收集用户数据。";
+"Athan Utility does not collect user data." = "Athan Utility 不会收集用户数据。";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "位置服务已禁用，并可以在设置中进行调整。Athan Utility 不会收集用户数据。";
 "Location Name" = "位置名称";
 "Location:" = "位置：";
 
@@ -158,5 +157,206 @@
 
 
 // MARK: - Widget
-"Open Athan Utility to set location." = "打开 宣礼 实用工具以设置位置。";
-"Use Athan Widgets to view upcoming salah times at a glance." = "使用 宣礼 小部件一目了然地查看即将到来的祷告时间。";
+"Open Athan Utility to set location." = "打开 Athan Utility 以设置位置。";
+"Use Athan Widgets to view upcoming salah times at a glance." = "使用 Athan Utility 小组件一目了然地查看即将到来的礼拜时间。";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "计算方法已设置为 %@";
+"Adjust Method" = "调整方法";
+
+// Calculation-method suggestion popup
+"OK" = "确定";
+
+// Method update popup
+"Updated Calculation Method" = "已更新计算方法";
+"Undo" = "撤销";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "晨";
+"S_letter" = "日";
+"T_letter" = "晌";
+"A_letter" = "晡";
+"M_letter" = "昏";
+"I_letter" = "宵";
+"Continue" = "继续";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "推荐用于 %@";
+"use_recommended_method" = "使用推荐：%@";
+
+"Search City" = "搜索城市";
+
+/* ---- v7.3.3 new UI (feature grid, calendar export, Mac, Siri sheet, discovery) ---- */
+"done" = "完成";
+"edit" = "编辑";
+"discover_features" = "发现功能";
+"today" = "今天";
+"prayer_times" = "礼拜时间";
+"tap_return_today" = "回到今天";
+"until_prayer" = "后到";
+"begins_at" = "开始于";
+"version" = "版本";
+"madhab_asr" = "晡礼（教法学派）";
+"athan_sound" = "邦克声音";
+"dynamic_colors" = "随礼拜变化的动态颜色";
+"calc_section" = "计算";
+"notif_section" = "通知";
+"alerts_section" = "礼拜提醒";
+"appearance_section" = "外观";
+"method_colon" = "方法：";
+"recommended_settings_title" = "为你的位置推荐";
+"your_settings_title" = "你的设置";
+"location_not_found" = "找不到该地点。";
+"dur_hr" = "%d 小时";
+"dur_hr_min" = "%d 小时 %d 分钟";
+"dur_min" = "%d 分钟";
+"dur_lt_min" = "不到一分钟";
+"mac_section_times" = "礼拜时间";
+"mac_section_calendar" = "月历";
+"mac_section_settings" = "设置";
+"mac_section_discover" = "发现功能";
+"adopt_widgets_title" = "小组件";
+"adopt_widgets_sub" = "添加到主屏幕";
+"adopt_siri_title" = "Siri 快捷指令";
+"adopt_siri_sub" = "向 Siri 询问礼拜时间";
+"adopt_calendar_title" = "日历";
+"adopt_calendar_sub" = "把礼拜时间加入日历";
+"cal_access_denied" = "日历访问已关闭。请在“设置”中开启以添加礼拜时间。";
+"cal_no_source" = "没有可用于添加事件的日历账户。";
+"cal_add_alert" = "添加日历提醒";
+"cal_add_button" = "添加到日历";
+"cal_adding" = "正在添加… %d%%";
+"cal_alert_attime" = "礼拜时间时";
+"cal_alert_before" = "提前 %d 分钟";
+"cal_alert_header" = "提醒";
+"cal_done" = "已添加 %d 个礼拜时间。";
+"cal_event_notes" = "来自 Athan Utility 的礼拜时间。";
+"cal_export_title" = "日历集成";
+"cal_prayers_header" = "礼拜";
+"cal_range_header" = "提前多久";
+"cal_range_month" = "1 个月";
+"cal_range_3month" = "3 个月";
+"cal_range_6month" = "6 个月";
+"cal_range_year" = "1 年";
+"cal_remove_button" = "移除邦克事件";
+"siri_sheet_title" = "向 Siri 询问礼拜时间";
+"siri_sheet_body" = "添加快捷指令，然后免动手询问 Siri。";
+"siri_sheet_nav" = "Siri 快捷指令";
+"siri_phrase_1" = "“下一次礼拜时间”";
+"siri_phrase_2" = "“昏礼是什么时候？”";
+"siri_phrase_3" = "“今天的邦克时间”";
+"feature_discovery_footer" = "这些功能都在 App 内——这只是快速导览。";
+"feature_widgets_title" = "主屏幕与锁定屏幕小组件";
+"feature_widgets_subtitle" = "一眼看到下一次礼拜";
+"feature_widgets_detail" = "把小组件添加到主屏幕和锁定屏幕，无需打开 App 即可查看下一次礼拜和剩余时间。";
+"feature_earlyReminder_title" = "礼拜前的提前提醒";
+"feature_earlyReminder_subtitle" = "提前告知，从容不迫";
+"feature_earlyReminder_detail" = "可在每次礼拜前若干分钟收到可选提醒——足够时间做小净，在邦克响起时做好准备。每次礼拜均可调整。";
+"feature_watch_title" = "Apple Watch App";
+"feature_watch_subtitle" = "腕上的礼拜时间";
+"feature_watch_detail" = "原生 watchOS App，并为每个表盘提供复杂功能，让下一次礼拜和剩余时间随时一目了然。";
+"feature_autoMethod_title" = "自动计算方法";
+"feature_autoMethod_subtitle" = "契合你所在国家的权威机构";
+"feature_autoMethod_detail" = "出行时，Athan Utility 会切换到当地权威机构所用的计算方法——沙特的乌姆库拉、土耳其的迪亚内特、北美的 ISNA 等等——并可一键撤销。";
+"feature_notifications_title" = "各礼拜的邦克与声音";
+"feature_notifications_subtitle" = "完整邦克、提醒或静音";
+"feature_notifications_detail" = "可分别为每次礼拜选择完整邦克、简短提醒或静音——并可从多位宣礼员的 5 秒或 30 秒音频中挑选。";
+"feature_highLat_title" = "高纬度规则";
+"feature_highLat_subtitle" = "远离赤道也有合理时间";
+"feature_highLat_detail" = "在夏季太阳几乎不落的地区，高纬度规则可让晨礼与宵礼保持合理。Athan Utility 会自动为你的位置推荐合适的规则。";
+"feature_qibla_title" = "朝向指南针";
+"feature_qibla_subtitle" = "指向克尔白";
+"feature_qibla_detail" = "内置指南针指向朝向，对准时会轻轻震动提示。若偏差较大，可将手机做“8”字形移动以重新校准。";
+"feature_accessibility_title" = "为每个人而设计";
+"feature_accessibility_subtitle" = "VoiceOver 标签与触感朝向";
+"feature_accessibility_detail" = "每个控件都带有 VoiceOver 标签，对准克尔白时朝向指南针会震动——无需查看即可找到礼拜方向。";
+"feature_custom_title" = "自定义名称、颜色与声音";
+"feature_custom_subtitle" = "让 App 成为你的";
+"feature_custom_detail" = "重命名礼拜、选择邦克声音，并为一天中的每个时段自定义渐变颜色。";
+"feature_calendar_title" = "月历与导出";
+"feature_calendar_subtitle" = "完整一个月，可导出";
+"feature_calendar_detail" = "在日历中查看整月的礼拜时间，并导出为 CSV，用 Numbers 或 Excel 打开。";
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "晨礼闹钟";
+"fajr.alarm.description" = "安排一个真正的 iOS 闹钟,使其全年与晨礼(或日出)时间保持同步。需要 iOS 26。";
+"fajr.alarm.entry.description" = "让 iOS 闹钟自动跟随每日晨礼时间。";
+"fajr.alarm.offset.description" = "在所选礼拜之前或之后触发闹钟。适用于夜祷或封斋饭。";
+"fajr.alarm.schedule.description" = "要保持排期的闹钟数量。应用每次更新时刷新。";
+"fajr.alarm.ios26.required" = "自动晨礼闹钟需要 iOS 26 或更高版本。";
+"fajr.alarm.authorization.denied" = "闹钟已被禁用。请在系统设置中启用 AlarmKit 权限以使用此功能。";
+"fajr.alarm.summary.off" = "已关闭";
+"fajr.alarm.permission.needed" = "需要权限";
+"fajr.alarm.no.days" = "未选择任何日期——闹钟不会响。";
+"Anchor Prayer" = "参考礼拜";
+"Offset" = "偏移";
+"Days" = "天数";
+"Snooze" = "稍后提醒";
+"Schedule Window" = "排期范围";
+"Stop" = "停止";
+"Open Settings" = "打开设置";
+"fajr.alarm.title.format" = "%@闹钟";
+"fajr.alarm.offset.zero" = "%@ 准时";
+"fajr.alarm.offset.after" = "%2$@ 之后 %1$d 分钟";
+"fajr.alarm.offset.before" = "%2$@ 之前 %1$d 分钟";
+"fajr.alarm.snooze.minutes" = "%d 分钟稍后提醒";
+"fajr.alarm.days.ahead" = "接下来 %d 个闹钟";
+
+/* ---- Added in 8.0 ---- */
+"acknowledgements" = "致谢";
+"fajr.alarm.state.on" = "闹钟开启";
+"fajr.alarm.state.off" = "闹钟关闭";
+"new.features.announcement.title" = "新功能";
+"new.features.announcement.body" = "查看 Athan Utility 的最新功能。";
+"ack_cuzeth_detail" = "开发了 iOS 26 AlarmKit 晨礼闹钟功能。";
+"ack_adhan_detail" = "礼拜时间计算。由 Batoul Apps 提供。";
+"ack_whatsnew_detail" = "“新功能”界面。由 Sven Tiigi 提供。";
+"ack_tppdf_detail" = "日历导出的 PDF 生成。由 techprimate 提供。";
+"ack_intro" = "感谢这些人员和开源项目，Athan Utility 因此而改进。";
+"ack_contributors" = "贡献者";
+"ack_open_source" = "开源库";
+"cal_estimate_footer" = "大约 %d 个事件将被添加到专用的“Athan Utility”日历中。事件会记录你当前的位置。";
+"cal_tip" = "提示：更改位置或扩展范围时，先使用“移除”清除旧事件——重新添加时总是会清除并重建。";
+"features_section_title" = "特色功能";
+"debug_tools" = "调试工具";
+"no_mail_configured" = "本设备上未设置“邮件”账户。";
+"loc_locating" = "正在定位…";
+"loc_failed" = "无法获取你的位置。请重试。";
+"loc_requesting" = "正在请求定位权限——请在提示中轻点“允许”。";
+"loc_denied" = "定位权限已关闭。在“系统设置”>“隐私与安全性”>“位置服务”中开启。";
+"stop" = "停止";
+"preview" = "预览";
+"menubar_section" = "菜单栏";
+"adopt_fajr_sub" = "睡不过头的起床闹钟";
+"widgets_title" = "主屏幕和锁定屏幕小组件";
+"widgets_1" = "长按主屏幕或锁定屏幕的空白处，直到进入编辑模式。";
+"widgets_2" = "轻点 + 按钮（主屏幕）或时钟下方的小组件区域（锁定屏幕）。";
+"widgets_3" = "搜索“Athan Utility”并选择小组件尺寸。";
+"widgets_4" = "轻点“添加小组件”，然后点“完成”。";
+"hijri_tap_hint" = "轻点两下显示今天的公历日期和日历选项";
+"widget_preview_home_small" = "主屏幕";
+"widget_preview_home_medium" = "主屏幕";
+"widget_preview_lock" = "锁定屏幕";
+"siri_next_sentence" = "下一次礼拜是 %@，时间为 %@，还有 %@。";
+"siri_prayer_sentence" = "%@ 的时间是 %@。";
+"feature_mac_title" = "原生 Mac 应用";
+"feature_mac_subtitle" = "侧边栏和菜单栏项";
+"feature_mac_detail" = "Athan Utility Mac 版本，采用原生侧边栏重新设计——还可在菜单栏中显示下一次礼拜倒计时，并配有快速操作弹窗。";
+"zoom_in" = "放大";
+"zoom_out" = "缩小";
+"zoom_reset" = "实际大小";
+
+"Cancel" = "取消";
+"Alarms" = "闹钟";
+"Location Search" = "搜索位置";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility 会存储数月的礼拜时间数据，供离线使用。";
+
+"hijri_mode_subtitle" = "伊斯兰历";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "民用伊斯兰历";
+"hijri_mode_tabular" = "表定伊斯兰历";
+"hijri_ramadan_adjust" = "斋月日期";
+"day_previous" = "上一天";
+"day_next" = "下一天";
+"menubar_enable_button" = "在菜单栏中启用";
+"menubar_enable_subtitle" = "要将 Athan Utility 重新添加到你的菜单栏，请在 macOS 设置中启用 Athan Utility。";

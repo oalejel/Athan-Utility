@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -30,17 +32,27 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>20</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSExtensionPointIdentifier</key>
 	<string>com.apple.widgetkit-extension</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.omaralejel.Athan-Utility.fajrAlarmRefresh</string>
+	</array>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Athan Utility uses AlarmKit to schedule wake-up alarms that stay in sync with your daily Fajr prayer time.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Athan Utility uses your location to calculate athan times. None of your data is shared or stored remotely.</string>
 	<key>NSSiriUsageDescription</key>
 	<string>Athan times for requested regions are used by Siri.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Athan Utility adds prayer times to a dedicated calendar so you can see Salah times in your schedule.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Athan Utility adds prayer times to a dedicated calendar so you can see Salah times in your schedule.</string>
 	<key>NSSupportsLiveActivities</key>
-	<true/>
+	<false/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigurationIntent</string>
@@ -50,6 +62,10 @@
 		<string>GetMaghribIntent</string>
 		<string>GetThuhrIntent</string>
 		<string>NextPrayerIntent</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

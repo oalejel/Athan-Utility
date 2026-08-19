@@ -48,7 +48,6 @@
 
 "Appearance" = "Appearance";
 "Colors" = "Colors";
-"Custom Prayer Names" = "Custom Prayer Names";
 "Change Language" = "Change Language";
 
 "Developed by Omar Al-Ejel" = "Developed by Omar Al-Ejel";
@@ -78,7 +77,7 @@
 // MARK: - Madhab
 "Madhab" = "Madhab Asr Adjustment";
 "Hanafi" = "Hanafi";
-"Shafi" = "Non-Hanafi";
+"Shafi" = "Default";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon.";
 
 // MARK: - Latitude Rules
@@ -97,9 +96,6 @@
 
 
 // MARK: - Latitude Rules
-"middleOfTheNight" = "Middle of the Night";
-"seventhOfTheNight" = "Seventh of the Night";
-"twilightAngle" = "Twilight Angle";
 
 // MARK: - Sounds
 "athan.sound" = "Athan Sound";
@@ -189,34 +185,203 @@
 "Alarms" = "Alarms";
 "Location Search" = "Location Search";
 // "About" used in the context of "About the app"
-"About" = "About";
 // alarm settings
-"Normal & 15m" = "Normal & 15m";
-"Normal Reminder" = "Normal Reminder";
-"No Reminders" = "No Reminders";
-"15 minute reminder" = "15 minute reminder";
-"Sounds" = "Sounds";
 // location settings
-"Try Location" = "Try Location";
-"Location Search" = "Location Search";
-"Locality, State, Country" = "Locality, State, Country";
-"Try again" = "Try again";
-"Loading Prayer Data" = "Loading Prayer Data";
-"Offset: %@˚" = "Offset: %@˚";
 "OK" = "OK";
 "Continue" = "Continue";
 // "What's New" listed feature titles and subtitles
-"Offline Storage" = "Offline Storage";
-"15 minute reminders" = "15 minute reminders";
-"Today Extension" = "Today Extension";
-"Athan clock face" = "Athan clock face";
-"Qibla" = "Qibla";
+
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "Fajr Alarm";
+"fajr.alarm.description" = "Schedule a real iOS alarm that stays in sync with Fajr (or Sunrise) as times shift throughout the year. Requires iOS 26.";
+"fajr.alarm.entry.description" = "Automatically keep an iOS alarm locked to Fajr's daily time.";
+"fajr.alarm.offset.description" = "Fire the alarm before or after the chosen prayer. Useful for tahajjud or suhoor.";
+"fajr.alarm.schedule.description" = "Number of upcoming alarms to keep scheduled. Refreshed each time the app updates.";
+"fajr.alarm.ios26.required" = "Automatic Fajr alarms require iOS 26 or later.";
+"fajr.alarm.authorization.denied" = "Alarms are disabled. Enable AlarmKit access in system Settings to use this feature.";
+"fajr.alarm.summary.off" = "Off";
+"fajr.alarm.permission.needed" = "Permission needed";
+"fajr.alarm.no.days" = "No days selected — the alarm won't fire.";
+"Anchor Prayer" = "Anchor Prayer";
+"Offset" = "Offset";
+"Days" = "Days";
+"Snooze" = "Snooze";
+"Schedule Window" = "Schedule Window";
+"Stop" = "Stop";
+"Open Settings" = "Open Settings";
+"fajr.alarm.title.format" = "%@ Alarm";
+"fajr.alarm.offset.zero" = "At %@ time";
+"fajr.alarm.offset.after" = "%1$d min after %2$@";
+"fajr.alarm.offset.before" = "%1$d min before %2$@";
+"fajr.alarm.snooze.minutes" = "%d minute snooze";
+"fajr.alarm.days.ahead" = "Next %d alarm(s)";
+
 
 "Athan Utility stores months of athan data for offline use." = "Athan Utility stores months of athan data for offline use.";
 
-"Get reminded before the next athan takes place. Configurable in app preferences." = "Get reminded before the next athan takes place. Configurable in app preferences.";
 
-"Check current and upcoming salah times with the Notification Center widget." = "Check current and upcoming salah times with the Notification Center widget.";
 
-"A new way to visualize salah times throughout the day." = "A new way to visualize salah times throughout the day.";
 // MARK: - END OF OLD LOCALIZATIONS
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "Calculation method set to %@";
+"Adjust Method" = "Adjust Method";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "Updated Calculation Method";
+"Undo" = "Undo";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "Recommended for %@";
+"use_recommended_method" = "Use recommended: %@";
+
+"Search City" = "Search city";
+
+
+/* ---- Added in 8.0 (calendar export, feature grid, Fajr alarm, Mac UI, acknowledgements) ---- */
+"ack_adhan_detail" = "Prayer time calculations. By Batoul Apps.";
+"ack_contributors" = "Contributors";
+"ack_cuzeth_detail" = "Contributed the iOS 26 AlarmKit Fajr alarm feature.";
+"ack_intro" = "Athan Utility is better thanks to these people and open-source projects.";
+"ack_open_source" = "Open-Source Libraries";
+"ack_tppdf_detail" = "PDF generation for calendar export. By techprimate.";
+"ack_whatsnew_detail" = "The “What’s New” screen. By Sven Tiigi.";
+"acknowledgements" = "Acknowledgements";
+"adopt_calendar_sub" = "Add Salah times to your calendar";
+"adopt_calendar_title" = "Calendar";
+"adopt_fajr_sub" = "A wake-up alarm you can't sleep through";
+"adopt_siri_sub" = "Ask Siri for prayer times";
+"adopt_siri_title" = "Siri";
+"adopt_widgets_sub" = "Add to your Home or Lock Screen";
+"adopt_widgets_title" = "Widgets";
+"alerts_section" = "Prayer Alerts";
+"appearance_section" = "Appearance";
+"athan_sound" = "Athan Sound";
+"begins_at" = "begins";
+"cal_access_denied" = "Calendar access is off. Enable it in Settings to add prayer times.";
+"cal_add_alert" = "Add a calendar alert";
+"cal_add_button" = "Add to Calendar";
+"cal_adding" = "Adding… %d%%";
+"cal_alert_attime" = "At prayer time";
+"cal_alert_before" = "%d min before";
+"cal_alert_header" = "Alert";
+"cal_done" = "Added %d prayer times.";
+"cal_estimate_footer" = "About %d events will be added to a dedicated \u{201C}Athan Utility\u{201D} calendar. Events are stamped with your current location.";
+"cal_event_notes" = "Prayer time from Athan Utility.";
+"cal_export_title" = "Calendar Integration";
+"cal_no_source" = "No calendar account is available to add events to.";
+"cal_prayers_header" = "Prayers";
+"cal_range_3month" = "3 months";
+"cal_range_6month" = "6 months";
+"cal_range_header" = "How far ahead";
+"cal_range_month" = "1 month";
+"cal_range_year" = "1 year";
+"cal_remove_button" = "Remove Athan events";
+"cal_tip" = "Tip: when you change location or extend the range, use Remove to clear the old events first — adding again always clears and rebuilds them.";
+"calc_section" = "Calculation";
+"debug_tools" = "Debug Tools";
+"discover_features" = "Discover Features";
+"done" = "Done";
+"dur_hr" = "%d hr";
+"dur_hr_min" = "%d hr %d min";
+"dur_lt_min" = "less than a minute";
+"dur_min" = "%d min";
+"dynamic_colors" = "Dynamic colors by prayer";
+"edit" = "Edit";
+"fajr.alarm.state.off" = "Alarm Off";
+"fajr.alarm.state.on" = "Alarm On";
+"feature_accessibility_detail" = "Every control is labeled for VoiceOver, and the Qibla compass vibrates as you align with the Kaaba — so you can find the direction of prayer without looking.";
+"feature_accessibility_subtitle" = "VoiceOver labels & haptic Qibla";
+"feature_accessibility_title" = "Made for Everyone";
+"feature_autoMethod_detail" = "When you travel, Athan Utility switches to the calculation method used by the local authority — Umm al-Qura in Saudi Arabia, Diyanet in Turkey, ISNA in North America, and more — and lets you undo it with a single tap.";
+"feature_autoMethod_subtitle" = "Matches your country's authority";
+"feature_autoMethod_title" = "Automatic Calculation Method";
+"feature_calendar_detail" = "See the whole month's prayer times in a calendar, and export them to CSV to open in Numbers or Excel.";
+"feature_calendar_subtitle" = "A full month, exportable";
+"feature_calendar_title" = "Monthly Calendar & Export";
+"feature_custom_detail" = "Rename prayers, pick your athan sound, and customize the gradient colors for each time of day.";
+"feature_custom_subtitle" = "Make the app yours";
+"feature_custom_title" = "Custom Names, Colors & Sounds";
+"feature_discovery_footer" = "Everything here lives in the app — this is just a quick tour.";
+"feature_earlyReminder_detail" = "Get an optional reminder a set number of minutes before each prayer — enough time to make wudu and be ready when the athan sounds. Adjustable for every prayer.";
+"feature_earlyReminder_subtitle" = "A heads-up so you're never rushed";
+"feature_earlyReminder_title" = "Early Reminders Before Salah";
+"feature_highLat_detail" = "Where the sun barely sets in summer, a high-latitude rule keeps Fajr and Isha reasonable. Athan Utility recommends the right rule for your location automatically.";
+"feature_highLat_subtitle" = "Sensible times far from the equator";
+"feature_highLat_title" = "High-Latitude Rule";
+"feature_mac_detail" = "Athan Utility on Mac, redesigned with a native sidebar — plus a menu bar item that shows the next prayer countdown at a glance, with its own popover for quick actions.";
+"feature_mac_subtitle" = "A sidebar and a menu bar item";
+"feature_mac_title" = "Native Mac App";
+"feature_notifications_detail" = "Choose a full athan, a short reminder, or silence for each prayer independently — and pick from multiple muezzin voices in 5- or 30-second lengths.";
+"feature_notifications_subtitle" = "Full athan, a reminder, or silence";
+"feature_notifications_title" = "Per-Prayer Athan & Sounds";
+"feature_qibla_detail" = "The built-in compass points to the Qibla and gives a gentle haptic tap when you're aligned. If it seems off, move your phone in a figure-eight to recalibrate.";
+"feature_qibla_subtitle" = "Point toward the Kaaba";
+"feature_qibla_title" = "Qibla Compass";
+"feature_watch_detail" = "A native watchOS app plus complications for every watch face, so the next prayer and the time remaining are always a glance away.";
+"feature_watch_subtitle" = "Prayer times on your wrist";
+"feature_watch_title" = "Apple Watch App";
+"feature_widgets_detail" = "Add widgets to your Home Screen and Lock Screen to see the next prayer and time remaining without opening the app.";
+"feature_widgets_subtitle" = "The next prayer at a glance";
+"feature_widgets_title" = "Home & Lock Screen Widgets";
+"features_section_title" = "Featured";
+"hijri_tap_hint" = "Double-tap to show today's Gregorian date and calendar options";
+"loc_denied" = "Location access is off. Turn it on in System Settings › Privacy & Security › Location Services.";
+"loc_failed" = "Couldn't get your location. Please try again.";
+"loc_locating" = "Locating…";
+"loc_requesting" = "Requesting location access — approve the prompt.";
+"location_not_found" = "Couldn't find that place.";
+"mac_section_calendar" = "Monthly Calendar";
+"mac_section_discover" = "Discover Features";
+"mac_section_settings" = "Settings";
+"mac_section_times" = "Home";
+"madhab_asr" = "Asr (Madhab)";
+"menubar_section" = "Menu Bar";
+"method_colon" = "Method: ";
+"new.features.announcement.body" = "Check out Athan Utility's latest new features.";
+"new.features.announcement.title" = "What's New";
+"no_mail_configured" = "No email account is set up on this device.";
+"notif_section" = "Notifications";
+"prayer_times" = "Prayer Times";
+"preview" = "Preview";
+"recommended_settings_title" = "Recommended for your location";
+"siri_next_sentence" = "The next prayer is %@ at %@, in %@.";
+"siri_phrase_1" = "“Next prayer time”";
+"siri_phrase_2" = "“When is Maghrib?”";
+"siri_phrase_3" = "“Athan times today”";
+"siri_prayer_sentence" = "%@ is at %@.";
+"siri_sheet_body" = "Add a shortcut, then just ask Siri hands-free.";
+"siri_sheet_nav" = "Siri Shortcut";
+"siri_sheet_title" = "Ask Siri for prayer times";
+"stop" = "Stop";
+"tap_return_today" = "Return to today";
+"today" = "Today";
+"until_prayer" = "until";
+"version" = "Version";
+"widget_preview_home_medium" = "Home Screen";
+"widget_preview_home_small" = "Home Screen";
+"widget_preview_lock" = "Lock Screen";
+"widgets_1" = "Touch and hold an empty area of your Home Screen, or the Lock Screen, until it enters edit mode.";
+"widgets_2" = "Tap the + button (Home Screen) or the widget area below the clock (Lock Screen).";
+"widgets_3" = "Search for “Athan Utility” and pick a widget size.";
+"widgets_4" = "Tap Add Widget, then Done.";
+"widgets_title" = "Home & Lock Screen Widgets";
+"your_settings_title" = "Your settings";
+"zoom_in" = "Zoom In";
+"zoom_out" = "Zoom Out";
+"zoom_reset" = "Actual Size";
+
+// MARK: - Hijri calendar callout
+"hijri_mode_subtitle" = "Hijri calendar";
+"hijri_mode_ummalqura" = "Umm al-Qura";
+"hijri_mode_civil" = "Islamic Civil";
+"hijri_mode_tabular" = "Islamic Tabular";
+"hijri_ramadan_adjust" = "Ramadan day";
+"day_previous" = "Previous day";
+"day_next" = "Next day";
+"menubar_enable_button" = "Enable in Menu Bar";
+"menubar_enable_subtitle" = "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.";
+"open_location_settings" = "Open location settings";

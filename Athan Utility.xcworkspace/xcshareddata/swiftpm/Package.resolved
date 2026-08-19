@@ -1,25 +1,33 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Adhan",
-        "repositoryURL": "https://github.com/batoulapps/adhan-swift",
-        "state": {
-          "branch": null,
-          "revision": "dab32d8268a826d3087cbfc32256953929233234",
-          "version": "1.3.0"
-        }
-      },
-      {
-        "package": "WhatsNewKit",
-        "repositoryURL": "https://github.com/SvenTiigi/WhatsNewKit",
-        "state": {
-          "branch": null,
-          "revision": "92a9d6f5f6754aba0df972514fd7686f1de03bcc",
-          "version": "1.3.7"
-        }
+  "originHash" : "07a2d29d2dddf554ce420b9badec484cff4dd30686eaaed8b06b562440e282f0",
+  "pins" : [
+    {
+      "identity" : "adhan-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/batoulapps/adhan-swift",
+      "state" : {
+        "branch" : "main",
+        "revision" : "127280c27c303f7898f59070580f4789a75df628"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "tppdf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/techprimate/TPPDF",
+      "state" : {
+        "branch" : "main",
+        "revision" : "358561e4fb4cb8af8520c7870a903002f7492e22"
+      }
+    },
+    {
+      "identity" : "whatsnewkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SvenTiigi/WhatsNewKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6157c77e8be9b3d2310bc680681b61a8d9e290ac"
+      }
+    }
+  ],
+  "version" : 3
 }

@@ -192,6 +192,170 @@ struct MediumWidget: View {
 }
 
 
+// MARK: - Extra Large widget (iPad) — minified app view
+
+/// Hijri date string for the widget, reusing the app's transliterated month names
+/// (hijriString lives in Global.swift, which is a member of the widget target).
+func widgetHijriString(for date: Date) -> String {
+    let cal = Calendar(identifier: .islamicUmmAlQura)
+    let c = cal.dateComponents([.year, .month, .day], from: date)
+    if let y = c.year, let m = c.month, let d = c.day {
+        return hijriString(for: m, day: d, year: y)
+    }
+    return ""
+}
+
+/// 2D depiction of the current moon phase, driven by SwiftySuncalc's illumination
+/// values (the same engine the in-app MoonView3D uses). `illuminatedFraction` is
+/// 0...1; `waxing` puts the lit limb on the right (Northern-hemisphere convention).
+@available(iOSApplicationExtension 16.0, *)
+struct MoonPhaseView: View {
+    let illuminatedFraction: Double
+    let waxing: Bool
+
+    var body: some View {
+        Canvas { context, size in
+            let r = min(size.width, size.height) / 2
+            let cx = size.width / 2
+            let cy = size.height / 2
+            let center = CGPoint(x: cx, y: cy)
+            let diskRect = CGRect(x: cx - r, y: cy - r, width: 2 * r, height: 2 * r)
+
+            // shadowed disk + subtle rim
+            context.fill(Path(ellipseIn: diskRect), with: .color(Color.white.opacity(0.10)))
+            context.stroke(Path(ellipseIn: diskRect), with: .color(Color.white.opacity(0.22)), lineWidth: 1)
+
+            let k = max(0.0, min(1.0, illuminatedFraction))
+            // signed half-width of the terminator ellipse:
+            // k=0 (new) -> +r (no light), k=0.5 (quarter) -> 0 (straight), k=1 (full) -> -r (full light)
+            let xr = r * (1 - 2 * k)
+            let kappa = 0.5522847498 // cubic-bezier circle constant
+            let top = CGPoint(x: cx, y: cy - r)
+
+            var lit = Path()
+            lit.move(to: top)
+            // lit limb: right semicircle, top -> bottom
+            lit.addArc(center: center, radius: r, startAngle: .degrees(-90), endAngle: .degrees(90), clockwise: false)
+            // terminator: half-ellipse bottom -> top (two cubic quarter curves)
+            let mid = CGPoint(x: cx + xr, y: cy)
+            lit.addCurve(to: mid,
+                         control1: CGPoint(x: cx + xr * kappa, y: cy + r),
+                         control2: CGPoint(x: cx + xr,         y: cy + r * kappa))
+            lit.addCurve(to: top,
+                         control1: CGPoint(x: cx + xr,         y: cy - r * kappa),
+                         control2: CGPoint(x: cx + xr * kappa, y: cy - r))
+            lit.closeSubpath()
+
+            // waning -> mirror horizontally so the lit limb is on the left
+            if !waxing {
+                lit = lit.applying(CGAffineTransform(a: -1, b: 0, c: 0, d: 1, tx: 2 * cx, ty: 0))
+            }
+
+            context.fill(lit, with: .color(Color(white: 0.97)))
+        }
+        .aspectRatio(1, contentMode: .fit)
+    }
+}
+
+@available(iOSApplicationExtension 16.0, *)
+struct ExtraLargeWidget: View {
+    var entry: AthanEntry
+
+    var body: some View {
+        let illum = SwiftySuncalc().getMoonIllumination(date: entry.date)
+        let fraction = illum["fraction"] ?? 0
+        let waxing = (illum["phase"] ?? 0) < 0.5
+
+        GeometryReader { g in
+            HStack(alignment: .top, spacing: 0) {
+                // LEFT: hero (current salah + live timer + hijri) over a two-column prayer grid
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(alignment: .firstTextBaseline, spacing: 10) {
+                        PrayerSymbol(prayerType: entry.currentPrayer)
+                            .foregroundColor(.white)
+                            .font(.title)
+                        Text(entry.currentPrayer.localizedOrCustomString())
+                            .foregroundColor(.white)
+                            .font(.system(size: 54, weight: .bold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                    }
+
+                    HStack(spacing: 6) {
+                        Text(entry.nextPrayerDate, style: .timer)
+                            .foregroundColor(.init(UIColor.lightText))
+                            .font(.system(size: 26, weight: .bold))
+                            .monospacedDigit()
+                        if Strings.left != "" {
+                            Text(Strings.left)
+                                .foregroundColor(.init(UIColor.lightText))
+                                .font(.system(size: 26, weight: .bold))
+                        }
+                    }
+                    .padding(.top, 2)
+
+                    Text(widgetHijriString(for: entry.date))
+                        .foregroundColor(.init(UIColor.lightText))
+                        .font(.system(size: 18, weight: .semibold))
+                        .padding(.top, 1)
+
+                    Spacer(minLength: 14)
+
+                    // two-column prayer grid fills the wide canvas
+                    HStack(alignment: .top, spacing: 28) {
+                        prayerColumn(range: 0..<3)
+                        prayerColumn(range: 3..<6)
+                    }
+                }
+
+                Spacer(minLength: 16)
+
+                // RIGHT: prominent moon phase, hugging the right edge and filling the height
+                MoonPhaseView(illuminatedFraction: fraction, waxing: waxing)
+                    .frame(width: min(g.size.height, g.size.width * 0.34),
+                           height: min(g.size.height, g.size.width * 0.34))
+                    .shadow(color: .black.opacity(0.35), radius: 12, x: 0, y: 4)
+            }
+        }
+    }
+
+    @ViewBuilder
+    func prayerColumn(range: Range<Int>) -> some View {
+        VStack(spacing: 0) {
+            ForEach(range, id: \.self) { i in
+                let p = Prayer(index: i)
+                let isCurrent = i == entry.currentPrayer.rawValue()
+                let isPast = i < entry.currentPrayer.rawValue()
+                let rowColor: Color = isCurrent ? .green : (isPast ? Color(UIColor.lightText) : .white)
+
+                HStack(spacing: 10) {
+                    PrayerSymbol(prayerType: p)
+                        .foregroundColor(rowColor)
+                        .font(.system(size: 17, weight: .semibold))
+                        .frame(width: 24, alignment: .center)
+                    Text(p.localizedOrCustomString())
+                        .foregroundColor(rowColor)
+                        .font(.system(size: 21, weight: .bold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                    Spacer()
+                    Text(entry.todayPrayerTimes[i], style: .time)
+                        .foregroundColor(rowColor)
+                        .font(.system(size: 21, weight: .bold))
+                        .monospacedDigit()
+                }
+                .padding(.vertical, 6)
+
+                if i != range.upperBound - 1 {
+                    Rectangle()
+                        .fill(Color.white.opacity(0.13))
+                        .frame(height: 1)
+                }
+            }
+        }
+    }
+}
+
 struct SmallErrorWidget: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -406,8 +570,16 @@ struct Athan_WidgetEntryView : View {
         case (.accessoryCircular, true):
             AccessoryCircularErrorWidget()
                 .applyContainerBackground(entry: entry, useGradientBackground: false, usePadding: false)
+        case (.systemExtraLarge, false):
+            if #available(iOSApplicationExtension 16.0, *) {
+                ExtraLargeWidget(entry: entry)
+                    .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
+            } else {
+                MediumErrorWidget()
+                    .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
+            }
             // Error version of other currently unsupported widgets...
-        case (.systemExtraLarge, _):
+        case (.systemExtraLarge, true):
             MediumErrorWidget()
                 .applyContainerBackground(entry: entry, useGradientBackground: true, usePadding: true)
         @unknown default:

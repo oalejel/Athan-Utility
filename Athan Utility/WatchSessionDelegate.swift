@@ -85,18 +85,12 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
                                                                         useCurrentLocation: currentloc)
 //            }
             
-            // complications will be autoupdated in athanmanager
-            
-            
-            // Update complication
-//            let complicationServer = CLKComplicationServer.sharedInstance()
-//            guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
-//                return
-//            }
-//
-//            for complication in activeComplications {
-//                complicationServer.reloadTimeline(for: complication)
-//            }
+            // New data from the phone — reload complications so they refresh promptly
+            // even while the watch app is backgrounded.
+            #if os(watchOS)
+            let complicationServer = CLKComplicationServer.sharedInstance()
+            complicationServer.activeComplications?.forEach { complicationServer.reloadTimeline(for: $0) }
+            #endif
         }
         
 //        "locname" : locationSettings.locationName,

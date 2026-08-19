@@ -8,8 +8,8 @@
 
 // MARK: - Prayer Names
 "Fajr" = "فجر";
-"Sunrise" = "شروق";
-"Dhuhr" = "ظهر";
+"Sunrise" = "طلوعِ آفتاب";
+"Dhuhr" = "ظہر";
 "Asr" = "عصر";
 "Maghrib" = "مغرب";
 "Isha" = "عشاء";
@@ -43,7 +43,7 @@
 "Time for %1$@ in %2$@ [%3$@]" = "کا %1$@ وقت %3$@ (%2$@)";
 
 // Example: 15m left til Fajr in Bloomfield Hills! [2:45 pm]
-"%1$@m until %2$@ in %3$@ [%4$@]" = "‏@%3$ میں @$2% تک %1$@ منٹ باقی رہ گئے [@$4%]‏";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "‏%3$@ میں %2$@ تک %1$@ منٹ باقی رہ گئے [%4$@]‏";
 
 
 
@@ -57,7 +57,6 @@
 
 "Appearance" = "ظہور";
 "Colors" = "رنگ";
-"Custom Prayer Names" = "حسب ضرورت نماز کے نام";
 "Change Language" = "زبان تبدیل کریں";
 
 "Developed by Omar Al-Ejel" = "عمر العجیل نے تیار کیا";
@@ -87,7 +86,7 @@
 // MARK: - Madhab
 "Madhab" = "مذهب";
 "Hanafi" = "حنفی";
-"Shafi" = "غير حنفي";
+"Shafi" = "طے شدہ";
 "The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "حنفی محدب بعد میں عصر کے اوقات کا استعمال کرتا ہے ، جب اس وقت ہوتا ہے جب شمسی دوپہر کے بعد سے کسی شے کی لمبائی میں کسی چیز کی لمبائی میں اضافہ ہوتا ہے";
 
 // MARK: - Latitude Rules
@@ -139,7 +138,6 @@
 "Reminder Notification" = "یاد دہانی کی اطلاع";
 "Enabled" = "قابل بنایا گیا";
 "Play Sound" = "آواز چلائیں";
-"Play 30 seconds" = "Play 30 seconds";
 "reminder.minute.offset" = "منٹ جلدی: %@";
 "minute-character" = "m";
 "Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "اس دعا کی اطلاعات کو ڈیفالٹ iOS چائیم کھیلنے کیلئے مجبور کرنے کے لئے \"پلے ساؤنڈ\" کو غیر فعال کریں۔";
@@ -170,3 +168,202 @@
 "Use Athan Widgets to view upcoming salah times at a glance." = "آئندہ سلام کے اوقات کو ایک نظر میں دیکھنے کے لئے اتھن ویجٹ کا استعمال کریں۔";
 
 
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "حساب کا طریقہ %@ پر مقرر کر دیا گیا";
+"Adjust Method" = "طریقہ ایڈجسٹ کریں";
+
+// Calculation-method suggestion popup
+"OK" = "ٹھیک ہے";
+
+// Method update popup
+"Updated Calculation Method" = "حساب کا طریقہ اپ ڈیٹ ہو گیا";
+"Undo" = "واپس کریں";
+
+// Completed live keys 2026-08-06 (clock-face prayer initials + Continue/OK)
+"F_letter" = "ف";
+"S_letter" = "ش";
+"T_letter" = "ظ";
+"A_letter" = "ع";
+"M_letter" = "م";
+"I_letter" = "ع";
+"Continue" = "جاری رکھیں";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@ کے لیے تجویز کردہ";
+"use_recommended_method" = "تجویز کردہ استعمال کریں: %@";
+
+"Search City" = "شہر تلاش کریں";
+// MARK: - Fajr Alarm (AlarmKit, iOS 26+)
+"Fajr Alarm" = "فجر کا الارم";
+"fajr.alarm.description" = "ایک حقیقی iOS الارم شیڈول کریں جو سال بھر فجر (یا شروق) کے اوقات کے ساتھ خود بخود ہم آہنگ رہتا ہے۔ iOS 26 درکار ہے۔";
+"fajr.alarm.entry.description" = "iOS الارم کو خود بخود روزانہ کے فجر وقت کے ساتھ منسلک رکھیں۔";
+"fajr.alarm.offset.description" = "منتخب کردہ نماز سے پہلے یا بعد میں الارم بجائیں۔ تہجد یا سحری کے لئے مفید۔";
+"fajr.alarm.schedule.description" = "آئندہ کتنے الارم شیڈول رکھنے ہیں۔ ایپ کی ہر تازہ کاری پر اپڈیٹ ہوتے ہیں۔";
+"fajr.alarm.ios26.required" = "خودکار فجر الارم کے لیے iOS 26 یا بعد کا ورژن درکار ہے۔";
+"fajr.alarm.authorization.denied" = "الارم غیر فعال ہیں۔ اس خصوصیت کو استعمال کرنے کے لیے سسٹم سیٹنگز میں AlarmKit کی اجازت فعال کریں۔";
+"fajr.alarm.summary.off" = "بند";
+"fajr.alarm.permission.needed" = "اجازت درکار ہے";
+"fajr.alarm.no.days" = "کوئی دن منتخب نہیں — الارم نہیں بجے گا۔";
+"Anchor Prayer" = "بنیادی نماز";
+"Offset" = "وقت کا فرق";
+"Days" = "دن";
+"Snooze" = "اسنوز";
+"Schedule Window" = "شیڈول مدت";
+"Stop" = "روکیں";
+"Open Settings" = "سیٹنگز کھولیں";
+"fajr.alarm.title.format" = "%@ کا الارم";
+"fajr.alarm.offset.zero" = "%@ کے وقت پر";
+"fajr.alarm.offset.after" = "%2$@ کے %1$d منٹ بعد";
+"fajr.alarm.offset.before" = "%2$@ سے %1$d منٹ پہلے";
+"fajr.alarm.snooze.minutes" = "%d منٹ اسنوز";
+"fajr.alarm.days.ahead" = "اگلے %d الارم";
+
+
+"discover_features" = "خصوصیات دریافت کریں";
+"acknowledgements" = "تشکرات";
+"fajr.alarm.state.on" = "الارم آن";
+"fajr.alarm.state.off" = "الارم آف";
+"new.features.announcement.title" = "نیا کیا ہے";
+"new.features.announcement.body" = "Athan Utility کی تازہ ترین نئی خصوصیات دیکھیں۔";
+"ack_cuzeth_detail" = "iOS 26 کے AlarmKit فجر الارم فیچر میں تعاون کیا۔";
+"ack_adhan_detail" = "نماز کے اوقات کا حساب۔ از Batoul Apps۔";
+"ack_whatsnew_detail" = "“نیا کیا ہے” اسکرین۔ از Sven Tiigi۔";
+"ack_tppdf_detail" = "کیلنڈر ایکسپورٹ کے لیے PDF تیار کرنا۔ از techprimate۔";
+"ack_intro" = "Athan Utility ان افراد اور اوپن سورس پراجیکٹس کی بدولت بہتر ہے۔";
+"ack_contributors" = "تعاون کرنے والے";
+"ack_open_source" = "اوپن سورس لائبریریاں";
+"cal_range_month" = "1 مہینہ";
+"cal_range_3month" = "3 مہینے";
+"cal_range_6month" = "6 مہینے";
+"cal_range_year" = "1 سال";
+"cal_prayers_header" = "نمازیں";
+"cal_range_header" = "کتنے عرصے تک";
+"cal_alert_header" = "الرٹ";
+"cal_add_alert" = "کیلنڈر الرٹ شامل کریں";
+"cal_alert_attime" = "نماز کے وقت پر";
+"cal_alert_before" = "%d منٹ پہلے";
+"cal_estimate_footer" = "تقریباً %d ایونٹس ایک مخصوص “Athan Utility” کیلنڈر میں شامل کیے جائیں گے۔ ایونٹس پر آپ کے موجودہ مقام کی مہر لگی ہوگی۔";
+"cal_tip" = "ٹِپ: مقام تبدیل کرنے یا حد بڑھانے پر پہلے پرانے ایونٹس صاف کرنے کے لیے ہٹائیں استعمال کریں — دوبارہ شامل کرنے پر ہمیشہ پرانے ایونٹس صاف کر کے نئے سرے سے بنائے جاتے ہیں۔";
+"cal_adding" = "شامل ہو رہا ہے… %d%%";
+"cal_add_button" = "کیلنڈر میں شامل کریں";
+"cal_remove_button" = "اذان ایونٹس ہٹائیں";
+"cal_done" = "%d نماز کے اوقات شامل کر دیے گئے۔";
+"cal_export_title" = "کیلنڈر انٹیگریشن";
+"done" = "ہو گیا";
+"mac_section_times" = "ہوم";
+"mac_section_calendar" = "ماہانہ کیلنڈر";
+"mac_section_settings" = "ترتیبات";
+"mac_section_discover" = "خصوصیات دریافت کریں";
+"until_prayer" = "تک";
+"begins_at" = "شروع";
+"dur_hr_min" = "%d گھنٹے %d منٹ";
+"dur_hr" = "%d گھنٹے";
+"dur_min" = "%d منٹ";
+"dur_lt_min" = "ایک منٹ سے کم";
+"features_section_title" = "نمایاں";
+"debug_tools" = "ڈیبگ ٹولز";
+"no_mail_configured" = "اس ڈیوائس پر کوئی ای میل اکاؤنٹ سیٹ اپ نہیں ہے۔";
+"today" = "آج";
+"prayer_times" = "نماز کے اوقات";
+"location_not_found" = "وہ جگہ نہیں مل سکی۔";
+"loc_locating" = "مقام معلوم کیا جا رہا ہے…";
+"tap_return_today" = "آج پر واپس جائیں";
+"loc_failed" = "آپ کا مقام معلوم نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔";
+"loc_requesting" = "مقام تک رسائی کی درخواست کی جا رہی ہے — پرامپٹ کو منظور کریں۔";
+"loc_denied" = "مقام تک رسائی بند ہے۔ اسے سسٹم ترتیبات › رازداری اور سیکیورٹی › مقام کی خدمات میں آن کریں۔";
+"calc_section" = "حساب";
+"madhab_asr" = "عصر (مسلک)";
+"notif_section" = "اطلاعات";
+"athan_sound" = "اذان کی آواز";
+"stop" = "روکیں";
+"preview" = "پیش منظر";
+"alerts_section" = "نماز الرٹس";
+"appearance_section" = "ظاہری شکل";
+"dynamic_colors" = "نماز کے مطابق متحرک رنگ";
+"menubar_section" = "مینو بار";
+"version" = "ورژن";
+"adopt_widgets_title" = "ویجٹس";
+"adopt_siri_title" = "سیری";
+"adopt_calendar_title" = "کیلنڈر";
+"adopt_widgets_sub" = "اپنی ہوم اسکرین یا لاک اسکرین میں شامل کریں";
+"adopt_fajr_sub" = "ایک ایسا جگانے والا الارم جسے آپ سوتے ہوئے نظرانداز نہیں کر سکتے";
+"adopt_siri_sub" = "نماز کے اوقات کے لیے سیری سے پوچھیں";
+"adopt_calendar_sub" = "نماز کے اوقات اپنے کیلنڈر میں شامل کریں";
+"widgets_title" = "ہوم اور لاک اسکرین ویجٹس";
+"widgets_1" = "اپنی ہوم اسکرین یا لاک اسکرین کے کسی خالی حصے کو چھوئیں اور دبائے رکھیں جب تک وہ ترمیمی موڈ میں نہ آ جائے۔";
+"widgets_2" = "+ بٹن پر تھپتھپائیں (ہوم اسکرین) یا گھڑی کے نیچے ویجٹ ایریا پر (لاک اسکرین)۔";
+"widgets_3" = "“Athan Utility” تلاش کریں اور ویجٹ کا سائز منتخب کریں۔";
+"widgets_4" = "ویجٹ شامل کریں پر تھپتھپائیں، پھر ہو گیا پر۔";
+"siri_phrase_1" = "“اگلی نماز کا وقت”";
+"siri_phrase_2" = "“مغرب کب ہے؟”";
+"siri_phrase_3" = "“آج اذان کے اوقات”";
+"siri_sheet_title" = "نماز کے اوقات کے لیے سیری سے پوچھیں";
+"siri_sheet_body" = "ایک شارٹ کٹ شامل کریں، پھر بس سیری سے ہاتھ استعمال کیے بغیر پوچھیں۔";
+"siri_sheet_nav" = "سیری شارٹ کٹ";
+"hijri_tap_hint" = "آج کی عیسوی تاریخ اور کیلنڈر کے اختیارات دیکھنے کے لیے ڈبل ٹیپ کریں";
+"widget_preview_home_small" = "ہوم اسکرین";
+"widget_preview_home_medium" = "ہوم اسکرین";
+"widget_preview_lock" = "لاک اسکرین";
+"cal_access_denied" = "کیلنڈر تک رسائی بند ہے۔ نماز کے اوقات شامل کرنے کے لیے اسے ترتیبات میں فعال کریں۔";
+"cal_no_source" = "ایونٹس شامل کرنے کے لیے کوئی کیلنڈر اکاؤنٹ دستیاب نہیں ہے۔";
+"cal_event_notes" = "Athan Utility کی جانب سے نماز کا وقت۔";
+"siri_next_sentence" = "اگلی نماز %@ ہے، %@ پر، %@ میں۔";
+"siri_prayer_sentence" = "%@ کا وقت %@ ہے۔";
+"method_colon" = "طریقہ: ";
+"your_settings_title" = "آپ کی ترتیبات";
+"recommended_settings_title" = "آپ کے مقام کے لیے تجویز کردہ";
+"edit" = "ترمیم کریں";
+"feature_widgets_title" = "ہوم اور لاک اسکرین ویجٹس";
+"feature_widgets_subtitle" = "ایک نظر میں اگلی نماز";
+"feature_widgets_detail" = "ایپ کھولے بغیر اگلی نماز اور باقی وقت دیکھنے کے لیے اپنی ہوم اسکرین اور لاک اسکرین میں ویجٹس شامل کریں۔";
+"feature_earlyReminder_title" = "نماز سے پہلے ابتدائی یاد دہانیاں";
+"feature_earlyReminder_subtitle" = "ایک پیشگی اطلاع تاکہ آپ کبھی جلدی میں نہ ہوں";
+"feature_earlyReminder_detail" = "ہر نماز سے مقررہ منٹ پہلے ایک اختیاری یاد دہانی حاصل کریں — اتنا وقت کہ وضو کر سکیں اور اذان ہوتے وقت تیار ہوں۔ ہر نماز کے لیے قابلِ ترتیب۔";
+"feature_watch_title" = "ایپل واچ ایپ";
+"feature_watch_subtitle" = "آپ کی کلائی پر نماز کے اوقات";
+"feature_watch_detail" = "ایک مقامی watchOS ایپ اور ہر واچ فیس کے لیے کمپلیکیشنز، تاکہ اگلی نماز اور باقی وقت ہمیشہ ایک نظر میں ہوں۔";
+"feature_mac_title" = "مقامی Mac ایپ";
+"feature_mac_subtitle" = "ایک سائیڈ بار اور مینو بار آئٹم";
+"feature_mac_detail" = "Athan Utility Mac پر، ایک مقامی سائیڈ بار کے ساتھ نئے سرے سے ڈیزائن کی گئی — اور ایک مینو بار آئٹم جو ایک نظر میں اگلی نماز کی الٹی گنتی دکھاتا ہے، تیز اقدامات کے لیے اپنے پوپ اوور کے ساتھ۔";
+"feature_autoMethod_title" = "خودکار طریقہ حساب";
+"feature_autoMethod_subtitle" = "آپ کے ملک کے ادارے سے مطابقت رکھتا ہے";
+"feature_autoMethod_detail" = "جب آپ سفر کرتے ہیں تو Athan Utility مقامی ادارے کے استعمال کردہ طریقہ حساب پر خودبخود سوئچ ہو جاتی ہے — سعودی عرب میں ام القریٰ، ترکی میں دیانت، شمالی امریکہ میں ISNA، اور مزید — اور آپ اسے ایک ہی ٹیپ سے واپس بدل سکتے ہیں۔";
+"feature_notifications_title" = "ہر نماز کے لیے اذان اور آوازیں";
+"feature_notifications_subtitle" = "مکمل اذان، ایک یاد دہانی، یا خاموشی";
+"feature_notifications_detail" = "ہر نماز کے لیے الگ سے مکمل اذان، مختصر یاد دہانی، یا خاموشی منتخب کریں — اور 5 یا 30 سیکنڈ کی مختلف مؤذن آوازوں میں سے چنیں۔";
+"feature_highLat_title" = "بلند عرضِ بلد کا اصول";
+"feature_highLat_subtitle" = "خط استوا سے دور معقول اوقات";
+"feature_highLat_detail" = "جہاں گرمیوں میں سورج بمشکل غروب ہوتا ہے، وہاں بلند عرضِ بلد کا اصول فجر اور عشاء کو معقول رکھتا ہے۔ Athan Utility آپ کے مقام کے لیے خودکار طور پر صحیح اصول تجویز کرتی ہے۔";
+"feature_qibla_title" = "قبلہ کمپاس";
+"feature_qibla_subtitle" = "کعبہ کی طرف اشارہ کریں";
+"feature_qibla_detail" = "بلٹ اِن کمپاس قبلہ کی طرف اشارہ کرتا ہے اور درست سمت میں ہونے پر ہلکا سا ہیپٹک ٹیپ دیتا ہے۔ اگر یہ غلط لگے تو دوبارہ کیلیبریٹ کرنے کے لیے اپنے فون کو ہشت کی شکل میں گھمائیں۔";
+"feature_accessibility_title" = "سب کے لیے بنایا گیا";
+"feature_accessibility_subtitle" = "VoiceOver لیبلز اور ہیپٹک قبلہ";
+"feature_accessibility_detail" = "ہر کنٹرول VoiceOver کے لیے لیبل شدہ ہے، اور جب آپ کعبہ کی سمت سے ہم آہنگ ہوتے ہیں تو قبلہ کمپاس وائبریٹ کرتا ہے — تاکہ آپ دیکھے بغیر نماز کی سمت معلوم کر سکیں۔";
+"feature_custom_title" = "حسب ضرورت نام، رنگ اور آوازیں";
+"feature_custom_subtitle" = "ایپ کو اپنے مطابق بنائیں";
+"feature_custom_detail" = "نمازوں کے نام بدلیں، اپنی اذان کی آواز منتخب کریں، اور دن کے ہر وقت کے لیے گریڈینٹ رنگ حسب ضرورت بنائیں۔";
+"feature_calendar_title" = "ماہانہ کیلنڈر اور ایکسپورٹ";
+"feature_calendar_subtitle" = "پورا مہینہ، ایکسپورٹ کے قابل";
+"feature_calendar_detail" = "پورے مہینے کے نماز کے اوقات کیلنڈر میں دیکھیں، اور انہیں Numbers یا Excel میں کھولنے کے لیے CSV میں ایکسپورٹ کریں۔";
+"feature_discovery_footer" = "یہاں موجود ہر چیز ایپ کے اندر ہے — یہ صرف ایک مختصر ٹور ہے۔";
+"zoom_in" = "زوم ان";
+"zoom_out" = "زوم آؤٹ";
+"zoom_reset" = "اصل سائز";
+
+"Cancel" = "منسوخ کریں";
+"Alarms" = "الارمز";
+"Location Search" = "مقام تلاش کریں";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility آف لائن استعمال کے لیے کئی مہینوں کا اذان ڈیٹا محفوظ رکھتا ہے۔";
+
+"hijri_mode_subtitle" = "ہجری کیلنڈر";
+"hijri_mode_ummalqura" = "ام القریٰ";
+"hijri_mode_civil" = "اسلامی مدنی کیلنڈر";
+"hijri_mode_tabular" = "اسلامی جدولی کیلنڈر";
+"hijri_ramadan_adjust" = "رمضان کا دن";
+"day_previous" = "پچھلا دن";
+"day_next" = "اگلا دن";
+"menubar_enable_button" = "مینیو بار میں فعال کریں";
+"menubar_enable_subtitle" = "Athan Utility کو دوبارہ اپنے مینیو بار میں شامل کرنے کے لیے، macOS کی ترتیبات میں Athan Utility کو فعال کریں۔";

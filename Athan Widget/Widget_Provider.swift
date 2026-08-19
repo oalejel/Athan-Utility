@@ -62,6 +62,19 @@ class AthanProvider: TimelineProvider {
         // WARNING: no foreground updates here --> must manually tell manager to refresh
         // for now, dont call enterForeground since that will request new location
         manager.reloadSettingsAndNotifications()
+
+        // A widget timeline executing at all proves this is an existing install
+        // with a widget already configured (a brand-new install can't have one
+        // yet) — one of the two triggers for the one-time new-features announcement.
+        NewFeaturesAnnouncement.announceFromWidgetIfEligible()
+
+        // Auto-update the calculation method if the stored country now recommends a different
+        // one — so times reflect it without opening the app. Don't reschedule notifications
+        // from the widget (the app does that on next foreground); reload settings once more so
+        // this timeline is built with the new method.
+        if manager.autoUpdateMethodIfNeeded(for: manager.bestAvailableCountryCode(), rescheduleNotifications: false) {
+            manager.reloadSettingsAndNotifications()
+        }
         if !manager.locationSettings.isLoadedFromArchive {
             let openAppEntry = AthanEntry(date: Date(),
                                    currentPrayer: Prayer.fajr, // dummy data
@@ -95,10 +108,30 @@ class AthanProvider: TimelineProvider {
         
         
 
+        // Smart Stack relevance window: how long before a prayer starts the
+        // OUTGOING prayer's entry gets bumped to High (an "ending soon" heads-up),
+        // and how long after a prayer starts the INCOMING entry stays at High
+        // (the "just switched" window). Both requested at 15 minutes.
+        let relevanceWindow: TimeInterval = 15 * 60
+
+        // Precedes a transition entry with a clone of the still-current (about
+        // to end) entry, redated to `transitionDate - relevanceWindow` and
+        // scored High — so Smart Stack surfaces the OUTGOING prayer as its
+        // window closes, not just the incoming one.
+        func appendHeadsUpIfNeeded(before transitionDate: Date) {
+            guard let previous = entries.last else { return }
+            let headsUpDate = transitionDate.addingTimeInterval(-relevanceWindow)
+            guard headsUpDate > previous.date, headsUpDate > Date() else { return }
+            var headsUp = previous
+            headsUp.date = headsUpDate
+            headsUp.relevance = TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: relevanceWindow)
+            entries.append(headsUp)
+        }
+
         // create a single entry for every remaining prayer of the day
         // if we are currently on isha after 12 am, nextPrayer will return fajr
         for pIndex in (manager.todayTimes.nextPrayer()?.rawValue() ?? 6)..<6 {
-            
+
             let iterationPrayer = Prayer(index: pIndex) // the prayer we want to create a single update for
             let prayerDate = manager.todayTimes.time(for: iterationPrayer)
             let pColors = manager.appearanceSettings.colors(for: useDynamicColors ? iterationPrayer : nil)
@@ -111,12 +144,17 @@ class AthanProvider: TimelineProvider {
                 nextTime = manager.todayTimes.time(for: nextPrayer)
             }
 
-            // create single entry for prayer to be triggered on prayerDate
+            appendHeadsUpIfNeeded(before: prayerDate)
+
+            // create single entry for prayer to be triggered on prayerDate.
+            // High relevance + a decay window: Smart Stack should treat this as
+            // most relevant right as the prayer switches in.
             let entry = AthanEntry(date: prayerDate,
                                    currentPrayer: iterationPrayer,
                                    currentPrayerDate: prayerDate,
                                    nextPrayerDate: nextTime,
                                    todayPrayerTimes: todayTimesArray,
+                                   relevance: TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: relevanceWindow),
                                    gradient: Gradient(colors: [pColors.0, pColors.1]))
             entries.append(entry)
         }
@@ -127,17 +165,20 @@ class AthanProvider: TimelineProvider {
             let iterationPrayer = Prayer(index: tomorrowPIndex)
             let prayerDate = manager.tomorrowTimes.time(for: iterationPrayer)
             let pColors = manager.appearanceSettings.colors(for: useDynamicColors ? iterationPrayer : nil)
-            
+
             // get time of prayer that follows this one
             // will NOT have to worry about isha -> tomorrow since tomorrowPIndex never goes to 5
             let nextPrayer = Prayer(index: tomorrowPIndex + 1)
             let nextTime = manager.tomorrowTimes.time(for: nextPrayer)
+
+            appendHeadsUpIfNeeded(before: prayerDate)
 
             let entry = AthanEntry(date: prayerDate,
                                    currentPrayer: iterationPrayer,
                                    currentPrayerDate: prayerDate,
                                    nextPrayerDate: nextTime,
                                    todayPrayerTimes: tomorrowTimesArray,
+                                   relevance: TimelineEntryRelevance(score: EntryRelevance.High.rawValue, duration: relevanceWindow),
                                    gradient: Gradient(colors: [pColors.0, pColors.1]))
             entries.append(entry)
             // no worry for type == isha, since tomorrow's entries only go up to maghrib

@@ -56,7 +56,10 @@ struct QiblaPointerView: View {
                     .offset(x: 0, y: (g.size.width / -2) - lineWidth + pointerLength)
                     .foregroundColor(.white)
                     .shortRotationEffect(.degrees(pointerVisualAngleDegrees), id: 1)
-                    .animation(Animation.default.speed(1))
+                    // Scope the animation to heading changes only — a valueless
+                    // .animation() also animates the size-driven offset, which makes
+                    // the tip lag behind the circle while resizing the macOS window.
+                    .animation(.default, value: pointerVisualAngleDegrees)
                     .transition(.opacity)
             }
             // Accessibility: describe what this is, current alignment, and the haptic behavior

@@ -1,3 +1,4 @@
+#if !targetEnvironment(macCatalyst)  // Live Activities aren't available on Mac Catalyst
 //
 //  SuhoorActivityTrigger.swift
 //  Athan Utility
@@ -77,4 +78,4 @@ func cleanupSuhoorActivity() {
         }
     }
 }
-
+#endif

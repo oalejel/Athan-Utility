@@ -1,0 +1,334 @@
+/*
+  Localizable.strings
+  Athan Utility — Bengali (bn)
+*/
+
+// MARK: - Prayer Names
+"Fajr" = "ফজর";
+"Sunrise" = "সূর্যোদয়";
+"Dhuhr" = "যোহর";
+"Asr" = "আসর";
+"Maghrib" = "মাগরিব";
+"Isha" = "এশা";
+
+// MARK: Accessibility
+"acc_settings" = "সেটিংস";
+"acc_calendar" = "ক্যালেন্ডার";
+"acc_location_settings" = "অবস্থান সেটিংস";
+"acc_qibla_compass_label" = "কিবলা কম্পাস";
+"acc_qibla_compass_hint" = "তিন ডিগ্রির মধ্যে কিবলার সাথে সমান্তরাল হলে কম্পন দেয়।";
+"acc_qibla_aligned_value" = "কিবলার সাথে সমান্তরাল";
+"acc_qibla_turn_right" = "ডানে ঘুরুন";
+"acc_qibla_turn_left" = "বামে ঘুরুন";
+"acc_degrees_abbrev" = "ডিগ্রি";
+
+// MARK: - Notifications
+"Notifications" = "বিজ্ঞপ্তি";
+"Time for %1$@ [%2$@]. Please reopen Athan Utility to continue receiving notifications." = "%1$@-এর সময় [%2$@]। বিজ্ঞপ্তি পেতে আবার Athan Utility খুলুন।";
+"Time for %1$@ in %2$@ [%3$@]" = "%2$@-এ %1$@-এর সময় [%3$@]";
+"%1$@m until %2$@ in %3$@ [%4$@]" = "%3$@-এ %2$@-এর %1$@ মিনিট বাকি [%4$@]";
+
+// MARK: - Buttons and tags
+"left" = ""; // only for english
+"Done" = "সম্পন্ন";
+
+// MARK: - Settings
+"Settings" = "সেটিংস";
+"Appearance" = "চেহারা";
+"Colors" = "রঙ";
+"Change Language" = "ভাষা পরিবর্তন";
+"Developed by Omar Al-Ejel" = "Omar Al-Ejel কর্তৃক তৈরি";
+"Rate Athan Utility!" = "Athan Utility রেটিং দিন!";
+"Privacy Notes" = "গোপনীয়তা নোট";
+"Send Feedback" = "মতামত পাঠান";
+
+// MARK: - Calculation Method
+"Calculation Method" = "হিসাব পদ্ধতি";
+"Calculation methods primarily differ in Fajr and Isha sun angles." = "হিসাব পদ্ধতি মূলত ফজর ও এশার সূর্যের কোণে আলাদা।";
+"Muslim World League" = "রাবেতা আলম ইসলামি";
+"Egyptian" = "মিসরীয় সাধারণ জরিপ কর্তৃপক্ষ";
+"Karachi" = "করাচি";
+"Umm Al-Qura" = "উম্মুল কোরা";
+"Dubai" = "দুবাই";
+"Moonsighting Committee" = "চাঁদ দেখা কমিটি";
+"North America" = "উত্তর আমেরিকা (ISNA)";
+"Kuwait" = "কুয়েত";
+"Qatar" = "কাতার";
+"Singapore" = "সিঙ্গাপুর";
+"Tehran" = "তেহরান";
+"Turkey" = "তুরস্ক";
+"Other"  = "অন্যান্য";
+
+// MARK: - Madhab
+"Madhab" = "মাযহাব আসর সমন্বয়";
+"Hanafi" = "হানাফি";
+"Shafi" = "ডিফল্ট";
+"The Hanafi madhab uses later Asr times, taking place when the length of a shadow increases in length by double the length of an object since solar noon." = "হানাফি মাযহাব পরবর্তী আসর সময় ব্যবহার করে, যা তখন হয় যখন সূর্য মধ্যাহ্নের পর থেকে ছায়ার দৈর্ঘ্য বস্তুর দৈর্ঘ্যের দ্বিগুণ হয়।";
+
+// MARK: - Latitude Rules
+"High Latitude Rule" = "উচ্চ অক্ষাংশ নিয়ম";
+"middleOfTheNight" = "রাতের মধ্যভাগ";
+"seventhOfTheNight" = "রাতের সপ্তমাংশ";
+"twilightAngle" = "সন্ধ্যার কোণ";
+
+// MARK: - Intro Settings Labels
+"Calculation Preferences" = "হিসাব পছন্দসমূহ";
+"Consider setting..." = "আপনার স্থানীয় মসজিদ অনুযায়ী হিসাব পদ্ধতি নির্ধারণ করুন।";
+"highLatitudeExplanation" = "নির্দিষ্ট অক্ষাংশের উত্তরের দেশগুলো প্রায়ই উচ্চ অক্ষাংশ নিয়ম প্রয়োগ করে। আপনার অঞ্চলের জন্য প্রস্তাবিত নিয়ম হলো ";
+"Athan Preview" = "আজানের পূর্বরূপ";
+"Edit Location" = "অবস্থান সম্পাদনা";
+
+// MARK: - Sounds
+"athan.sound" = "আজানের শব্দ";
+"Full Athan can play when your iPhone is locked or Athan Utility is opened." = "iPhone লক থাকলে বা Athan Utility খোলা থাকলে পূর্ণ আজান বাজতে পারে।";
+"iOS Default" = "iOS ডিফল্ট";
+"Echo" = "প্রতিধ্বনি";
+"Makkah" = "মক্কা";
+"Madina" = "মদিনা";
+"Al-Aqsa" = "আল-আকসা";
+"Al-Aqsa 2" = "আল-আকসা ২";
+"Egypt" = "মিসর";
+"Abdulbaset" = "আবদুলবাসেত";
+"Abdulghaffar" = "আবদুলগাফফার";
+"Zakariya" = "যাকারিয়া";
+"Al-Qatami" = "আল-কাতামি";
+
+// MARK: - Colors
+"static" = "স্থির";
+"dynamic" = "গতিশীল";
+"All Prayers" = "সকল নামাজ";
+"restore.defaults" = "ডিফল্ট পুনরুদ্ধার";
+"colors.ios.requirement" = "রঙ কাস্টমাইজেশন শুধুমাত্র iOS 14+-এ পাওয়া যায়";
+"Select a color picker to customize gradients." = "গ্রেডিয়েন্ট কাস্টমাইজ করতে একটি রঙ নির্বাচক বেছে নিন।";
+
+// MARK: - Custom Names
+"custom.names" = "কাস্টম নাম";
+"custom.names.description" = "উইজেট, বিজ্ঞপ্তি এবং মূল ইন্টারফেসে ব্যবহৃত আজানের বানান পরিবর্তন করুন।";
+
+// MARK: - Notification Settings
+"Athan Notification" = "আজান বিজ্ঞপ্তি";
+"Reminder Notification" = "স্মরণিকা বিজ্ঞপ্তি";
+"Enabled" = "সক্ষম";
+"Play Sound" = "শব্দ বাজান";
+"reminder.minute.offset" = "আগাম মিনিট: %@m";
+"minute-character" = "মি";
+"Disable \"Play Sound\" to force this prayer's notifications to play the default iOS chime." = "এই নামাজের বিজ্ঞপ্তিকে iOS ডিফল্ট শব্দ বাজাতে বাধ্য করতে \"শব্দ বাজান\" নিষ্ক্রিয় করুন।";
+"offset-description" = "যখন মিনিট অফসেট %1$@ এবং %2$@-এর মধ্যবর্তী সময়ের চেয়ে বেশি, স্মরণিকা ডিফল্ট ১৫ মিনিটে থাকবে।";
+"Play Longer Athan" = "দীর্ঘ আজান বাজান";
+"Extends playback to the maximum iOS limit of ~30 seconds. Open Athan Utility to play the full Athan." = "প্রায় ৩০ সেকেন্ডের iOS সীমা পর্যন্ত প্লেব্যাক বাড়ায়। পূর্ণ আজানের জন্য Athan Utility খুলুন।";
+"athan.minute.offset" = "সময় সমন্বয়: %@m";
+
+// MARK: - Location Settings
+"Set Location" = "অবস্থান নির্ধারণ";
+"Set Location Manually" = "ম্যানুয়ালি অবস্থান নির্ধারণ";
+"Use Current Location" = "বর্তমান অবস্থান ব্যবহার";
+"Athan Utility does not collect user data." = "Athan Utility ব্যবহারকারীর ডেটা সংগ্রহ করে না।";
+"Location services are disabled, and can be adjusted in Settings. Athan Utility does not collect user data." = "অবস্থান পরিষেবা নিষ্ক্রিয়, সেটিংসে পরিবর্তন করা যাবে। Athan Utility ব্যবহারকারীর ডেটা সংগ্রহ করে না।";
+"Location Name" = "অবস্থানের নাম";
+"Location:" = "অবস্থান:";
+
+// MARK: - Calendar
+"Show Calendar" = "ক্যালেন্ডার দেখান";
+"Calendar" = "ক্যালেন্ডার";
+"Export" = "রপ্তানি";
+
+// MARK: - Widget
+"Open Athan Utility to set location." = "অবস্থান নির্ধারণ করতে Athan Utility খুলুন।";
+"Use Athan Widgets to view upcoming salah times at a glance." = "আসন্ন নামাজের সময় একনজরে দেখতে Athan Widget ব্যবহার করুন।";
+
+// MARK: - Old athan app
+"F_letter" = "ফ";
+"S_letter" = "স";
+"T_letter" = "য";
+"A_letter" = "আ";
+"M_letter" = "ম";
+"I_letter" = "এ";
+"Cancel" = "বাতিল";
+"Alarms" = "অ্যালার্ম";
+"Location Search" = "অবস্থান খুঁজুন";
+"OK" = "ঠিক আছে";
+"Continue" = "এগিয়ে যান";
+
+
+// MARK: - Auto-selected calculation method pill
+"Calculation method set to %@" = "গণনা পদ্ধতি %@ এ সেট করা হয়েছে";
+"Adjust Method" = "পদ্ধতি সমন্বয় করুন";
+
+// Calculation-method suggestion popup
+
+// Method update popup
+"Updated Calculation Method" = "গণনা পদ্ধতি আপডেট হয়েছে";
+"Undo" = "পূর্বাবস্থা";
+
+// Intro recommendation strings 2026-08-06
+"recommended_for_country" = "%@-এর জন্য প্রস্তাবিত";
+"use_recommended_method" = "প্রস্তাবিত ব্যবহার করুন: %@";
+
+// MARK: - Bengali (bn) l10n batch 2026-08-16
+"discover_features" = "ফিচার আবিষ্কার";
+"acknowledgements" = "স্বীকৃতি";
+"fajr.alarm.state.on" = "অ্যালার্ম চালু";
+"fajr.alarm.state.off" = "অ্যালার্ম বন্ধ";
+"new.features.announcement.title" = "নতুন কী আছে";
+"new.features.announcement.body" = "Athan Utility-এর সর্বশেষ নতুন ফিচারগুলো দেখুন।";
+"ack_cuzeth_detail" = "iOS 26 AlarmKit ফজর অ্যালার্ম ফিচারে অবদান রেখেছেন।";
+"ack_adhan_detail" = "নামাজের সময়ের হিসাব। Batoul Apps দ্বারা।";
+"ack_whatsnew_detail" = "“নতুন কী আছে” স্ক্রিন। Sven Tiigi দ্বারা।";
+"ack_tppdf_detail" = "ক্যালেন্ডার এক্সপোর্টের জন্য PDF তৈরি। techprimate দ্বারা।";
+"ack_intro" = "এই মানুষ ও ওপেন-সোর্স প্রজেক্টগুলোর কল্যাণে Athan Utility আরও ভালো হয়েছে।";
+"ack_contributors" = "অবদানকারী";
+"ack_open_source" = "ওপেন-সোর্স লাইব্রেরি";
+"cal_range_month" = "১ মাস";
+"cal_range_3month" = "৩ মাস";
+"cal_range_6month" = "৬ মাস";
+"cal_range_year" = "১ বছর";
+"cal_prayers_header" = "নামাজ";
+"cal_range_header" = "কতদূর পর্যন্ত";
+"cal_alert_header" = "সতর্কতা";
+"cal_add_alert" = "ক্যালেন্ডার সতর্কতা যোগ করুন";
+"cal_alert_attime" = "নামাজের সময়ে";
+"cal_alert_before" = "%d মিনিট আগে";
+"cal_estimate_footer" = "একটি নির্দিষ্ট \u{201C}Athan Utility\u{201D} ক্যালেন্ডারে প্রায় %d-টি ইভেন্ট যোগ হবে। ইভেন্টগুলো আপনার বর্তমান অবস্থান অনুযায়ী চিহ্নিত করা হবে।";
+"cal_tip" = "টিপ: অবস্থান পরিবর্তন করলে বা পরিসর বাড়ালে, প্রথমে পুরনো ইভেন্ট মুছতে “সরান” ব্যবহার করুন — আবার যোগ করলে সবসময় আগেরগুলো মুছে নতুন করে তৈরি হয়।";
+"cal_adding" = "যোগ করা হচ্ছে… %d%%";
+"cal_add_button" = "ক্যালেন্ডারে যোগ করুন";
+"cal_remove_button" = "আজানের ইভেন্ট সরান";
+"cal_done" = "%d-টি নামাজের সময় যোগ করা হয়েছে।";
+"cal_export_title" = "ক্যালেন্ডার ইন্টিগ্রেশন";
+"done" = "সম্পন্ন";
+"mac_section_times" = "হোম";
+"mac_section_calendar" = "মাসিক ক্যালেন্ডার";
+"mac_section_settings" = "সেটিংস";
+"mac_section_discover" = "ফিচার আবিষ্কার";
+"until_prayer" = "পর্যন্ত";
+"begins_at" = "শুরু";
+"dur_hr_min" = "%d ঘণ্টা %d মিনিট";
+"dur_hr" = "%d ঘণ্টা";
+"dur_min" = "%d মিনিট";
+"dur_lt_min" = "এক মিনিটেরও কম";
+"features_section_title" = "বিশেষ ফিচার";
+"debug_tools" = "ডিবাগ টুলস";
+"no_mail_configured" = "এই ডিভাইসে কোনো ইমেইল অ্যাকাউন্ট সেট আপ করা নেই।";
+"today" = "আজ";
+"prayer_times" = "নামাজের সময়";
+"location_not_found" = "ঐ জায়গাটি খুঁজে পাওয়া যায়নি।";
+"loc_locating" = "অবস্থান নির্ণয় করা হচ্ছে…";
+"tap_return_today" = "আজকের দিনে ফিরুন";
+"loc_failed" = "আপনার অবস্থান পাওয়া যায়নি। আবার চেষ্টা করুন।";
+"loc_requesting" = "অবস্থানের অনুমতি চাওয়া হচ্ছে — প্রম্পটে অনুমতি দিন।";
+"loc_denied" = "অবস্থানের অ্যাক্সেস বন্ধ আছে। System Settings › Privacy & Security › Location Services থেকে চালু করুন।";
+"calc_section" = "হিসাব";
+"madhab_asr" = "আসর (মাযহাব)";
+"notif_section" = "বিজ্ঞপ্তি";
+"athan_sound" = "আজানের শব্দ";
+"stop" = "থামান";
+"preview" = "প্রিভিউ";
+"alerts_section" = "নামাজের সতর্কতা";
+"appearance_section" = "চেহারা";
+"dynamic_colors" = "নামাজ অনুযায়ী পরিবর্তনশীল রঙ";
+"menubar_section" = "মেনু বার";
+"version" = "ভার্সন";
+"adopt_widgets_title" = "উইজেট";
+"adopt_siri_title" = "Siri";
+"adopt_calendar_title" = "ক্যালেন্ডার";
+"adopt_widgets_sub" = "আপনার হোম স্ক্রিন বা লক স্ক্রিনে যোগ করুন";
+"adopt_fajr_sub" = "এমন অ্যালার্ম, যা এড়িয়ে ঘুমানো যায় না";
+"adopt_siri_sub" = "নামাজের সময় জানতে Siri-কে জিজ্ঞাসা করুন";
+"adopt_calendar_sub" = "আপনার ক্যালেন্ডারে নামাজের সময় যোগ করুন";
+"widgets_title" = "হোম স্ক্রিন ও লক স্ক্রিন উইজেট";
+"widgets_1" = "আপনার হোম স্ক্রিন বা লক স্ক্রিনের খালি জায়গায় স্পর্শ করে ধরে রাখুন, যতক্ষণ না এটি এডিট মোডে প্রবেশ করে।";
+"widgets_2" = "+ বাটনে ট্যাপ করুন (হোম স্ক্রিন) অথবা ঘড়ির নিচের উইজেট এলাকায় ট্যাপ করুন (লক স্ক্রিন)।";
+"widgets_3" = "“Athan Utility” অনুসন্ধান করুন এবং একটি উইজেট সাইজ বেছে নিন।";
+"widgets_4" = "“উইজেট যোগ করুন”-এ ট্যাপ করুন, তারপর “সম্পন্ন”-এ ট্যাপ করুন।";
+"siri_phrase_1" = "“পরবর্তী নামাজের সময়”";
+"siri_phrase_2" = "“মাগরিব কখন?”";
+"siri_phrase_3" = "“আজকের আজানের সময়”";
+"siri_sheet_title" = "নামাজের সময় জানতে Siri-কে জিজ্ঞাসা করুন";
+"siri_sheet_body" = "একটি শর্টকাট যোগ করুন, তারপর হাত ছাড়াই Siri-কে জিজ্ঞাসা করুন।";
+"siri_sheet_nav" = "Siri শর্টকাট";
+"hijri_tap_hint" = "আজকের গ্রেগরিয়ান তারিখ ও ক্যালেন্ডার অপশন দেখতে ডাবল-ট্যাপ করুন";
+"widget_preview_home_small" = "হোম স্ক্রিন";
+"widget_preview_home_medium" = "হোম স্ক্রিন";
+"widget_preview_lock" = "লক স্ক্রিন";
+"cal_access_denied" = "ক্যালেন্ডার অ্যাক্সেস বন্ধ আছে। নামাজের সময় যোগ করতে সেটিংসে গিয়ে এটি চালু করুন।";
+"cal_no_source" = "ইভেন্ট যোগ করার জন্য কোনো ক্যালেন্ডার অ্যাকাউন্ট উপলব্ধ নেই।";
+"cal_event_notes" = "Athan Utility থেকে নামাজের সময়।";
+"siri_next_sentence" = "পরবর্তী নামাজ %1$@, %2$@ সময়ে — %3$@ পরে।";
+"siri_prayer_sentence" = "%1$@-এর সময় %2$@।";
+"method_colon" = "পদ্ধতি: ";
+"your_settings_title" = "আপনার সেটিংস";
+"recommended_settings_title" = "আপনার অবস্থানের জন্য প্রস্তাবিত";
+"edit" = "এডিট";
+"feature_widgets_title" = "হোম স্ক্রিন ও লক স্ক্রিন উইজেট";
+"feature_widgets_subtitle" = "একনজরে পরবর্তী নামাজ";
+"feature_widgets_detail" = "অ্যাপ না খুলেই পরবর্তী নামাজ এবং অবশিষ্ট সময় দেখতে আপনার হোম স্ক্রিন ও লক স্ক্রিনে উইজেট যোগ করুন।";
+"feature_earlyReminder_title" = "নামাজের আগে আগাম স্মরণিকা";
+"feature_earlyReminder_subtitle" = "যাতে আপনি কখনো তাড়াহুড়ো না করেন";
+"feature_earlyReminder_detail" = "প্রতিটি নামাজের নির্দিষ্ট মিনিট আগে একটি ঐচ্ছিক স্মরণিকা পান — যাতে ওজু করে আজান বাজার সময় প্রস্তুত থাকার মতো সময় পান। প্রতিটি নামাজের জন্য আলাদাভাবে সমন্বয়যোগ্য।";
+"feature_watch_title" = "Apple Watch অ্যাপ";
+"feature_watch_subtitle" = "আপনার কব্জিতে নামাজের সময়";
+"feature_watch_detail" = "একটি নেটিভ watchOS অ্যাপ, সাথে প্রতিটি ওয়াচ ফেসের জন্য কমপ্লিকেশন — যাতে পরবর্তী নামাজ ও অবশিষ্ট সময় সবসময় একনজরে দেখা যায়।";
+"feature_mac_title" = "নেটিভ Mac অ্যাপ";
+"feature_mac_subtitle" = "একটি সাইডবার ও মেনু বার আইটেম";
+"feature_mac_detail" = "Mac-এ Athan Utility, নেটিভ সাইডবার দিয়ে নতুন করে ডিজাইন করা — সাথে একটি মেনু বার আইটেম যা একনজরে পরবর্তী নামাজের কাউন্টডাউন দেখায়, দ্রুত কাজের জন্য নিজস্ব পপওভারসহ।";
+"feature_autoMethod_title" = "স্বয়ংক্রিয় হিসাব পদ্ধতি";
+"feature_autoMethod_subtitle" = "আপনার দেশের কর্তৃপক্ষের সাথে মিলে যায়";
+"feature_autoMethod_detail" = "আপনি ভ্রমণ করলে, Athan Utility স্থানীয় কর্তৃপক্ষের ব্যবহৃত হিসাব পদ্ধতিতে পরিবর্তিত হয় — সৌদি আরবে Umm al-Qura, তুরস্কে Diyanet, উত্তর আমেরিকায় ISNA, এবং আরও অনেক — এবং এক ট্যাপেই এটি পূর্বাবস্থায় ফেরানো যায়।";
+"feature_notifications_title" = "প্রতিটি নামাজের জন্য আজান ও শব্দ";
+"feature_notifications_subtitle" = "পূর্ণ আজান, একটি স্মরণিকা, অথবা নীরবতা";
+"feature_notifications_detail" = "প্রতিটি নামাজের জন্য আলাদাভাবে পূর্ণ আজান, একটি সংক্ষিপ্ত স্মরণিকা, অথবা নীরবতা বেছে নিন — এবং ৫ বা ৩০ সেকেন্ড দৈর্ঘ্যের একাধিক মুয়াজ্জিনের কণ্ঠ থেকে বেছে নিন।";
+"feature_highLat_title" = "উচ্চ-অক্ষাংশ নিয়ম";
+"feature_highLat_subtitle" = "নিরক্ষরেখা থেকে দূরে যুক্তিসঙ্গত সময়";
+"feature_highLat_detail" = "যেখানে গ্রীষ্মে সূর্য প্রায় অস্ত যায় না, সেখানে উচ্চ-অক্ষাংশ নিয়ম ফজর ও এশার সময়কে যুক্তিসঙ্গত রাখে। Athan Utility স্বয়ংক্রিয়ভাবে আপনার অবস্থানের জন্য সঠিক নিয়ম প্রস্তাব করে।";
+"feature_qibla_title" = "কিবলা কম্পাস";
+"feature_qibla_subtitle" = "কাবার দিকে নির্দেশ করুন";
+"feature_qibla_detail" = "বিল্ট-ইন কম্পাস কিবলার দিকে নির্দেশ করে এবং আপনি ঠিকভাবে সমান্তরাল হলে একটি মৃদু হ্যাপটিক কম্পন দেয়। যদি ভুল মনে হয়, পুনরায় ক্যালিব্রেট করতে আপনার ফোনটি আট (৮) আকৃতিতে নাড়ান।";
+"feature_accessibility_title" = "সবার জন্য তৈরি";
+"feature_accessibility_subtitle" = "VoiceOver লেবেল ও হ্যাপটিক কিবলা";
+"feature_accessibility_detail" = "প্রতিটি কন্ট্রোল VoiceOver-এর জন্য লেবেলযুক্ত, এবং কাবার সাথে সমান্তরাল হওয়ার সময় কিবলা কম্পাস কম্পিত হয় — যাতে না তাকিয়েও আপনি নামাজের দিক খুঁজে পান।";
+"feature_custom_title" = "কাস্টম নাম, রঙ ও শব্দ";
+"feature_custom_subtitle" = "অ্যাপটি নিজের মতো করে সাজান";
+"feature_custom_detail" = "নামাজের নাম পরিবর্তন করুন, আপনার আজানের শব্দ বেছে নিন, এবং দিনের প্রতিটি সময়ের জন্য গ্রেডিয়েন্ট রঙ কাস্টমাইজ করুন।";
+"feature_calendar_title" = "মাসিক ক্যালেন্ডার ও এক্সপোর্ট";
+"feature_calendar_subtitle" = "পুরো মাস, এক্সপোর্টযোগ্য";
+"feature_calendar_detail" = "ক্যালেন্ডারে পুরো মাসের নামাজের সময় দেখুন, এবং Numbers বা Excel-এ খোলার জন্য CSV-তে এক্সপোর্ট করুন।";
+"feature_discovery_footer" = "এখানে যা কিছু আছে সবই অ্যাপের মধ্যে রয়েছে — এটি শুধু একটি দ্রুত পরিচিতি।";
+"zoom_in" = "জুম ইন";
+"zoom_out" = "জুম আউট";
+"zoom_reset" = "প্রকৃত আকার";
+
+"Fajr Alarm" = "ফজর অ্যালার্ম";
+"fajr.alarm.description" = "ফজরের (বা সূর্যোদয়ের) সময় বছরজুড়ে পরিবর্তিত হলেও তার সাথে সমন্বিত একটি প্রকৃত iOS অ্যালার্ম শিডিউল করুন। iOS 26 প্রয়োজন।";
+"fajr.alarm.entry.description" = "একটি iOS অ্যালার্মকে স্বয়ংক্রিয়ভাবে ফজরের প্রতিদিনের সময়ের সাথে লক করে রাখুন।";
+"fajr.alarm.offset.description" = "নির্বাচিত নামাজের আগে বা পরে অ্যালার্ম বাজান। তাহাজ্জুদ বা সাহরির জন্য উপযোগী।";
+"fajr.alarm.schedule.description" = "শিডিউল করে রাখার জন্য আসন্ন অ্যালার্মের সংখ্যা। অ্যাপ আপডেট হওয়ার সময় প্রতিবার রিফ্রেশ হয়।";
+"fajr.alarm.ios26.required" = "স্বয়ংক্রিয় ফজর অ্যালার্মের জন্য iOS 26 বা তার পরবর্তী সংস্করণ প্রয়োজন।";
+"fajr.alarm.authorization.denied" = "অ্যালার্ম নিষ্ক্রিয় আছে। এই ফিচার ব্যবহার করতে সিস্টেম সেটিংসে AlarmKit অ্যাক্সেস চালু করুন।";
+"fajr.alarm.summary.off" = "বন্ধ";
+"fajr.alarm.permission.needed" = "অনুমতি প্রয়োজন";
+"fajr.alarm.no.days" = "কোনো দিন নির্বাচিত নয় — অ্যালার্ম বাজবে না।";
+"Anchor Prayer" = "ভিত্তি নামাজ";
+"Offset" = "অফসেট";
+"Days" = "দিন";
+"Snooze" = "স্নুজ";
+"Schedule Window" = "শিডিউল পরিসর";
+"Stop" = "বন্ধ করুন";
+"Open Settings" = "সেটিংস খুলুন";
+"fajr.alarm.title.format" = "%@ অ্যালার্ম";
+"fajr.alarm.offset.zero" = "%@-এর সময়ে";
+"fajr.alarm.offset.after" = "%2$@-এর %1$d মিনিট পরে";
+"fajr.alarm.offset.before" = "%2$@-এর %1$d মিনিট আগে";
+"fajr.alarm.snooze.minutes" = "%d মিনিট স্নুজ";
+"fajr.alarm.days.ahead" = "পরবর্তী %d অ্যালার্ম";
+"Athan Utility stores months of athan data for offline use." = "Athan Utility অফলাইন ব্যবহারের জন্য কয়েক মাসের আজানের তথ্য সংরক্ষণ করে।";
+"Search City" = "শহর খুঁজুন";
+
+"hijri_mode_subtitle" = "হিজরি ক্যালেন্ডার";
+"hijri_mode_ummalqura" = "উম্মুল কুরা";
+"hijri_mode_civil" = "ইসলামি সিভিল";
+"hijri_mode_tabular" = "ইসলামি তাবুলার";
+"hijri_ramadan_adjust" = "রমজানের দিন";
+"day_previous" = "আগের দিন";
+"day_next" = "পরবর্তী দিন";
+"menubar_enable_button" = "মেনু বারে চালু করুন";
+"menubar_enable_subtitle" = "Athan Utility-কে আবার আপনার মেনু বারে যোগ করতে, আপনার macOS সেটিংসে গিয়ে Athan Utility চালু করুন।";

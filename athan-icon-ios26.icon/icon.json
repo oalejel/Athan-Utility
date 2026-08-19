@@ -9,12 +9,6 @@
     {
       "layers" : [
         {
-          "glass" : false,
-          "hidden" : false,
-          "image-name" : "Icon 2021 Copy 4.png",
-          "name" : "Icon 2021 Copy 4"
-        },
-        {
           "blend-mode-specializations" : [
             {
               "appearance" : "tinted",

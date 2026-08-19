@@ -1,3 +1,4 @@
+#if !targetEnvironment(macCatalyst)  // Live Activities aren't available on Mac Catalyst
 //
 //  SuhoorActivityAttributes.swift
 //  Athan Utility
@@ -22,3 +23,4 @@ struct SuhoorActivityAttributes: ActivityAttributes {
     
     var activityName: String
 }
+#endif

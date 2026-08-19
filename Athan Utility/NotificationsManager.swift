@@ -7,6 +7,7 @@
 //
 
 import NotificationCenter
+import UserNotifications
 import Adhan
 import CoreLocation.CLLocation
 
@@ -47,19 +48,38 @@ class NotificationsManager {
                                     madhab: Madhab,
                                     noteSettings: NotificationSettings,
                                     shortLocationName: String) {
-        
+
+        // No notification permission prompt / scheduling during snapshot runs.
+        // (Inline check — this file is shared with the widget/Siri targets that
+        // don't compile SnapshotSupport.)
+        if CommandLine.arguments.contains("-UITEST_DEMO") || CommandLine.arguments.contains("-UITEST_INTRO") { return }
+
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, err) in
-            if !granted {
-                print("user denied notifications")
+        // Deliberately NOT requestAuthorization() here. Scheduling reruns on every
+        // location/settings change, so prompting inline meant the system alert fired
+        // the instant the user finished picking their city — before they had seen a
+        // single prayer time. NotificationPermission owns the prompt now (5s after the
+        // main UI first appears); this path only schedules when permission already exists.
+        center.getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral: break
+            default:
+                print("notification permission not granted yet — skipping scheduling")
                 return
             }
             center.getPendingNotificationRequests { (notes) in
                 print("pending notes: ")
                 print(notes.count)
-                
-                center.removeAllPendingNotificationRequests()
-                
+
+                // Only clear our own prayer-time notifications here, not every pending
+                // request — a blanket removeAllPendingNotificationRequests() would also
+                // wipe out unrelated scheduled notifications (e.g. the "explore settings"
+                // nudge) every time prayer times regenerate, which happens often.
+                let prayerNoteIDs = notes
+                    .map { $0.identifier }
+                    .filter { $0.hasPrefix("standard_note_") || $0.hasPrefix("pre_note_") }
+                center.removePendingNotificationRequests(withIdentifiers: prayerNoteIDs)
+
                 // only remove delivered if we open the main app
                 if let bundleID = Bundle.main.bundleIdentifier, bundleID == "com.omaralejel.Athan-Utility" {
                     center.removeAllDeliveredNotifications()
@@ -100,6 +120,15 @@ class NotificationsManager {
                     for p in Prayer.allCases {
                         let setting = noteSettings.settings[p]!
                         let prayerDate = times.time(for: p)
+
+                        // Today's already-passed prayers must not be scheduled. A
+                        // UNCalendarNotificationTrigger whose date is in the past fires
+                        // IMMEDIATELY, so rescheduling — which happens on every settings
+                        // change, including toggling a single bell — delivered an athan
+                        // for a prayer that was hours ago. Skips the pre-prayer reminder
+                        // below too, since that fires even earlier.
+                        guard prayerDate > Date() else { continue }
+
                         let dateString = df.string(from: prayerDate)
                         
                         // The object that stores text and sound for a note

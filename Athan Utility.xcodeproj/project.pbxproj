@@ -1649,7 +1649,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1669,7 +1669,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1710,7 +1710,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1724,7 +1724,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1747,7 +1747,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1759,7 +1759,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1785,7 +1785,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				INFOPLIST_FILE = "Athan Utility/Info.plist";
@@ -1797,7 +1797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility";
 				PRODUCT_NAME = "Athan Utility";
 				PROVISIONING_PROFILE = "";
@@ -1826,7 +1826,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1838,7 +1838,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
@@ -1867,7 +1867,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Athan Widget/Info.plist";
@@ -1879,7 +1879,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1903,14 +1903,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Athan Stickers/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athan Stickers";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Stickers";
@@ -1934,14 +1934,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Athan Stickers/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Athan Stickers";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.Athan-Stickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1964,7 +1964,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -1975,7 +1975,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
@@ -2000,7 +2000,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AthanSiriIntents/Info.plist;
@@ -2011,7 +2011,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.AthanSiriIntents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2101,7 +2101,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2113,7 +2113,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
@@ -2146,7 +2146,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "\"Athan Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				ENABLE_PREVIEWS = YES;
@@ -2158,7 +2158,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2177,7 +2177,7 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AthanMenuBarHelper/Info.plist;
@@ -2189,7 +2189,7 @@
 				);
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.MenuBarHelper";
 				PRODUCT_NAME = AthanMenuBarHelper;
 				SDKROOT = macosx;
@@ -2206,7 +2206,7 @@
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = DL7989H5XT;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = AthanMenuBarHelper/Info.plist;
@@ -2218,7 +2218,7 @@
 				);
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 8.0.0;
+				MARKETING_VERSION = 8.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.omaralejel.Athan-Utility.MenuBarHelper";
 				PRODUCT_NAME = AthanMenuBarHelper;
 				SDKROOT = macosx;

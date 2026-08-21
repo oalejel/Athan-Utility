@@ -45,6 +45,10 @@ class ObservableAthanManager: ObservableObject {
     @Published var qiblaHeading: Double = 0.0
     @Published var currentHeading: Double = 0.0
     @Published var locationPermissionsGranted = false
+    /// Mirrors `LocationSettings.shared.useCurrentLocation`. Views used to read that
+    /// static directly inside their body, which SwiftUI cannot track — so the location
+    /// pin kept its old state until some unrelated change forced a redraw.
+    @Published var usingCurrentLocation = false
     @Published var appearance: AppearanceSettings = AppearanceSettings.defaultSetting()
 
     /// Set when the app has *automatically* updated the calculation method for the user's
@@ -189,6 +193,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         LocationSettings.archive()
         
         ObservableAthanManager.shared.locationName = self.locationSettings.locationName
+        ObservableAthanManager.shared.usingCurrentLocation = self.locationSettings.useCurrentLocation
         ObservableAthanManager.shared.qiblaHeading = Qibla(coordinates:
                                                             Coordinates(latitude: self.locationSettings.locationCoordinate.latitude,
                                                                         longitude: self.locationSettings.locationCoordinate.longitude)).direction
@@ -310,7 +315,14 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
         locationSettingsDidSetHelper()
         
         refreshTimes()
-        
+
+        // Seed the permission flag from the status we ALREADY have, rather than
+        // waiting on a delegate callback that may never arrive for a user who
+        // granted access on some earlier launch. Runs after the settings helpers
+        // above so `locationSettings.useCurrentLocation` is loaded by the time
+        // this decides whether to kick off a location fetch.
+        applyLocationAuthorization(locationManager.authorizationStatus)
+
         // if non-iOS devices, force a refresh since enteredForeground will not be called
 //        if let bundleID = Bundle.main.bundleIdentifier, bundleID != "com.omaralejel.Athan-Utility" {
 //            reloadSettingsAndNotifications()
@@ -782,9 +794,16 @@ extension AthanManager {
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.authorizedWhenInUse ||
-            status == CLAuthorizationStatus.authorizedAlways {
+    /// Single place that turns an authorization status into our own flag, so the
+    /// deprecated and the modern delegate callbacks can't drift apart.
+    ///
+    /// Also called directly at startup: the flag used to be written ONLY from a
+    /// delegate callback, so until one arrived it read `false` even for someone
+    /// who granted permission long ago. That made the location pin render crossed
+    /// out, and — because the manual-entry branch used to sit behind this flag —
+    /// sent "Set Location Manually" to iOS Settings instead of the text field.
+    func applyLocationAuthorization(_ status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
             #warning("not sure if we should have this automatically called. may want a semaphore")
             locationPermissionsGranted = true
             if locationSettings.useCurrentLocation {
@@ -793,6 +812,18 @@ extension AthanManager {
         } else {
             locationPermissionsGranted = false
         }
+    }
+
+    // iOS 14 replaced `didChangeAuthorization` with this. The old one is still
+    // delivered only while the new one is absent, so implement the modern one and
+    // keep the deprecated shim below pointing at the same handler for older OSes.
+    @available(iOS 14.0, watchOS 7.0, *)
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        applyLocationAuthorization(manager.authorizationStatus)
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        applyLocationAuthorization(status)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {

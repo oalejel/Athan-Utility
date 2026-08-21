@@ -733,7 +733,7 @@ struct MainSwiftUI: View {
                                                 }
                                             }) {
                                                 HStack(spacing: 1) {
-                                                    Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation ? "location.fill" : "location.slash")
+                                                    Image(systemName: manager.locationPermissionsGranted && manager.usingCurrentLocation ? "location.fill" : "location.slash")
                                                         .foregroundColor(Color(.lightText))
                                                         .font(Font.body)
                                                     

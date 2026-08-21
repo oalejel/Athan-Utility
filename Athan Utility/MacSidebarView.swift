@@ -102,7 +102,7 @@ struct MacSidebarView: View {
             withAnimation(.easeInOut(duration: 0.18)) { showLocationEditor.toggle() }
         } label: {
             HStack(spacing: 7) {
-                Image(systemName: manager.locationPermissionsGranted && LocationSettings.shared.useCurrentLocation
+                Image(systemName: manager.locationPermissionsGranted && manager.usingCurrentLocation
                       ? "location.fill" : "location.slash")
                     .font(.system(size: fs(12))).foregroundColor(.white.opacity(0.85))
                 Text(manager.locationName.isEmpty ? "—" : manager.locationName)

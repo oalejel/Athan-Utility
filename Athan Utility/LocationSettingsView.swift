@@ -258,46 +258,53 @@ struct LocationSettingsView: View, Equatable {
                     Spacer()
                     
                     Button(action: { // gps locate button
+                        // Switching to manual entry needs no location permission — it just
+                        // reveals a text field. This has to sit AHEAD of the permission gate:
+                        // nested inside it, a user whose permission reads as not-granted taps
+                        // the white "Set Location Manually" button and gets sent to iOS
+                        // Settings instead of the field they asked for.
+                        if usingCurrentLocation {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            // if in tracking state, switch to custom state
+                            #warning("maybe leave all state change savig to later")
+                            withAnimation {
+                                usingCurrentLocation = false
+                            }
+                            return
+                        }
+
                         if locationPermissionGranted {
                             // set map to current location
                             let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                             lightImpactFeedbackGenerator.impactOccurred()
-                            
-                            if usingCurrentLocation {
-                                // if in tracking state, switch to custom state
-                                #warning("maybe leave all state change savig to later")
-                                withAnimation {
-                                    usingCurrentLocation = false
+
+                            timer?.invalidate() // prevent a timer that is still trying to calculate a location from proceeding
+                            awaitingLocationUpdate = true
+                            // at this point, we already know whether location permissions were granted
+                            // just ask athanmanager to ask for a location update and capture it
+                            AthanManager.shared.attemptSingleLocationUpdate { capturedLocationSettings in
+                                print("CALLBACK")
+                                let settings = capturedLocationSettings ?? AthanManager.shared.locationSettings.copy() as! LocationSettings
+                                textFieldText = settings.locationName
+                                boundCoordinate = settings.locationCoordinate // change map location
+                                unboundCoordinate = settings.locationCoordinate // change stored location
+                                timeZone = settings.timeZone
+                                // Adopt the new country too. Without this the code stayed on
+                                // whatever the user had typed before, so switching from a
+                                // manual Karachi back to Current Location in New York saved
+                                // countryCode "PK" and left the method on Karachi instead of
+                                // moving to ISNA.
+                                if let cc = settings.countryCode, !cc.isEmpty {
+                                    detectedCountryCode = cc
+                                } else {
+                                    detectedCountryCode = nil
+                                    lookUpCountryCode(for: settings.locationCoordinate)
                                 }
-                            } else {
-                                timer?.invalidate() // prevent a timer that is still trying to calculate a location from proceeding
-                                awaitingLocationUpdate = true
-                                // at this point, we already know whether location permissions were granted
-                                // just ask athanmanager to ask for a location update and capture it
-                                AthanManager.shared.attemptSingleLocationUpdate { capturedLocationSettings in
-                                    print("CALLBACK")
-                                    let settings = capturedLocationSettings ?? AthanManager.shared.locationSettings.copy() as! LocationSettings
-                                    textFieldText = settings.locationName
-                                    boundCoordinate = settings.locationCoordinate // change map location
-                                    unboundCoordinate = settings.locationCoordinate // change stored location
-                                    timeZone = settings.timeZone
-                                    // Adopt the new country too. Without this the code stayed on
-                                    // whatever the user had typed before, so switching from a
-                                    // manual Karachi back to Current Location in New York saved
-                                    // countryCode "PK" and left the method on Karachi instead of
-                                    // moving to ISNA.
-                                    if let cc = settings.countryCode, !cc.isEmpty {
-                                        detectedCountryCode = cc
-                                    } else {
-                                        detectedCountryCode = nil
-                                        lookUpCountryCode(for: settings.locationCoordinate)
-                                    }
-                                    updateLocalizedPrayer(coord: unboundCoordinate)
-                                    
-                                    awaitingLocationUpdate = false
-                                    withAnimation {
-                                        usingCurrentLocation = true
-                                    }
+                                updateLocalizedPrayer(coord: unboundCoordinate)
+                                
+                                awaitingLocationUpdate = false
+                                withAnimation {
+                                    usingCurrentLocation = true
                                 }
                             }
                         } else if AthanManager.shared.locationManager.authorizationStatus == .notDetermined {

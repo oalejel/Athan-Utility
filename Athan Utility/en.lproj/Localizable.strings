@@ -388,3 +388,8 @@
 
 "explore.settings.nudge.title" = "There'\''s More to Discover";
 "explore.settings.nudge.body" = "Custom sounds, calendar export, Qibla, and more are waiting in Settings.";
+
+"siri_sheet_body_modern" = "No setup needed — just say one of these to Siri.";
+"siri_phrase_modern_1" = "“Next prayer in Athan Utility”";
+"siri_phrase_modern_2" = "“What time is Maghrib in Athan Utility”";
+"siri_phrase_modern_3" = "“Athan Utility next prayer time”";

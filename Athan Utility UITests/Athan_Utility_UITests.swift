@@ -122,4 +122,39 @@ class Athan_Utility_UITests: XCTestCase {
             snapshot("06Widgets")
         }
     }
+
+    /// Verifies the fix for the "Ask Siri" sheet suggesting unmatchable phrases: opens
+    /// Settings, taps the Siri feature card, and screenshots the resulting sheet so the
+    /// corrected phrase list (matching AthanAppShortcuts.appShortcuts verbatim) is visible.
+    func testSiriShortcutSheet() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments += ["-UITEST_DEMO"]
+        setupSnapshot(app)
+        app.launch()
+
+        let settings = app.buttons["settingsButton"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 15), "Main screen did not appear")
+        settings.tap()
+
+        let siriCard = app.buttons["feature_siri"]
+        XCTAssertTrue(siriCard.waitForExistence(timeout: 5), "Siri feature card not found in Settings grid")
+        siriCard.tap()
+
+        // Locale-independent: the simulator's app-level language (set separately from the
+        // OS language by the app's own "Change Language" picker, and can be left in a
+        // non-English state by earlier localized-screenshot runs) doesn't affect this —
+        // text-matching on "Done" broke here for exactly that reason on the first attempt.
+        let sheetDone = app.buttons["siriSheetDoneButton"]
+        XCTAssertTrue(sheetDone.waitForExistence(timeout: 5), "Siri shortcut sheet did not appear")
+
+        // fastlane's snapshot() helper only captures when run through the actual `fastlane
+        // snapshot` tool (it checks for SIMULATOR_DEVICE_NAME/a screenshots-dir env var and
+        // silently no-ops otherwise) — worthless when verifying ad hoc via plain
+        // `xcodebuild test`. A raw XCTAttachment always works, in any run context.
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "siri_shortcut_sheet"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
 }

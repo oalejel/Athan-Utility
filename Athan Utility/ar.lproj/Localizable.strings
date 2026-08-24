@@ -373,3 +373,8 @@
 
 "explore.settings.nudge.title" = "هناك المزيد لاكتشافه";
 "explore.settings.nudge.body" = "أصوات مخصّصة، تصدير التقويم، القبلة، والمزيد بانتظارك في الإعدادات.";
+
+"siri_sheet_body_modern" = "لا حاجة لأي إعداد — فقط قل أحد هذه العبارات لسيري.";
+"siri_phrase_modern_1" = "”الصلاة التالية في Athan Utility“";
+"siri_phrase_modern_2" = "”ما هو وقت المغرب في Athan Utility“";
+"siri_phrase_modern_3" = "”Athan Utility وقت الصلاة التالية“";

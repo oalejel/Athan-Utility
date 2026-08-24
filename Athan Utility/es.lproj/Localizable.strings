@@ -360,3 +360,8 @@
 
 "explore.settings.nudge.title" = "Hay más por descubrir";
 "explore.settings.nudge.body" = "Sonidos personalizados, exportación de calendario, Qibla y más te esperan en Ajustes.";
+
+"siri_sheet_body_modern" = "No requiere configuración — solo dile una de estas frases a Siri.";
+"siri_phrase_modern_1" = "“Próxima oración en Athan Utility”";
+"siri_phrase_modern_2" = "“A qué hora es Maghrib en Athan Utility”";
+"siri_phrase_modern_3" = "“Athan Utility próxima hora de oración”";

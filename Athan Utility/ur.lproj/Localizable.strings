@@ -370,3 +370,8 @@
 
 "explore.settings.nudge.title" = "دریافت کرنے کے لیے مزید بہت کچھ ہے";
 "explore.settings.nudge.body" = "حسب ضرورت آوازیں، کیلنڈر ایکسپورٹ، قبلہ اور مزید سیٹنگز میں آپ کا انتظار کر رہے ہیں۔";
+
+"siri_sheet_body_modern" = "کسی سیٹ اپ کی ضرورت نہیں — بس ان میں سے کوئی ایک سیری سے کہیں۔";
+"siri_phrase_modern_1" = "”Athan Utility میں اگلی نماز“";
+"siri_phrase_modern_2" = "”Athan Utility میں مغرب کا وقت کیا ہے“";
+"siri_phrase_modern_3" = "”Athan Utility اگلی نماز کا وقت“";

@@ -358,3 +358,8 @@
 
 "explore.settings.nudge.title" = "Keşfedilecek Daha Çok Şey Var";
 "explore.settings.nudge.body" = "Özel sesler, takvim dışa aktarma, Kıble ve daha fazlası Ayarlar'da sizi bekliyor.";
+
+"siri_sheet_body_modern" = "Kurulum gerekmez — Siri'ye şunlardan birini söylemeniz yeterli.";
+"siri_phrase_modern_1" = "“Athan Utility'de sıradaki namaz”";
+"siri_phrase_modern_2" = "“Athan Utility'de Akşam vakti ne zaman”";
+"siri_phrase_modern_3" = "“Athan Utility sıradaki namaz vakti”";

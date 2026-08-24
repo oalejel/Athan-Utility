@@ -160,6 +160,7 @@ struct SettingsFeatureGrid: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
+        .accessibilityIdentifier("feature_\(f.rawValue)")
     }
 
     private func pill(_ f: AdoptedFeature) -> some View {
@@ -180,6 +181,7 @@ struct SettingsFeatureGrid: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
+        .accessibilityIdentifier("feature_\(f.rawValue)")
     }
 
     private func activate(_ f: AdoptedFeature) {
@@ -457,7 +459,8 @@ struct SiriShortcutSheet: View {
             .navigationBarTitle(NSLocalizedString("siri_sheet_nav", value: "Siri Shortcut", comment: ""), displayMode: .inline)
             .navigationBarItems(trailing: Button(NSLocalizedString("done", value: "Done", comment: "")) {
                 presentationMode.wrappedValue.dismiss()
-            })
+            }
+            .accessibilityIdentifier("siriSheetDoneButton"))
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

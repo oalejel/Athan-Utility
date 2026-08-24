@@ -363,3 +363,8 @@
 
 "explore.settings.nudge.title" = "还有更多功能等你发现";
 "explore.settings.nudge.body" = "自定义提醒音、日历导出、朝向指南针等功能都在设置中等你探索。";
+
+"siri_sheet_body_modern" = "无需设置 — 只需对 Siri 说出以下任意一句。";
+"siri_phrase_modern_1" = "“Athan Utility 中的下一个礼拜”";
+"siri_phrase_modern_2" = "“Athan Utility 中的昏礼是几点”";
+"siri_phrase_modern_3" = "“Athan Utility 下一个礼拜时间”";

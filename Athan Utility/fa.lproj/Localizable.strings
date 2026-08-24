@@ -335,3 +335,8 @@
 
 "explore.settings.nudge.title" = "چیزهای بیشتری برای کشف وجود دارد";
 "explore.settings.nudge.body" = "صداهای سفارشی، خروجی تقویم، قبله و موارد دیگر در تنظیمات منتظر شما هستند.";
+
+"siri_sheet_body_modern" = "نیازی به تنظیم نیست — فقط یکی از این‌ها را به سیری بگویید.";
+"siri_phrase_modern_1" = "«نماز بعدی در Athan Utility»";
+"siri_phrase_modern_2" = "«ساعت مغرب در Athan Utility چند است»";
+"siri_phrase_modern_3" = "«Athan Utility زمان نماز بعدی»";

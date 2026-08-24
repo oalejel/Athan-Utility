@@ -335,3 +335,8 @@
 
 "explore.settings.nudge.title" = "আরও অনেক কিছু আবিষ্কার করার আছে";
 "explore.settings.nudge.body" = "কাস্টম সাউন্ড, ক্যালেন্ডার এক্সপোর্ট, কিবলা এবং আরও অনেক কিছু সেটিংসে অপেক্ষা করছে।";
+
+"siri_sheet_body_modern" = "কোনো সেটআপের প্রয়োজন নেই — শুধু এর যেকোনো একটি Siri-কে বলুন।";
+"siri_phrase_modern_1" = "“Athan Utility-তে পরবর্তী নামাজ”";
+"siri_phrase_modern_2" = "“Athan Utility-তে মাগরিবের সময় কত”";
+"siri_phrase_modern_3" = "“Athan Utility পরবর্তী নামাজের সময়”";

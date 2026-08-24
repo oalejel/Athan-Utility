@@ -355,3 +355,6 @@
 "day_next" = "Sonraki gün";
 "menubar_enable_button" = "Menü Çubuğunda Etkinleştir";
 "menubar_enable_subtitle" = "Athan Utility'yi menü çubuğunuza yeniden eklemek için Athan Utility'yi macOS ayarlarınızdan etkinleştirin.";
+
+"explore.settings.nudge.title" = "Keşfedilecek Daha Çok Şey Var";
+"explore.settings.nudge.body" = "Özel sesler, takvim dışa aktarma, Kıble ve daha fazlası Ayarlar'da sizi bekliyor.";

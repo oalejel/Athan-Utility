@@ -333,3 +333,6 @@
 "day_next" = "Hari seterusnya";
 "menubar_enable_button" = "Dayakan dalam Bar Menu";
 "menubar_enable_subtitle" = "Untuk menambahkan Athan Utility semula ke bar menu anda, dayakan Athan Utility dalam tetapan macOS anda.";
+
+"explore.settings.nudge.title" = "Lebih Banyak untuk Diterokai";
+"explore.settings.nudge.body" = "Bunyi tersuai, eksport kalendar, Kiblat, dan banyak lagi menanti di Tetapan.";

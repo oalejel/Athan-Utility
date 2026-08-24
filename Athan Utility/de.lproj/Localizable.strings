@@ -335,3 +335,6 @@
 "day_next" = "Nächster Tag";
 "menubar_enable_button" = "In der Menüleiste aktivieren";
 "menubar_enable_subtitle" = "Um Athan Utility wieder zu deiner Menüleiste hinzuzufügen, aktiviere Athan Utility in den Systemeinstellungen.";
+
+"explore.settings.nudge.title" = "Es gibt noch mehr zu entdecken";
+"explore.settings.nudge.body" = "Eigene Klänge, Kalenderexport, Qibla und mehr warten in den Einstellungen.";

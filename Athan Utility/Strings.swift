@@ -169,4 +169,8 @@ class Strings {
     // MARK: - New-features announcement (one-time local notification for existing users)
     static var newFeaturesAnnouncementTitle = NSLocalizedString("new.features.announcement.title", value: "What's New", comment: "Title of the one-time local notification telling existing users about recent updates")
     static var newFeaturesAnnouncementBody = NSLocalizedString("new.features.announcement.body", value: "Check out Athan Utility's latest new features.", comment: "Body of the one-time local notification telling existing users about recent updates")
+
+    // MARK: - Explore Settings nudge (one-time local notification for users who never opened a Settings feature)
+    static var exploreSettingsNudgeTitle = NSLocalizedString("explore.settings.nudge.title", value: "There's More to Discover", comment: "Title of the one-time local notification nudging a user who hasn't explored any Settings feature")
+    static var exploreSettingsNudgeBody = NSLocalizedString("explore.settings.nudge.body", value: "Custom sounds, calendar export, Qibla, and more are waiting in Settings.", comment: "Body of the one-time local notification nudging a user who hasn't explored any Settings feature")
 }

@@ -385,3 +385,6 @@
 "menubar_enable_button" = "Enable in Menu Bar";
 "menubar_enable_subtitle" = "To add Athan Utility back to your menu bar, enable Athan Utility in your macOS settings.";
 "open_location_settings" = "Open location settings";
+
+"explore.settings.nudge.title" = "There'\''s More to Discover";
+"explore.settings.nudge.body" = "Custom sounds, calendar export, Qibla, and more are waiting in Settings.";

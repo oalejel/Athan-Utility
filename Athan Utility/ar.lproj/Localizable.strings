@@ -370,3 +370,6 @@
 "day_next" = "اليوم التالي";
 "menubar_enable_button" = "التفعيل في شريط القوائم";
 "menubar_enable_subtitle" = "لإعادة إضافة Athan Utility إلى شريط القوائم، فعّل Athan Utility من إعدادات macOS.";
+
+"explore.settings.nudge.title" = "هناك المزيد لاكتشافه";
+"explore.settings.nudge.body" = "أصوات مخصّصة، تصدير التقويم، القبلة، والمزيد بانتظارك في الإعدادات.";

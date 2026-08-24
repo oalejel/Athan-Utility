@@ -332,3 +332,6 @@
 "day_next" = "পরবর্তী দিন";
 "menubar_enable_button" = "মেনু বারে চালু করুন";
 "menubar_enable_subtitle" = "Athan Utility-কে আবার আপনার মেনু বারে যোগ করতে, আপনার macOS সেটিংসে গিয়ে Athan Utility চালু করুন।";
+
+"explore.settings.nudge.title" = "আরও অনেক কিছু আবিষ্কার করার আছে";
+"explore.settings.nudge.body" = "কাস্টম সাউন্ড, ক্যালেন্ডার এক্সপোর্ট, কিবলা এবং আরও অনেক কিছু সেটিংসে অপেক্ষা করছে।";

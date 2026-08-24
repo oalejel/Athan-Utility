@@ -358,3 +358,6 @@
 "day_next" = "Jour suivant";
 "menubar_enable_button" = "Activer dans la barre des menus";
 "menubar_enable_subtitle" = "Pour ajouter à nouveau Athan Utility à votre barre des menus, activez Athan Utility dans les Réglages macOS.";
+
+"explore.settings.nudge.title" = "Il y a encore plus à découvrir";
+"explore.settings.nudge.body" = "Sons personnalisés, export de calendrier, Qibla et bien plus vous attendent dans les Réglages.";

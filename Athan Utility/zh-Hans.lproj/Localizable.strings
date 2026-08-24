@@ -360,3 +360,6 @@
 "day_next" = "下一天";
 "menubar_enable_button" = "在菜单栏中启用";
 "menubar_enable_subtitle" = "要将 Athan Utility 重新添加到你的菜单栏，请在 macOS 设置中启用 Athan Utility。";
+
+"explore.settings.nudge.title" = "还有更多功能等你发现";
+"explore.settings.nudge.body" = "自定义提醒音、日历导出、朝向指南针等功能都在设置中等你探索。";

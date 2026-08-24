@@ -332,3 +332,6 @@
 "day_next" = "روز بعد";
 "menubar_enable_button" = "فعال‌سازی در نوار منو";
 "menubar_enable_subtitle" = "برای افزودن دوباره Athan Utility به نوار منو، آن را در تنظیمات macOS فعال کنید.";
+
+"explore.settings.nudge.title" = "چیزهای بیشتری برای کشف وجود دارد";
+"explore.settings.nudge.body" = "صداهای سفارشی، خروجی تقویم، قبله و موارد دیگر در تنظیمات منتظر شما هستند.";

@@ -332,3 +332,6 @@
 "day_next" = "Hari berikutnya";
 "menubar_enable_button" = "Aktifkan di Menu Bar";
 "menubar_enable_subtitle" = "Untuk menambahkan Athan Utility kembali ke menu bar Anda, aktifkan Athan Utility di Pengaturan macOS Anda.";
+
+"explore.settings.nudge.title" = "Masih Banyak yang Bisa Dijelajahi";
+"explore.settings.nudge.body" = "Suara khusus, ekspor kalender, Kiblat, dan lainnya menanti di Pengaturan.";

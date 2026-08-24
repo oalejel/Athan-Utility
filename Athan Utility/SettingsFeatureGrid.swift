@@ -388,12 +388,36 @@ struct WidgetHowToView: View {
 }
 
 // MARK: - Siri shortcut sheet
-
+//
+// The example phrases here MUST be phrases Siri actually recognizes, not just plausible-
+// sounding ones — telling a user to say something Siri can't match sends them straight into
+// a broken experience. On iOS 16+, `AthanAppShortcuts` (AthanAppIntents.swift) auto-registers
+// a fixed set of phrases with no setup needed — but Apple REQUIRES every one of those phrases
+// to include the app's name (the `\(.applicationName)` token is mandatory for
+// AppShortcutsProvider, not a style choice). A bare phrase like "next prayer time" matches
+// none of them; when a user says one anyway, Siri falls back to a best-guess suggestion and
+// simply reads back the closest shortcut's UI title instead of answering — which is exactly
+// where the literal, un-fixed-up string "Ask for the next prayer time" (the legacy custom
+// SiriKit intent's INIntentParameterCombinationTitle) was surfacing as a spoken "answer."
+//
+// Below iOS 16, AppIntents doesn't exist at all, so the legacy custom-intent path (with its
+// own manually-recorded phrase, via "Add to Siri") is the only thing that can work — kept for
+// that tier only, since a manually recorded phrase there isn't constrained to include the
+// app name the way an AppShortcut phrase is.
 @available(iOS 14.0, *)
 struct SiriShortcutSheet: View {
     @Environment(\.presentationMode) private var presentationMode
 
-    private let phrases = [
+    // Must exactly match phrases registered in AthanAppShortcuts.appShortcuts.
+    private let modernPhrases = [
+        NSLocalizedString("siri_phrase_modern_1", value: "“Next prayer in Athan Utility”", comment: ""),
+        NSLocalizedString("siri_phrase_modern_2", value: "“What time is Maghrib in Athan Utility”", comment: ""),
+        NSLocalizedString("siri_phrase_modern_3", value: "“Athan Utility next prayer time”", comment: "")
+    ]
+
+    // Example only — the legacy flow lets the user record ANY phrase of their choosing via
+    // the button below, so these don't need to include the app name the way modernPhrases do.
+    private let legacyPhrases = [
         NSLocalizedString("siri_phrase_1", value: "“Next prayer time”", comment: ""),
         NSLocalizedString("siri_phrase_2", value: "“When is Maghrib?”", comment: ""),
         NSLocalizedString("siri_phrase_3", value: "“Athan times today”", comment: "")
@@ -409,26 +433,22 @@ struct SiriShortcutSheet: View {
                         .padding(.top, 10)
                     Text(NSLocalizedString("siri_sheet_title", value: "Ask Siri for prayer times", comment: ""))
                         .font(.title2.weight(.bold)).multilineTextAlignment(.center)
-                    Text(NSLocalizedString("siri_sheet_body", value: "Add a shortcut, then just ask Siri hands-free.", comment: ""))
-                        .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
 
-                    IntentIntegratedController()
-                        .frame(height: 60)
-                        .padding(.horizontal)
+                    if #available(iOS 16.0, *) {
+                        Text(NSLocalizedString("siri_sheet_body_modern", value: "No setup needed — just say one of these to Siri.", comment: ""))
+                            .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
 
-                    VStack(alignment: .leading, spacing: 16) {
-                        ForEach(phrases, id: \.self) { p in
-                            HStack(spacing: 10) {
-                                Image(systemName: "quote.bubble.fill").foregroundColor(.purple.opacity(0.7))
-                                Text(p).font(.callout)
-                                Spacer()
-                            }
-                            .padding(.vertical, 2)
-                        }
+                        phraseList(modernPhrases)
+                    } else {
+                        Text(NSLocalizedString("siri_sheet_body", value: "Add a shortcut, then just ask Siri hands-free.", comment: ""))
+                            .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
+
+                        IntentIntegratedController()
+                            .frame(height: 60)
+                            .padding(.horizontal)
+
+                        phraseList(legacyPhrases)
                     }
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemBackground)))
-                    .padding(.horizontal)
 
                     Spacer(minLength: 10)
                 }
@@ -440,5 +460,21 @@ struct SiriShortcutSheet: View {
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    private func phraseList(_ phrases: [String]) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            ForEach(phrases, id: \.self) { p in
+                HStack(spacing: 10) {
+                    Image(systemName: "quote.bubble.fill").foregroundColor(.purple.opacity(0.7))
+                    Text(p).font(.callout)
+                    Spacer()
+                }
+                .padding(.vertical, 2)
+            }
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemBackground)))
+        .padding(.horizontal)
     }
 }

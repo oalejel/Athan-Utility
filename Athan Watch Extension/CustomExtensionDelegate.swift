@@ -9,12 +9,25 @@
 import WatchKit
 import ClockKit
 import Adhan
+import WatchConnectivity
 
 class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
 
     func applicationDidFinishLaunching() {
         // Keep complications fresh even when the app isn't opened.
         scheduleNextBackgroundRefresh()
+        recoverLocationIfMissing()
+    }
+
+    /// A watch with no saved location can't build a complication timeline, so the
+    /// complication shows placeholder dashes. Ask the phone for the location on every
+    /// launch and background wake — including the ones ClockKit itself triggers — so
+    /// that state repairs itself without the user having to open the watch app.
+    private func recoverLocationIfMissing() {
+        guard AthanManager.shared.locationSettings.locationName
+                == LocationSettings.defaultSetting().locationName else { return }
+        guard WCSession.default.activationState == .activated else { return }
+        WatchSessionDelegate.shared.requestUpdateFromPhone()
     }
 
     func handle(_ userActivity: NSUserActivity) {
@@ -39,6 +52,7 @@ class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
         for task in backgroundTasks {
             if let refreshTask = task as? WKApplicationRefreshBackgroundTask {
                 AthanManager.shared.refreshTimes()
+                recoverLocationIfMissing()
                 reloadComplications()
                 scheduleNextBackgroundRefresh()
                 refreshTask.setTaskCompletedWithSnapshot(false)

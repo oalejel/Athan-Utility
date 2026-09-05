@@ -9,6 +9,7 @@
 import ClockKit
 import SwiftUI
 import Adhan
+import WatchConnectivity
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
@@ -37,7 +38,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
         manager.refreshTimes()
-        if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
+        if !hasLocation {
+            requestLocationRecovery()
             handler(nil) // havent sent location
         } else {
             // Reach several days out, not tomorrow's Maghrib. When the timeline runs dry
@@ -60,7 +62,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         manager.refreshTimes()
-        if manager.locationSettings.locationName == LocationSettings.defaultSetting().locationName {
+        if !hasLocation {
+            requestLocationRecovery()
             handler(nil) // case if we have not set our locdeation
         } else if let template = getComplicationTemplate(for: complication, using: Date()) {
             print(">>> COMPLICATION MANAGER USING LOCATION (creating current entry): \(manager.locationSettings.locationName)")
@@ -115,7 +118,24 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     // MARK: - Helpers
-    
+
+    private var hasLocation: Bool {
+        manager.locationSettings.locationName != LocationSettings.defaultSetting().locationName
+    }
+
+    /// Ask the phone for the location again when we don't have one.
+    ///
+    /// Without this the no-location state is permanent from the complication's point of
+    /// view: the data source answers nil, ClockKit stops asking, and the complication sits
+    /// on placeholder dashes forever with nothing left to trigger a recovery. Requesting
+    /// here means every attempt ClockKit makes to build a timeline is also an attempt to
+    /// get the location back; once it arrives, `locationSettings`' didSet reloads the
+    /// timeline and the complication fills back in on its own.
+    private func requestLocationRecovery() {
+        guard WCSession.default.activationState == .activated else { return }
+        WatchSessionDelegate.shared.requestUpdateFromPhone()
+    }
+
     /// Prayer times strictly after `date`, covering `days` days forward.
     private func futurePrayerTimes(after date: Date, days: Int) -> [Date] {
         let calendar = Calendar.current
@@ -153,6 +173,10 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
 
     func getComplicationTemplate(for complication: CLKComplication, using date: Date) -> CLKComplicationTemplate? {
+        getComplicationTemplate(for: complication.family, using: date)
+    }
+
+    func getComplicationTemplate(for family: CLKComplicationFamily, using date: Date) -> CLKComplicationTemplate? {
         // check if queried date takes place after a time we have stored
         
         //        // to account for high precision similarity in dates, move date forward by 1 second
@@ -172,8 +196,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         let currentPrayerDate = sortedStoredTimes[firstGreaterTimeIndex - 1]
         let nextPrayerDate = sortedStoredTimes[firstGreaterTimeIndex]
         let nextPrayer = Prayer.allCases[firstGreaterTimeIndex % 6] // 6 per day, so % 6 maps back onto the cases
-        
-        switch complication.family {
+
+        switch family {
         case .graphicCircular:
             let timeProv = CLKTimeTextProvider(date: nextPrayerDate)
             let colors = watchColorsForPrayer(nextPrayer).map { UIColor($0) }

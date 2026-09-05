@@ -372,12 +372,19 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             yesterdayTimes = yesterday
         } else {
             print("DANGER: unable to calculate times. TODO: handle this accordingly for places on the north pole.")
-            // default back to settings defaults
-            locationSettings = LocationSettings.defaultSetting()
-            let dtz = locationSettings.timeZone
-            todayTimes = calculateTimes(referenceDate: Date(), customTimeZone: dtz, adjustments: adj) // guaranteed fallback
-            tomorrowTimes = calculateTimes(referenceDate: adjacentDayReference(days: 1, timeZone: dtz), customTimeZone: dtz, adjustments: adj)
-            yesterdayTimes = calculateTimes(referenceDate: adjacentDayReference(days: -1, timeZone: dtz), customTimeZone: dtz, adjustments: adj)
+            // Fall back to the default COORDINATES for this one calculation only.
+            // This used to assign `locationSettings = LocationSettings.defaultSetting()`,
+            // whose didSet archives to the shared app group — so a single failed
+            // calculation permanently destroyed the user's saved location, blanking
+            // its name. On the watch that is unrecoverable: the complication data
+            // source refuses to build a timeline without a location name, so the
+            // complication falls back to placeholder dashes and never comes back.
+            let fallback = LocationSettings.defaultSetting()
+            let dtz = fallback.timeZone
+            let coord = fallback.locationCoordinate
+            todayTimes = calculateTimes(referenceDate: Date(), customCoordinate: coord, customTimeZone: dtz, adjustments: adj) // guaranteed fallback
+            tomorrowTimes = calculateTimes(referenceDate: adjacentDayReference(days: 1, timeZone: dtz), customCoordinate: coord, customTimeZone: dtz, adjustments: adj)
+            yesterdayTimes = calculateTimes(referenceDate: adjacentDayReference(days: -1, timeZone: dtz), customCoordinate: coord, customTimeZone: dtz, adjustments: adj)
         } // should never fail on cupertino time.
         // add 24 hours for next day
         currentPrayer = todayTimes.currentPrayer(at: athanNow()) ?? yesterdayTimes.currentPrayer(at: athanNow()) ?? .isha

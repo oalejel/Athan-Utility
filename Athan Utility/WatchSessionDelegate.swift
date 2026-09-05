@@ -74,8 +74,10 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
         print("watch received complication update \(userInfo)")
         
+        // `lon` used to read userInfo["latitude"] too, so every complication push from
+        // the phone stored a coordinate with the latitude duplicated into the longitude.
         if let locName = userInfo["locname"] as? String, let lat = userInfo["latitude"] as? Double,
-           let lon = userInfo["latitude"] as? Double, let currentloc = userInfo["currentloc"] as? Bool,
+           let lon = userInfo["longitude"] as? Double, let currentloc = userInfo["currentloc"] as? Bool,
            let timezoneid = userInfo["timezoneid"] as? String {
             
 //            DispatchQueue.main.async {

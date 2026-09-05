@@ -19,10 +19,11 @@ class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
         recoverLocationIfMissing()
     }
 
-    /// A watch with no saved location can't build a complication timeline, so the
-    /// complication shows placeholder dashes. Ask the phone for the location on every
-    /// launch and background wake — including the ones ClockKit itself triggers — so
-    /// that state repairs itself without the user having to open the watch app.
+    /// The complication no longer depends on having a saved location — it always builds
+    /// a timeline, falling back to default coordinates — but a watch running on those
+    /// defaults is showing times for the wrong city. Ask the phone for the real location
+    /// on every launch and background wake so that state repairs itself without the user
+    /// having to open the watch app.
     private func recoverLocationIfMissing() {
         guard AthanManager.shared.locationSettings.locationName
                 == LocationSettings.defaultSetting().locationName else { return }

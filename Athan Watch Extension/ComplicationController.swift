@@ -9,7 +9,6 @@
 import ClockKit
 import SwiftUI
 import Adhan
-import WatchConnectivity
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
     
@@ -38,19 +37,22 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
         // Call the handler with the last entry date you can currently provide or nil if you can't support future timelines
         manager.refreshTimes()
-        if !hasLocation {
-            requestLocationRecovery()
-            handler(nil) // havent sent location
-        } else {
-            // Reach several days out, not tomorrow's Maghrib. When the timeline runs dry
-            // ClockKit keeps showing the LAST entry it was given, so a watch that misses
-            // its background refreshes sits on a stale prayer indefinitely — which is
-            // exactly the "stuck on Isha in the morning" report. Entries are cheap and
-            // each one computes its own times, so there is no reason to stop early.
-            let end = futurePrayerTimes(after: Date(), days: 4).last
-            print("latest scheduled complication: \(String(describing: end))")
-            handler(end)
-        }
+        // Deliberately NOT gated on having a location name. This used to bail out with
+        // nil whenever the saved name was empty, which is what left users on placeholder
+        // dashes: ClockKit takes nil as "this app has no timeline", stops asking, and
+        // nothing is left to bring the complication back. The only thing an entry needs
+        // is the DATE of the next prayer, and computing that on the watch is cheap and
+        // never depends on the name — so always answer with a real timeline and let the
+        // times correct themselves once a location arrives.
+        //
+        // Reach several days out, not tomorrow's Maghrib. When the timeline runs dry
+        // ClockKit keeps showing the LAST entry it was given, so a watch that misses
+        // its background refreshes sits on a stale prayer indefinitely — which is
+        // exactly the "stuck on Isha in the morning" report. Entries are cheap and
+        // each one computes its own times, so there is no reason to stop early.
+        let end = futurePrayerTimes(after: Date(), days: 4).last
+        print("latest scheduled complication: \(String(describing: end))")
+        handler(end)
     }
     
     func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
@@ -62,10 +64,9 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     
     func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
         manager.refreshTimes()
-        if !hasLocation {
-            requestLocationRecovery()
-            handler(nil) // case if we have not set our locdeation
-        } else if let template = getComplicationTemplate(for: complication, using: Date()) {
+        // Same as getTimelineEndDate: never refuse to render just because the saved
+        // location name is empty. The template only needs computable prayer times.
+        if let template = getComplicationTemplate(for: complication, using: Date()) {
             print(">>> COMPLICATION MANAGER USING LOCATION (creating current entry): \(manager.locationSettings.locationName)")
             let entry = CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template)
             handler(entry)
@@ -118,23 +119,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     }
     
     // MARK: - Helpers
-
-    private var hasLocation: Bool {
-        manager.locationSettings.locationName != LocationSettings.defaultSetting().locationName
-    }
-
-    /// Ask the phone for the location again when we don't have one.
-    ///
-    /// Without this the no-location state is permanent from the complication's point of
-    /// view: the data source answers nil, ClockKit stops asking, and the complication sits
-    /// on placeholder dashes forever with nothing left to trigger a recovery. Requesting
-    /// here means every attempt ClockKit makes to build a timeline is also an attempt to
-    /// get the location back; once it arrives, `locationSettings`' didSet reloads the
-    /// timeline and the complication fills back in on its own.
-    private func requestLocationRecovery() {
-        guard WCSession.default.activationState == .activated else { return }
-        WatchSessionDelegate.shared.requestUpdateFromPhone()
-    }
 
     /// Prayer times strictly after `date`, covering `days` days forward.
     private func futurePrayerTimes(after date: Date, days: Int) -> [Date] {

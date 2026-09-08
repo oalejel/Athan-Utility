@@ -55,7 +55,21 @@ struct AthanPlayView: View, Equatable {
                 // if less than a second since start and allowing 0.5 seconds early, then
                 let timeSince = -1 * date.timeIntervalSinceNow
                 if timeSince < 60 && timeSince > -0.5 {
-                    
+
+                    // This live in-app trigger is the ONLY athan playback path that
+                    // doesn't go through UNNotificationContent.sound (see
+                    // NotificationsManager), so it's the one place that can silently
+                    // ignore "silent mode" / a per-prayer sound-off toggle if it
+                    // doesn't check the setting itself. On Mac this fires even when
+                    // the window is hidden to the menu bar, since the SwiftUI view
+                    // tree — and this onValueChanged — keeps running in the
+                    // background: that's why muting from the sidebar previously had
+                    // no effect while the app or menu bar item was active.
+                    guard NotificationSettings.shared.settings[current]?.athanSoundEnabled ?? true else {
+                        lastPlayDate = Date()
+                        return
+                    }
+
                     // get duration of audio we start to play
                     let duration = NoteSoundPlayer.playFullAudio(for: NotificationSettings.shared.selectedSound.rawValue)
                     

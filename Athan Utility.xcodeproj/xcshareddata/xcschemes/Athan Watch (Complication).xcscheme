@@ -61,7 +61,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DEE3A5C25A6A04B00DC7331"
             BuildableName = "Athan Watch.app"
-            BlueprintName = "Athan Watch"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,7 +78,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3DEE3A5C25A6A04B00DC7331"
             BuildableName = "Athan Watch.app"
-            BlueprintName = "Athan Watch"
             ReferencedContainer = "container:Athan Utility.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

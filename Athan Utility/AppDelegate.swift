@@ -42,6 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         registerFajrAlarmRefreshTask()
         scheduleFajrAlarmRefresh()
 
+        #if DEBUG
+        // One-shot diagnostic dump for investigating a reminder that fired with the
+        // wrong content/time — see NotificationsManager.dumpPendingNotifications().
+        // Fired immediately, not delayed: a devicectl-launched process on a
+        // locked/dark-screen device can background again within ~1s, and a delayed
+        // dispatch never gets to run once suspended.
+        NotificationsManager.dumpPendingNotifications()
+        #endif
+
         #if targetEnvironment(macCatalyst)
         // Load the native-macOS helper bundle, show the menu bar item, and start the live
         // title driver — but OFF the launch critical path. The title driver touches

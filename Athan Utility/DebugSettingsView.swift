@@ -8,6 +8,7 @@
 
 import SwiftUI
 import WidgetKit
+import UserNotifications
 
 @available(iOS 13.0.0, *)
 struct DebugSettingsView: View {
@@ -74,6 +75,11 @@ struct DebugSettingsView: View {
                         row("Reload Widgets", "rectangle.3.group.fill", "Forces every widget timeline to refresh now.") {
                             WidgetCenter.shared.reloadAllTimelines()
                             return "Reloaded all widget timelines."
+                        }
+
+                        row("Dump Pending Notifications", "list.bullet.rectangle", "Prints every scheduled local notification's ID, fire date, and body to the console, plus current reminder settings per prayer.") {
+                            NotificationsManager.dumpPendingNotifications()
+                            return "Dumped to console — check the Xcode/Console log."
                         }
 
                         // Quick read-out of the current state — handy while debugging.

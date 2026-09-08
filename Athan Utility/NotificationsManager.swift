@@ -10,6 +10,7 @@ import NotificationCenter
 import UserNotifications
 import Adhan
 import CoreLocation.CLLocation
+import WatchConnectivity
 
 // could make this an extension of athan manager tbh. uses too many heavy lifting helpers from athan manager?..
 // but... not necessarily the case that all devices using athan amanger will be notification capabale
@@ -104,6 +105,20 @@ class NotificationsManager {
 //                        return
 //                    }
                     
+                    // prayerDate below is computed IN this timezone (calculateTimes takes
+                    // it as customTimeZone). The trigger's calendar components must be
+                    // extracted using the SAME zone — using the device's ambient
+                    // Calendar.current instead (as this used to) silently fires prayer
+                    // notifications at the wrong wall-clock time whenever the location's
+                    // timezone differs from the device's current one: e.g. a manually-set
+                    // location in a different zone than the phone is physically in, or the
+                    // device's system timezone changing (travel) between when this was
+                    // scheduled and when it fires. A reminder computed as "30 min before a
+                    // 5:11 AM Fajr in America/New_York" got its hour/minute reinterpreted
+                    // against whatever zone Calendar.current happened to be — landing on a
+                    // completely different prayer's time of day if the offset was large.
+                    var locationCalendar = Calendar.current
+                    locationCalendar.timeZone = AthanManager.shared.locationSettings.timeZone
                     guard let times = AthanManager.shared.calculateTimes(referenceDate: calcDate, customCoordinate: coordinate, customTimeZone: AthanManager.shared.locationSettings.timeZone, adjustments: noteSettings.adjustments()) else {
                         print("encountered nil calculating times for notifications")
                         return
@@ -173,7 +188,7 @@ class NotificationsManager {
                             noteContent.body = alertString
                             
                             // create a trigger with the correct date
-                            let dateComp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: prayerDate)
+                            let dateComp = locationCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: prayerDate)
                             let noteTrigger = UNCalendarNotificationTrigger(dateMatching: dateComp, repeats: false)
                             // create request, and make sure it is added on the main thread (there was an issue before with the old UINotificationCenter. test for whether this is needed)
                             let noteID = "standard_note_\(dateComp.day!)_\(dateComp.hour!)_\(dateComp.minute!)"
@@ -204,7 +219,7 @@ class NotificationsManager {
                             preNoteContent.categoryIdentifier = "reminder"
                             let preDate = Calendar.current.date(byAdding: .minute, value: -1 * minuteOffset, to: prayerDate)!
                             preNoteContent.userInfo = ["intendedFireDate": preDate]
-                            let preNoteComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)
+                            let preNoteComponents = locationCalendar.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone, .calendar], from: preDate)
                             
                             let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
                             
@@ -236,6 +251,55 @@ class NotificationsManager {
                     }
                 }
                 print(noteCount, " NOTIFICATIONS SUBMITTED TO NC")
+            }
+        }
+    }
+
+    /// Prints the live reminderOffset/enabled flags for every prayer plus every pending
+    /// local notification's identifier, next fire date, and body — the ground truth for
+    /// diagnosing a notification that fired with the wrong content or at the wrong time,
+    /// since neither is otherwise visible outside Settings > Notifications' summary UI.
+    /// Called from Debug Tools on demand, and once automatically at launch in DEBUG builds.
+    static func dumpPendingNotifications() {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        df.timeStyle = .medium
+
+        let loc = AthanManager.shared.locationSettings
+        print("=== LocationSettings ===")
+        print("name=\(loc.locationName) coord=\(loc.locationCoordinate) tz=\(loc.timeZone.identifier) useCurrentLocation=\(loc.useCurrentLocation) deviceTZ=\(TimeZone.current.identifier)")
+
+        // Deliberately String(describing:) rather than .localizedString() — that extension
+        // lives in CalculationMethod+Extensions.swift, which is main-app-target-only, while
+        // this file also compiles into the Siri and widget extension targets.
+        let prayer = AthanManager.shared.prayerSettings
+        print("=== PrayerSettings ===")
+        print("method=\(String(describing: prayer.calculationMethod)) madhab=\(String(describing: prayer.madhab)) latitudeRule=\(String(describing: prayer.latitudeRule))")
+
+        print("=== FajrAlarmSettings ===")
+        print("enabled=\(FajrAlarmSettings.shared.enabled)")
+
+        print("=== WCSession (Watch) ===")
+        let session = WCSession.isSupported() ? WCSession.default : nil
+        print("supported=\(WCSession.isSupported()) isPaired=\(session?.isPaired ?? false) isWatchAppInstalled=\(session?.isWatchAppInstalled ?? false) isReachable=\(session?.isReachable ?? false) activationState=\(String(describing: session?.activationState.rawValue))")
+
+        print("=== NotificationSettings.shared.settings (offset in minutes) ===")
+        for p in Prayer.allCases {
+            guard let s = NotificationSettings.shared.settings[p] else { continue }
+            print("\(p.stringValue()): athanAlertEnabled=\(s.athanAlertEnabled) reminderAlertEnabled=\(s.reminderAlertEnabled) reminderOffset=\(s.reminderOffset) athanOffset=\(s.athanOffset ?? 0)")
+        }
+
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let sorted = requests.sorted { lhs, rhs in
+                let l = (lhs.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate() ?? .distantFuture
+                let r = (rhs.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate() ?? .distantFuture
+                return l < r
+            }
+            print("=== \(sorted.count) pending notification requests ===")
+            for r in sorted {
+                let fireDate = (r.trigger as? UNCalendarNotificationTrigger)?.nextTriggerDate()
+                let fireDateStr = fireDate.map { df.string(from: $0) } ?? "unknown"
+                print("[\(r.identifier)] fires \(fireDateStr) — \(r.content.body)")
             }
         }
     }

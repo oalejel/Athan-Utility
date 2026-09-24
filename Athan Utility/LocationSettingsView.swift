@@ -375,7 +375,9 @@ struct LocationSettingsView: View, Equatable {
                         Button(action: { // DONE BUTTON
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
-                            if !erroneousLocation {
+                            // Empty name means no location was ever chosen; saving it would
+                            // leave the app with no location (shown as "—" in the Mac sidebar).
+                            if !erroneousLocation && !textFieldText.trimmingCharacters(in: .whitespaces).isEmpty {
                                 AthanManager.shared.locationSettings = LocationSettings(locationName: textFieldText, coord: unboundCoordinate, timeZone: timeZone, useCurrentLocation: usingCurrentLocation, countryCode: detectedCountryCode)
                                 AthanManager.shared.reloadSettingsAndNotifications()
 
@@ -406,6 +408,8 @@ struct LocationSettingsView: View, Equatable {
                                 .foregroundColor(Color(.lightText))
                                 .font(Font.body.weight(.bold))
                         }
+                        .disabled(textFieldText.trimmingCharacters(in: .whitespaces).isEmpty)
+                        .opacity(textFieldText.trimmingCharacters(in: .whitespaces).isEmpty ? 0.4 : 1)
                         .accessibilityIdentifier("locationDoneButton")
                     }
                 }

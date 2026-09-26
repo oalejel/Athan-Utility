@@ -193,15 +193,16 @@
 
 // MARK: - Fajr Alarm (AlarmKit, iOS 26+)
 "Fajr Alarm" = "Fajr Alarm";
-"fajr.alarm.description" = "Schedule a real iOS alarm that stays in sync with Fajr (or Sunrise) as times shift throughout the year. Requires iOS 26.";
-"fajr.alarm.entry.description" = "Automatically keep an iOS alarm locked to Fajr's daily time.";
-"fajr.alarm.offset.description" = "Fire the alarm before or after the chosen prayer. Useful for tahajjud or suhoor.";
+"fajr.alarm.description" = "Schedule real iOS alarms that stay in sync with your chosen prayers as times shift throughout the year. Requires iOS 26.";
+"fajr.alarm.entry.description" = "Automatically keep iOS alarms locked to your prayer times.";
+"fajr.alarm.offset.description" = "Set each alarm before or after its prayer — set Fajr later to wake near sunrise, or earlier for tahajjud or suhoor.";
 "fajr.alarm.schedule.description" = "Number of upcoming alarms to keep scheduled. Refreshed each time the app updates.";
 "fajr.alarm.ios26.required" = "Automatic Fajr alarms require iOS 26 or later.";
 "fajr.alarm.authorization.denied" = "Alarms are disabled. Enable AlarmKit access in system Settings to use this feature.";
 "fajr.alarm.summary.off" = "Off";
 "fajr.alarm.permission.needed" = "Permission needed";
 "fajr.alarm.no.days" = "No days selected — the alarm won't fire.";
+"fajr.alarm.no.prayers" = "No prayers selected — no alarm will ring.";
 "Anchor Prayer" = "Anchor Prayer";
 "Offset" = "Offset";
 "Days" = "Days";

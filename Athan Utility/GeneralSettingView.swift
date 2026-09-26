@@ -86,14 +86,15 @@ struct GeneralSettingView: View {
         if FajrAlarmManager.shared.currentAuthorizationState() == .denied {
             return Strings.fajrAlarmPermissionNeeded
         }
-        let offset = s.offsetMinutes
-        let prayer = s.target.displayName
-        if offset == 0 {
-            return String(format: Strings.fajrAlarmOffsetZero, prayer)
-        } else if offset > 0 {
-            return String(format: Strings.fajrAlarmOffsetAfter, offset, prayer)
-        } else {
-            return String(format: Strings.fajrAlarmOffsetBefore, abs(offset), prayer)
+        switch s.alarms.count {
+        case 0:
+            return Strings.fajrAlarmSummaryOff
+        case 1:
+            return FajrAlarmSettings.offsetDescription(s.alarms[0])
+        default:
+            // Several prayers: name them rather than repeating each offset.
+            let names = s.alarms.map { $0.target.displayName }
+            return ListFormatter.localizedString(byJoining: names)
         }
     }
 

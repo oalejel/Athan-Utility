@@ -279,15 +279,16 @@
 "feature_calendar_detail" = "在日历中查看整月的礼拜时间，并导出为 CSV，用 Numbers 或 Excel 打开。";
 // MARK: - Fajr Alarm (AlarmKit, iOS 26+)
 "Fajr Alarm" = "晨礼闹钟";
-"fajr.alarm.description" = "安排一个真正的 iOS 闹钟,使其全年与晨礼(或日出)时间保持同步。需要 iOS 26。";
-"fajr.alarm.entry.description" = "让 iOS 闹钟自动跟随每日晨礼时间。";
-"fajr.alarm.offset.description" = "在所选礼拜之前或之后触发闹钟。适用于夜祷或封斋饭。";
+"fajr.alarm.description" = "设置真正的 iOS 闹钟，全年随所选礼拜时间的变化自动同步。需要 iOS 26。";
+"fajr.alarm.entry.description" = "自动让 iOS 闹钟与你每天的礼拜时间保持一致。";
+"fajr.alarm.offset.description" = "可将每个闹钟设在对应礼拜之前或之后——把晨礼闹钟调晚可在日出前后起床，调早则可用于夜间礼拜或封斋饭。";
 "fajr.alarm.schedule.description" = "要保持排期的闹钟数量。应用每次更新时刷新。";
 "fajr.alarm.ios26.required" = "自动晨礼闹钟需要 iOS 26 或更高版本。";
 "fajr.alarm.authorization.denied" = "闹钟已被禁用。请在系统设置中启用 AlarmKit 权限以使用此功能。";
 "fajr.alarm.summary.off" = "已关闭";
 "fajr.alarm.permission.needed" = "需要权限";
 "fajr.alarm.no.days" = "未选择任何日期——闹钟不会响。";
+"fajr.alarm.no.prayers" = "未选择任何礼拜——不会有闹钟响起。";
 "Anchor Prayer" = "参考礼拜";
 "Offset" = "偏移";
 "Days" = "天数";

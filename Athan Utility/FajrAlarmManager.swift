@@ -3,8 +3,8 @@
 //  Athan Utility
 //
 //  Thin wrapper around AlarmKit (iOS 26+) that keeps a rolling set of
-//  scheduled Fajr/Sunrise wake-up alarms in sync with the user's
-//  current prayer-time calculations.
+//  scheduled prayer alarms (Fajr, Dhuhr, Asr, Maghrib, Isha) in sync with
+//  the user's current prayer-time calculations.
 //
 
 import Foundation
@@ -30,9 +30,8 @@ struct FajrAlarmMetadata: AlarmMetadata {
 // state (AthanManager / FajrAlarmSettings.shared) concurrently.
 private struct FajrSyncSnapshot {
     let enabled: Bool
-    let target: FajrAlarmTarget
-    let targetDisplayName: String
-    let offsetMinutes: Int
+    let alarms: [FajrAlarmEntry]
+    let displayNames: [FajrAlarmTarget: String]
     let weekdays: FajrAlarmWeekdayMask
     let snoozeEnabled: Bool
     let snoozeMinutes: Int
@@ -152,9 +151,8 @@ class FajrAlarmManager {
         let athanManager = AthanManager.shared
         return FajrSyncSnapshot(
             enabled: settings.enabled,
-            target: settings.target,
-            targetDisplayName: settings.target.displayName,
-            offsetMinutes: settings.offsetMinutes,
+            alarms: settings.alarms,
+            displayNames: Dictionary(uniqueKeysWithValues: settings.alarms.map { ($0.target, $0.target.displayName) }),
             weekdays: settings.weekdays,
             snoozeEnabled: settings.snoozeEnabled,
             snoozeMinutes: settings.snoozeMinutes,
@@ -297,12 +295,9 @@ class FajrAlarmManager {
         func persist() { FajrAlarmStore.save(ids: inProgressIDs + oldIDs + newIDs) }
         persist() // drops "gone" IDs immediately
 
-        // Compute the next N firing dates.
+        // Compute the next N firing dates for each prayer, soonest first.
         let fireDates = await upcomingFireDates(snapshot: snapshot)
 
-        // Title is built from a localized format string so Arabic / RTL
-        // languages can rearrange the word order (e.g. "منبّه الفجر").
-        let title = String(format: Strings.fajrAlarmTitleFormat, snapshot.targetDisplayName)
         let tint = Color(red: 4.0/255.0, green: 65.0/255.0, blue: 125.0/255.0)
 
         // Schedule the new window BEFORE cancelling the old one so a
@@ -310,13 +305,17 @@ class FajrAlarmManager {
         // still set" instead of "no alarms at all". The brief overlap is
         // bounded at 2× daysAhead alarms.
         var scheduleFailures = 0
-        for date in fireDates {
+        for (date, target) in fireDates {
             // Honor cooperative cancellation. Everything scheduled so far is
             // already persisted; the next sync pass finishes the rebuild.
             if Task.isCancelled { return }
             // Skip past dates defensively.
             guard date > Date() else { continue }
 
+            // Title is built from a localized format string so Arabic / RTL
+            // languages can rearrange the word order (e.g. "منبّه الفجر").
+            let prayerName = snapshot.displayNames[target] ?? target.displayName
+            let title = String(format: Strings.fajrAlarmTitleFormat, prayerName)
             let id = UUID()
             do {
                 let config = try makeConfiguration(
@@ -326,7 +325,7 @@ class FajrAlarmManager {
                     tint: tint,
                     snoozeEnabled: snapshot.snoozeEnabled,
                     snoozeMinutes: snapshot.snoozeMinutes,
-                    prayerName: snapshot.targetDisplayName
+                    prayerName: prayerName
                 )
                 _ = try await manager.schedule(id: id, configuration: config)
                 newIDs.append(id)
@@ -443,14 +442,16 @@ class FajrAlarmManager {
 
     // MARK: - Fire-date math (plain Swift; no AlarmKit dependency)
 
-    // Returns up to `daysAhead` upcoming alarm fire-dates, respecting the
-    // weekday mask and offset. Uses the Adhan-computed prayer time for the
-    // user's current location/settings. `calculateTimes` is main-isolated
-    // as far as AthanManager's internal state goes, so hop to main before
-    // invoking it.
-    private func upcomingFireDates(snapshot: FajrSyncSnapshot) async -> [Date] {
-        // Empty mask → nothing to schedule. Avoids a pointless full-window scan.
-        guard snapshot.weekdays.raw != 0 else { return [] }
+    // Returns up to `daysAhead` upcoming fire-dates for each chosen prayer,
+    // respecting the weekday mask and each prayer's offset, sorted soonest
+    // first. The sort matters: if AlarmKit refuses some of a large batch, the
+    // alarms it does accept are the ones about to ring. Uses the Adhan-computed
+    // prayer times for the user's current location/settings.
+    // `calculateTimes` is main-isolated as far as AthanManager's internal
+    // state goes, so hop to main before invoking it.
+    private func upcomingFireDates(snapshot: FajrSyncSnapshot) async -> [(Date, FajrAlarmTarget)] {
+        // Empty mask or no prayers → nothing to schedule. Avoids a pointless full-window scan.
+        guard snapshot.weekdays.raw != 0, !snapshot.alarms.isEmpty else { return [] }
 
         var cal = Calendar(identifier: .gregorian)
         cal.timeZone = snapshot.timeZone
@@ -458,48 +459,52 @@ class FajrAlarmManager {
         let now = Date()
         let startOfToday = cal.startOfDay(for: now)
 
-        var results: [Date] = []
+        var results: [(Date, FajrAlarmTarget)] = []
+        var counts: [FajrAlarmTarget: Int] = [:]
+        func satisfied() -> Bool {
+            snapshot.alarms.allSatisfy { (counts[$0.target] ?? 0) >= snapshot.daysAhead }
+        }
         // Scan enough days to deliver `daysAhead` alarms even when the
         // weekday mask is sparse (e.g. Sundays only). Worst case is 1 matching
         // day per 7 calendar days, plus a small buffer for when today's fire
-        // time has already passed.
+        // time has already passed. A day either side of the window catches
+        // offsets that push an alarm across midnight.
         let maxScan = snapshot.daysAhead * 7 + 7
-        var offset = 0
-        while results.count < snapshot.daysAhead, offset < maxScan {
+        var offset = -1
+        while !satisfied(), offset < maxScan {
             defer { offset += 1 }
 
             guard let day = cal.date(byAdding: .day, value: offset, to: startOfToday) else { continue }
 
-            // Respect weekday filter.
-            let weekday = cal.component(.weekday, from: day) // Sunday == 1
-            guard snapshot.weekdays.containsCalendarWeekday(weekday) else { continue }
-
-            // Extract the target Date inside the main-actor closure rather
-            // than returning the whole PrayerTimes struct — PrayerTimes
-            // (Adhan) is not Sendable, and sending it across the actor
-            // boundary is an error in Swift 6 language mode. Date is Sendable.
-            let target = snapshot.target
-            let base = await MainActor.run { () -> Date? in
+            // Extract the Dates inside the main-actor closure rather than
+            // returning the whole PrayerTimes struct — PrayerTimes (Adhan) is
+            // not Sendable, and sending it across the actor boundary is an
+            // error in Swift 6 language mode. Date is Sendable.
+            let targets = snapshot.alarms.map { $0.target }
+            let bases = await MainActor.run { () -> [FajrAlarmTarget: Date] in
                 guard let times = AthanManager.shared.calculateTimes(
                     referenceDate: day,
                     customCoordinate: snapshot.coordinate,
                     customTimeZone: snapshot.timeZone,
                     adjustments: snapshot.adjustments
-                ) else { return nil }
-                switch target {
-                case .fajr:    return times.fajr
-                case .sunrise: return times.sunrise
-                }
+                ) else { return [:] }
+                var out: [FajrAlarmTarget: Date] = [:]
+                for t in targets { out[t] = times.time(for: t.prayer) }
+                return out
             }
-            guard let base = base else { continue }
 
-            let fireDate = base.addingTimeInterval(TimeInterval(snapshot.offsetMinutes * 60))
-
-            // Skip times already in the past.
-            if fireDate > now {
-                results.append(fireDate)
+            for alarm in snapshot.alarms {
+                guard (counts[alarm.target] ?? 0) < snapshot.daysAhead,
+                      let base = bases[alarm.target] else { continue }
+                let fireDate = base.addingTimeInterval(TimeInterval(alarm.offsetMinutes * 60))
+                // The weekday is the day the alarm rings, not the prayer's
+                // day: "Isha + 3 hours" on a Friday rings early Saturday.
+                let weekday = cal.component(.weekday, from: fireDate) // Sunday == 1
+                guard fireDate > now, snapshot.weekdays.containsCalendarWeekday(weekday) else { continue }
+                results.append((fireDate, alarm.target))
+                counts[alarm.target, default: 0] += 1
             }
         }
-        return results
+        return results.sorted { $0.0 < $1.0 }
     }
 }

@@ -149,6 +149,8 @@ class Strings {
     static var fajrAlarmStateOn = NSLocalizedString("fajr.alarm.state.on", value: "Alarm On", comment: "Fajr alarm entry row title when the alarm is enabled")
     static var fajrAlarmStateOff = NSLocalizedString("fajr.alarm.state.off", value: "Alarm Off", comment: "Fajr alarm entry row title when the alarm is disabled")
     static var fajrAlarmPermissionNeeded = NSLocalizedString("fajr.alarm.permission.needed", comment: "Short status shown when AlarmKit permission is denied")
+    static var alarms = NSLocalizedString("Alarms", comment: "Section title listing the prayers that have an alarm")
+    static var fajrAlarmNoPrayersSelected = NSLocalizedString("fajr.alarm.no.prayers", comment: "Warning shown when alarms are enabled but no prayer is switched on")
     static var fajrAlarmNoDaysSelected = NSLocalizedString("fajr.alarm.no.days", comment: "Warning shown when the alarm is enabled but no weekdays are selected")
     static var fajrAlarmAnchorPrayer = NSLocalizedString("Anchor Prayer", comment: "Label for selecting which prayer the alarm is anchored to")
     static var fajrAlarmOffset = NSLocalizedString("Offset", comment: "Label for the minute offset stepper")

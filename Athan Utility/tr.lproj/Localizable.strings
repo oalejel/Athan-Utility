@@ -186,15 +186,16 @@
 "Search City" = "Şehir ara";
 // MARK: - İmsak Alarmı (AlarmKit, iOS 26+)
 "Fajr Alarm" = "İmsak Alarmı";
-"fajr.alarm.description" = "İmsak (veya Güneş) ile yıl boyunca senkronize kalan gerçek bir iOS alarmı planlar. iOS 26 gerektirir.";
-"fajr.alarm.entry.description" = "Bir iOS alarmını otomatik olarak günlük İmsak vaktine kilitleyin.";
-"fajr.alarm.offset.description" = "Alarmı seçilen namazdan önce veya sonra tetikleyin. Teheccüd veya sahur için kullanışlıdır.";
+"fajr.alarm.description" = "Seçtiğiniz namaz vakitleriyle yıl boyunca otomatik olarak senkronize kalan gerçek iOS alarmları kurun. iOS 26 gerektirir.";
+"fajr.alarm.entry.description" = "iOS alarmlarını otomatik olarak günlük namaz vakitlerinize bağlı tutun.";
+"fajr.alarm.offset.description" = "Her alarmı namazından önce veya sonra ayarlayın — güneşin doğuşuna yakın uyanmak için sabah alarmını geciktirin ya da teheccüd veya sahur için öne alın.";
 "fajr.alarm.schedule.description" = "Planlı tutulacak alarm sayısı. Uygulama her güncellendiğinde yenilenir.";
 "fajr.alarm.ios26.required" = "Otomatik İmsak alarmları için iOS 26 veya sonraki bir sürüm gereklidir.";
 "fajr.alarm.authorization.denied" = "Alarmlar devre dışı. Bu özelliği kullanmak için sistem Ayarları'ndan AlarmKit erişimini etkinleştirin.";
 "fajr.alarm.summary.off" = "Kapalı";
 "fajr.alarm.permission.needed" = "İzin gerekli";
 "fajr.alarm.no.days" = "Gün seçilmedi — alarm çalmayacak.";
+"fajr.alarm.no.prayers" = "Hiçbir namaz seçilmedi — hiçbir alarm çalmayacak.";
 "Anchor Prayer" = "Referans Namaz";
 "Offset" = "Fark";
 "Days" = "Günler";

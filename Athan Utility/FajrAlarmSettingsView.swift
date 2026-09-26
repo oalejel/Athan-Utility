@@ -2,8 +2,7 @@
 //  FajrAlarmSettingsView.swift
 //  Athan Utility
 //
-//  Settings UI for configuring the iOS 26 AlarmKit-backed Fajr/Sunrise
-//  wake-up alarm.
+//  Settings UI for configuring the iOS 26 AlarmKit-backed prayer alarms.
 //
 
 import SwiftUI
@@ -18,8 +17,7 @@ struct FajrAlarmSettingsView: View {
 
     // Local copies that are persisted on "Done".
     @State private var enabled: Bool = false
-    @State private var target: FajrAlarmTarget = .fajr
-    @State private var offsetMinutes: Int = 0
+    @State private var alarms: [FajrAlarmEntry] = []
     @State private var weekdays: FajrAlarmWeekdayMask = .all
     @State private var snoozeEnabled: Bool = true
     @State private var snoozeMinutes: Int = 5
@@ -85,7 +83,7 @@ struct FajrAlarmSettingsView: View {
             VStack(alignment: .leading, spacing: 16) {
                 if !isOSVersionSupported { unavailableBanner }
                 enableSection
-                offsetSection
+                prayersSection
                 daysSection
                 // Snooze is hidden: the snooze countdown needs a Live Activity,
                 // which is disabled app-wide. See FajrAlarmManager.makeConfiguration.
@@ -126,37 +124,33 @@ struct FajrAlarmSettingsView: View {
                     .font(.caption)
                     .foregroundColor(Color(.lightText))
                     .fixedSize(horizontal: false, vertical: true)
-
-                Divider().background(Color.white.opacity(0.3))
-
-                Text(Strings.fajrAlarmAnchorPrayer)
-                    .font(.subheadline).bold().foregroundColor(.white)
-
-                Picker(selection: $target, label: Text(Strings.fajrAlarmAnchorPrayer)) {
-                    ForEach(FajrAlarmTarget.allCases, id: \.rawValue) { t in
-                        Text(t.displayName).tag(t)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .disabled(!enabled || !isOSVersionSupported)
             }
         }
     }
 
-    private var offsetSection: some View {
-        sectionCard {
-            VStack(alignment: .leading, spacing: 8) {
-                sectionTitle(Strings.fajrAlarmOffset)
+    // Prayers offered as rows. Sunrise only appears for someone who set it
+    // up in an earlier version, so they can see it and turn it off.
+    private var prayerRows: [FajrAlarmTarget] {
+        alarms.contains { $0.target == .sunrise }
+            ? [.fajr, .sunrise, .dhuhr, .asr, .maghrib, .isha]
+            : FajrAlarmTarget.selectable
+    }
 
-                HStack {
-                    Text(offsetDescription)
-                        .font(.headline)
-                        .foregroundColor(.white)
-                    Spacer()
-                    Stepper("", value: $offsetMinutes, in: -120...120, step: 1)
-                        .labelsHidden()
-                        .accessibilityLabel(Text(Strings.fajrAlarmOffset))
-                        .accessibilityValue(Text(offsetDescription))
+    private var prayersSection: some View {
+        sectionCard {
+            VStack(alignment: .leading, spacing: 12) {
+                sectionTitle(Strings.alarms)
+
+                ForEach(Array(prayerRows.enumerated()), id: \.element.rawValue) { i, target in
+                    if i > 0 { Divider().background(Color.white.opacity(0.3)) }
+                    prayerRow(target)
+                }
+
+                if enabled && isOSVersionSupported && alarms.isEmpty {
+                    Text(Strings.fajrAlarmNoPrayersSelected)
+                        .font(.caption)
+                        .foregroundColor(.yellow)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Text(Strings.fajrAlarmOffsetDescription)
@@ -166,6 +160,56 @@ struct FajrAlarmSettingsView: View {
             }
             .disabled(!enabled || !isOSVersionSupported)
         }
+    }
+
+    @ViewBuilder
+    private func prayerRow(_ target: FajrAlarmTarget) -> some View {
+        let limit = FajrAlarmSettings.offsetLimit
+        VStack(alignment: .leading, spacing: 6) {
+            Toggle(isOn: isOnBinding(target)) {
+                Text(target.displayName)
+                    .font(.headline)
+                    .foregroundColor(.white)
+            }
+            if let entry = alarms.first(where: { $0.target == target }) {
+                HStack {
+                    Text(offsetDescription(entry))
+                        .font(.subheadline)
+                        .foregroundColor(Color(.lightText))
+                    Spacer()
+                    Stepper("", value: offsetBinding(target), in: -limit...limit, step: 1)
+                        .labelsHidden()
+                        .accessibilityLabel(Text("\(Strings.fajrAlarmOffset), \(target.displayName)"))
+                        .accessibilityValue(Text(offsetDescription(entry)))
+                }
+            }
+        }
+    }
+
+    private func isOnBinding(_ target: FajrAlarmTarget) -> Binding<Bool> {
+        Binding(
+            get: { alarms.contains { $0.target == target } },
+            set: { on in
+                if on {
+                    guard !alarms.contains(where: { $0.target == target }) else { return }
+                    alarms.append(FajrAlarmEntry(target: target, offsetMinutes: 0))
+                    alarms.sort { $0.target.dayOrder < $1.target.dayOrder }
+                } else {
+                    alarms.removeAll { $0.target == target }
+                }
+            }
+        )
+    }
+
+    private func offsetBinding(_ target: FajrAlarmTarget) -> Binding<Int> {
+        Binding(
+            get: { alarms.first { $0.target == target }?.offsetMinutes ?? 0 },
+            set: { value in
+                if let i = alarms.firstIndex(where: { $0.target == target }) {
+                    alarms[i].offsetMinutes = value
+                }
+            }
+        )
     }
 
     private var daysSection: some View {
@@ -324,14 +368,8 @@ struct FajrAlarmSettingsView: View {
 
     // MARK: - Derived labels
 
-    private var offsetDescription: String {
-        if offsetMinutes == 0 {
-            return String(format: Strings.fajrAlarmOffsetZero, target.displayName)
-        } else if offsetMinutes > 0 {
-            return String(format: Strings.fajrAlarmOffsetAfter, offsetMinutes, target.displayName)
-        } else {
-            return String(format: Strings.fajrAlarmOffsetBefore, abs(offsetMinutes), target.displayName)
-        }
+    private func offsetDescription(_ entry: FajrAlarmEntry) -> String {
+        FajrAlarmSettings.offsetDescription(entry)
     }
 
     private var snoozeDescription: String {
@@ -347,8 +385,7 @@ struct FajrAlarmSettingsView: View {
     private func loadFromSettings() {
         let s = FajrAlarmSettings.shared
         enabled = s.enabled
-        target = s.target
-        offsetMinutes = s.offsetMinutes
+        alarms = s.alarms
         weekdays = s.weekdays
         snoozeEnabled = s.snoozeEnabled
         snoozeMinutes = s.snoozeMinutes
@@ -359,10 +396,15 @@ struct FajrAlarmSettingsView: View {
     private func saveAndExit() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
+        // Leaving with the feature on but every prayer off would save an alarm
+        // that can never ring; fall back to the Fajr alarm this feature began as.
+        if enabled && alarms.isEmpty {
+            alarms = [FajrAlarmEntry(target: .fajr, offsetMinutes: 0)]
+        }
+
         let s = FajrAlarmSettings.shared
         s.enabled = enabled
-        s.target = target
-        s.offsetMinutes = offsetMinutes
+        s.alarms = alarms
         s.weekdays = weekdays
         s.snoozeEnabled = snoozeEnabled
         s.snoozeMinutes = snoozeMinutes

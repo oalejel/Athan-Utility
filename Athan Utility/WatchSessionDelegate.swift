@@ -10,6 +10,7 @@ import Foundation
 import WatchConnectivity
 import CoreLocation.CLLocation
 import ClockKit
+import WidgetKit
 
 class WatchSessionDelegate: NSObject, WCSessionDelegate {
     static let shared = WatchSessionDelegate()
@@ -58,6 +59,9 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
             DispatchQueue.main.async {
                 AthanManager.shared.prayerSettings = package.prayerSettings
                 AthanManager.shared.locationSettings = package.locationSettings
+                // A calculation-method change alone doesn't trip the location check that
+                // reloads complications, so reload here too.
+                WidgetCenter.shared.reloadAllTimelines()
             }
             replyHandler("watch successfully got package".data(using: .ascii)!)
             return
@@ -90,6 +94,7 @@ class WatchSessionDelegate: NSObject, WCSessionDelegate {
             // New data from the phone — reload complications so they refresh promptly
             // even while the watch app is backgrounded.
             #if os(watchOS)
+            WidgetCenter.shared.reloadAllTimelines()
             let complicationServer = CLKComplicationServer.sharedInstance()
             complicationServer.activeComplications?.forEach { complicationServer.reloadTimeline(for: $0) }
             #endif

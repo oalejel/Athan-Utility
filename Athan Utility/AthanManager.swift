@@ -15,6 +15,7 @@ import WidgetKit
 import AVFoundation
 #else
 import ClockKit
+import WidgetKit
 #endif
 
 import WatchConnectivity
@@ -264,6 +265,7 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
             UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.latitude), forKey: LAT_KEY)
             UserDefaults.standard.setValue(Double(self.locationSettings.locationCoordinate.longitude), forKey: LON_KEY)
             
+            WidgetCenter.shared.reloadAllTimelines()
             let complicationServer = CLKComplicationServer.sharedInstance()
             guard let activeComplications = complicationServer.activeComplications else { // watchOS 2.2
                 return
@@ -393,39 +395,11 @@ class AthanManager: NSObject, CLLocationManagerDelegate {
     
     // NOTE: this function MUST not have SIDE EFFECTS
     func calculateTimes(referenceDate: Date, customCoordinate: CLLocationCoordinate2D? = nil, customTimeZone: TimeZone? = nil, adjustments: PrayerAdjustments?, prayerSettingsOverride: PrayerSettings? = nil) -> PrayerTimes? {
-        let coord = locationSettings.locationCoordinate
-        
-        var cal = Calendar(identifier: Calendar.Identifier.gregorian)
-        cal.timeZone = customTimeZone ?? cal.timeZone // if we want to pass a custom time zone not based on the device time zone
-        let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
-        let coordinates = Coordinates(latitude: customCoordinate?.latitude ?? coord.latitude, longitude: customCoordinate?.longitude ?? coord.longitude)
-        
-        // Either use override argument or global app settings
-        let prayerSettings = prayerSettingsOverride ?? PrayerSettings.shared
-        var params = prayerSettings.calculationMethod.params
-        params.madhab = prayerSettings.madhab
-        params.highLatitudeRule = prayerSettings.latitudeRule
-        // custom minute offsets
-        if let adjustments = adjustments {
-            params.adjustments = adjustments
-        }
-        
-        // handle ummAlQura +30m isha adjustment on ramadan
-        // note: add +1day to reference date to account for taraweeh
-        //      being on the night before the first day of ramadan
-        let hijriCal = Calendar(identifier: .islamicUmmAlQura)
-        // +1 calendar day (DST-safe) so taraweeh on the night before Ramadan's
-        // first day gets the +30m isha adjustment.
-        let refPlusDay = cal.date(byAdding: .day, value: 1, to: referenceDate) ?? referenceDate.addingTimeInterval(24 * 60 * 60)
-        let islamicComponents = hijriCal.dateComponents([.month], from: refPlusDay)
-        if prayerSettings.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
-            params.adjustments.isha += 30
-        }
-        
-        if let prayers = PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params) {
-            return prayers
-        }
-        return nil
+        calculatePrayerTimes(referenceDate: referenceDate,
+                             coordinate: customCoordinate ?? locationSettings.locationCoordinate,
+                             timeZone: customTimeZone,
+                             prayerSettings: prayerSettingsOverride ?? PrayerSettings.shared,
+                             adjustments: adjustments)
     }
     
     // MARK: - Timers and timer callbacks

@@ -10,6 +10,7 @@ import WatchKit
 import ClockKit
 import Adhan
 import WatchConnectivity
+import WidgetKit
 
 class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
 
@@ -63,9 +64,10 @@ class CustomExtensionDelegate: NSObject, WKApplicationDelegate {
         }
     }
 
-    /// Reload every active complication timeline (safe to call from any of the
-    /// refresh paths; ClockKit coalesces within its budget).
+    /// Reload every complication timeline, WidgetKit and legacy ClockKit (safe to call
+    /// from any of the refresh paths; the system coalesces within its budget).
     func reloadComplications() {
+        WidgetCenter.shared.reloadAllTimelines()
         let server = CLKComplicationServer.sharedInstance()
         server.activeComplications?.forEach { server.reloadTimeline(for: $0) }
     }

@@ -31,6 +31,14 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     func handleSharedComplicationDescriptors(_ complicationDescriptors: [CLKComplicationDescriptor]) {
         // Do any necessary work to support these newly shared complication descriptors
     }
+
+    // MARK: - WidgetKit migration
+
+    // Newer watchOS no longer renders ClockKit complications; faces still carrying this
+    // one show placeholder dashes. This tells the system which WidgetKit complication
+    // (Athan Watch Widget) replaces it, so faces upgrade in place instead of the user
+    // having to find and re-add it.
+    var widgetMigrator: CLKComplicationWidgetMigrator { self }
     
     // MARK: - Timeline Configuration
     
@@ -363,3 +371,11 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 ////        }
 //    }
 //}
+
+extension ComplicationController: CLKComplicationWidgetMigrator {
+    func widgetConfiguration(from complicationDescriptor: CLKComplicationDescriptor) async -> CLKComplicationWidgetMigrationConfiguration? {
+        CLKComplicationStaticWidgetMigrationConfiguration(
+            kind: "AthanComplication", // AthanComplication.kind
+            extensionBundleIdentifier: "com.omaralejel.Athan-Utility.watchkitapp.complications")
+    }
+}

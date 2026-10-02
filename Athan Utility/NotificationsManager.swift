@@ -162,8 +162,15 @@ class NotificationsManager {
                                 // TODO: support separate fajr athan
                                 let soundName = UNNotificationSoundName(rawValue: soundFileWithSuffix)
                                 noteContent.sound = UNNotificationSound(named: soundName)
-                            } else { // always play default sound. user can use ios deliver quietly if they want to
+                            } else {
+                                #if targetEnvironment(macCatalyst)
+                                // Mac "Silent mode" turns the athan off for every prayer, and people expect
+                                // it to mean no sound at all, not a system chime in its place.
+                                noteContent.sound = nil
+                                #else
+                                // iOS: fall back to the standard tone. Users can pick Deliver Quietly if they want to.
                                 noteContent.sound = .default
+                                #endif
                             }
                             
                             var alertString = ""
@@ -223,10 +230,13 @@ class NotificationsManager {
                             
                             let preNoteTrigger = UNCalendarNotificationTrigger(dateMatching: preNoteComponents, repeats: false)
                             
-                            //use a standard note tone when giving a 15m reminder
-//                            if setting.athanSoundEnabled {
+                            // Standard tone for the reminder. On Mac, a prayer whose athan is off (Silent mode)
+                            // keeps its reminder silent too.
+                            #if targetEnvironment(macCatalyst)
+                            preNoteContent.sound = setting.athanSoundEnabled ? .default : nil
+                            #else
                             preNoteContent.sound = .default
-//                            }
+                            #endif
                             
                             let localizedMinutes = NumberFormatter.localizedString(from: NSNumber(value: setting.reminderOffset), number: .none)
                             let reminderMessage = Strings.reminderNotificationMessage

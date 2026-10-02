@@ -101,7 +101,7 @@ class Strings {
     static func silentModeToastMessage(silenced: Bool) -> String {
         silenced
             ? NSLocalizedString("toast_athan_silenced", value: "Athan sounds silenced",
-                                comment: "Brief confirmation: notifications will use the system sound")
+                                comment: "Brief confirmation: prayer notifications will make no sound")
             : NSLocalizedString("toast_athan_restored", value: "Athan sounds on",
                                 comment: "Brief confirmation: notifications will play the athan again")
     }

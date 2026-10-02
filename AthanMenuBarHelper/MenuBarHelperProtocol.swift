@@ -91,7 +91,7 @@ public final class MenuBarSnapshot: NSObject {
     public let soundOptions: [String]
     public let soundIndex: Int
     public let displayMode: Int          // 0 = countdown, 1 = start time
-    public let silentMode: Bool          // true = system sound instead of the athan
+    public let silentMode: Bool          // true = notifications make no sound
     public let countdownLabel: String    // e.g. "Fajr -6h 1m"  (the actual timeLeft title)
     public let startTimeLabel: String    // e.g. "Fajr: 3:38 PM" (the actual startTime title)
     public let topColor: CGColor

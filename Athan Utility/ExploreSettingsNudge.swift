@@ -49,7 +49,12 @@ enum ExploreSettingsNudge {
             let content = UNMutableNotificationContent()
             content.title = Strings.exploreSettingsNudgeTitle
             content.body = Strings.exploreSettingsNudgeBody
+            #if targetEnvironment(macCatalyst)
+            // Mac Silent mode means no notification sounds at all, this one included.
+            content.sound = NotificationSettings.shared.silentMode ? nil : .default
+            #else
             content.sound = .default
+            #endif
 
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(delayDays * 24 * 60 * 60), repeats: false)
             let request = UNNotificationRequest(identifier: notificationIdentifier, content: content, trigger: trigger)

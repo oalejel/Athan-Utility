@@ -206,8 +206,9 @@ class NotificationSettings: Codable, NSCopying {
     var settings: [Prayer:AlarmSetting]
     static let archiveName = "notificationsettings"
 
-    /// One switch for "notify me, but don't play the athan" — the notification still
-    /// arrives, it just uses the system sound instead of the recording.
+    /// One switch for "notify me, but don't play the athan". The notification still
+    /// arrives. On iOS it uses the system sound instead of the recording; on Mac it makes
+    /// no sound at all, and neither do the prayer reminders.
     ///
     /// Derived from the per-prayer `athanSoundEnabled` flags rather than stored, so it can
     /// never disagree with them. Sunrise is excluded on both sides: it has no athan to

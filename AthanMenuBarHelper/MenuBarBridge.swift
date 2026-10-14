@@ -256,7 +256,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
                 prayerIndex: i
             ))
         }
-        let methods = CalculationMethod.usefulCases()
+        let methods = PrayerMethod.allMethods
         let sounds = NotificationSettings.Sounds.allCases
         let nextTime = m.guaranteedNextPrayerTime()
         let countdownLabel = "-\(Self.countdownString(nextTime.timeIntervalSinceNow))"   // "-6h 1m"
@@ -264,7 +264,7 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
         return MenuBarSnapshot(rows: rows,
                                locationText: m.locationSettings.locationName,
                                methodOptions: methods.map { $0.localizedString() },
-                               methodIndex: methods.firstIndex(of: m.prayerSettings.calculationMethod) ?? 0,
+                               methodIndex: methods.firstIndex(of: m.prayerSettings.method) ?? 0,
                                soundOptions: sounds.map { $0.localizedString() },
                                soundIndex: m.notificationSettings.selectedSound.rawValue,
                                displayMode: MenuBarSettings.mode.rawValue,
@@ -291,10 +291,10 @@ final class MenuBarController: NSObject, MenuBarActionDelegate {
 
     func menuBarSetMethod(index: Int) {
         let m = AthanManager.shared
-        let methods = CalculationMethod.usefulCases()
+        let methods = PrayerMethod.allMethods
         guard methods.indices.contains(index),
               let updated = m.prayerSettings.copy() as? PrayerSettings else { return }
-        updated.calculationMethod = methods[index]
+        updated.method = methods[index]
         m.prayerSettings = updated             // didSet archives + recalculates
         m.reloadSettingsAndNotifications()
         pushSnapshot()

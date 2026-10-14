@@ -369,3 +369,7 @@
 "siri_phrase_modern_1" = "“Athan Utility 中的下一个礼拜”";
 "siri_phrase_modern_2" = "“Athan Utility 中的昏礼是几点”";
 "siri_phrase_modern_3" = "“Athan Utility 下一个礼拜时间”";
+
+/* Calculation method names */
+"method_jordan" = "约旦（宗教基金部）";
+"method_edmonton" = "埃德蒙顿（拉希德清真寺）";

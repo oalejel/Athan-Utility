@@ -59,13 +59,15 @@ struct LocationSettingsView: View, Equatable {
     // shown in place of the old forced calculation-preferences step.
     @State private var showingSettingsEditor = false
     @State private var userEditedCalcSettings = false
-    @State private var cardMethod: CalculationMethod = AthanManager.shared.prayerSettings.calculationMethod
+    @State private var cardMethod: PrayerMethod = AthanManager.shared.prayerSettings.method
     @State private var cardMadhab: Madhab = AthanManager.shared.prayerSettings.madhab
     @State private var cardLatRule: HighLatitudeRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
 
-    private var recommendedMethodForLocation: CalculationMethod {
-        if let cc = detectedCountryCode, !cc.isEmpty { return CalculationMethod.recommended(forISOCountryCode: cc) }
-        return AthanManager.shared.prayerSettings.calculationMethod
+    private var recommendedMethodForLocation: PrayerMethod {
+        if let cc = detectedCountryCode, !cc.isEmpty {
+            return PrayerMethod.recommended(forISOCountryCode: cc, coordinate: unboundCoordinate)
+        }
+        return AthanManager.shared.prayerSettings.method
     }
     private func syncCardFromRecommendation() {
         guard !userEditedCalcSettings else { return } // don't clobber the user's edits
@@ -73,14 +75,14 @@ struct LocationSettingsView: View, Equatable {
         cardLatRule = HighLatitudeRule.recommended(for: unboundCoordinate)
     }
     private func syncCardFromManager() {
-        cardMethod = AthanManager.shared.prayerSettings.calculationMethod
+        cardMethod = AthanManager.shared.prayerSettings.method
         cardMadhab = AthanManager.shared.prayerSettings.madhab
         cardLatRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
     }
     /// Seed the manager with the card's values so the editor opens on them, then present it.
     private func openSettingsEditor() {
         let ps = AthanManager.shared.prayerSettings
-        ps.calculationMethod = cardMethod
+        ps.method = cardMethod
         ps.madhab = cardMadhab
         ps.latitudeRule = cardLatRule
         AthanManager.shared.prayerSettings = ps
@@ -391,7 +393,7 @@ struct LocationSettingsView: View, Equatable {
                                 } else {
                                     // first-time setup — apply the settings shown in the recommended card
                                     let ps = AthanManager.shared.prayerSettings
-                                    ps.calculationMethod = cardMethod
+                                    ps.method = cardMethod
                                     ps.madhab = cardMadhab
                                     ps.latitudeRule = cardLatRule
                                     AthanManager.shared.prayerSettings = ps
@@ -533,7 +535,7 @@ struct LocationSettingView_Previews: PreviewProvider {
 /// Compact summary of the calculation settings recommended for the chosen
 /// location, with an "Edit" disclosure that opens the full editor as a sheet.
 private struct RecommendedSettingsCard: View {
-    let method: CalculationMethod
+    let method: PrayerMethod
     let madhab: Madhab
     let latRule: HighLatitudeRule
     var edited: Bool

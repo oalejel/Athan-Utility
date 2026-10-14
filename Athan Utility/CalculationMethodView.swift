@@ -14,7 +14,7 @@ struct CalculationMethodView: View {
     
     #warning("make sure updating this value changes earlier settings?")
     @Binding var tempPrayerSettings: PrayerSettings
-    @State var viewSelectedMethod = CalculationMethod.northAmerica
+    @State var viewSelectedMethod = PrayerMethod.standard(.northAmerica)
     
     @Binding var activeSection: SettingsSectionType
     
@@ -25,13 +25,13 @@ struct CalculationMethodView: View {
                 .bold()
                 .foregroundColor(.white)
                 .onAppear {
-                    viewSelectedMethod = tempPrayerSettings.calculationMethod
+                    viewSelectedMethod = tempPrayerSettings.method
                 }
                 .padding([.leading, .trailing, .top])
 
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading, spacing: nil) {
-                    let methods = CalculationMethod.usefulCases()
+                    let methods = PrayerMethod.allMethods
                     ForEach(methods, id: \.self) { method in
                         ZStack {
                             Button(action: {
@@ -39,7 +39,7 @@ struct CalculationMethodView: View {
                                 // set setting, making checkmark change
                                 withAnimation {
                                     viewSelectedMethod = method
-                                    tempPrayerSettings.calculationMethod = viewSelectedMethod
+                                    tempPrayerSettings.method = viewSelectedMethod
                                 }
                             }, label: {
                                 HStack {

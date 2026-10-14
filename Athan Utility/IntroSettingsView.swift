@@ -11,9 +11,10 @@ import SwiftUI
 import Adhan
 
 // helper to update localized prayers given new settings
-fileprivate func computePreviewTimes(method: CalculationMethod, madhab: Madhab, latitudeRule: HighLatitudeRule) -> PrayerTimes? {
+fileprivate func computePreviewTimes(method: PrayerMethod, madhab: Madhab, latitudeRule: HighLatitudeRule) -> PrayerTimes? {
     let locationSettings = AthanManager.shared.locationSettings
-    let prayerSettings = PrayerSettings(method: method, madhab: madhab, customNames: [:], latitudeRule: latitudeRule)
+    let prayerSettings = PrayerSettings(method: method.base, madhab: madhab, customNames: [:], latitudeRule: latitudeRule)
+    prayerSettings.method = method
     let times = AthanManager.shared.calculateTimes(
         referenceDate: Date(),
         customCoordinate: locationSettings.locationCoordinate,
@@ -35,15 +36,15 @@ struct IntroSettingsView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     // Temporary settings copy
-    @State var selectedCalcMethod = AthanManager.shared.prayerSettings.calculationMethod
+    @State var selectedCalcMethod = AthanManager.shared.prayerSettings.method
     @State var selectedMadhab = AthanManager.shared.prayerSettings.madhab
     @State var selectedLatitudeRule = AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight
     @State var locationPreference = AthanManager.shared.locationSettings.locationCoordinate
-    @State var previewPrayerTimes = computePreviewTimes(method:  AthanManager.shared.prayerSettings.calculationMethod, madhab: AthanManager.shared.prayerSettings.madhab, latitudeRule: AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight)
+    @State var previewPrayerTimes = computePreviewTimes(method:  AthanManager.shared.prayerSettings.method, madhab: AthanManager.shared.prayerSettings.madhab, latitudeRule: AthanManager.shared.prayerSettings.latitudeRule ?? .middleOfTheNight)
     
     // Other settings UI state properties
     let madhabs = Madhab.allCases
-    let calculationMethods = CalculationMethod.usefulCases()
+    let calculationMethods = PrayerMethod.allMethods
     let latitudeRules = HighLatitudeRule.allCases
     
     // Gradient background appearance state
@@ -55,9 +56,10 @@ struct IntroSettingsView: View {
         let cc = AthanManager.shared.locationSettings.countryCode
         return (cc?.isEmpty == false) ? cc : nil
     }
-    private var recommendedMethod: CalculationMethod? {
+    private var recommendedMethod: PrayerMethod? {
         guard let cc = suggestionCountryCode else { return nil }
-        return CalculationMethod.recommended(forISOCountryCode: cc)
+        return PrayerMethod.recommended(forISOCountryCode: cc,
+                                        coordinate: AthanManager.shared.locationSettings.locationCoordinate)
     }
     private var suggestionCountryName: String? {
         guard let cc = suggestionCountryCode else { return nil }
@@ -113,7 +115,7 @@ struct IntroSettingsView: View {
                             HStack {
                                 Spacer(minLength: 0)
                                 Picker("Calculation Method Picker", selection: $selectedCalcMethod, content: {
-                                    ForEach(calculationMethods, id: \.self.rawValue) { method in
+                                    ForEach(calculationMethods, id: \.self) { method in
                                         Text(method.localizedString())
                                             .tag(method)
                                     }
@@ -391,7 +393,7 @@ struct IntroSettingsView: View {
         IntroSetupFlags.hasCompletedCalculationSetup = true
         let prayerSettings = AthanManager.shared.prayerSettings
         prayerSettings.madhab = selectedMadhab
-        prayerSettings.calculationMethod = selectedCalcMethod
+        prayerSettings.method = selectedCalcMethod
         prayerSettings.latitudeRule = selectedLatitudeRule
         AthanManager.shared.prayerSettings = prayerSettings
     }

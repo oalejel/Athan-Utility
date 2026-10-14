@@ -94,11 +94,25 @@ class PrayerSettings: Codable, NSCopying {
     var madhab: Madhab
     var customNames: [Prayer:String] // store potential override names for athan times
     var latitudeRule: HighLatitudeRule?
+    /// PrayerMethod.regionalID when a regional method (Jordan, Edmonton) is selected. Kept
+    /// apart from `calculationMethod`, which then holds the closest standard method, so
+    /// builds that predate regional methods still decode the archive and get sensible times.
+    var regionalMethod: String? = nil
+
+    /// The selected method, regional ones included. Prefer this over `calculationMethod`.
+    var method: PrayerMethod {
+        get { PrayerMethod(base: calculationMethod, regionalID: regionalMethod) }
+        set {
+            calculationMethod = newValue.base
+            regionalMethod = newValue.regionalID
+        }
+    }
     
     static let archiveName = "prayersettings"
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = PrayerSettings(method: calculationMethod, madhab: madhab, customNames: customNames, latitudeRule: latitudeRule)
+        copy.regionalMethod = regionalMethod
         return copy
     }
 }

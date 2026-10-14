@@ -19,6 +19,7 @@
 		21225FEE517C5267F05D86E3 /* AthanMenuBarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11269AFEBE1C915CA913F090 /* AthanMenuBarHelper.swift */; };
 		24E74819971D558E95BB3EFA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D52255720CDD25800CF8C3D /* Localizable.strings */; };
 		2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65381F258627114C6FDB30DA /* FajrAlarmSettings.swift */; };
+		3020425A8FBF852A59774BDE /* RegionalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */; };
 		31BC68986D2415153B4CD3A4 /* Adhan in Frameworks */ = {isa = PBXBuildFile; productRef = 6F0309F80F2F2B0CC27986CC /* Adhan */; };
 		36936464CA24B5468BC94E22 /* DebugSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA1969BE74A4166B927B699 /* DebugSettingsView.swift */; };
 		38D33C2539A87D2DB6738F48 /* PrayerCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C893A4EC5F97CDD85B5332 /* PrayerCalculation.swift */; };
@@ -204,6 +205,7 @@
 		6EF3C4A4213F51990FCED645 /* MenuBarHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57E1BF4B3FC5F6969D0F8F9 /* MenuBarHelperProtocol.swift */; };
 		71B62694A3DA50DD8C87530C /* PrayerCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C893A4EC5F97CDD85B5332 /* PrayerCalculation.swift */; };
 		75622029F47EE8A65B211261 /* CalendarExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249FF144570F802EB68430C8 /* CalendarExportView.swift */; };
+		79AC7F5CFB963707FEAE4084 /* RegionalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */; };
 		7AC2CEAACF328ED4C8A97387 /* WatchColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E01A2C23F66CD5544F0B06 /* WatchColors.swift */; };
 		7C3F5E73A177372A79C4FD42 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
 		8157184BCE6271FD88E95774 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BADA3A167AB3BAB5245C07 /* WidgetKit.framework */; };
@@ -231,7 +233,9 @@
 		C013A1D007944FA2D2B4F38A /* Athan_UtilityApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE3A6B25A6A04D00DC7331 /* Athan_UtilityApp.swift */; };
 		C26FED75859A50FA9EE19E74 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 433138E90AF5895B33EFFB8C /* SwiftUI.framework */; };
 		C5159509157C2F3C4D3977D5 /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		C6D4EA824F7FFB14C873EC83 /* RegionalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */; };
 		CA2BF9126AFC892FC517F4AE /* DayBrowseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5075956B6268FBE6A35D494 /* DayBrowseState.swift */; };
+		CC22A245CC2B5A20FE37FD22 /* RegionalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */; };
 		CCB609AF45FE1C0CEA1C8C00 /* NotificationPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B895353DF4EFEA658C8E876A /* NotificationPermission.swift */; };
 		CDD074B9FB3B89E5C7ABA16B /* ExploreSettingsNudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C02CF09C83F934B0A95EBE /* ExploreSettingsNudge.swift */; };
 		D325E0ECD77E105DE4DAA6EA /* SnapshotSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FC5686B2503069B1B1C559 /* SnapshotSupport.swift */; };
@@ -239,6 +243,7 @@
 		D44E2F95745F6C1DEF8525B4 /* HijriSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA35E394ED76ADD19D63BC23 /* HijriSettings.swift */; };
 		D4A8CF84384C1F66072AC681 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0789A6259C23750047DD00 /* Strings.swift */; };
 		D51FB317E79101FFA9433D8F /* FajrAlarmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7EBA21989585742F65A2B0 /* FajrAlarmManager.swift */; };
+		E0143F72413845E46EC33303 /* RegionalMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */; };
 		E1FB145A85D934A3AD6144D0 /* HijriCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B928004751B72510E13FAC /* HijriCalloutView.swift */; };
 		E4497F14C9BF921045926568 /* AthanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16F10A2560859D00C78B12 /* AthanManager.swift */; };
 		E523BE75A8B95E4AABBC40A8 /* FajrAlarmSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DE262321F96491AED053A7 /* FajrAlarmSettingsView.swift */; };
@@ -534,6 +539,7 @@
 		3DF79CD02F45364D00E01FD2 /* SuhoorActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivity.swift; sourceTree = "<group>"; };
 		3DF79CD22F4564B700E01FD2 /* SuhoorActivityTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityTrigger.swift; sourceTree = "<group>"; };
 		3DF79CD42F4564F800E01FD2 /* SuhoorActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuhoorActivityAttributes.swift; sourceTree = "<group>"; };
+		410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionalMethods.swift; sourceTree = "<group>"; };
 		41B928004751B72510E13FAC /* HijriCalloutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HijriCalloutView.swift; path = HijriCalloutView.swift; sourceTree = "<group>"; };
 		433138E90AF5895B33EFFB8C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS26.0.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		44C893A4EC5F97CDD85B5332 /* PrayerCalculation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PrayerCalculation.swift; sourceTree = "<group>"; };
@@ -763,6 +769,7 @@
 				1C546286B14A3DA60BDA6E5B /* Athan Utility (Mac).entitlements */,
 				A67E659E7B41E14A6721DFD1 /* MacRootHost.swift */,
 				44C893A4EC5F97CDD85B5332 /* PrayerCalculation.swift */,
+				410C94EBE1C8D2D3CE3D098B /* RegionalMethods.swift */,
 			);
 			path = "Athan Utility";
 			sourceTree = "<group>";
@@ -1519,6 +1526,7 @@
 				CA2BF9126AFC892FC517F4AE /* DayBrowseState.swift in Sources */,
 				B37D03FA8258149FA4483A4F /* MacRootHost.swift in Sources */,
 				71B62694A3DA50DD8C87530C /* PrayerCalculation.swift in Sources */,
+				CC22A245CC2B5A20FE37FD22 /* RegionalMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1556,6 +1564,7 @@
 				AC940FC50E440C6EACD7A1C2 /* NewFeaturesAnnouncement.swift in Sources */,
 				20E8564DF6B911EE89ED155E /* HijriSettings.swift in Sources */,
 				B4E0C3C5F87120C1395EA2F2 /* PrayerCalculation.swift in Sources */,
+				3020425A8FBF852A59774BDE /* RegionalMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1585,6 +1594,7 @@
 				2F6E3C3B44EB31C6E7F12285 /* FajrAlarmSettings.swift in Sources */,
 				D44E2F95745F6C1DEF8525B4 /* HijriSettings.swift in Sources */,
 				9D1DB3049732778E1F753683 /* PrayerCalculation.swift in Sources */,
+				C6D4EA824F7FFB14C873EC83 /* RegionalMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1619,6 +1629,7 @@
 				95E0FF8422CCAA301841E05A /* HijriSettings.swift in Sources */,
 				17229736E36A4A022B7C473D /* WatchColors.swift in Sources */,
 				1E3195984C08ED08D1BD513C /* PrayerCalculation.swift in Sources */,
+				E0143F72413845E46EC33303 /* RegionalMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1643,6 +1654,7 @@
 				4AEB51DFF3A3FC8BCB33222C /* FajrAlarmSettings.swift in Sources */,
 				7AC2CEAACF328ED4C8A97387 /* WatchColors.swift in Sources */,
 				38D33C2539A87D2DB6738F48 /* PrayerCalculation.swift in Sources */,
+				79AC7F5CFB963707FEAE4084 /* RegionalMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

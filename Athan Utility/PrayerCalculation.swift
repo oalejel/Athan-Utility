@@ -23,7 +23,8 @@ func calculatePrayerTimes(referenceDate: Date,
     let date = cal.dateComponents([.year, .month, .day], from: referenceDate)
     let coordinates = Coordinates(latitude: coordinate.latitude, longitude: coordinate.longitude)
 
-    var params = prayerSettings.calculationMethod.params
+    let method = prayerSettings.method
+    var params = method.base.params
     params.madhab = prayerSettings.madhab
     params.highLatitudeRule = prayerSettings.latitudeRule
     // custom minute offsets
@@ -39,9 +40,11 @@ func calculatePrayerTimes(referenceDate: Date,
     // first day gets the +30m isha adjustment.
     let refPlusDay = cal.date(byAdding: .day, value: 1, to: referenceDate) ?? referenceDate.addingTimeInterval(24 * 60 * 60)
     let islamicComponents = hijriCal.dateComponents([.month], from: refPlusDay)
-    if prayerSettings.calculationMethod == .ummAlQura && islamicComponents.month == 9 {
+    if method == .standard(.ummAlQura) && islamicComponents.month == 9 {
         params.adjustments.isha += 30
     }
+
+    method.applyRules(to: &params, coordinate: coordinate, date: date, calendar: cal)
 
     return PrayerTimes(coordinates: coordinates, date: date, calculationParameters: params)
 }

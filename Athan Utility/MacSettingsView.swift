@@ -13,7 +13,7 @@ import Adhan
 
 @available(iOS 16.0, *)
 struct MacSettingsView: View {
-    @State private var method: CalculationMethod
+    @State private var method: PrayerMethod
     @State private var madhab: Madhab
     @State private var latRule: HighLatitudeRule
     @State private var sound: NotificationSettings.Sounds
@@ -21,11 +21,11 @@ struct MacSettingsView: View {
     @State private var bellVersion = 0
     @State private var isPreviewingSound = false
 
-    private let methods = CalculationMethod.usefulCases()
+    private let methods = PrayerMethod.allMethods
 
     init() {
         let ps = AthanManager.shared.prayerSettings
-        _method = State(initialValue: ps.calculationMethod)
+        _method = State(initialValue: ps.method)
         _madhab = State(initialValue: ps.madhab)
         _latRule = State(initialValue: ps.latitudeRule ?? .middleOfTheNight)
         _sound = State(initialValue: AthanManager.shared.notificationSettings.selectedSound)
@@ -148,7 +148,7 @@ struct MacSettingsView: View {
 
     private func applyPrayer() {
         guard let ps = AthanManager.shared.prayerSettings.copy() as? PrayerSettings else { return }
-        ps.calculationMethod = method
+        ps.method = method
         ps.madhab = madhab
         ps.latitudeRule = latRule
         AthanManager.shared.prayerSettings = ps

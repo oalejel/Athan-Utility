@@ -86,7 +86,7 @@ struct DebugSettingsView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Current State").font(.headline).foregroundColor(.white).padding(.top, 8)
                             Text("Location: \(AthanManager.shared.locationSettings.locationName)")
-                            Text("Method: \(AthanManager.shared.prayerSettings.calculationMethod.localizedString())")
+                            Text("Method: \(AthanManager.shared.prayerSettings.method.localizedString())")
                             Text("Fajr alarm enabled: \(FajrAlarmSettings.shared.enabled ? "yes" : "no")")
                         }
                         .font(.caption)

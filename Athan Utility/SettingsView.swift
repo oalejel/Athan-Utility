@@ -32,7 +32,7 @@ struct SettingsView: View {
     // Live x-offset of the detail pane during an interactive edge-swipe back.
     @State private var backDrag: CGFloat = 0
     
-    let calculationMethods = CalculationMethod.usefulCases()
+    let calculationMethods = PrayerMethod.allMethods
     let madhabs = Madhab.allCases
     @State var savedOffset = CGFloat(0)
 
@@ -67,7 +67,7 @@ struct SettingsView: View {
                     .transition(.move(edge: .trailing))
                     .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .CalculationMethod:
-                CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.calculationMethod, activeSection: $activeSection)
+                CalculationMethodView(tempPrayerSettings: $tempPrayerSettings, viewSelectedMethod: tempPrayerSettings.method, activeSection: $activeSection)
                     .transition(.move(edge: .trailing))
                     .interactiveBack(offset: $backDrag, width: g.size.width) { activeSection = .General }
             case .FajrAlarm:

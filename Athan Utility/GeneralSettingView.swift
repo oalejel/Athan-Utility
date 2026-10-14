@@ -52,7 +52,7 @@ struct GeneralSettingView: View {
     @Binding var dismissSounds: Bool
     @State var settingsState: SettingsSectionType
     
-    let calculationMethods = CalculationMethod.usefulCases()
+    let calculationMethods = PrayerMethod.allMethods
     let madhabs = Madhab.allCases
     let latitudeRules = HighLatitudeRule.allCases
     
@@ -266,7 +266,7 @@ struct GeneralSettingView: View {
                                             }
                                         }, label: {
                                             HStack {
-                                                Text(tempPrayerSettings.calculationMethod.localizedString())
+                                                Text(tempPrayerSettings.method.localizedString())
                                                     .font(.headline)
                                                     .bold()
                                                     .foregroundColor(.white)
@@ -732,7 +732,7 @@ struct GeneralSettingView: View {
                     Button(action: { // DONE button
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         
-                        print(tempPrayerSettings.calculationMethod)
+                        print(tempPrayerSettings.method)
                         print(tempPrayerSettings.madhab)
                         print(tempPrayerSettings.customNames)
                         

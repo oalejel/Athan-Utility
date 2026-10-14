@@ -341,3 +341,7 @@
 "siri_phrase_modern_1" = "“Salat berikutnya di Athan Utility”";
 "siri_phrase_modern_2" = "“Jam berapa Maghrib di Athan Utility”";
 "siri_phrase_modern_3" = "“Athan Utility waktu salat berikutnya”";
+
+/* Calculation method names */
+"method_jordan" = "Yordania (Kementerian Wakaf)";
+"method_edmonton" = "Edmonton (Masjid Al Rashid)";

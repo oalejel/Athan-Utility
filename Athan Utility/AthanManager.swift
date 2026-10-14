@@ -64,19 +64,36 @@ class ObservableAthanManager: ObservableObject {
 /// (e.g. during a widget refresh) still surfaces the popup the next time the app opens.
 struct MethodUpdateNotice: Equatable, Identifiable, Codable {
     var id = UUID()
-    let oldMethod: CalculationMethod
-    let newMethod: CalculationMethod
+    let oldMethod: PrayerMethod
+    let newMethod: PrayerMethod
     /// The ISO country code this update was derived from (GPS- or locale-based).
     let countryCode: String
 }
 
 // Defined here (rather than CalculationMethod+Extensions.swift) so it is available to
 // every target that compiles AthanManager.swift — the extensions file is only in the app target.
-extension CalculationMethod {
+extension PrayerMethod {
+    /// Al Rashid Mosque, whose Inter-Masajed Shura calendar the Edmonton method follows.
+    private static let edmontonCenter = CLLocation(latitude: 53.5461, longitude: -113.4938)
+    /// Covers the city and the surrounding communities the calendar is published for.
+    private static let edmontonRadiusMeters: CLLocationDistance = 80_000
+
     /// Best-fit calculation method for a given ISO 3166-1 alpha-2 country code.
     /// Used to auto-suggest a method when the user's location/country is determined.
     /// Falls back to the Muslim World League method for any country not explicitly mapped.
-    static func recommended(forISOCountryCode code: String) -> CalculationMethod {
+    /// `coordinate` narrows the suggestion where a city follows its own calendar (Edmonton).
+    static func recommended(forISOCountryCode code: String,
+                            coordinate: CLLocationCoordinate2D? = nil) -> PrayerMethod {
+        if code.uppercased() == "JO" { return .jordan }
+        if code.uppercased() == "CA", let coordinate = coordinate,
+           CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            .distance(from: edmontonCenter) <= edmontonRadiusMeters {
+            return .edmonton
+        }
+        return .standard(standardRecommendation(forISOCountryCode: code))
+    }
+
+    private static func standardRecommendation(forISOCountryCode code: String) -> CalculationMethod {
         switch code.uppercased() {
         // Gulf states with their own official authorities
         case "SA": return .ummAlQura          // Umm al-Qura, Saudi Arabia
@@ -100,7 +117,7 @@ extension CalculationMethod {
         case "SG", "MY", "BN": return .singapore
 
         // Egyptian General Authority of Survey (widely followed across N. Africa & Levant)
-        case "EG", "SD", "LY", "DZ", "TN", "IQ", "SY", "LB", "JO", "YE":
+        case "EG", "SD", "LY", "DZ", "TN", "IQ", "SY", "LB", "YE":
             return .egyptian
 
         // Everyone else: Muslim World League
@@ -567,6 +584,7 @@ extension AthanManager {
     }
 
     private static let pendingNoticeKey = "AthanPendingMethodUpdateNotice"
+    private static let regionalRemapOfferedKeyPrefix = "AthanRegionalMethodOffered_"
 
     private func persistPendingNotice(_ notice: MethodUpdateNotice?) {
         guard let d = groupDefaults else { return }
@@ -627,16 +645,32 @@ extension AthanManager {
             || CommandLine.arguments.contains("-UITEST_INTRO")
             || CommandLine.arguments.contains("-UITEST_DISCOVER") { return false }
         guard let code = countryCode?.uppercased(), !code.isEmpty else { return false }
-        let recommended = CalculationMethod.recommended(forISOCountryCode: code)
-        let current = prayerSettings.calculationMethod
+        let recommended = PrayerMethod.recommended(forISOCountryCode: code,
+                                                   coordinate: locationSettings.locationCoordinate)
+        let current = prayerSettings.method
         guard recommended != current else { return false }
+
+        // Before regional methods existed, Jordan mapped to Egyptian (Fajr ~8 min early,
+        // Maghrib ~5 min early there) and Edmonton to ISNA (hours off in summer). Offer the
+        // regional method once to anyone still on what the old mapping picked for them,
+        // even though their country was already handled; the popup has Undo for anyone who
+        // chose that method deliberately.
+        var correctsOldMapping = false
+        if let regional = recommended.regionalID {
+            let offeredKey = Self.regionalRemapOfferedKeyPrefix + regional
+            let oldPick: CalculationMethod = recommended == .jordan ? .egyptian : .northAmerica
+            correctsOldMapping = current == .standard(oldPick)
+                && handledSuggestionCountry == code
+                && groupDefaults?.bool(forKey: offeredKey) != true
+            groupDefaults?.set(true, forKey: offeredKey)
+        }
 
         // Both guards below exist to keep *passive* evaluation (every launch, every widget
         // refresh) from nagging or from stomping a deliberate choice. Neither should apply
         // when the user has just told us where they are: that is exactly the moment they
         // expect the method to follow, and the first-evaluation guard in particular used to
         // swallow the very first manual location change a user ever made.
-        if !userChangedLocation {
+        if !userChangedLocation && !correctsOldMapping {
             // Only act once per country until it changes.
             guard handledSuggestionCountry != code else { return false }
 
@@ -652,7 +686,7 @@ extension AthanManager {
 
         // Apply immediately (the didSet helper archives to the app group).
         let updated = prayerSettings.copy() as! PrayerSettings
-        updated.calculationMethod = recommended
+        updated.method = recommended
         prayerSettings = updated
 
         let notice = MethodUpdateNotice(oldMethod: current, newMethod: recommended, countryCode: code)
@@ -672,7 +706,7 @@ extension AthanManager {
     func undoMethodUpdate(_ notice: MethodUpdateNotice) {
         handledSuggestionCountry = notice.countryCode
         let updated = prayerSettings.copy() as! PrayerSettings
-        updated.calculationMethod = notice.oldMethod
+        updated.method = notice.oldMethod
         prayerSettings = updated
         reloadSettingsAndNotifications()
         persistPendingNotice(nil)

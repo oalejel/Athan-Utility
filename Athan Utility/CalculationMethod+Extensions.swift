@@ -56,3 +56,16 @@ extension CalculationMethod {
         self = cases[index]
     }
 }
+
+extension PrayerMethod {
+    func localizedString() -> String {
+        switch self {
+        case .standard(let method):
+            return method.localizedString()
+        case .jordan:
+            return NSLocalizedString("method_jordan", value: "Jordan (Ministry of Awqaf)", comment: "Calculation method name")
+        case .edmonton:
+            return NSLocalizedString("method_edmonton", value: "Edmonton (Al Rashid Mosque)", comment: "Calculation method name")
+        }
+    }
+}

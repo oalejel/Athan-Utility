@@ -364,3 +364,7 @@
 "siri_phrase_modern_1" = "“Athan Utility'de sıradaki namaz”";
 "siri_phrase_modern_2" = "“Athan Utility'de Akşam vakti ne zaman”";
 "siri_phrase_modern_3" = "“Athan Utility sıradaki namaz vakti”";
+
+/* Calculation method names */
+"method_jordan" = "Ürdün (Vakıflar Bakanlığı)";
+"method_edmonton" = "Edmonton (Al Rashid Camii)";

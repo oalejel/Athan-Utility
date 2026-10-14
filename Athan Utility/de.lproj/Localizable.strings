@@ -344,3 +344,7 @@
 "siri_phrase_modern_1" = "„Nächstes Gebet in Athan Utility“";
 "siri_phrase_modern_2" = "„Wie spät ist Maghrib in Athan Utility“";
 "siri_phrase_modern_3" = "„Athan Utility nächste Gebetszeit“";
+
+/* Calculation method names */
+"method_jordan" = "Jordanien (Ministerium für Awqaf)";
+"method_edmonton" = "Edmonton (Al-Rashid-Moschee)";

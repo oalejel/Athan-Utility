@@ -367,3 +367,7 @@
 "siri_phrase_modern_1" = "« Prochaine prière dans Athan Utility »";
 "siri_phrase_modern_2" = "« À quelle heure est Maghrib dans Athan Utility »";
 "siri_phrase_modern_3" = "« Athan Utility prochaine heure de prière »";
+
+/* Calculation method names */
+"method_jordan" = "Jordanie (ministère des Awqaf)";
+"method_edmonton" = "Edmonton (mosquée Al Rashid)";

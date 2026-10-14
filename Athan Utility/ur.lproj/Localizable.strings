@@ -376,3 +376,7 @@
 "siri_phrase_modern_1" = "”Athan Utility میں اگلی نماز“";
 "siri_phrase_modern_2" = "”Athan Utility میں مغرب کا وقت کیا ہے“";
 "siri_phrase_modern_3" = "”Athan Utility اگلی نماز کا وقت“";
+
+/* Calculation method names */
+"method_jordan" = "اردن (وزارت اوقاف)";
+"method_edmonton" = "ایڈمنٹن (مسجد الرشید)";

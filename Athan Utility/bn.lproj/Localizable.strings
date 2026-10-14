@@ -341,3 +341,7 @@
 "siri_phrase_modern_1" = "“Athan Utility-তে পরবর্তী নামাজ”";
 "siri_phrase_modern_2" = "“Athan Utility-তে মাগরিবের সময় কত”";
 "siri_phrase_modern_3" = "“Athan Utility পরবর্তী নামাজের সময়”";
+
+/* Calculation method names */
+"method_jordan" = "জর্ডান (আওকাফ মন্ত্রণালয়)";
+"method_edmonton" = "এডমন্টন (আল রশিদ মসজিদ)";

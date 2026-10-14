@@ -106,6 +106,10 @@ struct AthanComplicationView: View {
     /// Lets a caller outside WidgetKit (where the environment family isn't set) pick the layout.
     var familyOverride: WidgetFamily? = nil
     private var family: WidgetFamily { familyOverride ?? environmentFamily }
+    /// True where the face draws a curved label around a circular complication.
+    @Environment(\.showsWidgetLabel) private var environmentShowsLabel
+    var showsLabelOverride: Bool? = nil
+    private var showsWidgetLabel: Bool { showsLabelOverride ?? environmentShowsLabel }
 
     private var showsSymbol: Bool { entry.nextPrayer == .sunrise || entry.nextPrayer == .maghrib }
 
@@ -122,27 +126,42 @@ struct AthanComplicationView: View {
         }
     }
 
-    /// Next prayer's name (or a sunrise/sunset symbol) over its time.
-    private var circular: some View {
-        ZStack {
-            AccessoryWidgetBackground()
-            VStack(spacing: 0) {
-                if showsSymbol {
-                    Image(systemName: entry.nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")
-                        .font(.system(size: 14, weight: .semibold))
-                } else {
-                    Text(entry.nextPrayer.localizedOrCustomString())
-                        .font(.system(size: 11, weight: .semibold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                }
-                Text(shortTime(entry.nextPrayerDate))
-                    .font(.system(size: 13, weight: .bold))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+    /// Next prayer's name (or a sunrise/sunset symbol) over its time. On faces that curve a
+    /// label around the circle (Infograph's bezel), this switches to what the ClockKit bezel
+    /// complication showed for years: the current prayer's symbol in the circle and
+    /// "Maghrib 6:42 PM · 1 hr, 20 min" — including the time left — along the curve.
+    @ViewBuilder private var circular: some View {
+        if showsWidgetLabel {
+            ZStack {
+                AccessoryWidgetBackground()
+                Image(systemName: entry.currentPrayer.sfSymbolName())
+                    .font(.system(size: 18, weight: .bold))
                     .widgetAccentable()
             }
-            .padding(2)
+            .widgetLabel {
+                Text("\(entry.nextPrayer.localizedOrCustomString()) \(Text(entry.nextPrayerDate, style: .time)) · \(Text(entry.nextPrayerDate, style: .relative))")
+            }
+        } else {
+            ZStack {
+                AccessoryWidgetBackground()
+                VStack(spacing: 0) {
+                    if showsSymbol {
+                        Image(systemName: entry.nextPrayer == .sunrise ? "sunrise.fill" : "sunset.fill")
+                            .font(.system(size: 14, weight: .semibold))
+                    } else {
+                        Text(entry.nextPrayer.localizedOrCustomString())
+                            .font(.system(size: 11, weight: .semibold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                    }
+                    Text(shortTime(entry.nextPrayerDate))
+                        .font(.system(size: 13, weight: .bold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .widgetAccentable()
+                }
+                .padding(2)
+            }
         }
     }
 
